@@ -1,10 +1,73 @@
 ﻿@page
 @model RegisterModel
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "Registrar";
 }
 
-<h2>@ViewData["Title"]</h2>
+<section class="body-sign">
+    <div class="center-sign">
+        <a href="/" class="logo pull-left">
+            <img src="~/assets/images/logo.png" height="94" alt="Dna do Brasil" />
+        </a>
+
+        <div class="panel panel-sign">
+            <div class="panel-title-sign mt-xl text-right">
+                <h2 class="title text-uppercase text-weight-bold m-none"><i class="fa fa-user mr-xs"></i> Registrar</h2>
+            </div>
+            <div class="panel-body">
+                <form asp-route-returnUrl="@Model.ReturnUrl" method="post" id="form">
+                    @if (Request.HasFormContentType)
+                    {
+                        <div asp-validation-summary="All" class="alert alert-mini alert-danger margin-bottom-30"></div>
+                    }
+                    <div class="form-group mb-lg">
+                        <label>E-mail</label>
+                        <input asp-for="Input.Email" name="Input.Email" id="Input.Email" type="email" class="form-control input-lg" />
+                    </div>
+
+                    <div class="form-group mb-none">
+                        <div class="row">
+                            <div class="col-sm-6 mb-lg">
+                                <label>Senha</label>
+                                <input asp-for="Input.Password" name="Input.Password" id="Input.Password" type="password" class="form-control input-lg" />
+                            </div>
+                            <div class="col-sm-6 mb-lg">
+                                <label>Confirmar Senha</label>
+                                <input asp-for="Input.ConfirmPassword" name="Input.ConfirmPassword" id="Input.ConfirmPassword" type="password" class="form-control input-lg" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <div class="checkbox-custom checkbox-default">
+                                <input id="AgreeTerms" name="agreeterms" type="checkbox"/>
+                                <label for="AgreeTerms">Eu concordo com os <a href="#">termos de uso</a></label>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 text-right">
+                            <button type="submit" class="btn btn-primary hidden-xs">Registrar</button>
+                            <button type="submit" class="btn btn-primary btn-block btn-lg visible-xs mt-lg">Registrar</button>
+                        </div>
+                    </div>
+
+                    <p class="text-center">Já possui uma conta? <a class="nav-link text-dark" asp-page="/Account/Login">Entrar!</a></p>
+
+                </form>
+            </div>
+        </div>
+
+        <p class="text-center text-muted mt-md mb-md">&copy; Copyright 2016. All Rights Reserved.</p>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
+    <script src="~/js/login.js"></script>
+}
+
+
+@*<h2>@ViewData["Title"]</h2>
 
 <div class="row">
     <div class="col-md-4">
@@ -64,4 +127,4 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
-}
+}*@

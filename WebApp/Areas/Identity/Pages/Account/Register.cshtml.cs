@@ -64,7 +64,7 @@ namespace WebApp.Areas.Identity.Pages.Account
 
             [DataType(DataType.Password)]
             [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Compare("Password", ErrorMessage = "A senha e senha de confirmação não combinam")]
             public string ConfirmPassword { get; set; }
         }
 
