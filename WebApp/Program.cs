@@ -11,8 +11,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 	options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<IdentityUser>()
+	.AddRoles<IdentityRole>()
 	.AddEntityFrameworkStores<ApplicationDbContext>();
+
 builder.Services.AddControllersWithViews();
 
 builder.Services.Configure<IdentityOptions>(options =>
@@ -26,14 +28,15 @@ builder.Services.Configure<IdentityOptions>(options =>
 	options.Password.RequiredUniqueChars = 1;
 
 	// Lockout settings.
-	options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(1);
-	options.Lockout.MaxFailedAccessAttempts = 3;
-	options.Lockout.AllowedForNewUsers = true;
+	//options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(1);
+	//options.Lockout.MaxFailedAccessAttempts = 5;
+	//options.Lockout.AllowedForNewUsers = false;
 
 	// User settings.
 	options.User.AllowedUserNameCharacters =
 		"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
-	options.User.RequireUniqueEmail = false;
+	options.User.RequireUniqueEmail = true;
+	
 });
 
 

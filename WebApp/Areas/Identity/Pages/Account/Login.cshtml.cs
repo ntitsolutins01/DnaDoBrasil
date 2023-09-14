@@ -88,38 +88,59 @@ namespace WebApp.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            returnUrl ??= Url.Content("~/");
+			returnUrl = returnUrl ?? Url.Content("~/");
 
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-        
-            if (ModelState.IsValid)
-            {
-                // This doesn't count login failures towards account lockout
-                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Login.Email, Login.Password, Login.RememberMe, lockoutOnFailure: false);
-                if (result.Succeeded)
-                {
-                    _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
-                }
-                if (result.RequiresTwoFactor)
-                {
-                    return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Login.RememberMe });
-                }
-                if (result.IsLockedOut)
-                {
-                    _logger.LogWarning("User account locked out.");
-                    return RedirectToPage("./Lockout");
-                }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                    return Page();
-                }
-            }
+			if (ModelState.IsValid)
+			{
+				var result =
+					await _signInManager.PasswordSignInAsync(Login.Email, Login.Password, Login.RememberMe, true);
 
-            // If we got this far, something failed, redisplay form
-            return Page();
+				var u = await _userManager.FindByEmailAsync(Login.Email);
+
+				if (u == null)
+				{
+					ModelState.AddModelError(string.Empty, "Usuário não cadastrado.");
+					return Page();
+				}
+
+				if (!result.Succeeded)
+				{
+					if (result.IsLockedOut)
+					{
+						_logger.LogWarning("A sua conta foi bloqueada.");
+						ModelState.AddModelError(string.Empty, "A sua conta foi bloqueada.");
+						return RedirectToPage("./ForgotPassword");
+					}
+
+					ModelState.AddModelError(string.Empty, "Senha inválida.");
+					return Page();
+				}
+
+				if (result.Succeeded)
+				{
+					//if (!u.FirstAccess.HasValue)
+					//{
+					//	_logger.LogInformation("Primeiro acesso do usuário.");
+
+					//	var code = await _userManager.GeneratePasswordResetTokenAsync(u);
+					//	var email = Login.Email;
+					//	var callbackUrl = Url.Page(
+					//		"/Account/FirstAccessPassword",
+					//		null,
+					//		new { email, code },
+					//		Request.Scheme);
+
+					//	return RedirectToPage("./FirstAccessPassword", new { email, code });
+					//}
+					//await _userManager.AddClaimAsync(u, new Claim(ClaimTypes.Upn, u.Cpf));
+
+					_logger.LogInformation("User logged in.");
+					return LocalRedirect(returnUrl);
+				}
+			}
+
+			// If we got this far, something failed, redisplay form
+			return Page();
         }
     }
 }
