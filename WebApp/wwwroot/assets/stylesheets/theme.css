@@ -8406,6 +8406,11 @@ html.ie11 .scroll-to-top {
 	color: #FFF;
 }
 
+.panel-body.bg-green {
+	background: #4CAF50;
+	color: #FFF;
+}
+
 .panel-body.bg-tertiary {
 	background: #2BAAB1;
 	color: #FFF;
