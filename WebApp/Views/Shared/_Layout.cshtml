@@ -167,26 +167,32 @@
 						<nav id="menu" class="nav-main" role="navigation">
 
 							<ul class="nav nav-main">
-								<li>
-									<a href="layouts-default.html">
-										<i class="fa fa-home" aria-hidden="true"></i>
-										<span>Dashboard</span>
-									</a>
-								</li>
+                                <li>
+									<a href="@Url.Action("Index", "Home")">
+                                        <i class="fa fa-home" aria-hidden="true"></i>
+                                        <span>Dashboard</span>
+                                    </a>
+                                </li>
+                                <li class="nav-parent nav-expanded">
+									<a href="@Url.Action("Index", "Laudo")">
+                                        <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                                        <span></>Laudos</span>
+                                    </a>
+                                </li>
+                                <li class="nav-parent nav-expanded">
+									<a href="@Url.Action("Index", "Transacao")">
+										<i class="fa fa-exchange" aria-hidden="true"></i>
+                                        <span>Transações</span>
+                                    </a>
+                                </li>
 								<li class="nav-parent nav-expanded">
-									<a href="#">
-										<i class="fa fa-file-text-o" aria-hidden="true"></i>
-										<span>Laudos</span>
-									</a>
-								</li>
-								<li class="nav-parent nav-expanded">
-									<a href="#">
+									<a href="@Url.Action("Index", "Usuario")">
 										<i class="fa fa-users" aria-hidden="true"></i>
 										<span>Usuarios</span>
 									</a>
 								</li>
 								<li class="nav-parent nav-expanded">
-									<a href="#">
+									<a href="@Url.Action("Index", "Perfil")">
 										<i class="fa fa-shield" aria-hidden="true"></i>
 										<span>Perfil</span>
 									</a>
