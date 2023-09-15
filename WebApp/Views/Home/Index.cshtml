@@ -287,70 +287,57 @@
 	<script src="https://code.highcharts.com/highcharts.js"></script>
 
 	<script>
-		Highcharts.chart('container', {
-			chart: {
-				type: 'bar'
-			},
-			title: {
-				text: undefined
-			},
-			xAxis: {
-				categories: ['Hoje', 'Última semana', 'Último mês'],
+		$(function () {
+
+			Highcharts.chart('container', {
+
+				chart: {
+					type: 'column',
+					inverted: false
+				},
+
 				title: {
-					text: null
+					text: undefined
 				},
-				gridLineWidth: 1,
-				lineWidth: 0
-			},
-			yAxis: {
-				min: 0,
-				title: {
-					text: 'Population (millions)',
-					align: 'high'
+
+				xAxis: {
+					categories: ['Hoje', 'Última semana', 'Última mês']
 				},
-				labels: {
-					overflow: 'justify'
+
+				yAxis: {
+					title: {
+						text: 'Laudos'
+					}
 				},
-				gridLineWidth: 0
-			},
-			tooltip: {
-				valueSuffix: ' millions'
-			},
-			plotOptions: {
-				bar: {
-					borderRadius: '50%',
-					dataLabels: {
-						enabled: true
-					},
-					groupPadding: 0.1
-				}
-			},
-			legend: {
-				layout: 'vertical',
-				align: 'right',
-				verticalAlign: 'top',
-				x: -40,
-				y: 80,
-				floating: true,
-				borderWidth: 1,
-				backgroundColor:
-					Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF',
-				shadow: true
-			},
-			credits: {
-				enabled: false
-			},
-			series: [{
-				name: 'Hoje',
-				data: [631, 727, 3202]
-			}, {
-				name: 'Última semana',
-				data: [814, 841, 3714]
-			}, {
-				name: 'Último mês',
-				data: [1276, 1007, 4561]
-			}]
+
+				plotOptions: {
+					columnrange: {
+						dataLabels: {
+							enabled: true,
+							formatter: function () {
+								return this.y;
+							}
+						}
+					}
+				},
+
+				legend: {
+					enabled: false
+				},
+
+				series: [{
+					name: 'Total',
+					data: [
+						{ y: 20.1, color: '#3949AB' },
+						{ y: 34.4, color: '#8E24AA' },
+						{ y: 11.7, color: '#1E88E5' }
+					]
+				}]
+
+			});
+
 		});
+
 
 	</script>
 }
