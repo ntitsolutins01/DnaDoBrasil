@@ -4,25 +4,22 @@
 }
 
 <div class="row">
-    <div class="col-lg-12">
-        @using (@Html.BeginForm("Create", "Usuario", FormMethod.Post, new { id = "form" }))
-        {
-
-            <section class="card">
-                <header class="card-header">
-                    <div class="card-actions">
-                        <a href="#" class="card-action card-action-toggle" data-card-toggle></a>
-                        <a href="#" class="card-action card-action-dismiss" data-card-dismiss></a>
+    <div class="col-md-12">
+        <form id="form" action="forms-validation.html" class="form-horizontal">
+            <section class="panel">
+                <header class="panel-heading">
+                    <div class="panel-actions">
+                        <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
                     </div>
 
-                    <h2 class="card-title">Cadastrar Usuário</h2>
-
+                    <h2 class="panel-title">Filtro de pesquisa</h2>
                 </header>
-                <div id="vUsuario" class="card-body" data-loading-overlay>
+                <div class="panel-body">
+
                     <div class="form-group row">
                         <label class="col-sm-3 control-label text-sm-right pt-2">Nome <span class="required">*</span></label>
                         <div class="col-sm-9">
-                            <input type="text" name="NomUsuario" class="form-control" placeholder="eg.: Descrição completa do nome do usuário"
+                            <input type="text" name="NomUsuario" class="form-control"
                                    maxlength="60"
                                    title="Por favor informe a descrição completa do nome do usuário." required />
                         </div>
@@ -33,7 +30,7 @@
                             <input id="cpf" name="cpf"
                                    v-model="params.cpf"
                                    v-on:blur="ExisteCpf"
-                                   type="text" value="" class="form-control" placeholder="eg.: Número do CPF do usuário"
+                                   type="text" value="" class="form-control"
                                    maxlength="14" />
 
                         </div>
@@ -48,7 +45,7 @@
                                 <input type="text" id="EndEmail" name="EndEmail"
                                        v-model="params.email"
                                        v-on:blur="ExisteEmail"
-                                       class="form-control" placeholder="eg.: Endereço eletrônico válido do usuário"
+                                       class="form-control" 
                                        maxlength="40"
                                        title="Por favor informe um endereço eletrônico válido do usuário" required />
                             </div>
@@ -59,63 +56,43 @@
                                 <span class="input-group-addon">
                                     <i class="fa fa-phone"></i>
                                 </span>
-                                <input id="NumTelefone" name="NumTelefone" placeholder="eg.: Telefone de contato do usuário" class="form-control"
+                                <input id="NumTelefone" name="NumTelefone" class="form-control"
                                        maxlength="15"
                                        title="Por favor informe o telefone de contato do usuário" required>
                             </div>
                         </div>
                     </div>
+	                <div class="form-group row">
+		                <label class="col-lg-3 control-label text-sm-right pt-2">Tipo Perfil<span class="required">*</span></label>
 
-                    <div class="form-group row">
-                        <label class="col-lg-3 control-label text-sm-right pt-2">Nome da empresa<span class="required">*</span></label>
-
-                        <div class="col-lg-9">
-                            @* <select class="form-control populate select2" name="ddlEmpresa" id="ddlEmpresa"
-                                    title="Por favor selecione uma empresa." required
-                                    asp-for="CodEmpresa" asp-items="Model.ListEmpresa">
-                                <option value="">Selecionar Empresa</option>
-                            </select> *@
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label class="col-lg-3 control-label text-sm-right pt-2">Unidade de Infraestrutura<span class="required">*</span></label>
-
-                        <div class="col-lg-9">
-                            @* <select class="form-control populate select2" name="ddlUnidadeInfraestrutura" id="ddlUnidadeInfraestrutura"
-                                    title="Por favor selecione uma unidade de infraestrutura." required
-                                    asp-for="CodUnidadeInfraestrutura"
-                                    asp-items="Model.ListUnidadeInfraestrutura">
-                                <option value="">Selecionar Unidade de infraestrutura</option>
-                            </select> *@
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-lg-3 control-label text-sm-right pt-2">Tipo Perfil<span class="required">*</span></label>
-
-                        <div class="col-lg-9">
-                            @* <select class="form-control populate select2" name="ddlPerfil" id="ddlPerfil"
-                                    title="Por favor selecione um perfil." required
-                                    asp-for="CodPerfil" asp-items="Model.ListPerfil">
-                                <option value="">Selecionar Perfil</option>
-                            </select> *@
-                        </div>
-                    </div>
+		                <div class="col-lg-9">
+			                <select class="form-control populate select2" name="ddlPerfil" id="ddlPerfil"
+			                        title="Por favor selecione um perfil." required
+			                        @* asp-for="CodPerfil" asp-items="Model.ListPerfil" *@>
+				                <option value="">Selecionar Perfil</option>
+			                </select>
+		                </div>
+	                </div>
                 </div>
-                <footer class="card-footer">
-                    <div class="row justify-content-end">
-                        <div class="col-sm-9">
-                            <button class="btn  btn-success pull-left mr-2">Salvar &nbsp;&nbsp;<i class="fa fa-save"></i></button>
-                            <button type="reset" class="btn btn-danger pull-left mr-2">Cancelar &nbsp;&nbsp;<i class="fa fa-remove"></i></button>
-                            <a class="nav-link text-dark" asp-page="/Usuario/Index">Voltar &nbsp;&nbsp;<i class="fa fa-reply"></i></a>
-
+                <footer class="panel-footer">
+                    <div class="row">
+						<div class="col-md-9 col-md-offset-3">
+                            <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Voltar</button>
+                            <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
+                            <button type="submit" class="btn btn-dark pull-right" style="margin-left: 5px;margin-right: 5px;"><i class="fa fa-reply"></i> &nbsp;&nbsp;Salvar</button>
+                           @*  <button class="btn btn-success pull-right mr-2"><i class="fa fa-save"></i>&nbsp;&nbsp;Salvar </button>
+                            <button type="reset" class="btn btn-danger pull-right mr-2"><i class="fa fa-remove"></i>&nbsp;&nbsp;Cancelar </button>
+                            <a href="@Url.Action("Index", "Usuario")" class="btn btn-dark pull-right"> <i class="fa fa-reply">&nbsp;&nbsp;Voltar</i></a>
+ *@
                         </div>
                     </div>
                 </footer>
             </section>
-        }
+        </form>
     </div>
 </div>
+
+
 @section CssSpecificVendor {
     <link rel="stylesheet" href="~/vendor/select2/css/select2.css" />
     <link rel="stylesheet" href="~/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
