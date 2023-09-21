@@ -1,0 +1,199 @@
+﻿@{
+	ViewData["Title"] = "Alunos";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row">
+	<div class="col-md-12">
+		<form id="form" action="forms-validation.html" class="form-horizontal">
+			<section class="panel">
+				<header class="panel-heading">
+					<div class="panel-actions">
+						<a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
+					</div>
+
+					<h2 class="panel-title">Filtro de pesquisa</h2>
+				</header>
+				<div class="panel-body">
+
+					<label class="col-sm-1 control-label">Aluno</label>
+					<div class="col-md-3 form-group">
+						<input type="text" name="aluno" class="form-control" placeholder="eg.: Descrição completa do nome do aluno"
+							   maxlength="60" />
+					</div>
+
+					<label class="col-sm-1 control-label" style="width: 12.499999995%">CPF</label>
+					<div class="col-md-3 form-group">
+						<input id="cpf" name="cpf"
+							   v-model="params.cpf"
+							   v-on:blur="ExisteCpf"
+							   type="text" value="" class="form-control" placeholder="eg.: Número do CPF do aluno"
+							   maxlength="14" />
+					</div>
+
+					<label class="col-sm-1 control-label">Deficiência </label>
+					<div class="col-md-3 form-group">
+						<select class="form-control populate select2" name="ddlDeficiencia" id="ddlDeficiencia"
+								title="Por favor selecione uma deficiencia." required
+						@* asp-for="CodPerfil" asp-items="Model.ListPerfil" *@>
+							<option value="">Selecionar Local</option>
+						</select>
+					</div>
+
+					<label class="col-sm-1 control-label">Localidade</label>
+					<div class="col-md-3 form-group">
+						<select class="form-control populate select2" name="ddlLocalidade" id="ddlLocalidade"
+								title="Por favor selecione uma localidade." required
+						@* asp-for="CodPerfil" asp-items="Model.ListPerfil" *@>
+							<option value="">Selecionar Status</option>
+						</select>
+					</div>
+
+					<label class="col-sm-3 control-label">Cadastros ativos</label>
+					<div class="col-md-3 form-group">
+						<div class="switch switch-sm switch-primary">
+							<div class="ios-switch on">
+								<div class="on-background background-fill"></div>
+								<div class="state-background background-fill"></div>
+								<div class="handle"></div>
+							</div>
+							<input type="checkbox" name="switch" data-plugin-ios-switch="" checked="checked" style="display: none;">
+						</div>
+					</div>
+
+				</div>
+				<footer class="panel-footer">
+					<div class="row">
+						<div class="col-md-9 col-md-offset-3">
+							<button type="submit" class="btn btn-primary pull-right" style="margin-left: 5px;margin-right: 5px;"><i class="fa fa-search"></i> &nbsp;&nbsp;Pesquisar</button>
+						</div>
+					</div>
+				</footer>
+			</section>
+		</form>
+	</div>
+</div>
+
+<section class="panel">
+	<header class="panel-heading">
+		<div class="panel-actions">
+			<a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
+		</div>
+
+		<h2 class="panel-title">Listagem de Alunos</h2>
+
+	</header>
+	<div class="panel-body">
+
+		<table class="table table-bordered table-striped mb-0" id="datatable-default">
+			<thead>
+				<tr>
+					<th>Nome</th>
+					<th>Email</th>
+					<th>Pesquisas</th>
+					<th>Laudos</th>
+					<th>Status</th>
+					<th>Ações</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Fábio de Souza Muniz</td>
+					<td>ntitsolutions01@gmail.com</td>
+					<td>1</td>
+					<td>2</td>
+					<td>Ativo</td>
+					<td class="actions">
+						<a data-toggle="tooltip" data-placement="top" title="Editar" @* asp-action="Edit" *@ asp-controller="Perfil" asp-route-id="1" class="on-default edit-row" style='color: #FF9800'><i class="fa fa-pencil"></i></a>
+						<a data-toggle="tooltip" data-placement="top" title="Excluir" @* asp-action="Delete" *@ asp-controller="Perfil" asp-route-id="1" class="on-default remove-row" style='color:#F44336'><i class="fa fa-trash-o"></i></a>
+					</td>
+				</tr>
+				@* @foreach (var item in Model.aaData)
+				{
+				<tr>
+				<td>@Html.DisplayFor(modelItem => item.NomUsuario)</td>
+				<td>@Html.DisplayFor(modelItem => item.NumCpf)</td>
+				<td>@Html.DisplayFor(modelItem => item.Email)</td>
+				<td>@Html.DisplayFor(modelItem => item.NomPerfil)</td>
+				<td class="actions">
+				<a data-toggle="tooltip" data-placement="top" title="Editar" asp-action="Edit" asp-controller="Usuario" asp-route-id="@item.CodUsuarioLogin" class="on-default edit-row" style='color: #eea236'><i class="fa fa-pencil"></i></a>
+				<a data-toggle="tooltip" data-placement="top" title="Excluir" asp-action="Delete" asp-controller="Usuario" asp-route-id="@item.CodUsuarioLogin" class="on-default remove-row" style='color: #d43f3a'><i class="fa fa-trash-o"></i></a>
+				<a data-toggle="tooltip" data-placement="top" title="Excluir" asp-action="Delete" asp-controller="Usuario" asp-route-id="@item.CodUsuarioLogin" class="on-default remove-row" style='color: #d43f3a'><i class="fa fa-trash-o"></i></a>
+				</td>
+				</tr>
+				} *@
+			</tbody>
+		</table>
+	</div>
+	@* <footer class="panel-footer">
+	<button class="btn btn-primary">Submit </button>
+	<button type="reset" class="btn btn-default">Reset</button>
+	</footer> *@
+</section>
+
+
+
+@section CssSpecificVendor {
+	<link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />
+    }
+@section Scripts {
+	<script src="~/assets/vendor/ios7-switch/ios7-switch.js"></script>
+	<script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
+	<script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
+	<script src="~/js/formatTable.js"></script>
+
+	<script>
+		// iosSwitcher
+		(function ($) {
+
+			'use strict';
+
+			if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
+
+				$(function () {
+					$('[data-plugin-ios-switch]').each(function () {
+						var $this = $(this);
+
+						$this.themePluginIOS7Switch();
+					});
+				});
+
+			}
+
+		}).apply(this, [jQuery]);
+
+		(function ($) {
+
+			'use strict';
+			var crub = @ViewBag.CrudMessage;
+
+			if (crub === 1) {
+				new PNotify({
+					title: 'Laudo',
+					text: 'Cadastro realizado com sucesso!',
+					type: 'success'
+				});
+			} else if (crub === 2) {
+				new PNotify({
+					title: 'Laudo',
+					text: 'Dados alterados com sucesso.',
+					type: 'warning',
+					icon: 'fa fa-pencil'
+				});
+			} else if (crub === 3) {
+				new PNotify({
+					title: 'Laudo',
+					text: 'Registro excluído com sucesso.',
+					type: 'error',
+					icon: 'fa fa-trash-o'
+				});
+			}
+			if ($.isFunction($.fn['tooltip'])) {
+				$('[data-toggle=tooltip],[rel=tooltip]').tooltip({ container: 'body' });
+			}
+
+		}).apply(this, [jQuery]);
+	</script>
+}
+
