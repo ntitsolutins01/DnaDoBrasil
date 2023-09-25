@@ -19,18 +19,17 @@
 					</div>
 					<div id="collapse2One" class="accordion-body collapse">
                         <div class="panel-body">
+	                        <div class="well well-lg">
+		                        <div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-right">
+			                        <div class="circular-bar-chart" data-percent="45" data-plugin-options='{ "barColor": "#2baab1", "delay": 300, "size": 50, "lineWidth": 4 }'>
+				                        <strong>Average</strong>
+				                        <label><span class="percent">45</span>%</label>
+			                        </div>
+		                        </div>
+		                        <div class="h4 text-weight-bold mb-none">12/02/2023</div>
+		                        <p class="text-xs text-muted mb-none">Porcentagem de saúde</p>
+	                        </div>
                             
-                            <section class="panel">
-                                <div class="panel-body">
-                                    <div class="h4 text-weight-bold mb-none pull-right">Saúde</div>
-                                    <p class="text-xs text-muted mb-none pull-right">25/06/2023</p>
-                                    <div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-left">
-                                        <div class="circular-bar-chart" data-percent="100" data-plugin-options='{ "barColor": "red", "delay": 300, "size": 50, "lineWidth": 4 }'>
-                                            <label><span class="percent">100</span>%</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
 
                             <div class="row">
                                 <div class="col-md-12">
@@ -91,41 +90,69 @@
                                                         <input id="baixo-peso" name="baixo-peso"
                                                                type="text" placeholder="0%" class="form-control" disabled="" />
                                                     </div>
-                                                </div>
+											</div>
+											<div class="form-group">
+												<div class="col-sm-4">
+													<div class="alert alert-info">
+														<strong>0%</strong> You are using an awesome template! <a href="" class="alert-link">Say Hi to Porto Admin</a>.
+													</div>
+												</div>
+												<div class="col-sm-4">
+													<div class="alert alert-default">
+														<strong>20%</strong> You are using an awesome template! <a href="" class="alert-link">Say Hi to Porto Admin</a>.
+													</div>
+												</div>
+												<div class="col-sm-4">
+													<div class="alert alert-dark">
+														<strong>90%</strong> You are using an awesome template! <a href="" class="alert-link">Say Hi to Porto Admin</a>.
+													</div>
+												</div>
+											</div>
 
-                                                <div class="form-group">
-                                                    <section class="panel">
-                                                        <div class="panel-body">
-                                                            <div class="h4 text-weight-bold mb-none">Indice de Massa Corporal (IMC)</div>
-                                                            <p class="text-xs text-muted mb-none">Normal/Adequado</p>
-                                                            <div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-under ">
-                                                                <div class="circular-bar-chart" data-percent="15.6" data-plugin-options='{ "barColor": "#2baab1", "delay": 300, "size": 50, "lineWidth": 4 }'>
-                                                                    <label><span class="decimal">15,6</span>%</label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </section>
-                                                </div>
+	                                            <div class="form-group">
+		                                            <section class="panel panel-featured panel-featured-danger">
+			                                            <header class="panel-heading">
+				                                            <div class="panel-actions">
+					                                            <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
+				                                            </div>
+
+                                                        <h2 class="panel-title">Indice de Massa Corporal (IMC)</h2>
+                                                        <p class="panel-subtitle">Normal/Adequado</p>
+			                                            </header>
+			                                            <div class="panel-body">
+				                                            <code>.panel-featured.panel-featured-danger</code>
+			                                            </div>
+		                                            </section>
+		                                            @* <section class="panel">
+			                                            <div class="panel-body">
+				                                            <div class="h4 text-weight-bold mb-none"></div>
+				                                            <p class="text-xs text-muted mb-none">Normal/Adequado</p>
+				                                            <div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-under ">
+					                                            <div class="circular-bar-chart" data-percent="15.6" data-plugin-options='{ "barColor": "#2baab1", "delay": 300, "size": 50, "lineWidth": 4 }'>
+						                                            <label><span class="decimal">15,6</span>%</label>
+					                                            </div>
+				                                            </div>
+			                                            </div>
+		                                            </section> *@
+	                                            </div>
 
                                                 <div class="form-group">
                                                         <label class="col-md-2 control-label" for="textareaDefault">Recomendações </label>
-                                                        <div class="col-md-9">
+                                                        <div class="col-md-10">
                                                             <textarea class="form-control" rows="2" id="recommend"></textarea>
                                                         </div>
                                                 </div>
                                                 
                                                 
                                             </div>
-                                            @* <footer class="panel-footer">
+                                            <footer class="panel-footer">
 											    <div class="row">
 												    <div class="col-md-9 col-md-offset-3">
-													    <button type="submit" class="btn btn-dark pull-right" style="margin-left: 5px;margin-right: 5px;"><i class="fa fa-reply"></i> &nbsp;&nbsp;Voltar</button>
-													    <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
 													    <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
 
 												    </div>
 											    </div>
-										    </footer> *@
+										    </footer>
                                         </section>
                                     </form>
                                 </div>
