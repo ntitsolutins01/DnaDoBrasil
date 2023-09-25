@@ -1,0 +1,275 @@
+﻿@{
+	ViewData["Title"] = "Novo Aluno";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="tabs">
+			<ul class="nav nav-tabs">
+				<li class="active">
+					<a href="#dados" data-toggle="tab">Dados</a>
+				</li>
+				<li>
+					<a href="#complementos" data-toggle="tab">Complementos</a>
+				</li>
+				<li>
+					<a href="#matriculas" data-toggle="tab">Matrículas</a>
+				</li>
+				<li>
+					<a href="#ambientes" data-toggle="tab">Ambientes</a>
+				</li>
+				<li>
+					<a href="#deficiencias" data-toggle="tab">Deficiências</a>
+				</li>
+				<li>
+					<a href="#vouchers" data-toggle="tab">Vouchers</a>
+				</li>
+			</ul>
+			<div class="tab-content">
+				<div id="dados" class="tab-pane active">
+
+					<div class="row">
+						<div class="col-md-12">
+							<form id="form" action="forms-validation.html" class="form-horizontal">
+								<section class="panel">
+									<div class="panel-body">
+										<div class="form-group">
+											<label class="col-sm-1 control-label">Nome <span class="required">*</span></label>
+											<div class="col-sm-6">
+												<input type="text" name="fullname" class="form-control" required />
+											</div>
+											<label class="col-sm-2 control-label">Data Nascimento <span class="required">*</span></label>
+											<div class="col-sm-3">
+												<div class="input-group">
+													<span class="input-group-addon">
+														<i class="fa fa-calendar"></i>
+													</span>
+													<input id="DtOcorrencia" name="DtOcorrencia"
+														   data-plugin-masked-input data-input-mask="99/99/9999"
+														   class="form-control"
+													@* value="@Model.Relato.DatOcorrencia.ToShortDateString()" *@>
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-1 control-label">Email <span class="required">*</span></label>
+											<div class="col-sm-4">
+												<div class="input-group">
+													<span class="input-group-addon">
+														<i class="fa fa-envelope"></i>
+													</span>
+													<input type="email" name="email" class="form-control" required />
+												</div>
+											</div>
+											<label class="col-sm-1 control-label">Senha <span class="required">*</span></label>
+											<div class="col-sm-3">
+												<div class="input-group">
+													<span class="input-group-addon">
+														<i class="fa fa-lock"></i>
+													</span>
+													<input id="ssenha" name="senha" class="form-control"
+														   maxlength="15" type="password"
+														   title="Por favor informe a senha." required>
+												</div>
+											</div>
+											<label class="col-sm-1 control-label">Sexo <span class="required">*</span></label>
+											<div class="col-sm-2">
+												<select class="form-control populate select2" name="ddlPerfil" id="ddlPerfil"
+														title="Por favor selecione um perfil." required
+												@* asp-for="CodPerfil" asp-items="Model.ListPerfil" *@>
+													<option value="">Selecionar Sexo</option>
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-1 control-label">Nome Mãe</label>
+											<div class="col-sm-5">
+												<input type="url" name="github" class="form-control" />
+											</div>
+											<label class="col-sm-1 control-label">Nome Pai</label>
+											<div class="col-sm-5">
+												<input type="url" name="github" class="form-control" />
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-1 control-label">Cpf <span class="required">*</span></label>
+											<div class="col-sm-3">
+												<input id="cpf" name="cpf"
+													   v-model="params.cpf"
+													   v-on:blur="ExisteCpf"
+													   type="text" value="" class="form-control" 
+													   maxlength="14" />
+											</div>
+											<label class="col-sm-1 control-label">Telefone </label>
+											<div class="col-sm-3">
+												<div class="input-group">
+													<span class="input-group-addon">
+														<i class="fa fa-phone"></i>
+													</span>
+													<input name="Telefone" id="Telefone" data-plugin-masked-input=""
+														   style="z-index: auto;"
+														   data-input-mask="(99) 9999-9999"
+														   Title="Por favor informe o telefone da empresa"
+														   class="form-control">
+												</div>
+											</div>
+											<label class="col-sm-1 control-label">Celular <span class="required">*</span></label>
+											<div class="col-sm-3">
+												<div class="input-group">
+													<span class="input-group-addon">
+														<i class="fa fa-phone"></i>
+													</span>
+													<input name="Telefone" id="Telefone" data-plugin-masked-input=""
+														   style="z-index: auto;"
+														   data-input-mask="(99) 9999-9999"
+														   Title="Por favor informe o telefone da empresa"
+														   class="form-control" required>
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-1 control-label">Endereço</label>
+											<div class="col-sm-6">
+												<input type="url" name="github" class="form-control" />
+											</div>
+											<label class="col-sm-1 control-label">Número</label>
+											<div class="col-sm-1">
+												<input type="url" name="github" class="form-control" />
+											</div>
+											<label class="col-sm-1 control-label">Cep</label>
+											<div class="col-sm-2">
+												<input type="url" name="github" class="form-control" />
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-1 control-label">Bairro <span class="required">*</span></label>
+											<div class="col-sm-3">
+												<input type="url" name="github" class="form-control" />
+											</div>
+											<label class="col-sm-1 control-label">Estado </label>
+											<div class="col-sm-3">
+												<select class="form-control populate select2" name="ddlPerfil" id="ddlPerfil"
+														title="Por favor selecione um perfil." required
+												@* asp-for="CodPerfil" asp-items="Model.ListPerfil" *@>
+													<option value="">Selecionar Estado</option>
+												</select>
+											</div>
+											<label class="col-sm-1 control-label">Cidade <span class="required">*</span></label>
+											<div class="col-sm-3">
+												<input type="url" name="github" class="form-control" />
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-1 control-label">Facebook</label>
+											<div class="col-sm-5">
+												<div class="input-group">
+													<span class="input-group-addon">
+														<i class="fa fa-facebook"></i>
+													</span>
+													<input type="email" name="email" class="form-control" required />
+												</div>
+											</div>
+											<label class="col-sm-1 control-label">Twitter</label>
+											<div class="col-sm-5">
+												<div class="input-group">
+													<span class="input-group-addon">
+														<i class="fa fa-twitter"></i>
+													</span>
+													<input type="email" name="email" class="form-control" required />
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-3 control-label pull-left">Cadastro ativo para login?</label>
+											<div class="col-sm-2">
+												<input type="url" name="github" class="form-control" />
+											</div>
+											<label class="col-sm-3 control-label">Cadastro habilitado a operar?</label>
+											<div class="col-sm-2">
+												<input type="url" name="github" class="form-control" />
+											</div>
+										</div>
+									</div>
+									<footer class="panel-footer">
+										<div class="row">
+											<div class="col-md-9 col-md-offset-3">
+												<button type="submit" class="btn btn-dark pull-right" style="margin-left: 5px;margin-right: 5px;"><i class="fa fa-reply"></i> &nbsp;&nbsp;Voltar</button>
+												<button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
+												<button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
+												
+											</div>
+										</div>
+									</footer>
+								</section>
+							</form>
+						</div>
+					</div>
+
+
+
+
+
+					@* <div class="form-group">
+					<label class="col-md-3 control-label">Foto</label>
+					<div class="col-md-6">
+					<div class="fileupload fileupload-new" data-provides="fileupload">
+					<div class="input-append">
+					<div class="uneditable-input">
+					<i class="fa fa-file fileupload-exists"></i>
+					<span class="fileupload-preview"></span>
+					</div>
+					<span class="btn btn-default btn-file">
+					<span class="fileupload-exists">Change</span>
+					<span class="fileupload-new">Select file</span>
+					<input type="file" />
+					</span>
+					<a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">Remove</a>
+					</div>
+					</div>
+					</div>
+					</div>
+					<div class="form-group row">
+					<label class="col-sm-3 control-label">Nome<span class="required">*</span></label>
+					<div class="col-sm-9">
+					<input type="text" name="nome" class="form-control" maxlength="150"
+					title="Por favor informe o nome do aluno." required />
+					</div>
+					</div>
+					<div class="form-group row">
+					<label class="col-sm-3 control-label pull-right">E-mail <span class="required">*</span></label>
+					<div class="col-sm-4 pull-right">
+					<div class="input-group">
+					<span class="input-group-addon">
+					<i class="fa fa-envelope"></i>
+					</span>
+					<input type="text" id="EndEmail" name="EndEmail"
+					v-model="params.email"
+					v-on:blur="ExisteEmail"
+					class="form-control"
+					maxlength="40"
+					title="Por favor informe um endereço eletrônico válido do usuário" required />
+					</div>
+					</div>
+					<label class="col-lg-1 control-label text-lg-right pt-2">Senha<span class="required">*</span></label>
+					<div class="col-lg-4">
+					<div class="input-group">
+					<span class="input-group-addon">
+					<i class="fa fa-lock"></i>
+					</span>
+					<input id="ssenha" name="senha" class="form-control"
+					maxlength="15" type="password"
+					title="Por favor informe a senha." required>
+					</div>
+					</div>
+					</div> *@
+				</div>
+				<div id="recent" class="tab-pane">
+					<p>Recent</p>
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
