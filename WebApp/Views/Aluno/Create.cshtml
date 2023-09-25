@@ -28,12 +28,30 @@
 			</ul>
 			<div class="tab-content">
 				<div id="dados" class="tab-pane active">
-
 					<div class="row">
 						<div class="col-md-12">
 							<form id="form" action="forms-validation.html" class="form-horizontal">
 								<section class="panel">
 									<div class="panel-body">
+										<div class="form-group">
+											<label class="col-sm-1 control-label">Foto</label>
+											<div class="col-sm-9">
+												<div class="fileupload fileupload-new" data-provides="fileupload">
+													<div class="input-append">
+														<div class="uneditable-input">
+															<i class="fa fa-file fileupload-exists"></i>
+															<span class="fileupload-preview"></span>
+														</div>
+														<span class="btn btn-default btn-file">
+															<span class="fileupload-exists">Change</span>
+															<span class="fileupload-new">Select file</span>
+															<input type="file" />
+														</span>
+														<a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">Remove</a>
+													</div>
+												</div>
+											</div>
+										</div>
 										<div class="form-group">
 											<label class="col-sm-1 control-label">Nome <span class="required">*</span></label>
 											<div class="col-sm-6">
@@ -98,7 +116,7 @@
 												<input id="cpf" name="cpf"
 													   v-model="params.cpf"
 													   v-on:blur="ExisteCpf"
-													   type="text" value="" class="form-control" 
+													   type="text" value="" class="form-control"
 													   maxlength="14" />
 											</div>
 											<label class="col-sm-1 control-label">Telefone </label>
@@ -197,7 +215,7 @@
 												<button type="submit" class="btn btn-dark pull-right" style="margin-left: 5px;margin-right: 5px;"><i class="fa fa-reply"></i> &nbsp;&nbsp;Voltar</button>
 												<button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
 												<button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
-												
+
 											</div>
 										</div>
 									</footer>
@@ -205,71 +223,117 @@
 							</form>
 						</div>
 					</div>
-
-
-
-
-
-					@* <div class="form-group">
-					<label class="col-md-3 control-label">Foto</label>
-					<div class="col-md-6">
-					<div class="fileupload fileupload-new" data-provides="fileupload">
-					<div class="input-append">
-					<div class="uneditable-input">
-					<i class="fa fa-file fileupload-exists"></i>
-					<span class="fileupload-preview"></span>
-					</div>
-					<span class="btn btn-default btn-file">
-					<span class="fileupload-exists">Change</span>
-					<span class="fileupload-new">Select file</span>
-					<input type="file" />
-					</span>
-					<a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">Remove</a>
-					</div>
-					</div>
-					</div>
-					</div>
-					<div class="form-group row">
-					<label class="col-sm-3 control-label">Nome<span class="required">*</span></label>
-					<div class="col-sm-9">
-					<input type="text" name="nome" class="form-control" maxlength="150"
-					title="Por favor informe o nome do aluno." required />
-					</div>
-					</div>
-					<div class="form-group row">
-					<label class="col-sm-3 control-label pull-right">E-mail <span class="required">*</span></label>
-					<div class="col-sm-4 pull-right">
-					<div class="input-group">
-					<span class="input-group-addon">
-					<i class="fa fa-envelope"></i>
-					</span>
-					<input type="text" id="EndEmail" name="EndEmail"
-					v-model="params.email"
-					v-on:blur="ExisteEmail"
-					class="form-control"
-					maxlength="40"
-					title="Por favor informe um endereço eletrônico válido do usuário" required />
-					</div>
-					</div>
-					<label class="col-lg-1 control-label text-lg-right pt-2">Senha<span class="required">*</span></label>
-					<div class="col-lg-4">
-					<div class="input-group">
-					<span class="input-group-addon">
-					<i class="fa fa-lock"></i>
-					</span>
-					<input id="ssenha" name="senha" class="form-control"
-					maxlength="15" type="password"
-					title="Por favor informe a senha." required>
-					</div>
-					</div>
-					</div> *@
 				</div>
-				<div id="recent" class="tab-pane">
-					<p>Recent</p>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat.</p>
+				<div id="complementos" class="tab-pane">
+					<div class="row">
+						<div class="col-md-12">
+							<form id="form" action="forms-validation.html" class="form-horizontal">
+								<section class="panel">
+									<div class="panel-body">
+										<div class="form-group">
+											<div class="col-sm-9">
+												<div class="radio-custom radio-success">
+													<input type="radio" id="radioExample1" name="radioExample">
+													<label for="radioExample1">
+														Autorizo o mesmo a se ausentar das dependências do
+														Centro Olímpico e Paralímpico sem a presença de um responsável após o
+														término de suas atividades.
+													</label>
+												</div>
+
+												<div class="radio-custom radio-danger">
+													<input type="radio" id="radioExample2" name="radioExample">
+													<label for="radioExample2">
+														Não autorizo o mesmo a se ausentar das dependências do
+														Centro Olímpico e Paralímpico sem a presença de um responsável após o término
+														de suas atividades.
+													</label>
+												</div>
+											</div>
+										</div>
+
+									</div>
+									<footer class="panel-footer">
+										<div class="row">
+											<div class="col-md-9 col-md-offset-3">
+												<button type="submit" class="btn btn-dark pull-right" style="margin-left: 5px;margin-right: 5px;"><i class="fa fa-reply"></i> &nbsp;&nbsp;Voltar</button>
+												<button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
+												<button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
+
+											</div>
+										</div>
+									</footer>
+								</section>
+							</form>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
 
+	@section CssSpecificVendor {
+		<link rel="stylesheet" href="~/assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.css" />
+		<link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css" />
+		<link rel="stylesheet" href="~/assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
+	}
+	@section Scripts {
+		<script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
+		<script src="~/assets/vendor/select2/js/select2.js"></script>
+		<script src="~/assets/vendor/jquery-mask/jquery.mask.js"></script>
+		<script src="~/assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.js"></script>
+		<script src="~/assets/js/aluno.js"></script>
+		<script>
+
+			(function ($) {
+
+				'use strict';
+				var crud = @ViewBag.CrudMessage;
+
+				if (crud === 1) {
+					new PNotify({
+						title: 'Aluno',
+						text: 'Cadastro realizado com sucesso!',
+						type: 'success'
+					});
+				} else if (crud === 2) {
+					new PNotify({
+						title: 'Aluno',
+						text: 'Dados alterados com sucesso.',
+						type: 'warning'
+					});
+				} else if (crud === 3) {
+					new PNotify({
+						title: 'Aluno',
+						text: 'Registro excluído com sucesso.',
+						type: 'error'
+					});
+				}
+
+				var notify = @ViewBag.NotifyMessage;
+				var messagem = '@ViewBag.Notify';
+
+				if (notify === 0) {
+					new PNotify({
+						title: 'Aluno',
+						text: messagem,
+						type: 'success'
+					});
+				} else if (notify === 1) {
+					new PNotify({
+						title: 'Aluno',
+						text: messagem,
+						type: 'warning'
+					});
+				} else if (notify === 2) {
+					new PNotify({
+						title: 'Aluno',
+						text: messagem,
+						type: 'error'
+					});
+				}
+
+			}).apply(this, [jQuery]);
+
+		</script>
+	}

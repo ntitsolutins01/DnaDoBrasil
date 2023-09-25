@@ -25,4 +25,8 @@
     <_ContentIncludedByDefault Remove="Views\Usuario\Create.cshtml" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\assets\vendor\jquery-mask\jquery.mask.js" />
+  </ItemGroup>
+
 </Project>
