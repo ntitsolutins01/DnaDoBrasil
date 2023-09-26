@@ -252,12 +252,439 @@
 											</div>
 										</div>
 
+										<div class="form-group">
+											<label class="col-sm-1 control-label">Doenças</label>
+											<div class="col-sm-11">
+												<textarea class="form-control" rows="3"
+														  placeholder="Preencha com quais doenças e/ou motivos pelos quais necessite de atendimento especial."
+														  data-plugin-maxlength maxlength="140"></textarea>
+												<p>
+													<code>limite</code> 140.
+												</p>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-1 control-label">Nacionalidade</label>
+											<div class="col-sm-5">
+
+												<input type="email" name="email" class="form-control" required />
+											</div>
+											<label class="col-sm-1 control-label">Naturalidade</label>
+											<div class="col-sm-5">
+
+												<input type="email" name="email" class="form-control" required />
+											</div>
+										</div>
+										<div class="form-group">
+											<blockquote class="info">
+												<strong>Dados de Escola/Escolaridade</strong>
+											</blockquote>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-2 control-label">Nome Escola</label>
+											<div class="col-sm-4">
+												<input type="email" name="email" class="form-control" required />
+											</div>
+											<label class="col-sm-2 control-label">Tipo Escola</label>
+											<div class="col-sm-4">
+												<select class="form-control populate select2" name="ddlPerfil" id="ddlPerfil"
+														title="Por favor selecione um perfil." required
+												@* asp-for="CodPerfil" asp-items="Model.ListPerfil" *@>
+													<option value="">Selecionar Tipo Escola</option>
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-2 control-label">Tipo Escolaridade</label>
+											<div class="col-sm-4">
+												<select class="form-control populate select2" name="ddlPerfil" id="ddlPerfil"
+														title="Por favor selecione um perfil." required
+												@* asp-for="CodPerfil" asp-items="Model.ListPerfil" *@>
+													<option value="">Selecionar Tipo Escolaridade</option>
+												</select>
+											</div>
+											<label class="col-sm-2 control-label">Turno</label>
+											<div class="col-sm-4">
+												<select class="form-control populate select2" name="ddlPerfil" id="ddlPerfil"
+														title="Por favor selecione um perfil." required
+												@* asp-for="CodPerfil" asp-items="Model.ListPerfil" *@>
+													<option value="">Selecionar Turno</option>
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-2 control-label">Série</label>
+											<div class="col-sm-3">
+												<input type="url" name="github" class="form-control" />
+											</div>
+											<label class="col-sm-1 control-label">Ano </label>
+											<div class="col-sm-2">
+												<input type="url" name="github" class="form-control" />
+											</div>
+											<label class="col-sm-1 control-label">Turma</label>
+											<div class="col-sm-3">
+												<input type="url" name="github" class="form-control" />
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-2 control-label">Termo de compromisso</label>
+											<div class="col-sm-1">
+												<div class="radio-custom radio-primary">
+													<input id="awesome" name="porto_is" type="radio" value="awesome" required />
+													<label for="awesome">Sim</label>
+												</div>
+												<div class="radio-custom radio-primary">
+													<input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+													<label for="very-awesome">Não</label>
+												</div>
+												<label class="error" for="porto_is"></label>
+											</div>
+
+											<label class="col-sm-3 control-label">Autorização de uso de imagem e áudio</label>
+											<div class="col-sm-1">
+												<div class="radio-custom radio-primary">
+													<input id="awesome" name="porto_is" type="radio" value="awesome" required />
+													<label for="awesome">Sim</label>
+												</div>
+												<div class="radio-custom radio-primary">
+													<input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+													<label for="very-awesome">Não</label>
+												</div>
+												<label class="error" for="porto_is"></label>
+											</div>
+
+											<label class="col-sm-4 control-label">Autorização de captação e uso de indicadores de desenvolvimento e saúde</label>
+											<div class="col-sm-1">
+												<div class="radio-custom radio-primary">
+													<input id="awesome" name="porto_is" type="radio" value="awesome" required />
+													<label for="awesome">Sim</label>
+												</div>
+												<div class="radio-custom radio-primary">
+													<input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+													<label for="very-awesome">Não</label>
+												</div>
+												<label class="error" for="porto_is"></label>
+											</div>
+										</div>
 									</div>
 									<footer class="panel-footer">
 										<div class="row">
 											<div class="col-md-9 col-md-offset-3">
-												<button type="submit" class="btn btn-dark pull-right" style="margin-left: 5px;margin-right: 5px;"><i class="fa fa-reply"></i> &nbsp;&nbsp;Voltar</button>
-												<button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
+												<button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
+
+											</div>
+										</div>
+									</footer>
+								</section>
+							</form>
+						</div>
+					</div>
+				</div>
+				<div id="matriculas" class="tab-pane">
+					<div class="row">
+						<div class="col-md-12">
+							<form id="form" action="forms-validation.html" class="form-horizontal">
+								<section class="panel">
+									<div class="panel-body">
+										<div class="form-group">
+											<label class="col-sm-2 control-label">Localidade</label>
+											<div class="col-sm-10">
+												<select class="form-control populate select2" name="ddlPerfil" id="ddlPerfil"
+														title="Por favor selecione um perfil." required
+												@* asp-for="CodPerfil" asp-items="Model.ListPerfil" *@>
+													<option value="">Selecionar Localidade</option>
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-2 control-label">Data de vencimento PAR-Q</label>
+											<div class="col-sm-4">
+												<div class="input-group">
+													<span class="input-group-addon">
+														<i class="fa fa-calendar"></i>
+													</span>
+													<input id="DtOcorrencia" name="DtOcorrencia"
+														   data-plugin-masked-input data-input-mask="99/99/9999"
+														   class="form-control"
+													@* value="@Model.Relato.DatOcorrencia.ToShortDateString()" *@>
+												</div>
+											</div>
+											<label class="col-sm-3 control-label">Data de vencimento atestado médico</label>
+											<div class="col-sm-3">
+												<div class="input-group">
+													<span class="input-group-addon">
+														<i class="fa fa-calendar"></i>
+													</span>
+													<input id="DtOcorrencia" name="DtOcorrencia"
+														   data-plugin-masked-input data-input-mask="99/99/9999"
+														   class="form-control"
+													@* value="@Model.Relato.DatOcorrencia.ToShortDateString()" *@>
+												</div>
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label class="col-sm-2 control-label">Nome do responsável 1</label>
+											<div class="col-sm-4">
+
+												<input type="email" name="email" class="form-control" required />
+											</div>
+											<label class="col-sm-1 control-label">Parentesco</label>
+											<div class="col-sm-2">
+
+												<input type="email" name="email" class="form-control" required />
+											</div>
+											<label class="col-sm-1 control-label">Cpf</label>
+											<div class="col-sm-2">
+
+												<input type="email" name="email" class="form-control" required />
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label class="col-sm-2 control-label">Nome do responsável 2</label>
+											<div class="col-sm-4">
+
+												<input type="email" name="email" class="form-control" required />
+											</div>
+											<label class="col-sm-1 control-label">Parentesco</label>
+											<div class="col-sm-2">
+
+												<input type="email" name="email" class="form-control" required />
+											</div>
+											<label class="col-sm-1 control-label">Cpf</label>
+											<div class="col-sm-2">
+
+												<input type="email" name="email" class="form-control" required />
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label class="col-sm-2 control-label">Nome do responsável 3</label>
+											<div class="col-sm-4">
+
+												<input type="email" name="email" class="form-control" required />
+											</div>
+											<label class="col-sm-1 control-label">Parentesco</label>
+											<div class="col-sm-2">
+
+												<input type="email" name="email" class="form-control" required />
+											</div>
+											<label class="col-sm-1 control-label">Cpf</label>
+											<div class="col-sm-2">
+
+												<input type="email" name="email" class="form-control" required />
+											</div>
+										</div>
+									</div>
+									<footer class="panel-footer">
+										<div class="row">
+											<div class="col-md-9 col-md-offset-3">
+												<button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
+
+											</div>
+										</div>
+									</footer>
+								</section>
+							</form>
+						</div>
+					</div>
+				</div>
+				<div id="ambientes" class="tab-pane">
+					<div class="row">
+						<div class="col-md-12">
+							<form id="form" action="forms-validation.html" class="form-horizontal">
+								<section class="panel">
+									<div class="panel-body">
+										<div class="form-group">
+											<label class="col-sm-2 control-label">Ambiente</label>
+											<div class="col-sm-4">
+												<select class="form-control populate select2" name="ddlPerfil" id="ddlPerfil"
+														title="Por favor selecione um perfil." required
+												@* asp-for="CodPerfil" asp-items="Model.ListPerfil" *@>
+													<option value="">Selecionar Ambiente</option>
+												</select>
+											</div>
+											<div class="col-sm-1">
+												<button type="button" class="ml-xs btn btn-primary"
+												        data-toggle="modal" data-target="#mdAmbiente">
+													<i class="fa fa-plus"></i>
+												</button>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-2 control-label">Adicionados</label>
+											<div class="col-sm-10">
+												<table class="table table-bordered table-striped mb-0" id="datatable-default">
+													<thead>
+														<tr>
+															<th>Esporte</th>
+															<th>Ações</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<td>Natação</td>
+															<td class="actions">
+																<a data-toggle="tooltip" data-placement="top" title="Excluir" @* asp-action="Delete" *@ asp-controller="Perfil" asp-route-id="1" class="on-default remove-row" style='color:#F44336'><i class="fa fa-trash-o"></i></a>
+															</td>
+														</tr>
+														<tr>
+															<td>Futsal</td>
+															<td class="actions">
+																<a data-toggle="tooltip" data-placement="top" title="Excluir" @* asp-action="Delete" *@ asp-controller="Perfil" asp-route-id="1" class="on-default remove-row" style='color:#F44336'><i class="fa fa-trash-o"></i></a>
+															</td>
+														</tr>
+														@* @foreach (var item in Model.aaData)
+														{
+														<tr>
+														<td>@Html.DisplayFor(modelItem => item.NomUsuario)</td>
+														<td>@Html.DisplayFor(modelItem => item.NumCpf)</td>
+														<td>@Html.DisplayFor(modelItem => item.Email)</td>
+														<td>@Html.DisplayFor(modelItem => item.NomPerfil)</td>
+														<td class="actions">
+														<a data-toggle="tooltip" data-placement="top" title="Editar" asp-action="Edit" asp-controller="Usuario" asp-route-id="@item.CodUsuarioLogin" class="on-default edit-row" style='color: #eea236'><i class="fa fa-pencil"></i></a>
+														<a data-toggle="tooltip" data-placement="top" title="Excluir" asp-action="Delete" asp-controller="Usuario" asp-route-id="@item.CodUsuarioLogin" class="on-default remove-row" style='color: #d43f3a'><i class="fa fa-trash-o"></i></a>
+														<a data-toggle="tooltip" data-placement="top" title="Excluir" asp-action="Delete" asp-controller="Usuario" asp-route-id="@item.CodUsuarioLogin" class="on-default remove-row" style='color: #d43f3a'><i class="fa fa-trash-o"></i></a>
+														</td>
+														</tr>
+														} *@
+													</tbody>
+												</table>
+
+											</div>
+										</div>
+									</div>
+									<footer class="panel-footer">
+										<div class="row">
+											<div class="col-md-9 col-md-offset-3">
+												<button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
+
+											</div>
+										</div>
+									</footer>
+								</section>
+							</form>
+						</div>
+					</div>
+				</div>
+				<div id="deficiencias" class="tab-pane">
+					<div class="row">
+						<div class="col-md-12">
+							<form id="form" action="forms-validation.html" class="form-horizontal">
+								<section class="panel">
+									<div class="panel-body">
+										<div class="form-group">
+											<label class="col-sm-2 control-label">Deficiência</label>
+											<div class="col-sm-4">
+												<select class="form-control populate select2" name="ddlPerfil" id="ddlPerfil"
+														title="Por favor selecione um perfil." required
+												@* asp-for="CodPerfil" asp-items="Model.ListPerfil" *@>
+													<option value="">Selecionar Deficiência</option>
+												</select>
+											</div>
+											<div class="col-sm-1">
+												<button type="button" class="ml-xs btn btn-primary"
+												        data-toggle="modal" data-target="#mdDeficiencia">
+													<i class="fa fa-plus"></i>
+												</button>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-2 control-label">Adicionados</label>
+											<div class="col-sm-10">
+												<table class="table table-bordered table-striped mb-0" id="datatable-default">
+													<thead>
+														<tr>
+															<th>Deficiência</th>
+															<th>Ações</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<td>Transtorno de comportamento</td>
+															<td class="actions">
+																<a data-toggle="tooltip" data-placement="top" title="Excluir" @* asp-action="Delete" *@ asp-controller="Perfil" asp-route-id="1" class="on-default remove-row" style='color:#F44336'><i class="fa fa-trash-o"></i></a>
+															</td>
+														</tr>
+														<tr>
+															<td>Deficiência Visual</td>
+															<td class="actions">
+																<a data-toggle="tooltip" data-placement="top" title="Excluir" @* asp-action="Delete" *@ asp-controller="Perfil" asp-route-id="1" class="on-default remove-row" style='color:#F44336'><i class="fa fa-trash-o"></i></a>
+															</td>
+														</tr>
+														@* @foreach (var item in Model.aaData)
+														{
+														<tr>
+														<td>@Html.DisplayFor(modelItem => item.NomUsuario)</td>
+														<td>@Html.DisplayFor(modelItem => item.NumCpf)</td>
+														<td>@Html.DisplayFor(modelItem => item.Email)</td>
+														<td>@Html.DisplayFor(modelItem => item.NomPerfil)</td>
+														<td class="actions">
+														<a data-toggle="tooltip" data-placement="top" title="Editar" asp-action="Edit" asp-controller="Usuario" asp-route-id="@item.CodUsuarioLogin" class="on-default edit-row" style='color: #eea236'><i class="fa fa-pencil"></i></a>
+														<a data-toggle="tooltip" data-placement="top" title="Excluir" asp-action="Delete" asp-controller="Usuario" asp-route-id="@item.CodUsuarioLogin" class="on-default remove-row" style='color: #d43f3a'><i class="fa fa-trash-o"></i></a>
+														<a data-toggle="tooltip" data-placement="top" title="Excluir" asp-action="Delete" asp-controller="Usuario" asp-route-id="@item.CodUsuarioLogin" class="on-default remove-row" style='color: #d43f3a'><i class="fa fa-trash-o"></i></a>
+														</td>
+														</tr>
+														} *@
+													</tbody>
+												</table>
+
+											</div>
+										</div>
+									</div>
+									<footer class="panel-footer">
+										<div class="row">
+											<div class="col-md-9 col-md-offset-3">
+												<button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
+
+											</div>
+										</div>
+									</footer>
+								</section>
+							</form>
+						</div>
+					</div>
+				</div>
+				<div id="vouchers" class="tab-pane">
+					<div class="row">
+						<div class="col-md-12">
+							<form id="form" action="forms-validation.html" class="form-horizontal">
+								<section class="panel">
+									<div class="panel-body">
+										<div class="form-group">
+											<label class="col-sm-2 control-label">Voucher</label>
+											<div class="col-sm-4">
+												<input type="email" name="email" class="form-control" required />
+											</div>
+											<label class="col-sm-1 control-label">Local</label>
+											<div class="col-sm-5">
+												<select class="form-control populate select2" name="ddlPerfil" id="ddlPerfil"
+												        title="Por favor selecione um perfil." required
+												        @* asp-for="CodPerfil" asp-items="Model.ListPerfil" *@>
+													<option value="">Selecionar Local</option>
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-2 control-label">Turma</label>
+											<div class="col-sm-4">
+												<input type="email" name="email" class="form-control" required />
+											</div>
+											<label class="col-sm-1 control-label">Série</label>
+											<div class="col-sm-5">
+												<select class="form-control populate select2" name="ddlPerfil" id="ddlPerfil"
+												        title="Por favor selecione um perfil." required
+												        @* asp-for="CodPerfil" asp-items="Model.ListPerfil" *@>
+													<option value="">Selecionar Série</option>
+												</select>
+											</div>
+										</div>
+										
+									</div>
+									<footer class="panel-footer">
+										<div class="row">
+											<div class="col-md-9 col-md-offset-3">
 												<button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
 
 											</div>
@@ -271,69 +698,125 @@
 			</div>
 		</div>
 	</div>
+</div>
 
-	@section CssSpecificVendor {
-		<link rel="stylesheet" href="~/assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.css" />
-		<link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css" />
-		<link rel="stylesheet" href="~/assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
+<!-- Modal -->
+<div class="modal fade" id="mdAmbiente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-plus"></i> &nbsp;&nbsp;<strong>Novo Ambiente</strong></h5>
+			</div>
+			<div class="modal-body">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">Nome Ambiente<span class="required">*</span></label>
+					<div class="col-sm-9">
+
+						<input type="email" name="email" class="form-control" required />
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
+				<button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="mdDeficiencia" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-plus"></i> &nbsp;&nbsp;<strong>Nova Deficiência</strong></h5>
+			</div>
+			<div class="modal-body">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">Nome Deficiência<span class="required">*</span></label>
+					<div class="col-sm-9">
+
+						<input type="email" name="email" class="form-control" required />
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
+				<button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+@section CssSpecificVendor {
+	<link rel="stylesheet" href="~/assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.css" />
+	<link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css" />
+	<link rel="stylesheet" href="~/assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
+	<link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />
 	}
-	@section Scripts {
-		<script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
-		<script src="~/assets/vendor/select2/js/select2.js"></script>
-		<script src="~/assets/vendor/jquery-mask/jquery.mask.js"></script>
-		<script src="~/assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.js"></script>
-		<script src="~/assets/js/aluno.js"></script>
-		<script>
+@section Scripts {
+	<script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
+	<script src="~/assets/vendor/select2/js/select2.js"></script>
+	<script src="~/assets/vendor/jquery-mask/jquery.mask.js"></script>
+	<script src="~/assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.js"></script>
+	<script src="~/assets/vendor/bootstrap-maxlength/bootstrap-maxlength.js"></script>
+	<script src="~/assets/vendor/ios7-switch/ios7-switch.js"></script>
+	<script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
+	<script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
+	<script src="~/js/formatTable.js"></script>
+	<script src="~/js/aluno.js"></script>
+	<script>
+		// MaxLength
+		(function ($) {
 
-			(function ($) {
+			'use strict';
+			var crud = @ViewBag.CrudMessage;
 
-				'use strict';
-				var crud = @ViewBag.CrudMessage;
+			if (crud === 1) {
+				new PNotify({
+					title: 'Aluno',
+					text: 'Cadastro realizado com sucesso!',
+					type: 'success'
+				});
+			} else if (crud === 2) {
+				new PNotify({
+					title: 'Aluno',
+					text: 'Dados alterados com sucesso.',
+					type: 'warning'
+				});
+			} else if (crud === 3) {
+				new PNotify({
+					title: 'Aluno',
+					text: 'Registro excluído com sucesso.',
+					type: 'error'
+				});
+			}
 
-				if (crud === 1) {
-					new PNotify({
-						title: 'Aluno',
-						text: 'Cadastro realizado com sucesso!',
-						type: 'success'
-					});
-				} else if (crud === 2) {
-					new PNotify({
-						title: 'Aluno',
-						text: 'Dados alterados com sucesso.',
-						type: 'warning'
-					});
-				} else if (crud === 3) {
-					new PNotify({
-						title: 'Aluno',
-						text: 'Registro excluído com sucesso.',
-						type: 'error'
-					});
-				}
+			var notify = @ViewBag.NotifyMessage;
+			var messagem = '@ViewBag.Notify';
 
-				var notify = @ViewBag.NotifyMessage;
-				var messagem = '@ViewBag.Notify';
+			if (notify === 0) {
+				new PNotify({
+					title: 'Aluno',
+					text: messagem,
+					type: 'success'
+				});
+			} else if (notify === 1) {
+				new PNotify({
+					title: 'Aluno',
+					text: messagem,
+					type: 'warning'
+				});
+			} else if (notify === 2) {
+				new PNotify({
+					title: 'Aluno',
+					text: messagem,
+					type: 'error'
+				});
+			}
 
-				if (notify === 0) {
-					new PNotify({
-						title: 'Aluno',
-						text: messagem,
-						type: 'success'
-					});
-				} else if (notify === 1) {
-					new PNotify({
-						title: 'Aluno',
-						text: messagem,
-						type: 'warning'
-					});
-				} else if (notify === 2) {
-					new PNotify({
-						title: 'Aluno',
-						text: messagem,
-						type: 'error'
-					});
-				}
+		}).apply(this, [jQuery]);
 
-			}).apply(this, [jQuery]);
-
-		</script>
+	</script>
 	}
