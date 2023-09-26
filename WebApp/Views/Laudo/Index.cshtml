@@ -3,6 +3,84 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<div class="row">
+    <div class="col-md-12">
+        <form id="form" action="forms-validation.html" class="form-horizontal">
+            <section class="panel">
+                <header class="panel-heading">
+                    <div class="panel-actions">
+                        <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
+                    </div>
+
+                    <h2 class="panel-title">Filtro de pesquisa</h2>
+                </header>
+                <div class="panel-body">
+
+                    <label class="col-sm-1 control-label">Cliente</label>
+                    <div class="col-md-3 form-group">
+                        <input type="text" class="form-control">
+                    </div>
+
+                    <label class="col-sm-1 control-label" style="width: 12.499999995%">Tipo de Laudo</label>
+                    <div class="col-md-3 form-group">
+                        <input type="text" class="form-control">
+                    </div>
+
+                    <label class="col-sm-1 control-label">Local </label>
+                    <div class="col-md-3 form-group">
+                        <select class="form-control populate select2" name="ddlPerfil" id="ddlPerfil"
+                                title="Por favor selecione um perfil." required
+                        @* asp-for="CodPerfil" asp-items="Model.ListPerfil" *@>
+                            <option value="">Selecionar Local</option>
+                        </select>
+                    </div>
+
+                    <label class="col-sm-1 control-label">Série</label>
+                    <div class="col-md-3 form-group">
+                        <select class="form-control populate select2" name="ddlPerfil" id="ddlPerfil"
+                                title="Por favor selecione um perfil." required
+                                @* asp-for="CodPerfil" asp-items="Model.ListPerfil" *@>
+                            <option value="">Selecionar Status</option>
+                        </select>
+                    </div>
+                    
+                    <label class="col-sm-2 control-label">Com Notas</label>
+                    <div class="col-md-1 form-group">
+                        <div class="switch switch-sm switch-primary">
+                            <div class="ios-switch on">
+                                <div class="on-background background-fill"></div>
+                                <div class="state-background background-fill"></div>
+                                <div class="handle"></div>
+                            </div>
+                            <input type="checkbox" name="switch" data-plugin-ios-switch="" style="display: none;">
+                        </div>
+                    </div>
+                    
+                    <label class="col-sm-2 control-label">Com Laudos</label>
+                    <div class="col-md-1 form-group">
+                        <div class="switch switch-sm switch-primary">
+                            <div class="ios-switch">
+                                <div class="on-background background-fill"></div>
+                                <div class="state-background background-fill"></div>
+                                <div class="handle"></div>
+                            </div>
+                            <input type="checkbox" name="switch" data-plugin-ios-switch="" checked="checked" style="display: none;">
+                        </div>
+                    </div>
+
+                </div>
+                <footer class="panel-footer">
+                    <div class="row">
+                        <div class="col-md-9 col-md-offset-3">
+                            <button type="submit" class="btn btn-primary pull-right" style="margin-left: 5px;margin-right: 5px;"><i class="fa fa-search"></i> &nbsp;&nbsp;Pesquisar</button>
+                        </div>
+                    </div>
+                </footer>
+            </section>
+        </form>
+    </div>
+</div>
+
 <section class="panel">
     <header class="panel-heading">
         <div class="panel-actions">
@@ -18,11 +96,10 @@
             <thead>
                 <tr>
 					<th>Nome</th>
-					<th>DNA</th>
-                    <th>Esporte</th>
 					<th>Saúde</th>
-					<th>Vida</th>
-					<th>Vocação</th>
+                    <th>Talento Esportivo</th>
+					<th>Consumo Alimentar</th>
+					<th>Saude Bucal</th>
                     <th>Ações</th>
                 </tr>
             </thead>
@@ -30,10 +107,9 @@
             <tr>
 	            <td>Fábio de Souza Muniz</td>
 	            <td>325</td>
-	            <td>Natação</td>
+	            <td>200</td>
 	            <td>524</td>
 	            <td>845</td>
-	            <td>325</td>
 	            <td class="actions">
                         <a data-toggle="tooltip" data-placement="top" title="Detalhar" asp-action="Details" asp-controller="Laudo" asp-route-id="1" class="on-default edit-row" style='color: #eea236'><i class="fa fa-address-card"></i></a>
 	            </td>
