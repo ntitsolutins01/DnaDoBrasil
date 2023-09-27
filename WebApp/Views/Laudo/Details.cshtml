@@ -460,7 +460,7 @@
                             </a>
                         </h4>
                     </div>
-                    <div id="collapse2Three" class="accordion-body collapse in">
+                    <div id="collapse2Three" class="accordion-body collapse">
                         <div class="panel-body">
                             <div class="row form-group col-md-12">
                                 <form id="chk-radios-form" action="forms-validation.html">
@@ -607,7 +607,328 @@
                     </div>
                     <div id="collapse2Four" class="accordion-body collapse">
                         <div class="panel-body">
+                            <div class="row form-group col-md-12">
+                                <form id="chk-radios-form" action="forms-validation.html">
+                                    <section class="panel">
+                                        <div class="panel-body">
+                                            <div class="row form-group">
+                                                <div class="row">
+                                                    <label class="col-sm-3 control-label"> Profissional</label>
+                                                </div>
+                                                <div class="row col-sm-6">
+                                                    <select id="company" class="form-control" title="Please select at least one company" required>
+                                                        <option value="">Selecione um profissional</option>
+                                                        <option value="wagner telles da silva">Wagner Telles Da Silva</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="row">
+                                                    <label class="col-sm-10 control-label" id="q1">
+                                                        1. Escova os dentes todos os dias?
+                                                    </label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="radio-custom radio-primary col-sm-1">
+                                                        <input id="awesome" name="q1sim" id="q1sim" type="radio" value="sim" required />
+                                                        <label for="awesome">Sim</label>
+                                                    </div>
+                                                    <div class="radio-custom radio-primary col-sm-1">
+                                                        <input id="very-awesome" name="q1nao" id="q1nao" type="radio" value="nao" />
+                                                        <label for="very-awesome">Não</label>
+                                                    </div>
+                                                    <div class="radio-custom radio-primary col-sm-2">
+                                                        <input id="very-awesome" name="q1as-vezes" id="q1as-vezes" type="radio" value="as vezes" />
+                                                        <label for="very-awesome">As Vezes</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="row">
+                                                    <label class="col-sm-10 control-label" id="q2">
+                                                        2. Quantas vezes ao dia escova os dentes?
+                                                    </label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="radio-custom radio-primary col-sm-1">
+                                                        <input id="awesome" name="q2-1" id="q2-1" type="radio" value="1" required />
+                                                        <label for="awesome">1</label>
+                                                    </div>
+                                                    <div class="radio-custom radio-primary col-sm-1">
+                                                        <input id="very-awesome" name="q2-2" id="q2-2" type="radio" value="2" />
+                                                        <label for="very-awesome">2</label>
+                                                    </div>
+                                                    <div class="radio-custom radio-primary col-sm-2">
+                                                        <input id="very-awesome" name="q2-3oumais" id="q2-3oumais" type="radio" value="3 ou mais" />
+                                                        <label for="very-awesome">3 ou + vezes</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="row">
+                                                    <label class="col-sm-10 control-label" id="q3">
+                                                        3. Como escova os dentes?
+                                                    </label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="radio-custom radio-primary col-sm-2">
+                                                        <input name="q3-1" id="q3-1" type="radio" value="1" required />
+                                                        <label for="q3-1">Escova e Pasta</label>
+                                                    </div>
+                                                    <div class="radio-custom radio-primary col-sm-2">
+                                                        <input  name="q3-2" id="q3-2" type="radio" value="2" />
+                                                        <label for="q3-2">Apenas Escova</label>
+                                                    </div>
+                                                    <div class="radio-custom radio-primary col-sm-3">
+                                                        <input name="q3-3" id="q3-3" type="radio" value="3" />
+                                                        <label for="q3-3">Escova Pasta e Fio Dental</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="row">
+                                                    <label class="col-sm-10 control-label" id="q4">
+                                                        4. Considera importante escovar os dentes após as refeições?
+                                                    </label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="radio-custom radio-primary col-sm-1">
+                                                        <input id="awesome" name="q4sim" id="q4sim" type="radio" value="sim" required />
+                                                        <label for="awesome">Sim</label>
+                                                    </div>
+                                                    <div class="radio-custom radio-primary col-sm-1">
+                                                        <input id="very-awesome" name="q4nao" id="q4nao" type="radio" value="nao" />
+                                                        <label for="very-awesome">Não</label>
+                                                    </div>
+                                                    <div class="radio-custom radio-primary col-sm-2">
+                                                        <input id="very-awesome" name="q4nao" id="q4nao" type="radio" value="nao" />
+                                                        <label for="very-awesome">Nem Sempre</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="row">
+                                                    <label class="col-sm-10 control-label" id="q5">
+                                                        5. Escova a língua durante a higiene bucal?
+                                                    </label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="radio-custom radio-primary col-sm-1">
+                                                        <input id="awesome" name="q5sim" id="q5sim" type="radio" value="sim" required />
+                                                        <label for="awesome">Sim</label>
+                                                    </div>
+                                                    <div class="radio-custom radio-primary col-sm-1">
+                                                        <input id="very-awesome" name="q5nao" id="q5nao" type="radio" value="nao" />
+                                                        <label for="very-awesome">Não</label>
+                                                    </div>
+                                                    <div class="radio-custom radio-primary col-sm-2">
+                                                        <input id="very-awesome" name="q5nao" id="q5nao" type="radio" value="nao" />
+                                                        <label for="very-awesome">As Vezes</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="row">
+                                                    <label class="col-sm-10 control-label" id="q6">
+                                                        6. Costuma ir ao dentista com que frequência?
+                                                    </label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="radio-custom radio-primary col-sm-2">
+                                                        <input id="awesome" name="q6sim" id="q6sim" type="radio" value="sim" required />
+                                                        <label for="awesome">Uma vez ao ano</label>
+                                                    </div>
+                                                    <div class="radio-custom radio-primary col-sm-2">
+                                                        <input id="very-awesome" name="q6nao" id="q6nao" type="radio" value="nao" />
+                                                        <label for="very-awesome">Duas vezes ao ano</label>
+                                                    </div>
+                                                    <div class="radio-custom radio-primary col-sm-3">
+                                                        <input id="very-awesome" name="q6nao" id="q6nao" type="radio" value="nao" />
+                                                        <label for="very-awesome">Quando sente dor de dente</label>
+                                                    </div>
+                                                    <div class="radio-custom radio-primary col-sm-3">
+                                                        <input id="very-awesome" name="q6nao" id="q6nao" type="radio" value="nao" />
+                                                        <label for="very-awesome">Nunca foi ao dentista</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="row">
+                                                    <label class="col-sm-10 control-label" id="q5">
+                                                        7. Apresentou dor de dente no último ano?
+                                                    </label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="radio-custom radio-primary col-sm-2">
+                                                        <input id="awesome" name="q5sim" id="q5sim" type="radio" value="sim" required />
+                                                        <label for="awesome">Raramente</label>
+                                                    </div>
+                                                    <div class="radio-custom radio-primary col-sm-2">
+                                                        <input id="very-awesome" name="q5nao" id="q5nao" type="radio" value="nao" />
+                                                        <label for="very-awesome">Nunca</label>
+                                                    </div>
+                                                    <div class="radio-custom radio-primary col-sm-2">
+                                                        <input id="very-awesome" name="q5nao" id="q5nao" type="radio" value="nao" />
+                                                        <label for="very-awesome">Frequentemente</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="row">
+                                                    <label class="col-sm-10 control-label" id="q5">
+                                                        8. Já deixou de ir para a escola por causa de dor de dente?
+                                                    </label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="radio-custom radio-primary col-sm-1">
+                                                        <input id="awesome" name="q5sim" id="q5sim" type="radio" value="sim" required />
+                                                        <label for="awesome">Sim</label>
+                                                    </div>
+                                                    <div class="radio-custom radio-primary col-sm-1">
+                                                        <input id="very-awesome" name="q5nao" id="q5nao" type="radio" value="nao" />
+                                                        <label for="very-awesome">Não</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="row">
+                                                    <label class="col-sm-10 control-label" id="q5">
+                                                        9. Come doce entre as refeições?
+                                                    </label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="radio-custom radio-primary col-sm-1">
+                                                        <input id="awesome" name="q5sim" id="q5sim" type="radio" value="sim" required />
+                                                        <label for="awesome">Sim</label>
+                                                    </div>
+                                                    <div class="radio-custom radio-primary col-sm-1">
+                                                        <input id="very-awesome" name="q5nao" id="q5nao" type="radio" value="nao" />
+                                                        <label for="very-awesome">Não</label>
+                                                    </div>
+                                                    <div class="radio-custom radio-primary col-sm-2">
+                                                        <input id="very-awesome" name="q5nao" id="q5nao" type="radio" value="nao" />
+                                                        <label for="very-awesome">As Vezes</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="row">
+                                                    <label class="col-sm-10 control-label" id="q5">
+                                                        10. Já teve algum trauma dentário?
+                                                    </label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="radio-custom radio-primary col-sm-1">
+                                                        <input id="awesome" name="q5sim" id="q5sim" type="radio" value="sim" required />
+                                                        <label for="awesome">Sim</label>
+                                                    </div>
+                                                    <div class="radio-custom radio-primary col-sm-1">
+                                                        <input id="very-awesome" name="q5nao" id="q5nao" type="radio" value="nao" />
+                                                        <label for="very-awesome">Não</label>
+                                                    </div>
+                                                    <div class="radio-custom radio-primary col-sm-2">
+                                                        <input id="very-awesome" name="q5nao" id="q5nao" type="radio" value="nao" />
+                                                        <label for="very-awesome">Não sei</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="row">
+                                                    <label class="col-sm-10 control-label" id="q5">
+                                                        11. Já sentiu vergonha de sorrir?
+                                                    </label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="radio-custom radio-primary col-sm-1">
+                                                        <input id="awesome" name="q5sim" id="q5sim" type="radio" value="sim" required />
+                                                        <label for="awesome">Sim</label>
+                                                    </div>
+                                                    <div class="radio-custom radio-primary col-sm-1">
+                                                        <input id="very-awesome" name="q5nao" id="q5nao" type="radio" value="nao" />
+                                                        <label for="very-awesome">Não</label>
+                                                    </div>
+                                                    <div class="radio-custom radio-primary col-sm-2">
+                                                        <input id="very-awesome" name="q5nao" id="q5nao" type="radio" value="nao" />
+                                                        <label for="very-awesome">As Vezes</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="row">
+                                                    <label class="col-sm-10 control-label" id="q5">
+                                                        12. Possui dificuldade para mastigar?
+                                                    </label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="radio-custom radio-primary col-sm-1">
+                                                        <input id="awesome" name="q5sim" id="q5sim" type="radio" value="sim" required />
+                                                        <label for="awesome">Sim</label>
+                                                    </div>
+                                                    <div class="radio-custom radio-primary col-sm-1">
+                                                        <input id="very-awesome" name="q5nao" id="q5nao" type="radio" value="nao" />
+                                                        <label for="very-awesome">Não</label>
+                                                    </div>
+                                                    <div class="radio-custom radio-primary col-sm-2">
+                                                        <input id="very-awesome" name="q5nao" id="q5nao" type="radio" value="nao" />
+                                                        <label for="very-awesome">As Vezes</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="row">
+                                                    <label class="col-sm-10 control-label" id="q5">
+                                                        13. É respirador bucal?
+                                                    </label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="radio-custom radio-primary col-sm-1">
+                                                        <input id="awesome" name="q5sim" id="q5sim" type="radio" value="sim" required />
+                                                        <label for="awesome">Sim</label>
+                                                    </div>
+                                                    <div class="radio-custom radio-primary col-sm-1">
+                                                        <input id="very-awesome" name="q5nao" id="q5nao" type="radio" value="nao" />
+                                                        <label for="very-awesome">Não</label>
+                                                    </div>
+                                                    <div class="radio-custom radio-primary col-sm-2">
+                                                        <input id="very-awesome" name="q5nao" id="q5nao" type="radio" value="nao" />
+                                                        <label for="very-awesome">Não sei</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="row">
+                                                    <label class="col-sm-10 control-label" id="q5">
+                                                        14. Considera seu sorriso bonito?
+                                                    </label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="radio-custom radio-primary col-sm-1">
+                                                        <input id="awesome" name="q5sim" id="q5sim" type="radio" value="sim" required />
+                                                        <label for="awesome">Sim</label>
+                                                    </div>
+                                                    <div class="radio-custom radio-primary col-sm-1">
+                                                        <input id="very-awesome" name="q5nao" id="q5nao" type="radio" value="nao" />
+                                                        <label for="very-awesome">Não</label>
+                                                    </div>
+                                                    <div class="radio-custom radio-primary col-sm-2">
+                                                        <input id="very-awesome" name="q5nao" id="q5nao" type="radio" value="nao" />
+                                                        <label for="very-awesome">Mais ou menos</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 
+                                        <footer class="panel-footer">
+                                            <div class="row">
+                                                <div class="col-sm-9 col-sm-offset-3">
+                                                    <button class="btn btn-primary">Inserir</button>
+                                                    <button type="reset" class="btn btn-default ">Cancelar</button>
+                                                </div>
+                                            </div>
+                                        </footer>
+                                    </section>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
