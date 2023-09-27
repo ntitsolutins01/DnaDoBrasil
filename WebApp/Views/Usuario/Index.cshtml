@@ -1,29 +1,23 @@
 ﻿@{
-	ViewData["Title"] = "Index";
+	ViewData["Title"] = "Usuário";
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="row">
 	<div class="col-lg-12">
-		<form id="form1" class="form-horizontal">
+		<form id="form" class="form-horizontal">
 			<section class="panel">
 				<header class="panel-heading">
 					<div class="panel-actions">
 						<a href="#" class="card-action card-action-toggle" data-card-toggle></a>
 					</div>
-
 					<h2 class="panel-title">Listagem de Usuários</h2>
-
 				</header>
 				<div class="panel-body">
 					<div class="form-group row">
-
 						<div class="col-sm-12 pull-right">
-
-							<a data-toggle="modal" data-target="#mdExcluir" id="addToTable" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Novo Usuário </a>
+							<a href="@Url.Action("Create", "Usuario")" id="addToTable" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Novo Usuário </a>
 						</div>
 					</div>
-
-
 					<table class="table table-bordered table-striped mb-0" id="datatable-default">
 						<thead>
 							<tr>
@@ -65,24 +59,22 @@
 		</form>
 	</div>
 </div>
-
-
 <!-- Modal -->
-<div class="modal fade" id="mdExcluir" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="mdExcluir" tabindex="-1" role="dialog" aria-labelledby="mdExcluirLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Exclusão de Usuário</strong></h5>
+				<h5 class="modal-title" id="mdExcluirLabel">
+					<i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Exclusão de Usuário</strong>
+				</h5>
 			</div>
 			<div class="modal-body">
-
 				<div class="modal-icon">
 					<i class="fa fa-question-circle"></i>
 				</div>
 				<div class="modal-text">
 					<p class="mb-0">Tem certeza que deseja <b>excluir</b> esse registro?</p>
 				</div>
-				
 				<div class="modal-wrapper">
 				</div>
 			</div>
