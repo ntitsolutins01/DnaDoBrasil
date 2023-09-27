@@ -1,0 +1,56 @@
+﻿@{
+	ViewData["Title"] = "Listagem Plano de Aula";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+	<div class="col-md-12">
+		<section class="panel">
+			<header class="panel-heading">
+				<div class="panel-actions">
+					<a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
+				</div>
+				<h2 class="panel-title">Listagem de Planos de Aula Educação Física</h2>
+			</header>
+			<div class="panel-body">
+				<table class="table table-bordered table-striped mb-0" id="datatable-default">
+					<thead>
+						<tr>
+							<th>Nome plano</th>
+							<th>Grade</th>
+							<th class="text-center">Ações</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Atletismo Corrida</td>
+							<td>Ensino Fundamental</td>
+							<td class="actions">
+								<a data-toggle="tooltip" data-placement="top" title="Download" @* asp-action="Edit" *@ asp-controller="Perfil" asp-route-id="1" class="on-default edit-row" style='color: ##1565C0'><i class="fa fa-download"></i></a>
+							</td>
+						</tr>
+						<tr>
+							<td>Judô</td>
+							<td>Ensino Médio</td>
+							<td class="actions">
+								<a data-toggle="tooltip" data-placement="top" title="Download" @* asp-action="Edit" *@ asp-controller="Perfil" asp-route-id="1" class="on-default edit-row" style='color: ##1565C0'><i class="fa fa-download"></i></a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</section>
+	</div>
+</div>
+
+@section CssSpecificVendor {
+	<link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />
+}
+@section Scripts {
+	<script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
+	<script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
+	<script src="~/js/formatTable.js"></script>
+}
+
+
+
