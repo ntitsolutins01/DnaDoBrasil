@@ -21,7 +21,7 @@
                         <div class="panel-body">
 	                        <div class="well well-lg">
 		                        <div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-right">
-			                        <div class="circular-bar-chart" data-percent="45" data-plugin-options='{ "barColor": "#2baab1", "delay": 300, "size": 50, "lineWidth": 4 }'>
+                                <div class="circular-bar-chart" data-percent="45" data-plugin-options='{ "barColor": "red", "delay": 300, "size": 50, "lineWidth": 4 }'>
 				                        <strong>Average</strong>
 				                        <label><span class="percent">45</span>%</label>
 			                        </div>
@@ -75,75 +75,55 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="col-sm-2 control-label">Indice Positivo de Saúde</label>
-                                                    <div class="col-sm-2">
-                                                        <input id="ips" name="indice-positivo-saude"
-                                                               type="text" placeholder="0%" class="form-control" disabled=""/>
+                                                    <div class="col-sm-4">
+                                                        <div class=" alert alert-info">
+                                                            <strong>0%</strong>
+                                                            <div>
+                                                                <label class="control-label">Indice Positivo de Saúde</label>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <label class="col-sm-2 control-label">Acima do Peso </label>
-                                                    <div class="col-sm-2">
-                                                        <input id="acima-peso" name="acima-peso"
-                                                               type="text" placeholder="0%" class="form-control" disabled=""/>
+                                                    <div class="col-sm-4">
+                                                        <div class=" alert alert-info">
+                                                            <strong>0%</strong>
+                                                            <div>
+                                                                <label class="control-label">Acima do Peso</label>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <label class="col-sm-2 control-label">Baixo Peso </label>
-                                                    <div class="col-sm-2">
-                                                        <input id="baixo-peso" name="baixo-peso"
-                                                               type="text" placeholder="0%" class="form-control" disabled="" />
+                                                    <div class="col-sm-4">
+                                                        <div class=" alert alert-info">
+                                                            <strong>0%</strong>
+                                                            <div>
+                                                                <label class="control-label">Baixo Peso</label>
+                                                            </div>
+                                                        </div>
                                                     </div>
-											</div>
-											<div class="form-group">
-												<div class="col-sm-4">
-													<div class="alert alert-info">
-														<strong>0%</strong> You are using an awesome template! <a href="" class="alert-link">Say Hi to Porto Admin</a>.
-													</div>
-												</div>
-												<div class="col-sm-4">
-													<div class="alert alert-default">
-														<strong>20%</strong> You are using an awesome template! <a href="" class="alert-link">Say Hi to Porto Admin</a>.
-													</div>
-												</div>
-												<div class="col-sm-4">
-													<div class="alert alert-dark">
-														<strong>90%</strong> You are using an awesome template! <a href="" class="alert-link">Say Hi to Porto Admin</a>.
-													</div>
-												</div>
-											</div>
+                                                </div>
+                                            
+                                                <div class="row form-group">
+                                                    <a data-toggle="modal" data-target="#mdDetalhamento">
+                                                        <section class="panel col-md-4">
+                                                            <div class="panel-body bg-danger-less">
+                                                                <div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-right">
+                                                                    <div class="circular-bar-chart" data-percent="45" data-plugin-options='{ "barColor": "#2baab1", "delay": 300, "size": 50, "lineWidth": 4 }'>
+                                                                        <strong>Average</strong>
+                                                                        <label><span class="percent">45</span>%</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="h4 text-weight-bold mb-none">Indice de massa corporal (IMC)</div>
+                                                                <p class="text-xs mb-none">Normal/Adequado</p>
+                                                            </div>
+                                                        </section>
+                                                    </a>
+                                                </div>
 
-	                                            <div class="form-group">
-		                                            <section class="panel panel-featured panel-featured-danger">
-			                                            <header class="panel-heading">
-				                                            <div class="panel-actions">
-					                                            <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
-				                                            </div>
-
-                                                        <h2 class="panel-title">Indice de Massa Corporal (IMC)</h2>
-                                                        <p class="panel-subtitle">Normal/Adequado</p>
-			                                            </header>
-			                                            <div class="panel-body">
-				                                            <code>.panel-featured.panel-featured-danger</code>
-			                                            </div>
-		                                            </section>
-		                                            @* <section class="panel">
-			                                            <div class="panel-body">
-				                                            <div class="h4 text-weight-bold mb-none"></div>
-				                                            <p class="text-xs text-muted mb-none">Normal/Adequado</p>
-				                                            <div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-under ">
-					                                            <div class="circular-bar-chart" data-percent="15.6" data-plugin-options='{ "barColor": "#2baab1", "delay": 300, "size": 50, "lineWidth": 4 }'>
-						                                            <label><span class="decimal">15,6</span>%</label>
-					                                            </div>
-				                                            </div>
-			                                            </div>
-		                                            </section> *@
-	                                            </div>
-
-                                                <div class="form-group">
+                                                <div class="row form-group">
                                                         <label class="col-md-2 control-label" for="textareaDefault">Recomendações </label>
                                                         <div class="col-md-10">
                                                             <textarea class="form-control" rows="2" id="recommend"></textarea>
                                                         </div>
                                                 </div>
-                                                
-                                                
                                             </div>
                                             <footer class="panel-footer">
 											    <div class="row">
@@ -169,20 +149,19 @@
                             </a>
                         </h4>
                     </div>
-                    <div id="collapse2Two" class="accordion-body collapse in">
+                    <div id="collapse2Two" class="accordion-body collapse">
                         <div class="panel-body">
 
-                        <section class="panel">
-                            <div class="panel-body">
-                                <div class="h4 text-weight-bold mb-none pull-right">Talento Esportivo</div>
-                                <p class="text-xs text-muted mb-none pull-right">25/06/2023</p>
-                                <div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-left">
-                                    <div class="circular-bar-chart" data-percent="66" data-plugin-options='{ "barColor": "#ed9c28", "delay": 300, "size": 50, "lineWidth": 4 }'>
-                                        <label><span class="decimal">66</span>%</label>
-                                    </div>
+                        <div class="well well-lg">
+                            <div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-right">
+                                <div class="circular-bar-chart" data-percent="45" data-plugin-options='{ "barColor": "#ed9c28", "delay": 300, "size": 50, "lineWidth": 4 }'>
+                                    <strong>Average</strong>
+                                    <label><span class="percent">45</span>%</label>
                                 </div>
                             </div>
-                        </section>
+                            <div class="h4 text-weight-bold mb-none">12/02/2023</div>
+                            <p class="text-xs text-muted mb-none">Porcentagem de Talento Esportivo</p>
+                        </div>
 
                         <div class="row">
                             <div class="col-md-12">
@@ -200,7 +179,7 @@
                                                 <div class="col-sm-1">
                                                     <input type="text" name="idade" class="form-control" placeholder="8" disabled="" />
                                                 </div>
-                                                
+                                                        
                                                 <label class="col-sm-1 control-label">Sexo </label>
                                                 <div class="col-sm-2">
                                                     <input type="text" name="sexo" class="form-control" placeholder="Feminino" disabled="" />
@@ -254,40 +233,199 @@
                                                            type="text" placeholder="0%" class="form-control" disabled="" />
                                                 </div>
                                             </div>
-
+                                                
                                             <div class="form-group">
-                                                <section class="panel">
-                                                    <div class="panel-body">
-                                                        <div class="h4 text-weight-bold mb-none">Indice de Massa Corporal (IMC)</div>
-                                                        <p class="text-xs text-muted mb-none">Normal/Adequado</p>
-                                                        <div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-under ">
-                                                            <div class="circular-bar-chart" data-percent="15.6" data-plugin-options='{ "barColor": "#2baab1", "delay": 300, "size": 50, "lineWidth": 4 }'>
-                                                                <label><span class="decimal">15,6</span>%</label>
-                                                            </div>
+                                                <div class="col-sm-4">
+                                                    <div class=" alert alert-info">
+                                                        <strong>0%</strong>
+                                                        <div>
+                                                            <label class="control-label">Força explosiva de membros inferiores</label>
                                                         </div>
                                                     </div>
-                                                </section>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class=" alert alert-info">
+                                                        <strong>0%</strong>
+                                                        <div>
+                                                            <label class="control-label">Velocidade</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class=" alert alert-info">
+                                                        <strong>0%</strong>
+                                                        <div>
+                                                            <label class="control-label">Agilidade</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class=" alert alert-info">
+                                                        <strong>0%</strong>
+                                                        <div>
+                                                            <label class="control-label">Resistencia Abdominal</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class=" alert alert-info">
+                                                        <strong>0%</strong>
+                                                        <div>
+                                                            <label class="control-label">Aptidão cardiorrespiratoria</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class=" alert alert-info">
+                                                        <strong>0%</strong>
+                                                        <div>
+                                                            <label class="control-label">Flexibilidade Muscular</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class=" alert alert-info">
+                                                        <strong>0%</strong>
+                                                        <div>
+                                                            <label class="control-label">Força de membros superiores</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
 
-                                            <div class="form-group">
+                                        <div class="row form-group">
+                                            <a data-toggle="modal" data-target="#mdDetalhamento">
+                                                <section class="panel col-md-4">
+                                                    <div class="panel-body bg-warning-less">
+                                                        <div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-right">
+                                                            <div class="circular-bar-chart" data-percent="45" data-plugin-options='{ "barColor": "#2baab1", "delay": 300, "size": 50, "lineWidth": 4 }'>
+                                                                <strong>Average</strong>
+                                                                <label><span class="percent">45</span>%</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="h4 text-weight-bold mb-none">Indice de massa corporal (IMC)</div>
+                                                        <p class="text-xs mb-none" >Normal/Adequado</p>
+                                                    </div>
+                                                </section>
+                                            </a>
+                                            <a data-toggle="modal" data-target="#mdDetalhamento">
+                                                <section class="panel col-md-4">
+                                                    <div class="panel-body bg-warning-less">
+                                                        <div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-right">
+                                                            <div class="circular-bar-chart" data-percent="45" data-plugin-options='{ "barColor": "#2baab1", "delay": 300, "size": 50, "lineWidth": 4 }'>
+                                                                <strong>Average</strong>
+                                                                <label><span class="percent">45</span>%</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="h4 text-weight-bold mb-none">Preensão Manual (kg)</div>
+                                                        <p class="text-xs mb-none">Excelente</p>
+                                                    </div>
+                                                </section>
+                                            </a>
+                                            <a data-toggle="modal" data-target="#mdDetalhamento">
+                                                <section class="panel col-md-4">
+                                                    <div class="panel-body bg-warning-less">
+                                                        <div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-right">
+                                                            <div class="circular-bar-chart" data-percent="45" data-plugin-options='{ "barColor": "#2baab1", "delay": 300, "size": 50, "lineWidth": 4 }'>
+                                                                <strong>Average</strong>
+                                                                <label><span class="percent">45</span>%</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="h4 text-weight-bold mb-none">Flexibilidade (cm)</div>
+                                                        <p class="text-xs mb-none">Normal/Desenvolvimento</p>
+                                                    </div>
+                                                </section>
+                                            </a>
+                                        </div>
+                                        <div class="row form-group">
+                                            <a data-toggle="modal" data-target="#mdDetalhamento">
+                                                <section class="panel col-md-4">
+                                                    <div class="panel-body bg-warning-less">
+                                                        <div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-right">
+                                                            <div class="circular-bar-chart" data-percent="45" data-plugin-options='{ "barColor": "#2baab1", "delay": 300, "size": 50, "lineWidth": 4 }'>
+                                                                <strong>Average</strong>
+                                                                <label><span class="percent">45</span>%</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="h4 text-weight-bold mb-none">Impulsão Horizontal (cm)</div>
+                                                        <p class="text-xs mb-none">Normal/Desenvolvimento</p>
+                                                    </div>
+                                                </section>
+                                            </a>
+                                            <a data-toggle="modal" data-target="#mdDetalhamento">
+                                                <section class="panel col-md-4">
+                                                    <div class="panel-body bg-warning-less">
+                                                        <div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-right">
+                                                            <div class="circular-bar-chart" data-percent="45" data-plugin-options='{ "barColor": "#2baab1", "delay": 300, "size": 50, "lineWidth": 4 }'>
+                                                                <strong>Average</strong>
+                                                                <label><span class="percent">45</span>%</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="h4 text-weight-bold mb-none">Velocidade-20m (seg)</div>
+                                                        <p class="text-xs mb-none">Normal/Desenvolvimento</p>
+                                                    </div>
+                                                </section>
+                                            </a>
+                                            <a data-toggle="modal" data-target="#mdDetalhamento">
+                                                <section class="panel col-md-4">
+                                                    <div class="panel-body bg-warning-less">
+                                                        <div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-right">
+                                                            <div class="circular-bar-chart" data-percent="45" data-plugin-options='{ "barColor": "#2baab1", "delay": 300, "size": 50, "lineWidth": 4 }'>
+                                                                <strong>Average</strong>
+                                                                <label><span class="percent">45</span>%</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="h4 text-weight-bold mb-none">Aptidão Fisica-6min (m)</div>
+                                                        <p class="text-xs mb-none">Fraco</p>
+                                                    </div>
+                                                </section>
+                                            </a>
+                                        </div>
+                                        <div class="row form-group">
+                                            <a data-toggle="modal" data-target="#mdDetalhamento">
+                                                <section class="panel col-md-4">
+                                                    <div class="panel-body bg-warning-less">
+                                                        <div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-right">
+                                                            <div class="circular-bar-chart" data-percent="45" data-plugin-options='{ "barColor": "#2baab1", "delay": 300, "size": 50, "lineWidth": 4 }'>
+                                                                <strong>Average</strong>
+                                                                <label><span class="percent">45</span>%</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="h4 text-weight-bold mb-none">Agilidade (seg)</div>
+                                                        <p class="text-xs mb-none">Fraco</p>
+                                                    </div>
+                                                </section>
+                                            </a>
+                                            <a data-toggle="modal" data-target="#mdDetalhamento">
+                                                <section class="panel col-md-4">
+                                                    <div class="panel-body bg-warning-less">
+                                                        <div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-right">
+                                                            <div class="circular-bar-chart" data-percent="45" data-plugin-options='{ "barColor": "#2baab1", "delay": 300, "size": 50, "lineWidth": 4 }'>
+                                                                <strong>Average</strong>
+                                                                <label><span class="percent">45</span>%</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="h4 text-weight-bold mb-none">Abdominal (qtd)</div>
+                                                        <p class="text-xs mb-none">M. Fraco</p>
+                                                    </div>
+                                                </section>
+                                            </a>
+                                            </div>
+                                            <div class=" form-group">
                                                 <label class="col-md-2 control-label" for="textareaDefault">Recomendações </label>
                                                 <div class="col-md-9">
                                                     <textarea class="form-control" rows="2" id="recommend"></textarea>
                                                 </div>
+                                            </div>    
+                                                
                                             </div>
-
-
-                                        </div>
-                                        @* <footer class="panel-footer">
-                                        <div class="row">
-                                        <div class="col-md-9 col-md-offset-3">
-                                        <button type="submit" class="btn btn-dark pull-right" style="margin-left: 5px;margin-right: 5px;"><i class="fa fa-reply"></i> &nbsp;&nbsp;Voltar</button>
-                                        <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
-                                        <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
-
-                                        </div>
-                                        </div>
-                                        </footer> *@
+                                        <footer class="panel-footer">
+                                            <div class="row">
+                                                <div class="col-md-9 col-md-offset-3">
+                                                    <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
+                                                </div>
+                                            </div>
+                                        </footer>
                                     </section>
                                 </form>
                             </div>
@@ -330,7 +468,7 @@
 		</div>
     </div>
 
-	<div class="col-md-12 col-lg-3">
+	@* <div class="col-md-12 col-lg-3">
 
 		<h4 class="mb-md">Porcentagem</h4>
 		<ul class="simple-card-list mb-xlg">
@@ -368,5 +506,42 @@
 			</li>
 		</ul>
 
-	</div>
-
+	</div> *@
+    
+<!-- Modal -->
+<div class="modal fade" id="mdDetalhamento" tabindex="-1" role="dialog" aria-labelledby="mdDetalhamentoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mdDetalhamentoLabel"><i class="fa fa-info-circle"></i> &nbsp;&nbsp;<strong>Detalhes Talento Esportivo</strong></h5>
+            </div>
+            <div class="modal-body">
+                <div class="scrollable visible-slider colored-slider" data-plugin-scrollable style="height: 350px;">
+                    <div class="scrollable-content">
+                        <div class="modal-text">
+                            <div>
+                                <label>
+                                    O que é o índice de massa corporal é importante, pois é uma medida internacional usada para definir doenças sérias, crônicas e preveníeis, como a obesidade.
+                                    Além disso, ela é de fácil aplicação, o que facilita diagnósticos, permitindo que um especialista médico elimine possibilidades de doenças, ou vá atrás de uma específica com base no resultado da conta.
+                                    Doenças da tireóide, por exemplo, afetam o peso, e a medida simples do IMC pode ser uma pista para elas.
+                                </label>
+                                <a target=_blank  href=https://idecacemmfdh.eadplataforma.com/curso/dna-do-brasil-materiais-complementares-especialistas>Clique aqui para acessar planos de aula sobre as variáveis estudadas</a>
+                                <label>
+                                    Para você
+                                    continue cuidando de sua saúde integral, e de sua nutrição para conseguir ter forca para realizar qualquer atividade que física que gostemos. 
+                                    Priorize o consumo frutas mais calóricas nos lanches como ameixa preta, uva passa, banana, abacate, caqui, manga, suco de laranja (2-3 unidades da fruta) ou suco de tamarindo.
+                                </label>
+                            </div>
+                        </div>
+				
+                        <div class="modal-wrapper"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    @* <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-thumbs-o-down"></i> &nbsp;&nbsp;Não</button>
+                    <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</button> *@
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

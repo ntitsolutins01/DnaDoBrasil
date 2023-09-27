@@ -8431,6 +8431,16 @@ html.ie11 .scroll-to-top {
 	color: #FFF;
 }
 
+.panel-body.bg-warning-less {
+	background: #f2b55e;
+	color: #FFF;
+}
+
+.panel-body.bg-danger-less {
+	background: #d9524d;
+	color: #FFF;
+}
+
 .panel-body.bg-danger {
 	background: #d2322d;
 	color: #FFF;
