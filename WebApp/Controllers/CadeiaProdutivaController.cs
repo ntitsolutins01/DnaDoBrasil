@@ -12,5 +12,17 @@ namespace WebApp.Controllers
 		{
 			return View();
 		}
+		public IActionResult Estudantes()
+		{
+			return View();
+		}
+		public IActionResult SolicitacaoContato()
+		{
+			return View();
+		}
+		public IActionResult Details()
+		{
+			return View();
+		}
 	}
 }

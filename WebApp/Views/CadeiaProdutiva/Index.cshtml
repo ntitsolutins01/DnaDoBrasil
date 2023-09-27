@@ -68,10 +68,12 @@
     </header>
     <div class="panel-body">
         <div class="form-group row">
-            <div class="col-sm-12 pull-right">
-	            <a href="@Url.Action("Create", "CadeiaProdutiva")" id="addToTable" 
-	               class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Novo Cadeia Produtiva </a>
-            </div>
+	        <div class="col-sm-12 pull-right">
+		        @* href="@Url.Action("Create", "CadeiaProdutiva")" *@ 
+		        <a id="addToTable"
+		           data-toggle="modal" data-target="#mdExcluir"
+		           class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Novo Cadeia Produtiva </a>
+	        </div>
         </div>
         <table class="table table-bordered table-striped mb-0" id="datatable-default">
             <thead>
@@ -80,6 +82,7 @@
                     <th>Email</th>
                     <th>Laudos</th>
                     <th>Status</th>
+	                <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
@@ -88,13 +91,41 @@
                     <td>librade.cdl@gmail.com</td>
                     <td>2</td>
                     <td>Aguardando Ativação</td>
+	                <td class="actions">
+		                <a data-toggle="tooltip" data-placement="top" title="Editar" @* asp-action="Edit" *@ asp-controller="Perfil" asp-route-id="1" class="on-default edit-row" style='color: #FF9800'><i class="fa fa-pencil"></i></a>
+		                <a data-toggle="tooltip" data-placement="top" title="Excluir" @* asp-action="Delete" *@ asp-controller="Perfil" asp-route-id="1" class="on-default remove-row" style='color:#F44336'><i class="fa fa-trash-o"></i></a>
+	                </td>
                 </tr>
             </tbody>
         </table>
     </div>
 </section>
-
-
+<!-- Modal -->
+<div class="modal fade" id="mdExcluir" tabindex="-1" role="dialog" aria-labelledby="mdExcluirLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mdExcluirLabel">
+                    <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Exclusão de Cadeia Produtiva</strong>
+                </h5>
+            </div>
+            <div class="modal-body">
+                <div class="modal-icon">
+                    <i class="fa fa-question-circle"></i>
+                </div>
+                <div class="modal-text">
+                    <p class="mb-0">Tem certeza que deseja <b>excluir</b> esse registro?</p>
+                </div>
+                <div class="modal-wrapper">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-thumbs-o-down"></i> &nbsp;&nbsp;Não</button>
+                <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 @section CssSpecificVendor {
     <link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />
