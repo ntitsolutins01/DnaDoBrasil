@@ -10665,6 +10665,16 @@ body .ui-pnotify.icon-nb .notification .ui-pnotify-icon > span {
 	color: #FFF;
 }
 
+.panel-group .panel-accordion-qv .panel-heading .panel-title a {
+	background: #00a4a9;
+	color: #FFF;
+}
+
+.panel-group .panel-accordion-voc .panel-heading .panel-title a {
+	background: #a787c0;
+	color: #FFF;
+}
+
 .panel-group .panel-accordion-dark .panel-heading .panel-title a {
 	background: #171717;
 	color: #FFF;
