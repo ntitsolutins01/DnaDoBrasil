@@ -1,5 +1,6 @@
-﻿@{
-    ViewData["Title"] = "Listagem Transações";
+﻿
+@{
+    ViewData["Title"] = "SolicitacaoContato";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -11,39 +12,25 @@
                     <div class="panel-actions">
                         <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
                     </div>
-
                     <h2 class="panel-title">Filtro de pesquisa</h2>
                 </header>
                 <div class="panel-body">
-                    
-                    <label class="col-sm-1 control-label">Cliente</label>
-                    <div class="col-md-3 form-group">
-                        <input type="text" class="form-control">
-                    </div>
-                    
-                    <label class="col-sm-1 control-label" style="width: 12.499999995%">Profissional</label>
-                    <div class="col-md-3 form-group">
-                        <input type="text" class="form-control">
-                    </div>
-					
-                    <label class="col-sm-1 control-label">Local </label>
+                    <label class="col-sm-2 control-label">Cadeia Produtiva </label>
                     <div class="col-md-3 form-group">
                         <select class="form-control populate select2" name="ddlPerfil" id="ddlPerfil"
                                 title="Por favor selecione um perfil." required
-                                @* asp-for="CodPerfil" asp-items="Model.ListPerfil" *@>
-                            <option value="">Selecionar Local</option>
+                        @* asp-for="CodPerfil" asp-items="Model.ListPerfil" *@>
+                            <option value="">Selecionar Cadeia Produtiva</option>
                         </select>
                     </div>
-                    
-                    <label class="col-sm-1 control-label">Status</label>
+                    <label class="col-sm-1 control-label">Deficiências </label>
                     <div class="col-md-3 form-group">
                         <select class="form-control populate select2" name="ddlPerfil" id="ddlPerfil"
                                 title="Por favor selecione um perfil." required
-                                @* asp-for="CodPerfil" asp-items="Model.ListPerfil" *@>
-                            <option value="">Selecionar Status</option>
+                        @* asp-for="CodPerfil" asp-items="Model.ListPerfil" *@>
+                            <option value="">Selecionar Deficiência</option>
                         </select>
                     </div>
-
                 </div>
                 <footer class="panel-footer">
                     <div class="row">
@@ -63,7 +50,7 @@
             <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
         </div>
 
-        <h2 class="panel-title">Transações</h2>
+        <h2 class="panel-title">Listagem de Estudantes</h2>
 
     </header>
     <div class="panel-body">
@@ -71,36 +58,34 @@
         <table class="table table-bordered table-striped mb-0" id="datatable-default">
             <thead>
                 <tr>
-                    <th>Nome</th>
-                    <th>Status</th>
+                    <th>Cadeia Produtiva</th>
+                    <th>Aluno</th>
+                    <th>Email</th>
+                    <th>Idade</th>
+                    <th>Sexo</th>
+                    <th>Telefones</th>
+                    <th>Localidade</th>
+                    <th>Rede Social</th>
+	                <th class="text-center">Ações</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
+                    <td>NTIT SOlutions Ltda</td>
                     <td>Fábio de Souza Muniz</td>
-                    <td><span class="label label-primary">voucher</span></td>
+                    <td>ntitsolutions01@gmail.com</td>
+                    <td>39</td>
+                    <td>Masculino</td>
+                    <td>61-991650736</td>
+                    <td>Brasília-DF</td>
+					<td><span class="label label-default">Não Possui</span></td>
+	                <td class="actions">
+                        <a data-toggle="tooltip" data-placement="top" title="Visualizar Laudo" asp-action="Details" asp-controller="CadeiaProdutiva" asp-route-id="1" class="on-default edit-row" style='color: #607D8B'><i class="fa fa-eye"></i></a>
+	                </td>
                 </tr>
-                @* @foreach (var item in Model.aaData)
-                {
-                <tr>
-                <td>@Html.DisplayFor(modelItem => item.NomUsuario)</td>
-                <td>@Html.DisplayFor(modelItem => item.NumCpf)</td>
-                <td>@Html.DisplayFor(modelItem => item.Email)</td>
-                <td>@Html.DisplayFor(modelItem => item.NomPerfil)</td>
-                <td class="actions">
-                <a data-toggle="tooltip" data-placement="top" title="Editar" asp-action="Edit" asp-controller="Usuario" asp-route-id="@item.CodUsuarioLogin" class="on-default edit-row" style='color: #eea236'><i class="fa fa-pencil"></i></a>
-                <a data-toggle="tooltip" data-placement="top" title="Excluir" asp-action="Delete" asp-controller="Usuario" asp-route-id="@item.CodUsuarioLogin" class="on-default remove-row" style='color: #d43f3a'><i class="fa fa-trash-o"></i></a>
-                <a data-toggle="tooltip" data-placement="top" title="Excluir" asp-action="Delete" asp-controller="Usuario" asp-route-id="@item.CodUsuarioLogin" class="on-default remove-row" style='color: #d43f3a'><i class="fa fa-trash-o"></i></a>
-                </td>
-                </tr>
-                } *@
             </tbody>
         </table>
     </div>
-    @* <footer class="panel-footer">
-    <button class="btn btn-primary">Submit </button>
-    <button type="reset" class="btn btn-default">Reset</button>
-    </footer> *@
 </section>
 
 
@@ -148,3 +133,5 @@
         }).apply(this, [jQuery]);
     </script>
 }
+
+

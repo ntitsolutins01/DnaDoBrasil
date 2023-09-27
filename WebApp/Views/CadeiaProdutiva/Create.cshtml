@@ -1,0 +1,217 @@
+﻿
+@{
+    ViewData["Title"] = "Cadastro Cadeia Produtiva";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row">
+	<div class="col-md-12">
+		@using (@Html.BeginForm("Create", "CadeiaProdutiva", FormMethod.Post, new { id = "form", @class = "form-horizontal" }))
+		{
+			<section class="panel">
+				<header class="panel-heading">
+					<div class="panel-actions">
+						<a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
+					</div>
+
+					<h2 class="panel-title">Cadastro de Cadeia Produtiva</h2>
+				</header>
+				<div class="panel-body">
+
+					<div class="form-group">
+						<label class="col-sm-1 control-label">Nome</label>
+						<div class="col-sm-3">
+							<input type="text" name="fullname" class="form-control" required />
+						</div>
+						<label class="col-sm-1 control-label">Email </label>
+						<div class="col-sm-3">
+							<div class="input-group">
+								<span class="input-group-addon">
+									<i class="fa fa-envelope"></i>
+								</span>
+								<input type="email" name="email" class="form-control" required />
+							</div>
+						</div>
+						<label class="col-sm-1 control-label">Senha </label>
+						<div class="col-sm-3">
+							<div class="input-group">
+								<span class="input-group-addon">
+									<i class="fa fa-lock"></i>
+								</span>
+								<input id="ssenha" name="senha" class="form-control"
+									   maxlength="15" type="password"
+									   title="Por favor informe a senha.">
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-1 control-label">Tipo cadeia</label>
+						<div class="col-sm-2">
+							<div class="radio-custom radio-primary">
+								<input id="awesome" name="porto_is" type="radio" value="awesome" required />
+								<label for="awesome">Empresas parceiras</label>
+							</div>
+							<div class="radio-custom radio-primary">
+								<input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+								<label for="very-awesome">Clubes e Federações</label>
+							</div>
+							<label class="error" for="porto_is"></label>
+						</div>
+						<label class="col-sm-1 control-label">Tipo Pessoa</label>
+						<div class="col-sm-2">
+							<div class="radio-custom radio-primary">
+								<input id="awesome" name="porto_is" type="radio" value="awesome" required />
+								<label for="awesome">Pessoa Física</label>
+							</div>
+							<div class="radio-custom radio-primary">
+								<input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+								<label for="very-awesome">Pessoa Jurídica</label>
+							</div>
+							<label class="error" for="porto_is"></label>
+						</div>
+						<label class="col-sm-1 control-label">Pf</label>
+						<div class="col-sm-2">
+							<input type="url" name="github" class="form-control" />
+						</div>
+						<label class="col-sm-1 control-label">Cnpj</label>
+						<div class="col-sm-2">
+							<input type="url" name="github" class="form-control" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-1 control-label">Telefone </label>
+						<div class="col-sm-3">
+							<div class="input-group">
+								<span class="input-group-addon">
+									<i class="fa fa-phone"></i>
+								</span>
+								<input name="Telefone" id="Telefone" data-plugin-masked-input=""
+									   style="z-index: auto;"
+									   data-input-mask="(99) 9999-9999"
+									   Title="Por favor informe o telefone da empresa"
+									   class="form-control">
+							</div>
+						</div>
+						<label class="col-sm-1 control-label">Celular </label>
+						<div class="col-sm-3">
+							<div class="input-group">
+								<span class="input-group-addon">
+									<i class="fa fa-phone"></i>
+								</span>
+								<input name="Telefone" id="Telefone" data-plugin-masked-input=""
+									   style="z-index: auto;"
+									   data-input-mask="(99) 9999-9999"
+									   Title="Por favor informe o telefone da empresa"
+									   class="form-control" required>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-1 control-label">Endereço</label>
+						<div class="col-sm-6">
+							<input type="url" name="github" class="form-control" />
+						</div>
+						<label class="col-sm-1 control-label">Número</label>
+						<div class="col-sm-1">
+							<input type="url" name="github" class="form-control" />
+						</div>
+						<label class="col-sm-1 control-label">Cep</label>
+						<div class="col-sm-2">
+							<input type="url" name="github" class="form-control" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-1 control-label">Bairro </label>
+						<div class="col-sm-3">
+							<input type="url" name="github" class="form-control" />
+						</div>
+						<label class="col-sm-1 control-label">Estado </label>
+						<div class="col-sm-3">
+							<select class="form-control populate select2" name="ddlPerfil" id="ddlPerfil"
+									title="Por favor selecione um perfil." required
+							@* asp-for="CodPerfil" asp-items="Model.ListPerfil" *@>
+								<option value="">Selecionar Estado</option>
+							</select>
+						</div>
+						<label class="col-sm-1 control-label">Cidade </label>
+						<div class="col-sm-3">
+							<input type="url" name="github" class="form-control" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-1 control-label pull-left">Cadastro ativo?</label>
+						<div class="col-sm-1">
+							<div class="switch switch-sm switch-primary">
+								<input type="checkbox" id="AlunoIncluir" name="AlunoIncluir" data-plugin-ios-switch checked="checked" />
+							</div>
+						</div>
+						<label class="col-sm-1 control-label">Cadastro habilitado?</label>
+						<div class="col-sm-1">
+							<div class="switch switch-sm switch-primary">
+								<input type="checkbox" id="AlunoIncluir" name="AlunoIncluir" data-plugin-ios-switch checked="checked" />
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-1 control-label pull-left">&nbsp;&nbsp;</label>
+						<div class="col-sm-10">
+							<div class="checkbox-custom chekbox-primary">
+								<input id="for-project" value="project" type="checkbox" name="for[]" required />
+								<label for="for-project">Me comprometo que todas as informações prestadas são verdadeiras.</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<footer class="panel-footer">
+					<div class="row">
+						<div class="col-md-9 col-md-offset-3">
+							<button type="submit" class="btn btn-dark pull-right" style="margin-left: 5px;margin-right: 5px;"><i class="fa fa-reply"></i> &nbsp;&nbsp;Voltar</button>
+							<button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
+							<button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
+						</div>
+					</div>
+				</footer>
+			</section>
+		}
+	</div>
+</div>
+
+@section CssSpecificVendor {
+	<link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />
+}
+@section Scripts {
+	<script src="~/assets/vendor/ios7-switch/ios7-switch.js"></script>
+	<script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
+	<script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
+	<script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
+	<script src="~/js/formatTable.js"></script>
+	<script>
+
+
+		// iosSwitcher
+		(function ($) {
+
+			'use strict';
+
+			if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
+
+				$(function () {
+					$('[data-plugin-ios-switch]').each(function () {
+						var $this = $(this);
+
+						$this.themePluginIOS7Switch();
+					});
+				});
+
+			}
+
+		}).apply(this, [jQuery]);
+
+	</script>
+}
+
+
+
+
+
