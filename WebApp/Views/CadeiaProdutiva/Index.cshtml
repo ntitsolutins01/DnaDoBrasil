@@ -1,0 +1,144 @@
+﻿
+@{
+    ViewData["Title"] = "Listagem Cadeia Produtiva";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <form id="form" action="forms-validation.html" class="form-horizontal">
+            <section class="panel">
+                <header class="panel-heading">
+                    <div class="panel-actions">
+                        <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
+                    </div>
+
+                    <h2 class="panel-title">Filtro de pesquisa</h2>
+                </header>
+                <div class="panel-body">
+	                <div class="form-group row">
+		                <label class="col-sm-3 control-label">Cadeia Produtiva</label>
+		                <div class="col-md-6 form-group">
+			                <input type="text" class="form-control">
+		                </div>
+	                </div>
+	                <div class="form-group row">
+		                <label class="col-sm-3 control-label">&nbsp;&nbsp;</label>
+		                <div class="col-md-12 form-group">
+                            <div class="checkbox-custom chekbox-primary pull-right col-md-2">
+				                <input id="for-project" value="project" type="checkbox" name="for[]" required />
+				                <label for="for-project">Cadastro pendentes</label>
+			                </div>
+                            <div class="checkbox-custom chekbox-primary pull-right col-md-3">
+				                <input id="for-project" value="project" type="checkbox" name="for[]" required />
+				                <label for="for-project">Categorias pendentes</label>
+			                </div>
+                            <div class="checkbox-custom chekbox-primary pull-right col-md-3">
+				                <input id="for-project" value="project" type="checkbox" name="for[]" required />
+				                <label for="for-project">Deficiências pendentes</label>
+			                </div>
+                            <div class="checkbox-custom chekbox-primary pull-right col-md-3">
+				                <input id="for-project" value="project" type="checkbox" name="for[]" required />
+				                <label for="for-project">Solicitações de contato</label>
+			                </div>
+		                </div>
+	                </div>
+                </div>
+                <footer class="panel-footer">
+                    <div class="row">
+                        <div class="col-md-9 col-md-offset-3">
+                            <button type="submit" class="btn btn-primary pull-right" style="margin-left: 5px;margin-right: 5px;"><i class="fa fa-search"></i> &nbsp;&nbsp;Pesquisar</button>
+                        </div>
+                    </div>
+                </footer>
+            </section>
+        </form>
+    </div>
+</div>
+
+<section class="panel">
+    <header class="panel-heading">
+        <div class="panel-actions">
+            <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
+        </div>
+
+        <h2 class="panel-title">Listagem de Cadeia Produtiva</h2>
+
+    </header>
+    <div class="panel-body">
+        <div class="form-group row">
+            <div class="col-sm-12 pull-right">
+	            <a href="@Url.Action("Create", "CadeiaProdutiva")" id="addToTable" 
+	               class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Novo Cadeia Produtiva </a>
+            </div>
+        </div>
+        <table class="table table-bordered table-striped mb-0" id="datatable-default">
+            <thead>
+                <tr>
+                    <th>Instituiçao</th>
+                    <th>Email</th>
+                    <th>Laudos</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Clube desportivo Real Manaus</td>
+                    <td>librade.cdl@gmail.com</td>
+                    <td>2</td>
+                    <td>Aguardando Ativação</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+
+
+@section CssSpecificVendor {
+    <link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />
+}
+@section Scripts {
+    <script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
+    <script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/js/formatTable.js"></script>
+
+    <script>
+
+        (function ($) {
+
+            'use strict';
+            var crub = @ViewBag.CrudMessage;
+
+            if (crub === 1) {
+                new PNotify({
+                    title: 'Profissionais',
+                    text: 'Cadastro realizado com sucesso!',
+                    type: 'success'
+                });
+            } else if (crub === 2) {
+                new PNotify({
+                    title: 'Profissionais',
+                    text: 'Dados alterados com sucesso.',
+                    type: 'warning',
+                    icon: 'fa fa-pencil'
+                });
+            } else if (crub === 3) {
+                new PNotify({
+                    title: 'Profissionais',
+                    text: 'Registro excluído com sucesso.',
+                    type: 'error',
+                    icon: 'fa fa-trash-o'
+                });
+            }
+            if ($.isFunction($.fn['tooltip'])) {
+                $('[data-toggle=tooltip],[rel=tooltip]').tooltip({ container: 'body' });
+            }
+
+        }).apply(this, [jQuery]);
+    </script>
+}
+
+
+
