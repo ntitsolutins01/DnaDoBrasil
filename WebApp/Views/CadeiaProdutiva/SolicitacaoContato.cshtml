@@ -1,4 +1,4 @@
-﻿
+
 @{
     ViewData["Title"] = "SolicitacaoContato";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -15,15 +15,15 @@
                     <h2 class="panel-title">Filtro de pesquisa</h2>
                 </header>
                 <div class="panel-body">
-                    <label class="col-sm-2 control-label">Cadeia Produtiva </label>
-                    <div class="col-md-3 form-group" style="width: 29.166666655%">
+                    <label class="col-sm-3 control-label">Sistema Socioeconomico </label>
+                    <div class="col-md-3 form-group">
                         <select class="form-control populate select2" name="ddlPerfil" id="ddlPerfil"
                                 title="Por favor selecione um perfil." required
-                        @* asp-for="CodPerfil" asp-items="Model.ListPerfil" *@ >
-                            <option value="">Selecionar Cadeia Produtiva</option>
+                        @* asp-for="CodPerfil" asp-items="Model.ListPerfil" *@>
+                            <option value="">Selecionar Sistema Socioeconomico</option>
                         </select>
                     </div>
-                    <label class="col-sm-1 control-label" style="width: 12.499999995%">Deficiências </label>
+                    <label class="col-sm-2 control-label">Deficiências </label>
                     <div class="col-md-3 form-group">
                         <select class="form-control populate select2" name="ddlPerfil" id="ddlPerfil"
                                 title="Por favor selecione um perfil." required
@@ -58,7 +58,7 @@
         <table class="table table-bordered table-striped mb-0" id="datatable-default">
             <thead>
                 <tr>
-                    <th>Cadeia Produtiva</th>
+                    <th>Sistema Socioeconomico</th>
                     <th>Aluno</th>
                     <th>Email</th>
                     <th>Idade</th>
