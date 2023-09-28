@@ -182,6 +182,29 @@
                                         <span></>Profissionais</span>
                                     </a>
                                 </li>
+								<li class="nav-parent">
+									<a href="#">
+										<i class="fa fa-retweet" aria-hidden="true"></i>
+										<span>Cadeia Produtiva</span>
+									</a>
+									<ul class="nav nav-children">
+										<li>
+											<a href="@Url.Action("Index", "CadeiaProdutiva")">
+												Lista
+											</a>
+										</li>
+										<li>
+											<a href="@Url.Action("Estudantes", "CadeiaProdutiva")">
+												Estudantes
+											</a>
+										</li>
+										<li>
+											<a href="@Url.Action("SolicitacaoContato", "CadeiaProdutiva")">
+												Solicitações de contato
+											</a>
+										</li>
+									</ul>
+								</li>
                                 <li class="nav-parent nav-expanded">
 									<a href="@Url.Action("Index", "Laudo")">
                                         <i class="fa fa-file-text-o" aria-hidden="true"></i>
