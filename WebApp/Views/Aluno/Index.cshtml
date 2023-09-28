@@ -53,12 +53,7 @@
 					<label class="col-sm-3 control-label">Cadastros ativos</label>
 					<div class="col-md-3 form-group">
 						<div class="switch switch-sm switch-primary">
-							<div class="ios-switch on">
-								<div class="on-background background-fill"></div>
-								<div class="state-background background-fill"></div>
-								<div class="handle"></div>
-							</div>
-							<input type="checkbox" name="switch" data-plugin-ios-switch="" checked="checked" style="display: none;">
+							<input type="checkbox" id="AlunoIncluir" name="AlunoIncluir" data-plugin-ios-switch checked="checked" />
 						</div>
 					</div>
 
@@ -172,7 +167,7 @@
 		(function ($) {
 
 			'use strict';
-			var crub = @ViewBag.CrudMessage;
+			var crub = 1;// @ViewBag.CrudMessage;
 
 			if (crub === 1) {
 				new PNotify({
