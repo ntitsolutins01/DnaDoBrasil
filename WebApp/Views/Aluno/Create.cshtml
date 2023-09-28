@@ -11,16 +11,13 @@
 					<a href="#dados" data-toggle="tab">Dados</a>
 				</li>
 				<li>
-					<a href="#complementos" data-toggle="tab">Complementos</a>
+					<a href="#dependencias" data-toggle="tab">Dependências</a>
 				</li>
 				<li>
 					<a href="#matriculas" data-toggle="tab">Matrículas</a>
 				</li>
 				<li>
 					<a href="#ambientes" data-toggle="tab">Ambientes</a>
-				</li>
-				<li>
-					<a href="#deficiencias" data-toggle="tab">Deficiências</a>
 				</li>
 				<li>
 					<a href="#vouchers" data-toggle="tab">Vouchers</a>
@@ -198,14 +195,76 @@
 												</div>
 											</div>
 										</div>
+
 										<div class="form-group">
 											<label class="col-sm-3 control-label pull-left">Cadastro ativo para login?</label>
-											<div class="col-sm-2">
-												<input type="url" name="github" class="form-control" />
+											<div class="col-sm-1">
+												<div class="switch switch-sm switch-success">
+													<input type="checkbox" id="ativo" name="ativo" data-plugin-ios-switch checked="checked" />
+												</div>
 											</div>
 											<label class="col-sm-3 control-label">Cadastro habilitado a operar?</label>
 											<div class="col-sm-2">
-												<input type="url" name="github" class="form-control" />
+												<div class="switch switch-sm switch-success">
+													<input type="checkbox" id="habilitado" name="habilitado" data-plugin-ios-switch checked="checked" />
+												</div>
+											</div>
+										</div>
+										<blockquote class="danger">
+											<p>Deficiências</p>
+											<small>Caso possuir alguma deficiências todos os campos devem ser obrigatórios </small>
+										</blockquote>
+										<div class="form-group">
+											<label class="col-sm-2 control-label">Possui deficiência?</label>
+											<div class="col-sm-10">
+												<div class="radio-custom radio-success">
+													<input type="radio" id="radioExample1" name="radioExample" checked>
+													<label for="radioExample1">Sim</label>
+												</div>
+
+												<div class="radio-custom radio-danger">
+													<input type="radio" id="radioExample2" name="radioExample">
+													<label for="radioExample2">Não</label>
+												</div>
+
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-2 control-label">Deficiência</label>
+											<div class="col-sm-4">
+												<select class="form-control populate select2" name="ddlPerfil" id="ddlPerfil"
+														title="Por favor selecione um perfil." readonly
+												@* asp-for="CodPerfil" asp-items="Model.ListPerfil" *@>
+													<option value="">Selecionar Deficiência</option>
+												</select>
+											</div>
+											<div class="col-sm-1">
+												<button type="button" class="ml-xs btn btn-default"
+														data-toggle="modal" data-target="#mdDeficiencia">
+													<i class="fa fa-plus"></i>
+												</button>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-2 control-label">Adicionados</label>
+											<div class="col-sm-10">
+												<table class="table table-bordered table-striped mb-0" id="datatable-default">
+													<thead>
+														<tr>
+															<th>Deficiência</th>
+															<th>Ações</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<td>Deficiência Visual</td>
+															<td class="actions">
+																<a data-toggle="tooltip" data-placement="top" title="Excluir" @* asp-action="Delete" *@ asp-controller="Perfil" asp-route-id="1" class="on-default remove-row" style='color:#F44336'><i class="fa fa-trash-o"></i></a>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+
 											</div>
 										</div>
 									</div>
@@ -224,7 +283,7 @@
 						</div>
 					</div>
 				</div>
-				<div id="complementos" class="tab-pane">
+				<div id="dependencias" class="tab-pane">
 					<div class="row">
 						<div class="col-md-12">
 							<form id="form" action="forms-validation.html" class="form-horizontal">
@@ -751,6 +810,7 @@
 	<link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />
 	}
 @section Scripts {
+	<script src="~/assets/vendor/ios7-switch/ios7-switch.js"></script>
 	<script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
 	<script src="~/assets/vendor/select2/js/select2.js"></script>
 	<script src="~/assets/vendor/jquery-mask/jquery.mask.js"></script>
@@ -762,11 +822,30 @@
 	<script src="~/js/formatTable.js"></script>
 	<script src="~/js/aluno.js"></script>
 	<script>
+		
+		// iosSwitcher
+		(function ($) {
+
+			'use strict';
+
+			if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
+
+				$(function () {
+					$('[data-plugin-ios-switch]').each(function () {
+						var $this = $(this);
+
+						$this.themePluginIOS7Switch();
+					});
+				});
+
+			}
+
+		}).apply(this, [jQuery]);
 		// MaxLength
 		(function ($) {
 
 			'use strict';
-			var crud = @ViewBag.CrudMessage;
+			var crud = 1; //@ViewBag.CrudMessage;
 
 			if (crud === 1) {
 				new PNotify({
@@ -788,7 +867,7 @@
 				});
 			}
 
-			var notify = @ViewBag.NotifyMessage;
+			var notify = 1; //@ViewBag.NotifyMessage;
 			var messagem = '@ViewBag.Notify';
 
 			if (notify === 0) {
@@ -812,6 +891,5 @@
 			}
 
 		}).apply(this, [jQuery]);
-
 	</script>
 	}
