@@ -8441,6 +8441,11 @@ html.ie11 .scroll-to-top {
 	color: #FFF;
 }
 
+.panel-body.bg-success-less {
+	background: #80c883;
+	color: #FFF;
+}
+
 .panel-body.bg-voc {
 	background: #cdbadb;
 	color: #FFF;
