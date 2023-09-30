@@ -1,0 +1,360 @@
+﻿@{
+    ViewBag.Title = "Cadastro Saude Bucal";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row form-group col-md-12">
+    <div class="panel-group" id="accordionMeuTalento">
+        <div class="panel panel-accordion panel-accordion-info">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a style="text-align: center">
+                        Saude Bucal
+                        <br />
+                    </a>
+                </h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        @using (@Html.BeginForm("CreateSaudeBucal", "Aluno", FormMethod.Post, new { id = "form", @class = "form-horizontal" }))
+        {
+            <div class="panel-body">
+                <div class="row form-group col-md-12">
+                    <form id="chk-radios-form" action="forms-validation.html">
+                        <section class="panel">
+                            <div class="panel-body">
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>Profissional</strong></label>
+                                    </div>
+                                    <div class="row col-sm-6">
+                                        <select id="company" class="form-control" title="Please select at least one company" required>
+                                            <option value="">Selecione um profissional</option>
+                                            <option value="wagner telles da silva">Wagner Telles Da Silva</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row form-group col-sm-12">
+                                        <label class="control-label"><strong>1. Escova os dentes todos os dias?</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row form-group col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-1">
+                                            <input id="a" name="sb-x" type="radio" value="x-a" />
+                                            <label for="a">Sim</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-1">
+                                            <input id="b" name="sb-x" type="radio" value="x-b" />
+                                            <label for="b">Não</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-2">
+                                            <input id="c" name="sb-x" type="radio" value="x-c" />
+                                            <label for="c">As Vezes</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row form-group col-sm-12">
+                                        <label class="control-label"><strong>2. Quantas vezes ao dia escova os dentes?</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row form-group col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-1">
+                                            <input id="a" name="sb-x" type="radio" value="x-a" />
+                                            <label for="a">Sim</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-1">
+                                            <input id="b" name="sb-x" type="radio" value="x-b" />
+                                            <label for="b">Não</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="c" name="sb-x" type="radio" value="x-c" />
+                                            <label for="c">3 ou + vezes</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row form-group col-sm-12">
+                                        <label class="control-label"><strong>3. Como escova os dentes?</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row form-group col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-1">
+                                            <input id="a" name="sb-x" type="radio" value="x-a" />
+                                            <label for="a">Sim</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-1">
+                                            <input id="b" name="sb-x" type="radio" value="x-b" />
+                                            <label for="b">Não</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="c" name="sb-x" type="radio" value="x-c" />
+                                            <label for="c">Escova, pasta e fio dental</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row form-group col-sm-12">
+                                        <label class="control-label"><strong>4. Considera importante escovar os dentes após as refeições?</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row form-group col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-1">
+                                            <input id="a" name="sb-x" type="radio" value="x-a" />
+                                            <label for="a">Sim</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-1">
+                                            <input id="b" name="sb-x" type="radio" value="x-b" />
+                                            <label for="b">Não</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-2">
+                                            <input id="c" name="sb-x" type="radio" value="x-c" />
+                                            <label for="c">Nem Sempre</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row form-group col-sm-12">
+                                        <label class="control-label"><strong>5. Escova a língua durante a higiene bucal?</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row form-group col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-1">
+                                            <input id="a" name="sb-x" type="radio" value="x-a" />
+                                            <label for="a">Sim</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-1">
+                                            <input id="b" name="sb-x" type="radio" value="x-b" />
+                                            <label for="b">Não</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-2">
+                                            <input id="c" name="sb-x" type="radio" value="x-c" />
+                                            <label for="c">As Vezes</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row form-group col-sm-12">
+                                        <label class="control-label"><strong>6. Costuma ir ao dentista com que frequência?</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row form-group col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-1">
+                                            <input id="a" name="sb-x" type="radio" value="x-a" />
+                                            <label for="a">Sim</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-1">
+                                            <input id="b" name="sb-x" type="radio" value="x-b" />
+                                            <label for="b">Não</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="c" name="sb-x" type="radio" value="x-c" />
+                                            <label for="c">Quando sente dor de dente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="d" name="sb-x" type="radio" value="x-d" />
+                                            <label for="d">Nunca foi ao dentista</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row form-group col-sm-12">
+                                        <label class="control-label"><strong>7. Apresentou dor de dente no último ano?</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row form-group col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-1">
+                                            <input id="a" name="sb-x" type="radio" value="x-a" />
+                                            <label for="a">Sim</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-1">
+                                            <input id="b" name="sb-x" type="radio" value="x-b" />
+                                            <label for="b">Não</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-2">
+                                            <input id="c" name="sb-x" type="radio" value="x-c" />
+                                            <label for="c">Frequentemente</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row form-group col-sm-12">
+                                        <label class="control-label"><strong>8. Já deixou de ir para a escola por causa de dor de dente?</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row form-group col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-1">
+                                            <input id="a" name="sb-x" type="radio" value="x-a" />
+                                            <label for="a">Sim</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-1">
+                                            <input id="b" name="sb-x" type="radio" value="x-b" />
+                                            <label for="b">Não</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row form-group col-sm-12">
+                                        <label class="control-label"><strong>9. Come doce entre as refeições?</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row form-group col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-1">
+                                            <input id="a" name="sb-x" type="radio" value="x-a" />
+                                            <label for="a">Sim</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-1">
+                                            <input id="b" name="sb-x" type="radio" value="x-b" />
+                                            <label for="b">Não</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-2">
+                                            <input id="c" name="sb-x" type="radio" value="x-c" />
+                                            <label for="c">As Vezes</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row form-group col-sm-12">
+                                        <label class="control-label"><strong>10. Já teve algum trauma dentário?</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row form-group col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-1">
+                                            <input id="a" name="sb-x" type="radio" value="x-a" />
+                                            <label for="a">Sim</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-1">
+                                            <input id="b" name="sb-x" type="radio" value="x-b" />
+                                            <label for="b">Não</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-2">
+                                            <input id="c" name="sb-x" type="radio" value="x-c" />
+                                            <label for="c">Não Sei</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row form-group col-sm-12">
+                                        <label class="control-label"><strong>11. Já sentiu vergonha de sorrir?</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row form-group col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-1">
+                                            <input id="a" name="sb-x" type="radio" value="x-a" />
+                                            <label for="a">Sim</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-1">
+                                            <input id="b" name="sb-x" type="radio" value="x-b" />
+                                            <label for="b">Não</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-2">
+                                            <input id="c" name="sb-x" type="radio" value="x-c" />
+                                            <label for="c">As Vezes</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row form-group col-sm-12">
+                                        <label class="control-label"><strong>12. Possui dificuldade para mastigar?</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row form-group col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-1">
+                                            <input id="a" name="sb-x" type="radio" value="x-a" />
+                                            <label for="a">Sim</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-1">
+                                            <input id="b" name="sb-x" type="radio" value="x-b" />
+                                            <label for="b">Não</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-2">
+                                            <input id="c" name="sb-x" type="radio" value="x-c" />
+                                            <label for="c">As vezes</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row form-group col-sm-12">
+                                        <label class="control-label"><strong>13. É respirador bucal?</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row form-group col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-1">
+                                            <input id="a" name="sb-x" type="radio" value="x-a" />
+                                            <label for="a">Sim</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-1">
+                                            <input id="b" name="sb-x" type="radio" value="x-b" />
+                                            <label for="b">Não</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-2">
+                                            <input id="c" name="sb-x" type="radio" value="x-c" />
+                                            <label for="c">Não sei</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row form-group col-sm-12">
+                                        <label class="control-label"><strong>14. Considera seu sorriso bonito?</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row form-group col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-1">
+                                            <input id="a" name="sb-x" type="radio" value="x-a" />
+                                            <label for="a">Sim</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-1">
+                                            <input id="b" name="sb-x" type="radio" value="x-b" />
+                                            <label for="b">Não</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="c" name="sb-x" type="radio" value="x-c" />
+                                            <label for="c">Mais ou menos</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                            <footer class="panel-footer">
+                                <div class="row">
+                                    <div class="col-sm-9 col-sm-offset-3">
+                                        <button type="submit" class="btn btn-primary pull-right" style="margin-left: 5px;margin-right: 5px;"><i class="fa fa-forward"></i> &nbsp;&nbsp;Próximo</button>
+                                        <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
+                                        <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
+                                    </div>
+                                </div>
+                            </footer>
+                        </section>
+                    </form>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section CssSpecificVendor {
+    <link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />
+}
+@section Scripts {
+    <script src="~/assets/vendor/ios7-switch/ios7-switch.js"></script>
+    <script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
+    <script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
+    <script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/js/formatTable.js"></script>
+    <script>
+
+
+        // iosSwitcher
+        (function ($) {
+
+            'use strict';
+
+            if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
+
+                $(function () {
+                    $('[data-plugin-ios-switch]').each(function () {
+                        var $this = $(this);
+
+                        $this.themePluginIOS7Switch();
+                    });
+                });
+
+            }
+
+        }).apply(this, [jQuery]);
+
+    </script>
+}

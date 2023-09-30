@@ -22,11 +22,26 @@
   </ItemGroup>
 
   <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\Aluno\ConsumoAlimentar.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Aluno\Saude.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Aluno\SaudeBucal.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Usuario\Create.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="wwwroot\assets\vendor\jquery-mask\jquery.mask.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Aluno\Saude.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Aluno\ConsumoAlimentar.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Aluno\SaudeBucal.cshtml" />
   </ItemGroup>
 
 </Project>
