@@ -1,13 +1,13 @@
 ﻿
 @{
-    ViewData["Title"] = "Cadastro Cadeia Produtiva";
+	ViewData["Title"] = "Cadastro Sistema Socioeconomico";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
 <div class="row">
 	<div class="col-md-12">
-		@using (@Html.BeginForm("Create", "CadeiaProdutiva", FormMethod.Post, new { id = "form", @class = "form-horizontal" }))
+		@using (@Html.BeginForm("Create", "SistemaSocioeconomico", FormMethod.Post, new { id = "form", @class = "form-horizontal" }))
 		{
 			<section class="panel">
 				<header class="panel-heading">
@@ -46,7 +46,7 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="col-sm-1 control-label">Tipo cadeia</label>
+						<label class="col-sm-1 control-label">Selecione a Parceria</label>
 						<div class="col-sm-2">
 							<div class="radio-custom radio-primary">
 								<input id="awesome" name="porto_is" type="radio" value="awesome" required />
