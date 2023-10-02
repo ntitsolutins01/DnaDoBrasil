@@ -2,7 +2,7 @@
 
 namespace WebApp.Controllers
 {
-	public class CadeiaProdutivaController : Controller
+	public class SistemaSocioeconomicoController : Controller
 	{
 		public IActionResult Index()
 		{
