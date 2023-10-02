@@ -1,0 +1,229 @@
+﻿@{
+    ViewBag.Title = "Cadastro Consumo Alimentar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row form-group col-md-12">
+    <div class="panel-group" id="accordionMeuTalento">
+        <div class="panel panel-accordion panel-accordion-success">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a style="text-align: center">
+                        Consumo Alimentar
+                        <br />
+                    </a>
+                </h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        @using (@Html.BeginForm("CreateConsumoAlimentar", "Aluno", FormMethod.Post, new { id = "form", @class = "form-horizontal" }))
+        {
+            <div class="panel-body">
+                <div class="row form-group col-md-12">
+                    <form id="chk-radios-form" action="forms-validation.html">
+                        <section class="panel">
+                            <div class="panel-body">
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>Profissional</strong></label>
+                                    </div>
+                                    <div class="row col-sm-6">
+                                        <select id="company" class="form-control" title="Please select at least one company" required>
+                                            <option value="">Selecione um profissional</option>
+                                            <option value="wagner telles da silva">Wagner Telles Da Silva</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row form-group col-sm-12">
+                                        <label class="control-label"><strong>1. Você costuma realizar no mínimo as três refeições principais do dia?</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row form-group col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="a" name="ca-x" type="radio" value="x-a" />
+                                            <label for="a">Sim</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="b" name="ca-x" type="radio" value="x-b" />
+                                            <label for="b">Não</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row form-group col-sm-12">
+                                        <label class="control-label"><strong>2. Você costuma realizar as refeições assistindo à televisão e/ou usando dispositivos móveis (celular, tablet, notebook), computador?.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row form-group col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="a" name="ca-x" type="radio" value="x-a" />
+                                            <label for="a">Sim</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="b" name="ca-x" type="radio" value="x-b" />
+                                            <label for="b">Não</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row form-group col-sm-12">
+                                        <label class="control-label"><strong>3. Ontem, você consumiu feijão?</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row form-group col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="a" name="ca-x" type="radio" value="x-a" />
+                                            <label for="a">Sim</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="b" name="ca-x" type="radio" value="x-b" />
+                                            <label for="b">Não</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row form-group col-sm-12">
+                                        <label class="control-label"><strong>4. Ontem, você consumiu frutas frescas (não considerar suco de frutas)?</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row form-group col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="a" name="ca-x" type="radio" value="x-a" />
+                                            <label for="a">Sim</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="b" name="ca-x" type="radio" value="x-b" />
+                                            <label for="b">Não</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row form-group col-sm-12">
+                                        <label class="control-label"><strong>5. Ontem, você consumiu verduras e/ou legumes (não considere batata, mandioca, aipim, cará e/ou inhame)?</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row form-group col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="a" name="ca-x" type="radio" value="x-a" />
+                                            <label for="a">Sim</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="b" name="ca-x" type="radio" value="x-b" />
+                                            <label for="b">Não</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row form-group col-sm-12">
+                                        <label class="control-label"><strong>6. Ontem, você consumiu hambúrguer e/ou embutidos (presunto, mortadela, salame, linguiça, salsicha etc.)?</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row form-group col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="a" name="ca-x" type="radio" value="x-a" />
+                                            <label for="a">Sim</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="b" name="ca-x" type="radio" value="x-b" />
+                                            <label for="b">Não</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row form-group col-sm-12">
+                                        <label class="control-label" style="text-align: left;"><strong>7. Ontem, você consumiu bebidas adoçadas (refrigerante, suco de caixinha, suco em pó, água de coco de caixinha, xaropes de guaraná/groselha, suco de fruta com adição de açúcar etc.)?</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row form-group col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="a" name="ca-x" type="radio" value="x-a" />
+                                            <label for="a">Sim</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="b" name="ca-x" type="radio" value="x-b" />
+                                            <label for="b">Não</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row form-group col-sm-12">
+                                        <label class="control-label"><strong>8. Ontem, você consumiu macarrão instantâneo, salgadinhos de pacote ou biscoitos salgados?</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row form-group col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="a" name="ca-x" type="radio" value="x-a" />
+                                            <label for="a">Sim</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="b" name="ca-x" type="radio" value="x-b" />
+                                            <label for="b">Não</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row form-group col-sm-12">
+                                        <label class="control-label"><strong>9. Ontem, você consumiu biscoitos recheados, doces ou guloseimas (balas, pirulitos, chicletes, gelatina)?</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row form-group col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="a" name="ca-x" type="radio" value="x-a" />
+                                            <label for="a">Sim</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="b" name="ca-x" type="radio" value="x-b" />
+                                            <label for="b">Não</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+
+                            </div>
+
+                            <footer class="panel-footer">
+                                <div class="row">
+                                    <div class="col-sm-9 col-sm-offset-3">
+                                        <button type="submit" class="btn btn-primary pull-right" style="margin-left: 5px;margin-right: 5px;"><i class="fa fa-forward"></i> &nbsp;&nbsp;Próximo</button>
+                                        <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
+                                        <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
+                                    </div>
+                                </div>
+                            </footer>
+                        </section>
+                    </form>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section CssSpecificVendor {
+    <link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />
+}
+@section Scripts {
+    <script src="~/assets/vendor/ios7-switch/ios7-switch.js"></script>
+    <script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
+    <script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
+    <script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/js/formatTable.js"></script>
+    <script>
+
+
+        // iosSwitcher
+        (function ($) {
+
+            'use strict';
+
+            if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
+
+                $(function () {
+                    $('[data-plugin-ios-switch]').each(function () {
+                        var $this = $(this);
+
+                        $this.themePluginIOS7Switch();
+                    });
+                });
+
+            }
+
+        }).apply(this, [jQuery]);
+
+    </script>
+}
