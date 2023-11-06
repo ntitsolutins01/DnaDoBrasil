@@ -1,4 +1,3 @@
-
 @{
     ViewData["Title"] = "Inclusão de Profissionais";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -6,248 +5,274 @@
 
 
 <div class="row">
-	<div class="col-md-12">
-		@using (@Html.BeginForm("Create", "Profissional", FormMethod.Post, new { id = "form", @class = "form-horizontal" }))
-		{
-			<section class="panel">
-				<header class="panel-heading">
-					<div class="panel-actions">
-						<a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
-					</div>
+    <div class="col-md-12">
+        @using (@Html.BeginForm("Create", "Profissional", FormMethod.Post, new { id = "formProfissional", @class = "form-horizontal" }))
+        {
+            <section class="panel">
+                <header class="panel-heading">
+                    <div class="panel-actions">
+                        <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
+                    </div>
 
-					<h2 class="panel-title">Cadastro de Profissional</h2>
-				</header>
-				<div class="panel-body">
+                    <h2 class="panel-title">Cadastro de Profissional</h2>
+                </header>
+                <div class="panel-body">
 
-					<div class="form-group">
-						<label class="col-sm-1 control-label">Nome <span class="required">*</span></label>
-						<div class="col-sm-6">
-							<input type="text" name="fullname" class="form-control" required />
-						</div>
-						<label class="col-sm-2 control-label">Data Nascimento <span class="required">*</span></label>
-						<div class="col-sm-3">
-							<div class="input-group">
-								<span class="input-group-addon">
-									<i class="fa fa-calendar"></i>
-								</span>
-								<input id="DtOcorrencia" name="DtOcorrencia"
-								       data-plugin-masked-input data-input-mask="99/99/9999"
-								       class="form-control"
-								       @* value="@Model.Relato.DatOcorrencia.ToShortDateString()" *@>
-							</div>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-1 control-label">Email <span class="required">*</span></label>
-						<div class="col-sm-4">
-							<div class="input-group">
-								<span class="input-group-addon">
-									<i class="fa fa-envelope"></i>
-								</span>
-								<input type="email" name="email" class="form-control" required />
-							</div>
-						</div>
-						<label class="col-sm-1 control-label">Senha </label>
-						<div class="col-sm-3">
-							<div class="input-group">
-								<span class="input-group-addon">
-									<i class="fa fa-lock"></i>
-								</span>
-								<input id="ssenha" name="senha" class="form-control"
-								       maxlength="15" type="password"
-								       title="Por favor informe a senha." >
-							</div>
-						</div>
-						<label class="col-sm-1 control-label">Sexo <span class="required">*</span></label>
-						<div class="col-sm-2">
-							<select class="form-control populate select2" name="ddlPerfil" id="ddlPerfil"
-							        title="Por favor selecione um perfil." required
-							        @* asp-for="CodPerfil" asp-items="Model.ListPerfil" *@>
-								<option value="">Selecionar Sexo</option>
-							</select>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-1 control-label">Cpf <span class="required">*</span></label>
-						<div class="col-sm-3">
-							<input id="cpf" name="cpf"
-							       v-model="params.cpf"
-							       v-on:blur="ExisteCpf"
-							       type="text" value="" class="form-control"
-							       maxlength="14" />
-						</div>
-						<label class="col-sm-1 control-label">Telefone </label>
-						<div class="col-sm-3">
-							<div class="input-group">
-								<span class="input-group-addon">
-									<i class="fa fa-phone"></i>
-								</span>
-								<input name="Telefone" id="Telefone" data-plugin-masked-input=""
-								       style="z-index: auto;"
-								       data-input-mask="(99) 9999-9999"
-								       Title="Por favor informe o telefone da empresa"
-								       class="form-control">
-							</div>
-						</div>
-						<label class="col-sm-1 control-label">Celular </label>
-						<div class="col-sm-3">
-							<div class="input-group">
-								<span class="input-group-addon">
-									<i class="fa fa-phone"></i>
-								</span>
-								<input name="Telefone" id="Telefone" data-plugin-masked-input=""
-								       style="z-index: auto;"
-								       data-input-mask="(99) 9999-9999"
-								       Title="Por favor informe o telefone da empresa"
-								       class="form-control" required>
-							</div>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-1 control-label">Endereço</label>
-						<div class="col-sm-6">
-							<input type="url" name="github" class="form-control" />
-						</div>
-						<label class="col-sm-1 control-label">Número</label>
-						<div class="col-sm-1">
-							<input type="url" name="github" class="form-control" />
-						</div>
-						<label class="col-sm-1 control-label">Cep</label>
-						<div class="col-sm-2">
-							<input type="url" name="github" class="form-control" />
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-1 control-label">Bairro </label>
-						<div class="col-sm-3">
-							<input type="url" name="github" class="form-control" />
-						</div>
-						<label class="col-sm-1 control-label">Estado </label>
-						<div class="col-sm-3">
-							<select class="form-control populate select2" name="ddlPerfil" id="ddlPerfil"
-							        title="Por favor selecione um perfil." required
-							        @* asp-for="CodPerfil" asp-items="Model.ListPerfil" *@>
-								<option value="">Selecionar Estado</option>
-							</select>
-						</div>
-						<label class="col-sm-1 control-label">Cidade </label>
-						<div class="col-sm-3">
-							<input type="url" name="github" class="form-control" />
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-3 control-label pull-left">Cadastro ativo para login?</label>
-						<div class="col-sm-2">
-							<div class="switch switch-sm switch-success">
-								<input type="checkbox" id="AlunoIncluir" name="AlunoIncluir" data-plugin-ios-switch checked="checked" />
-							</div>
-						</div>
-						<label class="col-sm-3 control-label">Cadastro habilitado a operar?</label>
-						<div class="col-sm-2">
-							<div class="switch switch-sm switch-success">
-								<input type="checkbox" id="AlunoIncluir" name="AlunoIncluir" data-plugin-ios-switch checked="checked" />
-							</div>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-1 control-label">&nbsp;&nbsp; </label>
-						<div class="col-sm-12">
-						<blockquote class="info">
-							<strong>Gerenciamento de ambientes</strong>
-							</blockquote>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-2 control-label">Ambiente</label>
-						<div class="col-sm-4">
-							<select class="form-control populate select2" name="ddlPerfil" id="ddlPerfil"
-									title="Por favor selecione um perfil." required
-							@* asp-for="CodPerfil" asp-items="Model.ListPerfil" *@>
-								<option value="">Selecionar Ambiente</option>
-							</select>
-						</div>
-						<div class="col-sm-1">
-							<button type="button" class="ml-xs btn btn-primary"
-									data-toggle="modal" data-target="#mdAmbiente">
-								<i class="fa fa-plus"></i>
-							</button>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-2 control-label">Adicionados</label>
-						<div class="col-sm-10">
-							<table class="table table-bordered table-striped mb-0" id="datatable-default">
-								<thead>
-									<tr>
-										<th>Esporte</th>
-										<th>Ações</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>Natação</td>
-										<td class="actions">
-											<a data-toggle="tooltip" data-placement="top" title="Excluir" @* asp-action="Delete" *@ asp-controller="Perfil" asp-route-id="1" class="on-default remove-row" style='color:#F44336'><i class="fa fa-trash-o"></i></a>
-										</td>
-									</tr>
-									<tr>
-										<td>Futsal</td>
-										<td class="actions">
-											<a data-toggle="tooltip" data-placement="top" title="Excluir" @* asp-action="Delete" *@ asp-controller="Perfil" asp-route-id="1" class="on-default remove-row" style='color:#F44336'><i class="fa fa-trash-o"></i></a>
-										</td>
-									</tr>
-								</tbody>
-							</table>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">Nome <span class="required">*</span></label>
+                        <div class="col-sm-6">
+                            <input type="text" name="nome" id="nome"
+                                   placeholder="eg.: Nome completo do profissional" maxlength="200" class="form-control" required />
+                        </div>
+                        <label class="col-sm-2 control-label">Data Nascimento <span class="required">*</span></label>
+                        <div class="col-sm-3">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </span>
+                                <input id="DtNascimento" name="DtNascimento"
+                                       required
+                                       title="Por favor informe a data de nascimento."
+                                       style="z-index: auto;"
+                                       data-plugin-datepicker data-date-format="dd/mm/yyyy" data-plugin-options='{"language": "pt-BR"}'
+                                       placeholder="__/__/____" class="form-control startdate"
+                                       class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">Email <span class="required">*</span></label>
+                        <div class="col-sm-5">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-envelope"></i>
+                                </span>
+                                <input type="text" name="email" maxlength="100" class="form-control"
+                                       placeholder="eg.: Endereço eletrônico válido do profissional" />
+                            </div>
+                        </div>
+                        <label class="col-sm-1 control-label">Sexo <span class="required">*</span></label>
+                        <div class="col-sm-3">
+                            <select class="form-control populate select2" name="ddlSexo" id="ddlSexo"
+                                    title="Por favor selecione um sexo." required>
+                                <option value="">Selecionar Sexo</option>
+                                <option value="M">MASCULINO</option>
+                                <option value="F">FEMININO</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">Cpf </label>
+                        <div class="col-sm-3">
+                            <input id="cpf" name="cpf"
+                                   v-model="params.cpf"
+                                   type="text" value="" class="form-control" placeholder="eg.: Número do CPF do aluno"
+                                   maxlength="14" />
+                        </div>
+                        <label class="col-lg-1 control-label text-lg-right pt-2">Telefone</label>
+                        <div class="col-lg-3">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-phone"></i>
+                                </span>
+                                <input id="numTelefone" name="numTelefone" placeholder="eg.: (00) 0000-0000" class="form-control"
+                                       maxlength="14"
+                                       title="Por favor informe o telefone " >
+                            </div>
+                        </div>
+                        <label class="col-sm-1 control-label">Celular </label>
+                        <div class="col-sm-3">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-phone"></i>
+                                </span>
+                                <input id="numCelular" name="numCelular" placeholder="eg.: (00) 00000-0000" class="form-control"
+                                       maxlength="14"
+                                       title="Por favor informe o celular">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">Endereço</label>
+                        <div class="col-sm-5">
+                            <input type="text" id="endereco" name="endereco" maxlength="200" class="form-control" placeholder="eg.: Endereço do aluno" />
+                        </div>
+                        <label class="col-sm-1 control-label">Número</label>
+                        <div class="col-sm-2">
+                            <input type="number" id="numero" name="numero" maxlength="4" class="form-control" placeholder="eg.: 0000" />
+                        </div>
+                        <label class="col-sm-1 control-label">Cep</label>
+                        <div class="col-sm-2">
+                            <input type="text" id="cep" name="cep" maxlength="9" class="form-control" placeholder="eg.: 00000-000" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">Bairro </label>
+                        <div class="col-sm-3">
+                            <input type="bairro" name="bairro" maxlength="50" class="form-control" placeholder="eg.: Nome do bairro" />
+                        </div>
+                        <label class="col-sm-1 control-label">Estado </label>
+                        <div class="col-sm-3">
+                            <select class="form-control populate select2" name="ddlEstado" id="ddlEstado"
+                                    title="Por favor selecione um estado." 
+                            @* asp-for="CodEstado" asp-items="Model.ListEstado" *@>
+                                <option value="">Selecionar Estado</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-1 control-label">Municipio </label>
+                        <div class="col-sm-3">
+                            <select class="form-control populate select2" name="ddlEstado" id="ddlEstado"
+                                    title="Por favor selecione um estado."
+                            @* asp-for="CodMunicipio" asp-items="Model.ListMunicipio" *@>
+                                <option value="">Selecionar Estado</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label pull-left">Cadastro ativo para login?</label>
+                        <div class="col-sm-1">
+                            <div class="switch switch-sm switch-success">
+                                <input type="checkbox" id="ativo" name="ativo" data-plugin-ios-switch checked="checked" />
+                            </div>
+                        </div>
+                        <label class="col-sm-2 control-label">Cadastro habilitado a operar?</label>
+                        <div class="col-sm-1">
+                            <div class="switch switch-sm switch-success">
+                                <input type="checkbox" id="habilitado" name="habilitado" data-plugin-ios-switch checked="checked" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">&nbsp;&nbsp; </label>
+                        <div class="col-sm-12">
+                            <blockquote class="info">
+                                <strong>Gerenciamento de ambientes</strong>
+                            </blockquote>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Ambiente</label>
+                        <div class="col-sm-4">
+                            <select class="form-control populate select2" name="ddlAmbiente" id="ddlAmbiente"
+                                    style="width: 100%" title="Por favor selecione o turno."
+                            @* asp-for="CodAmbiente" asp-items="Model.ListAmbiente" *@>
+                                <option value="">Selecionar Ambiente</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-1">
+                            <button type="button" class="ml-xs btn btn-primary"
+                                    data-toggle="modal" data-target="#mdAmbiente">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Adicionados</label>
+                        <div class="col-sm-10">
+                            <table class="table table-bordered table-striped mb-0" id="datatable-default">
+                                <thead>
+                                    <tr>
+                                        <th>Esporte</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Natação</td>
+                                        <td class="actions">
+                                            <a data-toggle="tooltip" data-placement="top" title="Excluir" @* asp-action="Delete" *@ asp-controller="Perfil" asp-route-id="1" class="on-default remove-row" style='color:#F44336'><i class="fa fa-trash-o"></i></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Futsal</td>
+                                        <td class="actions">
+                                            <a data-toggle="tooltip" data-placement="top" title="Excluir" @* asp-action="Delete" *@ asp-controller="Perfil" asp-route-id="1" class="on-default remove-row" style='color:#F44336'><i class="fa fa-trash-o"></i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
 
-						</div>
-					</div>
-				</div>
-				<footer class="panel-footer">
-					<div class="row">
-						<div class="col-md-9 col-md-offset-3">
-							<button type="submit" class="btn btn-dark pull-right" style="margin-left: 5px;margin-right: 5px;"><i class="fa fa-reply"></i> &nbsp;&nbsp;Voltar</button>
-							<button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
-							<button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
-						</div>
-					</div>
-				</footer>
-			</section>
-		}
-	</div>
+                        </div>
+                    </div>
+                </div>
+                <footer class="panel-footer">
+                    <div class="row">
+                        <div class="col-md-9 col-md-offset-3">
+                            <button type="submit" class="btn btn-dark pull-right" style="margin-left: 5px;margin-right: 5px;"><i class="fa fa-reply"></i> &nbsp;&nbsp;Voltar</button>
+                            <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
+                            <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
+                        </div>
+                    </div>
+                </footer>
+            </section>
+        }
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="mdAmbiente" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="fa fa-plus"></i> &nbsp;&nbsp;<strong>Novo Ambiente</strong></h5>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Nome Ambiente<span class="required">*</span></label>
+                    <div class="col-sm-9">
+
+                        <input type="email" name="email" class="form-control" required />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
+                <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 @section CssSpecificVendor {
-	<link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />
+    <link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css" />
+    <link rel="stylesheet" href="~/assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
+    <link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />
+    <link href="~/assets/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.css" rel="stylesheet" />
 }
 @section Scripts {
-	<script src="~/assets/vendor/ios7-switch/ios7-switch.js"></script>
-	<script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
-	<script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
-	<script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
-	<script src="~/js/formatTable.js"></script>
-	<script>
+    <script src="~/assets/vendor/ios7-switch/ios7-switch.js"></script>
+    <script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
+    <script src="~/assets/vendor/select2/js/select2.js"></script>
+    <script src="~/assets/vendor/jquery-mask/jquery.mask.js"></script>
+    <script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
+    <script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    <script src="~/assets/vendor/bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+    <script src="~/js/formatTable.js"></script>
+    <script src="~/js/profissionais.js"></script>
+    <script>
 
 
-		// iosSwitcher
-		(function ($) {
+        // iosSwitcher
+        (function ($) {
 
-			'use strict';
+            'use strict';
 
-			if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
+            if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
 
-				$(function () {
-					$('[data-plugin-ios-switch]').each(function () {
-						var $this = $(this);
+                $(function () {
+                    $('[data-plugin-ios-switch]').each(function () {
+                        var $this = $(this);
 
-						$this.themePluginIOS7Switch();
-					});
-				});
+                        $this.themePluginIOS7Switch();
+                    });
+                });
 
-			}
+            }
 
-		}).apply(this, [jQuery]);
+        }).apply(this, [jQuery]);
 
-	</script>
+    </script>
 }
 
 

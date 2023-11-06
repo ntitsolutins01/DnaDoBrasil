@@ -5,23 +5,20 @@ namespace WebApp.Controllers
 {
     public class LaudoController : Controller
     {
-        // GET: LaudoController
         public ActionResult Index()
         {
             return View();
         }
-
-        // GET: LaudoController/Details/5
+        
         public ActionResult Details(int id)
         {
             return View();
         }
-
-        //// GET: LaudoController/Create
-        //public ActionResult Create()
-        //{
-        //    return View();
-        //}
+        
+        public ActionResult CreateLaudo()
+        {
+            return View();
+        }
 
         //// POST: LaudoController/Create
         //[HttpPost]

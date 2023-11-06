@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewData["Title"] = "Listagem Sistema Socioeconomico";
+    ViewData["Title"] = "Listagem de Parceiros";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -18,7 +18,7 @@
                 </header>
                 <div class="panel-body">
 	                <div class="form-group row">
-		                <label class="col-sm-3 control-label">Sistema Socioeconomico</label>
+		                <label class="col-sm-3 control-label">Parceiros</label>
 		                <div class="col-md-6 form-group">
 			                <input type="text" class="form-control">
 		                </div>
@@ -63,16 +63,16 @@
             <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
         </div>
 
-        <h2 class="panel-title">Listagem de Sistema Socioeconomico</h2>
+        <h2 class="panel-title">Listagem de Parceiros</h2>
 
     </header>
     <div class="panel-body">
         <div class="form-group row">
 	        <div class="col-sm-12 pull-right">
-		        @* href="@Url.Action("Create", "CadeiaProdutiva")" *@ 
-		        <a id="addToTable"
-		           data-toggle="modal" data-target="#mdExcluir"
-                   class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Novo Sistema Socioeconomico </a>
+		        @* data-toggle="modal" data-target="#mdExcluir" *@
+				<a id="addToTable" href="@Url.Action("Create", "SistemaSocioeconomico")"
+		           
+                   class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Novo Parceiros </a>
 	        </div>
         </div>
         <table class="table table-bordered table-striped mb-0" id="datatable-default">

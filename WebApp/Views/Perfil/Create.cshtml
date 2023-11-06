@@ -1,118 +1,100 @@
-﻿@{
-	ViewData["Title"] = "Inclusão de Perfil";
-	Layout = "~/Views/Shared/_Layout.cshtml";
+﻿@model WebApp.Models.PerfilModel
+
+@{
+    ViewData["Title"] = "Inclusão de Perfil";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="row">
-	<div class="col-md-12">
-		@using (@Html.BeginForm("Create", "Perfil", FormMethod.Post, new { id = "form", @class = "form-horizontal" }))
-		{
-			<section class="panel">
-				<header class="panel-heading">
-					<div class="panel-actions">
-						<a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
-					</div>
+    <div class="col-md-12">
+        @using (@Html.BeginForm("Create", "Perfil", FormMethod.Post, new { id = "formPerfil", @class = "form-horizontal" }))
+        {
+            <section class="panel">
+                <header class="panel-heading">
+                    <div class="panel-actions">
+                        <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
+                    </div>
 
-					<h2 class="panel-title">Cadastro de Perfil</h2>
-				</header>
-				<div class="panel-body">
+                    <h2 class="panel-title">Cadastro de Perfil</h2>
+                </header>
+                <div class="panel-body">
 
-					<div class="form-group row">
-						<label class="col-sm-3 control-label text-sm-right pt-2">Nome do Perfil <span class="required">*</span></label>
-						<div class="col-sm-9">
-							<input type="text" name="NomUsuario" class="form-control"
-								   maxlength="60"
-								   title="Por favor informe o nome do perfil." required />
-						</div>
-					</div>
-				<div class="form-group row">
-				<label class="col-lg-3 control-label text-lg-right pt-2 col-lg-3">Modulo Aluno</label>
-					<div class="col-lg-2">
-						<label class="col-sm-6 control-label text-sm-right pt-2">Listagem</label>
-						<div class="switch switch-sm switch-dark">
-								<input type="checkbox" id="AlunoIncluir" name="AlunoIncluir" data-plugin-ios-switch checked="checked" />
-						</div>
-					</div>
-					<div class="col-lg-2">
-						<label class="col-sm-6 control-label text-sm-right pt-2">Incluir</label>
-						<div class="switch switch-sm switch-dark">
-								<input type="checkbox" id="AlunoIncluir" name="AlunoIncluir" data-plugin-ios-switch checked="checked" />
-						</div>
-					</div>
-					<div class="col-lg-2">
-						<label class="col-sm-6 control-label text-sm-right pt-2">Alterar</label>
-						<div class="switch switch-sm switch-dark">
-								<input type="checkbox" id="AlunoIncluir" name="AlunoIncluir" data-plugin-ios-switch checked="checked" />
-						</div>
-					</div>
-					<div class="col-lg-2">
-						<label class="col-sm-6 control-label text-sm-right pt-2">Excluir</label>
-						<div class="switch switch-sm switch-dark">
-								<input type="checkbox" id="AlunoIncluir" name="AlunoIncluir" data-plugin-ios-switch checked="checked" />
-						</div>
-					</div>
-				</div>
-					@*  @foreach (var modulo in Model.ListModulo)
-				{
-				<div class="form-group row">
-				<label class="col-lg-3 control-label text-lg-right pt-2 col-lg-3">Módulo @modulo.NomModulo</label>
-				<div class="col-lg-9">
-				@{
-				string[] ListFuncionalidades = modulo.ListFuncionalidades.FirstOrDefault().NomFuncionalidade.Split(',');
-				foreach (var funcionalidade in ListFuncionalidades)
-				{
-				<label class="col-sm-2 control-label text-sm-right pt-2">@funcionalidade</label>
-				<div class="switch switch-sm switch-dark">
-				<input type="checkbox" id="@modulo.NomModulo@funcionalidade" name="@modulo.NomModulo@funcionalidade" data-plugin-ios-switch checked="checked" />
-				</div>
-				}
-				}
-				</div>
-				</div>
-				} *@
-
-				</div>
-				<footer class="panel-footer">
-					<div class="row">
-						<div class="col-md-9 col-md-offset-3">
-							<button type="submit" class="btn btn-dark pull-right" style="margin-left: 5px;margin-right: 5px;"><i class="fa fa-reply"></i> &nbsp;&nbsp;Voltar</button>
-							<button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
-							<button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
-						</div>
-					</div>
-				</footer>
-			</section>
-		}
-	</div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 control-label text-sm-right pt-2">Nome do Perfil <span class="required">*</span></label>
+                        <div class="col-sm-9">
+                            <input type="text" name="nome" class="form-control"
+                                   maxlength="60"
+                                   title="Por favor informe o nome do perfil." required />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 control-label text-sm-right pt-2">Descrição do Perfil <span class="required">*</span></label>
+                        <div class="col-sm-9">
+                            <input type="text" name="descricao" class="form-control"
+                                   maxlength="60"
+                                   title="Por favor informe a descrição do perfil." required />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        @foreach (var modulo in Model.Modulos)
+                        {
+                            <label class="col-lg-3 control-label text-lg-right pt-2 col-lg-3">Modulo @modulo.Nome</label>
+                            
+                                string[] funcionalidades = modulo.Funcionalidades.FirstOrDefault().Nome.Split(',');
+                                foreach (var funcionalidade in funcionalidades)
+                                {
+                                    <div class="col-lg-2">
+                                        <label class="col-sm-6 control-label text-sm-right pt-2">@funcionalidade</label>
+                                        <div class="switch switch-sm switch-dark">
+                                            <input type="checkbox" id="@modulo.Nome@funcionalidade" name="@modulo.Nome@funcionalidade" data-plugin-ios-switch checked="checked" />
+                                        </div>
+                                    </div>
+                                }
+                            
+                        }
+                    </div>
+                </div>
+                <footer class="panel-footer">
+                    <div class="row">
+                        <div class="col-md-9 col-md-offset-3">
+                            <a href="@Url.Action("Index", "Perfil")" class="btn btn-dark pull-right" style="margin-left: 5px;margin-right: 5px;"><i class="fa fa-reply"></i> &nbsp;&nbsp;Voltar</a>
+                            <button type="reset" class="btn btn-danger pull-right" style="margin-left: 5px;"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
+                            <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
+                        </div>
+                    </div>
+                </footer>
+            </section>
+        }
+    </div>
 </div>
 
 @section CssSpecificVendor {
 }
 @section Scripts {
-	<script src="~/assets/vendor/ios7-switch/ios7-switch.js"></script>
-	<script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
-	<script>
+    <script src="~/assets/vendor/ios7-switch/ios7-switch.js"></script>
+    <script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
+    <script>
 
 
-		// iosSwitcher
-		(function ($) {
+        // iosSwitcher
+        (function ($) {
 
-			'use strict';
+            'use strict';
 
-			if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
+            if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
 
-				$(function () {
-					$('[data-plugin-ios-switch]').each(function () {
-						var $this = $(this);
+                $(function () {
+                    $('[data-plugin-ios-switch]').each(function () {
+                        var $this = $(this);
 
-						$this.themePluginIOS7Switch();
-					});
-				});
+                        $this.themePluginIOS7Switch();
+                    });
+                });
 
-			}
+            }
 
-		}).apply(this, [jQuery]);
+        }).apply(this, [jQuery]);
 
-	</script>
+    </script>
 }
 

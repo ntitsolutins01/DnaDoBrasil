@@ -29,7 +29,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\assets\vendor\axios\axios.min.js" />
+    <None Include="wwwroot\assets\vendor\axios\axios.min.map" />
     <None Include="wwwroot\assets\vendor\jquery-mask\jquery.mask.js" />
+    <None Include="wwwroot\assets\vendor\vue\vue.js" />
   </ItemGroup>
 
   <ItemGroup>
