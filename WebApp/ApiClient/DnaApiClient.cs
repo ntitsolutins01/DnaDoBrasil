@@ -44,21 +44,16 @@ namespace WebApp.ApiClient
             var data = response.Result.Content.ReadAsStringAsync();
             return Task.FromResult(JsonConvert.DeserializeObject<long>(data.Result));
         }
-        //private async Task<MessageModel<T>> PostAsync<T>(Uri requestUrl, T content)
-        //{
-        //    addHeaders();
-        //    var response = await _httpClient.PostAsync(requestUrl.ToString(), CreateHttpContent<T>(content));
-        //    response.EnsureSuccessStatusCode();
-        //    var data = await response.Content.ReadAsStringAsync();
-        //    return JsonConvert.DeserializeObject<MessageModel<T>>(data);
-        //}
-        private async Task<T1> PostAsync<T1, T2>(Uri requestUrl, T2 content)
+
+        /// <summary>
+        /// Common method for making DELETE calls
+        /// </summary>
+        private Task<long> Delete<T>(Uri requestUrl)
         {
             addHeaders();
-            var response = await _httpClient.PostAsync(requestUrl.ToString(), CreateHttpContent<T2>(content));
-            response.EnsureSuccessStatusCode();
-            var data = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<T1>(data);
+             var response = _httpClient.DeleteAsync(requestUrl);
+            var data = response.Result.Content.ReadAsStringAsync();
+            return Task.FromResult(JsonConvert.DeserializeObject<long>(data.Result));
         }
 
         private Uri CreateRequestUri(string relativePath, string queryString = "")

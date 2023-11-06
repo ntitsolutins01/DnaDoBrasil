@@ -1,0 +1,136 @@
+﻿@using System.Collections
+@using System.Security.Claims
+@using System.Security.Cryptography.X509Certificates
+@model WebApp.Models.PerfilModel
+@{
+    ViewData["Title"] = "Alteração de Perfil";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        @using (@Html.BeginForm("Edit", "Perfil", FormMethod.Post, new { id = "formPerfil" }))
+        {
+            <section class="card">
+                <header class="card-header">
+                    <div class="card-actions">
+                        <a href="#" class="card-action card-action-toggle" data-card-toggle></a>
+                        <a href="#" class="card-action card-action-dismiss" data-card-dismiss></a>
+                    </div>
+
+                    <h2 class="card-title">Editar Perfil</h2>
+
+                </header>
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label class="col-sm-3 control-label text-sm-right pt-2">Nome do Perfil <span class="required">*</span></label>
+                        <div class="col-lg-9">
+                            @* @if (Model.Perfil.NomPerfil == UserRoles.Administrator)
+                            {
+                                <input type="text" name="NomPerfil" class="form-control" placeholder="eg.: Nome do Perfil" value="@Model.Perfil.NomPerfil" title="Por favor informe Nome do Perfil" required readonly />
+                            }
+                            else
+                            { *@
+                            <input type="text" name="NomPerfil" class="form-control" placeholder="eg.: Nome do Perfil" 
+                                   value="@Model.Perfil.Nome" title="Por favor informe Nome do Perfil" required />
+                            @* } *@
+
+                        </div>
+                    </div>
+                    @foreach (var modulo in Model.Modulos)
+                    {
+                        <div class="form-group row">
+                            <label class="col-lg-3 control-label text-lg-right pt-2 col-lg-3">Módulo @modulo.Nome</label>
+                            <div class="col-lg-9">
+                                @{
+                                    string[] funcionalidades = modulo.Funcionalidades.FirstOrDefault().Nome.Split(',');
+                                    foreach (var funcionalidade in funcionalidades)
+                                    {
+                                        <label class="col-sm-2 control-label text-sm-right pt-2">@funcionalidade</label>
+                                        <div class="switch switch-sm switch-dark">
+
+                                            @{
+                                                var listFuncSaved = Model.Claims.ToList().Where(x => x.Type == modulo.Nome);
+
+                                                var fun = listFuncSaved.Select(s => s.Value).FirstOrDefault()?.Split(',').ToList().Find(
+                                                delegate (string bk)
+                                                {
+                                                    return bk == funcionalidade;
+                                                }
+                                                );
+                                                if (fun != null)
+                                                {
+                                                    <input type="checkbox" id="@modulo.Nome@funcionalidade" name="@modulo.Nome@funcionalidade" data-plugin-ios-switch checked="checked" />
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" id="@modulo.Nome@funcionalidade" name="@modulo.Nome@funcionalidade" data-plugin-ios-switch />
+                                                }
+                                            }
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+                <footer class="card-footer">
+                    <div class="row justify-content-end">
+                        <div class="col-sm-9">
+                            <button class="btn  btn-success pull-left mr-2">Salvar &nbsp;&nbsp;<i class="fa fa-save"></i></button>
+                            <button type="reset" class="btn btn-danger pull-left mr-2">Cancelar &nbsp;&nbsp;<i class="fa fa-remove"></i></button>
+                            <a href="@Url.Action("Index", "Perfil")" class="btn btn-dark pull-left">Voltar &nbsp;&nbsp;<i class="fa fa-reply"></i></a>
+
+                        </div>
+                    </div>
+                </footer>
+            </section>
+        }
+    </div>
+</div>
+@section CssSpecificVendor {
+}
+@section Scripts {
+    <script src="~/vendor/ios7-switch/ios7-switch.js"></script>
+    <script src="~/vendor/jquery-validation/jquery.validate.js"></script>
+    <script>
+        (function () {
+
+            'use strict';
+
+            // basic
+            $("#form").validate({
+                highlight: function (label) {
+                    $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
+                },
+                success: function (label) {
+                    $(label).closest('.form-group').removeClass('has-error');
+                    label.remove();
+                },
+                errorPlacement: function (error, element) {
+                    var placement = element.closest('.input-group');
+                    if (!placement.get(0)) {
+                        placement = element;
+                    }
+                    if (error.text() !== '') {
+                        placement.after(error);
+                    }
+                }
+            });
+
+            if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
+
+                $(function () {
+                    $('[data-plugin-ios-switch]').each(function () {
+                        var $this = $(this);
+
+                        $this.themePluginIOS7Switch();
+                    });
+                });
+
+            }
+
+        }).apply(this, [jQuery]);
+
+    </script>
+}
