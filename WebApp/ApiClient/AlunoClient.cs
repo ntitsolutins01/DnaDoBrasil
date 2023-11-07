@@ -5,32 +5,38 @@ namespace WebApp.ApiClient
 {
     public partial class DnaApiClient
     {
+        protected DnaApiClient()
+        {
+            throw new NotImplementedException();
+        }
+
+        private const string ResourceAluno = "Alunos";
 
         #region Main Methods
 
-        public Task<long> CreatePerfil(PerfilModel.CreateUpdateCommand command)
+        public Task<long> CreateAluno(AlunoModel.CreateUpdateAlunoCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourcePerfil}"));
+                $"{ResourceAluno}"));
             return Post(requestUrl, command);
         }
-        public Task<long> UpdatePerfil(PerfilModel.CreateUpdateCommand command)
+        public Task<long> UpdateAluno(AlunoModel.CreateUpdateAlunoCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourcePerfil}"));
+                $"{ResourceAluno}"));
             return Put(requestUrl, command);
         }
-        public List<PerfilDto> GetPerfilAll()
+        public List<AlunoDto> GetAlunoAll()
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourcePerfil}"));
-            return Get<List<PerfilDto>>(requestUrl);
+                $"{ResourceAluno}"));
+            return Get<List<AlunoDto>>(requestUrl);
         }
 
-        public Task<long> DeletePerfil(string id)
+        public Task<long> DeleteAluno(string id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourcePerfil}/{id}"));
+                $"{ResourceAluno}/{id}"));
             return Delete<string>(requestUrl);
         }
 
@@ -38,23 +44,23 @@ namespace WebApp.ApiClient
 
         #region Methods
 
-        public PerfilDto GetPerfilById(string id)
+        public AlunoDto GetAlunoById(string id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourcePerfil}/{id}"));
-            return Get<PerfilDto>(requestUrl);
+                $"{ResourceAluno}/{id}"));
+            return Get<AlunoDto>(requestUrl);
         }
-        public List<ModuloDto> GetModuloAll()
-        {
-            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}/Modulos"));
-            return Get<List<ModuloDto>>(requestUrl);
-        }
-
-        //public Task<bool> ExistUsuarioByIdPerfil(string id)
+        //public List<DeficienciaDto> GetDeficienciasAll()
         //{
         //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-        //        $"{ResourcePerfil}/ExistUsuarioByIdPerfil"));
+        //        $"{ResourceAluno}/Deficiencias"));
+        //    return Get<List<DeficienciaDto>>(requestUrl);
+        //}
+
+        //public Task<bool> ExistUsuarioByIdAluno(string id)
+        //{
+        //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+        //        $"{ResourceAluno}/ExistUsuarioByIdAluno"));
         //    return PostAsync<bool, string>(requestUrl, id);
         //}
 
