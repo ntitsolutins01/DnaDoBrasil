@@ -1,12 +1,12 @@
 ﻿using System.Text;
 using Newtonsoft.Json;
+using WebApp.Models;
 
 namespace WebApp.ApiClient
 {
     public partial class DnaApiClient
-    {
-
-        private readonly HttpClient _httpClient;
+	{
+		private readonly HttpClient _httpClient;
         private Uri BaseEndpoint { get; }
         
         public DnaApiClient(Uri baseEndpoint)
@@ -15,7 +15,7 @@ namespace WebApp.ApiClient
             _httpClient = new HttpClient();
         }
 
-        private T Get<T>(Uri requestUrl)
+        public T Get<T>(Uri requestUrl)
         {
             addHeaders();
             var response = _httpClient.GetAsync(requestUrl, HttpCompletionOption.ResponseHeadersRead);
@@ -26,7 +26,7 @@ namespace WebApp.ApiClient
         /// <summary>
         /// Common method for making POST calls
         /// </summary>
-        private Task<long> Post<T>(Uri requestUrl, T content)
+        public Task<long> Post<T>(Uri requestUrl, T content)
         {
             addHeaders();
              var response = _httpClient.PostAsync(requestUrl.ToString(), CreateHttpContent<T>(content));
@@ -37,7 +37,7 @@ namespace WebApp.ApiClient
         /// <summary>
         /// Common method for making PUT calls
         /// </summary>
-        private Task<long> Put<T>(Uri requestUrl, T content)
+        public Task<long> Put<T>(Uri requestUrl, T content)
         {
             addHeaders();
              var response = _httpClient.PutAsync(requestUrl.ToString(), CreateHttpContent<T>(content));
@@ -48,7 +48,7 @@ namespace WebApp.ApiClient
         /// <summary>
         /// Common method for making DELETE calls
         /// </summary>
-        private Task<long> Delete<T>(Uri requestUrl)
+        public Task<long> Delete<T>(Uri requestUrl)
         {
             addHeaders();
              var response = _httpClient.DeleteAsync(requestUrl);
@@ -56,7 +56,7 @@ namespace WebApp.ApiClient
             return Task.FromResult(JsonConvert.DeserializeObject<long>(data.Result));
         }
 
-        private Uri CreateRequestUri(string relativePath, string queryString = "")
+        public Uri CreateRequestUri(string relativePath, string queryString = "")
         {
             var endpoint = new Uri(BaseEndpoint, relativePath);
             var uriBuilder = new UriBuilder(endpoint);
@@ -89,5 +89,9 @@ namespace WebApp.ApiClient
             //_httpClient.DefaultRequestHeaders.Authorization =
             //    new AuthenticationHeaderValue("Bearer", "Your Oauth token");
         }
+
+        private const string ResourcePerfil = "Perfis";
+        private const string ResourceConfiguracaoSistema = "ConfiguracaoSistema";
+        private const string ResourceDeficiencia = "Deficiencias";
     }
 }

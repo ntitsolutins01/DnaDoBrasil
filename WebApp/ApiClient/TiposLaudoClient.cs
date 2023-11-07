@@ -5,32 +5,31 @@ namespace WebApp.ApiClient
 {
     public partial class DnaApiClient
     {
-
         #region Main Methods
 
-        public Task<long> CreatePerfil(PerfilModel.CreateUpdateCommand command)
+        public Task<long> CreateTiposLaudo(TiposLaudoModel.CreateUpdateTiposLaudoCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourcePerfil}"));
+                $"{ResourceConfiguracaoSistema}"));
             return Post(requestUrl, command);
         }
-        public Task<long> UpdatePerfil(PerfilModel.CreateUpdateCommand command)
+        public Task<long> UpdateTiposLaudo(TiposLaudoModel.CreateUpdateTiposLaudoCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourcePerfil}"));
+                $"{ResourceConfiguracaoSistema}"));
             return Put(requestUrl, command);
         }
-        public List<PerfilDto> GetPerfilAll()
+        public List<TiposLaudoDto> GetTiposLaudoAll()
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourcePerfil}"));
-            return Get<List<PerfilDto>>(requestUrl);
+                $"{ResourceConfiguracaoSistema}"));
+            return Get<List<TiposLaudoDto>>(requestUrl);
         }
 
-        public Task<long> DeletePerfil(string id)
+        public Task<long> DeleteTiposLaudo(string id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourcePerfil}/{id}"));
+                $"{ResourceConfiguracaoSistema}/{id}"));
             return Delete<string>(requestUrl);
         }
 
@@ -38,23 +37,23 @@ namespace WebApp.ApiClient
 
         #region Methods
 
-        public PerfilDto GetPerfilById(string id)
+        public TiposLaudoDto GetTiposLaudoById(string id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourcePerfil}/{id}"));
-            return Get<PerfilDto>(requestUrl);
+                $"{ResourceConfiguracaoSistema}/{id}"));
+            return Get<TiposLaudoDto>(requestUrl);
         }
-        public List<ModuloDto> GetModuloAll()
-        {
-            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}/Modulos"));
-            return Get<List<ModuloDto>>(requestUrl);
-        }
-
-        //public Task<bool> ExistUsuarioByIdPerfil(string id)
+        //public List<DeficienciaDto> GetDeficienciasAll()
         //{
         //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-        //        $"{ResourcePerfil}/ExistUsuarioByIdPerfil"));
+        //        $"{ResourceConfiguracaoSistema}/Deficiencias"));
+        //    return Get<List<DeficienciaDto>>(requestUrl);
+        //}
+
+        //public Task<bool> ExistUsuarioByIdTiposLaudo(string id)
+        //{
+        //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+        //        $"{ResourceConfiguracaoSistema}/ExistUsuarioByIdTiposLaudo"));
         //    return PostAsync<bool, string>(requestUrl, id);
         //}
 
