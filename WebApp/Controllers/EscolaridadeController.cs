@@ -13,11 +13,12 @@ namespace WebApp.Controllers
     {
         public IActionResult Index(int? crud, int? notify, string message = null)
         {
-            SetNotifyMessage(notify, message);
-            SetCrudMessage(crud);
-            var response = ApiClientFactory.Instance.GetEscolaridadeAll();
+            //SetNotifyMessage(notify, message);
+            //SetCrudMessage(crud);
+            //var response = ApiClientFactory.Instance.GetEscolaridadeAll();
 
-            return View(new EscolaridadeModel(){Escolaridades = response});
+            //return View(new EscolaridadeModel(){Escolaridades = response});
+            return View();
         }
 
         //[ClaimsAuthorize("ConfiguracaoSistema", "Incluir")]
@@ -30,26 +31,26 @@ namespace WebApp.Controllers
         }
 
         //[ClaimsAuthorize("Usuario", "Incluir")]
-        public async Task<ActionResult> Create(IFormCollection collection)
-        {
-            try
-            {
-                var command = new EscolaridadeModel.CreateUpdateEscolaridadeCommand
-                {
+        //public async Task<ActionResult> Create(IFormCollection collection)
+        //{
+        //    try
+        //    {
+        //        var command = new EscolaridadeModel.CreateUpdateEscolaridadeCommand
+        //        {
 
-                    Nome = collection["nome"].ToString(),
-                    Descricao = collection["descricao"].ToString()
-                };
+        //            Nome = collection["nome"].ToString(),
+        //            Descricao = collection["descricao"].ToString()
+        //        };
 
-                await ApiClientFactory.Instance.CreateEscolaridade(command);
+        //        await ApiClientFactory.Instance.CreateEscolaridade(command);
 
-                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
-            }
-            catch (Exception e)
-            {
-                return RedirectToAction(nameof(Index));
-            }
-        }
+        //        return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //}
 
         //[ClaimsAuthorize("Escolaridade", "Alterar")]
         //public ActionResult Edit(string id)
