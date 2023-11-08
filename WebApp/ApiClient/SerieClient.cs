@@ -5,32 +5,31 @@ namespace WebApp.ApiClient
 {
     public partial class DnaApiClient
     {
-
         #region Main Methods
 
-        public Task<long> CreatePerfil(PerfilModel.CreateUpdateCommand command)
+        public Task<long> CreateSerie(SerieModel.CreateUpdateSerieCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourcePerfil}"));
+                $"{ResourceConfiguracaoSistema}"));
             return Post(requestUrl, command);
         }
-        public Task<long> UpdatePerfil(PerfilModel.CreateUpdateCommand command)
+        public Task<long> UpdateSerie(SerieModel.CreateUpdateSerieCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourcePerfil}"));
+                $"{ResourceConfiguracaoSistema}"));
             return Put(requestUrl, command);
         }
-        public List<PerfilDto> GetPerfilAll()
+        public List<SerieDto> GetSerieAll()
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourcePerfil}"));
-            return Get<List<PerfilDto>>(requestUrl);
+                $"{ResourceConfiguracaoSistema}"));
+            return Get<List<SerieDto>>(requestUrl);
         }
 
-        public Task<long> DeletePerfil(string id)
+        public Task<long> DeleteSerie(string id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourcePerfil}/{id}"));
+                $"{ResourceConfiguracaoSistema}/{id}"));
             return Delete<string>(requestUrl);
         }
 
@@ -38,23 +37,23 @@ namespace WebApp.ApiClient
 
         #region Methods
 
-        public PerfilDto GetPerfilById(string id)
+        public SerieDto GetSerieById(string id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourcePerfil}/{id}"));
-            return Get<PerfilDto>(requestUrl);
+                $"{ResourceConfiguracaoSistema}/{id}"));
+            return Get<SerieDto>(requestUrl);
         }
-        public List<ModuloDto> GetModuloAll()
-        {
-            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}/Modulos"));
-            return Get<List<ModuloDto>>(requestUrl);
-        }
-
-        //public Task<bool> ExistUsuarioByIdPerfil(string id)
+        //public List<SerieDto> GetSeriesAll()
         //{
         //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-        //        $"{ResourcePerfil}/ExistUsuarioByIdPerfil"));
+        //        $"{ResourceConfiguracaoSistema}/Series"));
+        //    return Get<List<SerieDto>>(requestUrl);
+        //}
+
+        //public Task<bool> ExistUsuarioByIdSerie(string id)
+        //{
+        //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+        //        $"{ResourceConfiguracaoSistema}/ExistUsuarioByIdSerie"));
         //    return PostAsync<bool, string>(requestUrl, id);
         //}
 

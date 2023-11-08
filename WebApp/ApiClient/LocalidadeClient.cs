@@ -5,32 +5,31 @@ namespace WebApp.ApiClient
 {
     public partial class DnaApiClient
     {
-
         #region Main Methods
 
-        public Task<long> CreatePerfil(PerfilModel.CreateUpdateCommand command)
+        public Task<long> CreateLocalidade(LocalidadeModel.CreateUpdateLocalidadeCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourcePerfil}"));
+                $"{ResourceConfiguracaoSistema}"));
             return Post(requestUrl, command);
         }
-        public Task<long> UpdatePerfil(PerfilModel.CreateUpdateCommand command)
+        public Task<long> UpdateLocalidade(LocalidadeModel.CreateUpdateLocalidadeCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourcePerfil}"));
+                $"{ResourceConfiguracaoSistema}"));
             return Put(requestUrl, command);
         }
-        public List<PerfilDto> GetPerfilAll()
+        public List<LocalidadeDto> GetLocalidadeAll()
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourcePerfil}"));
-            return Get<List<PerfilDto>>(requestUrl);
+                $"{ResourceConfiguracaoSistema}"));
+            return Get<List<LocalidadeDto>>(requestUrl);
         }
 
-        public Task<long> DeletePerfil(string id)
+        public Task<long> DeleteLocalidade(string id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourcePerfil}/{id}"));
+                $"{ResourceConfiguracaoSistema}/{id}"));
             return Delete<string>(requestUrl);
         }
 
@@ -38,23 +37,23 @@ namespace WebApp.ApiClient
 
         #region Methods
 
-        public PerfilDto GetPerfilById(string id)
+        public LocalidadeDto GetLocalidadeById(string id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourcePerfil}/{id}"));
-            return Get<PerfilDto>(requestUrl);
+                $"{ResourceConfiguracaoSistema}/{id}"));
+            return Get<LocalidadeDto>(requestUrl);
         }
-        public List<ModuloDto> GetModuloAll()
-        {
-            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}/Modulos"));
-            return Get<List<ModuloDto>>(requestUrl);
-        }
-
-        //public Task<bool> ExistUsuarioByIdPerfil(string id)
+        //public List<LocalidadeDto> GetLocalidadesAll()
         //{
         //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-        //        $"{ResourcePerfil}/ExistUsuarioByIdPerfil"));
+        //        $"{ResourceConfiguracaoSistema}/Localidades"));
+        //    return Get<List<LocalidadeDto>>(requestUrl);
+        //}
+
+        //public Task<bool> ExistUsuarioByIdLocalidade(string id)
+        //{
+        //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+        //        $"{ResourceConfiguracaoSistema}/ExistUsuarioByIdLocalidade"));
         //    return PostAsync<bool, string>(requestUrl, id);
         //}
 

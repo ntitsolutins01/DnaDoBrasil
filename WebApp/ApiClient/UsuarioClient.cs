@@ -57,18 +57,18 @@
         //    return Get<WebProfileUser>(requestUrl);
         //}
 
-        public Task<bool> GetUsuarioByCpf(string cpf)
-        {
-            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceUsuario}/GetUsuarioByCpf"));
-            return PostAsync<bool, string>(requestUrl, cpf);
-        }
-        public Task<bool> GetUsuarioByEmail(string email)
-        {
-            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceUsuario}/GetUsuarioByEmail"));
-            return PostAsync<bool, string>(requestUrl, email);
-        }
+        //public Task<bool> GetUsuarioByCpf(string cpf)
+        //{
+        //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+        //        $"{ResourceUsuario}/GetUsuarioByCpf"));
+        //    return PostAsync<bool, string>(requestUrl, cpf);
+        //}
+        //public Task<bool> GetUsuarioByEmail(string email)
+        //{
+        //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+        //        $"{ResourceUsuario}/GetUsuarioByEmail"));
+        //    return PostAsync<bool, string>(requestUrl, email);
+        //}
 
         #endregion
 
