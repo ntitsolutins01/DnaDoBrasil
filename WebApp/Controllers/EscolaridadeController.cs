@@ -30,40 +30,29 @@ namespace WebApp.Controllers
             return View();
         }
 
-        //[ClaimsAuthorize("Usuario", "Incluir")]
-        //public async Task<ActionResult> Create(IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        var command = new EscolaridadeModel.CreateUpdateEscolaridadeCommand
-        //        {
+		////[ClaimsAuthorize("Usuario", "Incluir")]
+		//public async Task<ActionResult> Create(IFormCollection collection)
+		//{
+		//	try
+		//	{
+		//		var command = new DeficienciaModel.CreateUpdateDeficienciaCommand
+		//		{
 
-        //            Nome = collection["nome"].ToString(),
-        //            Descricao = collection["descricao"].ToString()
-        //        };
+		//			TipoLaudo = collection["tipoLaudo"].ToString()
+		//		};
 
-        //        await ApiClientFactory.Instance.CreateEscolaridade(command);
+		//		await ApiClientFactory.Instance.CreateDeficiencia(command);
 
-        //        return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //}
+		//		return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
+		//	}
+		//	catch (Exception e)
+		//	{
+		//		return RedirectToAction(nameof(Index));
+		//	}
+		//}
 
-        //[ClaimsAuthorize("Escolaridade", "Alterar")]
-        //public ActionResult Edit(string id)
-        //{
-        //    var obj = ApiClientFactory.Instance.GetEscolaridadeById(id);
-
-        //    var model = new EscolaridadeModel() { Escolaridade = obj };
-
-        //    return View(model);
-        //}
-
-        //[ClaimsAuthorize("Usuario", "Alterar")]
-        public async Task<ActionResult> Edit(string id, IFormCollection collection)
+		//[ClaimsAuthorize("Usuario", "Alterar")]
+		public async Task<ActionResult> Edit(string id, IFormCollection collection)
         {
                 var command = new EscolaridadeModel.CreateUpdateEscolaridadeCommand
                 {
