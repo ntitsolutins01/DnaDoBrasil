@@ -91,6 +91,7 @@ namespace WebApp.ApiClient
         }
 
         private const string ResourcePerfil = "Perfis";
+        private const string ResourceUsuario = "Usurios";
         private const string ResourceConfiguracaoSistema = "ConfiguracaoSistema";
         private const string ResourceDeficiencia = "Deficiencias";
         private const string ResourceContrato = "Contratos";
