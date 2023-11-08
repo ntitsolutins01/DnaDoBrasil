@@ -1,4 +1,4 @@
-﻿using Infraero.Relprev.CrossCutting.Enumerators;
+using Infraero.Relprev.CrossCutting.Enumerators;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
