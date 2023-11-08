@@ -2,15 +2,11 @@
 {
     public class UsuarioDto
     {
-        public int CodUsuario { get; set; }
-        public string CodUsuarioLogin { get; set; }
-        public string NomUsuario { get; set; }
-        public string NumCpf { get; set; }
-        public string NumTelefone { get; set; }
-        public int CodUnidadeInfraestrutura { get; set; }
-        public string CodPerfil { get; set; }
-        public int CodEmpresa { get; set; }
-        public string NomPerfil { get; set; }
-        public string Email { get; set; }
-    }
+	    public required int AspNetUserId { get; set; }
+	    public required string Nome { get; set; }
+	    public required string Cpf { get; set; }
+	    public required string Email { get; set; }
+	    public required string Telefone { get; set; }
+	    public required string AspNetRoleId { get; set; }
+	}
 }

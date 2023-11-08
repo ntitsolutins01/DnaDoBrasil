@@ -1,76 +1,63 @@
-﻿namespace WebApp.ApiClient
+﻿using WebApp.Dto;
+using WebApp.Models;
+
+namespace WebApp.ApiClient
 {
-    public partial class DnaApiClient
-    {
-        private const string ResourceUsuario = "Usuario";
+	public partial class DnaApiClient
+	{
 
-        #region Main Methods
+		#region Main Methods
 
-        public Task<long> CreateUsuario(object command)
-        {
-            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceUsuario}/CreateUsuario"));
-            return Post(requestUrl, command);
-        }
-        public Task<long> UpdateUsuario(object command)
-        {
-            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceUsuario}/UpdateUsuario"));
-            return Post(requestUrl, command);
-        }
+		public Task<long> CreateUsuario(UsuarioModel.CreateUpdateUsuarioCommand command)
+		{
+			var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+				$"{ResourceUsuario}"));
+			return Post(requestUrl, command);
+		}
+		public Task<long> UpdateUsuario(UsuarioModel.CreateUpdateUsuarioCommand command)
+		{
+			var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+				$"{ResourceUsuario}"));
+			return Put(requestUrl, command);
+		}
+		public List<UsuarioDto> GetUsuarioAll()
+		{
+			var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+				$"{ResourceUsuario}"));
+			return Get<List<UsuarioDto>>(requestUrl);
+		}
 
-        public Task<long> DeleteUsuario(object command)
-        {
-            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceUsuario}/DeleteUsuario"));
-            return Post(requestUrl, command);
-        }
+		public Task<long> DeleteUsuario(string id)
+		{
+			var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+				$"{ResourceUsuario}/{id}"));
+			return Delete<string>(requestUrl);
+		}
 
-        //public GridUsuario GetGridUsuario()
-        //{
-        //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-        //        $"{ResourceUsuario}/GetGridUsuario"));
-        //    return Get<GridUsuario>(requestUrl);
-        //}
+		#endregion
 
-        //public List<UsuarioDto> GetUsuarioAll()
-        //{
-        //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-        //        $"{ResourceUsuario}/GetUsuarioAll/"));
-        //    return Get<List<UsuarioDto>>(requestUrl);
-        //}
+		#region Methods
 
-        #endregion
+		public UsuarioDto GetUsuarioById(string id)
+		{
+			var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+				$"{ResourceUsuario}/{id}"));
+			return Get<UsuarioDto>(requestUrl);
+		}
+		public List<ModuloDto> GetModuloAll()
+		{
+			var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+				$"{ResourceConfiguracaoSistema}/Modulos"));
+			return Get<List<ModuloDto>>(requestUrl);
+		}
 
-        #region Methods
+		//public Task<bool> ExistUsuarioByIdUsuario(string id)
+		//{
+		//    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+		//        $"{ResourceUsuario}/ExistUsuarioByIdUsuario"));
+		//    return PostAsync<bool, string>(requestUrl, id);
+		//}
 
-        //public UsuarioDto GetUsuarioById(string id)
-        //{
-        //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-        //        $"{ResourceUsuario}/GetUsuarioById/{id}"));
-        //    return Get<UsuarioDto>(requestUrl);
-        //}
-        //public WebProfileUser GetUsuarioByName(string name)
-        //{
-        //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-        //        $"{ResourceUsuario}/GetUsuarioByName/{name}"));
-        //    return Get<WebProfileUser>(requestUrl);
-        //}
-
-        //public Task<bool> GetUsuarioByCpf(string cpf)
-        //{
-        //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-        //        $"{ResourceUsuario}/GetUsuarioByCpf"));
-        //    return PostAsync<bool, string>(requestUrl, cpf);
-        //}
-        //public Task<bool> GetUsuarioByEmail(string email)
-        //{
-        //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-        //        $"{ResourceUsuario}/GetUsuarioByEmail"));
-        //    return PostAsync<bool, string>(requestUrl, email);
-        //}
-
-        #endregion
-
-    }
+		#endregion
+	}
 }

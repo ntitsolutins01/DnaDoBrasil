@@ -26,7 +26,6 @@ namespace WebApp.ApiClient
                 $"{ResourcePerfil}"));
             return Get<List<PerfilDto>>(requestUrl);
         }
-
         public Task<long> DeletePerfil(string id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
@@ -38,26 +37,31 @@ namespace WebApp.ApiClient
 
         #region Methods
 
-        public PerfilDto GetPerfilById(string id)
+        public PerfilDto GetPerfilById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 $"{ResourcePerfil}/{id}"));
             return Get<PerfilDto>(requestUrl);
-        }
-        public List<ModuloDto> GetModuloAll()
-        {
-            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}/Modulos"));
-            return Get<List<ModuloDto>>(requestUrl);
-        }
+		}
+		public UsuarioDto GetUsuarioByName(string name)
+		{
+			var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+				$"{ResourceUsuario}/{name}"));
+			return Get<UsuarioDto>(requestUrl);
+		}
+		public UsuarioDto GetUsuarioByCpf(string cpf)
+		{
+			var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+				$"{ResourceUsuario}?cpf={cpf}"));
+			return Get<UsuarioDto>(requestUrl);
+		}
+		public UsuarioDto GetUsuarioByEmail(string email)
+		{
+			var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+				$"{ResourceUsuario}?email={email}"));
+			return Get<UsuarioDto>(requestUrl);
+		}
 
-        //public Task<bool> ExistUsuarioByIdPerfil(string id)
-        //{
-        //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-        //        $"{ResourcePerfil}/ExistUsuarioByIdPerfil"));
-        //    return PostAsync<bool, string>(requestUrl, id);
-        //}
-
-        #endregion
-    }
+		#endregion
+	}
 }
