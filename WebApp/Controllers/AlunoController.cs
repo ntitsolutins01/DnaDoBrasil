@@ -223,7 +223,47 @@ namespace WebApp.Controllers
 		{
 			return View();
 		}
-		public IActionResult SaudeBucal()
+
+        //[ClaimsAuthorize("Usuario", "Incluir")]
+        [HttpPost]
+        public async Task<ActionResult> CreateConsumoAlimentar(IFormCollection collection)
+        {
+            try
+            {
+                var command = new ConsumoAlimentarModel.CreateUpdateConsumoAlimentarCommand
+                {
+                    ProfissionalId = Convert.ToInt32(collection["profissionalId"]),
+                    QuestionarioId = Convert.ToInt32(collection["questionarioId"]),
+                    Resposta = Convert.ToString(collection["resposta"])
+                };
+
+                await ApiClientFactory.Instance.CreateConsumoAlimentar(command);
+
+                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
+        //[ClaimsAuthorize("Usuario", "Alterar")]
+        public async Task<ActionResult> EditConsumoAlimentar(string id, IFormCollection collection)
+        {
+            var command = new ConsumoAlimentarModel.CreateUpdateConsumoAlimentarCommand
+            {
+                Id = Convert.ToInt32(id),
+                ProfissionalId = Convert.ToInt32(collection["profissionalId"]),
+                QuestionarioId = Convert.ToInt32(collection["questionarioId"]),
+                Resposta = Convert.ToString(collection["resposta"])
+
+            };
+
+            await ApiClientFactory.Instance.UpdateConsumoAlimentar(command);
+
+            return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+        }
+        public IActionResult SaudeBucal()
 		{
 			return View();
 		}
