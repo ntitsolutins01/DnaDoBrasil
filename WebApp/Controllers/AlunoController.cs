@@ -267,5 +267,45 @@ namespace WebApp.Controllers
 		{
 			return View();
 		}
-	}
+
+        //[ClaimsAuthorize("Usuario", "Incluir")]
+        [HttpPost]
+        public async Task<ActionResult> CreateSaudeBucal(IFormCollection collection)
+        {
+            try
+            {
+                var command = new SaudeBucalModel.CreateUpdateSaudeBucalCommand
+                {
+                    ProfissionalId = Convert.ToInt32(collection["profissionalId"]),
+                    QuestionarioId = Convert.ToInt32(collection["questionarioId"]),
+                    Resposta = Convert.ToString(collection["resposta"])
+                };
+
+                await ApiClientFactory.Instance.CreateSaudeBucal(command);
+
+                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
+        //[ClaimsAuthorize("Usuario", "Alterar")]
+        public async Task<ActionResult> EditSaudeBucal(string id, IFormCollection collection)
+        {
+            var command = new SaudeBucalModel.CreateUpdateSaudeBucalCommand
+            {
+                Id = Convert.ToInt32(id),
+                ProfissionalId = Convert.ToInt32(collection["profissionalId"]),
+                QuestionarioId = Convert.ToInt32(collection["questionarioId"]),
+                Resposta = Convert.ToString(collection["resposta"])
+
+            };
+
+            await ApiClientFactory.Instance.UpdateSaudeBucal(command);
+
+            return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+        }
+    }
 }
