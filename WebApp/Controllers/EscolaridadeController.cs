@@ -31,15 +31,17 @@ namespace WebApp.Controllers
         }
 
         //[ClaimsAuthorize("Usuario", "Incluir")]
-        [HttpPost]
         public async Task<ActionResult> Create(IFormCollection collection)
         {
             try
             {
-                var command = new EscolaridadeModel.CreateUpdateEscolaridadeCommand()
+                var command = new EscolaridadeModel.CreateUpdateEscolaridadeCommand
                 {
-                    Nome = collection["escolaridade"].ToString()
-                };
+
+					Nome = collection["Escolaridade"].ToString(),
+                    Descricao = collection["Inscricao"].ToString()
+
+				};
 
                 await ApiClientFactory.Instance.CreateEscolaridade(command);
 
