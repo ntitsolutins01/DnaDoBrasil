@@ -1,8 +1,147 @@
-﻿
+﻿@model WebApp.Models.UsuarioModel
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Alteração de Usuário";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Edit</h2>
 
+<div class="row">
+    <div class="col-lg-12">
+        @using (@Html.BeginForm("Edit", "Usuario", FormMethod.Post, new { id = "formUsuario" }))
+        {
+            <section class="card">
+                <header class="card-header">
+                    <div class="card-actions">
+                        <a href="#" class="card-action card-action-toggle" data-card-toggle></a>
+                    </div>
+
+                    <h2 class="card-title">Editar Usuário</h2>
+
+                </header>
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label class="col-sm-3 control-label text-sm-right pt-2">Nome <span class="required">*</span></label>
+                        <div class="col-sm-9">
+                            <input type="text" name="NomUsuario" class="form-control"
+                                   maxlength="60"
+                                   title="Por favor informe a descrição completa do nome do usuário." required />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 control-label text-sm-right pt-2">Cpf <span class="required">*</span></label>
+                        <div class="col-sm-9">
+                            <input id="cpf" name="cpf"
+                                   v-model="params.cpf"
+                                   v-on:blur="ExisteCpf"
+                                   type="text" value="" class="form-control"
+                                   maxlength="14" />
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-3 control-label text-sm-right pt-2">E-mail <span class="required">*</span></label>
+                        <div class="col-lg-4">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-envelope"></i>
+                                </span>
+                                <input type="text" id="EndEmail" name="EndEmail"
+                                       v-model="params.email"
+                                       v-on:blur="ExisteEmail"
+                                       class="form-control"
+                                       maxlength="40"
+                                       title="Por favor informe um endereço eletrônico válido do usuário" required />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-3 control-label text-sm-right pt-2">Tipo Perfil<span class="required">*</span></label>
+
+                        <div class="col-lg-9">
+                            <select class="form-control populate select2" name="ddlPerfil" id="ddlPerfil"
+                                    title="Por favor selecione um perfil." required
+                                    asp-for="PerfilId" asp-items="Model.ListPerfis">
+                                <option value="">Selecionar Perfil</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <footer class="card-footer">
+                    <div class="row justify-content-end">
+                        <div class="col-sm-9">
+                            <button class="btn  btn-success pull-left mr-2">Salvar &nbsp;&nbsp;<i class="fa fa-save"></i></button>
+                            <button type="reset" class="btn btn-danger pull-left mr-2">Cancelar &nbsp;&nbsp;<i class="fa fa-remove"></i></button>
+                            <a href="@Url.Action("Index", "Usuario")" class="btn btn-dark pull-left">Voltar &nbsp;&nbsp;<i class="fa fa-reply"></i></a>
+
+                        </div>
+                    </div>
+                </footer>
+            </section>
+        }
+    </div>
+</div>
+
+
+@section CssSpecificVendor {
+    <link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css" />
+    <link rel="stylesheet" href="~/assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
+}
+@section Scripts {
+    <script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
+    <script src="~/assets/vendor/select2/js/select2.js"></script>
+    <script src="~/assets/vendor/jquery-mask/jquery.mask.js"></script>
+    <script src="~/js/usuario.js"></script>
+    <script>
+
+        (function ($) {
+
+            'use strict';
+            var crud = @ViewBag.CrudMessage;
+
+            if (crud === 1) {
+                new PNotify({
+                    title: 'Usuário',
+                    text: 'Cadastro realizado com sucesso!',
+                    type: 'success'
+                });
+            } else if (crud === 2) {
+                new PNotify({
+                    title: 'Usuário',
+                    text: 'Dados alterados com sucesso.',
+                    type: 'warning'
+                });
+            } else if (crud === 3) {
+                new PNotify({
+                    title: 'Usuário',
+                    text: 'Registro excluído com sucesso.',
+                    type: 'error'
+                });
+            }
+
+            var notify = @ViewBag.NotifyMessage;
+            var messagem = '@ViewBag.Notify';
+
+            if (notify === 0) {
+                new PNotify({
+                    title: 'Usuário',
+                    text: messagem,
+                    type: 'success'
+                });
+            } else if (notify === 1) {
+                new PNotify({
+                    title: 'Usuário',
+                    text: messagem,
+                    type: 'warning'
+                });
+            } else if (notify === 2) {
+                new PNotify({
+                    title: 'Usuário',
+                    text: messagem,
+                    type: 'error'
+                });
+            }
+
+        }).apply(this, [jQuery]);
+
+    </script>
+}

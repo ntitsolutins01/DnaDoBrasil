@@ -5,10 +5,11 @@ namespace WebApp.ApiClient
 {
 	public partial class DnaApiClient
 	{
+        private const string ResourceUsuario = "Usuarios";
 
-		#region Main Methods
+        #region Main Methods
 
-		public Task<long> CreateUsuario(UsuarioModel.CreateUpdateUsuarioCommand command)
+        public Task<long> CreateUsuario(UsuarioModel.CreateUpdateUsuarioCommand command)
 		{
 			var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
 				$"{ResourceUsuario}"));
