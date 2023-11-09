@@ -1,37 +1,35 @@
-﻿using WebApp.Dto;
+using WebApp.Dto;
 using WebApp.Models;
 
 namespace WebApp.ApiClient
 {
     public partial class DnaApiClient
     {
-	    private const string ResourceAmbiente = "Ambientes";
+        #region Main Methods
 
-		#region Main Methods
-
-		public Task<long> CreateAmbiente(AmbienteModel.CreateUpdateAmbienteCommand command)
+        public Task<long> CreateVocacional(VocacionalModel.CreateUpdateVocacionalCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceAmbiente}"));
+                $"{ResourceConfiguracaoSistema}"));
             return Post(requestUrl, command);
         }
-        public Task<long> UpdateAmbiente(AmbienteModel.CreateUpdateAmbienteCommand command)
+        public Task<long> UpdateVocacional(VocacionalModel.CreateUpdateVocacionalCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceAmbiente}"));
+                $"{ResourceConfiguracaoSistema}"));
             return Put(requestUrl, command);
         }
-        public List<AmbienteDto> GetAmbienteAll()
+        public List<VocacionalDto> GetVocacionalAll()
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceAmbiente}"));
-            return Get<List<AmbienteDto>>(requestUrl);
+                $"{ResourceConfiguracaoSistema}"));
+            return Get<List<VocacionalDto>>(requestUrl);
         }
 
-        public Task<long> DeleteAmbiente(string id)
+        public Task<long> DeleteVocacional(string id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceAmbiente}/{id}"));
+                $"{ResourceConfiguracaoSistema}/{id}"));
             return Delete<string>(requestUrl);
         }
 
@@ -39,25 +37,23 @@ namespace WebApp.ApiClient
 
         #region Methods
 
-        public AmbienteDto GetAmbienteById(string id)
+        public VocacionalDto GetVocacionalById(string id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceAmbiente}/{id}"));
-            return Get<AmbienteDto>(requestUrl);
+                $"{ResourceConfiguracaoSistema}/{id}"));
+            return Get<VocacionalDto>(requestUrl);
         }
-
-
-        //public List<DeficienciaDto> GetDeficienciasAll()
+        //public List<VocacionalDto> GetVocacionalsAll()
         //{
         //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-        //        $"{ResourceAmbiente}/Deficiencias"));
-        //    return Get<List<DeficienciaDto>>(requestUrl);
+        //        $"{ResourceConfiguracaoSistema}/Vocacionals"));
+        //    return Get<List<VocacionalDto>>(requestUrl);
         //}
 
-        //public Task<bool> ExistUsuarioByIdAmbiente(string id)
+        //public Task<bool> ExistUsuarioByIdVocacional(string id)
         //{
         //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-        //        $"{ResourceAmbiente}/ExistUsuarioByIdAmbiente"));
+        //        $"{ResourceConfiguracaoSistema}/ExistUsuarioByIdVocacional"));
         //    return PostAsync<bool, string>(requestUrl, id);
         //}
 

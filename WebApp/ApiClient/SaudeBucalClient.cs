@@ -1,37 +1,35 @@
-﻿using WebApp.Dto;
+using WebApp.Dto;
 using WebApp.Models;
 
 namespace WebApp.ApiClient
 {
     public partial class DnaApiClient
     {
-	    private const string ResourceAmbiente = "Ambientes";
+        #region Main Methods
 
-		#region Main Methods
-
-		public Task<long> CreateAmbiente(AmbienteModel.CreateUpdateAmbienteCommand command)
+        public Task<long> CreateSaudeBucal(SaudeBucalModel.CreateUpdateSaudeBucalCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceAmbiente}"));
+                $"{ResourceConfiguracaoSistema}"));
             return Post(requestUrl, command);
         }
-        public Task<long> UpdateAmbiente(AmbienteModel.CreateUpdateAmbienteCommand command)
+        public Task<long> UpdateSaudeBucal(SaudeBucalModel.CreateUpdateSaudeBucalCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceAmbiente}"));
+                $"{ResourceConfiguracaoSistema}"));
             return Put(requestUrl, command);
         }
-        public List<AmbienteDto> GetAmbienteAll()
+        public List<SaudeBucalDto> GetSaudeBucalAll()
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceAmbiente}"));
-            return Get<List<AmbienteDto>>(requestUrl);
+                $"{ResourceConfiguracaoSistema}"));
+            return Get<List<SaudeBucalDto>>(requestUrl);
         }
 
-        public Task<long> DeleteAmbiente(string id)
+        public Task<long> DeleteSaudeBucal(string id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceAmbiente}/{id}"));
+                $"{ResourceConfiguracaoSistema}/{id}"));
             return Delete<string>(requestUrl);
         }
 
@@ -39,25 +37,23 @@ namespace WebApp.ApiClient
 
         #region Methods
 
-        public AmbienteDto GetAmbienteById(string id)
+        public SaudeBucalDto GetSaudeBucalById(string id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceAmbiente}/{id}"));
-            return Get<AmbienteDto>(requestUrl);
+                $"{ResourceConfiguracaoSistema}/{id}"));
+            return Get<SaudeBucalDto>(requestUrl);
         }
-
-
-        //public List<DeficienciaDto> GetDeficienciasAll()
+        //public List<SaudeBucalDto> GetSaudeBucalsAll()
         //{
         //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-        //        $"{ResourceAmbiente}/Deficiencias"));
-        //    return Get<List<DeficienciaDto>>(requestUrl);
+        //        $"{ResourceConfiguracaoSistema}/SaudeBucals"));
+        //    return Get<List<SaudeBucalDto>>(requestUrl);
         //}
 
-        //public Task<bool> ExistUsuarioByIdAmbiente(string id)
+        //public Task<bool> ExistUsuarioByIdSaudeBucal(string id)
         //{
         //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-        //        $"{ResourceAmbiente}/ExistUsuarioByIdAmbiente"));
+        //        $"{ResourceConfiguracaoSistema}/ExistUsuarioByIdSaudeBucal"));
         //    return PostAsync<bool, string>(requestUrl, id);
         //}
 

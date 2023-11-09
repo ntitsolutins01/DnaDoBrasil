@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using WebApp.Enumerators;
 using WebApp.Factory;
 using WebApp.Models;
 
@@ -26,27 +27,285 @@ namespace WebApp.Controllers
 		}
 		public IActionResult TalentoEsportivo()
 		{
+
 			return View();
 		}
-		public IActionResult Vocacional()
+
+        //[ClaimsAuthorize("Usuario", "Incluir")]
+        [HttpPost]
+        public async Task<ActionResult> CreateTalentoEsportivo(IFormCollection collection)
+        {
+            try
+            {
+                var command = new TalentoEsportivoModel.CreateUpdateTalentoEsportivoCommand
+                {
+                    Flexibilidade = Convert.ToInt32(collection["flexibilidade"]),
+                    PreensaoManual = Convert.ToInt32(collection["preensaoManual"]),
+                    Velocidade = Convert.ToInt32(collection["velocidade"]),
+                    ImpulsaoHorizontal = Convert.ToInt32(collection["impulsaoHorizontal"]),
+                    AptidaoFisica = Convert.ToInt32(collection["aptdaoFisica"]),
+                    Agilidade = Convert.ToInt32(collection["agilidade"]),
+                    Abdominal = Convert.ToInt32(collection["abdominal"])
+                };
+
+                await ApiClientFactory.Instance.CreateTalentoEsportivo(command);
+
+                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
+
+        //[ClaimsAuthorize("Usuario", "Alterar")]
+        public async Task<ActionResult> EditTalentoEsportivo(string id, IFormCollection collection)
+        {
+            var command = new TalentoEsportivoModel.CreateUpdateTalentoEsportivoCommand
+            {
+                Id = Convert.ToInt32(id),
+                Flexibilidade = Convert.ToInt32(collection["flexibilidade"]),
+                PreensaoManual = Convert.ToInt32(collection["preensaoManual"]),
+                Velocidade = Convert.ToInt32(collection["velocidade"]),
+                ImpulsaoHorizontal = Convert.ToInt32(collection["impulsaoHorizontal"]),
+                AptidaoFisica = Convert.ToInt32(collection["aptdaoFisica"]),
+                Agilidade = Convert.ToInt32(collection["agilidade"]),
+                Abdominal = Convert.ToInt32(collection["abdominal"])
+        };
+
+            await ApiClientFactory.Instance.UpdateTalentoEsportivo(command);
+
+            return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+        }
+        public IActionResult Vocacional()
 		{
 			return View();
 		}
-		public IActionResult QualidadeVida()
+
+        //[ClaimsAuthorize("Usuario", "Incluir")]
+        [HttpPost]
+        public async Task<ActionResult> CreateVocacional(IFormCollection collection)
+        {
+            try
+            {
+                var command = new VocacionalModel.CreateUpdateVocacionalCommand
+                {
+                    ProfissionalId = Convert.ToInt32(collection["profissionalId"]),
+                    QuestionarioId = Convert.ToInt32(collection["questionarioId"]),
+                    Resposta = Convert.ToString(collection["profissionalId"])
+                };
+
+                await ApiClientFactory.Instance.CreateVocacional(command);
+
+                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
+        //[ClaimsAuthorize("Usuario", "Alterar")]
+        public async Task<ActionResult> EditVocacional(string id, IFormCollection collection)
+        {
+            var command = new VocacionalModel.CreateUpdateVocacionalCommand
+            {
+                Id = Convert.ToInt32(id),
+                ProfissionalId = Convert.ToInt32(collection["profissionalId"]),
+                QuestionarioId = Convert.ToInt32(collection["questionarioId"]),
+                Resposta = Convert.ToString(collection["profissionalId"])
+
+            };
+
+            await ApiClientFactory.Instance.UpdateVocacional(command);
+
+            return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+        }
+
+
+
+        public IActionResult QualidadeVida()
 		{
 			return View();
 		}
-		public IActionResult Saude()
+
+
+        //[ClaimsAuthorize("Usuario", "Incluir")]
+        [HttpPost]
+        public async Task<ActionResult> CreateQualidadeVida(IFormCollection collection)
+        {
+            try
+            {
+                var command = new QualidadeVidaModel.CreateUpdateQualidadeVidaCommand
+                {
+                    ProfissionalId = Convert.ToInt32(collection["profissionalId"]),
+                    QuestionarioId = Convert.ToInt32(collection["questionarioId"]),
+                    Resposta = Convert.ToString(collection["profissionalId"])
+                };
+
+                await ApiClientFactory.Instance.CreateQualidadeVida(command);
+
+                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
+        //[ClaimsAuthorize("Usuario", "Alterar")]
+        public async Task<ActionResult> EditQualidadeVida(string id, IFormCollection collection)
+        {
+            var command = new QualidadeVidaModel.CreateUpdateQualidadeVidaCommand
+            {
+                Id = Convert.ToInt32(id),
+                ProfissionalId = Convert.ToInt32(collection["profissionalId"]),
+                QuestionarioId = Convert.ToInt32(collection["questionarioId"]),
+                Resposta = Convert.ToString(collection["profissionalId"])
+
+            };
+
+            await ApiClientFactory.Instance.UpdateQualidadeVida(command);
+
+            return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+        }
+
+        public IActionResult Saude()
 		{
 			return View();
 		}
-		public IActionResult ConsumoAlimentar()
+
+
+        //[ClaimsAuthorize("Usuario", "Incluir")]
+        [HttpPost]
+        public async Task<ActionResult> CreateSaude(IFormCollection collection)
+        {
+            try
+            {
+                var command = new SaudeModel.CreateUpdateSaudeCommand
+                {
+                    ProfissionalId = Convert.ToInt32(collection["profissionalId"]),
+                    Altura = Convert.ToInt32(collection["altura"]),
+                    Massa = Convert.ToInt32(collection["massa"]),
+                    Envergadura = Convert.ToInt32(collection["envergadura"])
+
+                };
+
+                await ApiClientFactory.Instance.CreateSaude(command);
+
+                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
+        //[ClaimsAuthorize("Usuario", "Alterar")]
+        public async Task<ActionResult> EditSaude(string id, IFormCollection collection)
+        {
+            var command = new SaudeModel.CreateUpdateSaudeCommand
+            {
+                Id = Convert.ToInt32(id),
+                ProfissionalId = Convert.ToInt32(collection["profissionalId"]),
+                Altura = Convert.ToInt32(collection["altura"]),
+                Massa = Convert.ToInt32(collection["massa"]),
+                Envergadura = Convert.ToInt32(collection["envergadura"])
+
+            };
+
+            await ApiClientFactory.Instance.UpdateSaude(command);
+
+            return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+        }
+        public IActionResult ConsumoAlimentar()
 		{
 			return View();
 		}
-		public IActionResult SaudeBucal()
+
+        //[ClaimsAuthorize("Usuario", "Incluir")]
+        [HttpPost]
+        public async Task<ActionResult> CreateConsumoAlimentar(IFormCollection collection)
+        {
+            try
+            {
+                var command = new ConsumoAlimentarModel.CreateUpdateConsumoAlimentarCommand
+                {
+                    ProfissionalId = Convert.ToInt32(collection["profissionalId"]),
+                    QuestionarioId = Convert.ToInt32(collection["questionarioId"]),
+                    Resposta = Convert.ToString(collection["resposta"])
+                };
+
+                await ApiClientFactory.Instance.CreateConsumoAlimentar(command);
+
+                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
+        //[ClaimsAuthorize("Usuario", "Alterar")]
+        public async Task<ActionResult> EditConsumoAlimentar(string id, IFormCollection collection)
+        {
+            var command = new ConsumoAlimentarModel.CreateUpdateConsumoAlimentarCommand
+            {
+                Id = Convert.ToInt32(id),
+                ProfissionalId = Convert.ToInt32(collection["profissionalId"]),
+                QuestionarioId = Convert.ToInt32(collection["questionarioId"]),
+                Resposta = Convert.ToString(collection["resposta"])
+
+            };
+
+            await ApiClientFactory.Instance.UpdateConsumoAlimentar(command);
+
+            return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+        }
+        public IActionResult SaudeBucal()
 		{
 			return View();
 		}
-	}
+
+        //[ClaimsAuthorize("Usuario", "Incluir")]
+        [HttpPost]
+        public async Task<ActionResult> CreateSaudeBucal(IFormCollection collection)
+        {
+            try
+            {
+                var command = new SaudeBucalModel.CreateUpdateSaudeBucalCommand
+                {
+                    ProfissionalId = Convert.ToInt32(collection["profissionalId"]),
+                    QuestionarioId = Convert.ToInt32(collection["questionarioId"]),
+                    Resposta = Convert.ToString(collection["resposta"])
+                };
+
+                await ApiClientFactory.Instance.CreateSaudeBucal(command);
+
+                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
+        //[ClaimsAuthorize("Usuario", "Alterar")]
+        public async Task<ActionResult> EditSaudeBucal(string id, IFormCollection collection)
+        {
+            var command = new SaudeBucalModel.CreateUpdateSaudeBucalCommand
+            {
+                Id = Convert.ToInt32(id),
+                ProfissionalId = Convert.ToInt32(collection["profissionalId"]),
+                QuestionarioId = Convert.ToInt32(collection["questionarioId"]),
+                Resposta = Convert.ToString(collection["resposta"])
+
+            };
+
+            await ApiClientFactory.Instance.UpdateSaudeBucal(command);
+
+            return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+        }
+    }
 }
