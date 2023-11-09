@@ -12,6 +12,7 @@ using WebApp.Factory;
 using WebApp.Models;
 using WebApp.Utility;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
+using System.Security.Claims;
 
 namespace WebApp.Controllers
 {
@@ -20,15 +21,17 @@ namespace WebApp.Controllers
 		private readonly IOptions<SettingsModel> _appSettings;
 		private readonly IEmailSender _emailSender;
 		private readonly UserManager<IdentityUser> _userManager;
+		private readonly RoleManager<IdentityRole> _roleManager;
 		private readonly IHostingEnvironment _host;
 
 		public UsuarioController(IOptions<SettingsModel> app, IEmailSender emailSender,
-			UserManager<IdentityUser> userManager, IHostingEnvironment host)
+			UserManager<IdentityUser> userManager, IHostingEnvironment host, RoleManager<IdentityRole> roleManager)
 		{
 			_appSettings = app;
 			_emailSender = emailSender;
 			_userManager = userManager;
 			_host = host;
+			_roleManager = roleManager;
 			ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
 		}
 		//[ClaimsAuthorize("Usuario", "Consultar")]
@@ -49,7 +52,7 @@ namespace WebApp.Controllers
 
 			var model = new UsuarioModel
 			{
-				ListPerfil = new SelectList(resultPerfil, "Id", "Nome")
+				ListPerfis = new SelectList(resultPerfil, "Id", "Nome")
 			};
 			return View(model);
 		}
@@ -59,6 +62,10 @@ namespace WebApp.Controllers
 		{
 			try
 			{
+				var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+				var perfilId = int.Parse(collection["ddlPerfil"].ToString());
+				var aspNetRoleId = _roleManager.FindByNameAsync(collection["ddlPerfil"].ToString()).Result?.Id;
+
 				var command = new UsuarioModel.CreateUpdateUsuarioCommand
 				{
 
@@ -66,9 +73,9 @@ namespace WebApp.Controllers
 					Nome = collection["NomUsuario"].ToString(),
 					Cpf = collection["cpf"].ToString(),
 					Telefone = collection["NumTelefone"].ToString(),
-					PerfilId = int.Parse(collection["ddlAssunto"].ToString()),
-					AspNetUserId = 0,
-					AspNetRoleId = ""
+					PerfilId = perfilId,
+					AspNetUserId = userId,
+					AspNetRoleId = aspNetRoleId
 				};
 
 				var result = ApiClientFactory.Instance.GetUsuarioByCpf(command.Cpf);
@@ -127,6 +134,76 @@ namespace WebApp.Controllers
 
 			await _emailSender.SendEmailAsync(user.Email, "Primeiro acesso sistema Dna",
 				message);
+		}
+
+		//[ClaimsAuthorize("Usuario", "Alterar")]
+		public ActionResult Edit(string id)
+		{
+			UsuarioModel model = new UsuarioModel();
+
+			var obj = ApiClientFactory.Instance.GetUsuarioById(id);
+
+			if (obj != null)
+			{
+				var resultPerfil = ApiClientFactory.Instance.GetPerfilAll();
+
+
+				model = new UsuarioModel
+				{
+					ListPerfis = new SelectList(resultPerfil, "PerfilId", "Nome", obj.PerfilId),
+					Usuario = obj
+				};
+
+				return View(model);
+			}
+
+			return View(model);
+		}
+
+		//[ClaimsAuthorize("Usuario", "Alterar")]
+		[HttpPost]
+		public async Task<ActionResult> Edit(string id, IFormCollection collection)
+		{
+			try
+			{
+				var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+				var perfilId = int.Parse(collection["ddlPerfil"].ToString());
+				var aspNetRoleId = _roleManager.FindByNameAsync(collection["ddlPerfil"].ToString()).Result?.Id;
+
+				var command = new UsuarioModel.CreateUpdateUsuarioCommand
+				{
+
+					Email = collection["EndEmail"].ToString(),
+					Nome = collection["NomUsuario"].ToString(),
+					Cpf = collection["cpf"].ToString(),
+					Telefone = collection["NumTelefone"].ToString(),
+					PerfilId = perfilId,
+					AspNetUserId = userId,
+					AspNetRoleId = aspNetRoleId
+				};
+
+				ApiClientFactory.Instance.UpdateUsuario(command);
+
+				return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+			}
+			catch
+			{
+				return View();
+			}
+		}
+
+		//[ClaimsAuthorize("Usuario", "Excluir")]
+		public ActionResult Delete(int id)
+		{
+			try
+			{
+				ApiClientFactory.Instance.DeleteUsuario(id);
+				return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
+			}
+			catch
+			{
+				return RedirectToAction(nameof(Index));
+			}
 		}
 	}
 }

@@ -69,7 +69,7 @@ namespace WebApp.Controllers
                     TipoLaudo = collection["tipoLaudo"].ToString()
                 };
 
-                await ApiClientFactory.Instance.UpdateUsuario(command);
+                await ApiClientFactory.Instance.UpdateDeficiencia(command);
 
                 return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
         }

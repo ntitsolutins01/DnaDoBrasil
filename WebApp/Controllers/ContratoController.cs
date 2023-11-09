@@ -68,7 +68,7 @@ namespace WebApp.Controllers
 				Anexo = collection["anexo"].ToString()
 			};
 
-			await ApiClientFactory.Instance.UpdateUsuario(command);
+			await ApiClientFactory.Instance.UpdateContrato(command);
 
 			return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
 		}
