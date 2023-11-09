@@ -8,5 +8,6 @@
 	    public required string Email { get; set; }
 	    public required string Telefone { get; set; }
 	    public required string AspNetRoleId { get; set; }
-	}
+	    public int PerfilId { get; set; }
+    }
 }

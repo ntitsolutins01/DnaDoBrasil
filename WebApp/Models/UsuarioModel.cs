@@ -11,7 +11,7 @@ namespace WebApp.Models
 
 		public class CreateUpdateUsuarioCommand
 		{
-			public required int AspNetUserId { get; set; }
+			public required string AspNetUserId { get; set; }
 			public required string Nome { get; set; }
 			public required string Cpf { get; set; }
 			public required string Email { get; set; }

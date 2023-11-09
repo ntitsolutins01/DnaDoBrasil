@@ -12,6 +12,7 @@ using WebApp.Factory;
 using WebApp.Models;
 using WebApp.Utility;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
+using System.Security.Claims;
 
 namespace WebApp.Controllers
 {
@@ -127,6 +128,92 @@ namespace WebApp.Controllers
 
 			await _emailSender.SendEmailAsync(user.Email, "Primeiro acesso sistema Dna",
 				message);
+		}
+
+		//[ClaimsAuthorize("Usuario", "Alterar")]
+		public ActionResult Edit(string id)
+		{
+			UsuarioModel model = new UsuarioModel();
+
+			var obj = ApiClientFactory.Instance.GetUsuarioById(id);
+
+			if (obj != null)
+			{
+				var resultPerfil = ApiClientFactory.Instance.GetPerfilAll();
+
+
+				model = new UsuarioModel
+				{
+					ListPerfil = new SelectList(resultPerfil, "PerfilId", "Nome", obj.PerfilId),
+					Usuario = obj
+				};
+
+				return View(model);
+			}
+
+			return View(model);
+		}
+
+		//[ClaimsAuthorize("Usuario", "Alterar")]
+		[HttpPost]
+		public async Task<ActionResult> Edit(string id, IFormCollection collection)
+		{
+			try
+			{
+				var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+				var command = new UsuarioModel.CreateUpdateUsuarioCommand
+				{
+
+					Email = collection["EndEmail"].ToString(),
+					Nome = collection["NomUsuario"].ToString(),
+					Cpf = collection["cpf"].ToString(),
+					Telefone = collection["NumTelefone"].ToString(),
+					PerfilId = int.Parse(collection["ddlAssunto"].ToString()),
+					AspNetUserId = ,
+					AspNetRoleId = ""
+					AlteradoPor = 
+				};
+
+				var result = await ApiClientFactory.Instance.GetUsuarioByCpf(command.NumCpf);
+
+				if (result)
+				{
+					return RedirectToAction(nameof(Create), new { notify = (int)EnumNotify.Error, message = "Já existe um usuário cadastrado com esse cpf." });
+
+				}
+
+				ApiClientFactory.Instance.UpdateUsuario(command);
+
+				//var user = await _userManager.FindByEmailAsync(command.Email);
+
+				//if (user == null)
+				//{
+				//    ModelState.AddModelError(string.Empty, "Usuário não cadastrado.");
+				//    return View();
+				//}
+				//SendNewUserEmail(user, command.Email);
+
+				return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+			}
+			catch
+			{
+				return View();
+			}
+		}
+
+		[ClaimsAuthorize("Usuario", "Excluir")]
+		public ActionResult Delete(string id)
+		{
+			try
+			{
+				ApiClientFactory.Instance.DeleteUsuario(new DeleteUsuarioCommand { Id = id });
+				return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
+			}
+			catch
+			{
+				return RedirectToAction(nameof(Index));
+			}
 		}
 	}
 }
