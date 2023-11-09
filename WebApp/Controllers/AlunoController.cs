@@ -171,13 +171,55 @@ namespace WebApp.Controllers
             return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
         }
 
-
-
         public IActionResult Saude()
 		{
 			return View();
 		}
-		public IActionResult ConsumoAlimentar()
+
+
+        //[ClaimsAuthorize("Usuario", "Incluir")]
+        [HttpPost]
+        public async Task<ActionResult> CreateSaude(IFormCollection collection)
+        {
+            try
+            {
+                var command = new SaudeModel.CreateUpdateSaudeCommand
+                {
+                    ProfissionalId = Convert.ToInt32(collection["profissionalId"]),
+                    Altura = Convert.ToInt32(collection["altura"]),
+                    Massa = Convert.ToInt32(collection["massa"]),
+                    Envergadura = Convert.ToInt32(collection["envergadura"])
+
+                };
+
+                await ApiClientFactory.Instance.CreateSaude(command);
+
+                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
+        //[ClaimsAuthorize("Usuario", "Alterar")]
+        public async Task<ActionResult> EditSaude(string id, IFormCollection collection)
+        {
+            var command = new SaudeModel.CreateUpdateSaudeCommand
+            {
+                Id = Convert.ToInt32(id),
+                ProfissionalId = Convert.ToInt32(collection["profissionalId"]),
+                Altura = Convert.ToInt32(collection["altura"]),
+                Massa = Convert.ToInt32(collection["massa"]),
+                Envergadura = Convert.ToInt32(collection["envergadura"])
+
+            };
+
+            await ApiClientFactory.Instance.UpdateSaude(command);
+
+            return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+        }
+        public IActionResult ConsumoAlimentar()
 		{
 			return View();
 		}
