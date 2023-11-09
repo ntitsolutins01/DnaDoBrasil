@@ -33,13 +33,6 @@ namespace WebApp.ApiClient
             return Get<List<AlunoDto>>(requestUrl);
         }
 
-        public Task<long> DeleteAluno(string id)
-        {
-            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceAluno}/{id}"));
-            return Delete<string>(requestUrl);
-        }
-
         #endregion
 
         #region Methods
@@ -50,18 +43,28 @@ namespace WebApp.ApiClient
                 $"{ResourceAluno}/{id}"));
             return Get<AlunoDto>(requestUrl);
         }
+        //public List<DeficienciaDto> GetDeficienciasByAlunoId()
+        //{
+        //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+        //        $"{ResourceAluno}/Deficiencias"));
+        //    return Get<List<DeficienciaDto>>(requestUrl);
+        //}
         //public List<DeficienciaDto> GetDeficienciasAll()
         //{
         //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
         //        $"{ResourceAluno}/Deficiencias"));
         //    return Get<List<DeficienciaDto>>(requestUrl);
         //}
-
-        //public Task<bool> ExistUsuarioByIdAluno(string id)
+        //public List<DeficienciaDto> GetDeficienciasByAlunoId()
         //{
         //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-        //        $"{ResourceAluno}/ExistUsuarioByIdAluno"));
-        //    return PostAsync<bool, string>(requestUrl, id);
+        //        $"{ResourceAluno}/Deficiencias"));
+        //} 
+        //public List<DeficienciaDto> GetTipoEscolaridadeAll()
+        //{
+        //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+        //        $"{ResourceAluno}/Deficiencias"));
+        //    return Get<List<DeficienciaDto>>(requestUrl);
         //}
 
         #endregion

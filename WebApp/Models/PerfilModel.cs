@@ -16,12 +16,13 @@ namespace WebApp.Models
         public List<ModuloDto> Modulos { get; set; }
         public List<Claim> Claims { get; set; }
 
-        public class CreateUpdateCommand    
+        public class CreateUpdateCommand
         {
-        public string Id { get; set; }
-        public string Nome { get; set; }
-        public ListDictionary Claims { get; set; }
-        public string Descricao { get; set; }
+            public int Id { get; set; }
+            public string Nome { get; set; }
+            public ListDictionary Claims { get; set; }
+            public string Descricao { get; set; }
+            public string AspNetRoleId { get; set; }
         }
     }
 

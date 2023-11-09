@@ -90,10 +90,7 @@ namespace WebApp.ApiClient
             //    new AuthenticationHeaderValue("Bearer", "Your Oauth token");
         }
 
-        private const string ResourcePerfil = "Perfis";
-        private const string ResourceUsuario = "Usurios";
-        private const string ResourceConfiguracaoSistema = "ConfiguracaoSistema";
-        private const string ResourceDeficiencia = "Deficiencias";
+        
         private const string ResourceContrato = "Contratos";
         private const string ResourceEscolaridade = "Escolaridades"; 
         private const string ResourceSerie = "Series";

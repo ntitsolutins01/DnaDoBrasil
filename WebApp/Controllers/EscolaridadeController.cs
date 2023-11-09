@@ -30,29 +30,29 @@ namespace WebApp.Controllers
             return View();
         }
 
-		////[ClaimsAuthorize("Usuario", "Incluir")]
-		//public async Task<ActionResult> Create(IFormCollection collection)
-		//{
-		//	try
-		//	{
-		//		var command = new DeficienciaModel.CreateUpdateDeficienciaCommand
-		//		{
+        //[ClaimsAuthorize("Usuario", "Incluir")]
+        [HttpPost]
+        public async Task<ActionResult> Create(IFormCollection collection)
+        {
+            try
+            {
+                var command = new EscolaridadeModel.CreateUpdateEscolaridadeCommand()
+                {
+                    Nome = collection["escolaridade"].ToString()
+                };
 
-		//			TipoLaudo = collection["tipoLaudo"].ToString()
-		//		};
+                await ApiClientFactory.Instance.CreateEscolaridade(command);
 
-		//		await ApiClientFactory.Instance.CreateDeficiencia(command);
+                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+        }
 
-		//		return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
-		//	}
-		//	catch (Exception e)
-		//	{
-		//		return RedirectToAction(nameof(Index));
-		//	}
-		//}
-
-		//[ClaimsAuthorize("Usuario", "Alterar")]
-		public async Task<ActionResult> Edit(string id, IFormCollection collection)
+        //[ClaimsAuthorize("Usuario", "Alterar")]
+        public async Task<ActionResult> Edit(string id, IFormCollection collection)
         {
                 var command = new EscolaridadeModel.CreateUpdateEscolaridadeCommand
                 {

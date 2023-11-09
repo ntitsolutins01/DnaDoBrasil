@@ -5,6 +5,7 @@ namespace WebApp.ApiClient
 {
     public partial class DnaApiClient
     {
+        private const string ResourcePerfil = "Perfis";
 
         #region Main Methods
 

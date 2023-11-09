@@ -5,18 +5,21 @@ namespace WebApp.ApiClient
 {
     public partial class DnaApiClient
     {
+
+        private const string ResourceDeficiencia = "Deficiencias";
+
         #region Main Methods
 
         public Task<long> CreateDeficiencia(DeficienciaModel.CreateUpdateDeficienciaCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}"));
+                $"{ResourceDeficiencia}"));
             return Post(requestUrl, command);
         }
         public Task<long> UpdateDeficiencia(DeficienciaModel.CreateUpdateDeficienciaCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}"));
+                $"{ResourceDeficiencia}"));
             return Put(requestUrl, command);
         }
         public List<DeficienciaDto> GetDeficienciaAll()

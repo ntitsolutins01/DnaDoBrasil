@@ -91,6 +91,9 @@ namespace WebApp.Controllers
                 {
                     await _roleManager.AddClaimAsync(adminRole, addClaim);
                 }
+
+                command.AspNetRoleId = adminRole.Id;
+
                 await ApiClientFactory.Instance.CreatePerfil(command);
                 
                 return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
@@ -121,7 +124,7 @@ namespace WebApp.Controllers
 
         //[ClaimsAuthorize("Perfil", "Alterar")]
         [HttpPost]
-        public async Task<ActionResult> Edit(string id, IFormCollection collection)
+        public async Task<ActionResult> Edit(int id, IFormCollection collection)
         {
             try
             {
@@ -143,14 +146,14 @@ namespace WebApp.Controllers
                     Claims = list
                 };
 
-                var adminRole = await _roleManager.FindByIdAsync(command.Id);
+                var adminRole = await _roleManager.FindByIdAsync(command.AspNetRoleId);
 
                 if (adminRole != null)
                 {
                     adminRole.Name = command.Nome;
                     var resRole = await _roleManager.UpdateAsync(adminRole);
 
-                    var role = _roleManager.Roles.Single(x => x.Id == command.Id);
+                    var role = _roleManager.Roles.Single(x => x.Id == command.AspNetRoleId);
                     var claims = _roleManager.GetClaimsAsync(role).Result;
 
                     foreach (var claim in claims)
