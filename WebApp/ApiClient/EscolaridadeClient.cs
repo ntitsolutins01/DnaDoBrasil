@@ -5,6 +5,9 @@ namespace WebApp.ApiClient
 {
     public partial class DnaApiClient
     {
+
+        private const string ResourceConfiguracaoSistema = "ConfiguracaoSistema";
+
         #region Main Methods
 
         public Task<long> CreateEscolaridade(EscolaridadeModel.CreateUpdateEscolaridadeCommand command)
