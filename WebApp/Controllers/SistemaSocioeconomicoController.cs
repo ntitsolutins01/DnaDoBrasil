@@ -4,7 +4,7 @@ namespace WebApp.Controllers
 {
 	public class SistemaSocioeconomicoController : Controller
 	{
-		public IActionResult Index()
+		public IActionResult Parceiro()
 		{
 			return View();
 		}
