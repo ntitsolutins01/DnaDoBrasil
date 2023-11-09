@@ -7,5 +7,6 @@ namespace WebApp.Dto
         public string Id { get; set; }
         public string Nome { get; set; }
         public ListDictionary Claims { get; set; }
+        public string AspNetRoleId { get; set; }
     }
 }

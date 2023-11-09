@@ -61,7 +61,7 @@ namespace WebApp.Controllers
                     Descricao = collection["descricao"].ToString()
                 };
 
-                await ApiClientFactory.Instance.UpdateUsuario(command);
+                await ApiClientFactory.Instance.UpdateEscolaridade(command);
 
                 return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
         }

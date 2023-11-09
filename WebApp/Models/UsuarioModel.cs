@@ -6,7 +6,7 @@ namespace WebApp.Models
     public class UsuarioModel
     {
         public int PerfilId { get; set; }
-        public SelectList ListPerfil { get; set; }
+        public SelectList ListPerfis { get; set; }
         public UsuarioDto Usuario { get; set; }
 
 		public class CreateUpdateUsuarioCommand
@@ -18,6 +18,7 @@ namespace WebApp.Models
 			public required string Telefone { get; set; }
 			public required string AspNetRoleId { get; set; }
 			public int PerfilId { get; set; }
+			public string Id { get; set; }
 		}
 	}
 }

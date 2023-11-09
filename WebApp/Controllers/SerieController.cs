@@ -77,7 +77,7 @@ namespace WebApp.Controllers
                     ScoreTotal = Convert.ToInt32(collection["scoreTotal"].ToString())
                 };
 
-                await ApiClientFactory.Instance.UpdateUsuario(command);
+                await ApiClientFactory.Instance.UpdateSerie(command);
 
                 return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
         }

@@ -21,15 +21,17 @@ namespace WebApp.Controllers
 		private readonly IOptions<SettingsModel> _appSettings;
 		private readonly IEmailSender _emailSender;
 		private readonly UserManager<IdentityUser> _userManager;
+		private readonly RoleManager<IdentityRole> _roleManager;
 		private readonly IHostingEnvironment _host;
 
 		public UsuarioController(IOptions<SettingsModel> app, IEmailSender emailSender,
-			UserManager<IdentityUser> userManager, IHostingEnvironment host)
+			UserManager<IdentityUser> userManager, IHostingEnvironment host, RoleManager<IdentityRole> roleManager)
 		{
 			_appSettings = app;
 			_emailSender = emailSender;
 			_userManager = userManager;
 			_host = host;
+			_roleManager = roleManager;
 			ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
 		}
 		//[ClaimsAuthorize("Usuario", "Consultar")]
@@ -50,7 +52,7 @@ namespace WebApp.Controllers
 
 			var model = new UsuarioModel
 			{
-				ListPerfil = new SelectList(resultPerfil, "Id", "Nome")
+				ListPerfis = new SelectList(resultPerfil, "Id", "Nome")
 			};
 			return View(model);
 		}
@@ -60,6 +62,10 @@ namespace WebApp.Controllers
 		{
 			try
 			{
+				var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+				var perfilId = int.Parse(collection["ddlPerfil"].ToString());
+				var aspNetRoleId = _roleManager.FindByNameAsync(collection["ddlPerfil"].ToString()).Result?.Id;
+
 				var command = new UsuarioModel.CreateUpdateUsuarioCommand
 				{
 
@@ -67,9 +73,9 @@ namespace WebApp.Controllers
 					Nome = collection["NomUsuario"].ToString(),
 					Cpf = collection["cpf"].ToString(),
 					Telefone = collection["NumTelefone"].ToString(),
-					PerfilId = int.Parse(collection["ddlAssunto"].ToString()),
-					AspNetUserId = 0,
-					AspNetRoleId = ""
+					PerfilId = perfilId,
+					AspNetUserId = userId,
+					AspNetRoleId = aspNetRoleId
 				};
 
 				var result = ApiClientFactory.Instance.GetUsuarioByCpf(command.Cpf);
@@ -144,7 +150,7 @@ namespace WebApp.Controllers
 
 				model = new UsuarioModel
 				{
-					ListPerfil = new SelectList(resultPerfil, "PerfilId", "Nome", obj.PerfilId),
+					ListPerfis = new SelectList(resultPerfil, "PerfilId", "Nome", obj.PerfilId),
 					Usuario = obj
 				};
 
@@ -161,6 +167,8 @@ namespace WebApp.Controllers
 			try
 			{
 				var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+				var perfilId = int.Parse(collection["ddlPerfil"].ToString());
+				var aspNetRoleId = _roleManager.FindByNameAsync(collection["ddlPerfil"].ToString()).Result?.Id;
 
 				var command = new UsuarioModel.CreateUpdateUsuarioCommand
 				{
@@ -169,30 +177,12 @@ namespace WebApp.Controllers
 					Nome = collection["NomUsuario"].ToString(),
 					Cpf = collection["cpf"].ToString(),
 					Telefone = collection["NumTelefone"].ToString(),
-					PerfilId = int.Parse(collection["ddlAssunto"].ToString()),
-					AspNetUserId = ,
-					AspNetRoleId = ""
-					AlteradoPor = 
+					PerfilId = perfilId,
+					AspNetUserId = userId,
+					AspNetRoleId = aspNetRoleId
 				};
 
-				var result = await ApiClientFactory.Instance.GetUsuarioByCpf(command.NumCpf);
-
-				if (result)
-				{
-					return RedirectToAction(nameof(Create), new { notify = (int)EnumNotify.Error, message = "Já existe um usuário cadastrado com esse cpf." });
-
-				}
-
 				ApiClientFactory.Instance.UpdateUsuario(command);
-
-				//var user = await _userManager.FindByEmailAsync(command.Email);
-
-				//if (user == null)
-				//{
-				//    ModelState.AddModelError(string.Empty, "Usuário não cadastrado.");
-				//    return View();
-				//}
-				//SendNewUserEmail(user, command.Email);
 
 				return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
 			}
@@ -202,12 +192,12 @@ namespace WebApp.Controllers
 			}
 		}
 
-		[ClaimsAuthorize("Usuario", "Excluir")]
-		public ActionResult Delete(string id)
+		//[ClaimsAuthorize("Usuario", "Excluir")]
+		public ActionResult Delete(int id)
 		{
 			try
 			{
-				ApiClientFactory.Instance.DeleteUsuario(new DeleteUsuarioCommand { Id = id });
+				ApiClientFactory.Instance.DeleteUsuario(id);
 				return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
 			}
 			catch

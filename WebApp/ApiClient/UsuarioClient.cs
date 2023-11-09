@@ -27,7 +27,7 @@ namespace WebApp.ApiClient
 			return Get<List<UsuarioDto>>(requestUrl);
 		}
 
-		public Task<long> DeleteUsuario(string id)
+		public Task<long> DeleteUsuario(int id)
 		{
 			var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
 				$"{ResourceUsuario}/{id}"));
