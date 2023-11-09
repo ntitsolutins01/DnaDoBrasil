@@ -129,7 +129,51 @@ namespace WebApp.Controllers
 		{
 			return View();
 		}
-		public IActionResult Saude()
+
+
+        //[ClaimsAuthorize("Usuario", "Incluir")]
+        [HttpPost]
+        public async Task<ActionResult> CreateQualidadeVida(IFormCollection collection)
+        {
+            try
+            {
+                var command = new QualidadeVidaModel.CreateUpdateQualidadeVidaCommand
+                {
+                    ProfissionalId = Convert.ToInt32(collection["profissionalId"]),
+                    QuestionarioId = Convert.ToInt32(collection["questionarioId"]),
+                    Resposta = Convert.ToString(collection["profissionalId"])
+                };
+
+                await ApiClientFactory.Instance.CreateQualidadeVida(command);
+
+                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
+        //[ClaimsAuthorize("Usuario", "Alterar")]
+        public async Task<ActionResult> EditQualidadeVida(string id, IFormCollection collection)
+        {
+            var command = new QualidadeVidaModel.CreateUpdateQualidadeVidaCommand
+            {
+                Id = Convert.ToInt32(id),
+                ProfissionalId = Convert.ToInt32(collection["profissionalId"]),
+                QuestionarioId = Convert.ToInt32(collection["questionarioId"]),
+                Resposta = Convert.ToString(collection["profissionalId"])
+
+            };
+
+            await ApiClientFactory.Instance.UpdateQualidadeVida(command);
+
+            return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+        }
+
+
+
+        public IActionResult Saude()
 		{
 			return View();
 		}
