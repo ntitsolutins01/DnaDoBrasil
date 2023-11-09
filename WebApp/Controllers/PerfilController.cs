@@ -23,9 +23,7 @@ namespace WebApp.Controllers
         private readonly ApplicationDbContext _db;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<IdentityUser> _userManager;
-
-
-        private readonly IOptions<SettingsModel> _appSettings;
+		private readonly IOptions<SettingsModel> _appSettings;
 
         public PerfilController(ApplicationDbContext db,
             RoleManager<IdentityRole> roleManager,
