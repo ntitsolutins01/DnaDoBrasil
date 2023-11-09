@@ -22,6 +22,7 @@ namespace WebApp.Models
             public int Id { get; internal set; }
 
         }
+
     }
 
 }

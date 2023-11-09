@@ -82,7 +82,50 @@ namespace WebApp.Controllers
 		{
 			return View();
 		}
-		public IActionResult QualidadeVida()
+
+        //[ClaimsAuthorize("Usuario", "Incluir")]
+        [HttpPost]
+        public async Task<ActionResult> CreateVocacional(IFormCollection collection)
+        {
+            try
+            {
+                var command = new VocacionalModel.CreateUpdateVocacionalCommand
+                {
+                    ProfissionalId = Convert.ToInt32(collection["profissionalId"]),
+                    QuestionarioId = Convert.ToInt32(collection["questionarioId"]),
+                    Resposta = Convert.ToString(collection["profissionalId"])
+                };
+
+                await ApiClientFactory.Instance.CreateVocacional(command);
+
+                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
+        //[ClaimsAuthorize("Usuario", "Alterar")]
+        public async Task<ActionResult> EditVocacional(string id, IFormCollection collection)
+        {
+            var command = new VocacionalModel.CreateUpdateVocacionalCommand
+            {
+                Id = Convert.ToInt32(id),
+                ProfissionalId = Convert.ToInt32(collection["profissionalId"]),
+                QuestionarioId = Convert.ToInt32(collection["questionarioId"]),
+                Resposta = Convert.ToString(collection["profissionalId"])
+
+            };
+
+            await ApiClientFactory.Instance.UpdateVocacional(command);
+
+            return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+        }
+
+
+
+        public IActionResult QualidadeVida()
 		{
 			return View();
 		}
