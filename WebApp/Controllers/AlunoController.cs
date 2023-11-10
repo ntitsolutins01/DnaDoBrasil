@@ -190,6 +190,7 @@ namespace WebApp.Controllers
                     Massa = Convert.ToInt32(collection["massa"]),
                     Envergadura = Convert.ToInt32(collection["envergadura"])
 
+
                 };
 
                 await ApiClientFactory.Instance.CreateSaude(command);
@@ -453,6 +454,73 @@ namespace WebApp.Controllers
             };
 
             await ApiClientFactory.Instance.UpdateVoucher(command);
+
+            return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+        }
+
+
+        public IActionResult Matricula()
+        {
+            return View();
+        }
+
+        //[ClaimsAuthorize("Usuario", "Incluir")]
+        [HttpPost]
+        public async Task<ActionResult> CreateMatricula(IFormCollection collection)
+        {
+            try
+            {
+                var command = new MatriculaModel.CreateUpdateMatriculaCommand
+                {
+                    DtVencimentoParq = Convert.ToDateTime(collection["dtVencimentoParq"].ToString()),
+                    DtVencimentoAtestadoMedico = Convert.ToDateTime(collection["diVencimentoAtestadoMedico"].ToString()),
+                    NomeResponsavel1 = Convert.ToString(collection["nomeResponsavel1"]),
+                    ParentescoResponsavel1 = Convert.ToString(collection["parentescoResponsavel1"]),
+                    CpfResponsavel1 = Convert.ToString(collection["cpfResponsavel1"]),
+                    NomeResponsavel2 = Convert.ToString(collection["nomeResponsavel2"]),
+                    ParentescoResponsavel2 = Convert.ToString(collection["parentescoResponsavel2"]),
+                    CpfResponsavel2 = Convert.ToString(collection["cpfResponsavel2"]),
+                    NomeResponsavel3 = Convert.ToString(collection["nomeResponsavel3"]),
+                    ParentescoResponsavel3 = Convert.ToString(collection["parentescoResponsavel3"]),
+                    CpfResponsavel3 = Convert.ToString(collection["cpfResponsavel3"]),
+                    LocalId = Convert.ToInt32(collection["localId"]),
+                    AlunoId = Convert.ToInt32(collection["alunoId"])
+
+                };
+
+                await ApiClientFactory.Instance.CreateMatricula(command);
+
+                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
+        //[ClaimsAuthorize("Usuario", "Alterar")]
+        public async Task<ActionResult> EditMatricula(string id, IFormCollection collection)
+        {
+            var command = new MatriculaModel.CreateUpdateMatriculaCommand
+            {
+                Id = Convert.ToInt32(id),
+                DtVencimentoParq = Convert.ToDateTime(collection["dtVencimentoParq"].ToString()),
+                DtVencimentoAtestadoMedico = Convert.ToDateTime(collection["diVencimentoAtestadoMedico"].ToString()),
+                NomeResponsavel1 = Convert.ToString(collection["nomeResponsavel1"]),
+                ParentescoResponsavel1 = Convert.ToString(collection["parentescoResponsavel1"]),
+                CpfResponsavel1 = Convert.ToString(collection["cpfResponsavel1"]),
+                NomeResponsavel2 = Convert.ToString(collection["nomeResponsavel2"]),
+                ParentescoResponsavel2 = Convert.ToString(collection["parentescoResponsavel2"]),
+                CpfResponsavel2 = Convert.ToString(collection["cpfResponsavel2"]),
+                NomeResponsavel3 = Convert.ToString(collection["nomeResponsavel3"]),
+                ParentescoResponsavel3 = Convert.ToString(collection["parentescoResponsavel3"]),
+                CpfResponsavel3 = Convert.ToString(collection["cpfResponsavel3"]),
+                LocalId = Convert.ToInt32(collection["localId"]),
+                AlunoId = Convert.ToInt32(collection["alunoId"])
+
+            };
+
+            await ApiClientFactory.Instance.UpdateMatricula(command);
 
             return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
         }
