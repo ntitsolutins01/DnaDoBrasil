@@ -1,23 +1,31 @@
-﻿using Infraero.Relprev.CrossCutting.Enumerators;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using WebApp.Areas.Identity.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using WebApp.Enumerators;
 using WebApp.Factory;
 using WebApp.Models;
+using WebApp.Utility;
 
 namespace WebApp.Controllers
 {
 	public class SerieController : BaseController
     {
-        public IActionResult Index(int? crud, int? notify, string message = null)
+
+	    private readonly IOptions<SettingsModel> _appSettings;
+
+	    public SerieController(IOptions<SettingsModel> appSettings)
+	    {
+		    _appSettings = appSettings;
+		    ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
+		}
+
+	    public IActionResult Index(int? crud, int? notify, string message = null)
         {
             SetNotifyMessage(notify, message);
             SetCrudMessage(crud);
-            var response = ApiClientFactory.Instance.GetSerieAll();
+            //var response = ApiClientFactory.Instance.GetSerieAll();
 
-            return View(new SerieModel(){Series = response});
+            //return View(new SerieModel(){Series = response});
+            return View();
         }
 
         //[ClaimsAuthorize("ConfiguracaoSistema", "Incluir")]
@@ -30,6 +38,7 @@ namespace WebApp.Controllers
         }
 
         //[ClaimsAuthorize("Usuario", "Incluir")]
+        [HttpPost]
         public async Task<ActionResult> Create(IFormCollection collection)
         {
             try
