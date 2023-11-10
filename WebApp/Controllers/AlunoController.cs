@@ -307,5 +307,157 @@ namespace WebApp.Controllers
 
             return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
         }
+
+
+        public IActionResult Dados()
+        {
+            return View();
+        }
+
+
+        //[ClaimsAuthorize("Usuario", "Incluir")]
+        [HttpPost]
+        public async Task<ActionResult> CreateDados(IFormCollection collection)
+        {
+            try
+            {
+                var command = new DadosModel.CreateUpdateDadosCommand
+                {
+                    AspNetUserId = Convert.ToInt32(collection["aspnetUserId"]),
+                    MunicipioId = Convert.ToInt32(collection["municipioId"]),
+                    Nome = Convert.ToString(collection["nome"]),
+                    Email = Convert.ToString(collection["email"]),
+                    Sexo = Convert.ToString(collection["sexo"]),
+                    DtNascimento = Convert.ToDateTime(collection["dtNascimento"].ToString()),
+                    NomeMae = Convert.ToString(collection["nomeMae"]),
+                    NomePai = Convert.ToString(collection["nomePai"]),
+                    Cpf = Convert.ToString(collection["cpf"]),
+                    Telefone = Convert.ToString(collection["telefone"]),
+                    Celular = Convert.ToString(collection["celular"]),
+                    Cep = Convert.ToString(collection["cep"]),
+                    Endereco = Convert.ToString(collection["endereco"]),
+                    Numero = Convert.ToString(collection["numero"]),
+                    Bairro = Convert.ToString(collection["bairro"]),
+                    RedeSocial = Convert.ToString(collection["redeSocial"]),
+                    Url = Convert.ToString(collection["url"]),
+                    Status = Convert.ToBoolean(collection["status"]),
+                    Habilitado = Convert.ToBoolean(collection["status"]),
+                    DeficienciasId = Convert.ToInt32(collection["deficienciasId"]),
+                    AmbientesId = Convert.ToInt32(collection["ambientesId"]),
+                    ParceiroId = Convert.ToInt32(collection["parceiroId"]),
+                    Etnia = Convert.ToInt32(collection["etnia"]),
+                    ContratosId = Convert.ToInt32(collection["contratosId"]),
+                    MatriculaId = Convert.ToInt32(collection["matriculaId"]),
+                    VoucherId = Convert.ToInt32(collection["voucherId"]),
+                    DependenciaId = Convert.ToInt32(collection["dependenciaId"]),
+                    LaudosId = Convert.ToInt32(collection["laudosId"])
+
+                };
+
+                await ApiClientFactory.Instance.CreateDados(command);
+
+                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
+        //[ClaimsAuthorize("Usuario", "Alterar")]
+        public async Task<ActionResult> EditDados(string id, IFormCollection collection)
+        {
+            var command = new DadosModel.CreateUpdateDadosCommand
+            {
+                Id = Convert.ToInt32(id),
+                AspNetUserId = Convert.ToInt32(collection["aspnetUserId"]),
+                MunicipioId = Convert.ToInt32(collection["municipioId"]),
+                Nome = Convert.ToString(collection["nome"]),
+                Email = Convert.ToString(collection["email"]),
+                Sexo = Convert.ToString(collection["sexo"]),
+                DtNascimento = Convert.ToDateTime(collection["dtNascimento"].ToString()),
+                NomeMae = Convert.ToString(collection["nomeMae"]),
+                NomePai = Convert.ToString(collection["nomePai"]),
+                Cpf = Convert.ToString(collection["cpf"]),
+                Telefone = Convert.ToString(collection["telefone"]),
+                Celular = Convert.ToString(collection["celular"]),
+                Cep = Convert.ToString(collection["cep"]),
+                Endereco = Convert.ToString(collection["endereco"]),
+                Numero = Convert.ToString(collection["numero"]),
+                Bairro = Convert.ToString(collection["bairro"]),
+                RedeSocial = Convert.ToString(collection["redeSocial"]),
+                Url = Convert.ToString(collection["url"]),
+                Status = Convert.ToBoolean(collection["status"]),
+                Habilitado = Convert.ToBoolean(collection["status"]),
+                DeficienciasId = Convert.ToInt32(collection["deficienciasId"]),
+                AmbientesId = Convert.ToInt32(collection["ambientesId"]),
+                ParceiroId = Convert.ToInt32(collection["parceiroId"]),
+                Etnia = Convert.ToInt32(collection["etnia"]),
+                ContratosId = Convert.ToInt32(collection["contratosId"]),
+                MatriculaId = Convert.ToInt32(collection["matriculaId"]),
+                VoucherId = Convert.ToInt32(collection["voucherId"]),
+                DependenciaId = Convert.ToInt32(collection["dependenciaId"]),
+                LaudosId = Convert.ToInt32(collection["laudosId"])
+
+            };
+
+            await ApiClientFactory.Instance.UpdateDados(command);
+
+            return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+        }
+
+
+
+        public IActionResult Voucher()
+        {
+            return View();
+        }
+
+        //[ClaimsAuthorize("Usuario", "Incluir")]
+        [HttpPost]
+        public async Task<ActionResult> CreateVoucher(IFormCollection collection)
+        {
+            try
+            {
+                var command = new VoucherModel.CreateUpdateVoucherCommand
+                {
+                    LocalId = Convert.ToInt32(collection["localId"]),
+                    Descricao = Convert.ToString(collection["descricao"]),
+                    Turma = Convert.ToString(collection["turma"]),
+                    Serie = Convert.ToString(collection["serie"]),
+                    AlunoId = Convert.ToInt32(collection["alunoId"])
+                };
+
+                await ApiClientFactory.Instance.CreateVoucher(command);
+
+                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
+        //[ClaimsAuthorize("Usuario", "Alterar")]
+        public async Task<ActionResult> EditVoucher(string id, IFormCollection collection)
+        {
+            var command = new VoucherModel.CreateUpdateVoucherCommand
+            {
+                Id = Convert.ToInt32(id),
+                LocalId = Convert.ToInt32(collection["localId"]),
+                Descricao = Convert.ToString(collection["descricao"]),
+                Turma = Convert.ToString(collection["turma"]),
+                Serie = Convert.ToString(collection["serie"]),
+                AlunoId = Convert.ToInt32(collection["alunoId"])
+
+            };
+
+            await ApiClientFactory.Instance.UpdateVoucher(command);
+
+            return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+        }
+
+
+
     }
 }
