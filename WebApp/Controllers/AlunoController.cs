@@ -408,6 +408,56 @@ namespace WebApp.Controllers
 
 
 
+        public IActionResult Voucher()
+        {
+            return View();
+        }
+
+        //[ClaimsAuthorize("Usuario", "Incluir")]
+        [HttpPost]
+        public async Task<ActionResult> CreateVoucher(IFormCollection collection)
+        {
+            try
+            {
+                var command = new VoucherModel.CreateUpdateVoucherCommand
+                {
+                    LocalId = Convert.ToInt32(collection["localId"]),
+                    Descricao = Convert.ToString(collection["descricao"]),
+                    Turma = Convert.ToString(collection["turma"]),
+                    Serie = Convert.ToString(collection["serie"]),
+                    AlunoId = Convert.ToInt32(collection["alunoId"])
+                };
+
+                await ApiClientFactory.Instance.CreateVoucher(command);
+
+                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
+        //[ClaimsAuthorize("Usuario", "Alterar")]
+        public async Task<ActionResult> EditVoucher(string id, IFormCollection collection)
+        {
+            var command = new VoucherModel.CreateUpdateVoucherCommand
+            {
+                Id = Convert.ToInt32(id),
+                LocalId = Convert.ToInt32(collection["localId"]),
+                Descricao = Convert.ToString(collection["descricao"]),
+                Turma = Convert.ToString(collection["turma"]),
+                Serie = Convert.ToString(collection["serie"]),
+                AlunoId = Convert.ToInt32(collection["alunoId"])
+
+            };
+
+            await ApiClientFactory.Instance.UpdateVoucher(command);
+
+            return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+        }
+
+
 
     }
 }
