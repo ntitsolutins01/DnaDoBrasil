@@ -21,27 +21,16 @@
 
 					<div class="form-group">
 						<label class="col-sm-1 control-label">Nome</label>
-						<div class="col-sm-3">
-							<input type="text" name="fullname" class="form-control" required />
+						<div class="col-sm-6">
+							<input type="text" id="nome" name="nome" class="form-control" required />
 						</div>
 						<label class="col-sm-1 control-label">Email </label>
-						<div class="col-sm-3">
+						<div class="col-sm-5">
 							<div class="input-group">
 								<span class="input-group-addon">
 									<i class="fa fa-envelope"></i>
 								</span>
-								<input type="email" name="email" class="form-control" required />
-							</div>
-						</div>
-						<label class="col-sm-1 control-label">Senha </label>
-						<div class="col-sm-3">
-							<div class="input-group">
-								<span class="input-group-addon">
-									<i class="fa fa-lock"></i>
-								</span>
-								<input id="ssenha" name="senha" class="form-control"
-									   maxlength="15" type="password"
-									   title="Por favor informe a senha.">
+								<input type="email" id="email"name="email" class="form-control" required />
 							</div>
 						</div>
 					</div>
@@ -49,26 +38,26 @@
 						<label class="col-sm-1 control-label">Selecione a Parceria</label>
 						<div class="col-sm-2">
 							<div class="radio-custom radio-primary">
-								<input id="awesome" name="porto_is" type="radio" value="awesome" required />
-								<label for="awesome">Empresas parceiras</label>
+								<input id="empresas" name="tipoParceria" type="radio" value="empresas" required />
+								<label for="empresas">Empresas parceiras</label>
 							</div>
 							<div class="radio-custom radio-primary">
-								<input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
-								<label for="very-awesome">Clubes e Federações</label>
+								<input id="clubesFederacoes" name="tipoParceria" type="radio" value="clubesFederacoes" />
+								<label for="clubesFederacoes">Clubes e Federações</label>
 							</div>
 							<label class="error" for="porto_is"></label>
 						</div>
 						<label class="col-sm-1 control-label">Tipo Pessoa</label>
 						<div class="col-sm-2">
 							<div class="radio-custom radio-primary">
-								<input id="awesome" name="porto_is" type="radio" value="awesome" required />
-								<label for="awesome">Pessoa Física</label>
+								<input id="pf" name="tipoPessoa" type="radio" value="pf" required />
+								<label for="pf">Pessoa Física</label>
 							</div>
 							<div class="radio-custom radio-primary">
-								<input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
-								<label for="very-awesome">Pessoa Jurídica</label>
+								<input id="pj" name="tipoPessoa" type="radio" value="pj" />
+								<label for="pj">Pessoa Jurídica</label>
 							</div>
-							<label class="error" for="porto_is"></label>
+							<label class="error" for="tipoPessoa"></label>
 						</div>
 						<label class="col-sm-1 control-label">Pf</label>
 						<div class="col-sm-2">
@@ -76,7 +65,7 @@
 						</div>
 						<label class="col-sm-1 control-label">Cnpj</label>
 						<div class="col-sm-2">
-							<input type="url" name="github" class="form-control" />
+							<input type="text" id="cpfCnpj" name="cpfCnpj" class="form-control" />
 						</div>
 					</div>
 					<div class="form-group">
@@ -99,7 +88,7 @@
 								<span class="input-group-addon">
 									<i class="fa fa-phone"></i>
 								</span>
-								<input name="Telefone" id="Telefone" data-plugin-masked-input=""
+								<input name="Celular" id="Celular" data-plugin-masked-input=""
 									   style="z-index: auto;"
 									   data-input-mask="(99) 9999-9999"
 									   Title="Por favor informe o telefone da empresa"
@@ -110,11 +99,11 @@
 					<div class="form-group">
 						<label class="col-sm-1 control-label">Endereço</label>
 						<div class="col-sm-6">
-							<input type="url" name="github" class="form-control" />
+							<input type="text" id="Endereço" name="Endereço" class="form-control" />
 						</div>
 						<label class="col-sm-1 control-label">Número</label>
 						<div class="col-sm-1">
-							<input type="url" name="github" class="form-control" />
+							<input type="text" id="Número" name="Número" class="form-control" />
 						</div>
 						<label class="col-sm-1 control-label">Cep</label>
 						<div class="col-sm-2">
@@ -124,7 +113,7 @@
 					<div class="form-group">
 						<label class="col-sm-1 control-label">Bairro </label>
 						<div class="col-sm-3">
-							<input type="url" name="github" class="form-control" />
+							<input type="text" id="Bairro" name="Bairro" class="form-control" />
 						</div>
 						<label class="col-sm-1 control-label">Estado </label>
 						<div class="col-sm-3">
@@ -143,13 +132,13 @@
 						<label class="col-sm-1 control-label pull-left">Cadastro ativo?</label>
 						<div class="col-sm-1">
 							<div class="switch switch-sm switch-primary">
-								<input type="checkbox" id="AlunoIncluir" name="AlunoIncluir" data-plugin-ios-switch checked="checked" />
+								<input type="checkbox" id="status" name="status" data-plugin-ios-switch checked="checked" />
 							</div>
 						</div>
 						<label class="col-sm-1 control-label">Cadastro habilitado?</label>
 						<div class="col-sm-1">
 							<div class="switch switch-sm switch-primary">
-								<input type="checkbox" id="AlunoIncluir" name="AlunoIncluir" data-plugin-ios-switch checked="checked" />
+								<input type="checkbox" id="habilitado" name="habilitado" data-plugin-ios-switch checked="checked" />
 							</div>
 						</div>
 					</div>
