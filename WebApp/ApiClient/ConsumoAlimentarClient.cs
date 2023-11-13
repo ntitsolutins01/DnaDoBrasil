@@ -13,12 +13,6 @@ namespace WebApp.ApiClient
                 $"{ResourceConfiguracaoSistema}"));
             return Post(requestUrl, command);
         }
-        public Task<long> UpdateConsumoAlimentar(ConsumoAlimentarModel.CreateUpdateConsumoAlimentarCommand command)
-        {
-            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}"));
-            return Put(requestUrl, command);
-        }
         public List<ConsumoAlimentarDto> GetConsumoAlimentarAll()
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
@@ -26,12 +20,6 @@ namespace WebApp.ApiClient
             return Get<List<ConsumoAlimentarDto>>(requestUrl);
         }
 
-        public Task<long> DeleteConsumoAlimentar(string id)
-        {
-            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}/{id}"));
-            return Delete<string>(requestUrl);
-        }
 
         #endregion
 

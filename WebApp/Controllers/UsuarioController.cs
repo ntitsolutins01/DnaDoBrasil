@@ -182,7 +182,7 @@ namespace WebApp.Controllers
 					AspNetRoleId = aspNetRoleId
 				};
 
-				ApiClientFactory.Instance.UpdateUsuario(command);
+				//ApiClientFactory.Instance.UpdateUsuario(command);
 
 				return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
 			}
@@ -197,7 +197,7 @@ namespace WebApp.Controllers
 		{
 			try
 			{
-				ApiClientFactory.Instance.DeleteUsuario(id);
+				//ApiClientFactory.Instance.DeleteUsuario(id);
 				return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
 			}
 			catch

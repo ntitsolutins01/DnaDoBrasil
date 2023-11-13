@@ -74,7 +74,7 @@ namespace WebApp.Controllers
                 Abdominal = Convert.ToInt32(collection["abdominal"])
         };
 
-            await ApiClientFactory.Instance.UpdateTalentoEsportivo(command);
+            //await ApiClientFactory.Instance.UpdateTalentoEsportivo(command);
 
             return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
         }
@@ -118,7 +118,7 @@ namespace WebApp.Controllers
 
             };
 
-            await ApiClientFactory.Instance.UpdateVocacional(command);
+            //await ApiClientFactory.Instance.UpdateVocacional(command);
 
             return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
         }
@@ -166,7 +166,7 @@ namespace WebApp.Controllers
 
             };
 
-            await ApiClientFactory.Instance.UpdateQualidadeVida(command);
+            //await ApiClientFactory.Instance.UpdateQualidadeVida(command);
 
             return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
         }
@@ -216,7 +216,7 @@ namespace WebApp.Controllers
 
             };
 
-            await ApiClientFactory.Instance.UpdateSaude(command);
+            //await ApiClientFactory.Instance.UpdateSaude(command);
 
             return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
         }
@@ -260,7 +260,7 @@ namespace WebApp.Controllers
 
             };
 
-            await ApiClientFactory.Instance.UpdateConsumoAlimentar(command);
+            //await ApiClientFactory.Instance.UpdateConsumoAlimentar(command);
 
             return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
         }
@@ -304,7 +304,7 @@ namespace WebApp.Controllers
 
             };
 
-            await ApiClientFactory.Instance.UpdateSaudeBucal(command);
+            //await ApiClientFactory.Instance.UpdateSaudeBucal(command);
 
             return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
         }
@@ -402,7 +402,7 @@ namespace WebApp.Controllers
 
             };
 
-            await ApiClientFactory.Instance.UpdateDados(command);
+            //await ApiClientFactory.Instance.UpdateDados(command);
 
             return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
         }
@@ -453,7 +453,7 @@ namespace WebApp.Controllers
 
             };
 
-            await ApiClientFactory.Instance.UpdateVoucher(command);
+            //await ApiClientFactory.Instance.UpdateVoucher(command);
 
             return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
         }
@@ -520,7 +520,7 @@ namespace WebApp.Controllers
 
             };
 
-            await ApiClientFactory.Instance.UpdateMatricula(command);
+            //await ApiClientFactory.Instance.UpdateMatricula(command);
 
             return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
         }

@@ -37,23 +37,30 @@ namespace WebApp.ApiClient
         /// <summary>
         /// Common method for making PUT calls
         /// </summary>
-        public Task<long> Put<T>(Uri requestUrl, T content)
+        public Task<bool> Put<T>(Uri requestUrl, T content)
         {
             addHeaders();
-             var response = _httpClient.PutAsync(requestUrl.ToString(), CreateHttpContent<T>(content));
+            var response = _httpClient.PutAsync(requestUrl.ToString(), CreateHttpContent<T>(content));
             var data = response.Result.Content.ReadAsStringAsync();
-            return Task.FromResult(JsonConvert.DeserializeObject<long>(data.Result));
+            return Task.FromResult(JsonConvert.DeserializeObject<bool>(data.Result));
         }
+        //public Task<bool> Put<T>(Uri requestUrl, T content)
+        //{
+        //    addHeaders();
+        //     var response = _httpClient.PutAsync(requestUrl.ToString(), CreateHttpContent<T>(content));
+        //    var data = response.Result.Content.ReadAsStringAsync();
+        //    return Task.FromResult(JsonConvert.DeserializeObject<bool>(data.Result));
+        //}
 
         /// <summary>
         /// Common method for making DELETE calls
         /// </summary>
-        public Task<long> Delete<T>(Uri requestUrl)
+        public Task<T> Delete<T>(Uri requestUrl)
         {
             addHeaders();
              var response = _httpClient.DeleteAsync(requestUrl);
             var data = response.Result.Content.ReadAsStringAsync();
-            return Task.FromResult(JsonConvert.DeserializeObject<long>(data.Result));
+            return Task.FromResult(JsonConvert.DeserializeObject<T>(data.Result));
         }
 
         public Uri CreateRequestUri(string relativePath, string queryString = "")
@@ -91,9 +98,9 @@ namespace WebApp.ApiClient
         }
 
         
-        private const string ResourceContrato = "Contratos";
         private const string ResourceEscolaridade = "Escolaridades"; 
         private const string ResourceSerie = "Series";
+        private const string ResourceConfiguracaoSistema = "ConfiguracaoSistema";
 
     }
 }

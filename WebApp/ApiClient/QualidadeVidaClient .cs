@@ -13,12 +13,6 @@ namespace WebApp.ApiClient
                 $"{ResourceConfiguracaoSistema}"));
             return Post(requestUrl, command);
         }
-        public Task<long> UpdateQualidadeVida(QualidadeVidaModel.CreateUpdateQualidadeVidaCommand command)
-        {
-            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}"));
-            return Put(requestUrl, command);
-        }
         public List<QualidadeVidaDto> GetQualidadeVidaAll()
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
@@ -26,12 +20,6 @@ namespace WebApp.ApiClient
             return Get<List<QualidadeVidaDto>>(requestUrl);
         }
 
-        public Task<long> DeleteQualidadeVida(string id)
-        {
-            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}/{id}"));
-            return Delete<string>(requestUrl);
-        }
 
         #endregion
 

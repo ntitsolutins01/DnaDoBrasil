@@ -16,12 +16,6 @@ namespace WebApp.ApiClient
                 $"{ResourceParceiro}"));
             return Post(requestUrl, command);
         }
-        public Task<long> UpdateParceiro(ParceiroModel.CreateUpdateParceiroCommand command)
-        {
-            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceParceiro}"));
-            return Put(requestUrl, command);
-        }
         public List<ParceiroDto> GetParceiroAll()
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
@@ -29,12 +23,6 @@ namespace WebApp.ApiClient
             return Get<List<ParceiroDto>>(requestUrl);
         }
 
-        public Task<long> DeleteParceiro(string id)
-        {
-            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}/{id}"));
-            return Delete<string>(requestUrl);
-        }
 
         #endregion
 

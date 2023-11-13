@@ -13,24 +13,11 @@ namespace WebApp.ApiClient
                 $"{ResourceConfiguracaoSistema}"));
             return Post(requestUrl, command);
         }
-        public Task<long> UpdateSaude(SaudeModel.CreateUpdateSaudeCommand command)
-        {
-            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}"));
-            return Put(requestUrl, command);
-        }
         public List<SaudeDto> GetSaudeAll()
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 $"{ResourceConfiguracaoSistema}"));
             return Get<List<SaudeDto>>(requestUrl);
-        }
-
-        public Task<long> DeleteSaude(string id)
-        {
-            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}/{id}"));
-            return Delete<string>(requestUrl);
         }
 
         #endregion

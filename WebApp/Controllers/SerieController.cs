@@ -86,7 +86,7 @@ namespace WebApp.Controllers
                     ScoreTotal = Convert.ToInt32(collection["scoreTotal"].ToString())
                 };
 
-                await ApiClientFactory.Instance.UpdateSerie(command);
+                //await ApiClientFactory.Instance.UpdateSerie(command);
 
                 return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
         }
@@ -96,7 +96,7 @@ namespace WebApp.Controllers
         {
             try
             {
-                ApiClientFactory.Instance.DeleteSerie(id);
+                //ApiClientFactory.Instance.DeleteSerie(id);
                 return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
             }
             catch

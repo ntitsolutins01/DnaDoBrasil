@@ -13,24 +13,11 @@ namespace WebApp.ApiClient
                 $"{ResourceConfiguracaoSistema}"));
             return Post(requestUrl, command);
         }
-        public Task<long> UpdateVocacional(VocacionalModel.CreateUpdateVocacionalCommand command)
-        {
-            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}"));
-            return Put(requestUrl, command);
-        }
         public List<VocacionalDto> GetVocacionalAll()
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 $"{ResourceConfiguracaoSistema}"));
             return Get<List<VocacionalDto>>(requestUrl);
-        }
-
-        public Task<long> DeleteVocacional(string id)
-        {
-            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}/{id}"));
-            return Delete<string>(requestUrl);
         }
 
         #endregion

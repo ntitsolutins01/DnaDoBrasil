@@ -63,7 +63,7 @@ namespace WebApp.Controllers
                     Descricao = collection["descricao"].ToString()
                 };
 
-                await ApiClientFactory.Instance.UpdateEscolaridade(command);
+                //await ApiClientFactory.Instance.UpdateEscolaridade(command);
 
                 return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
         }
@@ -73,7 +73,7 @@ namespace WebApp.Controllers
         {
             try
             {
-                ApiClientFactory.Instance.DeleteEscolaridade(id);
+                //ApiClientFactory.Instance.DeleteEscolaridade(id);
                 return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
             }
             catch

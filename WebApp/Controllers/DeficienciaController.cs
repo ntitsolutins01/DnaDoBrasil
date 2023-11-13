@@ -69,13 +69,13 @@ namespace WebApp.Controllers
                     TipoLaudo = collection["tipoLaudo"].ToString()
                 };
 
-                await ApiClientFactory.Instance.UpdateDeficiencia(command);
+                //await ApiClientFactory.Instance.UpdateDeficiencia(command);
 
                 return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
         }
 
         //[ClaimsAuthorize("Usuario", "Excluir")]
-        public ActionResult Delete(string id)
+        public ActionResult Delete(int id)
         {
             try
             {

@@ -5,58 +5,49 @@ namespace WebApp.ApiClient
 {
     public partial class DnaApiClient
     {
+        private const string ResourceDados = "Alunos";
+
         #region Main Methods
 
         public Task<long> CreateDados(DadosModel.CreateUpdateDadosCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}"));
+                $"{ResourceDados}"));
             return Post(requestUrl, command);
         }
-        public Task<long> UpdateDados(DadosModel.CreateUpdateDadosCommand command)
+
+        public Task<bool> UpdateDados(int id, DadosModel.CreateUpdateDadosCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}"));
+                $"{ResourceDados}/{id}"));
             return Put(requestUrl, command);
         }
-        public List<DadosDto> GetDadosAll()
-        {
-            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}"));
-            return Get<List<DadosDto>>(requestUrl);
-        }
 
-        public Task<long> DeleteDados(string id)
+        public Task<bool> DeleteDados(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}/{id}"));
-            return Delete<string>(requestUrl);
+                $"{ResourceDados}/{id}"));
+            return Delete<bool>(requestUrl);
         }
 
         #endregion
 
         #region Methods
 
+        public List<DadosDto> GetDadosAll()
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceDados}"));
+            return Get<List<DadosDto>>(requestUrl);
+        }
+
         public DadosDto GetDadosById(string id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}/{id}"));
+                $"{ResourceDados}/{id}"));
             return Get<DadosDto>(requestUrl);
+
+            #endregion
         }
-        //public List<DadosDto> GetDadossAll()
-        //{
-        //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-        //        $"{ResourceConfiguracaoSistema}/Dadoss"));
-        //    return Get<List<DadosDto>>(requestUrl);
-        //}
-
-        //public Task<bool> ExistUsuarioByIdDados(string id)
-        //{
-        //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-        //        $"{ResourceConfiguracaoSistema}/ExistUsuarioByIdDados"));
-        //    return PostAsync<bool, string>(requestUrl, id);
-        //}
-
-        #endregion
     }
 }

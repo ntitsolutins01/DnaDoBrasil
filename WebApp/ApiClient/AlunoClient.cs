@@ -20,7 +20,7 @@ namespace WebApp.ApiClient
                 $"{ResourceAluno}"));
             return Post(requestUrl, command);
         }
-        public Task<long> UpdateAluno(AlunoModel.CreateUpdateAlunoCommand command)
+        public Task<bool> UpdateAluno(AlunoModel.CreateUpdateAlunoCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 $"{ResourceAluno}"));

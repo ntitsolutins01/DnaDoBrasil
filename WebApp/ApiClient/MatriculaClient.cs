@@ -13,12 +13,7 @@ namespace WebApp.ApiClient
                 $"{ResourceConfiguracaoSistema}"));
             return Post(requestUrl, command);
         }
-        public Task<long> UpdateMatricula(MatriculaModel.CreateUpdateMatriculaCommand command)
-        {
-            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}"));
-            return Put(requestUrl, command);
-        }
+
         public List<MatriculaDto> GetMatriculaAll()
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
@@ -26,12 +21,6 @@ namespace WebApp.ApiClient
             return Get<List<MatriculaDto>>(requestUrl);
         }
 
-        public Task<long> DeleteMatricula(string id)
-        {
-            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}/{id}"));
-            return Delete<string>(requestUrl);
-        }
 
         #endregion
 

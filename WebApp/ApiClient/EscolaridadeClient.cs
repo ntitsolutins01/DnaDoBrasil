@@ -6,7 +6,6 @@ namespace WebApp.ApiClient
     public partial class DnaApiClient
     {
 
-        private const string ResourceConfiguracaoSistema = "ConfiguracaoSistema";
 
         #region Main Methods
 
@@ -16,12 +15,6 @@ namespace WebApp.ApiClient
                 $"{ResourceConfiguracaoSistema}"));
             return Post(requestUrl, command);
         }
-        public Task<long> UpdateEscolaridade(EscolaridadeModel.CreateUpdateEscolaridadeCommand command)
-        {
-            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}"));
-            return Put(requestUrl, command);
-        }
         public List<EscolaridadeDto> GetEscolaridadeAll()
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
@@ -29,12 +22,6 @@ namespace WebApp.ApiClient
             return Get<List<EscolaridadeDto>>(requestUrl);
         }
 
-        public Task<long> DeleteEscolaridade(string id)
-        {
-            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}/{id}"));
-            return Delete<string>(requestUrl);
-        }
 
         #endregion
 

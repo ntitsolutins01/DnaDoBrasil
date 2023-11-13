@@ -68,13 +68,13 @@ namespace WebApp.Controllers
 				Anexo = collection["anexo"].ToString()
 			};
 
-			await ApiClientFactory.Instance.UpdateContrato(command);
+			//await ApiClientFactory.Instance.UpdateContrato(command);
 
 			return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
 		}
 
 		//[ClaimsAuthorize("Usuario", "Excluir")]
-		public ActionResult Delete(string id)
+		public ActionResult Delete(int id)
 		{
 			try
 			{

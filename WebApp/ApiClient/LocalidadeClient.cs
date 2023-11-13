@@ -5,38 +5,40 @@ namespace WebApp.ApiClient
 {
     public partial class DnaApiClient
     {
+        private const string ResourceLocalidade = "Localidades";
+
         #region Main Methods
 
         public Task<long> CreateLocalidade(LocalidadeModel.CreateUpdateLocalidadeCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}"));
+                $"{ResourceLocalidade}"));
             return Post(requestUrl, command);
         }
-        public Task<long> UpdateLocalidade(LocalidadeModel.CreateUpdateLocalidadeCommand command)
+
+        public Task<bool> UpdateLocalidade(int id, LocalidadeModel.CreateUpdateLocalidadeCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}"));
+                $"{ResourceLocalidade}/{id}"));
             return Put(requestUrl, command);
         }
+
+        public Task<bool> DeleteLocalidade(int id)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceLocalidade}/{id}"));
+            return Delete<bool>(requestUrl);
+        }
+        #endregion
+
+        #region Methods
+
         public List<LocalidadeDto> GetLocalidadeAll()
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 $"{ResourceConfiguracaoSistema}"));
             return Get<List<LocalidadeDto>>(requestUrl);
         }
-
-        public Task<long> DeleteLocalidade(string id)
-        {
-            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}/{id}"));
-            return Delete<string>(requestUrl);
-        }
-
-        #endregion
-
-        #region Methods
-
         public LocalidadeDto GetLocalidadeById(string id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
