@@ -47,6 +47,18 @@ var vm = new Vue({
                 $("#" + el).addClass("loading-overlay-showing");
                 self.loading = flag;
             }
+        },
+        DeleteTipoLaudo: function (id) {
+            var url = "TipoLaudo/Delete/" + id;
+            $("#deleteTipoLaudoHref").prop("href", url);
         }
     }
 });
+
+var crud = {
+    DeleteModal: function (id) {
+        $('input[name="TipoLaudoId"]').attr('value', id);
+        $('#mdDeleteTipoLaudo').modal('show');
+        vm.DeleteTipoLaudo(id)
+    }
+};

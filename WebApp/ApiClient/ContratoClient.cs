@@ -21,18 +21,12 @@ namespace WebApp.ApiClient
                 $"{ResourceContrato}"));
             return Put(requestUrl, command);
         }
-        public Task<bool> DeleteContrato(int id)
-        {
-            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceContrato}"));
-            return Get<List<ContratoDto>>(requestUrl);
-        }
 
-        public Task<long> DeleteContrato(string id)
+        public Task<bool> DeleteContrato(string id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 $"{ResourceContrato}/{id}"));
-            return Delete<string>(requestUrl);
+            return Delete<bool>(requestUrl);
         }
 
         #endregion

@@ -83,7 +83,7 @@ namespace WebApp.Controllers
 		}
 
 		//[ClaimsAuthorize("Usuario", "Excluir")]
-		public ActionResult Delete(int id)
+		public ActionResult Delete(string id)
 		{
 			try
 			{

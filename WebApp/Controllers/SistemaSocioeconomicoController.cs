@@ -97,7 +97,7 @@ namespace WebApp.Controllers
 				TipoParceria = Convert.ToInt32(collection["TipoParceria"].ToString()), //TODO: Verificar condicional para resgate checkbox
 			};
 
-			await ApiClientFactory.Instance.UpdateParceiro(command);
+			//await ApiClientFactory.Instance.UpdateParceiro(command);
 
 			return RedirectToAction(nameof(Parceiro), new { crud = (int)EnumCrud.Updated });
 		}
@@ -107,7 +107,7 @@ namespace WebApp.Controllers
 		{
 			try
 			{
-				ApiClientFactory.Instance.DeleteParceiro(id);
+				//ApiClientFactory.Instance.DeleteParceiro(id);
 				return RedirectToAction(nameof(Parceiro), new { crud = (int)EnumCrud.Deleted });
 			}
 			catch
