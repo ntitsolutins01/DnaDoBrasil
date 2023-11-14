@@ -36,6 +36,7 @@ namespace WebApp.Controllers
         }
 
         //[ClaimsAuthorize("Usuario", "Incluir")]
+        [HttpPost]
         public async Task<ActionResult> Create(IFormCollection collection)
         {
             try
@@ -43,7 +44,7 @@ namespace WebApp.Controllers
                 var command = new AmbienteModel.CreateUpdateAmbienteCommand
                 {
 
-                    TipoLaudo = collection["tipoLaudo"].ToString()
+	                Nome  = collection["nome"].ToString()
                 };
 
                 await ApiClientFactory.Instance.CreateAmbiente(command);
@@ -72,7 +73,7 @@ namespace WebApp.Controllers
                 var command = new AmbienteModel.CreateUpdateAmbienteCommand
                 {
 
-                    TipoLaudo = collection["tipoLaudo"].ToString()
+                    Nome = collection["nome"].ToString()
                 };
 
                 //await ApiClientFactory.Instance.UpdateAmbiente(command);

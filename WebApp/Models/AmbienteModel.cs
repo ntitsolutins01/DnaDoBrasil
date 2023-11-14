@@ -12,7 +12,7 @@ namespace WebApp.Models
 
         public class CreateUpdateAmbienteCommand
         {
-            public string TipoLaudo { get; set; }
+            public string Nome { get; set; }
         }
     }
 
