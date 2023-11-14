@@ -2,16 +2,26 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Options;
 using WebApp.Areas.Identity.Models;
 using WebApp.Enumerators;
 using WebApp.Factory;
 using WebApp.Models;
+using WebApp.Utility;
 
 namespace WebApp.Controllers
 {
 	public class DeficienciaController : BaseController
     {
-        public IActionResult Index(int? crud, int? notify, string message = null)
+	    private readonly IOptions<SettingsModel> _appSettings;
+
+	    public DeficienciaController(IOptions<SettingsModel> appSettings)
+	    {
+		    _appSettings = appSettings;
+		    ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
+	    }
+
+		public IActionResult Index(int? crud, int? notify, string message = null)
         {
             SetNotifyMessage(notify, message);
             SetCrudMessage(crud);
@@ -37,7 +47,7 @@ namespace WebApp.Controllers
                 var command = new DeficienciaModel.CreateUpdateDeficienciaCommand
                 {
 
-                    TipoLaudo = collection["tipoLaudo"].ToString()
+                    Nome = collection["nome"].ToString()
                 };
 
                 await ApiClientFactory.Instance.CreateDeficiencia(command);
@@ -66,8 +76,8 @@ namespace WebApp.Controllers
                 var command = new DeficienciaModel.CreateUpdateDeficienciaCommand
                 {
 
-                    TipoLaudo = collection["tipoLaudo"].ToString()
-                };
+					Nome = collection["nome"].ToString()
+				};
 
                 //await ApiClientFactory.Instance.UpdateDeficiencia(command);
 

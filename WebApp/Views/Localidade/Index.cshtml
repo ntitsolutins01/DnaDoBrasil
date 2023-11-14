@@ -1,6 +1,6 @@
-﻿@model WebApp.Models.DeficienciaModel
+﻿@model LocalidadeModel
 @{
-    ViewData["Title"] = "Listagem de Deficiencias";
+    ViewData["Title"] = "Listagem de Localidades";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -13,33 +13,33 @@
                     <div class="panel-actions">
                         <a href="#" class="card-action card-action-toggle" data-card-toggle></a>
                     </div>
-                    <h2 class="panel-title">Listagem de Deficiencias</h2>
+                    <h2 class="panel-title">Listagem de Localidades</h2>
                 </header>
                 <div class="panel-body">
                     <div class="form-group row">
                         <div class="col-sm-12 pull-right">
-                            <a href="@Url.Action("Create", "Deficiencia")" id="addToTable" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Novo Tipo de Laudo </a>
+                            <a href="@Url.Action("Create", "Localidade")" id="addToTable" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Novo Tipo de Laudo </a>
                         </div>
                     </div>
                     <table class="table table-bordered table-striped mb-0" id="datatable-default">
                         <thead>
                             <tr>
                                 <th>Id</th>
-                                <th>Nome da Deficiencia</th>
+                                <th>Nome da Localidade</th>
                                 <th>Status</th>
                                 <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var item in Model.Deficiencias)
+                            @foreach (var item in Model.Localidades)
                             {
                                 <tr>
                                     <td>@Html.DisplayFor(modelItem => item.Id)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Nome)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Status)</td>
                                     <td class="actions">
-                                        <a data-toggle="tooltip" data-placement="top" title="Editar" asp-action="Edit" asp-controller="Deficiencia" asp-route-id="@item.Id" class="on-default edit-row" style='color: #FF9800'><i class="fa fa-pencil"></i></a>
-                                        <a data-toggle="tooltip" data-placement="top" title="Excluir" asp-action="Delete" asp-controller="Deficiencia" asp-route-id="@item.Id" class="on-default remove-row" style='color: #F44336'><i class="fa fa-trash"></i></a>
+                                        <a data-toggle="tooltip" data-placement="top" title="Editar" asp-action="Edit" asp-controller="Localidade" asp-route-id="@item.Id" class="on-default edit-row" style='color: #FF9800'><i class="fa fa-pencil"></i></a>
+                                        <a data-toggle="tooltip" data-placement="top" title="Excluir" asp-action="Delete" asp-controller="Localidade" asp-route-id="@item.Id" class="on-default remove-row" style='color: #F44336'><i class="fa fa-trash"></i></a>
                                     </td>
                                 </tr>
                             }
@@ -56,7 +56,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="mdExcluirLabel">
-                    <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Exclusão de Deficiencia</strong>
+                    <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Exclusão de Localidade</strong>
                 </h5>
             </div>
             <div class="modal-body">
@@ -82,7 +82,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="mdEditarLabel">
-                    <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Alterar Deficiencia</strong>
+                    <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Alterar Localidade</strong>
                 </h5>
             </div>
             <div class="modal-body">
@@ -119,20 +119,20 @@
 
             if (crub === 1) {
                 new PNotify({
-                    title: 'Deficiencia',
+                    title: 'Localidade',
                     text: 'Cadastro realizado com sucesso!',
                     type: 'success'
                 });
             } else if (crub === 2) {
                 new PNotify({
-                    title: 'Deficiencia',
+                    title: 'Localidade',
                     text: 'Dados alterados com sucesso.',
                     type: 'warning',
                     icon: 'fa fa-pencil'
                 });
             } else if (crub === 3) {
                 new PNotify({
-                    title: 'Deficiencia',
+                    title: 'Localidade',
                     text: 'Registro excluído com sucesso.',
                     type: 'error',
                     icon: 'fa fa-trash-o'

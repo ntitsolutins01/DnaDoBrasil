@@ -12,7 +12,7 @@ namespace WebApp.Models
 
         public class CreateUpdateDeficienciaCommand
         {
-            public string TipoLaudo { get; set; }
+            public string Nome { get; set; }
         }
     }
 

@@ -13,12 +13,11 @@ namespace WebApp.Controllers
     {
         public IActionResult Index(int? crud, int? notify, string message = null)
         {
-            //SetNotifyMessage(notify, message);
-            //SetCrudMessage(crud);
-            //var response = ApiClientFactory.Instance.GetEscolaridadeAll();
+            SetNotifyMessage(notify, message);
+            SetCrudMessage(crud);
+            var response = ApiClientFactory.Instance.GetEscolaridadeAll();
 
-            //return View(new EscolaridadeModel(){Escolaridades = response});
-            return View();
+            return View(new EscolaridadeModel() { Escolaridades = response });
         }
 
         //[ClaimsAuthorize("ConfiguracaoSistema", "Incluir")]
@@ -38,8 +37,8 @@ namespace WebApp.Controllers
                 var command = new EscolaridadeModel.CreateUpdateEscolaridadeCommand
                 {
 
-					Nome = collection["Escolaridade"].ToString(),
-                    Descricao = collection["Inscricao"].ToString()
+					Nome = collection["nome"].ToString(),
+                    Descricao = collection["descricao"].ToString()
 
 				};
 

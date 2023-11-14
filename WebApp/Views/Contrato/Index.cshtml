@@ -24,27 +24,30 @@
 					<thead>
 						<tr>
 							<th>Id</th>
-							<th>Nome da Contrato</th>
-							<th>Status</th>
+							<th>Nome do Contrato</th>
+							<th>Nome do Contrato</th>
+							<th>Nome do Contrato</th>
+							<th>Nome do Contrato</th>
+							<th>Anexo</th>
 							<th>Ações</th>
 						</tr>
 					</thead>
 					<tbody>
-						@* @foreach (var item in Model.Contratos)
-						{ *@
+						@foreach (var item in Model.Contratos)
+						{
 						<tr>
-							@* <td>@Html.DisplayFor(modelItem => item.Id)</td>
+							<td>@Html.DisplayFor(modelItem => item.Id)</td>
 							<td>@Html.DisplayFor(modelItem => item.Nome)</td>
 							<td>@Html.DisplayFor(modelItem => item.Descricao)</td>
 							<td>@Html.DisplayFor(modelItem => item.DtIni)</td>
 							<td>@Html.DisplayFor(modelItem => item.DtFim)</td>
-							<td>@Html.DisplayFor(modelItem => item.Anexo)</td> *@
+							<td>@Html.DisplayFor(modelItem => item.Anexo)</td>
 							<td class="actions">
 								<a title="Editar" type="button" data-toggle="modal" data-target="#mdEdit" style="cursor: pointer; color: #FF9800"><i class="fa fa-pencil"></i></a>
 								<a title="Excluir" type="button" data-toggle="modal" data-target="#mdDelete" style="cursor: pointer; color: #F44336"><i class="fa fa-trash"></i></a>
 							</td>
 						</tr>
-						@* } *@
+						}
 					</tbody>
 				</table>
 			</div>
