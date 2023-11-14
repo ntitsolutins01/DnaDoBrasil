@@ -1,4 +1,4 @@
-﻿namespace WebApp.Dto
+namespace WebApp.Dto
 {
     public class UsuarioDto
     {

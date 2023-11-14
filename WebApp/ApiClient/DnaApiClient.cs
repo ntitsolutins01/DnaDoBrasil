@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 using Newtonsoft.Json;
 using WebApp.Models;
 
@@ -97,6 +97,7 @@ namespace WebApp.ApiClient
             //    new AuthenticationHeaderValue("Bearer", "Your Oauth token");
         }
 
+        
         
         private const string ResourceEscolaridade = "Escolaridades"; 
         private const string ResourceSerie = "Series";

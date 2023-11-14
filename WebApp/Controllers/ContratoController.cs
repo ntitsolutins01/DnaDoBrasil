@@ -2,23 +2,32 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Options;
 using WebApp.Areas.Identity.Models;
 using WebApp.Enumerators;
 using WebApp.Factory;
 using WebApp.Models;
+using WebApp.Utility;
 
 namespace WebApp.Controllers
 {
 	public class ContratoController : BaseController
 	{
+		private readonly IOptions<SettingsModel> _appSettings;
+
+		public ContratoController(IOptions<SettingsModel> appSettings)
+		{
+			_appSettings = appSettings;
+			ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
+		}
+
 		public IActionResult Index(int? crud, int? notify, string message = null)
 		{
-			//SetNotifyMessage(notify, message);
-			//SetCrudMessage(crud);
-			//var response = ApiClientFactory.Instance.GetContratoAll();
+			SetNotifyMessage(notify, message);
+			SetCrudMessage(crud);
+			var response = ApiClientFactory.Instance.GetContratoAll();
 
-			//return View(new ContratoModel(){Contratos = response});
-			return View();
+			return View(new ContratoModel() { Contratos = response });
 		}
 
 		//[ClaimsAuthorize("ConfiguracaoSistema", "Incluir")]

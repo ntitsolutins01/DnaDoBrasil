@@ -1,31 +1,38 @@
-﻿using WebApp.Dto;
+using WebApp.Dto;
 using WebApp.Models;
 
 namespace WebApp.ApiClient
 {
     public partial class DnaApiClient
     {
-        private const string ResourceContrato = "Contratos";
+	    private const string ResourceContrato = "Contratos";
 
-        #region Main Methods
+		#region Main Methods
 
-        public Task<long> CreateContrato(ContratoModel.CreateUpdateContratoCommand command)
+		public Task<long> CreateContrato(ContratoModel.CreateUpdateContratoCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}"));
+                $"{ResourceContrato}"));
             return Post(requestUrl, command);
         }
         public Task<bool> UpdateContrato(int id, ContratoModel.CreateUpdateContratoCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceContrato}/{id}"));
+                $"{ResourceContrato}"));
             return Put(requestUrl, command);
         }
         public Task<bool> DeleteContrato(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceContrato}"));
+            return Get<List<ContratoDto>>(requestUrl);
+        }
+
+        public Task<long> DeleteContrato(string id)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 $"{ResourceContrato}/{id}"));
-            return Delete<bool>(requestUrl);
+            return Delete<string>(requestUrl);
         }
 
         #endregion
@@ -41,9 +48,22 @@ namespace WebApp.ApiClient
         public ContratoDto GetContratoById(string id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}/{id}"));
+                $"{ResourceContrato}/{id}"));
             return Get<ContratoDto>(requestUrl);
         }
+        //public List<ContratoDto> GetContratosAll()
+        //{
+        //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+        //        $"{ResourceContrato}/Contratos"));
+        //    return Get<List<ContratoDto>>(requestUrl);
+        //}
+
+        //public Task<bool> ExistUsuarioByIdContrato(string id)
+        //{
+        //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+        //        $"{ResourceContrato}/ExistUsuarioByIdContrato"));
+        //    return PostAsync<bool, string>(requestUrl, id);
+        //}
 
         #endregion
     }
