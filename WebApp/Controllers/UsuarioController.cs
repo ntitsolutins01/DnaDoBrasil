@@ -40,7 +40,8 @@ namespace WebApp.Controllers
 			SetNotifyMessage(notify, message);
 			SetCrudMessage(crud);
 			var response = ApiClientFactory.Instance.GetUsuarioAll();
-			return View(response);
+
+			return View(new UsuarioModel() { Usuarios = response });
 		}
 
 		//[ClaimsAuthorize("Usuario", "Incluir")]
@@ -58,6 +59,7 @@ namespace WebApp.Controllers
 		}
 
 		//[ClaimsAuthorize("Usuario", "Incluir")]
+		[HttpPost]
 		public async Task<ActionResult> Create(IFormCollection collection)
 		{
 			try
@@ -146,7 +148,6 @@ namespace WebApp.Controllers
 			if (obj != null)
 			{
 				var resultPerfil = ApiClientFactory.Instance.GetPerfilAll();
-
 
 				model = new UsuarioModel
 				{
