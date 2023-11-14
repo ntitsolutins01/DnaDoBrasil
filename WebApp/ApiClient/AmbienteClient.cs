@@ -15,24 +15,11 @@ namespace WebApp.ApiClient
                 $"{ResourceAmbiente}"));
             return Post(requestUrl, command);
         }
-        public Task<long> UpdateAmbiente(AmbienteModel.CreateUpdateAmbienteCommand command)
-        {
-            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceAmbiente}"));
-            return Put(requestUrl, command);
-        }
         public List<AmbienteDto> GetAmbienteAll()
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 $"{ResourceAmbiente}"));
             return Get<List<AmbienteDto>>(requestUrl);
-        }
-
-        public Task<long> DeleteAmbiente(string id)
-        {
-            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceAmbiente}/{id}"));
-            return Delete<string>(requestUrl);
         }
 
         #endregion

@@ -70,13 +70,13 @@ namespace WebApp.Controllers
 	                Descricao = collection["descricao"].ToString()
 				};
 
-                await ApiClientFactory.Instance.UpdateLocalidade(command);
+                //await ApiClientFactory.Instance.UpdateLocalidade(command);
 
                 return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
         }
 
         //[ClaimsAuthorize("Usuario", "Excluir")]
-        public ActionResult Delete(string id)
+        public ActionResult Delete(int id)
         {
             try
             {

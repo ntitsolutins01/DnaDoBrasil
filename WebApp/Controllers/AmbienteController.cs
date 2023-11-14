@@ -75,7 +75,7 @@ namespace WebApp.Controllers
                     TipoLaudo = collection["tipoLaudo"].ToString()
                 };
 
-                await ApiClientFactory.Instance.UpdateAmbiente(command);
+                //await ApiClientFactory.Instance.UpdateAmbiente(command);
 
                 return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
         }
@@ -85,7 +85,7 @@ namespace WebApp.Controllers
         {
             try
             {
-                ApiClientFactory.Instance.DeleteAmbiente(id);
+                //ApiClientFactory.Instance.DeleteAmbiente(id);
                 return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
             }
             catch

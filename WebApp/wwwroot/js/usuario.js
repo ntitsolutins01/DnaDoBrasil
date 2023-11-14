@@ -1,5 +1,5 @@
 var vm = new Vue({
-    el: "#form",
+    el: "#formUsuario",
     data: {
         params: {
             cpf: "",
@@ -13,69 +13,72 @@ var vm = new Vue({
         (function ($) {
 
             'use strict';
+            var formid = $('form').attr('id');
 
-            var $select = $(".select2").select2({
-                allowClear: true
-            });
+            if (formid === "formUsuario") {
+                var $select = $(".select2").select2({
+                    allowClear: true
+                });
 
-            $(".select2").each(function () {
-                var $this = $(this),
-                    opts = {};
+                $(".select2").each(function () {
+                    var $this = $(this),
+                        opts = {};
 
-                var pluginOptions = $this.data('plugin-options');
-                if (pluginOptions)
-                    opts = pluginOptions;
+                    var pluginOptions = $this.data('plugin-options');
+                    if (pluginOptions)
+                        opts = pluginOptions;
 
-                $this.themePluginSelect2(opts);
-            });
+                    $this.themePluginSelect2(opts);
+                });
 
-            /*
-             * When you change the value the select via select2, it triggers
-             * a 'change' event, but the jquery validation plugin
-             * only re-validates on 'blur'*/
+                /*
+                 * When you change the value the select via select2, it triggers
+                 * a 'change' event, but the jquery validation plugin
+                 * only re-validates on 'blur'*/
 
-            $select.on('change', function () {
-                $(this).trigger('blur');
-            });
+                $select.on('change', function () {
+                    $(this).trigger('blur');
+                });
 
-            var $numCpf = $("#cpf");
-            $numCpf.mask('000.000.000-00', { reverse: false });
+                var $numCpf = $("#cpf");
+                $numCpf.mask('000.000.000-00', { reverse: false });
 
-            var $numTel = $("#NumTelefone");
-            $numTel.mask('(00) 00000-0000');
+                var $numTel = $("#NumTelefone");
+                $numTel.mask('(00) 00000-0000');
 
-            $("#form").validate({
-                rules: {
-                    "EndEmail": {
-                        required: true,
-                        email: true
+                $("#formUsuario").validate({
+                    rules: {
+                        "EndEmail": {
+                            required: true,
+                            email: true
+                        },
+                        cpf: { cpf: true, required: true }
                     },
-                    cpf: { cpf: true, required: true }
-                },
-                messages: {
-                    "EndEmail": {
-                        required: "Por favor informe o endereÁo eletrÙnico v·lido do usu·rio.",
-                        email: "Formato de e-mail inv·lido."
+                    messages: {
+                        "EndEmail": {
+                            required: "Por favor informe o endere√ßo eletr√¥nico v√°lido do usu√°rio.",
+                            email: "Formato de e-mail inv√°lido."
+                        },
+                        cpf: { cpf: 'Formato de CPF inv√°lido', required: "Por favor informe o n√∫mero do CPF do usu√°rio." }
                     },
-                    cpf: { cpf: 'Formato de CPF inv·lido', required: "Por favor informe o n˙mero do CPF do usu·rio." }
-                },
-                highlight: function (label) {
-                    $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
-                },
-                success: function (label) {
-                    $(label).closest('.form-group').removeClass('has-error');
-                    label.remove();
-                },
-                errorPlacement: function (error, element) {
-                    var placement = element.closest('.input-group');
-                    if (!placement.get(0)) {
-                        placement = element;
+                    highlight: function (label) {
+                        $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
+                    },
+                    success: function (label) {
+                        $(label).closest('.form-group').removeClass('has-error');
+                        label.remove();
+                    },
+                    errorPlacement: function (error, element) {
+                        var placement = element.closest('.input-group');
+                        if (!placement.get(0)) {
+                            placement = element;
+                        }
+                        if (error.text() !== '') {
+                            placement.after(error);
+                        }
                     }
-                    if (error.text() !== '') {
-                        placement.after(error);
-                    }
-                }
-            });
+                });
+            }
 
             jQuery.validator.addMethod("cpf", function (cpf, element) {
                 var regex = /^\d{3}\.\d{3}\.\d{3}\-\d{2}$/;
@@ -119,7 +122,7 @@ var vm = new Vue({
                 return true;
 
 
-            }, "Informe um CPF v·lido");
+            }, "Informe um CPF v√°lido");
         }).apply(this, [jQuery]);
     },
     methods: {
@@ -183,6 +186,18 @@ var vm = new Vue({
                 Site.Notification("Erro ao buscar e analisar dados", error.response.data, "error", 1);
                 self.ShowLoad(false, "vUsuario");
             });
+        },
+        DeleteUsuario: function (id) {
+            var url = "Usuario/Delete/" + id;
+            $("#deleteUsuarioHref").prop("href", url);
         }
     }
 });
+
+var crud = {
+    DeleteModal: function (id) {
+        $('input[name="usuarioId"]').attr('value', id);
+        $('#mdDeleteUsuario').modal('show');
+        vm.DeleteUsuario(id)
+    }
+};

@@ -23,7 +23,7 @@ namespace WebApp.Controllers
         private readonly ApplicationDbContext _db;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<IdentityUser> _userManager;
-		private readonly IOptions<SettingsModel> _appSettings;
+        private readonly IOptions<SettingsModel> _appSettings;
 
         public PerfilController(ApplicationDbContext db,
             RoleManager<IdentityRole> roleManager,
@@ -85,7 +85,7 @@ namespace WebApp.Controllers
                 adminRole = new IdentityRole(command.Nome);
                 await _roleManager.CreateAsync(adminRole);
                 foreach (var addClaim in from DictionaryEntry claim in command.Claims
-                         select new Claim(claim.Key.ToString()!, claim.Value!.ToString()!))
+                                         select new Claim(claim.Key.ToString()!, claim.Value!.ToString()!))
                 {
                     await _roleManager.AddClaimAsync(adminRole, addClaim);
                 }
@@ -93,7 +93,7 @@ namespace WebApp.Controllers
                 command.AspNetRoleId = adminRole.Id;
 
                 await ApiClientFactory.Instance.CreatePerfil(command);
-                
+
                 return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
             }
             catch (Exception e)
@@ -103,9 +103,12 @@ namespace WebApp.Controllers
         }
 
         //[ClaimsAuthorize("Perfil", "Alterar")]
-        public ActionResult Edit(string id)
+        public ActionResult Edit(int id)
         {
-            var obj = GetPerfilById(id);
+            var perfil = ApiClientFactory.Instance.GetPerfilById(id);
+            if (id == null)
+                return RedirectToActionResult();
+            var obj = GetPerfilByAspNetRoleId(perfil.AspNetRoleId);
             var responseModulos = ApiClientFactory.Instance.GetModuloAll();
 
             var listClaim = new List<Claim>();
@@ -115,8 +118,7 @@ namespace WebApp.Controllers
                 listClaim.Add(new Claim(item.Key.ToString(), item.Value.ToString()));
             }
 
-
-            var model = new PerfilModel { Perfil = obj, Modulos = responseModulos, Claims = listClaim };
+            var model = new PerfilModel { Perfil = perfil, Modulos = responseModulos, Claims = listClaim };
             return View(model);
         }
 
@@ -128,6 +130,7 @@ namespace WebApp.Controllers
             {
                 ListDictionary list = new ListDictionary();
                 var responseModulos = ApiClientFactory.Instance.GetModuloAll();
+                var perfil = ApiClientFactory.Instance.GetPerfilById(id);
 
                 foreach (var modulo in responseModulos)
                 {
@@ -139,12 +142,14 @@ namespace WebApp.Controllers
 
                 var command = new PerfilModel.CreateUpdateCommand
                 {
-                    Id = id,
+                    Id = perfil.Id,
                     Nome = collection["nome"].ToString(),
-                    Claims = list
+                    Descricao = collection["descricao"].ToString(),
+                    Claims = list,
+                    AspNetRoleId = perfil.AspNetRoleId
                 };
 
-                var adminRole = await _roleManager.FindByIdAsync(command.AspNetRoleId);
+                var adminRole = await _roleManager.FindByIdAsync(perfil.AspNetRoleId);
 
                 if (adminRole != null)
                 {
@@ -165,11 +170,21 @@ namespace WebApp.Controllers
                         var res = await _roleManager.AddClaimAsync(adminRole, addClaim);
                     }
 
-                    ApiClientFactory.Instance.UpdatePerfil(command);
+                    var result = await ApiClientFactory.Instance.UpdatePerfil(id, command);
+
+                    if (result)
+                    {
+                        return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+                    }
+                    else
+                    {
+                        return RedirectToActionResult();
+                    }
                 }
-
-
-                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+                else
+                {
+                    return RedirectToActionResult();
+                }
             }
             catch
             {
@@ -178,43 +193,13 @@ namespace WebApp.Controllers
         }
 
         //[ClaimsAuthorize("Perfil", "Excluir")]
-        public async Task<ActionResult> DeleteAsync(string id)
+        public async Task<ActionResult> DeleteAsync(int id)
         {
             try
             {
-                var obj = _db.Roles.Where(x => x.Id == id).FirstOrDefault();
-                var usersInRole =
-                    _db.UserRoles.Where(u => u.RoleId == id).Select(s => s.UserId);
+                var perfil = ApiClientFactory.Instance.GetPerfilById(id);
 
-                foreach (var idUserInRole in usersInRole)
-                {
-                    var user = await _userManager.FindByIdAsync(idUserInRole);
-                    if (user != null)
-                    {
-                        var userRoles = await _userManager.GetRolesAsync(new IdentityUser() { Id = user.Id });
-
-                        var rsRemove = await _userManager.RemoveFromRoleAsync(user, userRoles.FirstOrDefault());
-
-                        //if (!rsRemove.Succeeded) return null;
-                        //var userRole = _db.Roles.FirstOrDefault(x => x.Name.ToUpper() == command.NomPerfilUsuarioPublico.ToUpper());
-                        //await _userManager.AddToRoleAsync(user, userRole.Name);
-
-                        //var usuario = await Mediator.Send(new GetUsuarioByIdQuery { Id = user.Id });
-
-
-                        //var commandUsu = new UpdateUsuarioCommand
-                        //{
-                        //    NomUsuario = user.Nome,
-                        //    NumTelefone = user.Telefone,
-                        //    CodEmpresa = usuario.CodEmpresa,
-                        //    CodUnidadeInfraestrutura = usuario.CodUnidadeInfraestrutura,
-                        //    CodPerfil = userRole.Id,
-                        //    NomPerfil = userRole.Name,
-                        //};
-
-                        //var resultUsu = await Mediator.Send(commandUsu);
-                    }
-                }
+                var obj = _db.Roles.Where(x => x.Id == perfil.AspNetRoleId).FirstOrDefault();
 
                 var result = await _roleManager.DeleteAsync(obj);
 
@@ -233,10 +218,10 @@ namespace WebApp.Controllers
             }
         }
 
-        private PerfilDto GetPerfilById(string id)
+        private PerfilDto GetPerfilByAspNetRoleId(string aspNetRoleId)
         {
-            var entity = _db.Roles.Where(x => x.Id == id).Select(item => new PerfilDto { Nome = item.Name, Id = item.Id }).FirstOrDefault();
-            var role = _roleManager.Roles.Single(x => x.Id == entity.Id);
+            var entity = _db.Roles.Where(x => x.Id == aspNetRoleId).Select(item => new PerfilDto { Nome = item.Name, AspNetRoleId = item.Id }).FirstOrDefault();
+            var role = _roleManager.Roles.Single(x => x.Id == entity.AspNetRoleId);
             var claims = _roleManager.GetClaimsAsync(role).Result;
             ListDictionary list = new ListDictionary();
             foreach (var claim in claims)
@@ -247,6 +232,15 @@ namespace WebApp.Controllers
             entity.Claims = list;
 
             return entity;
+        }
+        private RedirectToActionResult RedirectToActionResult()
+        {
+            return RedirectToAction(nameof(Index),
+                new
+                {
+                    notify = 2,
+                    message = "Erro ao alterar o perfil. Favor entrar em contato com o administrador do sistema."
+                });
         }
     }
 }

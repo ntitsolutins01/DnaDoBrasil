@@ -8,6 +8,7 @@ namespace WebApp.Models
         public int PerfilId { get; set; }
         public SelectList ListPerfis { get; set; }
         public UsuarioDto Usuario { get; set; }
+        public List<UsuarioDto> Usuarios { get; set; }
 
 		public class CreateUpdateUsuarioCommand
 		{

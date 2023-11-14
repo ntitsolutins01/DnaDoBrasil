@@ -40,7 +40,8 @@ namespace WebApp.Controllers
 			SetNotifyMessage(notify, message);
 			SetCrudMessage(crud);
 			var response = ApiClientFactory.Instance.GetUsuarioAll();
-			return View(response);
+
+			return View(new UsuarioModel() { Usuarios = response });
 		}
 
 		//[ClaimsAuthorize("Usuario", "Incluir")]
@@ -58,6 +59,7 @@ namespace WebApp.Controllers
 		}
 
 		//[ClaimsAuthorize("Usuario", "Incluir")]
+		[HttpPost]
 		public async Task<ActionResult> Create(IFormCollection collection)
 		{
 			try
@@ -147,7 +149,6 @@ namespace WebApp.Controllers
 			{
 				var resultPerfil = ApiClientFactory.Instance.GetPerfilAll();
 
-
 				model = new UsuarioModel
 				{
 					ListPerfis = new SelectList(resultPerfil, "PerfilId", "Nome", obj.PerfilId),
@@ -182,7 +183,7 @@ namespace WebApp.Controllers
 					AspNetRoleId = aspNetRoleId
 				};
 
-				ApiClientFactory.Instance.UpdateUsuario(command);
+				//ApiClientFactory.Instance.UpdateUsuario(command);
 
 				return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
 			}
@@ -197,7 +198,7 @@ namespace WebApp.Controllers
 		{
 			try
 			{
-				ApiClientFactory.Instance.DeleteUsuario(id);
+				//ApiClientFactory.Instance.DeleteUsuario(id);
 				return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
 			}
 			catch

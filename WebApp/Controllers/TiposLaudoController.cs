@@ -69,7 +69,7 @@ namespace WebApp.Controllers
                     TipoLaudo = collection["tipoLaudo"].ToString()
                 };
 
-                await ApiClientFactory.Instance.UpdateTiposLaudo(command);
+                //await ApiClientFactory.Instance.UpdateTiposLaudo(command);
 
                 return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
         }
@@ -79,7 +79,7 @@ namespace WebApp.Controllers
         {
             try
             {
-                ApiClientFactory.Instance.DeleteTiposLaudo(id);
+                //ApiClientFactory.Instance.DeleteTiposLaudo(id);
                 return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
             }
             catch

@@ -5,26 +5,28 @@ namespace WebApp.ApiClient
 {
     public partial class DnaApiClient
     {
-        private const string ResourceContrato = "Contratos";
+        private const string ResourceDados = "Alunos";
 
         #region Main Methods
 
-        public Task<long> CreateContrato(ContratoModel.CreateUpdateContratoCommand command)
+        public Task<long> CreateDados(DadosModel.CreateUpdateDadosCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}"));
+                $"{ResourceDados}"));
             return Post(requestUrl, command);
         }
-        public Task<bool> UpdateContrato(int id, ContratoModel.CreateUpdateContratoCommand command)
+
+        public Task<bool> UpdateDados(int id, DadosModel.CreateUpdateDadosCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceContrato}/{id}"));
+                $"{ResourceDados}/{id}"));
             return Put(requestUrl, command);
         }
-        public Task<bool> DeleteContrato(int id)
+
+        public Task<bool> DeleteDados(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceContrato}/{id}"));
+                $"{ResourceDados}/{id}"));
             return Delete<bool>(requestUrl);
         }
 
@@ -32,19 +34,20 @@ namespace WebApp.ApiClient
 
         #region Methods
 
-        public List<ContratoDto> GetContratoAll()
+        public List<DadosDto> GetDadosAll()
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}"));
-            return Get<List<ContratoDto>>(requestUrl);
-        }
-        public ContratoDto GetContratoById(string id)
-        {
-            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}/{id}"));
-            return Get<ContratoDto>(requestUrl);
+                $"{ResourceDados}"));
+            return Get<List<DadosDto>>(requestUrl);
         }
 
-        #endregion
+        public DadosDto GetDadosById(string id)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceDados}/{id}"));
+            return Get<DadosDto>(requestUrl);
+
+            #endregion
+        }
     }
 }

@@ -16,50 +16,39 @@ namespace WebApp.ApiClient
                 $"{ResourceDeficiencia}"));
             return Post(requestUrl, command);
         }
-        public Task<long> UpdateDeficiencia(DeficienciaModel.CreateUpdateDeficienciaCommand command)
+
+        public Task<bool> UpdateDeficiencia(int id, DeficienciaModel.CreateUpdateDeficienciaCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceDeficiencia}"));
+                $"{ResourceDeficiencia}/{id}"));
             return Put(requestUrl, command);
         }
-        public List<DeficienciaDto> GetDeficienciaAll()
-        {
-            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}"));
-            return Get<List<DeficienciaDto>>(requestUrl);
-        }
 
-        public Task<long> DeleteDeficiencia(string id)
+        public Task<bool> DeleteDeficiencia(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}/{id}"));
-            return Delete<string>(requestUrl);
+                $"{ResourceDeficiencia}/{id}"));
+            return Delete<bool>(requestUrl);
         }
 
         #endregion
 
         #region Methods
 
+        public List<DeficienciaDto> GetDeficienciaAll()
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceDeficiencia}"));
+            return Get<List<DeficienciaDto>>(requestUrl);
+        }
+
         public DeficienciaDto GetDeficienciaById(string id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}/{id}"));
+                $"{ResourceDeficiencia}/{id}"));
             return Get<DeficienciaDto>(requestUrl);
+
+            #endregion
         }
-        //public List<DeficienciaDto> GetDeficienciasAll()
-        //{
-        //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-        //        $"{ResourceConfiguracaoSistema}/Deficiencias"));
-        //    return Get<List<DeficienciaDto>>(requestUrl);
-        //}
-
-        //public Task<bool> ExistUsuarioByIdDeficiencia(string id)
-        //{
-        //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-        //        $"{ResourceConfiguracaoSistema}/ExistUsuarioByIdDeficiencia"));
-        //    return PostAsync<bool, string>(requestUrl, id);
-        //}
-
-        #endregion
     }
 }

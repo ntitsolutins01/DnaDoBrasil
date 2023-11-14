@@ -1,10 +1,12 @@
-﻿@{
+﻿@model UsuarioModel
+
+@{
 	ViewData["Title"] = "Usuário";
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="row">
 	<div class="col-lg-12">
-		<form id="form" class="form-horizontal">
+		<form id="formUsuario" class="form-horizontal">
 			<section class="panel">
 				<header class="panel-heading">
 					<div class="panel-actions">
@@ -21,6 +23,7 @@
 					<table class="table table-bordered table-striped mb-0" id="datatable-default">
 						<thead>
 							<tr>
+								<th>Id</th>
 								<th>Nome</th>
 								<th>CPF</th>
 								<th>E-mail</th>
@@ -29,29 +32,23 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>Fábio de Souza Muniz</td>
-								<td>987.564.952-54</td>
-								<td>ntitsolutions01@gmail.com</td>
-								<td>Administrador</td>
-								<td class="actions">
-									<a data-toggle="tooltip" data-placement="top" title="Editar" asp-action="Edit" asp-controller="Usuario" asp-route-id="1" class="on-default edit-row" style='color: #FF9800'><i class="fa fa-pencil"></i></a>
-									<a data-toggle="tooltip" data-placement="top" title="Excluir" asp-action="Delete" asp-controller="Usuario" asp-route-id="1" class="on-default remove-row" style='color:#F44336'><i class="fa fa-trash-o"></i></a>
-								</td>
-							</tr>
-							@* @foreach (var item in Model.aaData)
-							{
-							<tr>
-							<td>@Html.DisplayFor(modelItem => item.NomUsuario)</td>
-							<td>@Html.DisplayFor(modelItem => item.NumCpf)</td>
-							<td>@Html.DisplayFor(modelItem => item.Email)</td>
-							<td>@Html.DisplayFor(modelItem => item.NomPerfil)</td>
-							<td class="actions">
-							<a data-toggle="tooltip" data-placement="top" title="Editar" asp-action="Edit" asp-controller="Usuario" asp-route-id="@item.CodUsuarioLogin" class="on-default edit-row" style='color: #eea236'><i class="fa fa-pencil"></i></a>
-							<a data-toggle="tooltip" data-placement="top" title="Excluir" asp-action="Delete" asp-controller="Usuario" asp-route-id="@item.CodUsuarioLogin" class="on-default remove-row" style='color: #d43f3a'><i class="fa fa-trash-o"></i></a>
-							</td>
-							</tr>
-							} *@
+                        @foreach (var item in Model.Usuarios)
+                        {
+                            <tr>
+                                <td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Id)</td>
+                                <td class="text-center">@Html.DisplayFor(modelItem => item.Nome)</td>
+                                <td class="text-center">@Html.DisplayFor(modelItem => item.Cpf)</td>
+                                <td class="text-center">@Html.DisplayFor(modelItem => item.Email)</td>
+                                <td class="text-center">@Html.DisplayFor(modelItem => item.Perfil.Nome)</td>
+                                <td class="text-center">
+                                    <a data-toggle="tooltip" data-placement="top" title="Editar" asp-action="Edit" asp-controller="Perfil" asp-route-Id="@item.Id" class="on-default edit-row" style='color: #FF9800'><i class="fa fa-pencil"></i></a>
+
+									<a data-toggle="tooltip" data-placement="top" title="Excluir" href='javascript:(crud.DeleteModal("+@item.Id+"))'
+									   class="on-default remove-row" style="cursor: pointer;color: #F44336"><i class="fa fa-trash"></i></a>
+
+                                </td>
+                            </tr>
+                        }
 						</tbody>
 					</table>
 				</div>
@@ -60,27 +57,28 @@
 	</div>
 </div>
 <!-- Modal -->
-<div class="modal fade" id="mdExcluir" tabindex="-1" role="dialog" aria-labelledby="mdExcluirLabel" aria-hidden="true">
+<div class="modal fade" id="mdDeleteUsuario" tabindex="-1" role="dialog" aria-labelledby="mdDeleteUsuarioLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="mdExcluirLabel">
-					<i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Exclusão de Usuário</strong>
-				</h5>
-			</div>
+            <div class="modal-header">
+                <h5 class="modal-title" id="mdDeleteUsuarioLabel">
+                    <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Exclusão de Usuário</strong>
+                </h5>
+            </div>
 			<div class="modal-body">
 				<div class="modal-icon">
 					<i class="fa fa-question-circle"></i>
 				</div>
-				<div class="modal-text">
-					<p class="mb-0">Tem certeza que deseja <b>excluir</b> esse registro?</p>
-				</div>
+                <div class="modal-text">
+                    <input type="hidden" id="usuarioId" />
+                    <p class="mb-0">Tem certeza que deseja <b>excluir</b> esse registro?</p>
+                </div>
 				<div class="modal-wrapper">
 				</div>
 			</div>
 			<div class="modal-footer">
 				<button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-thumbs-o-down"></i> &nbsp;&nbsp;Não</button>
-				<button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</button>
+				<a id="deleteUsuarioHref" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</a>
 			</div>
 		</div>
 	</div>
@@ -92,28 +90,28 @@
 	<script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
 	<script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
 	<script src="~/js/formatTable.js"></script>
-
+    <script src="~/js/usuario.js"></script>
 	<script>
 
 		(function ($) {
 
 			'use strict';
-			var crub = @ViewBag.CrudMessage;
+			var crud = @ViewBag.CrudMessage;
 
-			if (crub === 1) {
+			if (crud === 1) {
 				new PNotify({
 					title: 'Usuário',
 					text: 'Cadastro realizado com sucesso!',
 					type: 'success'
 				});
-			} else if (crub === 2) {
+			} else if (crud === 2) {
 				new PNotify({
 					title: 'Usuário',
 					text: 'Dados alterados com sucesso.',
 					type: 'warning',
 					icon: 'fa fa-pencil'
 				});
-			} else if (crub === 3) {
+			} else if (crud === 3) {
 				new PNotify({
 					title: 'Usuário',
 					text: 'Registro excluído com sucesso.',

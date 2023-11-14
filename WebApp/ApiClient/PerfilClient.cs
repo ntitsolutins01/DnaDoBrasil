@@ -15,33 +15,39 @@ namespace WebApp.ApiClient
                 $"{ResourcePerfil}"));
             return Post(requestUrl, command);
         }
-        public Task<long> UpdatePerfil(PerfilModel.CreateUpdateCommand command)
-        {
-            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourcePerfil}"));
-            return Put(requestUrl, command);
-        }
-        public List<PerfilDto> GetPerfilAll()
-        {
-            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourcePerfil}"));
-            return Get<List<PerfilDto>>(requestUrl);
-        }
-        public Task<long> DeletePerfil(string id)
+        public Task<bool> UpdatePerfil(int id, PerfilModel.CreateUpdateCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 $"{ResourcePerfil}/{id}"));
-            return Delete<string>(requestUrl);
+            return Put(requestUrl, command);
+        }
+        public Task<bool> DeletePerfil(int id)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourcePerfil}/{id}"));
+            return Delete<bool>(requestUrl);
         }
 
         #endregion
 
         #region Methods
 
+        public List<PerfilDto> GetPerfilAll()
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourcePerfil}"));
+            return Get<List<PerfilDto>>(requestUrl);
+        }
         public PerfilDto GetPerfilById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 $"{ResourcePerfil}/{id}"));
+            return Get<PerfilDto>(requestUrl);
+		}
+        public PerfilDto GetPerfilByAspNetRoleId(string aspNetRoleId)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourcePerfil}/AspNetRoleId/{aspNetRoleId}"));
             return Get<PerfilDto>(requestUrl);
 		}
 		public UsuarioDto GetUsuarioByName(string name)

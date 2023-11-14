@@ -5,22 +5,20 @@ namespace WebApp.ApiClient
 {
     public partial class DnaApiClient
     {
-
-        private const string ResourceParceiro = "Parceiros";
-
         #region Main Methods
 
-        public Task<long> CreateParceiro(ParceiroModel.CreateUpdateParceiroCommand command)
-        {
-            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceParceiro}"));
-            return Post(requestUrl, command);
-        }
-        public List<ParceiroDto> GetParceiroAll()
+        public Task<long> CreateMatricula(MatriculaModel.CreateUpdateMatriculaCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 $"{ResourceConfiguracaoSistema}"));
-            return Get<List<ParceiroDto>>(requestUrl);
+            return Post(requestUrl, command);
+        }
+
+        public List<MatriculaDto> GetMatriculaAll()
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceConfiguracaoSistema}"));
+            return Get<List<MatriculaDto>>(requestUrl);
         }
 
 
@@ -28,23 +26,23 @@ namespace WebApp.ApiClient
 
         #region Methods
 
-        public ParceiroDto GetParceiroById(string id)
+        public MatriculaDto GetMatriculaById(string id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 $"{ResourceConfiguracaoSistema}/{id}"));
-            return Get<ParceiroDto>(requestUrl);
+            return Get<MatriculaDto>(requestUrl);
         }
-        //public List<ParceiroDto> GetParceirosAll()
+        //public List<MatriculaDto> GetMatriculasAll()
         //{
         //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-        //        $"{ResourceConfiguracaoSistema}/Parceiros"));
-        //    return Get<List<ParceiroDto>>(requestUrl);
+        //        $"{ResourceConfiguracaoSistema}/Matriculas"));
+        //    return Get<List<MatriculaDto>>(requestUrl);
         //}
 
-        //public Task<bool> ExistUsuarioByIdParceiro(string id)
+        //public Task<bool> ExistUsuarioByIdMatricula(string id)
         //{
         //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-        //        $"{ResourceConfiguracaoSistema}/ExistUsuarioByIdParceiro"));
+        //        $"{ResourceConfiguracaoSistema}/ExistUsuarioByIdMatricula"));
         //    return PostAsync<bool, string>(requestUrl, id);
         //}
 

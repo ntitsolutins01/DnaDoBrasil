@@ -13,12 +13,6 @@ namespace WebApp.ApiClient
                 $"{ResourceConfiguracaoSistema}"));
             return Post(requestUrl, command);
         }
-        public Task<long> UpdateTiposLaudo(TiposLaudoModel.CreateUpdateTiposLaudoCommand command)
-        {
-            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}"));
-            return Put(requestUrl, command);
-        }
         public List<TiposLaudoDto> GetTiposLaudoAll()
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
@@ -26,12 +20,6 @@ namespace WebApp.ApiClient
             return Get<List<TiposLaudoDto>>(requestUrl);
         }
 
-        public Task<long> DeleteTiposLaudo(string id)
-        {
-            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}/{id}"));
-            return Delete<string>(requestUrl);
-        }
 
         #endregion
 
@@ -43,19 +31,6 @@ namespace WebApp.ApiClient
                 $"{ResourceConfiguracaoSistema}/{id}"));
             return Get<TiposLaudoDto>(requestUrl);
         }
-        //public List<DeficienciaDto> GetDeficienciasAll()
-        //{
-        //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-        //        $"{ResourceConfiguracaoSistema}/Deficiencias"));
-        //    return Get<List<DeficienciaDto>>(requestUrl);
-        //}
-
-        //public Task<bool> ExistUsuarioByIdTiposLaudo(string id)
-        //{
-        //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-        //        $"{ResourceConfiguracaoSistema}/ExistUsuarioByIdTiposLaudo"));
-        //    return PostAsync<bool, string>(requestUrl, id);
-        //}
 
         #endregion
     }

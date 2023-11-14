@@ -5,22 +5,19 @@ namespace WebApp.ApiClient
 {
     public partial class DnaApiClient
     {
-
-        private const string ResourceParceiro = "Parceiros";
-
         #region Main Methods
 
-        public Task<long> CreateParceiro(ParceiroModel.CreateUpdateParceiroCommand command)
-        {
-            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceParceiro}"));
-            return Post(requestUrl, command);
-        }
-        public List<ParceiroDto> GetParceiroAll()
+        public Task<long> CreateVoucher(VoucherModel.CreateUpdateVoucherCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 $"{ResourceConfiguracaoSistema}"));
-            return Get<List<ParceiroDto>>(requestUrl);
+            return Post(requestUrl, command);
+        }
+        public List<VoucherDto> GetVoucherAll()
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceConfiguracaoSistema}"));
+            return Get<List<VoucherDto>>(requestUrl);
         }
 
 
@@ -28,23 +25,23 @@ namespace WebApp.ApiClient
 
         #region Methods
 
-        public ParceiroDto GetParceiroById(string id)
+        public VoucherDto GetVoucherById(string id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 $"{ResourceConfiguracaoSistema}/{id}"));
-            return Get<ParceiroDto>(requestUrl);
+            return Get<VoucherDto>(requestUrl);
         }
-        //public List<ParceiroDto> GetParceirosAll()
+        //public List<VoucherDto> GetVouchersAll()
         //{
         //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-        //        $"{ResourceConfiguracaoSistema}/Parceiros"));
-        //    return Get<List<ParceiroDto>>(requestUrl);
+        //        $"{ResourceConfiguracaoSistema}/Vouchers"));
+        //    return Get<List<VoucherDto>>(requestUrl);
         //}
 
-        //public Task<bool> ExistUsuarioByIdParceiro(string id)
+        //public Task<bool> ExistUsuarioByIdVoucher(string id)
         //{
         //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-        //        $"{ResourceConfiguracaoSistema}/ExistUsuarioByIdParceiro"));
+        //        $"{ResourceConfiguracaoSistema}/ExistUsuarioByIdVoucher"));
         //    return PostAsync<bool, string>(requestUrl, id);
         //}
 

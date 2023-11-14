@@ -15,24 +15,11 @@ namespace WebApp.ApiClient
 				$"{ResourceUsuario}"));
 			return Post(requestUrl, command);
 		}
-		public Task<long> UpdateUsuario(UsuarioModel.CreateUpdateUsuarioCommand command)
-		{
-			var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-				$"{ResourceUsuario}"));
-			return Put(requestUrl, command);
-		}
 		public List<UsuarioDto> GetUsuarioAll()
 		{
 			var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
 				$"{ResourceUsuario}"));
 			return Get<List<UsuarioDto>>(requestUrl);
-		}
-
-		public Task<long> DeleteUsuario(int id)
-		{
-			var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-				$"{ResourceUsuario}/{id}"));
-			return Delete<string>(requestUrl);
 		}
 
 		#endregion
