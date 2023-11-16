@@ -5,20 +5,30 @@ namespace WebApp.ApiClient
 {
     public partial class DnaApiClient
     {
+        private const string ResourceSaude = "Saude";
+
         #region Main Methods
 
         public Task<long> CreateSaude(SaudeModel.CreateUpdateSaudeCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}"));
+                $"{ResourceSaude}"));
             return Post(requestUrl, command);
         }
-        public List<SaudeDto> GetSaudeAll()
+        public Task<bool> UpdateSaude(int id, SaudeModel.CreateUpdateSaudeCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}"));
-            return Get<List<SaudeDto>>(requestUrl);
+                $"{ResourceSaude}/{id}"));
+            return Put(requestUrl, command);
         }
+
+        public Task<bool> DeleteSaude(int id)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceSaude}/{id}"));
+            return Delete<bool>(requestUrl);
+        }
+
 
         #endregion
 
@@ -27,22 +37,15 @@ namespace WebApp.ApiClient
         public SaudeDto GetSaudeById(string id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}/{id}"));
+                $"{ResourceSaude}/{id}"));
             return Get<SaudeDto>(requestUrl);
         }
-        //public List<SaudeDto> GetSaudesAll()
-        //{
-        //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-        //        $"{ResourceConfiguracaoSistema}/Saudes"));
-        //    return Get<List<SaudeDto>>(requestUrl);
-        //}
-
-        //public Task<bool> ExistUsuarioByIdSaude(string id)
-        //{
-        //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-        //        $"{ResourceConfiguracaoSistema}/ExistUsuarioByIdSaude"));
-        //    return PostAsync<bool, string>(requestUrl, id);
-        //}
+        public List<SaudeDto> GetSaudeAll()
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceSaude}"));
+            return Get<List<SaudeDto>>(requestUrl);
+        }
 
         #endregion
     }

@@ -5,14 +5,30 @@ namespace WebApp.ApiClient
 {
     public partial class DnaApiClient
     {
+        private const string ResourceSaudeBucal = "SaudesBucais";
+
         #region Main Methods
 
         public Task<long> CreateSaudeBucal(SaudeBucalModel.CreateUpdateSaudeBucalCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}"));
+                $"{ResourceSaudeBucal}"));
             return Post(requestUrl, command);
         }
+        public Task<bool> UpdateSaudeBucal(int id, SaudeBucalModel.CreateUpdateSaudeBucalCommand command)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceSaudeBucal}/{id}"));
+            return Put(requestUrl, command);
+        }
+
+        public Task<bool> DeleteSaudeBucal(int id)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceSaudeBucal}/{id}"));
+            return Delete<bool>(requestUrl);
+        }
+
 
         #endregion
 
@@ -21,14 +37,14 @@ namespace WebApp.ApiClient
         public List<SaudeBucalDto> GetSaudeBucalAll()
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}"));
+                $"{ResourceSaudeBucal}"));
             return Get<List<SaudeBucalDto>>(requestUrl);
         }
 
         public SaudeBucalDto GetSaudeBucalById(string id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}/{id}"));
+                $"{ResourceSaudeBucal}/{id}"));
             return Get<SaudeBucalDto>(requestUrl);
 
             #endregion

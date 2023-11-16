@@ -5,19 +5,27 @@ namespace WebApp.ApiClient
 {
     public partial class DnaApiClient
     {
+        private const string ResourceTiposLaudo = "TiposLaudos";
         #region Main Methods
 
         public Task<long> CreateTiposLaudo(TiposLaudoModel.CreateUpdateTiposLaudoCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}"));
+                $"{ResourceTiposLaudo}"));
             return Post(requestUrl, command);
         }
-        public List<TiposLaudoDto> GetTiposLaudoAll()
+        public Task<bool> UpdateTiposLaudo(int id, TiposLaudoModel.CreateUpdateTiposLaudoCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}"));
-            return Get<List<TiposLaudoDto>>(requestUrl);
+                $"{ResourceTiposLaudo}/{id}"));
+            return Put(requestUrl, command);
+        }
+
+        public Task<bool> DeleteTiposLaudo(int id)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceTiposLaudo}/{id}"));
+            return Delete<bool>(requestUrl);
         }
 
 
@@ -28,8 +36,14 @@ namespace WebApp.ApiClient
         public TiposLaudoDto GetTiposLaudoById(string id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}/{id}"));
+                $"{ResourceTiposLaudo}/{id}"));
             return Get<TiposLaudoDto>(requestUrl);
+        }
+        public List<TiposLaudoDto> GetTiposLaudoAll()
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceTiposLaudo}"));
+            return Get<List<TiposLaudoDto>>(requestUrl);
         }
 
         #endregion

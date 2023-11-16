@@ -15,11 +15,18 @@ namespace WebApp.ApiClient
                 $"{ResourceAmbiente}"));
             return Post(requestUrl, command);
         }
-        public List<AmbienteDto> GetAmbienteAll()
+        public Task<bool> UpdateAmbiente(int id, AmbienteModel.CreateUpdateAmbienteCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceAmbiente}"));
-            return Get<List<AmbienteDto>>(requestUrl);
+                $"{ResourceAmbiente}/{id}"));
+            return Put(requestUrl, command);
+        }
+
+        public Task<bool> DeleteAmbiente(int id)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceAmbiente}/{id}"));
+            return Delete<bool>(requestUrl);
         }
 
         #endregion
@@ -32,21 +39,12 @@ namespace WebApp.ApiClient
                 $"{ResourceAmbiente}/{id}"));
             return Get<AmbienteDto>(requestUrl);
         }
-
-
-        //public List<DeficienciaDto> GetDeficienciasAll()
-        //{
-        //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-        //        $"{ResourceAmbiente}/Deficiencias"));
-        //    return Get<List<DeficienciaDto>>(requestUrl);
-        //}
-
-        //public Task<bool> ExistUsuarioByIdAmbiente(string id)
-        //{
-        //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-        //        $"{ResourceAmbiente}/ExistUsuarioByIdAmbiente"));
-        //    return PostAsync<bool, string>(requestUrl, id);
-        //}
+        public List<AmbienteDto> GetAmbienteAll()
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceAmbiente}"));
+            return Get<List<AmbienteDto>>(requestUrl);
+        }
 
         #endregion
     }

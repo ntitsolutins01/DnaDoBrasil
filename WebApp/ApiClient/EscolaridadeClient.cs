@@ -5,24 +5,29 @@ namespace WebApp.ApiClient
 {
     public partial class DnaApiClient
     {
-
+        private const string ResourceEscolaridade = "Escolaridades";
 
         #region Main Methods
 
         public Task<long> CreateEscolaridade(EscolaridadeModel.CreateUpdateEscolaridadeCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}"));
+                $"{ResourceEscolaridade}"));
             return Post(requestUrl, command);
         }
-        public List<EscolaridadeDto> GetEscolaridadeAll()
+        public Task<bool> UpdateEscolaridade(int id, EscolaridadeModel.CreateUpdateEscolaridadeCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}"));
-            return Get<List<EscolaridadeDto>>(requestUrl);
+                $"{ResourceEscolaridade}/{id}"));
+            return Put(requestUrl, command);
         }
 
-
+        public Task<bool> DeleteEscolaridade(int id)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceEscolaridade}/{id}"));
+            return Delete<bool>(requestUrl);
+        }
         #endregion
 
         #region Methods
@@ -30,23 +35,15 @@ namespace WebApp.ApiClient
         public EscolaridadeDto GetEscolaridadeById(string id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}/{id}"));
+                $"{ResourceEscolaridade}/{id}"));
             return Get<EscolaridadeDto>(requestUrl);
         }
-        //public List<EscolaridadeDto> GetEscolaridadesAll()
-        //{
-        //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-        //        $"{ResourceConfiguracaoSistema}/Escolaridades"));
-        //    return Get<List<EscolaridadeDto>>(requestUrl);
-        //}
-
-        //public Task<bool> ExistUsuarioByIdEscolaridade(string id)
-        //{
-        //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-        //        $"{ResourceConfiguracaoSistema}/ExistUsuarioByIdEscolaridade"));
-        //    return PostAsync<bool, string>(requestUrl, id);
-        //}
-
+        public List<EscolaridadeDto> GetEscolaridadeAll()
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceEscolaridade}"));
+            return Get<List<EscolaridadeDto>>(requestUrl);
+        }
         #endregion
     }
 }

@@ -35,7 +35,7 @@ namespace WebApp.ApiClient
 		public List<ModuloDto> GetModuloAll()
 		{
 			var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-				$"{ResourceConfiguracaoSistema}/Modulos"));
+				$"{ResourceUsuario}/Modulos"));
 			return Get<List<ModuloDto>>(requestUrl);
 		}
         public UsuarioDto GetUsuarioByCpf(string cpf)

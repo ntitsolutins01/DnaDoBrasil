@@ -5,19 +5,29 @@ namespace WebApp.ApiClient
 {
     public partial class DnaApiClient
     {
+        private const string ResourceVocacional = "Vocacionais";
         #region Main Methods
 
         public Task<long> CreateVocacional(VocacionalModel.CreateUpdateVocacionalCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}"));
+                $"{ResourceVocacional}"));
             return Post(requestUrl, command);
         }
-        public List<VocacionalDto> GetVocacionalAll()
+       
+
+        public Task<bool> UpdateVocacional(int id, VocacionalModel.CreateUpdateVocacionalCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}"));
-            return Get<List<VocacionalDto>>(requestUrl);
+                $"{ResourceVocacional}/{id}"));
+            return Put(requestUrl, command);
+        }
+
+        public Task<bool> DeleteVocacional(int id)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceVocacional}/{id}"));
+            return Delete<bool>(requestUrl);
         }
 
         #endregion
@@ -27,22 +37,15 @@ namespace WebApp.ApiClient
         public VocacionalDto GetVocacionalById(string id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}/{id}"));
+                $"{ResourceVocacional}/{id}"));
             return Get<VocacionalDto>(requestUrl);
         }
-        //public List<VocacionalDto> GetVocacionalsAll()
-        //{
-        //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-        //        $"{ResourceConfiguracaoSistema}/Vocacionals"));
-        //    return Get<List<VocacionalDto>>(requestUrl);
-        //}
-
-        //public Task<bool> ExistUsuarioByIdVocacional(string id)
-        //{
-        //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-        //        $"{ResourceConfiguracaoSistema}/ExistUsuarioByIdVocacional"));
-        //    return PostAsync<bool, string>(requestUrl, id);
-        //}
+        public List<VocacionalDto> GetVocacionalAll()
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceVocacional}"));
+            return Get<List<VocacionalDto>>(requestUrl);
+        }
 
         #endregion
     }

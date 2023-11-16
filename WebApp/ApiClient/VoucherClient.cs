@@ -5,19 +5,27 @@ namespace WebApp.ApiClient
 {
     public partial class DnaApiClient
     {
+        private const string ResourceVoucher = "Vouchers";
         #region Main Methods
 
         public Task<long> CreateVoucher(VoucherModel.CreateUpdateVoucherCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}"));
+                $"{ResourceVoucher}"));
             return Post(requestUrl, command);
         }
-        public List<VoucherDto> GetVoucherAll()
+        public Task<bool> UpdateVoucher(int id, VoucherModel.CreateUpdateVoucherCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}"));
-            return Get<List<VoucherDto>>(requestUrl);
+                $"{ResourceVoucher}/{id}"));
+            return Put(requestUrl, command);
+        }
+
+        public Task<bool> DeleteVoucher(int id)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceVoucher}/{id}"));
+            return Delete<bool>(requestUrl);
         }
 
 
@@ -28,22 +36,15 @@ namespace WebApp.ApiClient
         public VoucherDto GetVoucherById(string id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}/{id}"));
+                $"{ResourceVoucher}/{id}"));
             return Get<VoucherDto>(requestUrl);
         }
-        //public List<VoucherDto> GetVouchersAll()
-        //{
-        //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-        //        $"{ResourceConfiguracaoSistema}/Vouchers"));
-        //    return Get<List<VoucherDto>>(requestUrl);
-        //}
-
-        //public Task<bool> ExistUsuarioByIdVoucher(string id)
-        //{
-        //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-        //        $"{ResourceConfiguracaoSistema}/ExistUsuarioByIdVoucher"));
-        //    return PostAsync<bool, string>(requestUrl, id);
-        //}
+        public List<VoucherDto> GetVoucherAll()
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceVoucher}"));
+            return Get<List<VoucherDto>>(requestUrl);
+        }
 
         #endregion
     }

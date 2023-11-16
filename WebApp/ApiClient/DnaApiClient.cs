@@ -99,9 +99,7 @@ namespace WebApp.ApiClient
 
         
         
-        private const string ResourceEscolaridade = "Escolaridades"; 
-        private const string ResourceSerie = "Series";
-        private const string ResourceConfiguracaoSistema = "ConfiguracaoSistema";
+       
 
     }
 }

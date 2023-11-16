@@ -36,29 +36,16 @@ namespace WebApp.ApiClient
         public List<LocalidadeDto> GetLocalidadeAll()
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}"));
+                $"{ResourceLocalidade}"));
             return Get<List<LocalidadeDto>>(requestUrl);
         }
         public LocalidadeDto GetLocalidadeById(string id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceConfiguracaoSistema}/{id}"));
+                $"{ResourceLocalidade}/{id}"));
             return Get<LocalidadeDto>(requestUrl);
         }
-        //public List<LocalidadeDto> GetLocalidadesAll()
-        //{
-        //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-        //        $"{ResourceConfiguracaoSistema}/Localidades"));
-        //    return Get<List<LocalidadeDto>>(requestUrl);
-        //}
-
-        //public Task<bool> ExistUsuarioByIdLocalidade(string id)
-        //{
-        //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-        //        $"{ResourceConfiguracaoSistema}/ExistUsuarioByIdLocalidade"));
-        //    return PostAsync<bool, string>(requestUrl, id);
-        //}
-
+        
         #endregion
     }
 }
