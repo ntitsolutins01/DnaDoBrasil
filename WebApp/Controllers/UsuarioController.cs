@@ -16,195 +16,233 @@ using System.Security.Claims;
 
 namespace WebApp.Controllers
 {
-	public class UsuarioController : BaseController
-	{
-		private readonly IOptions<SettingsModel> _appSettings;
-		private readonly IEmailSender _emailSender;
-		private readonly UserManager<IdentityUser> _userManager;
-		private readonly RoleManager<IdentityRole> _roleManager;
-		private readonly IHostingEnvironment _host;
+    public class UsuarioController : BaseController
+    {
+        private readonly IOptions<SettingsModel> _appSettings;
+        private readonly IEmailSender _emailSender;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IHostingEnvironment _host;
 
-		public UsuarioController(IOptions<SettingsModel> app, IEmailSender emailSender,
-			UserManager<IdentityUser> userManager, IHostingEnvironment host, RoleManager<IdentityRole> roleManager)
-		{
-			_appSettings = app;
-			_emailSender = emailSender;
-			_userManager = userManager;
-			_host = host;
-			_roleManager = roleManager;
-			ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
-		}
-		//[ClaimsAuthorize("Usuario", "Consultar")]
-		public IActionResult Index(int? crud, int? notify, string message = null)
-		{
-			SetNotifyMessage(notify, message);
-			SetCrudMessage(crud);
-			var response = ApiClientFactory.Instance.GetUsuarioAll();
+        public UsuarioController(IOptions<SettingsModel> app, IEmailSender emailSender,
+            UserManager<IdentityUser> userManager, IHostingEnvironment host, RoleManager<IdentityRole> roleManager)
+        {
+            _appSettings = app;
+            _emailSender = emailSender;
+            _userManager = userManager;
+            _host = host;
+            _roleManager = roleManager;
+            ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
+        }
+        //[ClaimsAuthorize("Usuario", "Consultar")]
+        public IActionResult Index(int? crud, int? notify, string message = null)
+        {
+            SetNotifyMessage(notify, message);
+            SetCrudMessage(crud);
+            var response = ApiClientFactory.Instance.GetUsuarioAll();
 
-			return View(new UsuarioModel() { Usuarios = response });
-		}
+            return View(new UsuarioModel() { Usuarios = response });
+        }
 
-		//[ClaimsAuthorize("Usuario", "Incluir")]
-		public ActionResult Create(int? crud, int? notify, string message = null)
-		{
-			SetNotifyMessage(notify, message);
-			SetCrudMessage(crud);
-			var resultPerfil = ApiClientFactory.Instance.GetPerfilAll();
+        //[ClaimsAuthorize("Usuario", "Incluir")]
+        public ActionResult Create(int? crud, int? notify, string message = null)
+        {
+            SetNotifyMessage(notify, message);
+            SetCrudMessage(crud);
+            var resultPerfil = ApiClientFactory.Instance.GetPerfilAll();
 
-			var model = new UsuarioModel
-			{
-				ListPerfis = new SelectList(resultPerfil, "Id", "Nome")
-			};
-			return View(model);
-		}
+            var model = new UsuarioModel
+            {
+                ListPerfis = new SelectList(resultPerfil, "Id", "Nome")
+            };
+            return View(model);
+        }
 
-		//[ClaimsAuthorize("Usuario", "Incluir")]
-		[HttpPost]
-		public async Task<ActionResult> Create(IFormCollection collection)
-		{
-			try
-			{
-				var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-				var perfilId = int.Parse(collection["ddlPerfil"].ToString());
-				var aspNetRoleId = _roleManager.FindByNameAsync(collection["ddlPerfil"].ToString()).Result?.Id;
+        //[ClaimsAuthorize("Usuario", "Incluir")]
+        [HttpPost]
+        public async Task<ActionResult> Create(IFormCollection collection)
+        {
+            try
+            {
+                var result = ApiClientFactory.Instance.GetUsuarioByCpf(collection["cpf"].ToString());
 
-				var command = new UsuarioModel.CreateUpdateUsuarioCommand
-				{
+                if (result != null)
+                {
+                    return RedirectToAction(nameof(Create),
+                        new
+                        {
+                            notify = (int)EnumNotify.Error,
+                            message = "Já existe um usuário cadastrado com esse cpf."
+                        });
+                }
 
-					Email = collection["EndEmail"].ToString(),
-					Nome = collection["NomUsuario"].ToString(),
-					Cpf = collection["cpf"].ToString(),
-					Telefone = collection["NumTelefone"].ToString(),
-					PerfilId = perfilId,
-					AspNetUserId = userId,
-					AspNetRoleId = aspNetRoleId
-				};
+                var result2 = ApiClientFactory.Instance.GetUsuarioByEmail(collection["email"].ToString().Trim());
 
-				var result = ApiClientFactory.Instance.GetUsuarioByCpf(command.Cpf);
+                if (result2 != null)
+                {
+                    return RedirectToAction(nameof(Create),
+                        new
+                        {
+                            notify = (int)EnumNotify.Error,
+                            message = "Já existe usuários com o E-mail informado cadastrado na base de dados!"
+                        });
+                }
 
-				if (result != null)
-				{
-					return RedirectToAction(nameof(Create),
-						new
-						{
-							notify = (int)EnumNotify.Error,
-							message = "Já existe um usuário cadastrado com esse cpf."
-						});
+                var command = new UsuarioModel.CreateUpdateUsuarioCommand
+                {
+                    Email = collection["email"].ToString(),
+                    Nome = collection["nome"].ToString(),
+                    Cpf = collection["cpf"].ToString()
+                };
 
-				}
+                var newUser = new IdentityUser { UserName = command.Email, Email = command.Email };
+                var includedUser = await _userManager.CreateAsync(newUser, "12345678");
 
-				var result2 = ApiClientFactory.Instance.GetUsuarioByEmail(command.Email.Trim());
+                command.PerfilId = int.Parse(collection["ddlPerfil"].ToString());
+                var perfil = ApiClientFactory.Instance.GetPerfilById(command.PerfilId);
 
-				if (result2 != null)
-				{
-					return RedirectToAction(nameof(Create), new { notify = (int)EnumNotify.Error, message = "Já existe usuários com o E-mail informado cadastrado na base de dados!" });
+                command.AspNetUserId = "includedUser.Id";
+                command.AspNetRoleId = perfil.AspNetRoleId;
 
-				}
+                ApiClientFactory.Instance.CreateUsuario(command);
 
-				var obj = ApiClientFactory.Instance.GetPerfilById(command.PerfilId);
+                SendNewUserEmail(newUser, command.Email, command.Nome);
 
-				ApiClientFactory.Instance.CreateUsuario(command);
+                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction(nameof(Index),
+                    new
+                    {
+                        notify = (int)EnumNotify.Error,
+                        message = "Erro ao criar usuário. Favor entrar em contato com o administrador do sistema."
+                    });
+            }
+        }
 
-				var user = await _userManager.FindByEmailAsync(command.Email);
+        private async Task SendNewUserEmail(IdentityUser user, string email, string nome)
+        {
+            var code = await _userManager.GeneratePasswordResetTokenAsync(new IdentityUser(user.Email));
 
-				if (user == null)
-				{
-					ModelState.AddModelError(string.Empty, "Usuário não cadastrado.");
-					return View();
-				}
-				SendNewUserEmail(user, command.Email, command.Nome);
+            var callbackUrl = Url.ActionLink("ResetPassword",
+                "Identity/Account", new { code, email });
 
-				return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
-			}
-			catch (Exception e)
-			{
-				return RedirectToAction(nameof(Index));
-			}
-		}
+            var message =
+                System.IO.File.ReadAllText(Path.Combine(_host.WebRootPath, "emailtemplates/ConfirmEmail.html"));
+            message = message.Replace("%NAME%", nome);
+            message = message.Replace("%CALLBACK%", HtmlEncoder.Default.Encode(callbackUrl.Replace("%2FAccount", "/Account")));
 
-		private async Task SendNewUserEmail(IdentityUser user, string email, string nomeUsuario)
-		{
-			var code = await _userManager.GeneratePasswordResetTokenAsync(new IdentityUser(user.Email));
+            await _emailSender.SendEmailAsync(user.Email, "Primeiro acesso sistema Dna",
+                message);
+        }
 
-			var callbackUrl = Url.ActionLink("ResetPassword",
-				"Identity/Account", new { code, email });
+        //[ClaimsAuthorize("Usuario", "Alterar")]
+        public ActionResult Edit(string id)
+        {
+            UsuarioModel model = new UsuarioModel();
 
-			var message =
-				System.IO.File.ReadAllText(Path.Combine(_host.WebRootPath, "emailtemplates/ConfirmEmail.html"));
-			message = message.Replace("%NAME%", nomeUsuario);
-			message = message.Replace("%CALLBACK%", HtmlEncoder.Default.Encode(callbackUrl.Replace("%2FAccount", "/Account")));
+            var obj = ApiClientFactory.Instance.GetUsuarioById(id);
 
-			await _emailSender.SendEmailAsync(user.Email, "Primeiro acesso sistema Dna",
-				message);
-		}
+            if (obj != null)
+            {
+                var resultPerfil = ApiClientFactory.Instance.GetPerfilAll();
 
-		//[ClaimsAuthorize("Usuario", "Alterar")]
-		public ActionResult Edit(string id)
-		{
-			UsuarioModel model = new UsuarioModel();
+                model = new UsuarioModel
+                {
+                    ListPerfis = new SelectList(resultPerfil, "PerfilId", "Nome", obj.PerfilId),
+                    Usuario = obj
+                };
 
-			var obj = ApiClientFactory.Instance.GetUsuarioById(id);
+                return View(model);
+            }
 
-			if (obj != null)
-			{
-				var resultPerfil = ApiClientFactory.Instance.GetPerfilAll();
+            return View(model);
+        }
 
-				model = new UsuarioModel
-				{
-					ListPerfis = new SelectList(resultPerfil, "PerfilId", "Nome", obj.PerfilId),
-					Usuario = obj
-				};
+        //[ClaimsAuthorize("Usuario", "Alterar")]
+        [HttpPost]
+        public async Task<ActionResult> Edit(string id, IFormCollection collection)
+        {
+            try
+            {
+                var editUser
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var perfilId = int.Parse(collection["ddlPerfil"].ToString());
+                var aspNetRoleId = _roleManager.FindByNameAsync(collection["ddlPerfil"].ToString()).Result?.Id;
 
-				return View(model);
-			}
+                var command = new UsuarioModel.CreateUpdateUsuarioCommand
+                {
 
-			return View(model);
-		}
+                    Email = collection["EndEmail"].ToString(),
+                    Nome = collection["NomUsuario"].ToString(),
+                    Cpf = collection["cpf"].ToString(),
+                    PerfilId = perfilId,
+                    AspNetUserId = userId,
+                    AspNetRoleId = aspNetRoleId
+                };
 
-		//[ClaimsAuthorize("Usuario", "Alterar")]
-		[HttpPost]
-		public async Task<ActionResult> Edit(string id, IFormCollection collection)
-		{
-			try
-			{
-				var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-				var perfilId = int.Parse(collection["ddlPerfil"].ToString());
-				var aspNetRoleId = _roleManager.FindByNameAsync(collection["ddlPerfil"].ToString()).Result?.Id;
+                var result = ApiClientFactory.Instance.UpdateUsuario(command);
 
-				var command = new UsuarioModel.CreateUpdateUsuarioCommand
-				{
+                if (result)
+                {
+                    return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+                }
+                else
+                {
+                    return RedirectToAction(nameof(Index),
+                        new
+                        {
+                            notify = (int)EnumNotify.Error,
+                            message = "Erro ao criar usuário. Favor entrar em contato com o administrador do sistema."
+                        });
+                }
 
-					Email = collection["EndEmail"].ToString(),
-					Nome = collection["NomUsuario"].ToString(),
-					Cpf = collection["cpf"].ToString(),
-					Telefone = collection["NumTelefone"].ToString(),
-					PerfilId = perfilId,
-					AspNetUserId = userId,
-					AspNetRoleId = aspNetRoleId
-				};
+            }
+            catch
+            {
+                return View();
+            }
+        }
 
-				//ApiClientFactory.Instance.UpdateUsuario(command);
+        //[ClaimsAuthorize("Usuario", "Excluir")]
+        public ActionResult Delete(int id)
+        {
+            try
+            {
+                //ApiClientFactory.Instance.DeleteUsuario(id);
+                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
+            }
+            catch
+            {
+                return RedirectToAction(nameof(Index));
+            }
+        }
 
-				return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
-			}
-			catch
-			{
-				return View();
-			}
-		}
+        //[ClaimsAuthorize("Usuario", "Consultar")]
+        public async Task<JsonResult> GetUsuarioByEmail(string email)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(email))
+                {
+                    var result = ApiClientFactory.Instance.GetUsuarioByEmail(email);
 
-		//[ClaimsAuthorize("Usuario", "Excluir")]
-		public ActionResult Delete(int id)
-		{
-			try
-			{
-				//ApiClientFactory.Instance.DeleteUsuario(id);
-				return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
-			}
-			catch
-			{
-				return RedirectToAction(nameof(Index));
-			}
-		}
-	}
+                    if (result == null)
+                    {
+                        throw new Exception("Já existe um usuário cadastrado com esse email.");
+                    }
+
+                    return Json(result);
+                }
+
+                throw new Exception("Email não informado.");
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message);
+
+            }
+        }
+    }
 }

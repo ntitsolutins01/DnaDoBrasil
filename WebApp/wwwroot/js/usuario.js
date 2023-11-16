@@ -173,7 +173,7 @@ var vm = new Vue({
             axios.get("GetUsuarioByEmail/?email=" + self.params.email).then(result => {
 
                 if (result.data !== false) {
-                    new PNotify({
+                    new PNotify({   
                         title: 'Usuario',
                         text: result.data,
                         type: 'error'

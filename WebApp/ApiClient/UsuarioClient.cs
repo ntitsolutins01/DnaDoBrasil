@@ -38,14 +38,19 @@ namespace WebApp.ApiClient
 				$"{ResourceConfiguracaoSistema}/Modulos"));
 			return Get<List<ModuloDto>>(requestUrl);
 		}
+        public UsuarioDto GetUsuarioByCpf(string cpf)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceUsuario}/Cpf/{cpf}"));
+            return Get<UsuarioDto>(requestUrl);
+        }
+        public UsuarioDto GetUsuarioByEmail(string email)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceUsuario}/Email/{email}"));
+            return Get<UsuarioDto>(requestUrl);
+        }
 
-		//public Task<bool> ExistUsuarioByIdUsuario(string id)
-		//{
-		//    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-		//        $"{ResourceUsuario}/ExistUsuarioByIdUsuario"));
-		//    return PostAsync<bool, string>(requestUrl, id);
-		//}
-
-		#endregion
-	}
+        #endregion
+    }
 }

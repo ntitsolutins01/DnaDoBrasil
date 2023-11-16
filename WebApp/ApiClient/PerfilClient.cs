@@ -56,18 +56,6 @@ namespace WebApp.ApiClient
 				$"{ResourceUsuario}/{name}"));
 			return Get<UsuarioDto>(requestUrl);
 		}
-		public UsuarioDto GetUsuarioByCpf(string cpf)
-		{
-			var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-				$"{ResourceUsuario}?cpf={cpf}"));
-			return Get<UsuarioDto>(requestUrl);
-		}
-		public UsuarioDto GetUsuarioByEmail(string email)
-		{
-			var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-				$"{ResourceUsuario}?email={email}"));
-			return Get<UsuarioDto>(requestUrl);
-		}
 
 		#endregion
 	}
