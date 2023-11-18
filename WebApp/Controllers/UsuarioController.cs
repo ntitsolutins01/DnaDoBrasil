@@ -1,4 +1,4 @@
-﻿using Infraero.Relprev.CrossCutting.Enumerators;
+using Infraero.Relprev.CrossCutting.Enumerators;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -162,11 +162,10 @@ namespace WebApp.Controllers
 
         //[ClaimsAuthorize("Usuario", "Alterar")]
         [HttpPost]
-        public async Task<ActionResult> Edit(string id, IFormCollection collection)
+        public async Task<ActionResult> Edit(int id, IFormCollection collection)
         {
             try
             {
-                
                 var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 var perfilId = int.Parse(collection["ddlPerfil"].ToString());
                 var aspNetRoleId = _roleManager.FindByNameAsync(collection["ddlPerfil"].ToString()).Result?.Id;
@@ -182,7 +181,7 @@ namespace WebApp.Controllers
                     AspNetRoleId = aspNetRoleId
                 };
 
-                //var result = ApiClientFactory.Instance.UpdateUsuario(command);
+                var result = await ApiClientFactory.Instance.UpdateUsuario(id, command);
 
                 if (false)
                 {
@@ -210,7 +209,7 @@ namespace WebApp.Controllers
         {
             try
             {
-                //ApiClientFactory.Instance.DeleteUsuario(id);
+                ApiClientFactory.Instance.DeleteUsuario(id);
                 return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
             }
             catch

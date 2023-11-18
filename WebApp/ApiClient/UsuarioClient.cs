@@ -15,18 +15,29 @@ namespace WebApp.ApiClient
 				$"{ResourceUsuario}"));
 			return Post(requestUrl, command);
 		}
-		public List<UsuarioDto> GetUsuarioAll()
-		{
-			var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-				$"{ResourceUsuario}"));
-			return Get<List<UsuarioDto>>(requestUrl);
-		}
+        public Task<bool> UpdateUsuario(int id, UsuarioModel.CreateUpdateUsuarioCommand command)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceUsuario}/{id}"));
+            return Put(requestUrl, command);
+        }
+        public Task<bool> DeleteUsuario(int id)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceUsuario}/{id}"));
+            return Delete<bool>(requestUrl);
+        }
 
-		#endregion
+        #endregion
 
-		#region Methods
-
-		public UsuarioDto GetUsuarioById(string id)
+        #region Methods
+        public List<UsuarioDto> GetUsuarioAll()
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceUsuario}"));
+            return Get<List<UsuarioDto>>(requestUrl);
+        }
+        public UsuarioDto GetUsuarioById(string id)
 		{
 			var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
 				$"{ResourceUsuario}/{id}"));
