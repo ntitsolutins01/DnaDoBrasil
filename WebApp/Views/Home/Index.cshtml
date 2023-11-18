@@ -5,7 +5,7 @@
 
 <div class="col-md-6 col-lg-12 col-xl-6">
     <div class="row">
-		<form id="form" action="forms-validation.html" class="form-horizontal">
+		<form id="formDashboard" action="forms-validation.html" class="form-horizontal">
 			<section class="panel">
 				<header class="panel-heading">
 					<div class="panel-actions">
@@ -431,11 +431,15 @@
         </section>
     </div>
 </div>
-
+@section CssSpecificVendor {
+    <link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css"/>
+    <link rel="stylesheet" href="~/assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css"/>
+}
 @section Scripts {
 	<script src="https://code.highcharts.com/highcharts.js"></script>
 	<script src="https://code.highcharts.com/modules/variable-pie.js"></script>
-
+    <script src="~/assets/vendor/select2/js/select2.js"></script>
+    <script src="~/js/dashboard.js"></script>
 	<script>
 		$(function () {
 

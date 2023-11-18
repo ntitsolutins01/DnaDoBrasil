@@ -5,7 +5,7 @@ namespace WebApp.ApiClient
 {
     public partial class DnaApiClient
 	{
-		private const string ResourceDivisaoAdministrativa = "DivisaoAdministrativa";
+		private const string ResourceDivisaoAdministrativa = "DivisoesAdministrativas";
 
 		#region Methods
 

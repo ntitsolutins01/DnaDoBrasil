@@ -25,15 +25,14 @@ namespace WebApp.Controllers
 		public IActionResult Index()
 		{
 			var localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeAll(), "Id", "Nome");
-			//var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Id", "Nome"); 
-			//var model = new DashboardModel
-			//{
-			//	ListLocalidades = localidades,
-			//	ListEstados = estados 
-				
-			//}; //TOdo: Fabio por favor resolver esse erro 
+			var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Id", "Nome");
+			var model = new DashboardModel
+			{
+				ListLocalidades = localidades,
+				ListEstados = estados
+
+			}; 
 			return View(model);
-			//return View();
 		}
 
 		public IActionResult Privacy()
