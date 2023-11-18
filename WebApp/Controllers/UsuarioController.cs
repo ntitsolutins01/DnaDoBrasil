@@ -166,7 +166,7 @@ namespace WebApp.Controllers
         {
             try
             {
-                var editUser
+                
                 var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 var perfilId = int.Parse(collection["ddlPerfil"].ToString());
                 var aspNetRoleId = _roleManager.FindByNameAsync(collection["ddlPerfil"].ToString()).Result?.Id;
@@ -182,9 +182,9 @@ namespace WebApp.Controllers
                     AspNetRoleId = aspNetRoleId
                 };
 
-                var result = ApiClientFactory.Instance.UpdateUsuario(command);
+                //var result = ApiClientFactory.Instance.UpdateUsuario(command);
 
-                if (result)
+                if (false)
                 {
                     return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
                 }
