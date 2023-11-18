@@ -1,10 +1,10 @@
 ﻿@model DashboardModel
 @{
-    ViewData["Title"] = "Dashboard";
+	ViewData["Title"] = "Dashboard";
 }
 
 <div class="col-md-6 col-lg-12 col-xl-6">
-    <div class="row">
+	<div class="row">
 		<form id="formDashboard" action="forms-validation.html" class="form-horizontal">
 			<section class="panel">
 				<header class="panel-heading">
@@ -14,44 +14,41 @@
 					<h2 class="panel-title">Filtro de pesquisa</h2>
 				</header>
 				<div class="panel-body">
-					<label class="col-sm-2 control-label">Periodo:</label>
-                    <div class="col-md-4 form-group">
-                        <select class="form-control populate select2" name="ddlPeriodo" id="ddlPeriodo"
-                                title="periodoSelect">
-	                        <option value="">Selecionar Periodo</option>
-	                        <option value="matutino">MATUNINO</option>
-	                        <option value="vespertino">VESPERTINO</option>
-	                        <option value="noturno">NOTURNO</option>
-                        </select>
-                    </div>
-
+					
 					<label class="col-sm-2 control-label">Estado:</label>
-                    <div class="col-md-4 form-group">
-                        <select class="form-control populate select2" name="ddlEstado" id="ddlEstado"
-                                title="estadoSelect" required
-                                asp-for="EstadoId" asp-items="Model.ListEstados">
-                            <option value="">Selecionar Estado</option>
-                        </select>
-                    </div>
-
+					<div class="col-md-4 form-group">
+						<select class="form-control populate select2" name="ddlEstado" id="ddlEstado"
+								title="estadoSelect" required
+								asp-for="EstadoId" asp-items="Model.ListEstados">
+							<option value="">Selecionar Estado</option>
+						</select>
+					</div>
 					<label class="col-sm-2 control-label">Cidade:</label>
-                    <div class="col-md-4 form-group">
-                        <select class="form-control populate select2" name="ddlCidade" id="ddlCidade"
-                                title="cidadeSelect" required
-                                asp-for="CidadeId" asp-items="Model.ListCidades">
-                            <option value="">Selecionar Cidade</option>
-                        </select>
-                    </div>
-
+					<div class="col-md-4 form-group">
+						<select class="form-control populate select2" name="ddlCidade" id="ddlCidade"
+						        title="cidadeSelect" required
+						        asp-for="CidadeId" asp-items="Model.ListCidades">
+							<option value="">Selecionar Cidade</option>
+						</select>
+					</div>
 					<label class="col-sm-2 control-label">Localidade:</label>
-                    <div class="col-md-4 form-group">
-                        <select class="form-control populate select2" name="ddlLocalidade" id="ddlLocalidade"
-                                title="localidadeSelect" required
-                                asp-for="LocalidadeId" asp-items="Model.ListLocalidades">
-                            <option value="">Selecionar Localidade</option>
-                        </select>
-                    </div>
-
+					<div class="col-md-4 form-group">
+						<select class="form-control populate select2" name="ddlLocalidade" id="ddlLocalidade"
+								title="localidadeSelect" required
+								asp-for="LocalidadeId" asp-items="Model.ListLocalidades">
+							<option value="">Selecionar Localidade</option>
+						</select>
+					</div>
+					<label class="col-sm-2 control-label">Periodo:</label>
+					<div class="col-md-4 form-group">
+						<select class="form-control populate select2" name="ddlPeriodo" id="ddlPeriodo"
+								title="periodoSelect">
+							<option value="">Selecionar Periodo</option>
+							<option value="matutino">MATUNINO</option>
+							<option value="vespertino">VESPERTINO</option>
+							<option value="noturno">NOTURNO</option>
+						</select>
+					</div>
 				</div>
 				<footer class="panel-footer">
 					<div class="row">
@@ -62,179 +59,175 @@
 				</footer>
 			</section>
 		</form>
-
-        <div class="col-md-4 col-xl-12">
-            <section class="panel">
+		<div class="col-md-4 col-xl-12">
+			<section class="panel">
 				<div class="panel-body bg-primary" style="background-color: #673AB7 !important">
-                    <div class="widget-summary">
-                        <div class="widget-summary-col widget-summary-col-icon">
-                            <div class="summary-icon">
-                                <i class="fa fa-bar-chart"></i>
-                            </div>
-                        </div>
-                        <div class="widget-summary-col">
-                            <div class="summary">
-                                <h4 class="title">Avaliações DNA do Brasil</h4>
-                                <div class="info">
-                                    <strong class="amount">14666</strong>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
-    
-	
-    <div class="col-md-4 col-xl-12">
-	    <section class="panel">
-		    <div class="panel-body bg-primary" style="background-color: #F44336 !important">
-			    <div class="widget-summary">
-				    <div class="widget-summary-col widget-summary-col-icon">
-					    <div class="summary-icon">
-						    <i class="fa fa-file-text"></i>
-					    </div>
-				    </div>
-				    <div class="widget-summary-col">
-					    <div class="summary">
-						    <h4 class="title">Laudos em andamento</h4>
-						    <div class="info">
-							    <strong class="amount">210272</strong>
-						    </div>
-					    </div>
-				    </div>
-			    </div>
-		    </div>
-	    </section>
-    </div>
-    <div class="col-md-4 col-xl-12">
-	    <section class="panel">
-		    <div class="panel-body bg-primary" style="background-color: #4CAF50 !important">
-			    <div class="widget-summary">
-				    <div class="widget-summary-col widget-summary-col-icon">
-					    <div class="summary-icon">
-						    <i class="fa fa-check-square"></i>
-					    </div>
-				    </div>
-				    <div class="widget-summary-col">
-					    <div class="summary">
-						    <h4 class="title">Laudos Finalizados</h4>
-						    <div class="info">
-							    <strong class="amount">81404</strong>
-						    </div>
-					    </div>
-				    </div>
-			    </div>
-		    </div>
-	    </section>
-    </div>
-    <div class="col-md-4 col-xl-12">
-	    <section class="panel">
-		    <div class="panel-body bg-primary" style="background-color: #3F51B5 !important">
-			    <div class="widget-summary">
-				    <div class="widget-summary-col widget-summary-col-icon">
-					    <div class="summary-icon">
-						    <i class="fa fa-male"></i>
-					    </div>
-				    </div>
-				    <div class="widget-summary-col">
-					    <div class="summary">
-						    <h4 class="title">Cadastros masculino</h4>
-						    <div class="info">
-							    <strong class="amount">30443</strong>
-						    </div>
-					    </div>
-				    </div>
-			    </div>
-		    </div>
-	    </section>
-    </div>
-
-    <div class="col-md-4 col-xl-12">
-	    <section class="panel">
-		    <div class="panel-body bg-primary" style="background-color: #E91E63 !important">
-			    <div class="widget-summary">
-				    <div class="widget-summary-col widget-summary-col-icon">
-					    <div class="summary-icon">
-						    <i class="fa fa-female"></i>
-					    </div>
-				    </div>
-				    <div class="widget-summary-col">
-					    <div class="summary">
-						    <h4 class="title">Cadastros feminino</h4>
-						    <div class="info">
-							    <strong class="amount">29502</strong>
-						    </div>
-					    </div>
-				    </div>
-			    </div>
-		    </div>
-	    </section>
-    </div>
-    <div class="col-md-4 col-xl-12">
-	    <section class="panel">
-		    <div class="panel-body bg-primary" style="background-color: #2196F3 !important">
-			    <div class="widget-summary">
-				    <div class="widget-summary-col widget-summary-col-icon">
-					    <div class="summary-icon">
-						    <i class="fa fa-users"></i>
-					    </div>
-				    </div>
-				    <div class="widget-summary-col">
-					    <div class="summary">
-						    <h4 class="title">Alunos Cadastrados</h4>
-						    <div class="info">
-							    <strong class="amount">59945</strong>
-						    </div>
-					    </div>
-				    </div>
-			    </div>
-		    </div>
-	    </section>
-    </div>
-        <div class="col-md-4 col-xl-12">
-            <section class="panel">
+					<div class="widget-summary">
+						<div class="widget-summary-col widget-summary-col-icon">
+							<div class="summary-icon">
+								<i class="fa fa-bar-chart"></i>
+							</div>
+						</div>
+						<div class="widget-summary-col">
+							<div class="summary">
+								<h4 class="title">Avaliações DNA do Brasil</h4>
+								<div class="info">
+									<strong class="amount">14666</strong>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+		<div class="col-md-4 col-xl-12">
+			<section class="panel">
+				<div class="panel-body bg-primary" style="background-color: #F44336 !important">
+					<div class="widget-summary">
+						<div class="widget-summary-col widget-summary-col-icon">
+							<div class="summary-icon">
+								<i class="fa fa-file-text"></i>
+							</div>
+						</div>
+						<div class="widget-summary-col">
+							<div class="summary">
+								<h4 class="title">Laudos em andamento</h4>
+								<div class="info">
+									<strong class="amount">210272</strong>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+		<div class="col-md-4 col-xl-12">
+			<section class="panel">
+				<div class="panel-body bg-primary" style="background-color: #4CAF50 !important">
+					<div class="widget-summary">
+						<div class="widget-summary-col widget-summary-col-icon">
+							<div class="summary-icon">
+								<i class="fa fa-check-square"></i>
+							</div>
+						</div>
+						<div class="widget-summary-col">
+							<div class="summary">
+								<h4 class="title">Laudos Finalizados</h4>
+								<div class="info">
+									<strong class="amount">81404</strong>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+		<div class="col-md-4 col-xl-12">
+			<section class="panel">
 				<div class="panel-body bg-primary" style="background-color: #3F51B5 !important">
-                    <div class="widget-summary">
-                        <div class="widget-summary-col widget-summary-col-icon">
-                            <div class="summary-icon">
-								<i class="fa fa-id-card"></i>
-                            </div>
-                        </div>
-                        <div class="widget-summary-col">
-                            <div class="summary">
-								<h4 class="title">Laudos Masculino</h4>
-                                <div class="info">
-                                    <strong class="amount">147736</strong>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
-        <div class="col-md-4 col-xl-12">
-            <section class="panel">
+					<div class="widget-summary">
+						<div class="widget-summary-col widget-summary-col-icon">
+							<div class="summary-icon">
+								<i class="fa fa-male"></i>
+							</div>
+						</div>
+						<div class="widget-summary-col">
+							<div class="summary">
+								<h4 class="title">Cadastros masculino</h4>
+								<div class="info">
+									<strong class="amount">30443</strong>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+		<div class="col-md-4 col-xl-12">
+			<section class="panel">
 				<div class="panel-body bg-primary" style="background-color: #E91E63 !important">
-                    <div class="widget-summary">
-                        <div class="widget-summary-col widget-summary-col-icon">
-                            <div class="summary-icon">
+					<div class="widget-summary">
+						<div class="widget-summary-col widget-summary-col-icon">
+							<div class="summary-icon">
+								<i class="fa fa-female"></i>
+							</div>
+						</div>
+						<div class="widget-summary-col">
+							<div class="summary">
+								<h4 class="title">Cadastros feminino</h4>
+								<div class="info">
+									<strong class="amount">29502</strong>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+		<div class="col-md-4 col-xl-12">
+			<section class="panel">
+				<div class="panel-body bg-primary" style="background-color: #2196F3 !important">
+					<div class="widget-summary">
+						<div class="widget-summary-col widget-summary-col-icon">
+							<div class="summary-icon">
+								<i class="fa fa-users"></i>
+							</div>
+						</div>
+						<div class="widget-summary-col">
+							<div class="summary">
+								<h4 class="title">Alunos Cadastrados</h4>
+								<div class="info">
+									<strong class="amount">59945</strong>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+		<div class="col-md-4 col-xl-12">
+			<section class="panel">
+				<div class="panel-body bg-primary" style="background-color: #3F51B5 !important">
+					<div class="widget-summary">
+						<div class="widget-summary-col widget-summary-col-icon">
+							<div class="summary-icon">
+								<i class="fa fa-id-card"></i>
+							</div>
+						</div>
+						<div class="widget-summary-col">
+							<div class="summary">
+								<h4 class="title">Laudos Masculino</h4>
+								<div class="info">
+									<strong class="amount">147736</strong>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+		<div class="col-md-4 col-xl-12">
+			<section class="panel">
+				<div class="panel-body bg-primary" style="background-color: #E91E63 !important">
+					<div class="widget-summary">
+						<div class="widget-summary-col widget-summary-col-icon">
+							<div class="summary-icon">
 								<i class="fa fa-id-card-o"></i>
-                            </div>
-                        </div>
-                        <div class="widget-summary-col">
-                            <div class="summary">
+							</div>
+						</div>
+						<div class="widget-summary-col">
+							<div class="summary">
 								<h4 class="title">Laudos Feminino</h4>
-                                <div class="info">
-                                    <strong class="amount">143056</strong>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
-    </div>
+								<div class="info">
+									<strong class="amount">143056</strong>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+	</div>
 	@* <div class="row">
 	<div class="col-md-12 col-lg-6 col-xl-6">
 	</div>
@@ -273,87 +266,87 @@
 				<div class="table-responsive">
 					<table class="table table-striped mb-none">
 						<thead>
-						<tr>
-							<th>Laudos</th>
-							<th>Finalizados</th>
-							<th>Em Andamento</th>
-							<th>Progresso</th>
-						</tr>
+							<tr>
+								<th>Laudos</th>
+								<th>Finalizados</th>
+								<th>Em Andamento</th>
+								<th>Progresso</th>
+							</tr>
 						</thead>
 						<tbody>
-						<tr>
-							<td><span class="label label-success" style="background-color: #ea4153 !important">Talento Esportivo</span></td>
-							<td>28652</td>
-							<td>33693</td>
-							<td>
-								<div class="progress progress-sm progress-half-rounded m-none mt-xs light">
-									<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 45.96%;">
-										45.96%
+							<tr>
+								<td><span class="label label-success" style="background-color: #ea4153 !important">Talento Esportivo</span></td>
+								<td>28652</td>
+								<td>33693</td>
+								<td>
+									<div class="progress progress-sm progress-half-rounded m-none mt-xs light">
+										<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 45.96%;">
+											45.96%
+										</div>
 									</div>
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<td><span class="label label-success" style="background-color: #f2a845 !important">Saúde</span></td>
-							<td>28422</td>
-							<td>33955</td>
-							<td>
-								<div class="progress progress-sm progress-half-rounded m-none mt-xs light">
-									<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 45.56%;">
-										45.56%
+								</td>
+							</tr>
+							<tr>
+								<td><span class="label label-success" style="background-color: #f2a845 !important">Saúde</span></td>
+								<td>28422</td>
+								<td>33955</td>
+								<td>
+									<div class="progress progress-sm progress-half-rounded m-none mt-xs light">
+										<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 45.56%;">
+											45.56%
+										</div>
 									</div>
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<td><span class="label label-warning" style="background-color: #6be2e3 !important">Qualidade de vida</span></td>
-							<td>7566</td>
-							<td>23028</td>
-							<td>
-								<div class="progress progress-sm progress-half-rounded m-none mt-xs light">
-									<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 24.73%;">
-										24.73%
+								</td>
+							</tr>
+							<tr>
+								<td><span class="label label-warning" style="background-color: #6be2e3 !important">Qualidade de vida</span></td>
+								<td>7566</td>
+								<td>23028</td>
+								<td>
+									<div class="progress progress-sm progress-half-rounded m-none mt-xs light">
+										<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 24.73%;">
+											24.73%
+										</div>
 									</div>
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<td><span class="label label-success" style="background-color: #6937f4 !important">Vocacional</span></td>
-							<td>5668</td>
-							<td>17424</td>
-							<td>
-								<div class="progress progress-sm progress-half-rounded m-none mt-xs light">
-									<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 24.55%;">
-										24.55%
+								</td>
+							</tr>
+							<tr>
+								<td><span class="label label-success" style="background-color: #6937f4 !important">Vocacional</span></td>
+								<td>5668</td>
+								<td>17424</td>
+								<td>
+									<div class="progress progress-sm progress-half-rounded m-none mt-xs light">
+										<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 24.55%;">
+											24.55%
+										</div>
 									</div>
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<td><span class="label label-warning" style="background-color: #777 !important">Consumo Alimentar</span></td>
-							<td>5299</td>
-							<td>51493</td>
-							<td>
-								<div class="progress progress-sm progress-half-rounded m-none mt-xs light">
-									<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 9.33%;">
-										9.33%
+								</td>
+							</tr>
+							<tr>
+								<td><span class="label label-warning" style="background-color: #777 !important">Consumo Alimentar</span></td>
+								<td>5299</td>
+								<td>51493</td>
+								<td>
+									<div class="progress progress-sm progress-half-rounded m-none mt-xs light">
+										<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 9.33%;">
+											9.33%
+										</div>
 									</div>
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<td><span class="label label-danger" style="background-color: #777 !important">Saude Bucal</span></td>
-							<td>5306</td>
-							<td>50286</td>
-							<td>
-								<div class="progress progress-sm progress-half-rounded m-none mt-xs light">
-									<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 9.54%;">
-										9.54%
+								</td>
+							</tr>
+							<tr>
+								<td><span class="label label-danger" style="background-color: #777 !important">Saude Bucal</span></td>
+								<td>5306</td>
+								<td>50286</td>
+								<td>
+									<div class="progress progress-sm progress-half-rounded m-none mt-xs light">
+										<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 9.54%;">
+											9.54%
+										</div>
 									</div>
-								</div>
-							</td>
-						</tr>
-							
+								</td>
+							</tr>
+
 						</tbody>
 					</table>
 				</div>
@@ -397,49 +390,49 @@
 </div>
 
 <div class="row">
-    <div class="col-lg-5 col-md-12">
-        <section class="panel">
-            <header class="panel-heading">
-                <div class="panel-actions">
-                    <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
-                </div>
+	<div class="col-lg-5 col-md-12">
+		<section class="panel">
+			<header class="panel-heading">
+				<div class="panel-actions">
+					<a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
+				</div>
 
-                <h2 class="panel-title">Talento Esportivo</h2>
-                <p class="panel-subtitle">Sintético</p>
-            </header>
-            <div class="panel-body">
-                <div id="containerTalentoEsportivoSintetico"></div>
-            </div>
-        </section>
-    </div>
-    <div class="col-lg-7 col-md-12">
-        <section class="panel">
-            <header class="panel-heading">
-                <div class="panel-actions">
-                    <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
-                </div>
+				<h2 class="panel-title">Talento Esportivo</h2>
+				<p class="panel-subtitle">Sintético</p>
+			</header>
+			<div class="panel-body">
+				<div id="containerTalentoEsportivoSintetico"></div>
+			</div>
+		</section>
+	</div>
+	<div class="col-lg-7 col-md-12">
+		<section class="panel">
+			<header class="panel-heading">
+				<div class="panel-actions">
+					<a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
+				</div>
 
-                <h2 class="panel-title">Talento Esportivo</h2>
-                <p class="panel-subtitle">Analítico</p>
-            </header>
-            <div class="panel-body">
-                <div class="table-responsive">
-                    <div id="containerTalentoEsportivoAnalitico"></div>
-					
-                </div>
-            </div>
-        </section>
-    </div>
+				<h2 class="panel-title">Talento Esportivo</h2>
+				<p class="panel-subtitle">Analítico</p>
+			</header>
+			<div class="panel-body">
+				<div class="table-responsive">
+					<div id="containerTalentoEsportivoAnalitico"></div>
+
+				</div>
+			</div>
+		</section>
+	</div>
 </div>
 @section CssSpecificVendor {
-    <link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css"/>
-    <link rel="stylesheet" href="~/assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css"/>
+	<link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css" />
+	<link rel="stylesheet" href="~/assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
 }
 @section Scripts {
 	<script src="https://code.highcharts.com/highcharts.js"></script>
 	<script src="https://code.highcharts.com/modules/variable-pie.js"></script>
-    <script src="~/assets/vendor/select2/js/select2.js"></script>
-    <script src="~/js/dashboard.js"></script>
+	<script src="~/assets/vendor/select2/js/select2.js"></script>
+	<script src="~/js/dashboard.js"></script>
 	<script>
 		$(function () {
 
