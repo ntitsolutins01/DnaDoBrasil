@@ -1,4 +1,5 @@
-﻿@{
+﻿@model DashboardModel
+@{
     ViewData["Title"] = "Dashboard";
 }
 
@@ -16,9 +17,11 @@
 					<label class="col-sm-2 control-label">Periodo:</label>
                     <div class="col-md-4 form-group">
                         <select class="form-control populate select2" name="ddlPeriodo" id="ddlPeriodo"
-                                title="periodoSelect" required
-                                @* asp-for="CodPeriodo" asp-items="Model.ListPeriodo" *@>
-                            <option value="">Selecionar Periodo</option>
+                                title="periodoSelect">
+	                        <option value="">Selecionar Periodo</option>
+	                        <option value="matutino">MATUNINO</option>
+	                        <option value="vespertino">VESPERTINO</option>
+	                        <option value="noturno">NOTURNO</option>
                         </select>
                     </div>
 
@@ -26,7 +29,7 @@
                     <div class="col-md-4 form-group">
                         <select class="form-control populate select2" name="ddlEstado" id="ddlEstado"
                                 title="estadoSelect" required
-                                @* asp-for="CodEstado" asp-items="Model.ListEstado" *@>
+                                asp-for="EstadoId" asp-items="Model.ListEstados">
                             <option value="">Selecionar Estado</option>
                         </select>
                     </div>
@@ -35,7 +38,7 @@
                     <div class="col-md-4 form-group">
                         <select class="form-control populate select2" name="ddlCidade" id="ddlCidade"
                                 title="cidadeSelect" required
-                                @* asp-for="CodCidade" asp-items="Model.ListCidade" *@>
+                                asp-for="CidadeId" asp-items="Model.ListCidades">
                             <option value="">Selecionar Cidade</option>
                         </select>
                     </div>
@@ -44,7 +47,7 @@
                     <div class="col-md-4 form-group">
                         <select class="form-control populate select2" name="ddlLocalidade" id="ddlLocalidade"
                                 title="localidadeSelect" required
-                                @* asp-for="CodLocalidade" asp-items="Model.ListLocalidade" *@>
+                                asp-for="LocalidadeId" asp-items="Model.ListLocalidades">
                             <option value="">Selecionar Localidade</option>
                         </select>
                     </div>
