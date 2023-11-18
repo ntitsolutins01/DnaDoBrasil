@@ -7,50 +7,78 @@ var vm = new Vue({
         var self = this;
         (function ($) {
             'use strict';
+            var formid = $('form').attr('id');
 
-            var $select = $(".select2").select2({
-                allowClear: true
-            });
+            if (formid === "formDashboard") {
+                var $select = $(".select2").select2({
+                    allowClear: true
+                });
 
-            $(".select2").each(function () {
-                var $this = $(this),
-                    opts = {};
+                $(".select2").each(function () {
+                    var $this = $(this),
+                        opts = {};
 
-                var pluginOptions = $this.data('plugin-options');
-                if (pluginOptions)
-                    opts = pluginOptions;
+                    var pluginOptions = $this.data('plugin-options');
+                    if (pluginOptions)
+                        opts = pluginOptions;
 
-                $this.themePluginSelect2(opts);
-            });
+                    $this.themePluginSelect2(opts);
+                });
 
-            /*
-             * When you change the value the select via select2, it triggers
-             * a 'change' event, but the jquery validation plugin
-             * only re-validates on 'blur'*/
+                /*
+                 * When you change the value the select via select2, it triggers
+                 * a 'change' event, but the jquery validation plugin
+                 * only re-validates on 'blur'*/
 
-            $select.on('change', function () {
-                $(this).trigger('blur');
-            });
+                $select.on('change', function () {
+                    $(this).trigger('blur');
+                });
 
 
-            $("#formDashboard").validate({
-                highlight: function (label) {
-                    $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
-                },
-                success: function (label) {
-                    $(label).closest('.form-group').removeClass('has-error');
-                    label.remove();
-                },
-                errorPlacement: function (error, element) {
-                    var placement = element.closest('.input-group');
-                    if (!placement.get(0)) {
-                        placement = element;
+                $("#formDashboard").validate({
+                    highlight: function (label) {
+                        $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
+                    },
+                    success: function (label) {
+                        $(label).closest('.form-group').removeClass('has-error');
+                        label.remove();
+                    },
+                    errorPlacement: function (error, element) {
+                        var placement = element.closest('.input-group');
+                        if (!placement.get(0)) {
+                            placement = element;
+                        }
+                        if (error.text() !== '') {
+                            placement.after(error);
+                        }
                     }
-                    if (error.text() !== '') {
-                        placement.after(error);
-                    }
-                }
-            });
+                });
+
+                $("#ddlEstado").change(function () {
+                    var sigla = $("#ddlEstado").val();
+
+                    var url = "Dashboard/GetMunicipioByUf/" + sigla;
+
+                    var ddlSource = "#ddlMunicipio";
+
+                    $.getJSON(url,
+                        { id: $(ddlSource).val() },
+                        function (data) {
+                            var items = '<option value="">Selecionar Municipio</option>';
+                            $("#ddlMunicipio").empty;
+                            $.each(data,
+                                function (i, row) {
+                                    items += "<option value='" + row.value + "'>" + row.text + "</option>";
+                                });
+                            $("#ddlMunicipio").html(items);
+                        });
+                });
+            }
+
+
+
+
+            
         }).apply(this, [jQuery]);
     },
     methods: {
