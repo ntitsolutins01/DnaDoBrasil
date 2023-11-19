@@ -11,9 +11,10 @@ namespace WebApp.Controllers
 	public class HomeController : Controller
 	{
 		public IActionResult Index()
-		{
-			return View();
-		}
+        {
+            return Redirect("/Identity/Account/Login");
+            //return RedirectToPage("/Identity/Account/Login");
+        }
 		public IActionResult Privacy()
 		{
 			return View();

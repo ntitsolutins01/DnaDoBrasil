@@ -95,9 +95,9 @@ namespace WebApp.Areas.Identity.Pages.Account
 				var result =
 					await _signInManager.PasswordSignInAsync(Login.Email, Login.Password, Login.RememberMe, true);
 
-				var u = await _userManager.FindByEmailAsync(Login.Email);
+				var user = await _userManager.FindByEmailAsync(Login.Email);
 
-				if (u == null)
+				if (user == null)
 				{
 					ModelState.AddModelError(string.Empty, "Usuário não cadastrado.");
 					return Page();
@@ -118,21 +118,21 @@ namespace WebApp.Areas.Identity.Pages.Account
 
 				if (result.Succeeded)
 				{
-					//if (!u.FirstAccess.HasValue)
-					//{
-					//	_logger.LogInformation("Primeiro acesso do usuário.");
+					if (!user.EmailConfirmed)
+					{
+						_logger.LogInformation("Primeiro acesso do usuário.");
 
-					//	var code = await _userManager.GeneratePasswordResetTokenAsync(u);
-					//	var email = Login.Email;
-					//	var callbackUrl = Url.Page(
-					//		"/Account/FirstAccessPassword",
-					//		null,
-					//		new { email, code },
-					//		Request.Scheme);
+						var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+						var email = Login.Email;
+						var callbackUrl = Url.Page(
+							"/Account/FirstAccessPassword",
+							null,
+							new { email, code },
+							Request.Scheme);
 
-					//	return RedirectToPage("./FirstAccessPassword", new { email, code });
-					//}
-					//await _userManager.AddClaimAsync(u, new Claim(ClaimTypes.Upn, u.Cpf));
+						return Redirect($"/Identity/Account/Manage/FirstAccessPassword?email={email}&code={code}");
+					}
+					//await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Upn, user.Cpf));
 
 					_logger.LogInformation("User logged in.");
 					return LocalRedirect(returnUrl);

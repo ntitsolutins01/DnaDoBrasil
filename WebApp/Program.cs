@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using System.Configuration;
 using WebApp.Data;
 using WebApp.Models;
+using WebApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -63,6 +65,9 @@ builder.Services.AddMvc().AddRazorPagesOptions(options =>
 
 builder.Services.Configure<SettingsModel>(builder.Configuration.GetSection("DnaSettings"));
 //builder.Services.Configure<SmtpClientSettings>(Configuration.GetSection("SmtpClient"));
+
+// Register email service. Configured in appsettings.json
+builder.Services.AddTransient<IEmailSender, SendGridEmailService>();
 
 var app = builder.Build();
 
