@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
 using WebApp.Areas.Identity.Models;
+using WebApp.Configuration;
 using WebApp.Enumerators;
 using WebApp.Factory;
 using WebApp.Models;
@@ -11,11 +12,11 @@ using WebApp.Utility;
 
 namespace WebApp.Controllers
 {
-	public class ContratoController : BaseController
+    public class ContratoController : BaseController
 	{
-		private readonly IOptions<SettingsModel> _appSettings;
+		private readonly IOptions<UrlSettings> _appSettings;
 
-		public ContratoController(IOptions<SettingsModel> appSettings)
+		public ContratoController(IOptions<UrlSettings> appSettings)
 		{
 			_appSettings = appSettings;
 			ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;

@@ -13,18 +13,19 @@ using WebApp.Models;
 using WebApp.Utility;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 using System.Security.Claims;
+using WebApp.Configuration;
 
 namespace WebApp.Controllers
 {
     public class UsuarioController : BaseController
     {
-        private readonly IOptions<SettingsModel> _appSettings;
+        private readonly IOptions<UrlSettings> _appSettings;
         private readonly IEmailSender _emailSender;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IHostingEnvironment _host;
 
-        public UsuarioController(IOptions<SettingsModel> app, IEmailSender emailSender,
+        public UsuarioController(IOptions<UrlSettings> app, IEmailSender emailSender,
             UserManager<IdentityUser> userManager, IHostingEnvironment host, RoleManager<IdentityRole> roleManager)
         {
             _appSettings = app;

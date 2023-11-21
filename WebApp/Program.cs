@@ -1,11 +1,14 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.EntityFrameworkCore;
 using System.Configuration;
+using Infraero.Relprev.CrossCutting.Configuration;
 using WebApp.Data;
 using WebApp.Models;
 using WebApp.Services;
+using WebApp.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -63,15 +66,23 @@ builder.Services.AddMvc().AddRazorPagesOptions(options =>
     options.Conventions.AddPageRoute("/Identity/Account/Login", "");
 });
 
-builder.Services.Configure<SettingsModel>(builder.Configuration.GetSection("DnaSettings"));
-//builder.Services.Configure<SmtpClientSettings>(Configuration.GetSection("SmtpClient"));
+builder.Services.Configure<UrlSettings>(builder.Configuration.GetSection("DnaSettings"));
+builder.Services.Configure<ParametersModel>(builder.Configuration.GetSection("DnaParameters"));
+builder.Services.Configure<SmtpClientSettings>(builder.Configuration.GetSection("SmtpClient"));
 
-// Register email service. Configured in appsettings.json
+
+var config = builder.Configuration.GetSection("DnaParameters").Get<ParametersModel>();
+
+//define a quantidade de tempo que um token gerado permanece válido. PS: O padrão é 1 dia.
+builder.Services.Configure<DataProtectionTokenProviderOptions>(options =>
+    options.TokenLifespan = TimeSpan.FromMinutes(config.TokenTime));
+
+// Registra o serviço de e-mail. Configurado em appsettings.json
 builder.Services.AddTransient<IEmailSender, SendGridEmailService>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configuração the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();

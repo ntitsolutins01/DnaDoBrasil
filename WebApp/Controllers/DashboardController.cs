@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
+using WebApp.Configuration;
 using WebApp.Dto;
 using WebApp.Factory;
 using WebApp.Models;
@@ -8,13 +9,13 @@ using WebApp.Utility;
 
 namespace WebApp.Controllers
 {
-	public class DashboardController : BaseController
+    public class DashboardController : BaseController
 	{
 		private readonly ILogger<DashboardController> _logger;
-		private readonly IOptions<SettingsModel> _appSettings;
+		private readonly IOptions<UrlSettings> _appSettings;
 
 
-		public DashboardController(ILogger<DashboardController> logger, IOptions<SettingsModel> appSettings)
+		public DashboardController(ILogger<DashboardController> logger, IOptions<UrlSettings> appSettings)
 		{
 			_logger = logger;
 			_appSettings = appSettings;

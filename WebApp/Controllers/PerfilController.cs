@@ -8,6 +8,7 @@ using System.Collections;
 using System.Collections.Specialized;
 using System.Security.Claims;
 using WebApp.Areas.Identity.Models;
+using WebApp.Configuration;
 using WebApp.Data;
 using WebApp.Dto;
 using WebApp.Enumerators;
@@ -23,11 +24,11 @@ namespace WebApp.Controllers
         private readonly ApplicationDbContext _db;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<IdentityUser> _userManager;
-        private readonly IOptions<SettingsModel> _appSettings;
+        private readonly IOptions<UrlSettings> _appSettings;
 
         public PerfilController(ApplicationDbContext db,
             RoleManager<IdentityRole> roleManager,
-            UserManager<IdentityUser> userManager, IOptions<SettingsModel> appSettings)
+            UserManager<IdentityUser> userManager, IOptions<UrlSettings> appSettings)
         {
             _db = db;
             _roleManager = roleManager;

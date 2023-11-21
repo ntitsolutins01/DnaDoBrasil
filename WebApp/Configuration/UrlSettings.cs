@@ -1,6 +1,6 @@
-﻿namespace WebApp.Models
+﻿namespace WebApp.Configuration
 {
-    public class SettingsModel
+    public class UrlSettings
     {
         public string WebApiBaseUrl { get; set; }
     }

@@ -1,20 +1,16 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.IO;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Encodings.Web;
-using System.Threading.Tasks;
-using Infraero.Relprev.CrossCutting.Models;
-using Infraero.Relprev.Infrastructure.Identity;
-using Infraero.Relprev.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Options;
+using WebApp.Data;
+using WebApp.Models;
+using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
-namespace Infraero.Relprev.WebUi.Areas.Identity.Pages.Account
+namespace WebApp.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
     public class ForgotPasswordModel : PageModel
@@ -22,10 +18,10 @@ namespace Infraero.Relprev.WebUi.Areas.Identity.Pages.Account
         private readonly ApplicationDbContext _db;
         private readonly IEmailSender _emailSender;
         private readonly IHostingEnvironment _host;
-        private readonly UserManager<WebProfileUser> _userManager;
+        private readonly UserManager<IdentityUser> _userManager;
         private readonly IOptions<ParametersModel> _parameters;
 
-        public ForgotPasswordModel(UserManager<WebProfileUser> userManager, IEmailSender emailSender,
+        public ForgotPasswordModel(UserManager<IdentityUser> userManager, IEmailSender emailSender,
             IHostingEnvironment host,
             ApplicationDbContext db,
             IOptions<ParametersModel> parameters
@@ -62,7 +58,7 @@ namespace Infraero.Relprev.WebUi.Areas.Identity.Pages.Account
             return Page();
         }
 
-        private async Task SendForgotPasswordEmail(WebProfileUser user, string email)
+        private async Task SendForgotPasswordEmail(IdentityUser user, string email)
         {
             var code = await _userManager.GeneratePasswordResetTokenAsync(user);
             var callbackUrl = Url.Page(
@@ -74,7 +70,7 @@ namespace Infraero.Relprev.WebUi.Areas.Identity.Pages.Account
 
             var message =
                 System.IO.File.ReadAllText(Path.Combine(_host.WebRootPath, "emailtemplates/ForgotPassword.html"));
-            message = message.Replace("%NAME%", user.Nome);
+            message = message.Replace("%NAME%", user.UserName);
             message = message.Replace("%SITE%", "https://relprev.dvt.infraero.gov.br");
             message = message.Replace("%TEMPOTOKEN%", _parameters.Value.TokenTime.ToString());
             message = message.Replace("%HORA%", DateTime.Now.ToString("hh:mm"));
