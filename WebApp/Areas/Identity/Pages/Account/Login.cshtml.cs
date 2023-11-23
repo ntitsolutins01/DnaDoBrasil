@@ -86,61 +86,52 @@ namespace WebApp.Areas.Identity.Pages.Account
             ReturnUrl = returnUrl;
         }
 
-        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
+        public async Task<IActionResult> OnPostAsync(string? returnUrl = null)
         {
-			returnUrl = returnUrl ?? Url.Content("~/");
+			returnUrl ??= Url.Content("~/Dashboard");
 
-			if (ModelState.IsValid)
-			{
-				var result =
-					await _signInManager.PasswordSignInAsync(Login.Email, Login.Password, Login.RememberMe, true);
+            if (!ModelState.IsValid) return Page();
+            var result =
+                await _signInManager.PasswordSignInAsync(Login.Email, Login.Password, Login.RememberMe, true);
 
-				var user = await _userManager.FindByEmailAsync(Login.Email);
+            var user = await _userManager.FindByEmailAsync(Login.Email);
 
-				if (user == null)
-				{
-					ModelState.AddModelError(string.Empty, "Usuário não cadastrado.");
-					return Page();
-				}
+            if (user == null)
+            {
+                ModelState.AddModelError(string.Empty, "Usuário não cadastrado.");
+                return Page();
+            }
 
-				if (!result.Succeeded)
-				{
-					if (result.IsLockedOut)
-					{
-						_logger.LogWarning("A sua conta foi bloqueada.");
-						ModelState.AddModelError(string.Empty, "A sua conta foi bloqueada.");
-						return RedirectToPage("./ForgotPassword");
-					}
+            switch (result.Succeeded)
+            {
+                case false when result.IsLockedOut:
+                    _logger.LogWarning("A sua conta foi bloqueada.");
+                    ModelState.AddModelError(string.Empty, "A sua conta foi bloqueada.");
+                    return RedirectToPage("./ForgotPassword");
+                case false:
+                    ModelState.AddModelError(string.Empty, "Senha inválida.");
+                    return Page();
+                case true when !user.EmailConfirmed:
+                {
+                    _logger.LogInformation("Primeiro acesso do usuário.");
 
-					ModelState.AddModelError(string.Empty, "Senha inválida.");
-					return Page();
-				}
+                    var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+                    var email = Login.Email;
+                    var callbackUrl = Url.Page(
+                        "/Account/FirstAccessPassword",
+                        null,
+                        new { email, code },
+                        Request.Scheme);
 
-				if (result.Succeeded)
-				{
-					if (!user.EmailConfirmed)
-					{
-						_logger.LogInformation("Primeiro acesso do usuário.");
-
-						var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-						var email = Login.Email;
-						var callbackUrl = Url.Page(
-							"/Account/FirstAccessPassword",
-							null,
-							new { email, code },
-							Request.Scheme);
-
-						return Redirect($"/Identity/Account/Manage/FirstAccessPassword?email={email}&code={code}");
-					}
-					//await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Upn, user.Cpf));
-
-					_logger.LogInformation("User logged in.");
-					return LocalRedirect(returnUrl);
-				}
-			}
-
-			// If we got this far, something failed, redisplay form
-			return Page();
+                    return Redirect($"/Identity/Account/Manage/FirstAccessPassword?email={email}&code={code}");
+                }
+                case true:
+                    _logger.LogInformation("User logged in.");
+                    return LocalRedirect(returnUrl);
+                default:
+                    // If we got this far, something failed, redisplay form
+                    return Page();
+            }
         }
     }
 }

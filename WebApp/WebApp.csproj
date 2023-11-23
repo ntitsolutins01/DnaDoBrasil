@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MailKit" Version="4.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="7.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.10" />
@@ -37,6 +38,9 @@
     <None Include="wwwroot\assets\vendor\axios\axios.min.map" />
     <None Include="wwwroot\assets\vendor\jquery-mask\jquery.mask.js" />
     <None Include="wwwroot\assets\vendor\vue\vue.js" />
+    <None Include="wwwroot\EmailTemplates\ConfirmEmail.html" />
+    <None Include="wwwroot\EmailTemplates\EmailPadrao.html" />
+    <None Include="wwwroot\EmailTemplates\ForgotPassword.html" />
   </ItemGroup>
 
   <ItemGroup>

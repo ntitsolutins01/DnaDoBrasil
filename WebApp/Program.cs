@@ -68,6 +68,7 @@ builder.Services.AddMvc().AddRazorPagesOptions(options =>
 
 builder.Services.Configure<UrlSettings>(builder.Configuration.GetSection("DnaSettings"));
 builder.Services.Configure<ParametersModel>(builder.Configuration.GetSection("DnaParameters"));
+builder.Services.Configure<SendGridSettings>(builder.Configuration.GetSection("SendGrid"));
 builder.Services.Configure<SmtpClientSettings>(builder.Configuration.GetSection("SmtpClient"));
 
 

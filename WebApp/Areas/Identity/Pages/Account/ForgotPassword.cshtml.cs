@@ -69,9 +69,9 @@ namespace WebApp.Areas.Identity.Pages.Account
 
 
             var message =
-                System.IO.File.ReadAllText(Path.Combine(_host.WebRootPath, "emailtemplates/ForgotPassword.html"));
+                System.IO.File.ReadAllText(Path.Combine(_host.WebRootPath, "EmailTemplates/ForgotPassword.html"));
             message = message.Replace("%NAME%", user.UserName);
-            message = message.Replace("%SITE%", "https://relprev.dvt.infraero.gov.br");
+            message = message.Replace("%SITE%", "https://dnabrasil.net");
             message = message.Replace("%TEMPOTOKEN%", _parameters.Value.TokenTime.ToString());
             message = message.Replace("%HORA%", DateTime.Now.ToString("hh:mm"));
             message = message.Replace("%DATA%", DateTime.Now.ToString("dd/MM/yyyy"));
@@ -81,7 +81,7 @@ namespace WebApp.Areas.Identity.Pages.Account
 
 
 
-            await _emailSender.SendEmailAsync(user.Email, "Recupere sua senha do sistema Relprev",
+            await _emailSender.SendEmailAsync(user.Email, "Recupere sua senha do sistema Dna Brasil",
                 message);
         }
 
