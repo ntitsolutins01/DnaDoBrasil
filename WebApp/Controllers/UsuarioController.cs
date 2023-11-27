@@ -13,6 +13,7 @@ using WebApp.Models;
 using WebApp.Utility;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 using System.Security.Claims;
+using System.Text.RegularExpressions;
 using WebApp.Configuration;
 
 namespace WebApp.Controllers
@@ -65,7 +66,9 @@ namespace WebApp.Controllers
         {
             try
             {
-                var result = ApiClientFactory.Instance.GetUsuarioByCpf(collection["cpf"].ToString());
+                var cpf = collection["cpf"].ToString();
+
+                var result = ApiClientFactory.Instance.GetUsuarioByCpf(Regex.Replace(cpf, "[^0-9a-zA-Z]+", ""));
 
                 if (result != null)
                 {
@@ -243,6 +246,33 @@ namespace WebApp.Controllers
                 return Json(ex.Message);
 
             }
+        }
+
+        public async Task<JsonResult> GetUsuarioByCpf(string cpf)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(cpf))
+                {
+                    var result = ApiClientFactory.Instance.GetUsuarioByCpf(Regex.Replace(cpf, "[^0-9a-zA-Z]+", ""));
+
+                    if (result)
+                    {
+                        throw new Exception("Já existe um usuário cadastrado com esse cpf.");
+                    }
+
+                    return Json(result);
+                }
+
+                throw new Exception("Cpf não informado.");
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message);
+
+            }
+
+
         }
     }
 }
