@@ -22,35 +22,35 @@ namespace WebApp.Services
         {
             try
             {
-                //MimeMessage message = new MimeMessage();
-                //message.From.Add(new MailboxAddress("Teste", "fmuniz0001@gmail.com"));
-                //message.To.Add(MailboxAddress.Parse("fmuniz0001@gmail.com"));
-                //message.Subject = "teste";
-                //message.Body = new TextPart("plain")
-                //{
-                //    Text = @"Hello Fabio"
-                //};
-                //var mai = "ntitsolutions01@gmail.com";
-                //var senha = "Mariaflor@001";
+                MimeMessage message = new MimeMessage();
+                message.From.Add(new MailboxAddress("Teste", "fmuniz0001@gmail.com"));
+                message.To.Add(MailboxAddress.Parse("fmuniz0001@gmail.com"));
+                message.Subject = "teste";
+                message.Body = new TextPart("plain")
+                {
+                    Text = @"Hello Fabio"
+                };
+                var mai = "no_replay@idecace.org.br";
+                var senha = "Idecace@2023";
 
-                //var client = new SmtpClient();
+                var client = new SmtpClient();
 
-                //try
-                //{
-                //    client.Connect("smtp.gmail.com", 465, true);
-                //    client.Authenticate(mai, senha);
-                //    client.Send(message);
-                //}
-                //catch (Exception e)
-                //{
-                //    Console.WriteLine(e);
-                //    throw;
-                //}
-                //finally
-                //{
-                //    client.Disconnect(true);
-                //    client.Dispose();
-                //}
+                try
+                {
+                    client.Connect("email-ssl.com.br", 465, true);
+                    client.Authenticate(mai, senha);
+                    client.Send(message);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
+                finally
+                {
+                    client.Disconnect(true);
+                    client.Dispose();
+                }
 
 
                 //var apiKey = "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";
@@ -64,16 +64,16 @@ namespace WebApp.Services
                 //var response = await client.SendEmailAsync(msg);
 
 
-                var apiKey = _settings.ApiKey;
+                //var apiKey = _settings.ApiKey;
 
-                var myMessage = new SendGridMessage();
-                myMessage.AddTo(email);
-                myMessage.From = new EmailAddress(_settings.FromEmail, _settings.FromName);
-                myMessage.Subject = subject;
-                myMessage.HtmlContent = htmlMessage;
+                //var myMessage = new SendGridMessage();
+                //myMessage.AddTo(email);
+                //myMessage.From = new EmailAddress(_settings.FromEmail, _settings.FromName);
+                //myMessage.Subject = subject;
+                //myMessage.HtmlContent = htmlMessage;
 
-                var transportWeb = new SendGridClient(apiKey);
-                var response = await transportWeb.SendEmailAsync(myMessage);
+                //var transportWeb = new SendGridClient(apiKey);
+                //var response = await transportWeb.SendEmailAsync(myMessage);
             }
             catch (Exception e)
             {
