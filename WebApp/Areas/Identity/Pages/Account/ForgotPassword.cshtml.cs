@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Net.Mail;
+using System.Net.Mime;
 using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -73,7 +75,6 @@ namespace WebApp.Areas.Identity.Pages.Account
                 null,
                 new { code, email },
                 Request.Scheme);
-
 
             var message =
                 System.IO.File.ReadAllText(Path.Combine(_host.WebRootPath, "EmailTemplates/ForgotPassword.html"));

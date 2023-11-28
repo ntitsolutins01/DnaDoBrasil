@@ -172,10 +172,10 @@ var vm = new Vue({
 
             axios.get("GetUsuarioByEmail/?email=" + self.params.email).then(result => {
 
-                if (result.data !== false) {
+                if (result.data === false) {
                     new PNotify({   
                         title: 'Usuario',
-                        text: result.data,
+                        text: "Já existe um usuário cadastrado com esse email.",
                         type: 'warning'
                     });
                 }

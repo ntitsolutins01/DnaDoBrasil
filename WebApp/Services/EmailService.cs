@@ -3,9 +3,9 @@
 //using SendGrid;
 //using SendGrid.Helpers.Mail;
 using MailKit.Net.Smtp;
+using MimeKit;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Options;
-using MimeKit;
 using WebApp.Configuration;
 
 namespace WebApp.Services
@@ -95,7 +95,7 @@ namespace WebApp.Services
                 message.To.Add(MailboxAddress.Parse(email));
                 message.Subject = subject;
                 message.Body = new TextPart("html") { Text = htmlMessage };
-                var mail = _settings.FromEmail;
+                var mail = _settings.Usr;
                 var senha = _settings.Pwd;
 
                 var client = new SmtpClient();
