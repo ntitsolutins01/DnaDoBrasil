@@ -248,31 +248,12 @@ namespace WebApp.Controllers
             }
         }
 
-        public async Task<JsonResult> GetUsuarioByCpf(string cpf)
+        public async Task<bool> GetUsuarioByCpf(string cpf)
         {
-            try
-            {
-                if (!string.IsNullOrEmpty(cpf))
-                {
-                    var result = ApiClientFactory.Instance.GetUsuarioByCpf(Regex.Replace(cpf, "[^0-9a-zA-Z]+", ""));
+            if (string.IsNullOrEmpty(cpf)) throw new Exception("Cpf não informado.");
+            var result = ApiClientFactory.Instance.GetUsuarioByCpf(Regex.Replace(cpf, "[^0-9a-zA-Z]+", ""));
 
-                    if (result)
-                    {
-                        throw new Exception("Já existe um usuário cadastrado com esse cpf.");
-                    }
-
-                    return Json(result);
-                }
-
-                throw new Exception("Cpf não informado.");
-            }
-            catch (Exception ex)
-            {
-                return Json(ex.Message);
-
-            }
-
-
+            return result != null;
         }
     }
 }
