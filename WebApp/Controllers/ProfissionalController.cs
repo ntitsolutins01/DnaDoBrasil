@@ -45,12 +45,21 @@ namespace WebApp.Controllers
             {
                 var command = new ProfissionalModel.CreateUpdateProfissionalCommand
                 {
-                    //Nome = collection["nome"].ToString(),
-                    //Descricao = collection["descricao"].ToString(),
-                    //IdadeInicial = Convert.ToInt32(collection["idadeInicial"]),
-                    //IdadeFinal = Convert.ToInt32(collection["idadeFinal"]),
-                    //ScoreTotal = Convert.ToInt32(collection["scoreTotal"].ToString())
-                };
+                    Nome = collection["nome"].ToString(),
+                    DtNascimento = collection["dataNascimento"].ToString(),
+                    Email = Convert.ToInt32(collection["email"]),
+                    Sexo = Convert.ToInt32(collection["sexo"]),
+                    Telefone = collection["telefone"].ToString(),
+                    Cep = collection["cep"].ToString(),
+                    Celular = collection["celular"].ToString(),
+                    Cpf = collection["cpf"].ToString(),
+                    AspNetUserId = collection["aspnetuserId"].ToString(),
+                    Numero = collection["numero"].ToString(),
+                    Bairro = collection["bairro"].ToString(),
+					Endereco = collection["endereco"].ToString(),
+					MunicipioId = collection["municipioId"].ToString(),
+					Habilitado = collection["habilitado"].ToString(),
+				};
 
                 await ApiClientFactory.Instance.CreateProfissional(command);
 
@@ -77,8 +86,22 @@ namespace WebApp.Controllers
         {
             var command = new ProfissionalModel.CreateUpdateProfissionalCommand
             {
-                Id = Convert.ToInt32(id)
-            };
+                Id = Convert.ToInt32(id),
+                Nome = collection["nome"].ToString(),
+                DtNascimento = collection["dataNascimento"].ToString(),
+                Email = Convert.ToInt32(collection["email"]),
+                Sexo = Convert.ToInt32(collection["sexo"]),
+                Telefone = collection["telefone"].ToString(),
+                Cep = collection["cep"].ToString(),
+                Celular = collection["celular"].ToString(),
+                Cpf = collection["cpf"].ToString(),
+                AspNetUserId = collection["aspnetuserId"].ToString(),
+                Numero = collection["numero"].ToString(),
+                Bairro = collection["bairro"].ToString(),
+                Endereco = collection["endereco"].ToString(),
+                MunicipioId = collection["municipioId"].ToString(),
+                Habilitado = collection["habilitado"].ToString()
+			};
 
             await ApiClientFactory.Instance.UpdateProfissional(id, command);
 

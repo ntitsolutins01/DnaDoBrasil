@@ -13,21 +13,21 @@ namespace WebApp.Models
         public class CreateUpdateProfissionalCommand
         {
             public int Id { get; set; }
-            public  int AspNetUserId { get; set; }
+            public  string AspNetUserId { get; set; }
             public  string Nome { get; set; }
-            public DateTime DtNascimento { get; set; }
-            public  string Email { get; set; }
-            public  string Sexo { get; set; }
+            public string DtNascimento { get; set; }
+            public  int Email { get; set; }
+            public  int Sexo { get; set; }
             public  string Cpf { get; set; }
             public string? Telefone { get; set; }
             public string? Celular { get; set; }
             public string? Endereco { get; set; }
-            public int? Numero { get; set; }
+            public string Numero { get; set; }
             public string? Cep { get; set; }
             public string? Bairro { get; set; }
             public bool Status { get; set; } = true;
-            public int? MunicipioId { get; set; }
-            public bool? Habilitado { get; set; }
+            public string MunicipioId { get; set; }
+            public string Habilitado { get; set; }
         }
     }
 
