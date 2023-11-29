@@ -25,8 +25,7 @@ namespace WebApp.Controllers
             SetCrudMessage(crud);
             var response = ApiClientFactory.Instance.GetProfissionalAll();
 
-            //return View(new ProfissionalModel(){Profissionals = response});
-            return View();
+            return View(new ProfissionalModel(){Profissionais = response});
         }
 
         //[ClaimsAuthorize("ConfiguracaoSistema", "Incluir")]
