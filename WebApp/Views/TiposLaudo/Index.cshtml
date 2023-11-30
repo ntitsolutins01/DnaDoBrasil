@@ -37,7 +37,7 @@
 	                                <td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Id)</td>
                                     <td class ="text-center">@Html.DisplayFor(modelItem => item.Nome)</td>
                                     <td class="text-center">@Html.DisplayFor(modelItem => item.Descricao)</td>
-                                    <td class="actions">
+                                    <td class="text-center actions">
                                         <a data-toggle="tooltip" data-placement="top" title="Editar" asp-action="Edit" asp-controller="TiposLaudo" asp-route-id="@item.Id" class="on-default edit-row" style='color: #FF9800'><i class="fa fa-pencil"></i></a>
                                         <a data-toggle="tooltip" data-placement="top" title="Excluir" asp-action="Delete" asp-controller="TiposLaudo" asp-route-id="@item.Id" class="on-default remove-row" style='color: #F44336'><i class="fa fa-trash"></i></a>
                                     </td>
