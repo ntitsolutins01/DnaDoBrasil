@@ -3,7 +3,7 @@
     public class TiposLaudoDto
     {
         public string Id { get; set; }
-        public string TipoLaudo { get; set; }
-        public string Status { get; set; }
+        public string Nome { get; set; }
+        public string Descricao { get; set; }
     }
 }
