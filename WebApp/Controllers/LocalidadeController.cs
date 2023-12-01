@@ -41,6 +41,7 @@ namespace WebApp.Controllers
         }
 
         //[ClaimsAuthorize("Usuario", "Incluir")]
+        [HttpPost]
         public async Task<ActionResult> Create(IFormCollection collection)
         {
             try
@@ -73,6 +74,7 @@ namespace WebApp.Controllers
         //}
 
         //[ClaimsAuthorize("Usuario", "Alterar")]
+        [HttpPost]
         public async Task<ActionResult> Edit(string id, IFormCollection collection)
         {
                 var command = new LocalidadeModel.CreateUpdateLocalidadeCommand
