@@ -79,7 +79,8 @@ namespace WebApp.Controllers
                 var command = new TiposLaudoModel.CreateUpdateTiposLaudoCommand
                 {
 
-                    TipoLaudo = collection["tipoLaudo"].ToString()
+                    Nome = collection["nome"].ToString(),
+                    Descricao = collection["descricao"].ToString()
                 };
 
                 //await ApiClientFactory.Instance.UpdateTiposLaudo(command);
