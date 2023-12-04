@@ -47,17 +47,14 @@ namespace WebApp.Controllers
         {
             try
             {
-                var command = new SerieModel.CreateUpdateSerieCommand
+                var command = new FomentoModel.CreateUpdateFomentoCommand
                 {
-
-                    Nome = collection["nome"].ToString(),
-                    Descricao = collection["descricao"].ToString(),
-                    IdadeInicial = Convert.ToInt32(collection["idadeInicial"]),
-                    IdadeFinal = Convert.ToInt32(collection["idadeFinal"]),
-                    ScoreTotal = Convert.ToInt32(collection["scoreTotal"].ToString())
-                };
-
-                await ApiClientFactory.Instance.CreateSerie(command);
+                    Fomento = collection["fomento"].ToString(),
+                    Localidade = collection["localidades"].ToString(),
+                    Estado = collection["estado"].ToString(),
+                    Cidade = Convert.ToInt32(collection["cidade"]),
+                    
+                await ApiClientFactory.Instance.CreateFomento(command);
 
                 return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
             }
@@ -69,17 +66,16 @@ namespace WebApp.Controllers
     }
     public async Task<ActionResult> Edit(string id, IFormCollection collection)
     {
-        var command = new SerieModel.CreateUpdateSerieCommand
+        var command = new FomentoModel.CreateUpdateFomentoCommand
         {
             Id = Convert.ToInt32(id),
-            Nome = collection["nome"].ToString(),
-            Descricao = collection["descricao"].ToString(),
-            IdadeInicial = Convert.ToInt32(collection["idadeInicial"]),
-            IdadeFinal = Convert.ToInt32(collection["idadeFinal"]),
-            ScoreTotal = Convert.ToInt32(collection["scoreTotal"].ToString())
+            Estado = collection["Estado"].ToString(),
+            Cidade = collection["Cidade"].ToString(),
+            Localidade = Convert.ToInt32(collection["Localidade"]),
+           
         };
 
-        //await ApiClientFactory.Instance.UpdateSerie(command);
+        //await ApiClientFactory.Instance.UpdateFomento(command);
 
         return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
     }
