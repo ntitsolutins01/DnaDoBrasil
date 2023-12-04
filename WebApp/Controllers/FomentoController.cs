@@ -27,6 +27,7 @@ namespace WebApp.Controllers
 
             return View(new AmbienteModel() { Ambientes = response });
         }
+
         public ActionResult Create(int? crud, int? notify, string message = null)
         {
             SetNotifyMessage(notify, message);
@@ -42,41 +43,7 @@ namespace WebApp.Controllers
             };
             return View(model);
         }
-        [HttpPost]
-        public async Task<ActionResult> Create(IFormCollection collection)
-        {
-            try
-            {
-                var command = new FomentoModel.CreateUpdateFomentoCommand
-                {
-                    Fomento = collection["fomento"].ToString(),
-                    Localidade = collection["localidades"].ToString(),
-                    Estado = collection["estado"].ToString(),
-                    Cidade = Convert.ToInt32(collection["cidade"]),
-                    
-                await ApiClientFactory.Instance.CreateFomento(command);
 
-                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
-            }
-            catch (Exception e)
-            {
-                return RedirectToAction(nameof(Index));
-            }
-        }
-    }
-    public async Task<ActionResult> Edit(string id, IFormCollection collection)
-    {
-        var command = new FomentoModel.CreateUpdateFomentoCommand
-        {
-            Id = Convert.ToInt32(id),
-            Estado = collection["Estado"].ToString(),
-            Cidade = collection["Cidade"].ToString(),
-            Localidade = Convert.ToInt32(collection["Localidade"]),
-           
-        };
-
-        //await ApiClientFactory.Instance.UpdateFomento(command);
-
-        return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+        
     }
 }
