@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using WebApp.Configuration;
+using WebApp.Dto;
 using WebApp.Enumerators;
 using WebApp.Factory;
 using WebApp.Models;
@@ -10,21 +11,21 @@ namespace WebApp.Controllers
 {
     public class AmbienteController : BaseController
     {
-	    private readonly IOptions<UrlSettings> _appSettings;
+        private readonly IOptions<UrlSettings> _appSettings;
 
-	    public AmbienteController(IOptions<UrlSettings> appSettings)
-		{
-			_appSettings = appSettings;
-			ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
-		}
+        public AmbienteController(IOptions<UrlSettings> appSettings)
+        {
+            _appSettings = appSettings;
+            ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
+        }
 
-	    public IActionResult Index(int? crud, int? notify, string message = null)
+        public IActionResult Index(int? crud, int? notify, string message = null)
         {
             SetNotifyMessage(notify, message);
             SetCrudMessage(crud);
             var response = ApiClientFactory.Instance.GetAmbienteAll();
 
-            return View(new AmbienteModel(){Ambientes = response});
+            return View(new AmbienteModel() { Ambientes = response });
         }
 
         //[ClaimsAuthorize("ConfiguracaoSistema", "Incluir")]
@@ -45,7 +46,7 @@ namespace WebApp.Controllers
                 var command = new AmbienteModel.CreateUpdateAmbienteCommand
                 {
 
-	                Nome  = collection["nome"].ToString()
+                    Nome = collection["nome"].ToString()
                 };
 
                 await ApiClientFactory.Instance.CreateAmbiente(command);
@@ -69,17 +70,18 @@ namespace WebApp.Controllers
         //}
 
         //[ClaimsAuthorize("Usuario", "Alterar")]
-        public async Task<ActionResult> Edit(string id, IFormCollection collection)
+        public async Task<ActionResult> Edit(IFormCollection collection)
         {
-                var command = new AmbienteModel.CreateUpdateAmbienteCommand
-                {
+            var command = new AmbienteModel.CreateUpdateAmbienteCommand
+            {
+                Id = Convert.ToInt32(collection["editAmbienteId"]),
+                Nome = collection["nome"].ToString(),
+                Status = collection["editStatus"].ToString() == "" ? false : true
+            };
 
-                    Nome = collection["nome"].ToString()
-                };
+            await ApiClientFactory.Instance.UpdateAmbiente(command.Id, command);
 
-                //await ApiClientFactory.Instance.UpdateAmbiente(command);
-
-                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+            return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
         }
 
         //[ClaimsAuthorize("Usuario", "Excluir")]
@@ -94,6 +96,13 @@ namespace WebApp.Controllers
             {
                 return RedirectToAction(nameof(Index));
             }
+        }
+
+        public async Task<AmbienteDto> GetAmbienteById(int id)
+        {
+            var result = ApiClientFactory.Instance.GetAmbienteById(id);
+
+            return result;
         }
     }
 }

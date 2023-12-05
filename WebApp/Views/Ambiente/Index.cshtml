@@ -4,10 +4,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
-<div class="row">
-    <div class="col-lg-12">
-        <form id="form" class="form-horizontal">
+<div id="formAmbiente">
+    <div class="row">
+        <div class="col-lg-12">
             <section class="panel">
                 <header class="panel-heading">
                     <div class="panel-actions">
@@ -23,92 +22,114 @@
                     </div>
                     <table class="table table-bordered table-striped mb-0" id="datatable-default">
                         <thead>
-                            <tr>
-                                <th class="text-center">Id</th>
-                                <th class="text-center">Nome do Ambiente</th>
-                                <th class="text-center">Status</th>
-                                <th class="text-center">Ações</th>
-                            </tr>
+                        <tr>
+                            <th class="text-center">Id</th>
+                            <th class="text-center">Nome do Ambiente</th>
+                            <th class="text-center">Status</th>
+                            <th class="text-center">Ações</th>
+                        </tr>
                         </thead>
                         <tbody>
-                            @foreach (var item in Model.Ambientes)
-                            {
-                                <tr>
-	                                <td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Id)</td>
-                                    <td class="text-center">@Html.DisplayFor(modelItem => item.Nome)</td>
-                                    <td class="text-center">@Html.DisplayFor(modelItem => item.Status)</td>
-                                    <td class="actions">
-                                        <a data-toggle="tooltip" data-placement="top" title="Editar" asp-action="Edit" asp-controller="Ambiente" asp-route-id="@item.Id" class="on-default edit-row" style='color: #FF9800'><i class="fa fa-pencil"></i></a>
-                                        <a data-toggle="tooltip" data-placement="top" title="Excluir" asp-action="Delete" asp-controller="Ambiente" asp-route-id="@item.Id" class="on-default remove-row" style='color: #F44336'><i class="fa fa-trash"></i></a>
-                                    </td>
-                                </tr>
-                            }
+                        @foreach (var item in Model.Ambientes)
+                        {
+                            <tr>
+                                <td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Id)</td>
+                                <td class="text-center">@Html.DisplayFor(modelItem => item.Nome)</td>
+                                <td class="text-center">@Html.DisplayFor(modelItem => item.Status)</td>
+                                <td class="actions">
+                                    <a data-toggle="tooltip" data-placement="top" title="Editar"
+                                       href='javascript:(crud.EditModal(@item.Id))'
+                                       class="on-default edit-row" style='color: #FF9800'>
+                                        <i class="fa fa-pencil"></i>
+                                    </a>
+                                    <a data-toggle="tooltip" data-placement="top" title="Excluir" href='javascript:(crud.DeleteModal(@item.Id))'
+                                       class="on-default remove-row" style="cursor: pointer;color: #F44336"><i class="fa fa-trash"></i></a></td>
+                            </tr>
+                        }
                         </tbody>
                     </table>
                 </div>
             </section>
-        </form>
+        </div>
     </div>
-</div>
-<!-- Modal -->
-<div class="modal fade" id="mdExcluir" tabindex="-1" role="dialog" aria-labelledby="mdExcluirLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="mdExcluirLabel">
-                    <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Exclusão de Ambiente</strong>
-                </h5>
+    <!-- Modal -->
+    <div class="modal fade" id="mdDeleteAmbiente" tabindex="-1" role="dialog" aria-labelledby="mdDeleteAmbienteLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mdDeleteAmbienteLabel">
+                        <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Exclusão de Ambiente</strong>
+                    </h5>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-icon">
+                        <i class="fa fa-question-circle"></i>
+                    </div>
+                    <div class="modal-text">
+                        <input type="hidden" id="deleteAmbienteId" />
+                        <p class="mb-0">Tem certeza que deseja <b>excluir</b> esse registro?</p>
+                    </div>
+                    <div class="modal-wrapper">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-thumbs-o-down"></i> &nbsp;&nbsp;Não</button>
+                    <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</button>
+                </div>
             </div>
-            <div class="modal-body">
-                <div class="modal-icon">
-                    <i class="fa fa-question-circle"></i>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="mdEditAmbiente" tabindex="-1" role="dialog" aria-labelledby="mdEditAmbienteLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mdEditAmbienteLabel">
+                        <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Alterar Ambiente</strong>
+                    </h5>
                 </div>
-                <div class="modal-text">
-                    <p class="mb-0">Tem certeza que deseja <b>excluir</b> esse registro?</p>
-                </div>
-                <div class="modal-wrapper">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-thumbs-o-down"></i> &nbsp;&nbsp;Não</button>
-                <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</button>
+                @using (@Html.BeginForm("Edit", "Ambiente", FormMethod.Post, new { id = "formEditAmbiente", @class = "form-horizontal" }))
+                {
+                    <input type="hidden" name="editAmbienteId" :value="editDto.Id"/>
+
+                    <div class="modal-body">
+                        <div class="form-group row">
+                            <label class="col-sm-3 control-label text-sm-right pt-2">Ambiente <span class="required">*</span></label>
+                            <div class="col-sm-7">
+                                <input type="text" name="nome" class="form-control"
+                                       maxlength="80" :value="editDto.Nome"
+                                       title="Por favor informe o ambiente." required />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 control-label text-sm-right pt-2">Status</label>
+                            <div class="col-md-3">
+                                <div class="switch switch-sm switch-primary">
+                                    <input type="checkbox" id="editStatus" name="editStatus" data-plugin-ios-switch checked="checked" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="reset" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
+                        <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
+                    </div>
+                }
             </div>
         </div>
     </div>
 </div>
-<!-- Modal -->
-<div class="modal fade" id="mdEdite" tabindex="-1" role="dialog" aria-labelledby="mdEditeLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="mdEditarLabel">
-                    <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Alterar Ambiente</strong>
-                </h5>
-            </div>
-            <div class="modal-body">
-                <div class="modal-icon">
-                    <i class="fa fa-question-circle"></i>
-                </div>
-                <div class="modal-text">
-                    <p class="mb-0">Tem certeza que deseja <b>alterar</b> esse registro?</p>
-                </div>
-                <div class="modal-wrapper">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-thumbs-o-down"></i> &nbsp;&nbsp;Não</button>
-                <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</button>
-            </div>
-        </div>
-    </div>
-</div>
+
 @section CssSpecificVendor {
     <link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />
 }
 @section Scripts {
+    <script src="~/assets/vendor/ios7-switch/ios7-switch.js"></script>
     <script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
     <script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
     <script src="~/js/formatTable.js"></script>
+    <script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
+    <script src="~/js/ambiente.js"></script>
 
     <script>
 
@@ -123,6 +144,7 @@
                     text: 'Cadastro realizado com sucesso!',
                     type: 'success'
                 });
+                crub = 0;
             } else if (crub === 2) {
                 new PNotify({
                     title: 'Ambiente',
@@ -130,6 +152,7 @@
                     type: 'warning',
                     icon: 'fa fa-pencil'
                 });
+                crub = 0;
             } else if (crub === 3) {
                 new PNotify({
                     title: 'Ambiente',
@@ -137,7 +160,36 @@
                     type: 'error',
                     icon: 'fa fa-trash-o'
                 });
+                crub = 0;
             }
+            
+
+			var notify = @ViewBag.NotifyMessage;
+			var messagem = '@ViewBag.Notify';
+
+			if (notify === 0) {
+				new PNotify({
+					title: 'Ambiente',
+					text: messagem,
+					type: 'success'
+				});
+                crub = 0;
+			} else if (notify === 1) {
+				new PNotify({
+					title: 'Ambiente',
+					text: messagem,
+					type: 'warning'
+                });
+                crub = 0;
+			} else if (notify === 2) {
+				new PNotify({
+					title: 'Ambiente',
+					text: messagem,
+					type: 'error'
+                });
+                crub = 0;
+			}
+
             if ($.isFunction($.fn['tooltip'])) {
                 $('[data-toggle=tooltip],[rel=tooltip]').tooltip({ container: 'body' });
             }

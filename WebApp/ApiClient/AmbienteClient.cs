@@ -33,10 +33,10 @@ namespace WebApp.ApiClient
 
         #region Methods
 
-        public AmbienteDto GetAmbienteById(string id)
+        public AmbienteDto GetAmbienteById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceAmbiente}/{id}"));
+                $"{ResourceAmbiente}/Ambiente/{id}"));
             return Get<AmbienteDto>(requestUrl);
         }
         public List<AmbienteDto> GetAmbienteAll()
