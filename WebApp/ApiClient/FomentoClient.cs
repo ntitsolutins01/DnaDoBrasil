@@ -32,7 +32,7 @@ namespace WebApp.ApiClient
 
         #region Methods
 
-        public FomentoDto GetFomentoById(string id)
+        public FomentoDto GetFomentoById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 $"{ResourceFomento}/{id}"));
