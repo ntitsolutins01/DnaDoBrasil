@@ -22,30 +22,38 @@
                     </div>
                     <table class="table table-bordered table-striped mb-0" id="datatable-default">
                         <thead>
-                        <tr>
-                            <th class="text-center">Id</th>
-                            <th class="text-center">Nome do Ambiente</th>
-                            <th class="text-center">Status</th>
-                            <th class="text-center">Ações</th>
-                        </tr>
+                            <tr>
+                                <th class="text-center">Id</th>
+                                <th class="text-center">Nome do Ambiente</th>
+                                <th class="text-center">Status</th>
+                                <th class="text-center">Ações</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        @foreach (var item in Model.Ambientes)
-                        {
-                            <tr>
-                                <td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Id)</td>
-                                <td class="text-center">@Html.DisplayFor(modelItem => item.Nome)</td>
-                                <td class="text-center">@Html.DisplayFor(modelItem => item.Status)</td>
-                                <td class="actions">
-                                    <a data-toggle="tooltip" data-placement="top" title="Editar"
-                                       href='javascript:(crud.EditModal(@item.Id))'
-                                       class="on-default edit-row" style='color: #FF9800'>
-                                        <i class="fa fa-pencil"></i>
-                                    </a>
-                                    <a data-toggle="tooltip" data-placement="top" title="Excluir" href='javascript:(crud.DeleteModal(@item.Id))'
-                                       class="on-default remove-row" style="cursor: pointer;color: #F44336"><i class="fa fa-trash"></i></a></td>
-                            </tr>
-                        }
+                            @foreach (var item in Model.Ambientes)
+                            {
+                                <tr>
+                                    <td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Id)</td>
+                                    <td class="text-center">@Html.DisplayFor(modelItem => item.Nome)</td>
+                                    @if (item.Status)
+                                    {
+                                        <td class="text-center"><span class="label label-success">ATIVO</span></td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-center"><span class="label label-danger">INATIVO</span></td>
+                                    }
+                                    <td class="actions">
+                                        <a data-toggle="tooltip" data-placement="top" title="Editar"
+                                           href='javascript:(crud.EditModal(@item.Id))'
+                                           class="on-default edit-row" style='color: #FF9800'>
+                                            <i class="fa fa-pencil"></i>
+                                        </a>
+                                        <a data-toggle="tooltip" data-placement="top" title="Excluir" href='javascript:(crud.DeleteModal(@item.Id))'
+                                           class="on-default remove-row" style="cursor: pointer;color: #F44336"><i class="fa fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>
@@ -74,7 +82,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-thumbs-o-down"></i> &nbsp;&nbsp;Não</button>
-                    <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</button>
+                    <a id="deleteAmbienteHref" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</a>
                 </div>
             </div>
         </div>
@@ -90,7 +98,7 @@
                 </div>
                 @using (@Html.BeginForm("Edit", "Ambiente", FormMethod.Post, new { id = "formEditAmbiente", @class = "form-horizontal" }))
                 {
-                    <input type="hidden" name="editAmbienteId" :value="editDto.Id"/>
+                    <input type="hidden" name="editAmbienteId" :value="editDto.Id" />
 
                     <div class="modal-body">
                         <div class="form-group row">
@@ -162,33 +170,33 @@
                 });
                 crub = 0;
             }
-            
 
-			var notify = @ViewBag.NotifyMessage;
-			var messagem = '@ViewBag.Notify';
 
-			if (notify === 0) {
-				new PNotify({
-					title: 'Ambiente',
-					text: messagem,
-					type: 'success'
-				});
-                crub = 0;
-			} else if (notify === 1) {
-				new PNotify({
-					title: 'Ambiente',
-					text: messagem,
-					type: 'warning'
+            var notify = @ViewBag.NotifyMessage;
+            var messagem = '@ViewBag.Notify';
+
+            if (notify === 0) {
+                new PNotify({
+                    title: 'Ambiente',
+                    text: messagem,
+                    type: 'success'
                 });
                 crub = 0;
-			} else if (notify === 2) {
-				new PNotify({
-					title: 'Ambiente',
-					text: messagem,
-					type: 'error'
+            } else if (notify === 1) {
+                new PNotify({
+                    title: 'Ambiente',
+                    text: messagem,
+                    type: 'warning'
                 });
                 crub = 0;
-			}
+            } else if (notify === 2) {
+                new PNotify({
+                    title: 'Ambiente',
+                    text: messagem,
+                    type: 'error'
+                });
+                crub = 0;
+            }
 
             if ($.isFunction($.fn['tooltip'])) {
                 $('[data-toggle=tooltip],[rel=tooltip]').tooltip({ container: 'body' });

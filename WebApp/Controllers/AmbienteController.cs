@@ -58,16 +58,6 @@ namespace WebApp.Controllers
             }
         }
 
-        //[ClaimsAuthorize("Ambiente", "Alterar")]
-        //public ActionResult Edit(string id)
-        //{
-        //    var obj = ApiClientFactory.Instance.GetAmbienteById(id);
-
-        //    var model = new AmbienteModel() { Ambiente = obj };
-
-        //    return View(model);
-        //}
-
         //[ClaimsAuthorize("Usuario", "Alterar")]
         public async Task<ActionResult> Edit(IFormCollection collection)
         {
@@ -84,11 +74,11 @@ namespace WebApp.Controllers
         }
 
         //[ClaimsAuthorize("Usuario", "Excluir")]
-        public ActionResult Delete(string id)
+        public ActionResult Delete(int id)
         {
             try
             {
-                //ApiClientFactory.Instance.DeleteAmbiente(id);
+                ApiClientFactory.Instance.DeleteAmbiente(id);
                 return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
             }
             catch
