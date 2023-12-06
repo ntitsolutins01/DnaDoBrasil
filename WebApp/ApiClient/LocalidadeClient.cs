@@ -39,10 +39,10 @@ namespace WebApp.ApiClient
                 $"{ResourceLocalidade}"));
             return Get<List<LocalidadeDto>>(requestUrl);
         }
-        public LocalidadeDto GetLocalidadeById(string id)
+        public LocalidadeDto GetLocalidadeById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceLocalidade}/{id}"));
+                $"{ResourceLocalidade}/Localidade/{id}"));
             return Get<LocalidadeDto>(requestUrl);
         }
         

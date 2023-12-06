@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
 using WebApp.Configuration;
+using WebApp.Dto;
 using WebApp.Enumerators;
 using WebApp.Factory;
 using WebApp.Models;
@@ -50,7 +51,6 @@ namespace WebApp.Controllers
                     Nome = collection["nome"].ToString(),
                     Descricao = collection["descricao"].ToString(),
                     MunicipioId = collection["ddlMunicipio"].ToString()
-
                 };
 
                 await ApiClientFactory.Instance.CreateLocalidade(command);
@@ -63,29 +63,19 @@ namespace WebApp.Controllers
             }
         }
 
-        //[ClaimsAuthorize("Localidade", "Alterar")]
-        public ActionResult Edit(string id)
-        {
-            var obj = ApiClientFactory.Instance.GetLocalidadeById(id);
-
-            var model = new LocalidadeModel() { Localidade = obj };
-
-            return View(model);
-        }
-
         //[ClaimsAuthorize("Usuario", "Alterar")]
-        [HttpPost]
-        public async Task<ActionResult> Edit(string id, IFormCollection collection)
+        public async Task<ActionResult> Edit(IFormCollection collection)
         {
-                var command = new LocalidadeModel.CreateUpdateLocalidadeCommand
-                {
-	                Nome = collection["nome"].ToString(),
-	                Descricao = collection["descricao"].ToString()
-				};
+            var command = new LocalidadeModel.CreateUpdateLocalidadeCommand
+            {
+                Id = Convert.ToInt32(collection["editLocalidadeId"]),
+                Nome = collection["nome"].ToString(),
+                Descricao = collection["descricao"].ToString(),
+            };
 
-                //await ApiClientFactory.Instance.UpdateLocalidade(command);
+            await ApiClientFactory.Instance.UpdateLocalidade(command.Id, command);
 
-                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+            return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
         }
 
         //[ClaimsAuthorize("Usuario", "Excluir")]
@@ -100,6 +90,13 @@ namespace WebApp.Controllers
             {
                 return RedirectToAction(nameof(Index));
             }
+        }
+
+        public async Task<LocalidadeDto> GetLocalidadeById(int id)
+        {
+            var result = ApiClientFactory.Instance.GetLocalidadeById(id);
+
+            return result;
         }
     }
 }
