@@ -33,10 +33,10 @@ namespace WebApp.ApiClient
 
         #region Methods
 
-        public TiposLaudoDto GetTiposLaudoById(string id)
+        public TiposLaudoDto GetTiposLaudoById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceTiposLaudo}/{id}"));
+                $"{ResourceTiposLaudo}/TipoLaudo/{id}"));
             return Get<TiposLaudoDto>(requestUrl);
         }
         public List<TiposLaudoDto> GetTiposLaudoAll()

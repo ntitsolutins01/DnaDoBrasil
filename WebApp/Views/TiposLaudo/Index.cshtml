@@ -5,103 +5,134 @@
 }
 
 
-<div class="row">
-    <div class="col-lg-12">
-        <form id="form" class="form-horizontal">
-            <section class="panel">
-                <header class="panel-heading">
-                    <div class="panel-actions">
-                        <a href="#" class="card-action card-action-toggle" data-card-toggle></a>
-                    </div>
-                    <h2 class="panel-title">Listagem de Tipo de Laudos</h2>
-                </header>
-                <div class="panel-body">
-                    <div class="form-group row">
-                        <div class="col-sm-12 pull-right">
-                            <a href="@Url.Action("Create", "TiposLaudo")" id="addToTable" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Novo Tipo de Laudo </a>
+<div id="formTipoLaudo">
+    <div class="row">
+        <div class="col-lg-12">
+            <form id="form" class="form-horizontal">
+                <section class="panel">
+                    <header class="panel-heading">
+                        <div class="panel-actions">
+                            <a href="#" class="card-action card-action-toggle" data-card-toggle></a>
                         </div>
-                    </div>
-                    <table class="table table-bordered table-striped mb-0" id="datatable-default">
-                        <thead>
-                            <tr>
-                                <th class="text-center">Id</th>
-                                <th class="text-center">Nome Tipo de Laudo</th>
-                                <th class="text-center">Descrição</th>
-                                <th class="text-center">Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model.TiposLaudos)
-                            {
+                        <h2 class="panel-title">Listagem de Tipo de Laudos</h2>
+                    </header>
+                    <div class="panel-body">
+                        <div class="form-group row">
+                            <div class="col-sm-12 pull-right">
+                                <a href="@Url.Action("Create", "TiposLaudo")" id="addToTable" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Novo Tipo de Laudo </a>
+                            </div>
+                        </div>
+                        <table class="table table-bordered table-striped mb-0" id="datatable-default">
+                            <thead>
                                 <tr>
-	                                <td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Id)</td>
-                                    <td class ="text-center">@Html.DisplayFor(modelItem => item.Nome)</td>
-                                    <td class="text-center">@Html.DisplayFor(modelItem => item.Descricao)</td>
-                                    <td class="text-center actions">
-                                        <a data-toggle="tooltip" data-placement="top" title="Editar" asp-action="Edit" asp-controller="TiposLaudo" asp-route-id="@item.Id" class="on-default edit-row" style='color: #FF9800'><i class="fa fa-pencil"></i></a>
-                                        <a data-toggle="tooltip" data-placement="top" title="Excluir" asp-action="Delete" asp-controller="TiposLaudo" asp-route-id="@item.Id" class="on-default remove-row" style='color: #F44336'><i class="fa fa-trash"></i></a>
-                                    </td>
+                                    <th class="text-center">Id</th>
+                                    <th class="text-center">Nome Tipo de Laudo</th>
+                                    <th class="text-center">Descrição</th>
+                                    <th class="text-center">Ações</th>
                                 </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-        </form>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.TiposLaudos)
+                                {
+                                    <tr>
+                                        <td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Id)</td>
+                                        <td class="text-center">@Html.DisplayFor(modelItem => item.Nome)</td>
+                                        <td class="text-center">@Html.DisplayFor(modelItem => item.Descricao)</td>
+                                        <td class="actions">
+                                            <a data-toggle="tooltip" data-placement="top" title="Editar"
+                                               href='javascript:(crud.EditModal(@item.Id))'
+                                               class="on-default edit-row" style='color: #FF9800'>
+                                                <i class="fa fa-pencil"></i>
+                                            </a>
+                                            <a data-toggle="tooltip" data-placement="top" title="Excluir" href='javascript:(crud.DeleteModal(@item.Id))'
+                                               class="on-default remove-row" style="cursor: pointer;color: #F44336"><i class="fa fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </form>
+        </div>
     </div>
-</div>
-<!-- Modal -->
-<div class="modal fade" id="mdExcluir" tabindex="-1" role="dialog" aria-labelledby="mdExcluirLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="mdExcluirLabel">
-                    <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Exclusão de Tipo Laudo</strong>
-                </h5>
+    <!-- Modal -->
+    <div class="modal fade" id="mdDeleteTiposLaudo" tabindex="-1" role="dialog" aria-labelledby="mdDeleteTiposLaudoLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mdDeleteTiposLaudoLabel">
+                        <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Exclusão de TiposLaudo</strong>
+                    </h5>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-icon">
+                        <i class="fa fa-question-circle"></i>
+                    </div>
+                    <div class="modal-text">
+                        <input type="hidden" id="deleteTiposLaudoId" />
+                        <p class="mb-0">Tem certeza que deseja <b>excluir</b> esse registro?</p>
+                    </div>
+                    <div class="modal-wrapper">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-thumbs-o-down"></i> &nbsp;&nbsp;Não</button>
+                    <a id="deleteTiposLaudoHref" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</a>
+                </div>
             </div>
-            <div class="modal-body">
-                <div class="modal-icon">
-                    <i class="fa fa-question-circle"></i>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="mdEditTiposLaudo" tabindex="-1" role="dialog" aria-labelledby="mdEditTiposLaudoLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mdEditTiposLaudoLabel">
+                        <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Alterar Tipos Laudo</strong>
+                    </h5>
                 </div>
-                <div class="modal-text">
-                    <p class="mb-0">Tem certeza que deseja <b>excluir</b> esse registro?</p>
-                </div>
-                <div class="modal-wrapper">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-thumbs-o-down"></i> &nbsp;&nbsp;Não</button>
-                <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</button>
+                @using (@Html.BeginForm("Edit", "TiposLaudo", FormMethod.Post, new { id = "formEditTiposLaudo", @class = "form-horizontal" }))
+                {
+                    <input type="hidden" name="editTiposLaudoId" :value="editDto.Id" />
+
+                    <div class="modal-body">
+                        <div class="form-group row">
+                            <label class="col-sm-4 control-label text-sm-right pt-2">TiposLaudo <span class="required">*</span></label>
+                            <div class="col-sm-8">
+                                <input type="text" name="nome" class="form-control"
+                                       maxlength="80" :value="editDto.Nome"
+                                       title="Por favor informe o nome do tipo de laudo." required />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-4 control-label text-sm-right pt-2">Descrição <span class="required">*</span></label>
+                            <div class="col-sm-8">
+                                <input type="text" name="descricao" class="form-control"
+                                       maxlength="80" :value="editDto.Nome"
+                                       title="Por favor informe a descrição." required />
+                            </div>
+                        </div>
+                        @* <div class="form-group row">
+                            <label class="col-sm-3 control-label text-sm-right pt-2">Status</label>
+                            <div class="col-md-3">
+                                <div class="switch switch-sm switch-primary">
+                                    <input type="checkbox" id="editStatus" name="editStatus" data-plugin-ios-switch checked="checked" />
+                                </div>
+                            </div>
+                        </div> *@
+                    </div>
+                    <div class="modal-footer">
+                        <button type="reset" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
+                        <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
+                    </div>
+                }
             </div>
         </div>
     </div>
 </div>
-<!-- Modal -->
-<div class="modal fade" id="mdEdite" tabindex="-1" role="dialog" aria-labelledby="mdEditeLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="mdEditarLabel">
-                    <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Alterar de Tipo Laudo</strong>
-                </h5>
-            </div>
-            <div class="modal-body">
-                <div class="modal-icon">
-                    <i class="fa fa-question-circle"></i>
-                </div>
-                <div class="modal-text">
-                    <p class="mb-0">Tem certeza que deseja <b>alterar</b> esse registro?</p>
-                </div>
-                <div class="modal-wrapper">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-thumbs-o-down"></i> &nbsp;&nbsp;Não</button>
-                <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</button>
-            </div>
-        </div>
-    </div>
-</div>
+
+
 @section CssSpecificVendor {
     <link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />
 }
@@ -109,6 +140,8 @@
     <script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
     <script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
     <script src="~/js/formatTable.js"></script>
+    <script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
+    <script src="~/js/tipo-laudo.js"></script>
 
     <script>
 
@@ -138,6 +171,31 @@
                     icon: 'fa fa-trash-o'
                 });
             }
+
+            
+            var notify = @ViewBag.NotifyMessage;
+            var messagem = '@ViewBag.Notify';
+
+            if (notify === 0) {
+                new PNotify({
+                    title: 'Tipos de Laudo',
+                    text: messagem,
+                    type: 'success'
+                });
+            } else if (notify === 1) {
+                new PNotify({
+                    title: 'Tipos de Laudo',
+                    text: messagem,
+                    type: 'warning'
+                });
+            } else if (notify === 2) {
+                new PNotify({
+                    title: 'Tipos de Laudo',
+                    text: messagem,
+                    type: 'error'
+                });
+            }
+
             if ($.isFunction($.fn['tooltip'])) {
                 $('[data-toggle=tooltip],[rel=tooltip]').tooltip({ container: 'body' });
             }

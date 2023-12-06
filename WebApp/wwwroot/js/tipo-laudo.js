@@ -1,31 +1,54 @@
 var vm = new Vue({
     el: "#formTipoLaudo",
     data: {
-        loading: false
+        loading: false,
+        editDto: { Id: "", Nome: "", Descricao:"" }
     },
     mounted: function () {
         var self = this;
         (function ($) {
             'use strict';
+            var formid = $('form').attr('id');
 
-            $("#formTipoLaudo").validate({
-                highlight: function (label) {
-                    $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
-                },
-                success: function (label) {
-                    $(label).closest('.form-group').removeClass('has-error');
-                    label.remove();
-                },
-                errorPlacement: function (error, element) {
-                    var placement = element.closest('.input-group');
-                    if (!placement.get(0)) {
-                        placement = element;
+            if (formid === "formTipoLaudo") {
+                $("#formTipoLaudo").validate({
+                    highlight: function (label) {
+                        $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
+                    },
+                    success: function (label) {
+                        $(label).closest('.form-group').removeClass('has-error');
+                        label.remove();
+                    },
+                    errorPlacement: function (error, element) {
+                        var placement = element.closest('.input-group');
+                        if (!placement.get(0)) {
+                            placement = element;
+                        }
+                        if (error.text() !== '') {
+                            placement.after(error);
+                        }
                     }
-                    if (error.text() !== '') {
-                        placement.after(error);
+                });
+            } else if (formid === "formTipoLaudo") {
+                $("#formEditTipoLaudo").validate({
+                    highlight: function (label) {
+                        $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
+                    },
+                    success: function (label) {
+                        $(label).closest('.form-group').removeClass('has-error');
+                        label.remove();
+                    },
+                    errorPlacement: function (error, element) {
+                        var placement = element.closest('.input-group');
+                        if (!placement.get(0)) {
+                            placement = element;
+                        }
+                        if (error.text() !== '') {
+                            placement.after(error);
+                        }
                     }
-                }
-            });
+                });
+}
         }).apply(this, [jQuery]);
     },
     methods: {
@@ -48,17 +71,35 @@ var vm = new Vue({
                 self.loading = flag;
             }
         },
-        DeleteTipoLaudo: function (id) {
-            var url = "TipoLaudo/Delete/" + id;
-            $("#deleteTipoLaudoHref").prop("href", url);
+        DeleteTiposLaudo: function (id) {
+            var url = "TiposLaudo/Delete/" + id;
+            $("#deleteTiposLaudoHref").prop("href", url);
+        },
+        EditTiposLaudo: function (id) {
+            var self = this;
+
+            axios.get("TiposLaudo/GetTiposLaudoById/?id=" + id).then(result => {
+
+                self.editDto.Id = result.data.id;
+                self.editDto.Nome = result.data.nome;
+                self.editDto.Status = result.data.status;
+
+            }).catch(error => {
+                Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
+            });
         }
     }
 });
 
 var crud = {
     DeleteModal: function (id) {
-        $('input[name="TipoLaudoId"]').attr('value', id);
-        $('#mdDeleteTipoLaudo').modal('show');
-        vm.DeleteTipoLaudo(id)
+        $('input[name="TiposLaudoId"]').attr('value', id);
+        $('#mdDeleteTiposLaudo').modal('show');
+        vm.DeleteTiposLaudo(id)
+    },
+    EditModal: function (id) {
+        $('input[name="TiposLaudoId"]').attr('value', id);
+        $('#mdEditTiposLaudo').modal('show');
+        vm.EditTiposLaudo(id)
     }
 };
