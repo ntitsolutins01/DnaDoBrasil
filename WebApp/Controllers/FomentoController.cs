@@ -25,8 +25,15 @@ namespace WebApp.Controllers
             SetNotifyMessage(notify, message);
             SetCrudMessage(crud);
             var response = ApiClientFactory.Instance.GetFomentoAll();
+            var localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeAll(), "Id", "Nome");
+            var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
 
-            return View(new FomentoModel() { Fomento = response });
+            return View(new FomentoModel()
+            {
+                Fomentos = response,
+                ListLocalidades = localidades,
+                ListEstados = estados
+            });
         }
 
         public ActionResult Create(int? crud, int? notify, string message = null)
@@ -53,7 +60,7 @@ namespace WebApp.Controllers
                 var command = new FomentoModel.CreateUpdateFomentoCommand
                 {
                     LocalidadeId = Convert.ToInt32(collection["ddlLocalidade"].ToString()),
-                    MunicipioId = Convert.ToInt32(collection["ddlMuncipio"].ToString()),
+                    MunicipioId = Convert.ToInt32(collection["ddlMunicipio"].ToString()),
                     Nome = collection["Nome"].ToString()
                 };
 
@@ -72,9 +79,8 @@ namespace WebApp.Controllers
         {
             var command = new FomentoModel.CreateUpdateFomentoCommand
             {
-                LocalidadeId = Convert.ToInt32(collection["ddlLocalidade"].ToString()),
-                MunicipioId = Convert.ToInt32(collection["ddlMuncipio"].ToString()),
-                Nome = collection["Nome"].ToString()
+                Id = Convert.ToInt32(collection["editFomentoId"]),
+                Nome = collection["nome"].ToString()
             };
 
             await ApiClientFactory.Instance.UpdateFomento(command.Id, command);

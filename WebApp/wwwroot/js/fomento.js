@@ -1,15 +1,16 @@
 var vm = new Vue({
     el: "#formFomento",
     data: {
-        loading: false
+        loading: false,
+        editDto: { Nome: "" }
     },
     mounted: function () {
         var self = this;
         (function ($) {
             'use strict';
-            var formid = $('form').attr('id');
+            //var formid = $('form').attr('id');
 
-            if (formid === "formFomento") {
+            //if (formid === "formFomento") {
                 var $select = $(".select2").select2({
                     allowClear: true
                 });
@@ -81,7 +82,7 @@ var vm = new Vue({
                             }
                         });
                 });
-            }
+            //}
         }).apply(this, [jQuery]);
     },
     methods: {
@@ -107,6 +108,18 @@ var vm = new Vue({
         DeleteFomento: function (id) {
             var url = "Fomento/Delete/" + id;
             $("#deleteFomentoHref").prop("href", url);
+        },
+        EditFomento: function (id) {
+            var self = this;
+
+            axios.get("Fomento/GetFomentoById/?id=" + id).then(result => {
+
+                self.editDto.Id = result.data.id;
+                self.editDto.Nome = result.data.nome;
+
+            }).catch(error => {
+                Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
+            });
         }
     }
 });
@@ -116,5 +129,10 @@ var crud = {
         $('input[name="FomentoId"]').attr('value', id);
         $('#mdDeleteFomento').modal('show');
         vm.DeleteFomento(id)
+    },
+    EditModal: function (id) {
+        $('input[name="FomentoId"]').attr('value', id);
+        $('#mdEditFomento').modal('show');
+        vm.EditFomento(id)
     }
 };

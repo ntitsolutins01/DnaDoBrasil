@@ -6,5 +6,6 @@
         public string Nome { get; set; }
         public int MunicipioId { get; set; }
         public int LocalidadeId { get; set; }
+        public string Data { get; set; }
     }
 }

@@ -11,7 +11,7 @@ namespace WebApp.Models
         public SelectList ListEstados { get; set; }
         public string CidadeId { get; set; }
         public SelectList ListCidades { get; set; }
-        public List<FomentoDto> Fomento { get; set; }
+        public List<FomentoDto> Fomentos { get; set; }
 
         public class CreateUpdateFomentoCommand
         {
