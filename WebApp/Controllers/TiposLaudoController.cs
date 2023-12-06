@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
 using WebApp.Areas.Identity.Models;
 using WebApp.Configuration;
+using WebApp.Dto;
 using WebApp.Enumerators;
 using WebApp.Factory;
 using WebApp.Models;
@@ -35,22 +36,21 @@ namespace WebApp.Controllers
         {
             SetNotifyMessage(notify, message);
             SetCrudMessage(crud);
+                    
 
             return View();
         }
 
         //[ClaimsAuthorize("Usuario", "Incluir")]
-      [HttpPost]
+        [HttpPost]
         public async Task<ActionResult> Create(IFormCollection collection)
         {
             try
             {
                 var command = new TiposLaudoModel.CreateUpdateTiposLaudoCommand
                 {
-
                     Nome = collection["nome"].ToString(),
                     Descricao = collection["descricao"].ToString()
-
                 };
 
                 await ApiClientFactory.Instance.CreateTiposLaudo(command);
@@ -63,43 +63,40 @@ namespace WebApp.Controllers
             }
         }
 
-        //[ClaimsAuthorize("TiposLaudo", "Alterar")]
-        //public ActionResult Edit(string id)
-        //{
-        //    var obj = ApiClientFactory.Instance.GetTiposLaudoById(id);
-
-        //    var model = new TiposLaudoModel() { TiposLaudo = obj };
-
-        //    return View(model);
-        //}
-
         //[ClaimsAuthorize("Usuario", "Alterar")]
-        public async Task<ActionResult> Edit(string id, IFormCollection collection)
+        public async Task<ActionResult> Edit(IFormCollection collection)
         {
-                var command = new TiposLaudoModel.CreateUpdateTiposLaudoCommand
-                {
+            var command = new TiposLaudoModel.CreateUpdateTiposLaudoCommand
+            {
+                Id = Convert.ToInt32(collection["editTiposLaudoId"]),
+                Nome = collection["nome"].ToString(),
+                Descricao = collection["descricao"].ToString()
+            };
 
-                    Nome = collection["nome"].ToString(),
-                    Descricao = collection["descricao"].ToString()
-                };
+            await ApiClientFactory.Instance.UpdateTiposLaudo(command.Id, command);
 
-                //await ApiClientFactory.Instance.UpdateTiposLaudo(command);
-
-                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+            return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
         }
 
         //[ClaimsAuthorize("Usuario", "Excluir")]
-        public ActionResult Delete(string id)
+        public ActionResult Delete(int id)
         {
             try
             {
-                //ApiClientFactory.Instance.DeleteTiposLaudo(id);
+                ApiClientFactory.Instance.DeleteTiposLaudo(id);
                 return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
             }
             catch
             {
                 return RedirectToAction(nameof(Index));
             }
+        }
+
+        public async Task<TiposLaudoDto> GetTiposLaudoById(int id)
+        {
+            var result = ApiClientFactory.Instance.GetTiposLaudoById(id);
+
+            return result;
         }
     }
 }
