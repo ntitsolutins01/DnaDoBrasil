@@ -5,99 +5,96 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
 using WebApp.Areas.Identity.Models;
 using WebApp.Configuration;
+using WebApp.Dto;
 using WebApp.Enumerators;
 using WebApp.Factory;
 using WebApp.Models;
 using WebApp.Utility;
 
-namespace WebApp.Controllers
+namespace WebApp.Controllers;
+
+public class DeficienciaController : BaseController
 {
-    public class DeficienciaController : BaseController
+    private readonly IOptions<UrlSettings> _appSettings;
+
+    public DeficienciaController(IOptions<UrlSettings> appSettings)
     {
-	    private readonly IOptions<UrlSettings> _appSettings;
+        _appSettings = appSettings;
+        ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
+    }
 
-	    public DeficienciaController(IOptions<UrlSettings> appSettings)
-	    {
-		    _appSettings = appSettings;
-		    ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
-	    }
+    public IActionResult Index(int? crud, int? notify, string message = null)
+    {
+        SetNotifyMessage(notify, message);
+        SetCrudMessage(crud);
+        var response = ApiClientFactory.Instance.GetDeficienciaAll();
 
-		public IActionResult Index(int? crud, int? notify, string message = null)
+        return View(new DeficienciaModel(){Deficiencias = response});
+    }
+
+    //[ClaimsAuthorize("ConfiguracaoSistema", "Incluir")]
+    public ActionResult Create(int? crud, int? notify, string message = null)
+    {
+        SetNotifyMessage(notify, message);
+        SetCrudMessage(crud);
+
+        return View();
+    }
+
+    //[ClaimsAuthorize("Usuario", "Incluir")]
+    [HttpPost]
+    public async Task<ActionResult> Create(IFormCollection collection)
+    {
+        try
         {
-            SetNotifyMessage(notify, message);
-            SetCrudMessage(crud);
-            var response = ApiClientFactory.Instance.GetDeficienciaAll();
-
-            return View(new DeficienciaModel(){Deficiencias = response});
-        }
-
-        //[ClaimsAuthorize("ConfiguracaoSistema", "Incluir")]
-        public ActionResult Create(int? crud, int? notify, string message = null)
-        {
-            SetNotifyMessage(notify, message);
-            SetCrudMessage(crud);
-
-            return View();
-        }
-
-        //[ClaimsAuthorize("Usuario", "Incluir")]
-        [HttpPost]
-        public async Task<ActionResult> Create(IFormCollection collection)
-        {
-            try
+            var command = new DeficienciaModel.CreateUpdateDeficienciaCommand
             {
-                var command = new DeficienciaModel.CreateUpdateDeficienciaCommand
-                {
+                Nome = collection["nome"].ToString()
+            };
 
-                    Nome = collection["nome"].ToString()
-                };
+            await ApiClientFactory.Instance.CreateDeficiencia(command);
 
-                await ApiClientFactory.Instance.CreateDeficiencia(command);
-
-                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
-            }
-            catch (Exception e)
-            {
-                return RedirectToAction(nameof(Index));
-            }
+            return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
         }
-
-        //[ClaimsAuthorize("Deficiencia", "Alterar")]
-        //public ActionResult Edit(string id)
-        //{
-        //    var obj = ApiClientFactory.Instance.GetDeficienciaById(id);
-
-        //    var model = new DeficienciaModel() { Deficiencia = obj };
-
-        //    return View(model);
-        //}
-
-        //[ClaimsAuthorize("Usuario", "Alterar")]
-        public async Task<ActionResult> Edit(string id, IFormCollection collection)
+        catch (Exception e)
         {
-                var command = new DeficienciaModel.CreateUpdateDeficienciaCommand
-                {
-
-					Nome = collection["nome"].ToString()
-				};
-
-                //await ApiClientFactory.Instance.UpdateDeficiencia(command);
-
-                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+            return RedirectToAction(nameof(Index));
         }
+    }
 
-        //[ClaimsAuthorize("Usuario", "Excluir")]
-        public ActionResult Delete(int id)
+    //[ClaimsAuthorize("Usuario", "Alterar")]
+    public async Task<ActionResult> Edit(IFormCollection collection)
+    {
+        var command = new DeficienciaModel.CreateUpdateDeficienciaCommand
         {
-            try
-            {
-                ApiClientFactory.Instance.DeleteDeficiencia(id);
-                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
-            }
-            catch
-            {
-                return RedirectToAction(nameof(Index));
-            }
+            Id = Convert.ToInt32(collection["editDeficienciaId"]),
+            Nome = collection["nome"].ToString(),
+            Status = collection["editStatus"].ToString() == "" ? false : true
+        };
+
+        await ApiClientFactory.Instance.UpdateDeficiencia(command.Id, command);
+
+        return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+    }
+
+    //[ClaimsAuthorize("Usuario", "Excluir")]
+    public ActionResult Delete(int id)
+    {
+        try
+        {
+            ApiClientFactory.Instance.DeleteDeficiencia(id);
+            return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
         }
+        catch
+        {
+            return RedirectToAction(nameof(Index));
+        }
+    }
+
+    public async Task<DeficienciaDto> GetDeficienciaById(int id)
+    {
+        var result = ApiClientFactory.Instance.GetDeficienciaById(id);
+
+        return result;
     }
 }
