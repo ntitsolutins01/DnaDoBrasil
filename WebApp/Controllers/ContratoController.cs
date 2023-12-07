@@ -36,7 +36,7 @@ namespace WebApp.Controllers
 		public ActionResult Create(int? crud, int? notify, string message = null)
 		{
 			SetNotifyMessage(notify, message);
-			SetCrudMessage(crud);
+			SetCrudMessage(crud);   
 
             return View();
 		}

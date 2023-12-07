@@ -1,6 +1,9 @@
 ﻿var vm = new Vue({
     el: "#formContrato",
-    data: {},
+    data: {
+        loading: false,
+        editDto: { Id: "", Nome: "", Status: true }
+},
     mounted: function () {
         var self = this;
         (function ($) {
