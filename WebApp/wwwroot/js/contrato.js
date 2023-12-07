@@ -65,6 +65,35 @@
                 $("#" + el).addClass("loading-overlay-showing");
                 self.loading = flag;
             }
+        },
+         DeleteContrato: function (id) {
+            var url = "Contrato/Delete/" + id;
+            $("#deleteContratoHref").prop("href", url);
+        },
+        EditContrato: function (id) {
+            var self = this;
+
+            axios.get("Contrato/GetContratoById/?id=" + id).then(result => {
+
+                self.editDto.Id = result.data.id;
+                self.editDto.Nome = result.data.nome;
+                self.editDto.Status = result.data.status;
+
+            }).catch(error => {
+                Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
+            });
         }
     }
 });
+var crud = {
+    DeleteModal: function (id) {
+        $('input[name="ContratoId"]').attr('value', id);
+        $('#mdDeleteContrato').modal('show');
+        vm.DeleteContrato(id)
+    },
+    EditModal: function (id) {
+        $('input[name="ContratoId"]').attr('value', id);
+        $('#mdEditContrato').modal('show');
+        vm.EditContrato(id)
+    }
+};

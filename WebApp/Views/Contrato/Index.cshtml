@@ -23,28 +23,33 @@
 				<table class="table table-bordered table-striped mb-0" id="datatable-default">
 					<thead>
 						<tr>
-							<th>Id</th>
-							<th>Nome do Contrato</th>
-							<th>Nome do Contrato</th>
-							<th>Nome do Contrato</th>
-							<th>Nome do Contrato</th>
-							<th>Anexo</th>
-							<th>Ações</th>
+							<th class="text-center">Id</th>
+							<th class="text-center">Nome do Contrato</th>
+							<th class="text-center">Descrição</th>
+							<th class="text-center">Data Inicío</th>
+							<th class="text-center">Data fim</th>
+							<th class="text-center">Anexo</th>
+							<th class="text-center">Ações</th>
 						</tr>
 					</thead>
 					<tbody>
 						@foreach (var item in Model.Contratos)
 						{
 						<tr>
-							<td>@Html.DisplayFor(modelItem => item.Id)</td>
-							<td>@Html.DisplayFor(modelItem => item.Nome)</td>
-							<td>@Html.DisplayFor(modelItem => item.Descricao)</td>
-							<td>@Html.DisplayFor(modelItem => item.DtIni)</td>
-							<td>@Html.DisplayFor(modelItem => item.DtFim)</td>
-							<td>@Html.DisplayFor(modelItem => item.Anexo)</td>
+								<td class="text-center">@Html.DisplayFor(modelItem => item.Id)</td>
+								<td class="text-center">@Html.DisplayFor(modelItem => item.Nome)</td>
+								<td class="text-center">@Html.DisplayFor(modelItem => item.Descricao)</td>
+								<td class="text-center">@Html.DisplayFor(modelItem => item.DtIni)</td>
+								<td class="text-center">@Html.DisplayFor(modelItem => item.DtFim)</td>
+								<td class="text-center">@Html.DisplayFor(modelItem => item.Anexo)</td>
 							<td class="actions">
-								<a title="Editar" type="button" data-toggle="modal" data-target="#mdEdit" style="cursor: pointer; color: #FF9800"><i class="fa fa-pencil"></i></a>
-								<a title="Excluir" type="button" data-toggle="modal" data-target="#mdDelete" style="cursor: pointer; color: #F44336"><i class="fa fa-trash"></i></a>
+								<a data-toggle="tooltip" data-placement="top" title="Editar"
+								   href='javascript:(crud.EditModal(@item.Id))'
+								   class="on-default edit-row" style='color: #FF9800'>
+									<i class="fa fa-pencil"></i>
+								</a>
+								<a data-toggle="tooltip" data-placement="top" title="Excluir" href='javascript:(crud.DeleteModal(@item.Id))'
+								   class="on-default remove-row" style="cursor: pointer;color: #F44336"><i class="fa fa-trash"></i></a>
 							</td>
 						</tr>
 						}
@@ -55,12 +60,12 @@
 	</div>
 </div>
 <!-- Modal -->
-<div class="modal fade" id="mdDelete" tabindex="-1" role="dialog" aria-labelledby="mdDeleteLabel" aria-hidden="true">
+<div class="modal fade" id="mdDeleteContrato" tabindex="-1" role="dialog" aria-labelledby="mdDeleteContratoLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="mdDeleteLabel">
-					<i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Exclusão de contrato</strong>
+				<h5 class="modal-title" id="mdDeleteContratoLabel">
+					<i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Exclusão de Contrato</strong>
 				</h5>
 			</div>
 			<div class="modal-body">
@@ -68,6 +73,7 @@
 					<i class="fa fa-question-circle"></i>
 				</div>
 				<div class="modal-text">
+					<input type="hidden" id="deleteContratoId" />
 					<p class="mb-0">Tem certeza que deseja <b>excluir</b> esse registro?</p>
 				</div>
 				<div class="modal-wrapper">
@@ -75,24 +81,25 @@
 			</div>
 			<div class="modal-footer">
 				<button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-thumbs-o-down"></i> &nbsp;&nbsp;Não</button>
-				<button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</button>
+				<a id="deleteContratoHref" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</a>
 			</div>
 		</div>
 	</div>
 </div>
 <!-- Modal -->
-<div class="modal fade" id="mdEdit" tabindex="-1" role="dialog" aria-labelledby="mdEditLabel" aria-hidden="true">
+<div class="modal fade" id="mdEditContrato" tabindex="-1" role="dialog" aria-labelledby="mdEditContratoLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="mdEditLabel">
-					<i class="fa fa-pencil"></i> &nbsp;&nbsp;<strong>Alterar contrato</strong>
+				<h5 class="modal-title" id="mdEditContratoLabel">
+					<i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Alterar Contrato</strong>
 				</h5>
 			</div>
-			<div class="modal-body">
-				@using (@Html.BeginForm("Edit", "Contrato", FormMethod.Post,
-						new { id = "formEditContrato", @class = "form-horizontal" }))
-				{
+			@using (@Html.BeginForm("Edit", "Contrato", FormMethod.Post, new { id = "formEditContrato", @class = "form-horizontal" }))
+			{
+				<input type="hidden" name="editContratoId" :value="editDto.Id" />
+
+				<div class="modal-body">
 					<div class="form-group row">
 						<label class="col-sm-3 control-label text-sm-right pt-2"> Nome do Contrato <span class="required">*</span></label>
 						<div class="col-sm-9">
@@ -161,12 +168,12 @@
 							</div>
 						</div>
 					</div>
-					<div class="modal-footer">
-						<button type="reset" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
-						<button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
-					</div>
-				}
-			</div>
+				</div>
+				<div class="modal-footer">
+					<button type="reset" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
+					<button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
+				</div>
+			}
 		</div>
 	</div>
 </div>
