@@ -27,7 +27,7 @@ namespace WebApp.Controllers
 		{
 			SetNotifyMessage(notify, message);
 			SetCrudMessage(crud);
-			var response = ApiClientFactory.Instance.GetContratoAll();
+			var response = ApiClientFactory.Instance.GetContratosAll();
 
 			return View(new ContratoModel() { Contratos = response });
 		}

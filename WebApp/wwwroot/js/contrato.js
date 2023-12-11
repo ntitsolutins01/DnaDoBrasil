@@ -9,44 +9,47 @@
         (function ($) {
 
             'use strict';
+            var formid = $('form').attr('id');
 
-            $("#formContrato").validate({
-                highlight: function (label) {
-                    $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
-                },
-                success: function (label) {
-                    $(label).closest('.form-group').removeClass('has-error');
-                    label.remove();
-                },
-                errorPlacement: function (error, element) {
-                    var placement = element.closest('.input-group');
-                    if (!placement.get(0)) {
-                        placement = element;
+            if (formid === "formContrato") {
+                $("#formContrato").validate({
+                    highlight: function (label) {
+                        $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
+                    },
+                    success: function (label) {
+                        $(label).closest('.form-group').removeClass('has-error');
+                        label.remove();
+                    },
+                    errorPlacement: function (error, element) {
+                        var placement = element.closest('.input-group');
+                        if (!placement.get(0)) {
+                            placement = element;
+                        }
+                        if (error.text() !== '') {
+                            placement.after(error);
+                        }
                     }
-                    if (error.text() !== '') {
-                        placement.after(error);
+                });
+            } else if (formid === "formEditContrato") {
+                $("#formEditContrato").validate({
+                    highlight: function (label) {
+                        $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
+                    },
+                    success: function (label) {
+                        $(label).closest('.form-group').removeClass('has-error');
+                        label.remove();
+                    },
+                    errorPlacement: function (error, element) {
+                        var placement = element.closest('.input-group');
+                        if (!placement.get(0)) {
+                            placement = element;
+                        }
+                        if (error.text() !== '') {
+                            placement.after(error);
+                        }
                     }
-                }
-            });
-
-            $("#formEditContrato").validate({
-                highlight: function (label) {
-                    $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
-                },
-                success: function (label) {
-                    $(label).closest('.form-group').removeClass('has-error');
-                    label.remove();
-                },
-                errorPlacement: function (error, element) {
-                    var placement = element.closest('.input-group');
-                    if (!placement.get(0)) {
-                        placement = element;
-                    }
-                    if (error.text() !== '') {
-                        placement.after(error);
-                    }
-                }
-            });
+                });
+            }
         }).apply(this, [jQuery]);
     },
     methods: {
