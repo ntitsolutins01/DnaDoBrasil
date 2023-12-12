@@ -1,7 +1,8 @@
 var vm = new Vue({
     el: "#formLocalidade",
     data: {
-        loading: false
+        loading: false,
+         editDto: { Id: "", Nome: "", Descricao: "" }
     },
     mounted: function () {
         var self = this;
@@ -81,6 +82,27 @@ var vm = new Vue({
                             }
                         });
                 });
+            } else if (formid === "formEditLocalidade") {
+
+                $("#formEditLocalidade").validate({
+                    highlight: function (label) {
+                        $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
+                    },
+                    success: function (label) {
+                        $(label).closest('.form-group').removeClass('has-error');
+                        label.remove();
+                    },
+                    errorPlacement: function (error, element) {
+                        var placement = element.closest('.input-group');
+                        if (!placement.get(0)) {
+                            placement = element;
+                        }
+                        if (error.text() !== '') {
+                            placement.after(error);
+                        }
+                    }
+                });
+
             }
         }).apply(this, [jQuery]);
     },
@@ -107,6 +129,19 @@ var vm = new Vue({
         DeleteLocalidade: function (id) {
             var url = "Localidade/Delete/" + id;
             $("#deleteLocalidadeHref").prop("href", url);
+        },
+        EditLocalidade: function (id) {
+            var self = this;
+
+            axios.get("Localidade/GetLocalidadeById/?id=" + id).then(result => {
+
+                self.editDto.Id = result.data.id;
+                self.editDto.Nome = result.data.nome;
+                self.editDto.Descricao = result.data.descricao;
+
+            }).catch(error => {
+                Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
+            });
         }
     }
 });
@@ -116,5 +151,10 @@ var crud = {
         $('input[name="LocalidadeId"]').attr('value', id);
         $('#mdDeleteLocalidade').modal('show');
         vm.DeleteLocalidade(id)
+    },
+    EditModal: function (id) {
+        $('input[name="LocalidadeId"]').attr('value', id);
+        $('#mdEditLocalidade').modal('show');
+        vm.EditLocalidade(id)
     }
 };

@@ -1,17 +1,29 @@
 var vm = new Vue({
-    el: "#formTipoLaudo",
+    el: "#formDeficiencia",
     data: {
         loading: false,
-        editDto: { Id: "", Nome: "", Descricao:"" }
+        editDto: { Id: "", Nome: "", Status: true }
     },
     mounted: function () {
         var self = this;
         (function ($) {
             'use strict';
+
+            if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
+
+                $(function () {
+                    $('[data-plugin-ios-switch]').each(function () {
+                        var $this = $(this);
+
+                        $this.themePluginIOS7Switch();
+                    });
+                });
+            }
+
             var formid = $('form').attr('id');
 
-            if (formid === "formTipoLaudo") {
-                $("#formTipoLaudo").validate({
+            if (formid === "formDeficiencia") {
+                $("#formDeficiencia").validate({
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
                     },
@@ -29,8 +41,8 @@ var vm = new Vue({
                         }
                     }
                 });
-            } else if (formid === "formTipoLaudo") {
-                $("#formEditTipoLaudo").validate({
+            } else if (formid === "formEditDeficiencia") {
+                $("#formEditDeficiencia").validate({
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
                     },
@@ -48,7 +60,7 @@ var vm = new Vue({
                         }
                     }
                 });
-}
+            }
         }).apply(this, [jQuery]);
     },
     methods: {
@@ -71,14 +83,14 @@ var vm = new Vue({
                 self.loading = flag;
             }
         },
-        DeleteTiposLaudo: function (id) {
-            var url = "TiposLaudo/Delete/" + id;
-            $("#deleteTiposLaudoHref").prop("href", url);
+        DeleteDeficiencia: function (id) {
+            var url = "Deficiencia/Delete/" + id;
+            $("#deleteDeficienciaHref").prop("href", url);
         },
-        EditTiposLaudo: function (id) {
+        EditDeficiencia: function (id) {
             var self = this;
 
-            axios.get("TiposLaudo/GetTiposLaudoById/?id=" + id).then(result => {
+            axios.get("Deficiencia/GetDeficienciaById/?id=" + id).then(result => {
 
                 self.editDto.Id = result.data.id;
                 self.editDto.Nome = result.data.nome;
@@ -91,15 +103,16 @@ var vm = new Vue({
     }
 });
 
+
 var crud = {
     DeleteModal: function (id) {
-        $('input[name="TiposLaudoId"]').attr('value', id);
-        $('#mdDeleteTiposLaudo').modal('show');
-        vm.DeleteTiposLaudo(id)
+        $('input[name="DeficienciaId"]').attr('value', id);
+        $('#mdDeleteDeficiencia').modal('show');
+        vm.DeleteDeficiencia(id)
     },
     EditModal: function (id) {
-        $('input[name="TiposLaudoId"]').attr('value', id);
-        $('#mdEditTiposLaudo').modal('show');
-        vm.EditTiposLaudo(id)
+        $('input[name="DeficienciaId"]').attr('value', id);
+        $('#mdEditDeficiencia').modal('show');
+        vm.EditDeficiencia(id)
     }
 };

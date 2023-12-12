@@ -26,7 +26,7 @@ namespace WebApp.ApiClient
                 $"{ResourceAluno}"));
             return Put(requestUrl, command);
         }
-        public List<AlunoDto> GetAlunoAll()
+        public List<AlunoDto> GetAlunosAll()
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 $"{ResourceAluno}"));

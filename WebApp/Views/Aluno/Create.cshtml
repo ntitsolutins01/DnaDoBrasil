@@ -911,7 +911,7 @@
         (function ($) {
 
             'use strict';
-            var crud = 1; //@ViewBag.CrudMessage;
+            var crud = @ViewBag.CrudMessage;
 
             if (crud === 1) {
                 new PNotify({
@@ -933,7 +933,7 @@
                 });
             }
 
-            var notify = 1; //@ViewBag.NotifyMessage;
+            var notify = @ViewBag.NotifyMessage;
             var messagem = '@ViewBag.Notify';
 
             if (notify === 0) {

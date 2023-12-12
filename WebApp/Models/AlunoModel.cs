@@ -10,9 +10,13 @@ namespace WebApp.Models
     public class AlunoModel
     {
         public AlunoDto Aluno { get; set; }
-        public List<AlunoDto> Aunos { get; set; }
+        public List<AlunoDto> Alunos { get; set; }
         public string AlunoId { get; set; }
         public SelectList ListAlunos { get; set; }
+        public SelectList ListLocalidades { get; set; }
+        public SelectList ListDeficiencias { get; set; }
+        public int LocalidadeId { get; set; }
+        public int DeficienciaId { get; set; }
 
         public class CreateUpdateAlunoCommand
         {

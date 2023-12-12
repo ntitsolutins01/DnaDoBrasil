@@ -42,10 +42,10 @@ namespace WebApp.ApiClient
             return Get<List<DeficienciaDto>>(requestUrl);
         }
 
-        public DeficienciaDto GetDeficienciaById(string id)
+        public DeficienciaDto GetDeficienciaById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceDeficiencia}/{id}"));
+                $"{ResourceDeficiencia}/Deficiencia/{id}"));
             return Get<DeficienciaDto>(requestUrl);
 
             #endregion
