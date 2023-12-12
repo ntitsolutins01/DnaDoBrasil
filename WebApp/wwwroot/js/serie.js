@@ -2,7 +2,7 @@
     el: "#formSerie",
     data: {
         loading: false,
-        editDto: { Id: "", Nome: "", Status: true }
+        editDto: { Id: "", Nome: "", Status: true, IdadeIni:0, IdadeFim:0, ScoreTotal:0, Descricao:"" }
     },
     mounted: function () {
         var self = this;
