@@ -1,21 +1,36 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Options;
+using WebApp.Configuration;
 using WebApp.Enumerators;
 using WebApp.Factory;
 using WebApp.Models;
+using WebApp.Utility;
 
 namespace WebApp.Controllers
 {
 	public class AlunoController : BaseController
     {
+        private readonly IOptions<UrlSettings> _appSettings;
+
+        public AlunoController(IOptions<UrlSettings> app)
+        {
+            _appSettings = app;
+            ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
+        }
+
         public ActionResult Index(int? crud, int? notify, string message = null)
         {
             SetNotifyMessage(notify, message);
             SetCrudMessage(crud);
 
-            //var deficiencias = ApiClientFactory.Instance.GetDeficienciasAll();
+            var response = ApiClientFactory.Instance.GetAlunosAll();
+            var localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeAll(), "Id", "Nome");
+            var deficiencias = new SelectList(ApiClientFactory.Instance.GetDeficienciaAll(), "Id", "Nome");
 
-            //return View(new AlunoModel { Deficiencias = deficiencias });
-            return View();
+            return View(new AlunoModel() { Alunos = response, ListLocalidades = localidades, ListDeficiencias = deficiencias });
         }
         public IActionResult Create()
 		{
