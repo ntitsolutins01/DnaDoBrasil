@@ -32,7 +32,7 @@ namespace WebApp.ApiClient
 
         #region Methods
 
-        public SerieDto GetSerieById(string id)
+        public SerieDto GetSerieById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 $"{ResourceSerie}/{id}"));
