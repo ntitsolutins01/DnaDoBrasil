@@ -40,7 +40,7 @@ namespace WebApp.ApiClient
                 $"{ResourceContrato}/Contrato/{id}"));
             return Get<ContratoDto>(requestUrl);
         }
-        public List<ContratoDto> GetContratosAll()
+        public List<ContratoDto> GetContratoAll()
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 $"{ResourceContrato}"));

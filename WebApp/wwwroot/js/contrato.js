@@ -2,7 +2,7 @@
     el: "#formContrato",
     data: {
         loading: false,
-        editDto: { Id: "", Nome: "", Status: true }
+        editDto: { Id: "", Nome: "", DtIni: "", DtFim: "", Anexo: "" }
 },
     mounted: function () {
         var self = this;
@@ -83,7 +83,9 @@
 
                 self.editDto.Id = result.data.id;
                 self.editDto.Nome = result.data.nome;
-                self.editDto.Status = result.data.status;
+                self.editDto.DtIni = result.data.status;
+                self.editDto.DtFim = result.data.status;
+                self.editDto.Anexo = result.data.status;
 
             }).catch(error => {
                 Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
