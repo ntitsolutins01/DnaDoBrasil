@@ -16,7 +16,6 @@ namespace WebApp.ApiClient
                 $"{ResourceProfissional}"));
             return Post(requestUrl, command);
         }
-
         public Task<bool> UpdateProfissional(int id, ProfissionalModel.CreateUpdateProfissionalCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
@@ -35,10 +34,10 @@ namespace WebApp.ApiClient
 
         #region Methods
 
-        public ProfissionalDto GetProfissionalById(string id)
+        public ProfissionalDto GetProfissionalById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceProfissional}/{id}"));
+                $"{ResourceProfissional}/Profissional/{id}"));
             return Get<ProfissionalDto>(requestUrl);
         }
         public List<ProfissionalDto> GetProfissionalAll()
