@@ -2,7 +2,7 @@
     el: "#formContrato",
     data: {
         loading: false,
-        editDto: { Id: "", Nome: "", DtIni: "", DtFim: "", Anexo: "" }
+        editDto: { Id: "", Nome: "", DtIni: "", DtFim: "", Anexo: "", Descricao: "", Status: true }
 },
     mounted: function () {
         var self = this;
@@ -83,9 +83,11 @@
 
                 self.editDto.Id = result.data.id;
                 self.editDto.Nome = result.data.nome;
-                self.editDto.DtIni = result.data.status;
-                self.editDto.DtFim = result.data.status;
-                self.editDto.Anexo = result.data.status;
+                self.editDto.Descricao = result.data.descricao;
+                self.editDto.DtIni = result.data.dtIni;
+                self.editDto.DtFim = result.data.dtFim;
+                self.editDto.Anexo = result.data.anexo;
+                self.editDto.Status = result.data.status;
 
             }).catch(error => {
                 Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
