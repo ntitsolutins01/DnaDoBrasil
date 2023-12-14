@@ -8,6 +8,16 @@ var vm = new Vue({
         var self = this;
         (function ($) {
             'use strict';
+            if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
+
+                $(function () {
+                    $('[data-plugin-ios-switch]').each(function () {
+                        var $this = $(this);
+
+                        $this.themePluginIOS7Switch();
+                    });
+                });
+            }
             var formid = $('form').attr('id');
 
             if (formid === "formLocalidade") {

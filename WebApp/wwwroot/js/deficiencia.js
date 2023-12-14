@@ -41,7 +41,9 @@ var vm = new Vue({
                         }
                     }
                 });
-            } else if (formid === "formEditDeficiencia") {
+            }
+
+            if (formid === "formEditDeficiencia") {
                 $("#formEditDeficiencia").validate({
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
