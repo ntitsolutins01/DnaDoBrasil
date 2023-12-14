@@ -76,6 +76,7 @@ namespace WebApp.Controllers
 				Descricao = collection["descricao"].ToString(),
 				DtIni = Convert.ToDateTime(collection["dtini"].ToString()),
 				DtFim = Convert.ToDateTime(collection["dtfim"].ToString()),
+				Status = collection["editStatus"].ToString() == "" ? false : true,
 				Anexo = collection["anexo"].ToString()
 			};
 

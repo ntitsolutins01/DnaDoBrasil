@@ -82,7 +82,7 @@ var vm = new Vue({
                             }
                         });
                 });
-            } else if (formid === "formEditLocalidade") {
+            }  if (formid === "formEditLocalidade") {
 
                 $("#formEditLocalidade").validate({
                     highlight: function (label) {

@@ -30,7 +30,9 @@
                         }
                     }
                 });
-            } else if (formid === "formEditContrato") {
+            }
+
+            if (formid === "formEditContrato") {
                 $("#formEditContrato").validate({
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');

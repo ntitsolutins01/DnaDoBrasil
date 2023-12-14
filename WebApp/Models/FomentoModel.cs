@@ -17,7 +17,8 @@ namespace WebApp.Models
         {
             public int Id { get; set; }
             public string Nome { get; set; }
-            public int MunicipioId { get; set; }
+            public bool Status { get; set; }
+			public int MunicipioId { get; set; }
             public int LocalidadeId { get; set; }
         }
     }
