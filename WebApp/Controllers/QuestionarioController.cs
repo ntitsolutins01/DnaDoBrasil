@@ -1,0 +1,105 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using WebApp.Configuration;
+using WebApp.Dto;
+using WebApp.Enumerators;
+using WebApp.Factory;
+using WebApp.Models;
+using WebApp.Utility;
+
+namespace WebApp.Controllers
+{
+	public class QuestionarioController : BaseController
+	{
+		private readonly IOptions<UrlSettings> _appSettings;
+
+		public QuestionarioController(IOptions<UrlSettings> appSettings)
+		{
+			_appSettings = appSettings;
+			ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
+		}
+
+		public IActionResult Index(int? crud, int? notify, string message = null)
+		{
+			SetNotifyMessage(notify, message);
+			SetCrudMessage(crud);
+			var response = ApiClientFactory.Instance.GetQuestionarioAll();
+
+			return View(new QuestionarioModel() { Questionarios = response });
+		}
+
+		//[ClaimsAuthorize("ConfiguracaoSistema", "Incluir")]
+		public ActionResult Create(int? crud, int? notify, string message = null)
+		{
+			SetNotifyMessage(notify, message);
+			SetCrudMessage(crud);
+
+			return View();
+		}
+
+		//[ClaimsAuthorize("Usuario", "Incluir")]
+		[HttpPost]
+		public async Task<ActionResult> Create(IFormCollection collection)
+		{
+			try
+			{
+				var command = new QuestionarioModel.CreateUpdateQuestionarioCommand
+				{
+					Nome = collection["nome"].ToString(),
+					Descricao = collection["descricao"].ToString(),
+					IdadeInicial = Convert.ToInt32(collection["idadeIni"].ToString()),
+					IdadeFinal = Convert.ToInt32(collection["idadeFim"].ToString()),
+					ScoreTotal = Convert.ToInt32(collection["scoreTotal"].ToString())
+				};
+
+				await ApiClientFactory.Instance.CreateQuestionario(command);
+
+				return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
+			}
+			catch (Exception e)
+			{
+				return RedirectToAction(nameof(Index));
+			}
+		}
+
+		//[ClaimsAuthorize("Usuario", "Alterar")]
+		public async Task<ActionResult> Edit(IFormCollection collection)
+		{
+			var command = new QuestionarioModel.CreateUpdateQuestionarioCommand
+			{
+				Id = Convert.ToInt32(collection["editQuestionarioId"]),
+				Nome = collection["nome"].ToString(),
+				Status = collection["editStatus"].ToString() == "" ? false : true,
+				Descricao = collection["descricao"].ToString(),
+				IdadeInicial = Convert.ToInt32(collection["idadeIni"].ToString()),
+				IdadeFinal = Convert.ToInt32(collection["idadeFim"].ToString()),
+				ScoreTotal = Convert.ToInt32(collection["scoreTotal"].ToString())
+			};
+
+			await ApiClientFactory.Instance.UpdateQuestionario(command.Id, command);
+
+			return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+		}
+
+		//[ClaimsAuthorize("Usuario", "Excluir")]
+		public ActionResult Delete(int id)
+		{
+			try
+			{
+				ApiClientFactory.Instance.DeleteQuestionario(id);
+				return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
+			}
+			catch
+			{
+				return RedirectToAction(nameof(Index));
+			}
+		}
+
+		public async Task<QuestionarioDto> GetQuestionarioById(int id)
+		{
+			var result = ApiClientFactory.Instance.GetQuestionarioById(id);
+
+			return result;
+		}
+	}
+}
