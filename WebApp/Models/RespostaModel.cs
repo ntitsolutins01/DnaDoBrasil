@@ -8,16 +8,17 @@ namespace WebApp.Models
 	{
 		public RespostaDto Resposta { get; set; }
 		public List<RespostaDto> Respostas { get; set; }
-		public string RespostaId { get; set; }
-		public SelectList ListRespostas { get; set; }
-		public SelectList ListQuestionarios { get; set; }
-        public QuestionarioDto Questionario { get; set; }
+        public string QuestionarioId { get; set; }
+        public SelectList ListQuestionarios { get; set; }
+        public List<QuestionarioDto> Questionarios { get; set; }
+        public int TipoLaudoId { get; set; }
+        public SelectList ListTiposLaudos { get; set; }
 
         public class CreateUpdateRespostaCommand
 		{
 			public int Id { get; set; }
 			public string RespostaQuestionario { get; set; }
-            public QuestionarioDto Questionario { get; set; }
+            public int QuestionarioId { get; set; }
         }
 	}
 
