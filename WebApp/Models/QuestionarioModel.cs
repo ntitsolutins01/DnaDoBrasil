@@ -13,14 +13,10 @@ namespace WebApp.Models
 
 		public class CreateUpdateQuestionarioCommand
 		{
-			public int Id { get; set; }
-			public string Nome { get; set; }
-			public bool Status { get; set; } = true;
-			public string Descricao { get; set; }
-			public int IdadeInicial { get; set; }
-			public int IdadeFinal { get; set; }
-			public int ScoreTotal { get; set; }
-		}
+            public int Id { get; set; }
+            public required string Pergunta { get; set; }
+            public required string TiposLaudo { get; set; }
+        }
 	}
 
 }

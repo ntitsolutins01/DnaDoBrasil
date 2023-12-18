@@ -45,11 +45,9 @@ namespace WebApp.Controllers
 			{
 				var command = new QuestionarioModel.CreateUpdateQuestionarioCommand
 				{
-					Nome = collection["nome"].ToString(),
-					Descricao = collection["descricao"].ToString(),
-					IdadeInicial = Convert.ToInt32(collection["idadeIni"].ToString()),
-					IdadeFinal = Convert.ToInt32(collection["idadeFim"].ToString()),
-					ScoreTotal = Convert.ToInt32(collection["scoreTotal"].ToString())
+                    Pergunta = collection["pergunta"].ToString(),
+                    TiposLaudo = collection["tiposlaudo"].ToString(),
+					
 				};
 
 				await ApiClientFactory.Instance.CreateQuestionario(command);
@@ -68,13 +66,9 @@ namespace WebApp.Controllers
 			var command = new QuestionarioModel.CreateUpdateQuestionarioCommand
 			{
 				Id = Convert.ToInt32(collection["editQuestionarioId"]),
-				Nome = collection["nome"].ToString(),
-				Status = collection["editStatus"].ToString() == "" ? false : true,
-				Descricao = collection["descricao"].ToString(),
-				IdadeInicial = Convert.ToInt32(collection["idadeIni"].ToString()),
-				IdadeFinal = Convert.ToInt32(collection["idadeFim"].ToString()),
-				ScoreTotal = Convert.ToInt32(collection["scoreTotal"].ToString())
-			};
+                Pergunta = collection["pergunta"].ToString(),
+                TiposLaudo = collection["tiposlaudo"].ToString(),
+            };
 
 			await ApiClientFactory.Instance.UpdateQuestionario(command.Id, command);
 

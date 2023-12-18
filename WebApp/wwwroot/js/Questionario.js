@@ -2,7 +2,7 @@
     el: "#formQuestionario",
     data: {
         loading: false,
-        editDto: { Id: "", Nome: "", Status: true, IdadeInicial:"", IdadeFinal:"", ScoreTotal:"", Descricao:"" }
+        editDto: { Id: "",TipoLaudo: "", Pergunta: "" }
     },
     mounted: function () {
         var self = this;
@@ -98,13 +98,9 @@
             axios.get("Questionario/GetQuestionarioById/?id=" + id).then(result => {
 
                 self.editDto.Id = result.data.id;
-                self.editDto.Nome = result.data.nome;
-                self.editDto.Descricao = result.data.descricao;
-                self.editDto.IdadeInicial = result.data.idadeInicial;
-                self.editDto.IdadeFinal = result.data.idadeFinal;
-                self.editDto.ScoreTotal = result.data.scoreTotal;
-                self.editDto.Status = result.data.status;
-
+                self.editDto.TipoLaudo = result.data.tipoLaudo.nome;
+                self.editDto.Pergunta = result.data.pergunta;
+               
             }).catch(error => {
                 Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
             });
