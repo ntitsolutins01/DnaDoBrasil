@@ -9,6 +9,17 @@ var vm = new Vue({
         (function ($) {
             'use strict';
 
+            if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
+
+                $(function () {
+                    $('[data-plugin-ios-switch]').each(function () {
+                        var $this = $(this);
+
+                        $this.themePluginIOS7Switch();
+                    });
+                });
+            }
+
             var formid = $('form').attr('id');
 
             if (formid === "formEditTiposLaudo") {
@@ -87,6 +98,7 @@ var vm = new Vue({
 
                 self.editDto.Id = result.data.id;
                 self.editDto.Nome = result.data.nome;
+                self.editDto.Descricao = result.data.descricao;
                 self.editDto.Status = result.data.status;
 
             }).catch(error => {
