@@ -2,23 +2,12 @@
     el: "#formResposta",
     data: {
         loading: false,
-        editDto: { Id: "",TipoLaudo: "", Pergunta: "" }
+        editDto: { Id: "",Questionario: "", Resposta: "" }
     },
     mounted: function () {
         var self = this;
         (function ($) {
             'use strict';
-
-            if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
-
-                $(function () {
-                    $('[data-plugin-ios-switch]').each(function () {
-                        var $this = $(this);
-
-                        $this.themePluginIOS7Switch();
-                    });
-                });
-            }
 
             var formid = $('form').attr('id');
 
@@ -46,6 +35,27 @@
 
             if (formid === "formResposta") {
 
+
+                $(".select2").each(function () {
+                    var $this = $(this),
+                        opts = {};
+
+                    var pluginOptions = $this.data('plugin-options');
+                    if (pluginOptions)
+                        opts = pluginOptions;
+
+                    $this.themePluginSelect2(opts);
+                });
+
+                /*
+                 * When you change the value the select via select2, it triggers
+                 * a 'change' event, but the jquery validation plugin
+                 * only re-validates on 'blur'*/
+
+                $select.on('change', function () {
+                    $(this).trigger('blur');
+                });
+
                 $("#formResposta").validate({
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
@@ -66,6 +76,34 @@
                 });
             }
 
+            $("#ddlTipoLaudo").change(function () {
+                var id = $("#ddlTipoLaudo").val();
+
+                var url = "Questionario/GetQuestionarioByTipoLaudo?id=" + id;
+
+                var ddlSource = "#ddlQuestionario";
+
+                $.getJSON(url,
+                    { id: $(ddlSource).val() },
+                    function (data) {
+                        if (data.length > 0) {
+                            var items = '<option value="">Selecionar Questionário</option>';
+                            $("#ddlMunicipio").empty;
+                            $.each(data,
+                                function (i, row) {
+                                    items += "<option value='" + row.value + "'>" + row.text + "</option>";
+                                });
+                            $("#ddlQuestionario").html(items);
+                        }
+                        else {
+                            new PNotify({
+                                title: 'Questionário',
+                                text: data,
+                                type: 'warning'
+                            });
+                        }
+                    });
+            });
         }).apply(this, [jQuery]);
     },
     methods: {
@@ -98,8 +136,8 @@
             axios.get("Resposta/GetRespostaById/?id=" + id).then(result => {
 
                 self.editDto.Id = result.data.id;
-                self.editDto.TipoLaudo = result.data.tipoLaudo.nome;
-                self.editDto.Pergunta = result.data.pergunta;
+                self.editDto.Questionario = result.data.questionario.nome;
+                self.editDto.Resposta = result.data.RespostaQuestionario;
                
             }).catch(error => {
                 Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
