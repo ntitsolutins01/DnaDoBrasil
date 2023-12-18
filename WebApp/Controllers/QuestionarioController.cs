@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
 using WebApp.Configuration;
 using WebApp.Dto;
@@ -24,8 +25,12 @@ namespace WebApp.Controllers
 			SetNotifyMessage(notify, message);
 			SetCrudMessage(crud);
 			var response = ApiClientFactory.Instance.GetQuestionarioAll();
+			var model = new QuestionarioModel()
+			{
+				Questionarios = response
+			};
 
-			return View(new QuestionarioModel() { Questionarios = response });
+			return View(model);
 		}
 
 		//[ClaimsAuthorize("ConfiguracaoSistema", "Incluir")]
@@ -34,7 +39,12 @@ namespace WebApp.Controllers
 			SetNotifyMessage(notify, message);
 			SetCrudMessage(crud);
 
-			return View();
+			var tiposlaudos = new SelectList(ApiClientFactory.Instance.GetTiposLaudoAll(), "Id", "Nome");
+			var model = new QuestionarioModel()
+			{
+				ListTiposLaudos = tiposlaudos
+			};
+			return View(model);
 		}
 
 		//[ClaimsAuthorize("Usuario", "Incluir")]
@@ -46,7 +56,7 @@ namespace WebApp.Controllers
 				var command = new QuestionarioModel.CreateUpdateQuestionarioCommand
 				{
                     Pergunta = collection["pergunta"].ToString(),
-                    TiposLaudo = collection["tiposlaudo"].ToString(),
+                    TiposLaudo = Convert.ToInt32(collection["tiposlaudo"].ToString()),
 					
 				};
 
@@ -67,7 +77,6 @@ namespace WebApp.Controllers
 			{
 				Id = Convert.ToInt32(collection["editQuestionarioId"]),
                 Pergunta = collection["pergunta"].ToString(),
-                TiposLaudo = collection["tiposlaudo"].ToString(),
             };
 
 			await ApiClientFactory.Instance.UpdateQuestionario(command.Id, command);

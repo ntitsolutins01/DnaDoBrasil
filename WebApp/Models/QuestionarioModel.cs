@@ -10,12 +10,14 @@ namespace WebApp.Models
 		public List<QuestionarioDto> Questionarios { get; set; }
 		public string QuestionarioId { get; set; }
 		public SelectList ListQuestionarios { get; set; }
+		public SelectList ListTiposLaudos { get; set; }
+		public int TipoLaudoId { get; set; }
 
 		public class CreateUpdateQuestionarioCommand
 		{
             public int Id { get; set; }
-            public required string Pergunta { get; set; }
-            public required string TiposLaudo { get; set; }
+            public string Pergunta { get; set; }
+            public int TiposLaudo { get; set; }
         }
 	}
 
