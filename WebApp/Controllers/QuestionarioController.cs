@@ -1,9 +1,5 @@
-﻿using Infraero.Relprev.CrossCutting.Enumerators;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using WebApp.Areas.Identity.Models;
 using WebApp.Configuration;
 using WebApp.Dto;
 using WebApp.Enumerators;
@@ -13,11 +9,11 @@ using WebApp.Utility;
 
 namespace WebApp.Controllers
 {
-    public class ContratoController : BaseController
+	public class QuestionarioController : BaseController
 	{
 		private readonly IOptions<UrlSettings> _appSettings;
 
-		public ContratoController(IOptions<UrlSettings> appSettings)
+		public QuestionarioController(IOptions<UrlSettings> appSettings)
 		{
 			_appSettings = appSettings;
 			ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
@@ -27,9 +23,9 @@ namespace WebApp.Controllers
 		{
 			SetNotifyMessage(notify, message);
 			SetCrudMessage(crud);
-			var response = ApiClientFactory.Instance.GetContratoAll();
+			var response = ApiClientFactory.Instance.GetQuestionarioAll();
 
-			return View(new ContratoModel() { Contratos = response });
+			return View(new QuestionarioModel() { Questionarios = response });
 		}
 
 		//[ClaimsAuthorize("ConfiguracaoSistema", "Incluir")]
@@ -47,16 +43,14 @@ namespace WebApp.Controllers
 		{
 			try
 			{
-				var command = new ContratoModel.CreateUpdateContratoCommand
+				var command = new QuestionarioModel.CreateUpdateQuestionarioCommand
 				{
-					Nome = collection["nome"].ToString().ToUpper(),
-					Descricao = collection["descricao"].ToString(),
-					DtIni = Convert.ToDateTime(collection["dtini"].ToString()),
-					DtFim = Convert.ToDateTime(collection["dtfim"].ToString()),
-					Anexo = collection["anexo"].ToString()
+                    Pergunta = collection["pergunta"].ToString(),
+                    TiposLaudo = collection["tiposlaudo"].ToString(),
+					
 				};
 
-				await ApiClientFactory.Instance.CreateContrato(command);
+				await ApiClientFactory.Instance.CreateQuestionario(command);
 
 				return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
 			}
@@ -69,18 +63,14 @@ namespace WebApp.Controllers
 		//[ClaimsAuthorize("Usuario", "Alterar")]
 		public async Task<ActionResult> Edit(IFormCollection collection)
 		{
-			var command = new ContratoModel.CreateUpdateContratoCommand
+			var command = new QuestionarioModel.CreateUpdateQuestionarioCommand
 			{
-				Id = Convert.ToInt32(collection["editContratoId"]),
-				Nome = collection["nome"].ToString().ToUpper(),
-				Descricao = collection["descricao"].ToString(),
-				DtIni = Convert.ToDateTime(collection["dtini"].ToString()),
-				DtFim = Convert.ToDateTime(collection["dtfim"].ToString()),
-				Status = collection["editStatus"].ToString() == "" ? false : true,
-				Anexo = collection["anexo"].ToString()
-			};
+				Id = Convert.ToInt32(collection["editQuestionarioId"]),
+                Pergunta = collection["pergunta"].ToString(),
+                TiposLaudo = collection["tiposlaudo"].ToString(),
+            };
 
-			await ApiClientFactory.Instance.UpdateContrato(command.Id, command);
+			await ApiClientFactory.Instance.UpdateQuestionario(command.Id, command);
 
 			return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
 		}
@@ -90,7 +80,7 @@ namespace WebApp.Controllers
 		{
 			try
 			{
-				ApiClientFactory.Instance.DeleteContrato(id);
+				ApiClientFactory.Instance.DeleteQuestionario(id);
 				return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
 			}
 			catch
@@ -99,12 +89,11 @@ namespace WebApp.Controllers
 			}
 		}
 
-		public async Task<ContratoDto> GetContratoById(int id)
+		public async Task<QuestionarioDto> GetQuestionarioById(int id)
 		{
-			var result = ApiClientFactory.Instance.GetContratoById(id);
+			var result = ApiClientFactory.Instance.GetQuestionarioById(id);
 
 			return result;
 		}
 	}
 }
-

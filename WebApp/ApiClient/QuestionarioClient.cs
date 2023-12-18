@@ -5,26 +5,26 @@ namespace WebApp.ApiClient
 {
     public partial class DnaApiClient
     {
-        private const string ResourceSerie = "Series";
+        private const string ResourceQuestionario = "Questionarios";
         #region Main Methods
 
-        public Task<long> CreateSerie(SerieModel.CreateUpdateSerieCommand command)
+        public Task<long> CreateQuestionario(QuestionarioModel.CreateUpdateQuestionarioCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceSerie}"));
+                $"{ResourceQuestionario}"));
             return Post(requestUrl, command);
         }
-        public Task<bool> UpdateSerie(int id, SerieModel.CreateUpdateSerieCommand command)
+        public Task<bool> UpdateQuestionario(int id, QuestionarioModel.CreateUpdateQuestionarioCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceSerie}/{id}"));
+                $"{ResourceQuestionario}/{id}"));
             return Put(requestUrl, command);
         }
 
-        public Task<bool> DeleteSerie(int id)
+        public Task<bool> DeleteQuestionario(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceSerie}/{id}"));
+                $"{ResourceQuestionario}/{id}"));
             return Delete<bool>(requestUrl);
         }
 
@@ -32,17 +32,17 @@ namespace WebApp.ApiClient
 
         #region Methods
 
-        public SerieDto GetSerieById(int id)
+        public QuestionarioDto GetQuestionarioById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceSerie}/Serie/{id}"));
-            return Get<SerieDto>(requestUrl);
+                $"{ResourceQuestionario}/Questionario/{id}"));
+            return Get<QuestionarioDto>(requestUrl);
         }
-        public List<SerieDto> GetSerieAll()
+        public List<QuestionarioDto> GetQuestionarioAll()
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceSerie}"));
-            return Get<List<SerieDto>>(requestUrl);
+                $"{ResourceQuestionario}"));
+            return Get<List<QuestionarioDto>>(requestUrl);
         }
 
         #endregion

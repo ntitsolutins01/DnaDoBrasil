@@ -2,15 +2,50 @@ var vm = new Vue({
     el: "#formTipoLaudo",
     data: {
         loading: false,
-        editDto: { Id: "", Nome: "", Descricao:"" }
+        editDto: { Id: "", Nome: "", Descricao: "" }
     },
     mounted: function () {
         var self = this;
         (function ($) {
             'use strict';
+
+            if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
+
+                $(function () {
+                    $('[data-plugin-ios-switch]').each(function () {
+                        var $this = $(this);
+
+                        $this.themePluginIOS7Switch();
+                    });
+                });
+            }
+
             var formid = $('form').attr('id');
 
+            if (formid === "formEditTiposLaudo") {
+
+                $("#formEditTiposLaudo").validate({
+                    highlight: function (label) {
+                        $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
+                    },
+                    success: function (label) {
+                        $(label).closest('.form-group').removeClass('has-error');
+                        label.remove();
+                    },
+                    errorPlacement: function (error, element) {
+                        var placement = element.closest('.input-group');
+                        if (!placement.get(0)) {
+                            placement = element;
+                        }
+                        if (error.text() !== '') {
+                            placement.after(error);
+                        }
+                    }
+                });
+            }
+
             if (formid === "formTipoLaudo") {
+
                 $("#formTipoLaudo").validate({
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
@@ -29,26 +64,7 @@ var vm = new Vue({
                         }
                     }
                 });
-            } else if (formid === "formTipoLaudo") {
-                $("#formEditTipoLaudo").validate({
-                    highlight: function (label) {
-                        $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
-                    },
-                    success: function (label) {
-                        $(label).closest('.form-group').removeClass('has-error');
-                        label.remove();
-                    },
-                    errorPlacement: function (error, element) {
-                        var placement = element.closest('.input-group');
-                        if (!placement.get(0)) {
-                            placement = element;
-                        }
-                        if (error.text() !== '') {
-                            placement.after(error);
-                        }
-                    }
-                });
-}
+            }
         }).apply(this, [jQuery]);
     },
     methods: {
@@ -82,6 +98,7 @@ var vm = new Vue({
 
                 self.editDto.Id = result.data.id;
                 self.editDto.Nome = result.data.nome;
+                self.editDto.Descricao = result.data.descricao;
                 self.editDto.Status = result.data.status;
 
             }).catch(error => {

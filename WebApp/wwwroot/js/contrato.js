@@ -2,7 +2,7 @@
     el: "#formContrato",
     data: {
         loading: false,
-        editDto: { Id: "", Nome: "", Status: true }
+        editDto: { Id: "", Nome: "", DtIni: "", DtFim: "", Anexo: "", Descricao: "", Status: true }
 },
     mounted: function () {
         var self = this;
@@ -30,7 +30,9 @@
                         }
                     }
                 });
-            } else if (formid === "formEditContrato") {
+            }
+
+            if (formid === "formEditContrato") {
                 $("#formEditContrato").validate({
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
@@ -83,6 +85,10 @@
 
                 self.editDto.Id = result.data.id;
                 self.editDto.Nome = result.data.nome;
+                self.editDto.Descricao = result.data.descricao;
+                self.editDto.DtIni = result.data.dtIni;
+                self.editDto.DtFim = result.data.dtFim;
+                self.editDto.Anexo = result.data.anexo;
                 self.editDto.Status = result.data.status;
 
             }).catch(error => {

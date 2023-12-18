@@ -18,6 +18,7 @@ namespace WebApp.Models
             public required DateTime DtIni { get; set; }
             public required DateTime DtFim { get; set; }
             public string? Anexo { get; set; }
+            public bool Status { get; set; }
         }
     }
 

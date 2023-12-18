@@ -1,8 +1,8 @@
 ﻿var vm = new Vue({
-    el: "#formProfissional",
+    el: "#formQuestionario",
     data: {
         loading: false,
-        editDto: { Id: "", Nome: "", DtNascimento: "", Email: "", AspNetUserId: "", Sexo: "", Cpf: "", Telefone: "", Celular: "", Endereco: "", Numero: "", Cep: "", Bairro: "",  Municipio: "", Ambientes: "", Contratos: "", Status: true  }
+        editDto: { Id: "",TipoLaudo: "", Pergunta: "" }
     },
     mounted: function () {
         var self = this;
@@ -22,9 +22,9 @@
 
             var formid = $('form').attr('id');
 
-            if (formid === "formEditProfissional") {
+            if (formid === "formEditQuestionario") {
 
-                $("#formEditProfissional").validate({
+                $("#formEditQuestionario").validate({
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
                     },
@@ -43,6 +43,29 @@
                     }
                 });
             }
+
+            if (formid === "formQuestionario") {
+
+                $("#formQuestionario").validate({
+                    highlight: function (label) {
+                        $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
+                    },
+                    success: function (label) {
+                        $(label).closest('.form-group').removeClass('has-error');
+                        label.remove();
+                    },
+                    errorPlacement: function (error, element) {
+                        var placement = element.closest('.input-group');
+                        if (!placement.get(0)) {
+                            placement = element;
+                        }
+                        if (error.text() !== '') {
+                            placement.after(error);
+                        }
+                    }
+                });
+            }
+
         }).apply(this, [jQuery]);
     },
     methods: {
@@ -65,33 +88,19 @@
                 self.loading = flag;
             }
         },
-        DeleteProfissional: function (id) {
-            var url = "Profissional/Delete/" + id;
-            $("#deleteProfissionalHref").prop("href", url);
+        DeleteQuestionario: function (id) {
+            var url = "Questionario/Delete/" + id;
+            $("#deleteQuestionarioHref").prop("href", url);
         },
-        EditProfissional: function (id) {
+        EditQuestionario: function (id) {
             var self = this;
 
-            axios.get("Profissional/GetProfissionalById/?id=" + id).then(result => {
+            axios.get("Questionario/GetQuestionarioById/?id=" + id).then(result => {
 
                 self.editDto.Id = result.data.id;
-                self.editDto.Nome = result.data.nome;
-                self.editDto.Status = result.data.status;
-                self.editDto.DtNascimento = result.data.dtnascimento;
-                self.editDto.Email = result.data.email;
-                self.editDto.AspNetUserId = result.data.aspnetuserid;
-                self.editDto.Sexo = result.data.sexo;
-                self.editDto.Cpf = result.data.cpf;
-                self.editDto.Telefone = result.data.telefone;
-                self.editDto.Celular = result.data.celular;
-                self.editDto.Endereco = result.data.endereco;
-                self.editDto.Numero = result.data.numero;
-                self.editDto.Cep = result.data.cep;
-                self.editDto.Bairro = result.data.bairro;
-                self.editDto.Municipio = result.data.municipio;
-                self.editDto.Ambientes = result.data.ambientes;
-                self.editDto.Contratos = result.data.contratos;
-
+                self.editDto.TipoLaudo = result.data.tipoLaudo.nome;
+                self.editDto.Pergunta = result.data.pergunta;
+               
             }).catch(error => {
                 Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
             });
@@ -101,13 +110,13 @@
 
 var crud = {
     DeleteModal: function (id) {
-        $('input[name="ProfissionalId"]').attr('value', id);
-        $('#mdDeleteProfissional').modal('show');
-        vm.DeleteProfissional(id)
+        $('input[name="QuestionarioId"]').attr('value', id);
+        $('#mdDeleteQuestionario').modal('show');
+        vm.DeleteQuestionario(id)
     },
     EditModal: function (id) {
-        $('input[name="ProfissionalId"]').attr('value', id);
-        $('#mdEditProfissional').modal('show');
-        vm.EditProfissional(id)
+        $('input[name="QuestionarioId"]').attr('value', id);
+        $('#mdEditQuestionario').modal('show');
+        vm.EditQuestionario(id)
     }
 };

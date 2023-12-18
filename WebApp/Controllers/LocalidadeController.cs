@@ -50,7 +50,7 @@ namespace WebApp.Controllers
                 {
                     Nome = collection["nome"].ToString(),
                     Descricao = collection["descricao"].ToString(),
-                    MunicipioId = collection["ddlMunicipio"].ToString()
+					MunicipioId = collection["ddlMunicipio"].ToString()
                 };
 
                 await ApiClientFactory.Instance.CreateLocalidade(command);
@@ -71,7 +71,8 @@ namespace WebApp.Controllers
                 Id = Convert.ToInt32(collection["editLocalidadeId"]),
                 Nome = collection["nome"].ToString(),
                 Descricao = collection["descricao"].ToString(),
-            };
+                Status = collection["editStatus"].ToString() == "" ? false : true
+			};
 
             await ApiClientFactory.Instance.UpdateLocalidade(command.Id, command);
 

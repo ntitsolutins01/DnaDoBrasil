@@ -1,10 +1,10 @@
-﻿@model WebApp.Models.FomentoModel
+﻿@model WebApp.Models.QuestionarioModel
 @{
-    ViewData["Title"] = "Listagem de Fomentos";
+    ViewData["Title"] = "Listagem de Questionarios";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div id="formFomento">
+<div id="formQuestionario">
     <div class="row">
         <div class="col-lg-12">
             <section class="panel">
@@ -12,40 +12,32 @@
                     <div class="panel-actions">
                         <a href="#" class="card-action card-action-toggle" data-card-toggle></a>
                     </div>
-                    <h2 class="panel-title">Listagem de Fomentos</h2>
+                    <h2 class="panel-title">Listagem de Questionarios</h2>
                 </header>
                 <div class="panel-body">
                     <div class="form-group row">
                         <div class="col-sm-12 pull-right">
-                            <a href="@Url.Action("Create", "Fomento")" id="addToTable" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Novo Fomento </a>
+                            <a href="@Url.Action("Create", "Questionario")" id="addToTable" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Novo Questionário </a>
                         </div>
                     </div>
                     <table class="table table-bordered table-striped mb-0" id="datatable-default">
                         <thead>
                             <tr>
                                 <th class="text-center">Id</th>
-                                <th class="text-center">Fomento</th>
-	                            <th class="text-center">Data</th>
-	                            <th class="text-center">Status</th>
+                                <th class="text-center">Pergunta</th>
+	                            <th class="text-center">Tipo Laudo</th>
                                 <th class="text-center">Ações</th>
+
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var item in Model.Fomentos)
+                            @foreach (var item in Model.Questionarios)
                             {
                                 <tr>
                                     <td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Id)</td>
-                                    <td class="text-center">@Html.DisplayFor(modelItem => item.Nome)</td>
-	                                <td class="text-center">@Html.DisplayFor(modelItem => item.Data)</td>
-	                                @if (item.Status)
-	                                {
-		                                <td class="text-center"><span class="label label-success">ATIVO</span></td>
-	                                }
-	                                else
-	                                {
-		                                <td class="text-center"><span class="label label-danger">INATIVO</span></td>
-	                                }
-                                    <td class="actions">
+                                    <td class="text-center">@Html.DisplayFor(modelItem => item.Pergunta)</td>
+                                    <td class="text-center">@Html.DisplayFor(modelItem => item.TipoLaudo.Nome)</td>
+                                    <td class="actions text-center">
                                         <a data-toggle="tooltip" data-placement="top" title="Editar"
                                            href='javascript:(crud.EditModal(@item.Id))'
                                            class="on-default edit-row" style='color: #FF9800'>
@@ -63,12 +55,12 @@
         </div>
     </div>
     <!-- Modal -->
-    <div class="modal fade" id="mdDeleteFomento" tabindex="-1" role="dialog" aria-labelledby="mdDeleteFomentoLabel" aria-hidden="true">
+    <div class="modal fade" id="mdDeleteQuestionario" tabindex="-1" role="dialog" aria-labelledby="mdDeleteQuestionarioLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="mdDeleteFomentoLabel">
-                        <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Exclusão de Fomento</strong>
+                    <h5 class="modal-title" id="mdDeleteQuestionarioLabel">
+                        <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Exclusão de Questionario</strong>
                     </h5>
                 </div>
                 <div class="modal-body">
@@ -76,7 +68,7 @@
                         <i class="fa fa-question-circle"></i>
                     </div>
                     <div class="modal-text">
-                        <input type="hidden" id="deleteFomentoId" />
+                        <input type="hidden" id="deleteQuestionarioId" />
                         <p class="mb-0">Tem certeza que deseja <b>excluir</b> esse registro?</p>
                     </div>
                     <div class="modal-wrapper">
@@ -84,61 +76,41 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-thumbs-o-down"></i> &nbsp;&nbsp;Não</button>
-                    <a id="deleteFomentoHref" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</a>
+                    <a id="deleteQuestionarioHref" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</a>
                 </div>
             </div>
         </div>
     </div>
     <!-- Modal -->
-    <div class="modal fade" id="mdEditFomento" tabindex="-1" role="dialog" aria-labelledby="mdEditFomentoLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+    <div class="modal fade" id="mdEditQuestionario" tabindex="-1" role="dialog" aria-labelledby="mdEditQuestionarioLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="mdEditFomentoLabel">
-                        <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Alterar Fomento</strong>
+                    <h5 class="modal-title" id="mdEditQuestionarioLabel">
+                        <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Alterar Questionario</strong>
                     </h5>
                 </div>
-                @using (@Html.BeginForm("Edit", "Fomento", FormMethod.Post, new { id = "formEditFomento", @class = "form-horizontal" }))
+                @using (@Html.BeginForm("Edit", "Questionario", FormMethod.Post, new { id = "formEditQuestionario", @class = "form-horizontal" }))
                 {
-                    <input type="hidden" name="editFomentoId" :value="editDto.Id" />
+                    <input type="hidden" name="editQuestionarioId" :value="editDto.Id" />
 
                     <div class="modal-body">
                         <div class="form-group row">
-                            <label class="col-sm-3 control-label text-sm-right pt-2">Fomento</label>
-                            <div class="col-sm-9">
+                            <label class="col-sm-2 control-label text-sm-right pt-2">Pergunta <span class="required">*</span></label>
+                            <div class="col-sm-10">
                                 <input type="text" name="nome" class="form-control"
-                                       maxlength="80" :value="editDto.Nome"
-                                       title="Por favor informe o Fomento." required />
-                            </div>
-                        </div>
-                        @* <div class="form-group row">
-                            <label class="col-sm-3 control-label text-sm-right pt-2">Estado</label>
-                            <div class="col-md-3">
-                                <select class="form-control populate select2" name="ddlEstado" id="ddlEstado"
-                                        title="estadoSelect" required
-                                        asp-for="EstadoId" asp-items="Model.ListEstados">
-                                    <option value="">Selecionar Estado</option>
-                                </select>
-                            </div>
-                            <label class="col-sm-1 control-label text-sm-right pt-2">Cidade</label>
-                            <div class="col-md-5">
-                                <select class="form-control populate select2" name="ddlMunicipio" id="ddlMunicipio"
-                                        title="cidadeSelect" required
-                                        asp-for="CidadeId" asp-items="Model.ListCidades">
-                                    <option value="">Selecionar Cidade</option>
-                                </select>
+                                       maxlength="80" :value="editDto.Pergunta"
+                                       title="Por favor informe a Pergunta." required />
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-3 control-label text-sm-right pt-2">Localidade</label>
-                            <div class="col-md-4">
-                                <select class="form-control populate select2" name="ddlLocalidade" id="ddlLocalidade"
-                                        title="localidadeSelect" required
-                                        asp-for="LocalidadeId" asp-items="Model.ListLocalidades">
-                                    <option value="">Selecionar Localidade</option>
-                                </select>
+                            <label class="col-sm-2 control-label text-sm-right pt-2">Tipo Laudo </label>
+                            <div class="col-sm-10">
+                                <input type="text" name="descricao" class="form-control"
+                                       maxlength="80" :value="editDto.TipoLaudo"
+                                       title="Por favor informe o Tipo Laudo." readonly />
                             </div>
-                        </div> *@
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="reset" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
@@ -149,18 +121,17 @@
         </div>
     </div>
 </div>
+
 @section CssSpecificVendor {
-    <link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css" />
     <link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />
 }
 @section Scripts {
+    <script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
     <script src="~/assets/vendor/ios7-switch/ios7-switch.js"></script>
     <script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
     <script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
-    <script src="~/assets/vendor/select2/js/select2.js"></script>
     <script src="~/js/formatTable.js"></script>
-    <script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
-    <script src="~/js/Fomento.js"></script>
+    <script src="~/js/Questionario.js"></script>
 
     <script>
 
@@ -171,14 +142,14 @@
 
             if (crub === 1) {
                 new PNotify({
-                    title: 'Fomento',
+                    title: 'Questionario',
                     text: 'Cadastro realizado com sucesso!',
                     type: 'success'
                 });
                 crub = 0;
             } else if (crub === 2) {
                 new PNotify({
-                    title: 'Fomento',
+                    title: 'Questionario',
                     text: 'Dados alterados com sucesso.',
                     type: 'warning',
                     icon: 'fa fa-pencil'
@@ -186,7 +157,7 @@
                 crub = 0;
             } else if (crub === 3) {
                 new PNotify({
-                    title: 'Fomento',
+                    title: 'Questionario',
                     text: 'Registro excluído com sucesso.',
                     type: 'error',
                     icon: 'fa fa-trash-o'
@@ -200,21 +171,21 @@
 
             if (notify === 0) {
                 new PNotify({
-                    title: 'Fomento',
+                    title: 'Questionario',
                     text: messagem,
                     type: 'success'
                 });
                 crub = 0;
             } else if (notify === 1) {
                 new PNotify({
-                    title: 'Fomento',
+                    title: 'Questionario',
                     text: messagem,
                     type: 'warning'
                 });
                 crub = 0;
             } else if (notify === 2) {
                 new PNotify({
-                    title: 'Fomento',
+                    title: 'Questionario',
                     text: messagem,
                     type: 'error'
                 });

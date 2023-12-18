@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using WebApp.Configuration;
+using WebApp.Dto;
 using WebApp.Enumerators;
 using WebApp.Factory;
 using WebApp.Models;
@@ -10,7 +11,6 @@ namespace WebApp.Controllers
 {
     public class ProfissionalController : BaseController
     {
-
         private readonly IOptions<UrlSettings> _appSettings;
 
         public ProfissionalController(IOptions<UrlSettings> appSettings)
@@ -25,7 +25,7 @@ namespace WebApp.Controllers
             SetCrudMessage(crud);
             var response = ApiClientFactory.Instance.GetProfissionalAll();
 
-            return View(new ProfissionalModel(){Profissionais = response});
+            return View(new ProfissionalModel() { Profissionais = response });
         }
 
         //[ClaimsAuthorize("ConfiguracaoSistema", "Incluir")]
@@ -56,10 +56,10 @@ namespace WebApp.Controllers
                     AspNetUserId = collection["aspnetuserId"].ToString(),
                     Numero = collection["numero"].ToString(),
                     Bairro = collection["bairro"].ToString(),
-					Endereco = collection["endereco"].ToString(),
-					MunicipioId = collection["municipioId"].ToString(),
-					Habilitado = collection["habilitado"].ToString(),
-				};
+                    Endereco = collection["endereco"].ToString(),
+                    MunicipioId = collection["municipioId"].ToString(),
+                    Habilitado = collection["habilitado"].ToString()
+                };
 
                 await ApiClientFactory.Instance.CreateProfissional(command);
 
@@ -71,22 +71,12 @@ namespace WebApp.Controllers
             }
         }
 
-        //[ClaimsAuthorize("Profissional", "Alterar")]
-        //public ActionResult Edit(string id)
-        //{
-        //    var obj = ApiClientFactory.Instance.GetProfissionalById(id);
-
-        //    var model = new ProfissionalModel() { Profissional = obj };
-
-        //    return View(model);
-        //}
-
         //[ClaimsAuthorize("Usuario", "Alterar")]
-        public async Task<ActionResult> Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Edit(IFormCollection collection)
         {
             var command = new ProfissionalModel.CreateUpdateProfissionalCommand
             {
-                Id = Convert.ToInt32(id),
+                Id = Convert.ToInt32(collection["editProfissionalId"]),
                 Nome = collection["nome"].ToString(),
                 DtNascimento = collection["dataNascimento"].ToString(),
                 Email = Convert.ToInt32(collection["email"]),
@@ -101,9 +91,9 @@ namespace WebApp.Controllers
                 Endereco = collection["endereco"].ToString(),
                 MunicipioId = collection["municipioId"].ToString(),
                 Habilitado = collection["habilitado"].ToString()
-			};
+            };
 
-            await ApiClientFactory.Instance.UpdateProfissional(id, command);
+            await ApiClientFactory.Instance.UpdateProfissional(command.Id, command);
 
             return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
         }
@@ -120,6 +110,13 @@ namespace WebApp.Controllers
             {
                 return RedirectToAction(nameof(Index));
             }
+        }
+
+        public async Task<ProfissionalDto> GetProfissionalById(int id)
+        {
+            var result = ApiClientFactory.Instance.GetProfissionalById(id);
+
+            return result;
         }
     }
 }

@@ -2,7 +2,7 @@
     el: "#formSerie",
     data: {
         loading: false,
-        editDto: { Id: "", Nome: "", Status: true, IdadeIni:0, IdadeFim:0, ScoreTotal:0, Descricao:"" }
+        editDto: { Id: "", Nome: "", Status: true, IdadeInicial:"", IdadeFinal:"", ScoreTotal:"", Descricao:"" }
     },
     mounted: function () {
         var self = this;
@@ -43,6 +43,29 @@
                     }
                 });
             }
+
+            if (formid === "formSerie") {
+
+                $("#formSerie").validate({
+                    highlight: function (label) {
+                        $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
+                    },
+                    success: function (label) {
+                        $(label).closest('.form-group').removeClass('has-error');
+                        label.remove();
+                    },
+                    errorPlacement: function (error, element) {
+                        var placement = element.closest('.input-group');
+                        if (!placement.get(0)) {
+                            placement = element;
+                        }
+                        if (error.text() !== '') {
+                            placement.after(error);
+                        }
+                    }
+                });
+            }
+
         }).apply(this, [jQuery]);
     },
     methods: {
@@ -76,6 +99,10 @@
 
                 self.editDto.Id = result.data.id;
                 self.editDto.Nome = result.data.nome;
+                self.editDto.Descricao = result.data.descricao;
+                self.editDto.IdadeInicial = result.data.idadeInicial;
+                self.editDto.IdadeFinal = result.data.idadeFinal;
+                self.editDto.ScoreTotal = result.data.scoreTotal;
                 self.editDto.Status = result.data.status;
 
             }).catch(error => {

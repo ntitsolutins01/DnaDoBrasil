@@ -80,8 +80,9 @@ namespace WebApp.Controllers
             var command = new FomentoModel.CreateUpdateFomentoCommand
             {
                 Id = Convert.ToInt32(collection["editFomentoId"]),
-                Nome = collection["nome"].ToString()
-            };
+                Nome = collection["nome"].ToString(),
+                Status = collection["editStatus"].ToString() == "" ? false : true
+			};
 
             await ApiClientFactory.Instance.UpdateFomento(command.Id, command);
 
