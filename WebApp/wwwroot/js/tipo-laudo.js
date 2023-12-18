@@ -98,6 +98,7 @@ var vm = new Vue({
 
                 self.editDto.Id = result.data.id;
                 self.editDto.Nome = result.data.nome;
+                self.editDto.Descricao = result.data.descricao;
                 self.editDto.Status = result.data.status;
 
             }).catch(error => {
