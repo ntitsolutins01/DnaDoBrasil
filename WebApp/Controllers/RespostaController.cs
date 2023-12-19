@@ -105,21 +105,5 @@ namespace WebApp.Controllers
 
 			return result;
 		}
-
-        public async Task<JsonResult> GetQuestionarioByTipoLaudo(string id)
-        {
-            try
-            {
-                if (string.IsNullOrEmpty(id)) throw new Exception("Tipo de Laudo não informado.");
-                var resultLocal = ApiClientFactory.Instance.GetQuestionarioByTipoLaudo(Convert.ToInt32(id));
-
-                return Json(new SelectList(resultLocal, "Id", "Pergunto"));
-
-            }
-            catch (Exception ex)
-            {
-                return Json(ex.Message);
-            }
-        }
     }
 }

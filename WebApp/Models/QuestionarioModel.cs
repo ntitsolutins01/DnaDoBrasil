@@ -13,7 +13,7 @@ namespace WebApp.Models
         {
             public int Id { get; set; }
             public string Pergunta { get; set; }
-            public int TiposLaudo { get; set; }
+            public int TipoLaudoId { get; set; }
         }
 	}
 

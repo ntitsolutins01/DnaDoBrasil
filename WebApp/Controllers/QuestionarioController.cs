@@ -56,7 +56,7 @@ namespace WebApp.Controllers
 				var command = new QuestionarioModel.CreateUpdateQuestionarioCommand
 				{
                     Pergunta = collection["pergunta"].ToString(),
-                    TiposLaudo = Convert.ToInt32(collection["tiposlaudo"].ToString()),
+                    TipoLaudoId = Convert.ToInt32(collection["ddlTipoLaudo"].ToString()),
 					
 				};
 
@@ -66,6 +66,7 @@ namespace WebApp.Controllers
 			}
 			catch (Exception e)
 			{
+				Console.Write(e.StackTrace);
 				return RedirectToAction(nameof(Index));
 			}
 		}
@@ -103,6 +104,21 @@ namespace WebApp.Controllers
 			var result = ApiClientFactory.Instance.GetQuestionarioById(id);
 
 			return result;
+		}
+		public async Task<JsonResult> GetQuestionarioByTipoLaudo(string id)
+		{
+			try
+			{
+				if (string.IsNullOrEmpty(id)) throw new Exception("Tipo de Laudo não informado.");
+				var resultLocal = ApiClientFactory.Instance.GetQuestionarioByTipoLaudo(Convert.ToInt32(id));
+
+				return Json(new SelectList(resultLocal, "Id", "Pergunto"));
+
+			}
+			catch (Exception ex)
+			{
+				return Json(ex.Message);
+			}
 		}
 	}
 }
