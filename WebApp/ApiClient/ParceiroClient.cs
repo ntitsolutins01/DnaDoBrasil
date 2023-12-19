@@ -34,10 +34,10 @@ namespace WebApp.ApiClient
 
         #region Methods
 
-        public ParceiroDto GetParceiroById(string id)
+        public ParceiroDto GetParceiroById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceParceiro}/{id}"));
+                $"{ResourceParceiro}/Parceiro/{id}"));
             return Get<ParceiroDto>(requestUrl);
         }
         public List<ParceiroDto> GetParceiroAll()

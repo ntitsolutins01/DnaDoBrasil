@@ -23,8 +23,8 @@ namespace WebApp.Controllers
 
 		public IActionResult Index(int? crud, int? notify, string message = null)
 		{
-			try
-			{
+            try
+            {
 				SetNotifyMessage(notify, message);
 				SetCrudMessage(crud);
 				var response = ApiClientFactory.Instance.GetRespostaAll();
