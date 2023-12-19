@@ -62,6 +62,7 @@ namespace WebApp.Controllers
 			}
 			catch (Exception e)
 			{
+				Console.Write(e.StackTrace);
 				return RedirectToAction(nameof(Index));
 			}
 		}

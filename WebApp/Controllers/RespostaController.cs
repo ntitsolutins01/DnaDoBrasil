@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Infraero.Relprev.CrossCutting.Enumerators;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
 using WebApp.Configuration;
@@ -22,30 +23,48 @@ namespace WebApp.Controllers
 
 		public IActionResult Index(int? crud, int? notify, string message = null)
 		{
-			SetNotifyMessage(notify, message);
-			SetCrudMessage(crud);
-			var response = ApiClientFactory.Instance.GetRespostaAll();
-
-			var model = new RespostaModel()
+			try
 			{
-                Respostas = response
-			};
+				SetNotifyMessage(notify, message);
+				SetCrudMessage(crud);
+				var response = ApiClientFactory.Instance.GetRespostaAll();
 
-			return View(model);
+				var model = new RespostaModel()
+				{
+					Respostas = response
+				};
+
+				return View(model);
+			}
+			catch (Exception e)
+			{
+				Console.Write(e.StackTrace);
+				return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = e.Message });
+
+			}
 		}
 
 		//[ClaimsAuthorize("ConfiguracaoSistema", "Incluir")]
 		public ActionResult Create(int? crud, int? notify, string message = null)
 		{
-			SetNotifyMessage(notify, message);
-			SetCrudMessage(crud);
-
-			var tiposlaudos = new SelectList(ApiClientFactory.Instance.GetTiposLaudoAll(), "Id", "Nome");
-			var model = new RespostaModel()
+			try
 			{
-				ListTiposLaudos = tiposlaudos
-			};
-			return View(model);
+				SetNotifyMessage(notify, message);
+				SetCrudMessage(crud);
+
+				var tiposlaudos = new SelectList(ApiClientFactory.Instance.GetTiposLaudoAll(), "Id", "Nome");
+				var model = new RespostaModel()
+				{
+					ListTiposLaudos = tiposlaudos
+				};
+				return View(model);
+			}
+			catch (Exception e)
+			{
+				Console.Write(e.StackTrace);
+				return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = e.Message });
+
+			}
 		}
 
 		//[ClaimsAuthorize("Usuario", "Incluir")]
@@ -56,9 +75,9 @@ namespace WebApp.Controllers
 			{
 				var command = new RespostaModel.CreateUpdateRespostaCommand()
 				{
-                    RespostaQuestionario = collection["resposta"].ToString(),
-                    QuestionarioId = Convert.ToInt32(collection["ddlQuestionario"].ToString()),
-					
+					RespostaQuestionario = collection["resposta"].ToString(),
+					QuestionarioId = Convert.ToInt32(collection["ddlQuestionario"].ToString()),
+
 				};
 
 				await ApiClientFactory.Instance.CreateResposta(command);
@@ -67,22 +86,31 @@ namespace WebApp.Controllers
 			}
 			catch (Exception e)
 			{
-				return RedirectToAction(nameof(Index));
+				Console.Write(e.StackTrace);
+				return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = e.Message });
 			}
 		}
 
 		//[ClaimsAuthorize("Usuario", "Alterar")]
 		public async Task<ActionResult> Edit(IFormCollection collection)
 		{
-			var command = new RespostaModel.CreateUpdateRespostaCommand
+			try
 			{
-				Id = Convert.ToInt32(collection["editQuestionarioId"]),
-                RespostaQuestionario = collection["resposta"].ToString(),
-            };
+				var command = new RespostaModel.CreateUpdateRespostaCommand
+				{
+					Id = Convert.ToInt32(collection["editRespostaId"]),
+					RespostaQuestionario = collection["resposta"].ToString(),
+				};
 
-			await ApiClientFactory.Instance.UpdateResposta(command.Id, command);
+				await ApiClientFactory.Instance.UpdateResposta(command.Id, command);
 
-			return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+				return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+			}
+			catch (Exception e)
+			{
+				Console.Write(e.StackTrace);
+				return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = e.Message });
+			}
 		}
 
 		//[ClaimsAuthorize("Usuario", "Excluir")]
@@ -93,9 +121,10 @@ namespace WebApp.Controllers
 				ApiClientFactory.Instance.DeleteResposta(id);
 				return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
 			}
-			catch
+			catch (Exception e)
 			{
-				return RedirectToAction(nameof(Index));
+				Console.Write(e.StackTrace);
+				return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = e.Message });
 			}
 		}
 
@@ -105,5 +134,5 @@ namespace WebApp.Controllers
 
 			return result;
 		}
-    }
+	}
 }

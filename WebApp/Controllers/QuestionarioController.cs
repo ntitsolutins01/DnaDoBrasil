@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Infraero.Relprev.CrossCutting.Enumerators;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
 using WebApp.Configuration;
@@ -55,9 +56,9 @@ namespace WebApp.Controllers
 			{
 				var command = new QuestionarioModel.CreateUpdateQuestionarioCommand
 				{
-                    Pergunta = collection["pergunta"].ToString(),
-                    TipoLaudoId = Convert.ToInt32(collection["ddlTipoLaudo"].ToString()),
-					
+					Pergunta = collection["pergunta"].ToString(),
+					TipoLaudoId = Convert.ToInt32(collection["ddlTipoLaudo"].ToString()),
+
 				};
 
 				await ApiClientFactory.Instance.CreateQuestionario(command);
@@ -67,22 +68,30 @@ namespace WebApp.Controllers
 			catch (Exception e)
 			{
 				Console.Write(e.StackTrace);
-				return RedirectToAction(nameof(Index));
+				return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = e.Message });
 			}
 		}
 
 		//[ClaimsAuthorize("Usuario", "Alterar")]
 		public async Task<ActionResult> Edit(IFormCollection collection)
 		{
-			var command = new QuestionarioModel.CreateUpdateQuestionarioCommand
+			try
 			{
-				Id = Convert.ToInt32(collection["editQuestionarioId"]),
-                Pergunta = collection["pergunta"].ToString(),
-            };
+				var command = new QuestionarioModel.CreateUpdateQuestionarioCommand
+				{
+					Id = Convert.ToInt32(collection["editQuestionarioId"]),
+					Pergunta = collection["pergunta"].ToString(),
+				};
 
-			await ApiClientFactory.Instance.UpdateQuestionario(command.Id, command);
+				await ApiClientFactory.Instance.UpdateQuestionario(command.Id, command);
 
-			return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+				return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+			}
+			catch (Exception e)
+			{
+				Console.Write(e.StackTrace);
+				return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = e.Message });
+			}
 		}
 
 		//[ClaimsAuthorize("Usuario", "Excluir")]
@@ -93,9 +102,10 @@ namespace WebApp.Controllers
 				ApiClientFactory.Instance.DeleteQuestionario(id);
 				return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
 			}
-			catch
+			catch (Exception e)
 			{
-				return RedirectToAction(nameof(Index));
+				Console.Write(e.StackTrace);
+				return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = e.Message });
 			}
 		}
 
@@ -105,19 +115,20 @@ namespace WebApp.Controllers
 
 			return result;
 		}
-		public async Task<JsonResult> GetQuestionarioByTipoLaudo(string id)
+		public async Task<JsonResult> GetQuestionariosByTipoLaudo(string id)
 		{
 			try
 			{
 				if (string.IsNullOrEmpty(id)) throw new Exception("Tipo de Laudo não informado.");
 				var resultLocal = ApiClientFactory.Instance.GetQuestionarioByTipoLaudo(Convert.ToInt32(id));
 
-				return Json(new SelectList(resultLocal, "Id", "Pergunto"));
+				return Json(new SelectList(resultLocal, "Id", "Pergunta"));
 
 			}
-			catch (Exception ex)
+			catch (Exception e)
 			{
-				return Json(ex.Message);
+				Console.Write(e.StackTrace);
+				return Json(e.Message);
 			}
 		}
 	}

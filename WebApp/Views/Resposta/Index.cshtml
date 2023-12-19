@@ -93,22 +93,30 @@
                 @using (@Html.BeginForm("Edit", "Resposta", FormMethod.Post, new { id = "formEditResposta", @class = "form-horizontal" }))
                 {
                     <input type="hidden" name="editRespostaId" :value="editDto.Id" />
-
-	                <div class="form-group row">
-		                <label class="col-sm-2 control-label text-sm-right pt-2">Resposta <span class="required">*</span></label>
-		                <div class="col-sm-10">
-			                <input type="text" name="nome" class="form-control"
-			                       maxlength="80"
-			                       title="Por favor informe a Resposta." required />
-		                </div>
-	                </div>
-	                <div class="form-group row">
-                        <label class="col-sm-2 control-label text-sm-right pt-2">Questionário:</label>
-                        <div class="col-sm-10">
-                            <input type="text" name="questionario" class="form-control"
-                                   maxlength="80" :value="editDto.Questionario"
+                    
+                    <div class="form-group row">
+                        <label class="col-sm-2 control-label text-sm-right pt-2">Tipo Laudo: </label>
+                        <div class="col-sm-4">
+                            <input type="text" name="descricao" class="form-control"
+                                   maxlength="80" :value="editDto.TipoLaudo"
+                                   title="Por favor informe o Tipo Laudo." readonly />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 control-label text-sm-right pt-2">Questionário: </label>
+                        <div class="col-sm-4">
+                            <input type="text" name="descricao" class="form-control"
+                                   maxlength="80" :value="editDto.TipoLaudo"
                                    title="Por favor informe o questionário." readonly />
                         </div>
+                    </div>
+	                <div class="form-group row">
+		                <label class="col-sm-2 control-label text-sm-right pt-2">Resposta: <span class="required">*</span></label>
+		                <div class="col-sm-10">
+			                <input type="text" name="resposta" class="form-control"
+                                   maxlength="100" :value="editDto.Resposta"
+			                       title="Por favor informe a Resposta." required />
+		                </div>
 	                </div>
                     <div class="modal-footer">
                         <button type="reset" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
