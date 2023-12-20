@@ -75,7 +75,7 @@ namespace WebApp.Controllers
                     Email = collection["email"].ToString(),
                     //TipoParceria = Convert.ToDateTime(collection["tipoparceria"].ToString()),
                     //TipoPessoa = Convert.ToDateTime(collection["tipopessoa"].ToString()),
-                    CpfCnpj = collection["tipoPessoa"].ToString() == "pf"? collection["cpf"].ToString() : collection["cnpj"].ToString()
+                    CpfCnpj = collection["tipoPessoa"].ToString() == "pf"? collection["cpf"].ToString() : collection["cnpj"].ToString(),
                     Telefone = collection["telefone"].ToString(),
                     Celular = collection["celular"].ToString(),
                     Cep = collection["cep"].ToString(),

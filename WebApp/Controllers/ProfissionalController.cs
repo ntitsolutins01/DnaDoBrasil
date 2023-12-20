@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using WebApp.Configuration;
 using WebApp.Dto;
@@ -37,7 +38,7 @@ namespace WebApp.Controllers
             return View();
         }
 
-        //[ClaimsAuthorize("Usuario", "Incluir")]
+        //[ClaimsAuthorize("Profissional", "Incluir")]
         [HttpPost]
         public async Task<ActionResult> Create(IFormCollection collection)
         {
@@ -71,7 +72,7 @@ namespace WebApp.Controllers
             }
         }
 
-        //[ClaimsAuthorize("Usuario", "Alterar")]
+        //[ClaimsAuthorize("Profissional", "Alterar")]
         public async Task<ActionResult> Edit(IFormCollection collection)
         {
             var command = new ProfissionalModel.CreateUpdateProfissionalCommand
@@ -98,7 +99,7 @@ namespace WebApp.Controllers
             return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
         }
 
-        //[ClaimsAuthorize("Usuario", "Excluir")]
+        //[ClaimsAuthorize("Profissional", "Excluir")]
         public ActionResult Delete(int id)
         {
             try
@@ -118,5 +119,31 @@ namespace WebApp.Controllers
 
             return result;
         }
-    }
+        //[ClaimsAuthorize("Profissional", "Consultar")]
+        public async Task<bool> GetProfissionalByEmail(string email)
+        {
+	        if (string.IsNullOrEmpty(email)) throw new Exception("Email não informado.");
+	        var result = ApiClientFactory.Instance.GetProfissionalByEmail(email);
+
+	        if (result == null)
+	        {
+		        return true;
+	        }
+
+	        return false;
+        }
+
+        public async Task<bool> GetProfissionalByCpf(string cpf)
+        {
+	        if (string.IsNullOrEmpty(cpf)) throw new Exception("Cpf não informado.");
+	        var result = ApiClientFactory.Instance.GetProfissionalByCpf(Regex.Replace(cpf, "[^0-9a-zA-Z]+", ""));
+
+	        if (result == null)
+	        {
+		        return true;
+	        }
+
+	        return false;
+        }
+	}
 }
