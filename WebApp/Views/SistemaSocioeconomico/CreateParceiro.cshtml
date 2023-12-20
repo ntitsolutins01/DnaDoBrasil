@@ -1,4 +1,4 @@
-﻿
+﻿@model ParceiroModel
 @{
 	ViewData["Title"] = "Cadastro Sistema Socioeconomico";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -7,7 +7,7 @@
 
 <div class="row">
 	<div class="col-md-12">
-		@using (@Html.BeginForm("Create", "SistemaSocioeconomico", FormMethod.Post, new { id = "form", @class = "form-horizontal" }))
+		@using (@Html.BeginForm("Create", "SistemaSocioeconomico", FormMethod.Post, new { id = "formParceiro", @class = "form-horizontal" }))
 		{
 			<section class="panel">
 				<header class="panel-heading">
@@ -21,11 +21,11 @@
 
 					<div class="form-group">
 						<label class="col-sm-1 control-label">Nome</label>
-						<div class="col-sm-5">
+						<div class="col-sm-4">
 							<input type="text" id="nome" name="nome" class="form-control" required />
 						</div>
 						<label class="col-sm-1 control-label">Email </label>
-						<div class="col-sm-5">
+						<div class="col-sm-4">
 							<div class="input-group">
 								<span class="input-group-addon">
 									<i class="fa fa-envelope"></i>
@@ -179,14 +179,19 @@
 </div>
 
 @section CssSpecificVendor {
+	<link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css" />
+	<link rel="stylesheet" href="~/assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
 	<link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />
 }
 @section Scripts {
-	<script src="~/assets/vendor/ios7-switch/ios7-switch.js"></script>
 	<script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
+	<script src="~/assets/vendor/select2/js/select2.js"></script>
+	<script src="~/assets/vendor/jquery-mask/jquery.mask.js"></script>
+	<script src="~/assets/vendor/ios7-switch/ios7-switch.js"></script>
 	<script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
 	<script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
 	<script src="~/js/formatTable.js"></script>
+	<script src="~/js/parceiro.js"></script>
 	<script>
 
 

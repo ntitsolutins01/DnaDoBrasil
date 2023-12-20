@@ -5,7 +5,7 @@
             cpf: ""
         },
         loading: false,
-        editDto: { Id: "", Nome: "", DtNascimento: "", Email: "", AspNetUserId: "", Sexo: "", Cpf: "", Telefone: "", Celular: "", Endereco: "", Numero: "", Cep: "", Bairro: "",  Municipio: "", Ambientes: "", Contratos: "", Status: true  }
+        editDto: { Id: "", Nome: "", DtNascimento: "", Email: "", AspNetUserId: "", Sexo: "", Cpf: "", Telefone: "", Celular: "", Endereco: "", Numero: "", Cep: "", Bairro: "", Municipio: "", Ambientes: "", Contratos: "", Status: true }
     },
     mounted: function () {
         var self = this;
@@ -49,40 +49,31 @@
             });
 
             $("#ddlEstado").change(function () {
+                var sigla = $("#ddlEstado").val();
 
-                var url = "GetEmpresaByUnidade";
-
-                var ddlSource = "#ddlUnidadeInfraestrutura";
-
-                $.getJSON(url,
-                    { id: $(ddlSource).val() },
-                    function (data) {
-                        var items = '';
-                        $("#ddlProfissional").empty;
-                        $.each(data,
-                            function (i, row) {
-                                items += "<option value='" + row.value + "'>" + row.text + "</option>";
-                            });
-                        $("#ddlProfissional").html(items);
-                    });
-            });
-
-            $("#ddlMunicipio").change(function () {
-
-                var url = "GetMunicipiosByUf";
+                var url = "DivisaoAdministrativa/GetMunicipioByUf?uf=" + sigla;
 
                 var ddlSource = "#ddlMunicipio";
 
                 $.getJSON(url,
                     { id: $(ddlSource).val() },
                     function (data) {
-                        var items = '';
-                        $("#ddlMunicipio").empty;
-                        $.each(data,
-                            function (i, row) {
-                                items += "<option value='" + row.value + "'>" + row.text + "</option>";
+                        if (data.length > 0) {
+                            var items = '<option value="">Selecionar Municipio</option>';
+                            $("#ddlMunicipio").empty;
+                            $.each(data,
+                                function (i, row) {
+                                    items += "<option value='" + row.value + "'>" + row.text + "</option>";
+                                });
+                            $("#ddlMunicipio").html(items);
+                        }
+                        else {
+                            new PNotify({
+                                title: 'Usuario',
+                                text: data,
+                                type: 'warning'
                             });
-                        $("#ddlMunicipio").html(items);
+                        }
                     });
             });
 
@@ -254,8 +245,8 @@
             }).catch(error => {
                 Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
             });
-        }
-         ExisteCpf: function () {
+        },
+        ExisteCpf: function () {
             var self = this;
             self.ShowLoad(true, "vUsuario");
 
@@ -296,7 +287,7 @@
                 Site.Notification("Erro ao buscar e analisar dados", error.response.data, "error", 1);
                 self.ShowLoad(false, "vUsuario");
             });
-        },
+        }
     }
 });
 
