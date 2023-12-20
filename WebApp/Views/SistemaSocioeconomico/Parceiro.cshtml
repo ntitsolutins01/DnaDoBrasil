@@ -1,4 +1,5 @@
-﻿
+﻿@model ParceiroModel
+
 @{
     ViewData["Title"] = "Listagem de Parceiros";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -17,33 +18,29 @@
                     <h2 class="panel-title">Filtro de pesquisa</h2>
                 </header>
                 <div class="panel-body">
-	                <div class="form-group row">
-		                <label class="col-sm-3 control-label">Parceiros</label>
-		                <div class="col-md-6 form-group">
-			                <input type="text" class="form-control">
-		                </div>
-	                </div>
-	                <div class="form-group row">
-		                <label class="col-sm-3 control-label">&nbsp;&nbsp;</label>
-		                <div class="col-md-12 form-group">
+                    <div class="form-group row">
+                        <label class="col-sm-3 control-label">Parceiros</label>
+                        <div class="col-md-6 form-group">
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 control-label">&nbsp;&nbsp;</label>
+                        <div class="col-md-12 form-group">
                             <div class="checkbox-custom chekbox-primary pull-right col-md-2">
-				                <input id="for-project" value="project" type="checkbox" name="for[]" required />
-				                <label for="for-project">Cadastro pendentes</label>
-			                </div>
+                                <input id="for-project" value="project" type="checkbox" name="for[]" required />
+                                <label for="for-project">Cadastro pendentes</label>
+                            </div>
                             <div class="checkbox-custom chekbox-primary pull-right col-md-3">
-				                <input id="for-project" value="project" type="checkbox" name="for[]" required />
-				                <label for="for-project">Categorias pendentes</label>
-			                </div>
+                                <input id="for-project" value="project" type="checkbox" name="for[]" required />
+                                <label for="for-project">Deficiências pendentes</label>
+                            </div>
                             <div class="checkbox-custom chekbox-primary pull-right col-md-3">
-				                <input id="for-project" value="project" type="checkbox" name="for[]" required />
-				                <label for="for-project">Deficiências pendentes</label>
-			                </div>
-                            <div class="checkbox-custom chekbox-primary pull-right col-md-3">
-				                <input id="for-project" value="project" type="checkbox" name="for[]" required />
-				                <label for="for-project">Solicitações de contato</label>
-			                </div>
-		                </div>
-	                </div>
+                                <input id="for-project" value="project" type="checkbox" name="for[]" required />
+                                <label for="for-project">Solicitações de contato</label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <footer class="panel-footer">
                     <div class="row">
@@ -68,33 +65,60 @@
     </header>
     <div class="panel-body">
         <div class="form-group row">
-	        <div class="col-sm-12 pull-right">
-				<a id="addToTable" href="@Url.Action("CreateParceiro", "SistemaSocioeconomico")"
-		           
+            <div class="col-sm-12 pull-right">
+                <a id="addToTable" href="@Url.Action("CreateParceiro", "SistemaSocioeconomico")"
                    class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Novo Parceiros </a>
-	        </div>
+            </div>
         </div>
         <table class="table table-bordered table-striped mb-0" id="datatable-default">
             <thead>
                 <tr>
                     <th>Instituiçao</th>
                     <th>Email</th>
-                    <th>Laudos</th>
+                    <th>Solicitação Pendente?</th>
                     <th>Status</th>
-	                <th>Ações</th>
+                    <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Clube desportivo Real Manaus</td>
-                    <td>librade.cdl@gmail.com</td>
-                    <td>2</td>
-                    <td>Aguardando Ativação</td>
-	                <td class="actions">
-		                <a data-toggle="tooltip" data-placement="top" title="Editar" @* asp-action="Edit" *@ asp-controller="Perfil" asp-route-id="1" class="on-default edit-row" style='color: #FF9800'><i class="fa fa-pencil"></i></a>
-		                <a data-toggle="tooltip" data-placement="top" title="Excluir" @* asp-action="Delete" *@ asp-controller="Perfil" asp-route-id="1" class="on-default remove-row" style='color:#F44336'><i class="fa fa-trash-o"></i></a>
-	                </td>
-                </tr>
+                @foreach (var item in Model.Parceiros)
+                {
+                    <tr>
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.Nome)</td>
+                        <td class="text-center">@Html.DisplayFor(modelItem => item.Email)</td>
+                        @if (item.Alunos!.Any())
+                        {
+                            <td class="text-center">
+                                <a type="button" href='javascript:(crud.PendentesModal(@item.Id))'
+                                   data-toggle="tooltip" data-placement="top" title="Lista de alunos solicitados"
+                                   class="mb-xs mt-xs mr-xs btn btn-xs btn-danger">
+                                    <b>SIM</b>
+                                </a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="text-center"><span class="label label-success">NÃO</span></td>
+                        }
+                        @if (item.Habilitado)
+                        {
+                            <td class="text-center"><span class="label label-success">HABILITADO</span></td>
+                        }
+                        else
+                        {
+                            <td class="text-center"><span class="label label-danger">INABILITADO</span></td>
+                        }
+                        <td class="actions text-center">
+                            <a data-toggle="tooltip" data-placement="top" title="Editar"
+                               href='javascript:(crud.EditModal(@item.Id))'
+                               class="on-default edit-row" style='color: #FF9800'>
+                                <i class="fa fa-pencil"></i>
+                            </a>
+                            <a data-toggle="tooltip" data-placement="top" title="Excluir" href='javascript:(crud.DeleteModal(@item.Id))'
+                               class="on-default remove-row" style="cursor: pointer;color: #F44336"><i class="fa fa-trash"></i></a>
+                        </td>
+                    </tr>
+                }
             </tbody>
         </table>
     </div>
@@ -121,6 +145,38 @@
             <div class="modal-footer">
                 <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-thumbs-o-down"></i> &nbsp;&nbsp;Não</button>
                 <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="mdPendentes" tabindex="-1" role="dialog" aria-labelledby="mdPendentesLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mdPendentesLabel">
+                    <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Listagem de alunos solicitados</strong>
+                </h5>
+            </div>
+            <input type="hidden" name="editParceiroId" :value="editDto.Id" />
+            <div class="modal-body">
+                <table id="alunosSolicitados" class="table table-responsive-md table-striped mb-0">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div class="checkbox-custom chekbox-primary pull-right col-md-2">
+                                    <input id="todos" value="todos" type="checkbox" name="for[]" required />
+                                </div>
+                            </th>
+                            <th>Aluno</th>
+                            <th>Idade</th>
+                            <th>Taleto</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="reset" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
             </div>
         </div>
     </div>
