@@ -17,6 +17,7 @@
         public int Numero { get; set; }
         public string? Bairro { get; set; }
         public bool Status { get; set; }
-        public bool? Habilitado { get; set; }
+        public bool Habilitado { get; set; }
+        public List<AlunoDto>? Alunos { get; set; }
     }
 }

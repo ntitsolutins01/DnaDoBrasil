@@ -1,9 +1,6 @@
-﻿var vm = new Vue({
-    el: "#formContrato",
-    data: {
-        loading: false,
-        editDto: { Id: "", Nome: "", DtIni: "", DtFim: "", Anexo: "", Descricao: "", Status: true }
-    },
+var vm = new Vue({
+    el: "#formParceiro",
+    data: {},
     mounted: function () {
         var self = this;
         (function ($) {
@@ -11,44 +8,34 @@
             'use strict';
             var formid = $('form').attr('id');
 
-            if (formid === "formContrato") {
-                $("#formContrato").validate({
-                    highlight: function (label) {
-                        $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
-                    },
-                    success: function (label) {
-                        $(label).closest('.form-group').removeClass('has-error');
-                        label.remove();
-                    },
-                    errorPlacement: function (error, element) {
-                        var placement = element.closest('.input-group');
-                        if (!placement.get(0)) {
-                            placement = element;
-                        }
-                        if (error.text() !== '') {
-                            placement.after(error);
-                        }
+            $("#formParceiro").validate({
+                highlight: function (label) {
+                    $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
+                },
+                success: function (label) {
+                    $(label).closest('.form-group').removeClass('has-error');
+                    label.remove();
+                },
+                errorPlacement: function (error, element) {
+                    var placement = element.closest('.input-group');
+                    if (!placement.get(0)) {
+                        placement = element;
                     }
                 });
             }
 
-            if (formid === "formEditContrato") {
-                $("#formEditContrato").validate({
-                    highlight: function (label) {
-                        $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
-                    },
-                    success: function (label) {
-                        $(label).closest('.form-group').removeClass('has-error');
-                        label.remove();
-                    },
-                    errorPlacement: function (error, element) {
-                        var placement = element.closest('.input-group');
-                        if (!placement.get(0)) {
-                            placement = element;
-                        }
-                        if (error.text() !== '') {
-                            placement.after(error);
-                        }
+            $("#formEditParceiro").validate({
+                highlight: function (label) {
+                    $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
+                },
+                success: function (label) {
+                    $(label).closest('.form-group').removeClass('has-error');
+                    label.remove();
+                },
+                errorPlacement: function (error, element) {
+                    var placement = element.closest('.input-group');
+                    if (!placement.get(0)) {
+                        placement = element;
                     }
                 });
             }
@@ -74,22 +61,54 @@
                 self.loading = flag;
             }
         },
-        DeleteContrato: function (id) {
-            var url = "Contrato/Delete/" + id;
-            $("#deleteContratoHref").prop("href", url);
-        },
-        EditContrato: function (id) {
+        EditPendentes: function (id) {
             var self = this;
 
-            axios.get("Contrato/GetContratoById/?id=" + id).then(result => {
+            axios.get("Parceiro/GetParceiroById/?id=" + id).then(result => {
 
                 self.editDto.Id = result.data.id;
-                self.editDto.Nome = result.data.nome;
-                self.editDto.Descricao = result.data.descricao;
-                self.editDto.DtIni = result.data.dtIni;
-                self.editDto.DtFim = result.data.dtFim;
-                self.editDto.Anexo = result.data.anexo;
-                self.editDto.Status = result.data.status;
+
+                var alunos = result.data.alunos;
+
+                $('#alunosSolicitados').DataTable().destroy();
+
+                $('#alunosSolicitados').DataTable({
+                    data: alunos,
+                    "columns": [
+                        { "data": "nome" },
+                        { "data": "idade" },
+                        { "data": "talento" }
+                    ],
+                    "paging": false,
+                    "searching": false,
+                    "language": {
+                        "sEmptyTable": "Nenhum registro encontrado",
+                        "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                        "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+                        "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+                        "sInfoPostFix": "",
+                        "sInfoThousands": ".",
+                        "sLengthMenu": "_MENU_ resultados por página",
+                        "sLoadingRecords": "Carregando...",
+                        "sProcessing": "Processando...",
+                        "sZeroRecords": "Nenhum registro encontrado",
+                        "sSearch": "Pesquisar: ",
+                        "oPaginate": {
+                            "sNext": "Próximo →" +
+                                "" +
+                                "",
+                            "sPrevious": "← Anterior",
+                            "sFirst": "Primeiro",
+                            "sLast": "Último"
+                        },
+                        "oAria": {
+                            "sSortAscending": ": Ordenar colunas de forma ascendente",
+                            "sSortDescending": ": Ordenar colunas de forma descendente"
+                        }
+                    }
+                });
+
+                $('#alunosSolicitados').DataTable().draw();
 
             }).catch(error => {
                 Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
@@ -97,15 +116,21 @@
         }
     }
 });
+
 var crud = {
     DeleteModal: function (id) {
-        $('input[name="ContratoId"]').attr('value', id);
-        $('#mdDeleteContrato').modal('show');
-        vm.DeleteContrato(id)
+        $('input[name="ParceiroId"]').attr('value', id);
+        $('#mdDeleteParceiro').modal('show');
+        vm.DeleteParceiro(id)
     },
     EditModal: function (id) {
-        $('input[name="ContratoId"]').attr('value', id);
-        $('#mdEditContrato').modal('show');
-        vm.EditContrato(id)
+        $('input[name="ParceiroId"]').attr('value', id);
+        $('#mdEditParceiro').modal('show');
+        vm.EditParceiro(id)
+    },
+    PendentesModal: function (id) {
+        $('input[name="ParceiroId"]').attr('value', id);
+        $('#mdEditParceiro').modal('show');
+        vm.EditPendentes(id)
     }
 };

@@ -1,4 +1,4 @@
-﻿namespace Infraero.Relprev.CrossCutting.Enumerators
+﻿namespace WebApp.Enumerators
 {
     public enum EnumNotify
     {
