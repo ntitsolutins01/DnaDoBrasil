@@ -1,152 +1,162 @@
-﻿@{
-    ViewData["Title"] = "Index";
+﻿@model WebApp.Models.LaudoModel
+@{
+    ViewData["Title"] = "Listagem de Laudos";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row">
-    <div class="col-md-12">
-        <form id="form" action="forms-validation.html" class="form-horizontal">
+<div id="formLaudo">
+    <div class="row">
+        <div class="col-lg-12">
             <section class="panel">
                 <header class="panel-heading">
                     <div class="panel-actions">
-                        <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
+                        <a href="#" class="card-action card-action-toggle" data-card-toggle></a>
                     </div>
-
-                    <h2 class="panel-title">Filtro de pesquisa</h2>
+                    <h2 class="panel-title">Listagem de Laudos</h2>
                 </header>
                 <div class="panel-body">
-
-                    <label class="col-sm-1 control-label">Cliente</label>
-                    <div class="col-md-3 form-group">
-                        <input type="text" class="form-control">
-                    </div>
-
-                    <label class="col-sm-1 control-label" style="width: 12.499999995%">Tipo de Laudo</label>
-                    <div class="col-md-3 form-group">
-                        <input type="text" class="form-control">
-                    </div>
-
-                    <label class="col-sm-1 control-label">Local </label>
-                    <div class="col-md-3 form-group">
-                        <select class="form-control populate select2" name="ddlPerfil" id="ddlPerfil"
-                                title="Por favor selecione um perfil." required
-                        @* asp-for="CodPerfil" asp-items="Model.ListPerfil" *@>
-                            <option value="">Selecionar Local</option>
-                        </select>
-                    </div>
-
-                    <label class="col-sm-1 control-label">Série</label>
-                    <div class="col-md-3 form-group">
-                        <select class="form-control populate select2" name="ddlPerfil" id="ddlPerfil"
-                                title="Por favor selecione um perfil." required
-                                @* asp-for="CodPerfil" asp-items="Model.ListPerfil" *@>
-                            <option value="">Selecionar Status</option>
-                        </select>
-                    </div>
-                    
-                    <label class="col-sm-2 control-label">Com Notas</label>
-                    <div class="col-md-1 form-group">
-                        <div class="switch switch-sm switch-primary">
-                            <div class="ios-switch on">
-                                <div class="on-background background-fill"></div>
-                                <div class="state-background background-fill"></div>
-                                <div class="handle"></div>
-                            </div>
-                            <input type="checkbox" name="switch" data-plugin-ios-switch="" style="display: none;">
+                    <div class="form-group row">
+                        <div class="col-sm-12 pull-right">
+                            <a href="@Url.Action("Create", "Laudo")" id="addToTable" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Novo Laudo </a>
                         </div>
                     </div>
-                    
-                    <label class="col-sm-2 control-label">Com Laudos</label>
-                    <div class="col-md-1 form-group">
-                        <div class="switch switch-sm switch-primary">
-                            <div class="ios-switch">
-                                <div class="on-background background-fill"></div>
-                                <div class="state-background background-fill"></div>
-                                <div class="handle"></div>
-                            </div>
-                            <input type="checkbox" name="switch" data-plugin-ios-switch="" checked="checked" style="display: none;">
-                        </div>
-                    </div>
-
+                    <table class="table table-bordered table-striped mb-0" id="datatable-default">
+                        <thead>
+                            <tr>
+                                <th class="text-center">Nome</th>
+                                <th class="text-center">Saúde</th>
+                                <th class="text-center">Talento Esportivo</th>
+                                <th class="text-center">Consumo Alimentar</th>
+                                <th class="text-center">Saude Bucal</th>
+                                <th class="text-center">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                       @*  @foreach (var item in Model.aaData)
+                        {
+	                        <tr>
+                                    <td class="text-center">@Html.DisplayFor(modelItem => item.NomUsuario)</td>
+                                    <td class="text-center">@Html.DisplayFor(modelItem => item.NumCpf)</td>
+                                    <td class="text-center">@Html.DisplayFor(modelItem => item.Email)</td>
+                                    <td class="text-center">@Html.DisplayFor(modelItem => item.NomPerfil)</td>
+		                        <td class="actions">
+			                        <a data-toggle="tooltip" data-placement="top" title="Editar" asp-action="Edit" asp-controller="Usuario" asp-route-id="@item.CodUsuarioLogin" class="on-default edit-row" style='color: #eea236'><i class="fa fa-pencil"></i></a>
+			                        <a data-toggle="tooltip" data-placement="top" title="Excluir" asp-action="Delete" asp-controller="Usuario" asp-route-id="@item.CodUsuarioLogin" class="on-default remove-row" style='color: #d43f3a'><i class="fa fa-trash-o"></i></a>
+		                        </td>
+	                        </tr>
+                        } *@
+                        </tbody>
+                    </table>
                 </div>
-                <footer class="panel-footer">
-                    <div class="row">
-                        <div class="col-md-9 col-md-offset-3">
-                            <button type="submit" class="btn btn-primary pull-right" style="margin-left: 5px;margin-right: 5px;"><i class="fa fa-search"></i> &nbsp;&nbsp;Pesquisar</button>
+            </section>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="mdDeleteLaudo" tabindex="-1" role="dialog" aria-labelledby="mdDeleteLaudoLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mdDeleteLaudoLabel">
+                        <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Exclusão de Laudo</strong>
+                    </h5>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-icon">
+                        <i class="fa fa-question-circle"></i>
+                    </div>
+                    <div class="modal-text">
+                        <input type="hidden" id="deleteLaudoId" />
+                        <p class="mb-0">Tem certeza que deseja <b>excluir</b> esse registro?</p>
+                    </div>
+                    <div class="modal-wrapper">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-thumbs-o-down"></i> &nbsp;&nbsp;Não</button>
+                    <a id="deleteLaudoHref" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="mdEditLaudo" tabindex="-1" role="dialog" aria-labelledby="mdEditLaudoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mdEditLaudoLabel">
+                        <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Alterar Laudo</strong>
+                    </h5>
+                </div>
+                @using (@Html.BeginForm("Edit", "Laudo", FormMethod.Post, new { id = "formEditLaudo", @class = "form-horizontal" }))
+                {
+                    <input type="hidden" name="editLaudoId" :value="editDto.Id" />
+
+                    <div class="modal-body">
+                        <div class="form-group row">
+                            <label class="col-sm-2 control-label text-sm-right pt-2">Laudo <span class="required">*</span></label>
+                            <div class="col-sm-10">
+                                <input type="text" name="nome" class="form-control"
+                                       maxlength="80" :value="editDto.Nome"
+                                       title="Por favor informe o Laudo." required />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 control-label text-sm-right pt-2">Descrição <span class="required">*</span></label>
+                            <div class="col-sm-10">
+                                <input type="text" name="descricao" class="form-control"
+                                       maxlength="80" :value="editDto.Descricao"
+                                       title="Por favor informe a descrição." required />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 control-label text-sm-right pt-2">Idade Inicial <span class="required">*</span></label>
+                            <div class="col-sm-2">
+                                <input type="number" name="idadeIni" class="form-control"
+                                       maxlength="80" :value="editDto.IdadeInicial" min="0" max="100"
+                                       title="Por favor informe a idade inicial." required />
+                            </div>
+                            <label class="col-sm-2 control-label text-sm-right pt-2">Idade Final <span class="required">*</span></label>
+                            <div class="col-sm-2">
+                                <input type="number" name="idadeFim" class="form-control"
+                                       maxlength="80" :value="editDto.IdadeFinal" min="0" max="100"
+                                       title="Por favor informe a idade final." required />
+                            </div>
+                            <label class="col-sm-2 control-label text-sm-right pt-2">ScoreTotal <span class="required">*</span></label>
+                            <div class="col-sm-2">
+                                <input type="number" name="scoreTotal" class="form-control"
+                                       maxlength="80" :value="editDto.ScoreTotal" min="0" max="100"
+                                       title="Por favor informe o score total." required />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 control-label text-sm-right pt-2">Status</label>
+                            <div class="col-md-3">
+                                <div class="switch switch-sm switch-primary">
+                                    <input type="checkbox" id="editStatus" name="editStatus" data-plugin-ios-switch checked="checked" />
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </footer>
-            </section>
-        </form>
+                    <div class="modal-footer">
+                        <button type="reset" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
+                        <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
+                    </div>
+                }
+            </div>
+        </div>
     </div>
 </div>
-
-<section class="panel">
-    <header class="panel-heading">
-        <div class="panel-actions">
-            <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
-        </div>
-
-        <h2 class="panel-title">Laudos</h2>
-
-    </header>
-    <div class="panel-body">
-        <table class="table table-bordered table-striped mb-0" id="datatable-default">
-            <thead>
-                <tr>
-					<th>Nome</th>
-					<th>Saúde</th>
-                    <th>Talento Esportivo</th>
-					<th>Consumo Alimentar</th>
-					<th>Saude Bucal</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-            <tr>
-	            <td>Fábio de Souza Muniz</td>
-	            <td>325</td>
-	            <td>200</td>
-	            <td>524</td>
-	            <td>845</td>
-	            <td class="actions">
-                    <a data-toggle="tooltip" data-placement="top" title="Detalhar" asp-action="Details" asp-controller="Laudo" asp-route-id="1" class="on-default edit-row" style='color: #eea236'><i class="fa fa-address-card"></i></a>
-                    <a data-toggle="tooltip" data-placement="top" title="Avaliação Completa" asp-action="Details" asp-controller="Laudo" asp-route-id="1" class="on-default edit-row" style='color: #d2322d'><i class="fa fa-bar-chart"></i></a>
-                    <a data-toggle="tooltip" data-placement="top" title="Relatório" asp-action="Details" asp-controller="Laudo" asp-route-id="1" class="on-default edit-row" style='color: #47a447'><i class="fa fa-file-text"></i></a>
-	            </td>
-            </tr>
-            @* @foreach (var item in Model.aaData)
-                {
-                <tr>
-                <td>@Html.DisplayFor(modelItem => item.NomUsuario)</td>
-                <td>@Html.DisplayFor(modelItem => item.NumCpf)</td>
-                <td>@Html.DisplayFor(modelItem => item.Email)</td>
-                <td>@Html.DisplayFor(modelItem => item.NomPerfil)</td>
-                <td class="actions">
-                <a data-toggle="tooltip" data-placement="top" title="Editar" asp-action="Edit" asp-controller="Usuario" asp-route-id="@item.CodUsuarioLogin" class="on-default edit-row" style='color: #eea236'><i class="fa fa-pencil"></i></a>
-                <a data-toggle="tooltip" data-placement="top" title="Excluir" asp-action="Delete" asp-controller="Usuario" asp-route-id="@item.CodUsuarioLogin" class="on-default remove-row" style='color: #d43f3a'><i class="fa fa-trash-o"></i></a>
-                <a data-toggle="tooltip" data-placement="top" title="Excluir" asp-action="Delete" asp-controller="Usuario" asp-route-id="@item.CodUsuarioLogin" class="on-default remove-row" style='color: #d43f3a'><i class="fa fa-trash-o"></i></a>
-                </td>
-                </tr>
-                } *@
-            </tbody>
-        </table>
-    </div>
-    @* <footer class="panel-footer">
-    <button class="btn btn-primary">Submit </button>
-    <button type="reset" class="btn btn-default">Reset</button>
-    </footer> *@
-</section>
-
-
 
 @section CssSpecificVendor {
     <link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />
 }
 @section Scripts {
+    <script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
+    <script src="~/assets/vendor/ios7-switch/ios7-switch.js"></script>
     <script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
     <script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
     <script src="~/js/formatTable.js"></script>
+    <script src="~/js/Laudo.js"></script>
 
     <script>
 
@@ -161,6 +171,7 @@
                     text: 'Cadastro realizado com sucesso!',
                     type: 'success'
                 });
+                crub = 0;
             } else if (crub === 2) {
                 new PNotify({
                     title: 'Laudo',
@@ -168,6 +179,7 @@
                     type: 'warning',
                     icon: 'fa fa-pencil'
                 });
+                crub = 0;
             } else if (crub === 3) {
                 new PNotify({
                     title: 'Laudo',
@@ -175,7 +187,36 @@
                     type: 'error',
                     icon: 'fa fa-trash-o'
                 });
+                crub = 0;
             }
+
+
+            var notify = @ViewBag.NotifyMessage;
+            var messagem = '@ViewBag.Notify';
+
+            if (notify === 0) {
+                new PNotify({
+                    title: 'Laudo',
+                    text: messagem,
+                    type: 'success'
+                });
+                crub = 0;
+            } else if (notify === 1) {
+                new PNotify({
+                    title: 'Laudo',
+                    text: messagem,
+                    type: 'warning'
+                });
+                crub = 0;
+            } else if (notify === 2) {
+                new PNotify({
+                    title: 'Laudo',
+                    text: messagem,
+                    type: 'error'
+                });
+                crub = 0;
+            }
+
             if ($.isFunction($.fn['tooltip'])) {
                 $('[data-toggle=tooltip],[rel=tooltip]').tooltip({ container: 'body' });
             }
@@ -183,4 +224,6 @@
         }).apply(this, [jQuery]);
     </script>
 }
+
+
 
