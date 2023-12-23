@@ -4,7 +4,6 @@
     {
         public int Id { get; set; }
         public int AspNetUserId { get; set; }
-        public int? MunicipioId { get; set; }
         public required string Nome { get; set; }
         public required string Email { get; set; }
         public required int TipoParceria { get; set; }
@@ -19,5 +18,8 @@
         public bool Status { get; set; }
         public bool Habilitado { get; set; }
         public List<AlunoDto>? Alunos { get; set; }
+        public int? MunicipioId { get; set; }
+        public int EstadoId { get; set; }
+        public string Uf { get; set; }
     }
 }

@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\assets\vendor\datatables\media\js\dataTables.select.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MailKit" Version="4.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="7.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.10" />
@@ -31,11 +35,13 @@
     <_ContentIncludedByDefault Remove="Views\Aluno\SaudeBucal.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Escolaridade\Create.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Usuario\Create.cshtml" />
+    <_ContentIncludedByDefault Remove="wwwroot\assets\vendor\datatables\media\js\dataTables.select.min.js" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="wwwroot\assets\vendor\axios\axios.min.js" />
     <None Include="wwwroot\assets\vendor\axios\axios.min.map" />
+    <None Include="wwwroot\assets\vendor\datatables\media\js\dataTables.select.min.js" />
     <None Include="wwwroot\assets\vendor\jquery-mask\jquery.mask.js" />
     <None Include="wwwroot\assets\vendor\vue\vue.js" />
     <None Include="wwwroot\EmailTemplates\ConfirmEmail.html" />

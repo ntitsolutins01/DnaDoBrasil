@@ -5,10 +5,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
-<div class="row">
-    <div class="col-md-12">
-        <form id="form" action="forms-validation.html" class="form-horizontal">
+<div id="formParceiro">
+    <div class="row">
+        <div class="col-md-12">
             <section class="panel">
                 <header class="panel-heading">
                     <div class="panel-actions">
@@ -50,145 +49,186 @@
                     </div>
                 </footer>
             </section>
-        </form>
+        </div>
     </div>
-</div>
-
-<section class="panel">
-    <header class="panel-heading">
-        <div class="panel-actions">
-            <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
-        </div>
-
-        <h2 class="panel-title">Listagem de Parceiros</h2>
-
-    </header>
-    <div class="panel-body">
-        <div class="form-group row">
-            <div class="col-sm-12 pull-right">
-                <a id="addToTable" href="@Url.Action("CreateParceiro", "SistemaSocioeconomico")"
-                   class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Novo Parceiros </a>
+    <section class="panel">
+        <header class="panel-heading">
+            <div class="panel-actions">
+                <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
             </div>
-        </div>
-        <table class="table table-bordered table-striped mb-0" id="datatable-default">
-            <thead>
-                <tr>
-                    <th>Instituiçao</th>
-                    <th>Email</th>
-                    <th>Solicitação Pendente?</th>
-                    <th>Status</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.Parceiros)
-                {
+
+            <h2 class="panel-title">Listagem de Parceiros</h2>
+
+        </header>
+        <div class="panel-body">
+            <div class="form-group row">
+                <div class="col-sm-12 pull-right">
+                    <a id="addToTable" href="@Url.Action("CreateParceiro", "SistemaSocioeconomico")"
+                       class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Novo Parceiros </a>
+                </div>
+            </div>
+            <table class="table table-bordered table-striped mb-0" id="datatable-default">
+                <thead>
                     <tr>
-                        <td class="text-center">@Html.DisplayFor(modelItem => item.Nome)</td>
-                        <td class="text-center">@Html.DisplayFor(modelItem => item.Email)</td>
-                        @if (item.Alunos!.Any())
-                        {
-                            <td class="text-center">
-                                <a type="button" href='javascript:(crud.PendentesModal(@item.Id))'
-                                   data-toggle="tooltip" data-placement="top" title="Lista de alunos solicitados"
-                                   class="mb-xs mt-xs mr-xs btn btn-xs btn-danger">
-                                    <b>SIM</b>
-                                </a>
-                            </td>
-                        }
-                        else
-                        {
-                            <td class="text-center"><span class="label label-success">NÃO</span></td>
-                        }
-                        @if (item.Habilitado)
-                        {
-                            <td class="text-center"><span class="label label-success">HABILITADO</span></td>
-                        }
-                        else
-                        {
-                            <td class="text-center"><span class="label label-danger">INABILITADO</span></td>
-                        }
-                        <td class="actions text-center">
-                            <a data-toggle="tooltip" data-placement="top" title="Editar"
-                               href='javascript:(crud.EditModal(@item.Id))'
-                               class="on-default edit-row" style='color: #FF9800'>
-                                <i class="fa fa-pencil"></i>
-                            </a>
-                            <a data-toggle="tooltip" data-placement="top" title="Excluir" href='javascript:(crud.DeleteModal(@item.Id))'
-                               class="on-default remove-row" style="cursor: pointer;color: #F44336"><i class="fa fa-trash"></i></a>
-                        </td>
+                        <th>Id</th>
+                        <th>Instituiçao</th>
+                        <th>Email</th>
+                        <th>Solicitação Pendente?</th>
+                        <th>Status</th>
+                        <th>Ações</th>
                     </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-</section>
-<!-- Modal -->
-<div class="modal fade" id="mdExcluir" tabindex="-1" role="dialog" aria-labelledby="mdExcluirLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="mdExcluirLabel">
-                    <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Exclusão de Sistema Socioeconomico</strong>
-                </h5>
-            </div>
-            <div class="modal-body">
-                <div class="modal-icon">
-                    <i class="fa fa-question-circle"></i>
-                </div>
-                <div class="modal-text">
-                    <p class="mb-0">Tem certeza que deseja <b>excluir</b> esse registro?</p>
-                </div>
-                <div class="modal-wrapper">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-thumbs-o-down"></i> &nbsp;&nbsp;Não</button>
-                <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Modal -->
-<div class="modal fade" id="mdPendentes" tabindex="-1" role="dialog" aria-labelledby="mdPendentesLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="mdPendentesLabel">
-                    <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Listagem de alunos solicitados</strong>
-                </h5>
-            </div>
-            <input type="hidden" name="editParceiroId" :value="editDto.Id" />
-            <div class="modal-body">
-                <table id="alunosSolicitados" class="table table-responsive-md table-striped mb-0">
-                    <thead>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Parceiros)
+                    {
                         <tr>
-                            <th>
-                                <div class="checkbox-custom chekbox-primary pull-right col-md-2">
-                                    <input id="todos" value="todos" type="checkbox" name="for[]" required />
-                                </div>
-                            </th>
-                            <th>Aluno</th>
-                            <th>Idade</th>
-                            <th>Taleto</th>
+                            <td class="text-center">@Html.DisplayFor(modelItem => item.Id)</td>
+                            <td class="text-center">@Html.DisplayFor(modelItem => item.Nome)</td>
+                            <td class="text-center">@Html.DisplayFor(modelItem => item.Email)</td>
+                            @if (item.Alunos!.Any())
+                            {
+                                <td class="text-center"><span class="label label-danger">SIM</span></td>
+                            }
+                            else
+                            {
+                                <td class="text-center"><span class="label label-success">NÃO</span></td>
+                            }
+                            @if (item.Habilitado)
+                            {
+                                <td class="text-center"><span class="label label-success">HABILITADO</span></td>
+                            }
+                            else
+                            {
+                                <td class="text-center"><span class="label label-danger">INABILITADO</span></td>
+                            }
+                            <td class="actions text-center">
+                                <a data-toggle="tooltip" data-placement="top" title="Editar" asp-action="EditParceiro" asp-controller="SistemaSocioeconomico"
+                                   asp-route-Id="@item.Id" class="on-default edit-row" style='color: #FF9800'><i class="fa fa-pencil"></i></a>
+                                @if (item.Alunos!.Any())
+                                {
+                                    <a data-toggle="tooltip" data-placement="top" title="Lista de alunos solicitados" href='javascript:(crud.PendentesModal(@item.Id))'
+                                       class="on-default remove-row" style="cursor: pointer;color: #43A047 "><i class="fa fa-group"></i></a>
+                                }
+                                <a data-toggle="tooltip" data-placement="top" title="Habilitar Parceiro" href='javascript:(crud.HabilitarModal(@item.Id))'
+                                   class="on-default remove-row" style="cursor: pointer;color: #7B1FA2"><i class="fa fa-check-circle"></i></a>
+                                <a data-toggle="tooltip" data-placement="top" title="Excluir" href='javascript:(crud.DeleteModal(@item.Id))'
+                                   class="on-default remove-row" style="cursor: pointer;color: #F44336"><i class="fa fa-trash"></i></a>
+                            </td>
                         </tr>
-                    </thead>
-                </table>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <!-- Modal -->
+    <div class="modal fade" id="mdExcluir" tabindex="-1" role="dialog" aria-labelledby="mdExcluirLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mdExcluirLabel">
+                        <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Exclusão de Sistema Socioeconomico</strong>
+                    </h5>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-icon">
+                        <i class="fa fa-question-circle"></i>
+                    </div>
+                    <div class="modal-text">
+                        <p class="mb-0">Tem certeza que deseja <b>excluir</b> esse registro?</p>
+                    </div>
+                    <div class="modal-wrapper">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-thumbs-o-down"></i> &nbsp;&nbsp;Não</button>
+                    <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</button>
+                </div>
             </div>
-            <div class="modal-footer">
-                <button type="reset" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="mdPendentes" tabindex="-1" role="dialog" aria-labelledby="mdPendentesLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mdPendentesLabel">
+                        <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Listagem de alunos solicitados</strong>
+                    </h5>
+                </div>
+                <input type="hidden" name="editParceiroId" :value="editDto.Id" />
+                <div class="modal-body">
+                    <table id="alunosSolicitados" class="table table-responsive-md table-striped mb-0">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <div class="checkbox-custom chekbox-primary pull-right col-md-2">
+                                        <input id="todos" value="todos" type="checkbox" name="for[]" required />
+                                    </div>
+                                </th>
+                                <th></th>
+                                <th>Id</th>
+                                <th>Aluno</th>
+                                <th>Idade</th>
+                                @* <th>Taleto</th> *@
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="reset" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="mdHabilitar" tabindex="-1" role="dialog" aria-labelledby="mdHabilitarLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mdHabilitarLabel">
+                        <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Habilitar Parceiro</strong>
+                    </h5>
+                </div>
+            @using (@Html.BeginForm("Habilitar", "Parceiro", FormMethod.Post, new { id = "formHabilitarParceiro", @class = "form-horizontal" }))
+            {
+                <input type="hidden" name="habilitarParceiroId" :value="editDto.Id"/>
+
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <label class="col-sm-2 control-label text-sm-right pt-2">Email <span class="required">*</span></label>
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-envelope"></i>
+                                </span>
+                                <input type="text" id="email" name="email"
+                                       v-model="params.email"
+                                       v-on:blur="ExisteEmail"
+                                       class="form-control"
+                                       maxlength="40"
+                                       title="Por favor informe um Email válido do parceiro." required />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-thumbs-o-down"></i> &nbsp;&nbsp;Não</button>
+                    <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</button>
+                </div>
+            }
             </div>
         </div>
     </div>
 </div>
-
 @section CssSpecificVendor {
     <link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />
 }
 @section Scripts {
     <script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
     <script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/assets/vendor/datatables/media/js/datatables.select.min.js"></script>
     <script src="~/js/formatTable.js"></script>
+    <script src="~/js/parceiro.js"></script>
 
     <script>
 
