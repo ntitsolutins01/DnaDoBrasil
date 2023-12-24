@@ -9,6 +9,10 @@ namespace WebApp.Models
         public List<ProfissionalDto> Profissionais { get; set; }
         public string ProfissionalId { get; set; }
         public SelectList ListProfissionals { get; set; }
+        public string EstadoId { get; set; }
+        public SelectList ListEstados { get; set; }
+        public string MunicipioId { get; set; }
+        public SelectList ListMunicipios { get; set; }
 
         public class CreateUpdateProfissionalCommand
         {

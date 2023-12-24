@@ -1,3 +1,5 @@
+@model ProfissionalModel
+
 @{
     ViewData["Title"] = "Inclusão de Profissionais";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -111,22 +113,22 @@
                         <div class="col-sm-3">
                             <input type="bairro" name="bairro" maxlength="50" class="form-control" placeholder="eg.: Nome do bairro" />
                         </div>
-                        <label class="col-sm-1 control-label">Estado </label>
-                        <div class="col-sm-3">
-                            <select class="form-control populate select2" name="ddlEstado" id="ddlEstado"
-                                    title="Por favor selecione um estado." 
-                            @* asp-for="CodEstado" asp-items="Model.ListEstado" *@>
-                                <option value="">Selecionar Estado</option>
-                            </select>
-                        </div>
-                        <label class="col-sm-1 control-label">Municipio </label>
-                        <div class="col-sm-3">
-                            <select class="form-control populate select2" name="ddlEstado" id="ddlEstado"
-                                    title="Por favor selecione um estado."
-                            @* asp-for="CodMunicipio" asp-items="Model.ListMunicipio" *@>
-                                <option value="">Selecionar Estado</option>
-                            </select>
-                        </div>
+	                    <label class="col-sm-3 control-label text-sm-right pt-2">Estado</label>
+	                    <div class="col-md-3">
+		                    <select class="form-control populate select2" name="ddlEstado" id="ddlEstado"
+		                            title="Por favor informe um Estado." required
+		                            asp-for="EstadoId" asp-items="Model.ListEstados">
+			                    <option value="">Selecionar Estado</option>
+		                    </select>
+	                    </div>
+	                    <label class="col-sm-1 control-label text-sm-right pt-2">Município</label>
+	                    <div class="col-md-5">
+		                    <select class="form-control populate select2" name="ddlMunicipio" id="ddlMunicipio"
+		                            required title="Por favor informe um Municipio."
+                                    asp-for="MunicipioId" asp-items="Model.ListMunicipios">
+			                    <option value="">Selecionar Município</option>
+		                    </select>
+	                    </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label pull-left">Cadastro ativo para login?</label>
