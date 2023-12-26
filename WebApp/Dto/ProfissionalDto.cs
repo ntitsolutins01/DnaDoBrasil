@@ -18,7 +18,7 @@
         public bool Status { get; set; } = true;
         public MunicipioDto? Municipio { get; set; }
         public List<AmbienteDto>? Ambientes { get; init; }
-        public bool? Habilitado { get; set; }
+        public bool Habilitado { get; set; }
         public List<ProfissionalDto>? Profissionais { get; set; }
 
     }

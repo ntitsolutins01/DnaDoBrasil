@@ -85,8 +85,8 @@
 						<th class="text-center">Id</th>
 						<th class="text-center">Nome</th>
 						<th class="text-center">Email</th>
-						<th class="text-center">Habilitado</th>
 						<th class="text-center">Status</th>
+						<th class="text-center">Habilitado</th>
 						<th class="text-center">Ações</th>
 					</tr>
 				</thead>
@@ -97,9 +97,25 @@
 							<td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Id)</td>
 							<td class="text-center">@Html.DisplayFor(modelItem => item.Nome)</td>
 							<td class="text-center">@Html.DisplayFor(modelItem => item.Email)</td>
-							<td class="text-center">@Html.DisplayFor(modelItem => item.Habilitado)</td>
-							<td class="text-center">@Html.DisplayFor(modelItem => item.Status)</td>
-							<td class="actions">
+							@if (item.Status)
+							{
+								<td class="text-center"><span class="label label-success">ATIVO</span></td>
+							}
+							else
+							{
+								<td class="text-center"><span class="label label-danger">INATIVO</span></td>
+							}
+							@if (item.Habilitado)
+							{
+								<td class="text-center"><span class="label label-success">HABILITADO</span></td>
+							}
+							else
+							{
+								<td class="text-center"><span class="label label-danger">INABILITADO</span></td>
+							}
+							<td class="actions text-center">
+								<a data-toggle="tooltip" data-placement="top" title="Habilitar Profissional" href='javascript:(crud.HabilitarModal(@item.Id))'
+								   class="on-default remove-row" style="cursor: pointer;color: #7B1FA2"><i class="fa fa-check-circle"></i></a>
 								<a data-toggle="tooltip" data-placement="top" title="Editar"
 								   href='javascript:(crud.EditModal(@item.Id))'
 								   class="on-default edit-row" style='color: #FF9800'>
@@ -114,228 +130,65 @@
 			</table>
 		</div>
 	</section>
-	<!-- Modal -->
-	<div class="modal fade" id="mdDeleteProfissional" tabindex="-1" role="dialog" aria-labelledby="mdDeleteProfissionalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="mdDeleteProfissionalLabel">
-						<i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Exclusão de Profissional</strong>
-					</h5>
+<!-- Modal -->
+<div class="modal fade" id="mdExcluir" tabindex="-1" role="dialog" aria-labelledby="mdExcluirLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="mdExcluirLabel">
+					<i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Exclusão de Profissional</strong>
+				</h5>
+			</div>
+			<div class="modal-body">
+				<div class="modal-icon">
+					<i class="fa fa-question-circle"></i>
 				</div>
-				<div class="modal-body">
-					<div class="modal-icon">
-						<i class="fa fa-question-circle"></i>
-					</div>
-					<div class="modal-text">
-						<input type="hidden" id="deleteProfissionalId" />
-						<p class="mb-0">Tem certeza que deseja <b>excluir</b> esse registro?</p>
-					</div>
-					<div class="modal-wrapper">
-					</div>
+				<div class="modal-text">
+					<p class="mb-0">Tem certeza que deseja <b>excluir</b> esse registro?</p>
 				</div>
-				<div class="modal-footer">
-					<button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-thumbs-o-down"></i> &nbsp;&nbsp;Não</button>
-					<a id="deleteProfissionalHref" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</a>
+				<div class="modal-wrapper">
 				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-thumbs-o-down"></i> &nbsp;&nbsp;Não</button>
+				<button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</button>
 			</div>
 		</div>
 	</div>
+</div>
 	<!-- Modal -->
-	<div class="modal fade" id="mdEditProfissional" tabindex="-1" role="dialog" aria-labelledby="mdEditProfissionalLabel" aria-hidden="true">
+	<div class="modal fade" id="mdHabilitar" tabindex="-1" role="dialog" aria-labelledby="mdHabilitarLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="mdEditProfissionalLabel">
-						<i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Alterar Profissional</strong>
+					<h5 class="modal-title" id="mdHabilitarLabel">
+						<i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Habilitar Profissional</strong>
 					</h5>
 				</div>
-				@using (@Html.BeginForm("Edit", "Profissional", FormMethod.Post, new { id = "formEditProfissional", @class = "form-horizontal" }))
+				@using (@Html.BeginForm("Habilitar", "Profissional", FormMethod.Post, new { id = "formHabilitarProfissional", @class = "form-horizontal" }))
 				{
-					<input type="hidden" name="editProfissionalId" :value="editDto.Id" />
+					<input type="hidden" name="habilitarParceiroId" :value="editDto.Id" />
 
-					<div class="panel-body">
-
-						<div class="form-group">
-							<label class="col-sm-1 control-label">Nome <span class="required">*</span></label>
-							<div class="col-sm-6">
-								<input type="text" name="nome" id="nome"
-									   placeholder="eg.: Nome completo do profissional" maxlength="200" class="form-control" required />
-							</div>
-							<label class="col-sm-2 control-label">Data Nascimento <span class="required">*</span></label>
-							<div class="col-sm-3">
-								<div class="input-group">
-									<span class="input-group-addon">
-										<i class="fa fa-calendar"></i>
-									</span>
-									<input id="DtNascimento" name="DtNascimento"
-										   required
-										   title="Por favor informe a data de nascimento."
-										   style="z-index: auto;"
-										   data-plugin-datepicker data-date-format="dd/mm/yyyy" data-plugin-options='{"language": "pt-BR"}'
-										   placeholder="__/__/____" class="form-control startdate"
-										   class="form-control">
-								</div>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-1 control-label">Email <span class="required">*</span></label>
-							<div class="col-sm-5">
+					<div class="modal-body">
+						<div class="form-group row">
+							<label class="col-sm-2 control-label text-sm-right pt-2">Email <span class="required">*</span></label>
+							<div class="col-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon">
 										<i class="fa fa-envelope"></i>
 									</span>
-									<input type="text" name="email" maxlength="100" class="form-control"
-										   placeholder="eg.: Endereço eletrônico válido do profissional" />
+									@* v-on:blur="ExisteEmail" *@
+									<input type="text" id="email" name="email"
+										   class="form-control"
+										   maxlength="100"
+										   title="Por favor informe um Email válido do parceiro." required />
 								</div>
-							</div>
-							<label class="col-sm-1 control-label">Sexo <span class="required">*</span></label>
-							<div class="col-sm-3">
-								<select class="form-control populate select2" name="ddlSexo" id="ddlSexo"
-										title="Por favor selecione um sexo." required>
-									<option value="">Selecionar Sexo</option>
-									<option value="M">MASCULINO</option>
-									<option value="F">FEMININO</option>
-								</select>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-1 control-label">Cpf </label>
-							<div class="col-sm-3">
-								<input id="cpf" name="cpf"
-									   v-model="params.cpf"
-									   type="text" value="" class="form-control" placeholder="eg.: Número do CPF do aluno"
-									   maxlength="14" />
-							</div>
-							<label class="col-lg-1 control-label text-lg-right pt-2">Telefone</label>
-							<div class="col-lg-3">
-								<div class="input-group">
-									<span class="input-group-addon">
-										<i class="fa fa-phone"></i>
-									</span>
-									<input id="numTelefone" name="numTelefone" placeholder="eg.: (00) 0000-0000" class="form-control"
-										   maxlength="14"
-										   title="Por favor informe o telefone ">
-								</div>
-							</div>
-							<label class="col-sm-1 control-label">Celular </label>
-							<div class="col-sm-3">
-								<div class="input-group">
-									<span class="input-group-addon">
-										<i class="fa fa-phone"></i>
-									</span>
-									<input id="numCelular" name="numCelular" placeholder="eg.: (00) 00000-0000" class="form-control"
-										   maxlength="14"
-										   title="Por favor informe o celular">
-								</div>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-1 control-label">Endereço</label>
-							<div class="col-sm-5">
-								<input type="text" id="endereco" name="endereco" maxlength="200" class="form-control" placeholder="eg.: Endereço do aluno" />
-							</div>
-							<label class="col-sm-1 control-label">Número</label>
-							<div class="col-sm-2">
-								<input type="number" id="numero" name="numero" maxlength="4" class="form-control" placeholder="eg.: 0000" />
-							</div>
-							<label class="col-sm-1 control-label">Cep</label>
-							<div class="col-sm-2">
-								<input type="text" id="cep" name="cep" maxlength="9" class="form-control" placeholder="eg.: 00000-000" />
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-1 control-label">Bairro </label>
-							<div class="col-sm-3">
-								<input type="bairro" name="bairro" maxlength="50" class="form-control" placeholder="eg.: Nome do bairro" />
-							</div>
-							<label class="col-sm-1 control-label">Estado </label>
-							<div class="col-sm-3">
-								<select class="form-control populate select2" name="ddlEstado" id="ddlEstado"
-										title="Por favor selecione um estado."
-								@* asp-for="CodEstado" asp-items="Model.ListEstado" *@>
-									<option value="">Selecionar Estado</option>
-								</select>
-							</div>
-							<label class="col-sm-1 control-label">Municipio </label>
-							<div class="col-sm-3">
-								<select class="form-control populate select2" name="ddlEstado" id="ddlEstado"
-										title="Por favor selecione um estado."
-								@* asp-for="CodMunicipio" asp-items="Model.ListMunicipio" *@>
-									<option value="">Selecionar Estado</option>
-								</select>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-3 control-label pull-left">Cadastro ativo para login?</label>
-							<div class="col-sm-1">
-								<div class="switch switch-sm switch-success">
-									<input type="checkbox" id="ativo" name="ativo" data-plugin-ios-switch checked="checked" />
-								</div>
-							</div>
-							<label class="col-sm-2 control-label">Cadastro habilitado a operar?</label>
-							<div class="col-sm-1">
-								<div class="switch switch-sm switch-success">
-									<input type="checkbox" id="habilitado" name="habilitado" data-plugin-ios-switch checked="checked" />
-								</div>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-1 control-label">&nbsp;&nbsp; </label>
-							<div class="col-sm-12">
-								<blockquote class="info">
-									<strong>Gerenciamento de ambientes</strong>
-								</blockquote>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-2 control-label">Ambiente</label>
-							<div class="col-sm-4">
-								<select class="form-control populate select2" name="ddlAmbiente" id="ddlAmbiente"
-										style="width: 100%" title="Por favor selecione o turno."
-								@* asp-for="CodAmbiente" asp-items="Model.ListAmbiente" *@>
-									<option value="">Selecionar Ambiente</option>
-								</select>
-							</div>
-							<div class="col-sm-1">
-								<button type="button" class="ml-xs btn btn-primary"
-										data-toggle="modal" data-target="#mdAmbiente">
-									<i class="fa fa-plus"></i>
-								</button>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-2 control-label">Adicionados</label>
-							<div class="col-sm-10">
-								<table class="table table-bordered table-striped mb-0" id="datatable-default">
-									<thead>
-										<tr>
-											<th>Esporte</th>
-											<th>Ações</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td>Natação</td>
-											<td class="actions">
-												<a data-toggle="tooltip" data-placement="top" title="Excluir" @* asp-action="Delete" *@ asp-controller="Perfil" asp-route-id="1" class="on-default remove-row" style='color:#F44336'><i class="fa fa-trash-o"></i></a>
-											</td>
-										</tr>
-										<tr>
-											<td>Futsal</td>
-											<td class="actions">
-												<a data-toggle="tooltip" data-placement="top" title="Excluir" @* asp-action="Delete" *@ asp-controller="Perfil" asp-route-id="1" class="on-default remove-row" style='color:#F44336'><i class="fa fa-trash-o"></i></a>
-											</td>
-										</tr>
-									</tbody>
-								</table>
-
 							</div>
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="reset" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
-						<button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
+						<button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-thumbs-o-down"></i> &nbsp;&nbsp;Não</button>
+						<button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</button>
 					</div>
 				}
 			</div>
