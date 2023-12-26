@@ -157,25 +157,21 @@
                 </div>
                 <input type="hidden" name="editParceiroId" :value="editDto.Id" />
                 <div class="modal-body">
-                    <table id="alunosSolicitados" class="table table-responsive-md table-striped mb-0">
+                    <table id="alunosSolicitados" class="table table-responsive-md table-striped mb-0" style="width:100%">
                         <thead>
-                            <tr>
-                                <th>
-                                    <div class="checkbox-custom chekbox-primary pull-right col-md-2">
-                                        <input id="todos" value="todos" type="checkbox" name="for[]" required />
-                                    </div>
-                                </th>
-                                <th></th>
-                                <th>Id</th>
-                                <th>Aluno</th>
-                                <th>Idade</th>
-                                @* <th>Taleto</th> *@
-                            </tr>
+                        <tr>
+                            <th></th>
+                            <th>Id</th>
+                            <th>Aluno</th>
+                            <th>Idade</th>
+                            <th>Açoes</th>
+                        </tr>
                         </thead>
                     </table>
                 </div>
                 <div class="modal-footer">
                     <button type="reset" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
+                    <a class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</a>
                 </div>
             </div>
         </div>
@@ -200,12 +196,11 @@
                             <div class="input-group">
                                 <span class="input-group-addon">
                                     <i class="fa fa-envelope"></i>
-                                </span>
+                                    </span>
+                                    @* v-on:blur="ExisteEmail" *@
                                 <input type="text" id="email" name="email"
-                                       v-model="params.email"
-                                       v-on:blur="ExisteEmail"
                                        class="form-control"
-                                       maxlength="40"
+                                       maxlength="100"
                                        title="Por favor informe um Email válido do parceiro." required />
                             </div>
                         </div>
@@ -222,11 +217,12 @@
 </div>
 @section CssSpecificVendor {
     <link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />
+    <link href="~/assets/vendor/datatables/extras/tabletools/select-1.2.3/css/select.bootstrap4.css" rel="stylesheet" />
 }
 @section Scripts {
     <script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
     <script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
-    <script src="~/assets/vendor/datatables/media/js/datatables.select.min.js"></script>
+    <script src="~/assets/vendor/datatables/extras/tabletools/select-1.2.3/js/datatables.select.js"></script>
     <script src="~/js/formatTable.js"></script>
     <script src="~/js/parceiro.js"></script>
 
