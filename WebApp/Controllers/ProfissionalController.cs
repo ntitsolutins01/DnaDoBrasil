@@ -97,10 +97,10 @@ namespace WebApp.Controllers
 					Celular = collection["numCelular"].ToString(),
 					Cpf = collection["cpf"].ToString(),
 					//AspNetUserId = collection["aspnetuserId"].ToString(),
-					Numero = Convert.ToInt32(collection["numero"].ToString()),
+					Numero = collection["numero"] == "" ? null : Convert.ToInt32(collection["numero"].ToString()),
 					Bairro = collection["bairro"].ToString(),
 					Endereco = collection["endereco"].ToString(),
-					MunicipioId = Convert.ToInt32(collection["ddlMunicipio"].ToString()),
+					MunicipioId = collection["ddlMunicipio"] == "" ? null : Convert.ToInt32(collection["ddlMunicipio"].ToString()),
 					Habilitado = habilitado == "",
 					Status = status != ""
 				};
@@ -135,10 +135,10 @@ namespace WebApp.Controllers
 					Celular = collection["numCelular"].ToString(),
 					Cpf = collection["cpf"].ToString(),
 					//AspNetUserId = collection["aspnetuserId"].ToString(),
-					Numero = Convert.ToInt32(collection["numero"].ToString()),
+					//Numero = Convert.ToInt32(collection["numero"].ToString()),
 					Bairro = collection["bairro"].ToString(),
 					Endereco = collection["endereco"].ToString(),
-					MunicipioId = Convert.ToInt32(collection["ddlMunicipio"].ToString()),
+					//MunicipioId = Convert.ToInt32(collection["ddlMunicipio"].ToString()),
 					Habilitado = habilitado == "",
 					Status = status != ""
 				};
