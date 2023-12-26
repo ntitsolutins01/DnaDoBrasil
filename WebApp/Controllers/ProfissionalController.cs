@@ -1,5 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
 using WebApp.Configuration;
 using WebApp.Dto;
@@ -22,21 +23,44 @@ namespace WebApp.Controllers
 
         public IActionResult Index(int? crud, int? notify, string message = null)
         {
-            SetNotifyMessage(notify, message);
-            SetCrudMessage(crud);
-            var response = ApiClientFactory.Instance.GetProfissionalAll();
 
-            return View(new ProfissionalModel() { Profissionais = response });
-        }
+			try
+			{
+				SetNotifyMessage(notify, message);
+				SetCrudMessage(crud); var response = ApiClientFactory.Instance.GetProfissionalAll();
+				var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
+
+				return View(new ProfissionalModel() { Profissionais = response, ListEstados = estados });
+
+			}
+			catch (Exception e)
+			{
+				Console.Write(e.StackTrace);
+				return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = e.Message });
+
+			}
+		}
 
         //[ClaimsAuthorize("ConfiguracaoSistema", "Incluir")]
         public ActionResult Create(int? crud, int? notify, string message = null)
         {
-            SetNotifyMessage(notify, message);
-            SetCrudMessage(crud);
+			try
+			{
+				SetNotifyMessage(notify, message);
+				SetCrudMessage(crud);
 
-            return View();
-        }
+				var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
+
+				return View(new ProfissionalModel() { ListEstados = estados });
+
+			}
+			catch (Exception e)
+			{
+				Console.Write(e.StackTrace);
+				return RedirectToAction(nameof(Create), new { notify = (int)EnumNotify.Error, message = e.Message });
+
+			}
+		}
 
         //[ClaimsAuthorize("Profissional", "Incluir")]
         [HttpPost]
@@ -96,7 +120,7 @@ namespace WebApp.Controllers
 
             await ApiClientFactory.Instance.UpdateProfissional(command.Id, command);
 
-            return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+            return RedirectToAction(nameof(Edit), new { crud = (int)EnumCrud.Updated });
         }
 
         //[ClaimsAuthorize("Profissional", "Excluir")]
