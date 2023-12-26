@@ -2,7 +2,8 @@ var vm = new Vue({
     el: "#vParceiro",
     data: {
         params: {
-            cpf: ""
+            cpf: "",
+            visible: false
         },
         loading: false,
         editDto: { Id: "", Nome: "", DtNascimento: "", Email: "", AspNetUserId: "", Sexo: "", Cpf: "", Telefone: "", Celular: "", Endereco: "", Numero: "", Cep: "", Bairro: "", Municipio: "",Habilitado: true, Status: true }
@@ -138,8 +139,6 @@ var vm = new Vue({
 
             //Inclusao
             if (formid === "formParceiro") {
-
-                FormatInputs();
                 
                 $("#formParceiro").validate({
                     rules: {
@@ -417,10 +416,6 @@ var vm = new Vue({
             }).catch(error => {
                 Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
             });
-        },
-        FormatInputs: function () {
-
-            
         }
     }
 });

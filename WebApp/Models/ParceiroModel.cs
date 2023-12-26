@@ -12,9 +12,9 @@ namespace WebApp.Models
         public string EstadoId { get; set; }
         public SelectList ListEstados { get; set; }
         public string MunicipioId { get; set; }
-        public SelectList ListMunicipio { get; set; }
+        public SelectList ListMunicipios { get; set; }
 
-		public class CreateUpdateParceiroCommand
+        public class CreateUpdateParceiroCommand
         {
             public int Id { get; set; }
             public int AspNetUserId { get; set; }

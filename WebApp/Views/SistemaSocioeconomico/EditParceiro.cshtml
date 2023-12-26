@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="vParceiro">
+<div id="vParceiro">
     <div class="row">
         <div class="col-md-12">
             @using (@Html.BeginForm("Edit", "SistemaSocioeconomico", FormMethod.Post, new { id = "formEditParceiro", @class = "form-horizontal" }))
@@ -132,7 +132,7 @@
                             <div class="col-md-3 form-group">
                                 <select class="form-control populate select2" name="ddlMunicipio" id="ddlMunicipio"
                                         title="Por favor informe o município."
-                                        asp-for="MunicipioId" asp-items="Model.ListMunicipio">
+                                        asp-for="MunicipioId" asp-items="Model.ListMunicipios">
                                     <option value="">Selecionar Município</option>
                                 </select>
                             </div>

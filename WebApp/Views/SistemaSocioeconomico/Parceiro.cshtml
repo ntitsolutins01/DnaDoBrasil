@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div id="formParceiro">
+<div id="vParceiro">
     <div class="row">
         <div class="col-md-12">
             <section class="panel">
@@ -185,7 +185,7 @@
                         <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Habilitar Parceiro</strong>
                     </h5>
                 </div>
-            @using (@Html.BeginForm("Habilitar", "Parceiro", FormMethod.Post, new { id = "formHabilitarParceiro", @class = "form-horizontal" }))
+            @using (@Html.BeginForm("Habilitar", "SistemaSocioeconomico", FormMethod.Post, new { id = "formHabilitarParceiro", @class = "form-horizontal" }))
             {
                 <input type="hidden" name="habilitarParceiroId" :value="editDto.Id"/>
 

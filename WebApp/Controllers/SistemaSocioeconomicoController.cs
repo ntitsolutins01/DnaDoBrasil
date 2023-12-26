@@ -11,6 +11,7 @@ using WebApp.Enumerators;
 using WebApp.Factory;
 using WebApp.Models;
 using WebApp.Utility;
+using WebApp.Views;
 
 namespace WebApp.Controllers
 {
@@ -66,8 +67,13 @@ namespace WebApp.Controllers
                 SetCrudMessage(crud);
 
                 var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
+                var model = new ParceiroModel
+                {
+                    ListEstados = estados
 
-                return View(new ParceiroModel() { ListEstados = estados });
+                };
+
+                return View(model);
 
             }
             catch (Exception e)
@@ -123,13 +129,13 @@ namespace WebApp.Controllers
 
                 if (obj != null)
                 {
-                    var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", obj.EstadoId);
+                    var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", obj.Uf);
                     var municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(obj.Uf), "Id", "Nome", obj.MunicipioId);
 
                     model = new ParceiroModel()
                     {
                         ListEstados = estados,
-                        ListMunicipio = municipios,
+                        ListMunicipios = municipios,
                         Parceiro = obj
                     };
 
