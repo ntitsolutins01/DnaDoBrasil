@@ -5,28 +5,26 @@ namespace WebApp.ApiClient
 {
     public partial class DnaApiClient
     {
-
-        private const string ResourceParceiro = "Parceiros";
-
+        private const string ResourceResposta = "Respostas";
         #region Main Methods
 
-        public Task<long> CreateParceiro(ParceiroModel.CreateUpdateParceiroCommand command)
+        public Task<long> CreateResposta(RespostaModel.CreateUpdateRespostaCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceParceiro}"));
+                $"{ResourceResposta}"));
             return Post(requestUrl, command);
         }
-        public Task<bool> UpdateParceiro(int id, ParceiroModel.CreateUpdateParceiroCommand command)
+        public Task<bool> UpdateResposta(int id, RespostaModel.CreateUpdateRespostaCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceParceiro}/{id}"));
+                $"{ResourceResposta}/{id}"));
             return Put(requestUrl, command);
         }
 
-        public Task<bool> DeleteParceiro(int id)
+        public Task<bool> DeleteResposta(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceParceiro}/{id}"));
+                $"{ResourceResposta}/{id}"));
             return Delete<bool>(requestUrl);
         }
 
@@ -34,17 +32,17 @@ namespace WebApp.ApiClient
 
         #region Methods
 
-        public ParceiroDto GetParceiroById(int id)
+        public RespostaDto GetRespostaById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceParceiro}/Parceiro/{id}"));
-            return Get<ParceiroDto>(requestUrl);
+                $"{ResourceResposta}/Resposta/{id}"));
+            return Get<RespostaDto>(requestUrl);
         }
-        public List<ParceiroDto> GetParceiroAll()
+        public List<RespostaDto> GetRespostaAll()
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceParceiro}"));
-            return Get<List<ParceiroDto>>(requestUrl);
+                $"{ResourceResposta}"));
+            return Get<List<RespostaDto>>(requestUrl);
         }
 
         #endregion

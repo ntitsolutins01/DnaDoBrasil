@@ -44,6 +44,12 @@ namespace WebApp.ApiClient
                 $"{ResourceQuestionario}"));
             return Get<List<QuestionarioDto>>(requestUrl);
         }
+        public List<QuestionarioDto> GetQuestionarioByTipoLaudo(int id)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceQuestionario}/TipoLaudo/{id}"));
+            return Get<List<QuestionarioDto>>(requestUrl);
+        }
 
         #endregion
     }

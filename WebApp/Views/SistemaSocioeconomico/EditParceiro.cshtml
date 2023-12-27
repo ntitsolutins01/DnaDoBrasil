@@ -1,14 +1,13 @@
 ﻿@model ParceiroModel
 @{
-	ViewData["Title"] = "Cadastro Sistema Socioeconomico";
+    ViewData["Title"] = "Alteração de Parceiro";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 
 <div id="vParceiro">
     <div class="row">
         <div class="col-md-12">
-            @using (@Html.BeginForm("Create", "SistemaSocioeconomico", FormMethod.Post, new { id = "formParceiro", @class = "form-horizontal" }))
+            @using (@Html.BeginForm("Edit", "SistemaSocioeconomico", FormMethod.Post, new { id = "formEditParceiro", @class = "form-horizontal" }))
             {
                 <section class="panel">
                     <header class="panel-heading">
@@ -16,73 +15,49 @@
                             <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
                         </div>
 
-                        <h2 class="panel-title">Cadastro de Parceiro</h2>
+                        <h2 class="panel-title">Alteração de Parceiro</h2>
                     </header>
                     <div class="panel-body">
 
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Nome</label>
                             <div class="col-sm-4">
-                                <input type="text" id="nome" name="nome" class="form-control" required title="Por favor informe o Nome"/>
+                                <input type="text" id="nome" name="nome" class="form-control" required title="Por favor informe o Nome"
+                                       value="@Model.Parceiro.Nome" />
                             </div>
                             <label class="col-sm-1 control-label">Email </label>
                             <div class="col-sm-4">
                                 <div class="input-group">
                                     <span class="input-group-addon">
                                         <i class="fa fa-envelope"></i>
-                                    </span>@* v-on:blur="ExisteEmail" *@
+                                    </span>
                                     <input type="text" id="email" name="email"
+                                           v-model="params.email"
+                                           v-on:blur="ExisteEmail"
                                            class="form-control"
                                            maxlength="40"
+                                           value="@Model.Parceiro.Email"
                                            title="Por favor informe um Email válido do parceiro." required />
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Selecione a Parceria</label>
-                            <div class="col-sm-2">
-                                <div class="radio-custom radio-danger">
-                                    <input id="empresas" name="tipoParceria" type="radio" value="1" required title="Por favor selecione a parceiria." />
-                                    <label for="tipoParceria">Empresas parceiras</label>
-                                </div>
-                                <div class="radio-custom radio-success">
-                                    <input id="clubesFederacoes" name="tipoParceria" type="radio" value="2" required title="Por favor selecione a parceiria." />
-                                    <label for="tipoParceria">Clubes e Federações</label>
-                                </div>
-                                <label class="error" for="tipoParceria"></label>
+                            <label class="col-sm-2 control-label">Tipo Parceria</label>
+                            <div class="col-sm-4">
+                                <input type="text" id="nome" name="nome" class="form-control" readonly
+                                       value="@Model.Parceiro.TipoParceriaNome" />
                             </div>
-                            <label class="col-sm-1 control-label">Tipo Pessoa</label>
-                            <div class="col-sm-2">
-                                <div class="radio-custom radio-default">
-                                    <input id="pf" name="tipoPessoa" type="radio" value="pf" checked
-                                           required title="Por favor selecione o tipo pessoa." />
-                                    <label for="tipoPessoa">Pessoa Física</label>
-                                </div>
-                                <div class="radio-custom radio-info">
-                                    <input id="pj" name="tipoPessoa" type="radio" value="pj" required title="Por favor selecione o tipo pessoa." />
-                                    <label for="tipoPessoa">Pessoa Jurídica</label>
-                                </div>
-                                <label class="error" for="tipoPessoa"></label>
-                            </div>
-                            <div v-if="params.visible" id="hideCpf">
-                                <label class="col-sm-1 control-label">CPF</label>
-                                <div class="col-sm-3">
-                                    <input id="cpf" name="cpf"
-                                           type="text" value="" class="form-control" 
-                                           title="Por favor informe o cpf do parceiro."
-                                           maxlength="14" checked/>
+                            <label v-if="params.visible" class="col-sm-1 control-label">CPF </label>
+                            <label v-else="!params.visible" class="col-sm-1 control-label">CNPJ </label>
+                            <div class="col-sm-4">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-envelope"></i>
+                                    </span>
+                                    <input type="text" id="nome" name="nome" class="form-control" readonly
+                                           value="@Model.Parceiro.TipoParceriaNome" />
                                 </div>
                             </div>
-                            <div v-if="!params.visible" id="hideCnpj">
-                                <label class="col-sm-1 control-label">CNPJ</label>
-                                <div class="col-sm-3">
-                                    <input id="cnpj" name="cnpj"
-                                           type="text" value="" class="form-control"
-                                           title="Por favor informe o cnpj do parceiro."
-                                           maxlength="14" />
-                                </div>
-                            </div>
-                            
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Telefone </label>
@@ -91,8 +66,8 @@
                                     <span class="input-group-addon">
                                         <i class="fa fa-phone"></i>
                                     </span>
-                                    <input id="numTelefone" name="numTelefone" class="form-control"
-                                           maxlength="14" 
+                                    <input id="numTelefone" name="numTelefone" placeholder="eg.: (00) 0000-0000" class="form-control"
+                                           maxlength="14" value="@Model.Parceiro.Telefone"
                                            title="Por favor informe o telefone ">
                                 </div>
                             </div>
@@ -102,8 +77,8 @@
                                     <span class="input-group-addon">
                                         <i class="fa fa-phone"></i>
                                     </span>
-                                    <input id="numCelular" name="numCelular" class="form-control"
-                                           maxlength="14"
+                                    <input id="numCelular" name="numCelular" placeholder="eg.: (00) 00000-0000" class="form-control"
+                                           maxlength="14" value="@Model.Parceiro.Celular"
                                            title="Por favor informe o celular">
                                 </div>
                             </div>
@@ -111,21 +86,21 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Endereço</label>
                             <div class="col-sm-6">
-                                <input type="text" id="endereco" name="endereco" class="form-control" />
+                                <input type="text" id="endereco" name="endereco" class="form-control" value="@Model.Parceiro.Endereco" />
                             </div>
                             <label class="col-sm-1 control-label">Número</label>
                             <div class="col-sm-1">
-                                <input type="text" id="numero" name="numero" class="form-control" />
+                                <input type="text" id="numero" name="numero" class="form-control" value="@Model.Parceiro.Numero" />
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Bairro </label>
                             <div class="col-sm-3">
-                                <input type="text" id="bairro" name="bairro" class="form-control" />
+                                <input type="text" id="bairro" name="bairro" class="form-control" value="@Model.Parceiro.Bairro" />
                             </div>
                             <label class="col-sm-1 control-label">Cep</label>
                             <div class="col-sm-2">
-                                <input type="text" id="cep" name="cep" class="form-control" />
+                                <input type="text" id="cep" name="cep" class="form-control" value="@Model.Parceiro.Cep" />
                             </div>
 
                         </div>
@@ -165,9 +140,8 @@
                             <label class="col-sm-1 control-label pull-left">&nbsp;&nbsp;</label>
                             <div class="col-sm-10">
                                 <div class="checkbox-custom chekbox-primary">
-                                    <input id="compromisso" value="compromisso" type="checkbox" name="compromisso" required title="Campo obrigatório" />
-                                    <label for="compromisso">Me comprometo que todas as informações prestadas são verdadeiras.</label>
-                                    <label class="error" for="compromisso"></label>
+                                    <input id="for-project" value="project" type="checkbox" name="for[]" required title="Campo obrigatorio" />
+                                    <label for="for-project">Me comprometo que todas as informações prestadas são verdadeiras.</label>
                                 </div>
                             </div>
                         </div>
@@ -200,29 +174,29 @@
     <script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
     <script src="~/js/formatTable.js"></script>
     <script src="~/js/parceiro.js"></script>
-	<script>
+    <script>
 
 
-		// iosSwitcher
-		(function ($) {
+        // iosSwitcher
+        (function ($) {
 
-			'use strict';
+            'use strict';
 
-			if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
+            if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
 
-				$(function () {
-					$('[data-plugin-ios-switch]').each(function () {
-						var $this = $(this);
+                $(function () {
+                    $('[data-plugin-ios-switch]').each(function () {
+                        var $this = $(this);
 
-						$this.themePluginIOS7Switch();
-					});
-				});
+                        $this.themePluginIOS7Switch();
+                    });
+                });
 
-			}
+            }
 
-		}).apply(this, [jQuery]);
+        }).apply(this, [jQuery]);
 
-	</script>
+    </script>
 }
 
 

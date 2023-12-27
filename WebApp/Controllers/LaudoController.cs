@@ -1,80 +1,55 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using WebApp.Configuration;
+using WebApp.Enumerators;
+using WebApp.Factory;
+using WebApp.Models;
+using WebApp.Utility;
 
 namespace WebApp.Controllers
 {
-    public class LaudoController : Controller
+    public class LaudoController : BaseController
     {
-        public ActionResult Index()
+	    private readonly IOptions<UrlSettings> _appSettings;
+
+	    public LaudoController(IOptions<UrlSettings> appSettings)
+	    {
+		    _appSettings = appSettings;
+		    ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
+	    }
+		public IActionResult Index(int? crud, int? notify, string message = null)
+		{
+			try
+			{
+				SetNotifyMessage(notify, message);
+				SetCrudMessage(crud);
+				var response = ApiClientFactory.Instance.GetLaudoAll();
+
+				var model = new LaudoModel()
+				{
+					Laudos = response
+				};
+
+				return View(model);
+			}
+			catch (Exception e)
+			{
+				Console.Write(e.StackTrace);
+				return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = e.Message });
+
+			}
+		}
+
+		public ActionResult Details(int id)
         {
             return View();
         }
         
-        public ActionResult Details(int id)
+        public ActionResult Create()
         {
             return View();
         }
+
         
-        public ActionResult CreateLaudo()
-        {
-            return View();
-        }
-
-        //// POST: LaudoController/Create
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create(IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
-
-        //// GET: LaudoController/Edit/5
-        //public ActionResult Edit(int id)
-        //{
-        //    return View();
-        //}
-
-        //// POST: LaudoController/Edit/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit(int id, IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
-
-        //// GET: LaudoController/Delete/5
-        //public ActionResult Delete(int id)
-        //{
-        //    return View();
-        //}
-
-        //// POST: LaudoController/Delete/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Delete(int id, IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
     }
 }

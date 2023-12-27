@@ -46,8 +46,20 @@ namespace WebApp.ApiClient
                 $"{ResourceProfissional}"));
             return Get<List<ProfissionalDto>>(requestUrl);
         }
+        public ProfissionalDto GetProfissionalByCpf(string cpf)
+        {
+	        var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+		        $"{ResourceProfissional}/Cpf/{cpf}"));
+	        return Get<ProfissionalDto>(requestUrl);
+        }
+        public ProfissionalDto GetProfissionalByEmail(string email)
+        {
+	        var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+		        $"{ResourceProfissional}/Email/{email}"));
+	        return Get<ProfissionalDto>(requestUrl);
+        }
 
-        #endregion
+		#endregion
 
-    }
+	}
 }

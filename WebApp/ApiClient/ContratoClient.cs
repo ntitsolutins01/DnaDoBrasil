@@ -8,45 +8,45 @@ namespace WebApp.ApiClient
         
         private const string ResourceContrato = "Contratos";
 
-        #region Main Methods
+		#region Main Methods
 
-        public Task<long> CreateContrato(ContratoModel.CreateUpdateContratoCommand command)
-        {
-            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceContrato}"));
-            return Post(requestUrl, command);
-        }
-        public Task<bool> UpdateContrato(int id, ContratoModel.CreateUpdateContratoCommand command)
-        {
-            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceContrato}/{id}"));
-            return Put(requestUrl, command);
-        }
+		public Task<long> CreateContrato(ContratoModel.CreateUpdateContratoCommand command)
+		{
+			var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+				$"{ResourceContrato}"));
+			return Post(requestUrl, command);
+		}
+		public Task<bool> UpdateContrato(int id, ContratoModel.CreateUpdateContratoCommand command)
+		{
+			var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+				$"{ResourceContrato}/{id}"));
+			return Put(requestUrl, command);
+		}
 
-        public Task<bool> DeleteContrato(int id)
-        {
-            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceContrato}/{id}"));
-            return Delete<bool>(requestUrl);
-        }
+		public Task<bool> DeleteContrato(int id)
+		{
+			var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+				$"{ResourceContrato}/{id}"));
+			return Delete<bool>(requestUrl);
+		}
 
-        #endregion
+		#endregion
 
-        #region Methods
+		#region Methods
 
-        public ContratoDto GetContratoById(int id)
-        {
-            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceContrato}/Contrato/{id}"));
-            return Get<ContratoDto>(requestUrl);
-        }
-        public List<ContratoDto> GetContratoAll()
-        {
-            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceContrato}"));
-            return Get<List<ContratoDto>>(requestUrl);
-        }
+		public ContratoDto GetContratoById(int id)
+		{
+			var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+				$"{ResourceContrato}/Contrato/{id}"));
+			return Get<ContratoDto>(requestUrl);
+		}
+		public List<ContratoDto> GetContratoAll()
+		{
+			var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+				$"{ResourceContrato}"));
+			return Get<List<ContratoDto>>(requestUrl);
+		}
 
-        #endregion
-    }
+		#endregion
+	}
 }

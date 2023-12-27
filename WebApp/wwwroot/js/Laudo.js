@@ -1,8 +1,8 @@
 ﻿var vm = new Vue({
-    el: "#formContrato",
+    el: "#formLaudo",
     data: {
         loading: false,
-        editDto: { Id: "", Nome: "", DtIni: "", DtFim: "", Anexo: "", Descricao: "", Status: true }
+        editDto: { Id: "", Nome: "", Status: true, IdadeInicial:"", IdadeFinal:"", ScoreTotal:"", Descricao:"" }
     },
     mounted: function () {
         var self = this;
@@ -22,9 +22,9 @@
 
             var formid = $('form').attr('id');
 
-            if (formid === "formEditContrato") {
+            if (formid === "formEditLaudo") {
 
-                $("#formEditContrato").validate({
+                $("#formEditLaudo").validate({
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
                     },
@@ -44,9 +44,9 @@
                 });
             }
 
-            if (formid === "formContrato") {
+            if (formid === "formLaudo") {
 
-                $("#formContrato").validate({
+                $("#formLaudo").validate({
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
                     },
@@ -65,6 +65,7 @@
                     }
                 });
             }
+
         }).apply(this, [jQuery]);
     },
     methods: {
@@ -87,21 +88,21 @@
                 self.loading = flag;
             }
         },
-        DeleteContrato: function (id) {
-            var url = "Contrato/Delete/" + id;
-            $("#deleteContratoHref").prop("href", url);
+        DeleteLaudo: function (id) {
+            var url = "Laudo/Delete/" + id;
+            $("#deleteLaudoHref").prop("href", url);
         },
-        EditContrato: function (id) {
+        EditLaudo: function (id) {
             var self = this;
 
-            axios.get("Contrato/GetContratoById/?id=" + id).then(result => {
+            axios.get("Laudo/GetLaudoById/?id=" + id).then(result => {
 
                 self.editDto.Id = result.data.id;
                 self.editDto.Nome = result.data.nome;
                 self.editDto.Descricao = result.data.descricao;
-                self.editDto.DtIni = result.data.dtIni;
-                self.editDto.DtFim = result.data.dtFim;
-                self.editDto.Anexo = result.data.anexo;
+                self.editDto.IdadeInicial = result.data.idadeInicial;
+                self.editDto.IdadeFinal = result.data.idadeFinal;
+                self.editDto.ScoreTotal = result.data.scoreTotal;
                 self.editDto.Status = result.data.status;
 
             }).catch(error => {
@@ -110,15 +111,16 @@
         }
     }
 });
+
 var crud = {
     DeleteModal: function (id) {
-        $('input[name="ContratoId"]').attr('value', id);
-        $('#mdDeleteContrato').modal('show');
-        vm.DeleteContrato(id)
+        $('input[name="LaudoId"]').attr('value', id);
+        $('#mdDeleteLaudo').modal('show');
+        vm.DeleteLaudo(id)
     },
     EditModal: function (id) {
-        $('input[name="ContratoId"]').attr('value', id);
-        $('#mdEditContrato').modal('show');
-        vm.EditContrato(id)
+        $('input[name="LaudoId"]').attr('value', id);
+        $('#mdEditLaudo').modal('show');
+        vm.EditLaudo(id)
     }
 };

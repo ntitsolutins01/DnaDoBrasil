@@ -1,13 +1,13 @@
-﻿
+﻿@model ParceiroModel
+
 @{
     ViewData["Title"] = "Listagem de Parceiros";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
-<div class="row">
-    <div class="col-md-12">
-        <form id="form" action="forms-validation.html" class="form-horizontal">
+<div id="vParceiro">
+    <div class="row">
+        <div class="col-md-12">
             <section class="panel">
                 <header class="panel-heading">
                     <div class="panel-actions">
@@ -17,33 +17,29 @@
                     <h2 class="panel-title">Filtro de pesquisa</h2>
                 </header>
                 <div class="panel-body">
-	                <div class="form-group row">
-		                <label class="col-sm-3 control-label">Parceiros</label>
-		                <div class="col-md-6 form-group">
-			                <input type="text" class="form-control">
-		                </div>
-	                </div>
-	                <div class="form-group row">
-		                <label class="col-sm-3 control-label">&nbsp;&nbsp;</label>
-		                <div class="col-md-12 form-group">
+                    <div class="form-group row">
+                        <label class="col-sm-3 control-label">Parceiros</label>
+                        <div class="col-md-6 form-group">
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 control-label">&nbsp;&nbsp;</label>
+                        <div class="col-md-12 form-group">
                             <div class="checkbox-custom chekbox-primary pull-right col-md-2">
-				                <input id="for-project" value="project" type="checkbox" name="for[]" required />
-				                <label for="for-project">Cadastro pendentes</label>
-			                </div>
+                                <input id="for-project" value="project" type="checkbox" name="for[]" required />
+                                <label for="for-project">Cadastro pendentes</label>
+                            </div>
                             <div class="checkbox-custom chekbox-primary pull-right col-md-3">
-				                <input id="for-project" value="project" type="checkbox" name="for[]" required />
-				                <label for="for-project">Categorias pendentes</label>
-			                </div>
+                                <input id="for-project" value="project" type="checkbox" name="for[]" required />
+                                <label for="for-project">Deficiências pendentes</label>
+                            </div>
                             <div class="checkbox-custom chekbox-primary pull-right col-md-3">
-				                <input id="for-project" value="project" type="checkbox" name="for[]" required />
-				                <label for="for-project">Deficiências pendentes</label>
-			                </div>
-                            <div class="checkbox-custom chekbox-primary pull-right col-md-3">
-				                <input id="for-project" value="project" type="checkbox" name="for[]" required />
-				                <label for="for-project">Solicitações de contato</label>
-			                </div>
-		                </div>
-	                </div>
+                                <input id="for-project" value="project" type="checkbox" name="for[]" required />
+                                <label for="for-project">Solicitações de contato</label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <footer class="panel-footer">
                     <div class="row">
@@ -53,87 +49,182 @@
                     </div>
                 </footer>
             </section>
-        </form>
+        </div>
+    </div>
+    <section class="panel">
+        <header class="panel-heading">
+            <div class="panel-actions">
+                <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
+            </div>
+
+            <h2 class="panel-title">Listagem de Parceiros</h2>
+
+        </header>
+        <div class="panel-body">
+            <div class="form-group row">
+                <div class="col-sm-12 pull-right">
+                    <a id="addToTable" href="@Url.Action("CreateParceiro", "SistemaSocioeconomico")"
+                       class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Novo Parceiros </a>
+                </div>
+            </div>
+            <table class="table table-bordered table-striped mb-0" id="datatable-default">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Instituiçao</th>
+                        <th>Email</th>
+                        <th>Solicitação Pendente?</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Parceiros)
+                    {
+                        <tr>
+                            <td class="text-center">@Html.DisplayFor(modelItem => item.Id)</td>
+                            <td class="text-center">@Html.DisplayFor(modelItem => item.Nome)</td>
+                            <td class="text-center">@Html.DisplayFor(modelItem => item.Email)</td>
+                            @if (item.Alunos!.Any())
+                            {
+                                <td class="text-center"><span class="label label-danger">SIM</span></td>
+                            }
+                            else
+                            {
+                                <td class="text-center"><span class="label label-success">NÃO</span></td>
+                            }
+                            @if (item.Habilitado)
+                            {
+                                <td class="text-center"><span class="label label-success">HABILITADO</span></td>
+                            }
+                            else
+                            {
+                                <td class="text-center"><span class="label label-danger">INABILITADO</span></td>
+                            }
+                            <td class="actions text-center">
+                                <a data-toggle="tooltip" data-placement="top" title="Editar" asp-action="EditParceiro" asp-controller="SistemaSocioeconomico"
+                                   asp-route-Id="@item.Id" class="on-default edit-row" style='color: #FF9800'><i class="fa fa-pencil"></i></a>
+                                @if (item.Alunos!.Any())
+                                {
+                                    <a data-toggle="tooltip" data-placement="top" title="Lista de alunos solicitados" href='javascript:(crud.PendentesModal(@item.Id))'
+                                       class="on-default remove-row" style="cursor: pointer;color: #43A047 "><i class="fa fa-group"></i></a>
+                                }
+                                <a data-toggle="tooltip" data-placement="top" title="Habilitar Parceiro" href='javascript:(crud.HabilitarModal(@item.Id))'
+                                   class="on-default remove-row" style="cursor: pointer;color: #7B1FA2"><i class="fa fa-check-circle"></i></a>
+                                <a data-toggle="tooltip" data-placement="top" title="Excluir" href='javascript:(crud.DeleteModal(@item.Id))'
+                                   class="on-default remove-row" style="cursor: pointer;color: #F44336"><i class="fa fa-trash"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <!-- Modal -->
+    <div class="modal fade" id="mdExcluir" tabindex="-1" role="dialog" aria-labelledby="mdExcluirLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mdExcluirLabel">
+                        <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Exclusão de Sistema Socioeconomico</strong>
+                    </h5>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-icon">
+                        <i class="fa fa-question-circle"></i>
+                    </div>
+                    <div class="modal-text">
+                        <p class="mb-0">Tem certeza que deseja <b>excluir</b> esse registro?</p>
+                    </div>
+                    <div class="modal-wrapper">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-thumbs-o-down"></i> &nbsp;&nbsp;Não</button>
+                    <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="mdPendentes" tabindex="-1" role="dialog" aria-labelledby="mdPendentesLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mdPendentesLabel">
+                        <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Listagem de alunos solicitados</strong>
+                    </h5>
+                </div>
+                <input type="hidden" name="editParceiroId" :value="editDto.Id" />
+                <div class="modal-body">
+                    <table id="alunosSolicitados" class="table table-responsive-md table-striped mb-0" style="width:100%">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>Id</th>
+                            <th>Aluno</th>
+                            <th>Idade</th>
+                            <th>Açoes</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="reset" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
+                    <a class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="mdHabilitar" tabindex="-1" role="dialog" aria-labelledby="mdHabilitarLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mdHabilitarLabel">
+                        <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Habilitar Parceiro</strong>
+                    </h5>
+                </div>
+            @using (@Html.BeginForm("Habilitar", "SistemaSocioeconomico", FormMethod.Post, new { id = "formHabilitarParceiro", @class = "form-horizontal" }))
+            {
+                <input type="hidden" name="habilitarParceiroId" :value="editDto.Id"/>
+
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <label class="col-sm-2 control-label text-sm-right pt-2">Email <span class="required">*</span></label>
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-envelope"></i>
+                                    </span>
+                                    @* v-on:blur="ExisteEmail" *@
+                                <input type="text" id="email" name="email"
+                                       class="form-control"
+                                       maxlength="100"
+                                       title="Por favor informe um Email válido do parceiro." required />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-thumbs-o-down"></i> &nbsp;&nbsp;Não</button>
+                    <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</button>
+                </div>
+            }
+            </div>
+        </div>
     </div>
 </div>
-
-<section class="panel">
-    <header class="panel-heading">
-        <div class="panel-actions">
-            <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
-        </div>
-
-        <h2 class="panel-title">Listagem de Parceiros</h2>
-
-    </header>
-    <div class="panel-body">
-        <div class="form-group row">
-	        <div class="col-sm-12 pull-right">
-		        @* data-toggle="modal" data-target="#mdExcluir" *@
-				<a id="addToTable" href="@Url.Action("Create", "SistemaSocioeconomico")"
-		           
-                   class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Novo Parceiros </a>
-	        </div>
-        </div>
-        <table class="table table-bordered table-striped mb-0" id="datatable-default">
-            <thead>
-                <tr>
-                    <th>Instituiçao</th>
-                    <th>Email</th>
-                    <th>Laudos</th>
-                    <th>Status</th>
-	                <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Clube desportivo Real Manaus</td>
-                    <td>librade.cdl@gmail.com</td>
-                    <td>2</td>
-                    <td>Aguardando Ativação</td>
-	                <td class="actions">
-		                <a data-toggle="tooltip" data-placement="top" title="Editar" @* asp-action="Edit" *@ asp-controller="Perfil" asp-route-id="1" class="on-default edit-row" style='color: #FF9800'><i class="fa fa-pencil"></i></a>
-		                <a data-toggle="tooltip" data-placement="top" title="Excluir" @* asp-action="Delete" *@ asp-controller="Perfil" asp-route-id="1" class="on-default remove-row" style='color:#F44336'><i class="fa fa-trash-o"></i></a>
-	                </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</section>
-<!-- Modal -->
-<div class="modal fade" id="mdExcluir" tabindex="-1" role="dialog" aria-labelledby="mdExcluirLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="mdExcluirLabel">
-                    <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Exclusão de Sistema Socioeconomico</strong>
-                </h5>
-            </div>
-            <div class="modal-body">
-                <div class="modal-icon">
-                    <i class="fa fa-question-circle"></i>
-                </div>
-                <div class="modal-text">
-                    <p class="mb-0">Tem certeza que deseja <b>excluir</b> esse registro?</p>
-                </div>
-                <div class="modal-wrapper">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-thumbs-o-down"></i> &nbsp;&nbsp;Não</button>
-                <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 @section CssSpecificVendor {
     <link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />
+    <link href="~/assets/vendor/datatables/extras/tabletools/select-1.2.3/css/select.bootstrap4.css" rel="stylesheet" />
 }
 @section Scripts {
     <script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
     <script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/assets/vendor/datatables/extras/tabletools/select-1.2.3/js/datatables.select.js"></script>
     <script src="~/js/formatTable.js"></script>
+    <script src="~/js/parceiro.js"></script>
 
     <script>
 

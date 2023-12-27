@@ -5,28 +5,26 @@ namespace WebApp.ApiClient
 {
     public partial class DnaApiClient
     {
-
-        private const string ResourceParceiro = "Parceiros";
-
+        private const string ResourceLaudo = "Laudos";
         #region Main Methods
 
-        public Task<long> CreateParceiro(ParceiroModel.CreateUpdateParceiroCommand command)
+        public Task<long> CreateLaudo(LaudoModel.CreateUpdateLaudoCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceParceiro}"));
+                $"{ResourceLaudo}"));
             return Post(requestUrl, command);
         }
-        public Task<bool> UpdateParceiro(int id, ParceiroModel.CreateUpdateParceiroCommand command)
+        public Task<bool> UpdateLaudo(int id, LaudoModel.CreateUpdateLaudoCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceParceiro}/{id}"));
+                $"{ResourceLaudo}/{id}"));
             return Put(requestUrl, command);
         }
 
-        public Task<bool> DeleteParceiro(int id)
+        public Task<bool> DeleteLaudo(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceParceiro}/{id}"));
+                $"{ResourceLaudo}/{id}"));
             return Delete<bool>(requestUrl);
         }
 
@@ -34,17 +32,17 @@ namespace WebApp.ApiClient
 
         #region Methods
 
-        public ParceiroDto GetParceiroById(int id)
+        public LaudoDto GetLaudoById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceParceiro}/Parceiro/{id}"));
-            return Get<ParceiroDto>(requestUrl);
+                $"{ResourceLaudo}/Laudo/{id}"));
+            return Get<LaudoDto>(requestUrl);
         }
-        public List<ParceiroDto> GetParceiroAll()
+        public List<LaudoDto> GetLaudoAll()
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceParceiro}"));
-            return Get<List<ParceiroDto>>(requestUrl);
+                $"{ResourceLaudo}"));
+            return Get<List<LaudoDto>>(requestUrl);
         }
 
         #endregion

@@ -9,24 +9,28 @@ namespace WebApp.Models
         public List<ParceiroDto> Parceiros { get; set; }
         public string ParceiroId { get; set; }
         public SelectList ListParceiros { get; set; }
+        public string EstadoId { get; set; }
+        public SelectList ListEstados { get; set; }
+        public string MunicipioId { get; set; }
+        public SelectList ListMunicipios { get; set; }
 
         public class CreateUpdateParceiroCommand
         {
             public int Id { get; set; }
             public int AspNetUserId { get; set; }
             public int? MunicipioId { get; set; }
-            public required string Nome { get; set; }
-            public required string Email { get; set; }
-            public required int TipoParceria { get; set; }
-            public required string TipoPessoa { get; set; }
-            public required string CpfCnpj { get; set; }
+            public  string Nome { get; set; }
+            public  string Email { get; set; }
+            public  int TipoParceria { get; set; }
+            public string TipoPessoa { get; set; }
+            public  string CpfCnpj { get; set; }
             public string? Telefone { get; set; }
             public string? Celular { get; set; }
             public string? Cep { get; set; }
             public string? Endereco { get; set; }
             public int Numero { get; set; }
             public string? Bairro { get; set; }
-            public bool Status { get; set; }
+            public bool Status { get; set; } = true;
             public bool? Habilitado { get; set; }
         }
     }

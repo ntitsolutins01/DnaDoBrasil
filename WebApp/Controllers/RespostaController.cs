@@ -11,11 +11,11 @@ using WebApp.Utility;
 
 namespace WebApp.Controllers
 {
-	public class QuestionarioController : BaseController
+	public class RespostaController : BaseController
 	{
 		private readonly IOptions<UrlSettings> _appSettings;
 
-		public QuestionarioController(IOptions<UrlSettings> appSettings)
+		public RespostaController(IOptions<UrlSettings> appSettings)
 		{
 			_appSettings = appSettings;
 			ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
@@ -23,29 +23,48 @@ namespace WebApp.Controllers
 
 		public IActionResult Index(int? crud, int? notify, string message = null)
 		{
-			SetNotifyMessage(notify, message);
-			SetCrudMessage(crud);
-			var response = ApiClientFactory.Instance.GetQuestionarioAll();
-			var model = new QuestionarioModel()
-			{
-				Questionarios = response
-			};
+            try
+            {
+				SetNotifyMessage(notify, message);
+				SetCrudMessage(crud);
+				var response = ApiClientFactory.Instance.GetRespostaAll();
 
-			return View(model);
+				var model = new RespostaModel()
+				{
+					Respostas = response
+				};
+
+				return View(model);
+			}
+			catch (Exception e)
+			{
+				Console.Write(e.StackTrace);
+				return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = e.Message });
+
+			}
 		}
 
 		//[ClaimsAuthorize("ConfiguracaoSistema", "Incluir")]
 		public ActionResult Create(int? crud, int? notify, string message = null)
 		{
-			SetNotifyMessage(notify, message);
-			SetCrudMessage(crud);
-
-			var tiposlaudos = new SelectList(ApiClientFactory.Instance.GetTiposLaudoAll(), "Id", "Nome");
-			var model = new QuestionarioModel()
+			try
 			{
-				ListTiposLaudos = tiposlaudos
-			};
-			return View(model);
+				SetNotifyMessage(notify, message);
+				SetCrudMessage(crud);
+
+				var tiposlaudos = new SelectList(ApiClientFactory.Instance.GetTiposLaudoAll(), "Id", "Nome");
+				var model = new RespostaModel()
+				{
+					ListTiposLaudos = tiposlaudos
+				};
+				return View(model);
+			}
+			catch (Exception e)
+			{
+				Console.Write(e.StackTrace);
+				return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = e.Message });
+
+			}
 		}
 
 		//[ClaimsAuthorize("Usuario", "Incluir")]
@@ -54,14 +73,14 @@ namespace WebApp.Controllers
 		{
 			try
 			{
-				var command = new QuestionarioModel.CreateUpdateQuestionarioCommand
+				var command = new RespostaModel.CreateUpdateRespostaCommand()
 				{
-					Pergunta = collection["pergunta"].ToString(),
-					TipoLaudoId = Convert.ToInt32(collection["ddlTipoLaudo"].ToString()),
+					RespostaQuestionario = collection["resposta"].ToString(),
+					QuestionarioId = Convert.ToInt32(collection["ddlQuestionario"].ToString()),
 
 				};
 
-				await ApiClientFactory.Instance.CreateQuestionario(command);
+				await ApiClientFactory.Instance.CreateResposta(command);
 
 				return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
 			}
@@ -77,13 +96,13 @@ namespace WebApp.Controllers
 		{
 			try
 			{
-				var command = new QuestionarioModel.CreateUpdateQuestionarioCommand
+				var command = new RespostaModel.CreateUpdateRespostaCommand
 				{
-					Id = Convert.ToInt32(collection["editQuestionarioId"]),
-					Pergunta = collection["pergunta"].ToString(),
+					Id = Convert.ToInt32(collection["editRespostaId"]),
+					RespostaQuestionario = collection["resposta"].ToString(),
 				};
 
-				await ApiClientFactory.Instance.UpdateQuestionario(command.Id, command);
+				await ApiClientFactory.Instance.UpdateResposta(command.Id, command);
 
 				return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
 			}
@@ -99,7 +118,7 @@ namespace WebApp.Controllers
 		{
 			try
 			{
-				ApiClientFactory.Instance.DeleteQuestionario(id);
+				ApiClientFactory.Instance.DeleteResposta(id);
 				return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
 			}
 			catch (Exception e)
@@ -109,27 +128,11 @@ namespace WebApp.Controllers
 			}
 		}
 
-		public async Task<QuestionarioDto> GetQuestionarioById(int id)
+		public async Task<RespostaDto> GetRespostaById(int id)
 		{
-			var result = ApiClientFactory.Instance.GetQuestionarioById(id);
+			var result = ApiClientFactory.Instance.GetRespostaById(id);
 
 			return result;
-		}
-		public async Task<JsonResult> GetQuestionariosByTipoLaudo(string id)
-		{
-			try
-			{
-				if (string.IsNullOrEmpty(id)) throw new Exception("Tipo de Laudo não informado.");
-				var resultLocal = ApiClientFactory.Instance.GetQuestionarioByTipoLaudo(Convert.ToInt32(id));
-
-				return Json(new SelectList(resultLocal, "Id", "Pergunta"));
-
-			}
-			catch (Exception e)
-			{
-				Console.Write(e.StackTrace);
-				return Json(e.Message);
-			}
 		}
 	}
 }
