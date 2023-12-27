@@ -104,7 +104,7 @@ namespace WebApp.Controllers
 					MunicipioId = collection["ddlMunicipio"] == "" ? null : Convert.ToInt32(collection["ddlMunicipio"].ToString()),
 					Habilitado = habilitado == "",
 					Status = status != "",
-					AmbientesIds = ambientesIds.ToArray() //collection["arrAmbientes"] == "" ? null : collection["arrAmbientes"]
+					AmbientesIds = collection["arrAmbientes"] == "" ? null : collection["arrAmbientes"].ToString()
 				};
 
 				await ApiClientFactory.Instance.CreateProfissional(command);
