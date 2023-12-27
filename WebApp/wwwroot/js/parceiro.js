@@ -3,11 +3,15 @@ var vm = new Vue({
     data: {
         params: {
             cpf: "",
-            visible: false
+            visible: true
         },
         loading: false,
-        editDto: { Id: "", Nome: "", DtNascimento: "", Email: "", AspNetUserId: "", Sexo: "", Cpf: "", Telefone: "", Celular: "", Endereco: "", Numero: "", Cep: "", Bairro: "", Municipio: "",Habilitado: true, Status: true }
-},
+        editDto: {
+            Id: "", Nome: "", DtNascimento: "", Email: "", AspNetUserId: "", Sexo: "", Cpf: "",
+            Telefone: "", Celular: "", Endereco: "", Numero: "", Cep: "",
+            Bairro: "", Municipio: "", Habilitado: true, Status: true
+        }
+    },
     mounted: function () {
         var self = this;
         (function ($) {
@@ -78,19 +82,6 @@ var vm = new Vue({
 
             var $numCpf = $("#cpf");
             $numCpf.mask('000.000.000-00', { reverse: false });
-
-            var $numCnpj = $("#cnpj");
-            $numCnpj.mask('00.000.000/0000-00', { reverse: false });
-
-            var $numTel = $("#numTelefone");
-            $numTel.mask('(00) 0000-0000');
-
-            var $numTel = $("#numCelular");
-            $numTel.mask('(00) 00000-0000');
-
-            var $numCep = $("#cep");
-            $numCep.mask('00000-000');
-
             jQuery.validator.addMethod("cpf", function (cpf, element) {
                 var regex = /^\d{3}\.\d{3}\.\d{3}\-\d{2}$/;
                 var add, rev, i;
@@ -132,28 +123,105 @@ var vm = new Vue({
                     return false;
                 return true;
 
-
             }, "Informe um CPF válido");
+
+            var $numCnpj = $("#cnpj");
+            $numCnpj.mask('00.000.000/0000-00', { reverse: false });
+
+            jQuery.validator.addMethod("cnpj",
+                function (value, element) {
+
+                    var numeros, digitos, soma, i, resultado, pos, tamanho, digitos_iguais;
+                    if (value.length == 0) {
+                        return false;
+                    }
+
+                    value = value.replace(/\D+/g, '');
+                    digitos_iguais = 1;
+
+                    for (i = 0; i < value.length - 1; i++)
+                        if (value.charAt(i) != value.charAt(i + 1)) {
+                            digitos_iguais = 0;
+                            break;
+                        }
+                    if (digitos_iguais)
+                        return false;
+
+                    tamanho = value.length - 2;
+                    numeros = value.substring(0, tamanho);
+                    digitos = value.substring(tamanho);
+                    soma = 0;
+                    pos = tamanho - 7;
+                    for (i = tamanho; i >= 1; i--) {
+                        soma += numeros.charAt(tamanho - i) * pos--;
+                        if (pos < 2)
+                            pos = 9;
+                    }
+                    resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+                    if (resultado != digitos.charAt(0)) {
+                        return false;
+                    }
+                    tamanho = tamanho + 1;
+                    numeros = value.substring(0, tamanho);
+                    soma = 0;
+                    pos = tamanho - 7;
+                    for (i = tamanho; i >= 1; i--) {
+                        soma += numeros.charAt(tamanho - i) * pos--;
+                        if (pos < 2)
+                            pos = 9;
+                    }
+
+                    resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+
+                    return (resultado == digitos.charAt(1));
+                },
+                "Informe um CNPJ válido");
+
+            var $numTel = $("#numTelefone");
+            $numTel.mask('(00) 0000-0000');
+
+            var $numTel = $("#numCelular");
+            $numTel.mask('(00) 00000-0000');
+
+            var $numCep = $("#cep");
+            $numCep.mask('00000-000');
+
+            var $tipoPessoa = $("input:radio[name=tipoPessoa]");
+            $tipoPessoa.on("change", function () {
+                
+                if ($(this).val() == "pf") {
+                    self.params.visible = true;
+                } else if ($(this).val() == "pj") {
+
+                    var $numCnpj = $("#cnpj");
+                    $numCnpj.mask('00.000.000/0000-00', { reverse: false });
+
+                    self.params.visible = false;
+
+                }
+            });
 
             var formid = $('form').attr('id');
 
             //Inclusao
             if (formid === "formParceiro") {
-                
+
                 $("#formParceiro").validate({
                     rules: {
                         "email": {
                             required: true,
                             email: true
                         },
-                        cpf: { cpf: true, required: true }
+                        cpf: { cpf: true, required: true },
+                        cnpj: { cnpj: true, required: true }
                     },
                     messages: {
                         "email": {
                             required: "Por favor informe o endereço eletrônico válido do usuário.",
                             email: "Formato de e-mail inválido."
                         },
-                        cpf: { cpf: 'Formato de CPF inválido', required: "Por favor informe o número do CPF do parceiro." }
+                        cpf: { cpf: 'Formato de CPF inválido', required: "Por favor informe o número do CPF do parceiro." },
+                        cnpj: { cnpj: 'Formato de CNPJ inválido', required: "Por favor informe o número do CNPJ do parceiro." }
                     },
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
@@ -233,7 +301,7 @@ var vm = new Vue({
                     }
                 });
             }
-            
+
         }).apply(this, [jQuery]);
 
     },
@@ -346,7 +414,7 @@ var vm = new Vue({
                 Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
             });
 
-            
+
         },
         ExisteCpf: function () {
             var self = this;

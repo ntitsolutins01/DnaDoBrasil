@@ -42,36 +42,21 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Selecione a Parceria</label>
-                            <div class="col-sm-2">
-                                <div class="radio-custom radio-primary">
-                                    <input id="empresas" name="tipoParceria" type="radio" value="empresas" required title="Por favor selecione a parceiria." />
-                                    <label for="tipoParceria">Empresas parceiras</label>
-                                </div>
-                                <div class="radio-custom radio-primary">
-                                    <input id="clubesFederacoes" name="tipoParceria" type="radio" value="clubesFederacoes" required title="Por favor selecione a parceiria." />
-                                    <label for="tipoParceria">Clubes e Federações</label>
-                                </div>
-                                <label class="error" for="tipoParceria"></label>
+                            <label class="col-sm-2 control-label">Tipo Parceria</label>
+                            <div class="col-sm-4">
+                                <input type="text" id="nome" name="nome" class="form-control" readonly
+                                       value="@Model.Parceiro.TipoParceriaNome" />
                             </div>
-                            <label class="col-sm-2 control-label">Tipo Pessoa</label>
-                            <div class="col-sm-2">
-                                <div class="radio-custom radio-primary">
-                                    <input id="pf" name="tipoPessoa" type="radio" value="pf" required title="Por favor selecione o tipo pessoa." />
-                                    <label for="tipoPessoa">Pessoa Física</label>
+                            <label v-if="params.visible" class="col-sm-1 control-label">CPF </label>
+                            <label v-else="!params.visible" class="col-sm-1 control-label">CNPJ </label>
+                            <div class="col-sm-4">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-envelope"></i>
+                                    </span>
+                                    <input type="text" id="nome" name="nome" class="form-control" readonly
+                                           value="@Model.Parceiro.TipoParceriaNome" />
                                 </div>
-                                <div class="radio-custom radio-primary">
-                                    <input id="pj" name="tipoPessoa" type="radio" value="pj" required title="Por favor selecione o tipo pessoa." />
-                                    <label for="tipoPessoa">Pessoa Jurídica</label>
-                                </div>
-                                <label class="error" for="tipoPessoa"></label>
-                            </div>
-                            <label class="col-sm-1 control-label">Cpf</label>
-                            <div class="col-sm-3">
-                                <input id="cpf" name="cpf"
-                                       v-model="params.cpf"
-                                       type="text" value="" class="form-control" title="Por favor informe o cpf ou cnpj do parceiro."
-                                       maxlength="14" value="@Model.Parceiro.CpfCnpj" />
                             </div>
                         </div>
                         <div class="form-group">

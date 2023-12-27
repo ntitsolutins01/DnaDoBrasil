@@ -2,7 +2,8 @@
     el: "#vProfissional",
     data: {
         params: {
-            cpf: ""
+            cpf: "",
+            ambientes: []
         },
         loading: false,
         editDto: { Id: "", Nome: "", DtNascimento: "", Email: "", AspNetUserId: "", Sexo: "", Cpf: "", Telefone: "", Celular: "", Endereco: "", Numero: "", Cep: "", Bairro: "", Municipio: "", Ambientes: "", Contratos: "", Status: true }
@@ -290,6 +291,93 @@
                 Site.Notification("Erro ao buscar e analisar dados", error.response.data, "error", 1);
                 self.ShowLoad(false, "vUsuario");
             });
+        },
+        AddAmbiente: function () {
+            var self = this;
+            self.ShowLoad(true, "vProfissional");
+
+            var mapped = $("#ddlAmbiente").select2('data');
+
+            $('#ambienteDataTable').DataTable().destroy();
+
+            var table = $('#ambienteDataTable').DataTable({
+                columnDefs: [
+                    { "className": "text-center", "targets": "_all" }
+                ]
+            });
+
+            table.row.add([mapped[0].id, mapped[0].text,
+                "<a style='color:#F44336' href='javascript:(crud.DeleteAmbiente(\"" + mapped[0].id + "\"))'><i class='fa fa-trash'></i></a>"])
+                .draw();
+
+            self.params.ambientes.push(mapped[0].id);
+
+            $('input[name="arrAmbientes"]').attr('value', self.params.ambientes);
+
+            $("#ddlAmbiente").select2("val", "0");
+
+
+            //$('#ambienteDataTable').DataTable().destroy();
+
+            //$('#ambienteDataTable').DataTable({
+            //    data: obj,
+            //    "columns": [
+            //        { "data": "id" },
+            //        { "data": "nome" },
+            //        {
+            //            "data": null,
+            //            "sortable": false,
+            //            "render": function (c) {
+            //                return "<a style='color:#F44336' href='javascript:(crud.DeleteAmbiente(\"" + c.index + "\"))'><i class='fa fa-trash'></i></a>";
+            //            }
+            //        }
+            //    ],
+            //    "paging": true,
+            //    "searching": true,
+            //    "language": {
+            //        "sEmptyTable": "Nenhum registro encontrado",
+            //        "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+            //        "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+            //        "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+            //        "sInfoPostFix": "",
+            //        "sInfoThousands": ".",
+            //        "sLengthMenu": "_MENU_ resultados por página",
+            //        "sLoadingRecords": "Carregando...",
+            //        "sProcessing": "Processando...",
+            //        "sZeroRecords": "Nenhum registro encontrado",
+            //        "sSearch": "Pesquisar: ",
+            //        "oPaginate": {
+            //            "sNext": "Próximo →" +
+            //                "" +
+            //                "",
+            //            "sPrevious": "← Anterior",
+            //            "sFirst": "Primeiro",
+            //            "sLast": "Último"
+            //        },
+            //        "oAria": {
+            //            "sSortAscending": ": Ordenar colunas de forma ascendente",
+            //            "sSortDescending": ": Ordenar colunas de forma descendente"
+            //        }
+            //    }
+            //});
+
+            //$('#ambienteDataTable').DataTable().draw();
+
+            self.ShowLoad(false, "vProfissional");
+        },
+        DeleteAmbiente: function (index) {
+            var self = this;
+            self.ShowLoad(true, "vProfissional");
+
+            var table = $('#ambienteDataTable').DataTable();
+
+            table.row(index).remove().draw();
+
+            $('#ambienteDataTable tbody').on('click', 'tr', function () {
+                //alert('Row index: ' + table.row(this).index());
+                var index = table.row(this).index();
+                table.row(index).remove().draw();
+            });
         }
     }
 });
@@ -303,6 +391,12 @@ var crud = {
         $('input[name="habilitarProfissionalId"]').attr('value', id);
         $('#mdHabilitar').modal('show');
     },
+    AddAmbiente: function () {
+        vm.AddAmbiente()
+    },
+    DeleteAmbiente: function (index) {
+        vm.DeleteAmbiente(index)
+    }
 };
 
 //var vm = new Vue({
@@ -360,54 +454,7 @@ var crud = {
 //                }
 //            });
 
-//            jQuery.validator.addMethod("cnpj",
-//                function (value, element) {
-
-//                    var numeros, digitos, soma, i, resultado, pos, tamanho, digitos_iguais;
-//                    if (value.length == 0) {
-//                        return false;
-//                    }
-
-//                    value = value.replace(/\D+/g, '');
-//                    digitos_iguais = 1;
-
-//                    for (i = 0; i < value.length - 1; i++)
-//                        if (value.charAt(i) != value.charAt(i + 1)) {
-//                            digitos_iguais = 0;
-//                            break;
-//                        }
-//                    if (digitos_iguais)
-//                        return false;
-
-//                    tamanho = value.length - 2;
-//                    numeros = value.substring(0, tamanho);
-//                    digitos = value.substring(tamanho);
-//                    soma = 0;
-//                    pos = tamanho - 7;
-//                    for (i = tamanho; i >= 1; i--) {
-//                        soma += numeros.charAt(tamanho - i) * pos--;
-//                        if (pos < 2)
-//                            pos = 9;
-//                    }
-//                    resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
-//                    if (resultado != digitos.charAt(0)) {
-//                        return false;
-//                    }
-//                    tamanho = tamanho + 1;
-//                    numeros = value.substring(0, tamanho);
-//                    soma = 0;
-//                    pos = tamanho - 7;
-//                    for (i = tamanho; i >= 1; i--) {
-//                        soma += numeros.charAt(tamanho - i) * pos--;
-//                        if (pos < 2)
-//                            pos = 9;
-//                    }
-
-//                    resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
-
-//                    return (resultado == digitos.charAt(1));
-//                },
-//                "Informe um CNPJ válido");
+//
 
 //        }).apply(this, [jQuery]);
 //    },

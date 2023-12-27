@@ -85,6 +85,7 @@ namespace WebApp.Controllers
 			{
 				var status = collection["status"].ToString();
 				var habilitado = collection["habilitado"].ToString();
+				var ambientesIds = collection["arrAmbientes"];
 
 				var command = new ProfissionalModel.CreateUpdateProfissionalCommand
 				{
@@ -102,7 +103,8 @@ namespace WebApp.Controllers
 					Endereco = collection["endereco"].ToString(),
 					MunicipioId = collection["ddlMunicipio"] == "" ? null : Convert.ToInt32(collection["ddlMunicipio"].ToString()),
 					Habilitado = habilitado == "",
-					Status = status != ""
+					Status = status != "",
+					AmbientesIds = ambientesIds.ToArray() //collection["arrAmbientes"] == "" ? null : collection["arrAmbientes"]
 				};
 
 				await ApiClientFactory.Instance.CreateProfissional(command);
@@ -146,6 +148,31 @@ namespace WebApp.Controllers
 				await ApiClientFactory.Instance.UpdateProfissional(command.Id, command);
 
 				return RedirectToAction(nameof(Edit), new { crud = (int)EnumCrud.Updated });
+			}
+			catch (Exception e)
+			{
+				Console.Write(e.StackTrace);
+				return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = e.Message });
+
+			}
+		}
+
+		//[ClaimsAuthorize("Profissional", "Alterar")]
+		[HttpPost]
+		public async Task<ActionResult> CreateAmbiente(IFormCollection collection)
+		{
+			try
+			{
+				var ambiente = collection["ambiente"].ToString();
+
+				var command = new AmbienteModel.CreateUpdateAmbienteCommand
+				{
+					Nome = ambiente
+				};
+
+				await ApiClientFactory.Instance.CreateAmbiente(command);
+
+				return RedirectToAction(nameof(Create), new { crud = (int)EnumCrud.Created });
 			}
 			catch (Exception e)
 			{

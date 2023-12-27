@@ -113,14 +113,11 @@
 							{
 								<td class="text-center"><span class="label label-danger">INABILITADO</span></td>
 							}
-							<td class="actions text-center">
+                            <td class="actions text-center">
+                                <a data-toggle="tooltip" data-placement="top" title="Editar" href='javascript:(crud.EditModal(@item.Id))'
+                                   class="on-default edit-row" style='color: #FF9800'><i class="fa fa-pencil"></i></a>
 								<a data-toggle="tooltip" data-placement="top" title="Habilitar Profissional" href='javascript:(crud.HabilitarModal(@item.Id))'
 								   class="on-default remove-row" style="cursor: pointer;color: #7B1FA2"><i class="fa fa-check-circle"></i></a>
-								<a data-toggle="tooltip" data-placement="top" title="Editar"
-								   href='javascript:(crud.EditModal(@item.Id))'
-								   class="on-default edit-row" style='color: #FF9800'>
-									<i class="fa fa-pencil"></i>
-								</a>
 								<a data-toggle="tooltip" data-placement="top" title="Excluir" href='javascript:(crud.DeleteModal(@item.Id))'
 								   class="on-default remove-row" style="cursor: pointer;color: #F44336"><i class="fa fa-trash"></i></a>
 							</td>
@@ -204,37 +201,56 @@
 	<script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
 	<script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
 	<script src="~/js/formatTable.js"></script>
+    <script src="~/js/profissional.js"></script>
 
 	<script>
 
 		(function ($) {
 
 			'use strict';
-			var crub = @ViewBag.CrudMessage;
+			var crud = @ViewBag.CrudMessage;
 
-			if (crub === 1) {
+			if (crud === 1) {
 				new PNotify({
-					title: 'Profissionais',
+					title: 'Resposta',
 					text: 'Cadastro realizado com sucesso!',
 					type: 'success'
 				});
-			} else if (crub === 2) {
+			} else if (crud === 2) {
 				new PNotify({
-					title: 'Profissionais',
+					title: 'Resposta',
 					text: 'Dados alterados com sucesso.',
-					type: 'warning',
-					icon: 'fa fa-pencil'
+					type: 'warning'
 				});
-			} else if (crub === 3) {
+			} else if (crud === 3) {
 				new PNotify({
-					title: 'Profissionais',
+					title: 'Resposta',
 					text: 'Registro excluído com sucesso.',
-					type: 'error',
-					icon: 'fa fa-trash-o'
+					type: 'error'
 				});
 			}
-			if ($.isFunction($.fn['tooltip'])) {
-				$('[data-toggle=tooltip],[rel=tooltip]').tooltip({ container: 'body' });
+
+			var notify = @ViewBag.NotifyMessage;
+			var messagem = '@ViewBag.Notify';
+
+			if (notify === 0) {
+				new PNotify({
+					title: 'Resposta',
+					text: messagem,
+					type: 'success'
+				});
+			} else if (notify === 1) {
+				new PNotify({
+					title: 'Resposta',
+					text: messagem,
+					type: 'warning'
+				});
+			} else if (notify === 2) {
+				new PNotify({
+					title: 'Resposta',
+					text: messagem,
+					type: 'error'
+				});
 			}
 
 		}).apply(this, [jQuery]);

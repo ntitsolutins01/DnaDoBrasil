@@ -42,19 +42,20 @@
                             <label class="col-sm-2 control-label">Selecione a Parceria</label>
                             <div class="col-sm-2">
                                 <div class="radio-custom radio-danger">
-                                    <input id="empresas" name="tipoParceria" type="radio" value="empresas" required title="Por favor selecione a parceiria." />
+                                    <input id="empresas" name="tipoParceria" type="radio" value="1" required title="Por favor selecione a parceiria." />
                                     <label for="tipoParceria">Empresas parceiras</label>
                                 </div>
                                 <div class="radio-custom radio-success">
-                                    <input id="clubesFederacoes" name="tipoParceria" type="radio" value="clubesFederacoes" required title="Por favor selecione a parceiria." />
+                                    <input id="clubesFederacoes" name="tipoParceria" type="radio" value="2" required title="Por favor selecione a parceiria." />
                                     <label for="tipoParceria">Clubes e Federações</label>
                                 </div>
                                 <label class="error" for="tipoParceria"></label>
                             </div>
-                            <label class="col-sm-2 control-label">Tipo Pessoa</label>
+                            <label class="col-sm-1 control-label">Tipo Pessoa</label>
                             <div class="col-sm-2">
                                 <div class="radio-custom radio-default">
-                                    <input id="pf" name="tipoPessoa" type="radio" value="pf" required title="Por favor selecione o tipo pessoa." />
+                                    <input id="pf" name="tipoPessoa" type="radio" value="pf" checked
+                                           required title="Por favor selecione o tipo pessoa." />
                                     <label for="tipoPessoa">Pessoa Física</label>
                                 </div>
                                 <div class="radio-custom radio-info">
@@ -63,17 +64,23 @@
                                 </div>
                                 <label class="error" for="tipoPessoa"></label>
                             </div>
-                            <div v-if="visible" id="hideCpf">
-                                <label class="col-sm-1 control-label">Cpf</label>
+                            <div v-if="params.visible" id="hideCpf">
+                                <label class="col-sm-1 control-label">CPF</label>
                                 <div class="col-sm-3">
                                     <input id="cpf" name="cpf"
-                                           v-model="params.cpf"
-                                           type="text" value="" class="form-control" title="Por favor informe o cpf ou cnpj do parceiro."
-                                           maxlength="14"/>
+                                           type="text" value="" class="form-control" 
+                                           title="Por favor informe o cpf do parceiro."
+                                           maxlength="14" checked/>
                                 </div>
                             </div>
-                            <div v-if="!visible" id="hideCnpj">
-                                <p>hide me </p>
+                            <div v-if="!params.visible" id="hideCnpj">
+                                <label class="col-sm-1 control-label">CNPJ</label>
+                                <div class="col-sm-3">
+                                    <input id="cnpj" name="cnpj"
+                                           type="text" value="" class="form-control"
+                                           title="Por favor informe o cnpj do parceiro."
+                                           maxlength="14" />
+                                </div>
                             </div>
                             
                         </div>
@@ -84,7 +91,7 @@
                                     <span class="input-group-addon">
                                         <i class="fa fa-phone"></i>
                                     </span>
-                                    <input id="numTelefone" name="numTelefone" placeholder="eg.: (00) 0000-0000" class="form-control"
+                                    <input id="numTelefone" name="numTelefone" class="form-control"
                                            maxlength="14" 
                                            title="Por favor informe o telefone ">
                                 </div>
@@ -95,7 +102,7 @@
                                     <span class="input-group-addon">
                                         <i class="fa fa-phone"></i>
                                     </span>
-                                    <input id="numCelular" name="numCelular" placeholder="eg.: (00) 00000-0000" class="form-control"
+                                    <input id="numCelular" name="numCelular" class="form-control"
                                            maxlength="14"
                                            title="Por favor informe o celular">
                                 </div>
@@ -158,8 +165,9 @@
                             <label class="col-sm-1 control-label pull-left">&nbsp;&nbsp;</label>
                             <div class="col-sm-10">
                                 <div class="checkbox-custom chekbox-primary">
-                                    <input id="for-project" value="project" type="checkbox" name="for[]" required title="Campo obrigatorio" />
-                                    <label for="for-project">Me comprometo que todas as informações prestadas são verdadeiras.</label>
+                                    <input id="compromisso" value="compromisso" type="checkbox" name="compromisso" required title="Campo obrigatório" />
+                                    <label for="compromisso">Me comprometo que todas as informações prestadas são verdadeiras.</label>
+                                    <label class="error" for="compromisso"></label>
                                 </div>
                             </div>
                         </div>

@@ -34,6 +34,7 @@ namespace WebApp.Models
             public bool Status { get; set; } = true;
             public int? MunicipioId { get; set; }
             public bool Habilitado { get; set; }
+            public string? AmbientesIds { get; set; }
         }
     }
 

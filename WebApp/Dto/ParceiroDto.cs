@@ -21,5 +21,6 @@
         public int? MunicipioId { get; set; }
         public int EstadoId { get; set; }
         public string Uf { get; set; }
+        public string TipoParceriaNome { get; set; }
     }
 }
