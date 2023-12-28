@@ -16,14 +16,14 @@ namespace WebApp.ApiClient
                 $"{ResourceProfissional}"));
             return Post(requestUrl, command);
         }
-        public Task<bool> UpdateProfissional(int id, ProfissionalModel.CreateUpdateProfissionalCommand command)
-        {
-            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceProfissional}/{id}"));
-            return Put(requestUrl, command);
-        }
+		public Task<bool> UpdateProfissional(int id, ProfissionalModel.CreateUpdateProfissionalCommand command)
+		{
+			var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+				$"{ResourceProfissional}/{id}"));
+			return Put(requestUrl, command);
+		}
 
-        public Task<bool> DeleteProfissional(int id)
+		public Task<bool> DeleteProfissional(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 $"{ResourceProfissional}/{id}"));

@@ -120,29 +120,33 @@ namespace WebApp.Controllers
 		}
 
 		//[ClaimsAuthorize("Profissional", "Alterar")]
-		public async Task<ActionResult> Edit(IFormCollection collection)
+		public async Task<ActionResult> Edit(int id, IFormCollection collection)
 		{
 			try
 			{
 				var status = collection["status"].ToString();
 				var habilitado = collection["habilitado"].ToString();
+				var ambientesIds = collection["arrAmbientes"];
+
 				var command = new ProfissionalModel.CreateUpdateProfissionalCommand
 				{
-					Nome = collection["nome"].ToString(),
-					DtNascimento = collection["DtNascimento"].ToString(),
-					Email = collection["email"].ToString(),
-					Sexo = collection["ddlSexo"].ToString(),
-					Telefone = collection["numTelefone"].ToString(),
-					Cep = collection["cep"].ToString(),
-					Celular = collection["numCelular"].ToString(),
-					Cpf = collection["cpf"].ToString(),
+					Id = id,
+					Nome = collection["nome"] == "" ? null : collection["nome"].ToString(),
+					DtNascimento = collection["DtNascimento"] == "" ? null : collection["DtNascimento"].ToString(),
+					Email = collection["email"] == "" ? null : collection["email"].ToString(),
+					Sexo = collection["ddlSexo"] == "" ? null : collection["ddlSexo"].ToString(),
+					Telefone = collection["numTelefone"] == "" ? null : collection["numTelefone"].ToString(),
+					Cep = collection["cep"] == "" ? null : collection["cep"].ToString(),
+					Celular = collection["numCelular"] == "" ? null : collection["numCelular"].ToString(),
+					Cpf = collection["cpf"] == "" ? null : collection["cpf"].ToString(),
 					//AspNetUserId = collection["aspnetuserId"].ToString(),
-					//Numero = Convert.ToInt32(collection["numero"].ToString()),
-					Bairro = collection["bairro"].ToString(),
-					Endereco = collection["endereco"].ToString(),
-					//MunicipioId = Convert.ToInt32(collection["ddlMunicipio"].ToString()),
-					Habilitado = habilitado == "",
-					Status = status != ""
+					Numero = collection["numero"] == "" ? null : Convert.ToInt32(collection["numero"].ToString()),
+					Bairro = collection["bairro"] == "" ? null : collection["bairro"].ToString(),
+					Endereco = collection["endereco"] == "" ? null : collection["endereco"].ToString(),
+					MunicipioId = collection["ddlMunicipio"] == "" ? null : Convert.ToInt32(collection["ddlMunicipio"].ToString()),
+					Habilitado = habilitado != "",
+					Status = status != "",
+					AmbientesIds = collection["arrAmbientes"] == "" ? null : collection["arrAmbientes"].ToString()
 				};
 
 				await ApiClientFactory.Instance.UpdateProfissional(command.Id, command);
