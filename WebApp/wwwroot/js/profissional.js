@@ -512,13 +512,8 @@
 var crud = {
     DeleteModal: function (id) {
         $('input[name="profissionalId"]').attr('value', id);
-        $('mdDeleteProfissional').modal('show');
+        $('mdDelete').modal('show');
         vm.DeleteProfissional(id)
-    },
-    EditModal: function (id) {
-        $('input[name="profissionalId"]').attr('value', id);
-        $('#mdEditContrato').modal('show');
-        vm.EditProfissional(id)
     },
     HabilitarModal: function (id) {
         $('input[name="habilitarProfissionalId"]').attr('value', id);

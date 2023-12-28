@@ -117,7 +117,8 @@
 								<a data-toggle="tooltip" data-placement="top" title="Editar" asp-action="Edit" asp-controller="Profissional" asp-route-Id="@item.Id" class="on-default edit-row" style='color: #FF9800'><i class="fa fa-pencil"></i></a>
 								<a data-toggle="tooltip" data-placement="top" title="Habilitar Profissional" href='javascript:(crud.HabilitarModal(@item.Id))'
 								   class="on-default remove-row" style="cursor: pointer;color: #7B1FA2"><i class="fa fa-check-circle"></i></a>
-								<a data-toggle="tooltip" data-placement="top" title="Excluir" asp-action="Delete" asp-controller="Profissional" asp-route-id="@item.Id" class="on-default remove-row" style='color: #F44336'><i class="fa fa-trash"></i></a>
+								<a data-toggle="tooltip" data-placement="top" title="Excluir" href='javascript:(crud.DeleteModal(@item.Id))'
+								   class="on-default remove-row" style="cursor: pointer;color: #F44336"><i class="fa fa-trash"></i></a>
 							</td>
 						</tr>
 					}
@@ -126,34 +127,8 @@
 		</div>
 	</section>
 	<!-- Modal -->
-	<div class="modal fade" id="mdDeleteProfissional" tabindex="-1" role="dialog" aria-labelledby="mdDeleteProfissionalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="mdDeleteProfissionalLabel">
-						<i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Exclusão de Usuário</strong>
-					</h5>
-				</div>
-				<div class="modal-body">
-					<div class="modal-icon">
-						<i class="fa fa-question-circle"></i>
-					</div>
-					<div class="modal-text">
-						<input type="hidden" id="deleteprofissionalId" />
-						<p class="mb-0">Tem certeza que deseja <b>excluir</b> esse registro?</p>
-					</div>
-					<div class="modal-wrapper">
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-thumbs-o-down"></i> &nbsp;&nbsp;Não</button>
-					<a id="deleteProfissionalHref" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</a>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Modal -->
-	<div class="modal fade" id="mdHabilitar" tabindex="-1" role="dialog" aria-labelledby="mdHabilitarLabel" aria-hidden="true">
+	<div class="modal fade" id="md
+	<div class="modal fade" id="mdHHabilitar" tabindex="-1" role="dialog" aria-labelledby="mdHabilitarLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -163,30 +138,50 @@
 				</div>
 				@using (@Html.BeginForm("Habilitar", "Profissional", FormMethod.Post, new { id = "formHabilitarProfissional", @class = "form-horizontal" }))
 				{
-					<input type="hidden" name="habilitarParceiroId" :value="editDto.Id" />
+							<input type="hidden" name="habilitarParceiroId" :value="editDto.Id" />
 
-					<div class="modal-body">
-						<div class="form-group row">
-							<label class="col-sm-2 control-label text-sm-right pt-2">Email <span class="required">*</span></label>
-							<div class="col-sm-10">
-								<div class="input-group">
-									<span class="input-group-addon">
-										<i class="fa fa-envelope"></i>
-									</span>
+							<div class="modal-body">
+								<div class="form-group row">
+									<label class="col-sm-2 control-label text-sm-right pt-2">Email <span class="required">*</span></label>
+									<div class="col-sm-10">
+										<div class="input-group">
+											<span class="input-group-addon">
+												<i class="fa fa-envelope"></i>
+											</span>
 									@* v-on:blur="ExisteEmail" *@
-									<input type="text" id="email" name="email"
-									       class="form-control"
-									       maxlength="100"
-									       title="Por favor informe um Email válido do parceiro." required />
+											<input type="text" id="email" name="email"
+												   class="form-control"
+												   maxlength="100"
+												   title="Por favor informe um Email válido do parceiro." required />
+										</div>
+									</div>
 								</div>
 							</div>
-						</div>
+							<div class="modal-footer">
+								<button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-thumbs-o-down"></i> &nbsp;&nbsp;Não</button>
+								<button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</button>
+							</div>
+				}
+			</div>
+		</div>
+	</div>
+	<!-- Modal -->
+	<div class="modal fade" id="mdDelete" tabindex="-1" role="dialog" aria-labelledby="mdDeleteLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="mdDeleteLabel">
+						<i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Delete Profissional</strong>
+					</h5>
+				</div>
+					<input type="hidden" name="profissionalId" :value="editDto.Id" />
+					<div class="modal-body">
 					</div>
 					<div class="modal-footer">
 						<button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-thumbs-o-down"></i> &nbsp;&nbsp;Não</button>
 						<button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</button>
 					</div>
-				}
+
 			</div>
 		</div>
 	</div>
@@ -194,68 +189,68 @@
 
 
 @section CssSpecificVendor {
-	<link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />
-	<link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css" />
-}
+		<link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />
+		<link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css" />
+	}
 @section Scripts {
-	<script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
-	<script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
-	<script src="~/assets/vendor/ios7-switch/ios7-switch.js"></script>
-	<script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
-	<script src="~/js/formatTable.js"></script>
-	<script src="~/js/profissional.js"></script>
+		<script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
+		<script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
+		<script src="~/assets/vendor/ios7-switch/ios7-switch.js"></script>
+		<script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
+		<script src="~/js/formatTable.js"></script>
+		<script src="~/js/profissional.js"></script>
 
-	<script>
+		<script>
 
-		(function ($) {
+			(function ($) {
 
-			'use strict';
-			var crud = @ViewBag.CrudMessage;
+				'use strict';
+				var crud = @ViewBag.CrudMessage;
 
-			if (crud === 1) {
-				new PNotify({
-					title: 'Profissional',
-					text: 'Cadastro realizado com sucesso!',
-					type: 'success'
-				});
-			} else if (crud === 2) {
-				new PNotify({
-					title: 'Profissional',
-					text: 'Dados alterados com sucesso.',
-					type: 'warning'
-				});
-			} else if (crud === 3) {
-				new PNotify({
-					title: 'Profissional',
-					text: 'Registro excluído com sucesso.',
-					type: 'error'
-				});
-			}
+				if (crud === 1) {
+					new PNotify({
+						title: 'Profissional',
+						text: 'Cadastro realizado com sucesso!',
+						type: 'success'
+					});
+				} else if (crud === 2) {
+					new PNotify({
+						title: 'Profissional',
+						text: 'Dados alterados com sucesso.',
+						type: 'warning'
+					});
+				} else if (crud === 3) {
+					new PNotify({
+						title: 'Profissional',
+						text: 'Registro excluído com sucesso.',
+						type: 'error'
+					});
+				}
 
-			var notify = @ViewBag.NotifyMessage;
-			var messagem = '@ViewBag.Notify';
+				var notify = @ViewBag.NotifyMessage;
+				var messagem = '@ViewBag.Notify';
 
-			if (notify === 0) {
-				new PNotify({
-					title: 'Profissional',
-					text: messagem,
-					type: 'success'
-				});
-			} else if (notify === 1) {
-				new PNotify({
-					title: 'Profissional',
-					text: messagem,
-					type: 'warning'
-				});
-			} else if (notify === 2) {
-				new PNotify({
-					title: 'Profissional',
-					text: messagem,
-					type: 'error'
-				});
-			}
+				if (notify === 0) {
+					new PNotify({
+						title: 'Profissional',
+						text: messagem,
+						type: 'success'
+					});
+				} else if (notify === 1) {
+					new PNotify({
+						title: 'Profissional',
+						text: messagem,
+						type: 'warning'
+					});
+				} else if (notify === 2) {
+					new PNotify({
+						title: 'Profissional',
+						text: messagem,
+						type: 'error'
+					});
+				}
 
-		}).apply(this, [jQuery]);
-	</script>
-}
+			}).apply(this, [jQuery]);
+		</script>
+	}
 

@@ -12,6 +12,7 @@ using WebApp.Enumerators;
 using WebApp.Factory;
 using WebApp.Models;
 using WebApp.Utility;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace WebApp.Controllers
 {
@@ -115,6 +116,28 @@ namespace WebApp.Controllers
 			{
 				Console.Write(e.StackTrace);
 				return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = e.Message });
+
+			}
+		}
+
+		public ActionResult Edit(int id, int? crud, int? notify, string message = null)
+		{
+			try
+			{
+				SetNotifyMessage(notify, message);
+				SetCrudMessage(crud);
+
+				var profissional = ApiClientFactory.Instance.GetProfissionalById(id);
+				var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
+				var ambientes = new SelectList(ApiClientFactory.Instance.GetAmbienteAll(), "Id", "Nome");
+
+				return View(new ProfissionalModel() { ListEstados = estados, ListAmbientes = ambientes, Profissional = profissional});
+
+			}
+			catch (Exception e)
+			{
+				Console.Write(e.StackTrace);
+				return RedirectToAction(nameof(Edit), new { notify = (int)EnumNotify.Error, message = e.Message });
 
 			}
 		}
