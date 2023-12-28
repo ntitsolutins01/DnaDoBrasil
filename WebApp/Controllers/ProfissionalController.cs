@@ -143,6 +143,7 @@ namespace WebApp.Controllers
 		}
 
 		//[ClaimsAuthorize("Profissional", "Alterar")]
+		[HttpPost]
 		public async Task<ActionResult> Edit(int id, IFormCollection collection)
 		{
 			try
