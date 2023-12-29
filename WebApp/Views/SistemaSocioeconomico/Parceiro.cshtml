@@ -70,12 +70,13 @@
             <table class="table table-bordered table-striped mb-0" id="datatable-default">
                 <thead>
                     <tr>
-                        <th>Id</th>
-                        <th>Instituiçao</th>
-                        <th>Email</th>
-                        <th>Solicitação Pendente?</th>
-                        <th>Status</th>
-                        <th>Ações</th>
+						<th class="text-center">Id</th>
+                        <th class="text-center">Instituiçao</th>
+                        <th class="text-center">Email</th>
+                        <th class="text-center">Solicitação Pendente?</th>
+                        <th class="text-center">Status</th>
+	                    <th class="text-center">Habilitado</th>
+                        <th class="text-center">Ações</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -85,7 +86,7 @@
                             <td class="text-center">@Html.DisplayFor(modelItem => item.Id)</td>
                             <td class="text-center">@Html.DisplayFor(modelItem => item.Nome)</td>
                             <td class="text-center">@Html.DisplayFor(modelItem => item.Email)</td>
-                            @if (item.Alunos!.Any())
+                            @if (item.Status)
                             {
                                 <td class="text-center"><span class="label label-danger">SIM</span></td>
                             }
@@ -177,42 +178,42 @@
         </div>
     </div>
     <!-- Modal -->
-    <div class="modal fade" id="mdHabilitar" tabindex="-1" role="dialog" aria-labelledby="mdHabilitarLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="mdHabilitarLabel">
-                        <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Habilitar Parceiro</strong>
-                    </h5>
-                </div>
-            @using (@Html.BeginForm("Habilitar", "SistemaSocioeconomico", FormMethod.Post, new { id = "formHabilitarParceiro", @class = "form-horizontal" }))
-            {
-                <input type="hidden" name="habilitarParceiroId" :value="editDto.Id"/>
+    <div class="modal fade" id="mdHHabilitar" tabindex="-1" role="dialog" aria-labelledby="mdHabilitarLabel" aria-hidden="true">
+	    <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+			    <div class="modal-header">
+				    <h5 class="modal-title" id="mdHabilitarLabel">
+                        <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Habilitar SistemaSocioeconomico</strong>
+				    </h5>
+			    </div>
+                @using (@Html.BeginForm("Habilitar", "SistemaSocioeconomico", FormMethod.Post, new { id = "formHabilitarSistemaSocioeconomico", @class = "form-horizontal" }))
+			    {
+				    <input type="hidden" name="habilitarParceiroId" :value="editDto.Id" />
 
-                <div class="modal-body">
-                    <div class="form-group row">
-                        <label class="col-sm-2 control-label text-sm-right pt-2">Email <span class="required">*</span></label>
-                        <div class="col-sm-10">
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="fa fa-envelope"></i>
-                                    </span>
-                                    @* v-on:blur="ExisteEmail" *@
-                                <input type="text" id="email" name="email"
-                                       class="form-control"
-                                       maxlength="100"
-                                       title="Por favor informe um Email válido do parceiro." required />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-thumbs-o-down"></i> &nbsp;&nbsp;Não</button>
-                    <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</button>
-                </div>
-            }
-            </div>
-        </div>
+				    <div class="modal-body">
+					    <div class="form-group row">
+						    <label class="col-sm-2 control-label text-sm-right pt-2">Email <span class="required">*</span></label>
+						    <div class="col-sm-10">
+							    <div class="input-group">
+								    <span class="input-group-addon">
+									    <i class="fa fa-envelope"></i>
+								    </span>
+								    @* v-on:blur="ExisteEmail" *@
+								    <input type="text" id="email" name="email"
+								           class="form-control"
+								           maxlength="100"
+								           title="Por favor informe um Email válido do parceiro." required />
+							    </div>
+						    </div>
+					    </div>
+				    </div>
+				    <div class="modal-footer">
+					    <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-thumbs-o-down"></i> &nbsp;&nbsp;Não</button>
+					    <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</button>
+				    </div>
+			    }
+		    </div>
+	    </div>
     </div>
 </div>
 @section CssSpecificVendor {
@@ -235,20 +236,20 @@
 
             if (crub === 1) {
                 new PNotify({
-                    title: 'Profissionais',
+                    title: 'Parceiro',
                     text: 'Cadastro realizado com sucesso!',
                     type: 'success'
                 });
             } else if (crub === 2) {
                 new PNotify({
-                    title: 'Profissionais',
+                    title: 'Parceiro',
                     text: 'Dados alterados com sucesso.',
                     type: 'warning',
                     icon: 'fa fa-pencil'
                 });
             } else if (crub === 3) {
                 new PNotify({
-                    title: 'Profissionais',
+                    title: 'Parceiro',
                     text: 'Registro excluído com sucesso.',
                     type: 'error',
                     icon: 'fa fa-trash-o'

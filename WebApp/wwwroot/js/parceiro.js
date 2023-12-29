@@ -60,26 +60,26 @@ var vm = new Vue({
 
                 var ddlSource = "#ddlMunicipio";
 
-                $.getJSON(url, { id: $(ddlSource).val() }, function (data) {
-                    if (data.length > 0) {
-                        var items = '<option value="">Selecionar Municipio</option>';
-                        $("#ddlMunicipio").empty;
-                        $.each(data,
-                            function (i, row) {
-                                items += "<option value='" + row.value + "'>" + row.text + "</option>";
+                $.getJSON(url, { id: $(ddlSource).val() },
+                    function (data) {
+                        if (data.length > 0) {
+                            var items = '<option value="">Selecionar Municipio</option>';
+                            $("#ddlMunicipio").empty;
+                            $.each(data,
+                                function (i, row) {
+                                    items += "<option value='" + row.value + "'>" + row.text + "</option>";
+                                });
+                            $("#ddlMunicipio").html(items);
+                        }
+                        else {
+                            new PNotify({
+                                title: 'Usuario',
+                                text: data,
+                                type: 'warning'
                             });
-                        $("#ddlMunicipio").html(items);
-                    }
-                    else {
-                        new PNotify({
-                            title: 'Parceiro',
-                            text: data,
-                            type: 'warning'
-                        });
-                    }
-                });
+                        }
+                    });
             });
-
             var $numCpf = $("#cpf");
             $numCpf.mask('000.000.000-00', { reverse: false });
             jQuery.validator.addMethod("cpf", function (cpf, element) {
@@ -189,9 +189,9 @@ var vm = new Vue({
             var $tipoPessoa = $("input:radio[name=tipoPessoa]");
             $tipoPessoa.on("change", function () {
                 
-                if ($(this).val() == "pf") {
+                if ($(this).val() == "cpf") {
                     self.params.visible = true;
-                } else if ($(this).val() == "pj") {
+                } else if ($(this).val() == "cnpj") {
 
                     var $numCnpj = $("#cnpj");
                     $numCnpj.mask('00.000.000/0000-00', { reverse: false });
