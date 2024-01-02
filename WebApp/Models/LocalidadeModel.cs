@@ -20,7 +20,7 @@ namespace WebApp.Models
 	        public string Nome { get; set; }
 	        public string Descricao { get; set; }
 	        public bool Status { get; set; }
-			public string MunicipioId { get; set; }
+			public int MunicipioId { get; set; }
         }
     }
 
