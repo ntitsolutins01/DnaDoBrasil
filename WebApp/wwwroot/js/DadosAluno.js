@@ -1,7 +1,9 @@
 ﻿var vm = new Vue({
-    el: "#formAluno",
+    el: "#formDadosAluno",
     data: {
-        loading: false
+        loading: false,
+        editDto: { Id: "", Nome: "", Status: true, IdadeInicial: "", IdadeFinal: "", ScoreTotal: "", Descricao: "" },
+        params:{}
     },
     mounted: function () {
         var self = this;
@@ -21,33 +23,9 @@
 
             var formid = $('form').attr('id');
 
-            if (formid === "formAluno") {
-                var $select = $(".select2").select2({
-                    allowClear: true
-                });
+            if (formid === "formDadosAluno") {
 
-                $(".select2").each(function () {
-                    var $this = $(this),
-                        opts = {};
-
-                    var pluginOptions = $this.data('plugin-options');
-                    if (pluginOptions)
-                        opts = pluginOptions;
-
-                    $this.themePluginSelect2(opts);
-                });
-
-                /*
-                 * When you change the value the select via select2, it triggers
-                 * a 'change' event, but the jquery validation plugin
-                 * only re-validates on 'blur'*/
-
-                $select.on('change', function () {
-                    $(this).trigger('blur');
-                });
-
-
-                $("#formAluno").validate({
+                $("#formDadosAluno").validate({
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
                     },
@@ -65,9 +43,8 @@
                         }
                     }
                 });
-
-
             }
+
         }).apply(this, [jQuery]);
     },
     methods: {
@@ -90,34 +67,17 @@
                 self.loading = flag;
             }
         },
-         DeleteAluno: function (id) {
-            var url = "Aluno/Delete/" + id;
-            $("#deleteAlunoHref").prop("href", url);
-        },
-        EditAluno: function (id) {
-            var self = this;
-
-            axios.get("Aluno/GetAlunoById/?id=" + id).then(result => {
-
-                self.editDto.Id = result.data.id;
-                self.editDto.Nome = result.data.nome;
-                self.editDto.Status = result.data.status;
-
-            }).catch(error => {
-                Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
-            });
+        DeleteDadosAluno: function (id) {
+            var url = "DadosAluno/Delete/" + id;
+            $("#deleteDadosAlunoHref").prop("href", url);
         }
     }
 });
+
 var crud = {
     DeleteModal: function (id) {
-        $('input[name="AlunoId"]').attr('value', id);
-        $('#mdDeleteAluno').modal('show');
-        vm.DeleteAluno(id)
-    },
-    EditModal: function (id) {
-        $('input[name="AlunoId"]').attr('value', id);
-        $('#mdEditAluno').modal('show');
-        vm.EditAluno(id)
+        $('input[name="DadosAlunoId"]').attr('value', id);
+        $('#mdDeleteDadosAluno').modal('show');
+        vm.DeleteDadosAluno(id)
     }
 };

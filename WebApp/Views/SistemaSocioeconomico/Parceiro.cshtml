@@ -183,10 +183,10 @@
 		    <div class="modal-content">
 			    <div class="modal-header">
 				    <h5 class="modal-title" id="mdHabilitarLabel">
-                        <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Habilitar SistemaSocioeconomico</strong>
+                        <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Habilitar Parceiro</strong>
 				    </h5>
 			    </div>
-                @using (@Html.BeginForm("Habilitar", "SistemaSocioeconomico", FormMethod.Post, new { id = "formHabilitarSistemaSocioeconomico", @class = "form-horizontal" }))
+                @using (@Html.BeginForm("Habilitar", "SistemaSocioeconomico", FormMethod.Post, new { id = "vParceiro", @class = "form-horizontal" }))
 			    {
 				    <input type="hidden" name="habilitarParceiroId" :value="editDto.Id" />
 

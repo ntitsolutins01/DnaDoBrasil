@@ -43,11 +43,23 @@ namespace WebApp.Controllers
 
 	        }
         }
-        public IActionResult Create()
-		{
-			return View();
-		}
-		public IActionResult Laudo()
+
+        //public ActionResult Create()
+        //{
+
+
+        //    return View();
+        //}
+
+
+        public ActionResult Create(int? crud, int? notify, string message = null)
+        {
+            SetNotifyMessage(notify, message);
+            SetCrudMessage(crud);
+
+            return View();
+        }
+        public IActionResult Laudo()
 		{
 			return View();
 		}

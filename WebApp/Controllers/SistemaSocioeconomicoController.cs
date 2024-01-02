@@ -91,21 +91,20 @@ namespace WebApp.Controllers
                 var command = new ParceiroModel.CreateUpdateParceiroCommand
                 {
 
-                    Nome = collection["nome"] == "" ? null : collection["nome"].ToString(),
-                    TipoPessoa = collection["tipoPessoa"] == "" ? null : collection["tipoPessoa"].ToString(),
-                    Cnpj = collection["Cnpj"] == "" ? null : collection["Cnpj"].ToString(),
-                    Cpf = collection["cpf"] == "" ? null : collection["cpf"].ToString(),
-                    Telefone = collection["numTelefone"] == "" ? null : collection["numTelefone"].ToString(),
-                    Celular = collection["numCelular"] == "" ? null : collection["numCelular"].ToString(),
-                    Cep = collection["cep"] == "" ? null : collection["cep"].ToString(),
-                    Endereco = collection["endereco"] == "" ? null : collection["endereco"].ToString(),
-                    Numero = collection["numero"] == "" ? null : Convert.ToInt32(collection["numero"].ToString()),
-                    Bairro = collection["bairro"] == "" ? null : collection["bairro"].ToString(),
-                    MunicipioId = collection["ddlMunicipio"] == "" ? null : Convert.ToInt32(collection["ddlMunicipio"].ToString()),
+                    Nome = collection["nome"].ToString(),
+                    TipoPessoa = collection["tipoPessoa"].ToString(),
+                    CpfCnpj = collection["tipoPessoa"] == "pf" ? collection["cpf"].ToString() : collection["cnpj"].ToString(),
+                    Telefone = collection["numTelefone"].ToString(), 
+                    Celular = collection["numCelular"].ToString(),
+                    Cep = collection["cep"].ToString(),
+                    Endereco = collection["endereco"].ToString(),
+                    Numero = Convert.ToInt32(collection["numero"].ToString()),
+                    Bairro = collection["bairro"].ToString(),
+                    MunicipioId = Convert.ToInt32(collection["ddlMunicipio"].ToString()),
                     Habilitado = habilitado != "",
                     Status = status != "",
-                    Email = collection["email"] == "" ? null : collection["email"].ToString(),
-                    //TipoParceria = Convert.ToInt32(collection["TipoParceria"].ToString()),
+                    Email = collection["email"].ToString(),
+                    TipoParceria = Convert.ToInt32(collection["TipoParceria"].ToString()),
 
                 };
 
@@ -153,21 +152,20 @@ namespace WebApp.Controllers
                 var command = new ParceiroModel.CreateUpdateParceiroCommand
                 {
                     Id = id,
-                    Nome = collection["nome"] == "" ? null : collection["nome"].ToString(),
-                    TipoPessoa = collection["tipoPessoa"] == "" ? null : collection["tipoPessoa"].ToString(),
-                    Cnpj = collection["Cnpj"] == "" ? null : collection["Cnpj"].ToString(),
-                    Cpf = collection["cpf"] == "" ? null : collection["cpf"].ToString(),
-                    Telefone = collection["numTelefone"] == "" ? null : collection["numTelefone"].ToString(),
-                    Celular = collection["numCelular"] == "" ? null : collection["numCelular"].ToString(),
-                    Cep = collection["cep"] == "" ? null : collection["cep"].ToString(),
-                    Endereco = collection["endereco"] == "" ? null : collection["endereco"].ToString(),
-                    Numero = collection["numero"] == "" ? null : Convert.ToInt32(collection["numero"].ToString()),
-                    Bairro = collection["bairro"] == "" ? null : collection["bairro"].ToString(),
-                    MunicipioId = collection["ddlMunicipio"] == "" ? null : Convert.ToInt32(collection["ddlMunicipio"].ToString()),
+                    Nome = collection["nome"].ToString(),
+                    TipoPessoa = collection["tipoPessoa"].ToString(),
+                    CpfCnpj = collection["tipoPessoa"] == "pf" ? collection["cpf"].ToString() : collection["cnpj"].ToString(),
+                    Telefone = collection["numTelefone"].ToString(),
+                    Celular = collection["numCelular"].ToString(),
+                    Cep = collection["cep"].ToString(),
+                    Endereco = collection["endereco"].ToString(),
+                    Numero = Convert.ToInt32(collection["numero"].ToString()),
+                    Bairro = collection["bairro"].ToString(),
+                    MunicipioId = Convert.ToInt32(collection["ddlMunicipio"].ToString()),
                     Habilitado = habilitado != "",
                     Status = status != "",
-                    Email = collection["email"] == "" ? null : collection["email"].ToString(),
-                    //TipoParceria = Convert.ToInt32(collection["TipoParceria"].ToString()),
+                    Email = collection["email"].ToString(),
+                    TipoParceria = Convert.ToInt32(collection["TipoParceria"].ToString()),
                 };
 
                 await ApiClientFactory.Instance.UpdateParceiro(command.Id, command);

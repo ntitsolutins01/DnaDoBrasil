@@ -1,3 +1,5 @@
+@model AlunoModel
+
 @{
     ViewData["Title"] = "Novo Aluno";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -27,7 +29,8 @@
                 <div id="dados" class="tab-pane active">
                     <div class="row">
                         <div class="col-md-12">
-                            <form id="formDados" action="forms-validation.html" class="form-horizontal">
+                        @using (@Html.BeginForm("CreateDados", "Aluno", FormMethod.Post, new { id = "formDadosAluno", @class = "form-horizontal" }))
+                        {
                                 <section class="panel">
                                     <div class="panel-body">
                                         <div class="form-group">
@@ -97,12 +100,12 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-group">
+                                       @*  <div class="form-group">
                                             <label class="col-sm-2 control-label">Estado/Profissional</label>
                                             <div class="col-sm-4">
                                                 <select class="form-control populate select2" name="ddlEstado" id="ddlEstado"
                                                         title="Por favor selecione um estado." required
-                                                @* asp-for="CodEstado" asp-items="Model.ListEstado" *@>
+                                                        asp-for="EstadoId" asp-items="Model.ListEstados">
                                                     <option value="">Selecionar Estado</option>
                                                 </select>
                                             </div>
@@ -111,11 +114,11 @@
                                             <div class="col-sm-4">
                                                 <select class="form-control populate select2" name="ddlProfissional" id="ddlProfissional"
                                                         title="Por favor selecione um profissional." required
-                                                @* asp-for="CodProfissional" asp-items="Model.ListProfissional" *@>
+                                                asp-for="CodProfissional" asp-items="Model.ListProfissional">
                                                     <option value="">Selecionar Profissional</option>
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div> *@
                                         <div class="form-group">
                                             <label class="col-sm-1 control-label">Nome Mãe</label>
                                             <div class="col-sm-5">
@@ -180,7 +183,7 @@
                                             <div class="col-sm-3">
                                                 <select class="form-control populate select2" name="ddlEstado" id="ddlEstado"
                                                         title="Por favor selecione um estado." required
-                                                @* asp-for="CodEstado" asp-items="Model.ListEstado" *@>
+                                                @* asp-for="CodEstado" asp-items="Model.ListEstado">
                                                     <option value="">Selecionar Estado</option>
                                                 </select>
                                             </div>
@@ -298,7 +301,7 @@
                                         </div>
                                     </footer>
                                 </section>
-                            </form>
+	                        }
                         </div>
                     </div>
                 </div>
@@ -886,7 +889,8 @@
     <script src="~/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
     <script src="~/assets/vendor/bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR.min.js"></script>
     <script src="~/js/formatTable.js"></script>
-    <script src="~/js/alunos.js"></script>
+    @* <script src="~/js/alunos.js"></script> *@
+    <script src="~/js/DadosAluno.js"></script>
     <script>
 
         // iosSwitcher

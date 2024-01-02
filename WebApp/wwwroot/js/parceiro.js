@@ -73,7 +73,7 @@ var vm = new Vue({
                         }
                         else {
                             new PNotify({
-                                title: 'Usuario',
+                                title: 'Parceiro',
                                 text: data,
                                 type: 'warning'
                             });
