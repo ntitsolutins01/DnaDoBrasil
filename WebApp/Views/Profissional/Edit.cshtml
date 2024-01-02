@@ -22,7 +22,7 @@
 					<div class="form-group">
 						<label class="col-sm-1 control-label">Nome <span class="required">*</span></label>
 						<div class="col-sm-6">
-							<input type="text" name="nome" id="nome"
+							<input type="text" name="nome" id="nome" value="@Model.Profissional.Nome"
 								   maxlength="200" class="form-control" required title="Por favor informe o nome." />
 						</div>
 						<label class="col-sm-2 control-label">Data Nascimento </label>
@@ -33,7 +33,7 @@
 								</span>
 								<input id="DtNascimento" name="DtNascimento"
 									   title="Por favor informe a data de nascimento."
-									   style="z-index: auto;"
+									   style="z-index: auto;" value="@Model.Profissional.DtNascimento"
 									   data-plugin-datepicker data-date-format="dd/mm/yyyy" data-plugin-options='{"language": "pt-BR"}'
 									   placeholder="__/__/____" class="form-control startdate"
 									   class="form-control">
@@ -47,7 +47,7 @@
 								<span class="input-group-addon">
 									<i class="fa fa-envelope"></i>
 								</span>
-								<input type="text" name="email" id="email" maxlength="100" class="form-control" />
+								<input type="text" name="email" id="email" maxlength="100" class="form-control" value="@Model.Profissional.Email" />
 							</div>
 						</div>
 						<label class="col-sm-1 control-label">Sexo</label>
@@ -64,7 +64,7 @@
 						<label class="col-sm-1 control-label">Cpf <span class="required">*</span></label>
 						<div class="col-sm-2">
 							<input id="cpf" name="cpf"
-							       type="text" class="form-control"
+								   type="text" class="form-control" value="@Model.Profissional.CpfCnpj"
 							       maxlength="14" />
 						</div>
 						<label class="col-sm-1 control-label text-sm-right pt-2">Estado <span class="required">*</span></label>
@@ -87,57 +87,56 @@
 					<div class="form-group">
 						<label class="col-sm-1 control-label">Endereço</label>
 						<div class="col-sm-5">
-							<input type="text" id="endereco" name="endereco" maxlength="200" class="form-control" />
+							<input type="text" id="endereco" name="endereco" maxlength="200" class="form-control" value="@Model.Profissional.Endereco" />
 						</div>
 						<label class="col-sm-1 control-label">Número</label>
 						<div class="col-sm-2">
-							<input type="number" id="numero" name="numero" maxlength="4" class="form-control" />
+							<input type="number" id="numero" name="numero" maxlength="4" class="form-control" value="@Model.Profissional.Numero" />
 						</div>
 						<label class="col-sm-1 control-label">Cep</label>
 						<div class="col-sm-2">
-							<input type="text" id="cep" name="cep" maxlength="9" class="form-control" />
+							<input type="text" id="cep" name="cep" maxlength="9" class="form-control" value="@Model.Profissional.Cep" />
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-1 control-label">Bairro </label>
-						<div class="col-sm-3">
-							<input type="bairro" name="bairro" maxlength="50" class="form-control" />
-						</div>
+                        <div class="col-sm-3">
+                            <input type="bairro" name="bairro" maxlength="50" class="form-control" value="@Model.Profissional.Bairro" />
+                        </div>
+                        <label class="col-lg-1 control-label text-lg-right pt-2">Telefone</label>
+                        <div class="col-lg-3">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-phone"></i>
+                                </span>
+                                <input id="numTelefone" name="numTelefone" class="form-control"
+                                       maxlength="14" value="@Model.Profissional.Telefone"
+                                       title="Por favor informe o telefone ">
+                            </div>
+                        </div>
+                        <label class="col-sm-1 control-label">Celular </label>
+                        <div class="col-sm-3">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-phone"></i>
+                                </span>
+                                <input id="numCelular" name="numCelular" class="form-control"
+                                       maxlength="14" value="@Model.Profissional.Celular"
+                                       title="Por favor informe o celular">
+                            </div>
+                        </div>
 					</div>
-					<label class="col-lg-1 control-label text-lg-right pt-2">Telefone</label>
-					<div class="col-lg-3">
-						<div class="input-group">
-							<span class="input-group-addon">
-								<i class="fa fa-phone"></i>
-							</span>
-							<input id="numTelefone" name="numTelefone" class="form-control"
-								   maxlength="14"
-								   title="Por favor informe o telefone ">
-						</div>
-					</div>
-					<label class="col-sm-1 control-label">Celular </label>
-					<div class="col-sm-3">
-						<div class="input-group">
-							<span class="input-group-addon">
-								<i class="fa fa-phone"></i>
-							</span>
-							<input id="numCelular" name="numCelular" class="form-control"
-								   maxlength="14"
-								   title="Por favor informe o celular">
-						</div>
-					</div>
-					
 					<div class="form-group">
 						<label class="col-sm-3 control-label pull-left">Cadastro ativo para login?</label>
 						<div class="col-sm-1">
 							<div class="switch switch-sm switch-success">
-								<input type="checkbox" id="status" name="status" data-plugin-ios-switch checked="checked" />
+								<input type="checkbox" id="status" name="status" data-plugin-ios-switch @(Model.Profissional.Status == true ? "checked" : "") />
 							</div>
 						</div>
 						<label class="col-sm-2 control-label">Cadastro habilitado a operar?</label>
 						<div class="col-sm-1">
 							<div class="switch switch-sm switch-success">
-								<input type="checkbox" id="habilitado" name="habilitado" data-plugin-ios-switch checked="checked" />
+								<input type="checkbox" id="habilitado" name="habilitado" data-plugin-ios-switch @(Model.Profissional.Habilitado == true ? "checked" : "") />
 							</div>
 						</div>
 					</div>
@@ -159,12 +158,9 @@
 							</select>
 						</div>
 						<div class="col-sm-1">
-							<a type="button" class="ml-xs btn btn-primary" href='javascript:(crud.AddAmbiente())'>
+							<a type="button" class="ml-xs btn btn-warning" href='javascript:(crud.AddAmbiente())'>
 								<i class="fa fa-plus"></i>
 							</a>
-						</div>
-						<div class="col-sm-5 pull-right">
-							<a data-toggle="modal" data-target="#mdAmbiente" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Alteração de Ambiente </a>
 						</div>
 					</div>
 					<div class="form-group">
@@ -172,13 +168,26 @@
 						<label class="col-sm-2 control-label">Adicionados</label>
 						<div class="col-sm-10">
 							<table class="table table-bordered table-striped mb-0" id="ambienteDataTable">
-								<thead>
-									<tr>
-										<th>Id</th>
-										<th>Nome Ambiente</th>
-										<th>Ação</th>
-									</tr>
-								</thead>
+                                <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Nome Ambiente</th>
+                                    <th>Ação</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach (var item in Model.Ambientes)
+                                {
+                                    <tr>
+                                        <td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Id)</td>
+                                        <td class="text-center">@Html.DisplayFor(modelItem => item.Nome)</td>
+                                        <td class="actions text-center">
+                                            <a data-toggle="tooltip" data-placement="top" title="Excluir" href='javascript:(crud.DeleteModal(@item.Id))'
+                                               class="on-default remove-row" style="cursor: pointer;color: #F44336"><i class="fa fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                }
+                                </tbody>
 							</table>
 
 						</div>

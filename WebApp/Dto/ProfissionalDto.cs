@@ -22,6 +22,6 @@
         public int MunicipioId { get; set; }
         public bool Status { get; set; }
         public bool Habilitado { get; set; }
-
+        public List<AmbienteDto>? Ambientes { get; set; }
     }
 }
