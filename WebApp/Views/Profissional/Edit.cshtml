@@ -62,12 +62,27 @@
 					</div>
 					<div class="form-group">
 						<label class="col-sm-1 control-label">Cpf <span class="required">*</span></label>
-						<div class="col-sm-3">
+						<div class="col-sm-2">
 							<input id="cpf" name="cpf"
-								   type="text" class="form-control"
-								   maxlength="14" />
+							       type="text" class="form-control"
+							       maxlength="14" />
 						</div>
-
+						<label class="col-sm-1 control-label text-sm-right pt-2">Estado <span class="required">*</span></label>
+						<div class="col-md-3">
+							<select class="form-control populate select2" name="ddlEstado" id="ddlEstado"
+							        title="Por favor informe um Estado." required
+							        asp-for="EstadoId" asp-items="Model.ListEstados">
+								<option value="">Selecionar Estado</option>
+							</select>
+						</div>
+						<label class="col-sm-2 control-label text-sm-right pt-2">Município <span class="required">*</span></label>
+						<div class="col-md-3">
+							<select class="form-control populate select2" name="ddlMunicipio" id="ddlMunicipio"
+							        title="Por favor informe um Municipio." required
+							        asp-for="MunicipioId" asp-items="Model.ListMunicipios">
+								<option value="">Selecionar Município</option>
+							</select>
+						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-1 control-label">Endereço</label>
@@ -111,24 +126,7 @@
 								   title="Por favor informe o celular">
 						</div>
 					</div>
-					<div class="form-group">
-						<label class="col-sm-1 control-label text-sm-right pt-2">Estado <span class="required">*</span></label>
-						<div class="col-md-3">
-							<select class="form-control populate select2" name="ddlEstado" id="ddlEstado"
-									title="Por favor informe um Estado." required
-									asp-for="EstadoId" asp-items="Model.ListEstados">
-								<option value="">Selecionar Estado</option>
-							</select>
-						</div>
-						<label class="col-sm-2 control-label text-sm-right pt-2">Município <span class="required">*</span></label>
-						<div class="col-md-3">
-							<select class="form-control populate select2" name="ddlMunicipio" id="ddlMunicipio"
-									title="Por favor informe um Municipio." required
-									asp-for="MunicipioId" asp-items="Model.ListMunicipios">
-								<option value="">Selecionar Município</option>
-							</select>
-						</div>
-					</div>
+					
 					<div class="form-group">
 						<label class="col-sm-3 control-label pull-left">Cadastro ativo para login?</label>
 						<div class="col-sm-1">

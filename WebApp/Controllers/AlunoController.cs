@@ -23,14 +23,25 @@ namespace WebApp.Controllers
 
         public ActionResult Index(int? crud, int? notify, string message = null)
         {
-            SetNotifyMessage(notify, message);
-            SetCrudMessage(crud);
+	        try
+	        {
+		        SetNotifyMessage(notify, message);
+		        SetCrudMessage(crud);
 
-            var response = ApiClientFactory.Instance.GetAlunosAll();
-            var localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeAll(), "Id", "Nome");
-            var deficiencias = new SelectList(ApiClientFactory.Instance.GetDeficienciaAll(), "Id", "Nome");
+		        var response = ApiClientFactory.Instance.GetAlunosAll();
+		        var localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeAll(), "Id", "Nome");
+		        var deficiencias = new SelectList(ApiClientFactory.Instance.GetDeficienciaAll(), "Id", "Nome");
 
-            return View(new AlunoModel() { Alunos = response, ListLocalidades = localidades, ListDeficiencias = deficiencias });
+		        return View(new AlunoModel()
+			        { Alunos = response, ListLocalidades = localidades, ListDeficiencias = deficiencias });
+
+	        }
+	        catch (Exception e)
+	        {
+		        Console.Write(e.StackTrace);
+		        return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = e.Message });
+
+	        }
         }
         public IActionResult Create()
 		{

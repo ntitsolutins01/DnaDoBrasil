@@ -128,10 +128,11 @@ namespace WebApp.Controllers
 				SetCrudMessage(crud);
 
 				var profissional = ApiClientFactory.Instance.GetProfissionalById(id);
-				var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
+				var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", profissional.Uf);
+				var municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(profissional.Uf!), "Id", "Nome", profissional.MunicipioId);
 				var ambientes = new SelectList(ApiClientFactory.Instance.GetAmbienteAll(), "Id", "Nome");
 
-				return View(new ProfissionalModel() { ListEstados = estados, ListAmbientes = ambientes, Profissional = profissional});
+				return View(new ProfissionalModel() { ListEstados = estados, ListAmbientes = ambientes, Profissional = profissional, ListMunicipios = municipios});
 
 			}
 			catch (Exception e)
