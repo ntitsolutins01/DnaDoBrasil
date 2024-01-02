@@ -189,9 +189,9 @@ var vm = new Vue({
             var $tipoPessoa = $("input:radio[name=tipoPessoa]");
             $tipoPessoa.on("change", function () {
                 
-                if ($(this).val() == "cpf") {
+                if ($(this).val() == "pf") {
                     self.params.visible = true;
-                } else if ($(this).val() == "cnpj") {
+                } else if ($(this).val() == "pj") {
 
                     var $numCnpj = $("#cnpj");
                     $numCnpj.mask('00.000.000/0000-00', { reverse: false });
