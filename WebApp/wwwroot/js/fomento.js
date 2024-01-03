@@ -115,6 +115,7 @@ var vm = new Vue({
             axios.get("Fomento/GetFomentoById/?id=" + id).then(result => {
 
                 self.editDto.Id = result.data.id;
+                self.editDto.Codigo = result.data.codigo;
                 self.editDto.Nome = result.data.nome;
 
             }).catch(error => {

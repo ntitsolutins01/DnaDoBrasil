@@ -61,6 +61,7 @@ namespace WebApp.Controllers
                 {
                     LocalidadeId = Convert.ToInt32(collection["ddlLocalidade"].ToString()),
                     MunicipioId = Convert.ToInt32(collection["ddlMunicipio"].ToString()),
+                    Codigo = collection["codigo"].ToString(),
                     Nome = collection["Nome"].ToString()
                 };
 
@@ -80,6 +81,7 @@ namespace WebApp.Controllers
             var command = new FomentoModel.CreateUpdateFomentoCommand
             {
                 Id = Convert.ToInt32(collection["editFomentoId"]),
+                Codigo = collection["codigo"].ToString(),
                 Nome = collection["nome"].ToString(),
                 Status = collection["editStatus"].ToString() == "" ? false : true
 			};
