@@ -17,6 +17,12 @@ namespace WebApp.Models
         public SelectList ListDeficiencias { get; set; }
         public int LocalidadeId { get; set; }
         public int DeficienciaId { get; set; }
+        public string EstadoId { get; set; }
+        public SelectList ListEstados { get; set; }
+        public string MunicipioId { get; set; }
+        public SelectList ListMunicipios { get; set; }
+        public SelectList ListAmbientes { get; set; }
+        public object AmbienteId { get; set; }
 
         public class CreateUpdateAlunoCommand
         {

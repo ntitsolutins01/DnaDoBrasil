@@ -14,7 +14,7 @@
 
             'use strict';
 
-            
+
 
             var formid = $('form').attr('id');
             //Inclusao
@@ -469,7 +469,7 @@
             });
 
             table.row.add([mapped[0].id, mapped[0].text,
-                "<a style='color:#F44336' href='javascript:(crud.DeleteAmbiente(\"" + mapped[0].id + "\"))'><i class='fa fa-trash'></i></a>"])
+            "<a style='color:#F44336' href='javascript:(crud.DeleteAmbiente(\"" + mapped[0].id + "\"))'><i class='fa fa-trash'></i></a>"])
                 .draw();
 
             self.params.ambientes.push(mapped[0].id);

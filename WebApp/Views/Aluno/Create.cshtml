@@ -53,7 +53,7 @@
                                             </div>
                                             <label class="col-sm-1 control-label">Nome <span class="required">*</span></label>
                                             <div class="col-sm-3">
-                                                <input type="text" name="nome" id="nome" placeholder="eg.: Nome completo do aluno" maxlength="200" class="form-control" required />
+                                                <input type="text" name="nome" id="nome" maxlength="200" class="form-control" required />
                                             </div>
                                             <label class="col-sm-1 control-label">Sexo <span class="required">*</span></label>
                                             <div class="col-sm-2">
@@ -95,8 +95,7 @@
                                                     <span class="input-group-addon">
                                                         <i class="fa fa-envelope"></i>
                                                     </span>
-                                                    <input type="text" name="email" maxlength="100" class="form-control"
-                                                           placeholder="eg.: Endereço eletrônico válido do aluno" />
+                                                    <input type="text" name="email" maxlength="100" class="form-control"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -122,11 +121,11 @@
                                         <div class="form-group">
                                             <label class="col-sm-1 control-label">Nome Mãe</label>
                                             <div class="col-sm-5">
-                                                <input type="text" name="nomeMae" maxlength="150" placeholder="eg.: Nome da mãe" class="form-control" />
+                                                <input type="text" name="nomeMae" maxlength="150"class="form-control" />
                                             </div>
                                             <label class="col-sm-1 control-label">Nome Pai</label>
                                             <div class="col-sm-5">
-                                                <input type="text" name="nomePai" maxlength="150" placeholder="eg.: Nome do pai" class="form-control" />
+                                                <input type="text" name="nomePai" maxlength="150"class="form-control" />
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -134,7 +133,7 @@
                                             <div class="col-sm-3">
                                                 <input id="cpf" name="cpf"
                                                        v-model="params.cpf"
-                                                       type="text" value="" class="form-control" placeholder="eg.: Número do CPF do aluno"
+                                                       type="text" value="" class="form-control"
                                                        maxlength="14" />
                                             </div>
                                             <label class="col-lg-1 control-label text-lg-right pt-2">Telefone<span class="required">*</span></label>
@@ -143,7 +142,7 @@
                                                     <span class="input-group-addon">
                                                         <i class="fa fa-phone"></i>
                                                     </span>
-                                                    <input id="numTelefone" name="numTelefone" placeholder="eg.: (00) 0000-0000" class="form-control"
+                                                    <input id="numTelefone" name="numTelefone"class="form-control"
                                                            maxlength="14"
                                                            title="Por favor informe o telefone " required>
                                                 </div>
@@ -154,7 +153,7 @@
                                                     <span class="input-group-addon">
                                                         <i class="fa fa-phone"></i>
                                                     </span>
-                                                    <input id="numCelular" name="numCelular" placeholder="eg.: (00) 00000-0000" class="form-control"
+                                                    <input id="numCelular" name="numCelular"class="form-control"
                                                            maxlength="14"
                                                            title="Por favor informe o celular">
                                                 </div>
@@ -163,38 +162,38 @@
                                         <div class="form-group">
                                             <label class="col-sm-1 control-label">Endereço</label>
                                             <div class="col-sm-6">
-                                                <input type="text" id="endereco" name="endereco" maxlength="200" class="form-control" placeholder="eg.: Endereço do aluno" />
+                                                <input type="text" id="endereco" name="endereco" maxlength="200" class="form-control"/>
                                             </div>  
                                             <label class="col-sm-1 control-label">Número</label>
                                             <div class="col-sm-1">
-                                                <input type="number" id="numero" name="numero" maxlength="4" class="form-control" placeholder="eg.: 0000" />
+                                                <input type="number" id="numero" name="numero" maxlength="4" class="form-control"/>
                                             </div>
                                             <label class="col-sm-1 control-label">Cep</label>
                                             <div class="col-sm-2">
-                                                <input type="text" id="cep" name="cep" maxlength="9" class="form-control" placeholder="eg.: 00000-000" />
+                                                <input type="text" id="cep" name="cep" maxlength="9" class="form-control"/>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-1 control-label">Bairro </label>
                                             <div class="col-sm-3">
-                                                <input type="bairro" name="bairro" maxlength="50" class="form-control" placeholder="eg.: Nome do bairro" />
+                                                <input type="bairro" name="bairro" maxlength="50" class="form-control"/>
                                             </div>
-                                            <label class="col-sm-1 control-label">Estado </label>
-                                            <div class="col-sm-3">
-                                                <select class="form-control populate select2" name="ddlEstado" id="ddlEstado"
-                                                        title="Por favor selecione um estado." required
-                                                @* asp-for="CodEstado" asp-items="Model.ListEstado">
-                                                    <option value="">Selecionar Estado</option>
-                                                </select>
-                                            </div>
-                                            <label class="col-sm-1 control-label">Municipio </label>
-                                            <div class="col-sm-3">
-                                                <select class="form-control populate select2" name="ddlEstado" id="ddlEstado"
-                                                        title="Por favor selecione um estado." required
-                                                @* asp-for="CodMunicipio" asp-items="Model.ListMunicipio" *@>
-                                                    <option value="">Selecionar Estado</option>
-                                                </select>
-                                            </div>
+	                                        <label class="col-sm-1 control-label text-sm-right pt-2">Estado <span class="required">*</span></label>
+	                                        <div class="col-md-3">
+		                                        <select class="form-control populate select2" name="ddlEstado" id="ddlEstado"
+		                                                title="Por favor informe um Estado." required
+		                                                asp-for="EstadoId" asp-items="Model.ListEstados">
+			                                        <option value="">Selecionar Estado</option>
+		                                        </select>
+	                                        </div>
+	                                        <label class="col-sm-2 control-label text-sm-right pt-2">Município <span class="required">*</span></label>
+	                                        <div class="col-md-3">
+		                                        <select class="form-control populate select2" name="ddlMunicipio" id="ddlMunicipio"
+		                                                title="Por favor informe um Municipio." required
+		                                                asp-for="MunicipioId" asp-items="Model.ListMunicipios">
+			                                        <option value="">Selecionar Município</option>
+		                                        </select>
+	                                        </div>
                                         </div>
                                         @* <div class="form-group">
                                         <label class="col-sm-1 control-label">Facebook</label>
@@ -280,7 +279,7 @@
                                                             <tr>
                                                                 <td>Deficiência Visual</td>
                                                                 <td class="actions">
-                                                                    <a data-toggle="tooltip" data-placement="top" title="Excluir" @* asp-action="Delete" *@ asp-controller="Perfil" asp-route-id="1" class="on-default remove-row" style='color:#F44336'><i class="fa fa-trash-o"></i></a>
+                                                                    <a data-toggle="tooltip" data-placement="top" title="Excluir" asp-action="Delete" asp-controller="Perfil" asp-route-id="1" class="on-default remove-row" style='color:#F44336'><i class="fa fa-trash-o"></i></a>
                                                                 </td>
                                                             </tr>
                                                         </tbody>
@@ -337,7 +336,6 @@
                                             <label class="col-sm-1 control-label">Doenças</label>
                                             <div class="col-sm-11">
                                                 <textarea class="form-control" rows="3"
-                                                          placeholder="eg.: Preencha com quais doenças e/ou motivos pelos quais necessite de atendimento especial."
                                                           data-plugin-maxlength maxlength="400"></textarea>
                                                 <p>
                                                     <code>limite</code> 400.
@@ -348,12 +346,12 @@
                                             <label class="col-sm-1 control-label">Nacionalidade</label>
                                             <div class="col-sm-5">
 
-                                                <input type="text" id="nacionalidade" name="nacionalidade" class="form-control" placeholder="eg.: Nacionalidade" />
+                                                <input type="text" id="nacionalidade" name="nacionalidade" class="form-control"/>
                                             </div>
                                             <label class="col-sm-1 control-label">Naturalidade</label>
                                             <div class="col-sm-5">
 
-                                                <input type="text" id="naturalidade" name="naturalidade" class="form-control" placeholder="eg.: Naturalidade" />
+                                                <input type="text" id="naturalidade" name="naturalidade" class="form-control"/>
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -364,7 +362,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">Nome Escola</label>
                                             <div class="col-sm-4">
-                                                <input type="text" id="escola" name="escola" class="form-control" placeholder="eg.: Nome da escola" />
+                                                <input type="text" id="escola" name="escola" class="form-control"/>
                                             </div>
 
                                             <label class="col-sm-2 control-label">Tipo Escola</label>
@@ -405,15 +403,15 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">Série</label>
                                             <div class="col-sm-3">
-                                                <input type="text" id="serie" name="serie" class="form-control" placeholder="eg.: Série do aluno" />
+                                                <input type="text" id="serie" name="serie" class="form-control"/>
                                             </div>
                                             <label class="col-sm-1 control-label">Ano </label>
                                             <div class="col-sm-2">
-                                                <input type="text" id="ano" name="ano" class="form-control" placeholder="eg.: Ano escolar" />
+                                                <input type="text" id="ano" name="ano" class="form-control"/>
                                             </div>
                                             <label class="col-sm-1 control-label">Turma</label>
                                             <div class="col-sm-3">
-                                                <input type="text" id="turma" name="turma" class="form-control" placeholder="eg.: Turma do aluno" />
+                                                <input type="text" id="turma" name="turma" class="form-control"/>
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -481,7 +479,7 @@
                                             <div class="col-sm-4">
                                                 <select class="form-control populate select2" name="ddlLocalidadeMatricula" id="ddlLocalidadeMatricula"
                                                         style="width: 100%" title="Por favor selecione a localidade."
-                                                        @* asp-for="CodLocal" asp-items="Model.ListLocal" *@>
+                                                        asp-for="LocalidadeId" asp-items="Model.ListLocalidades">
                                                     <option value="">Selecionar Localidade</option>
                                                 </select>
                                             </div>
@@ -530,19 +528,19 @@
                                             <div class="col-sm-4">
 
                                                 <input type="text" name="nomeResponsavel1" name="nomeResponsavel1" 
-                                                       maxlength="150" placeholder="eg.: Nome do responsável 1" class="form-control" required />
+                                                       maxlength="150"class="form-control" required />
                                             </div>
                                             <label class="col-sm-1 control-label">Parentesco</label>
                                             <div class="col-sm-2">
 
                                                 <input type="text" name="parentesco1" name="parentesco1"
-                                                       maxlength="150" placeholder="eg.: Parentesco do responsável 1" class="form-control" required />
+                                                       maxlength="150"class="form-control" required />
                                             </div>
                                             <label class="col-sm-1 control-label">Cpf</label>
                                             <div class="col-sm-2">
                                                 <input id="cpf1" name="cpf1"
                                                 v-model="params.cpf1"
-                                                type="text" value="" class="form-control" placeholder="eg.: Número do CPF do responsável 1"
+                                                type="text" value="" class="form-control"
                                                 maxlength="14" />
                                             </div>
                                         </div>
@@ -552,20 +550,20 @@
                                             <div class="col-sm-4">
 
                                                 <input type="text" name="nomeResponsavel2" name="nomeResponsavel2" 
-                                                       maxlength="150" placeholder="eg.: Nome do responsável 2" class="form-control" />
+                                                       maxlength="150"class="form-control" />
                                             </div>
                                             <label class="col-sm-1 control-label">Parentesco</label>
                                             <div class="col-sm-2">
 
                                                 <input type="text" name="parentesco2" name="parentesco2"
-                                                       maxlength="150" placeholder="eg.: Parentesco do responsável 2" class="form-control" />
+                                                       maxlength="150"class="form-control" />
                                             </div>
                                             <label class="col-sm-1 control-label">Cpf</label>
                                             <div class="col-sm-2">
                                                 
                                                 <input id="cpf2" name="cpf2"
                                                        v-model="params.cpf2"
-                                                       type="text" value="" class="form-control" placeholder="eg.: Número do CPF do responsável 2"
+                                                       type="text" value="" class="form-control"
                                                        maxlength="14" />
                                             </div>
                                         </div>
@@ -575,20 +573,20 @@
                                             <div class="col-sm-4">
 
                                                 <input type="text" name="nomeResponsavel3" name="nomeResponsavel3"
-                                                       maxlength="150" placeholder="eg.: Nome do responsável 3" class="form-control" />
+                                                       maxlength="150"class="form-control" />
                                             </div>
                                             <label class="col-sm-1 control-label">Parentesco</label>
                                             <div class="col-sm-2">
 
                                                 <input type="text" name="parentesco3" name="parentesco3"
-                                                       maxlength="150" placeholder="eg.: Parentesco do responsável 3" class="form-control" />
+                                                       maxlength="150"class="form-control" />
                                             </div>
                                             <label class="col-sm-1 control-label">Cpf</label>
                                             <div class="col-sm-2">
                                                 
                                                 <input id="cpf3" name="cpf3"
                                                        v-model="params.cpf3"
-                                                       type="text" value="" class="form-control" placeholder="eg.: Número do CPF do responsável 1"
+                                                       type="text" value="" class="form-control"
                                                        maxlength="14" />
                                             </div>
                                         </div>
@@ -617,7 +615,7 @@
                                             <div class="col-sm-4">
                                                 <select class="form-control populate select2" name="ddlAmbiente" id="ddlAmbiente"
                                                         style="width: 100%" title="Por favor selecione o turno."
-                                                        @* asp-for="CodAmbiente" asp-items="Model.ListAmbiente" *@>
+                                                        asp-for="AmbienteId" asp-items="Model.ListAmbientes">
                                                     <option value="">Selecionar Ambiente</option>
                                                 </select>
                                             </div>
@@ -700,7 +698,7 @@
                                             <div class="col-sm-4">
                                                 <select class="form-control populate select2" name="ddlLocalidadeVoucher" id="ddlLocalidadeVoucher"
                                                         style="width: 100%" title="Por favor selecione a localidade."
-                                                        @* asp-for="CodLocal" asp-items="Model.ListLocal" *@>
+                                                asp-for="LocalidadeId" asp-items="Model.ListLocalidades">
                                                     <option value="">Selecionar Local</option>
                                                 </select>
                                             </div>
