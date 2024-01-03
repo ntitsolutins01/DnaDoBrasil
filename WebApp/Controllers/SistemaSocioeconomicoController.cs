@@ -18,22 +18,23 @@ namespace WebApp.Controllers
 
     public class SistemaSocioeconomicoController : BaseController
     {
-        private readonly IOptions<UrlSettings> _appSettings;
         private readonly IEmailSender _emailSender;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IHostingEnvironment _host;
 
-        public SistemaSocioeconomicoController(IOptions<UrlSettings> appSettings,
+        public SistemaSocioeconomicoController(
+            IOptions<UrlSettings> appSettings,
             IEmailSender emailSender,
-            UserManager<IdentityUser> userManager, IHostingEnvironment host, RoleManager<IdentityRole> roleManager)
+            UserManager<IdentityUser> userManager, 
+            IHostingEnvironment host, 
+            RoleManager<IdentityRole> roleManager)
         {
-            _appSettings = appSettings;
             _emailSender = emailSender;
             _userManager = userManager;
             _host = host;
             _roleManager = roleManager;
-            ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
+            ApplicationSettings.WebApiUrl = appSettings.Value.WebApiBaseUrl;
         }
 
         public IActionResult Parceiro(int? crud, int? notify, string message = null)
@@ -91,21 +92,20 @@ namespace WebApp.Controllers
                 var command = new ParceiroModel.CreateUpdateParceiroCommand
                 {
 
-                    Nome = collection["nome"] == "" ? null : collection["nome"].ToString(),
-                    TipoPessoa = collection["tipoPessoa"] == "" ? null : collection["tipoPessoa"].ToString(),
-                    Cnpj = collection["Cnpj"] == "" ? null : collection["Cnpj"].ToString(),
-                    Cpf = collection["cpf"] == "" ? null : collection["cpf"].ToString(),
+                    Nome =  collection["nome"].ToString(),
+                    TipoPessoa =  collection["tipoPessoa"].ToString(),
+                    CpfCnpj = collection["tipoPessoa"] == "pf" ? collection["cpf"].ToString() : collection["cnpj"].ToString(),
                     Telefone = collection["numTelefone"] == "" ? null : collection["numTelefone"].ToString(),
                     Celular = collection["numCelular"] == "" ? null : collection["numCelular"].ToString(),
                     Cep = collection["cep"] == "" ? null : collection["cep"].ToString(),
                     Endereco = collection["endereco"] == "" ? null : collection["endereco"].ToString(),
-                    Numero = collection["numero"] == "" ? null : Convert.ToInt32(collection["numero"].ToString()),
+                    Numero = collection["numero"] == "" ? 0 : Convert.ToInt32(collection["numero"].ToString()),
                     Bairro = collection["bairro"] == "" ? null : collection["bairro"].ToString(),
-                    MunicipioId = collection["ddlMunicipio"] == "" ? null : Convert.ToInt32(collection["ddlMunicipio"].ToString()),
+                    MunicipioId = Convert.ToInt32(collection["ddlMunicipio"].ToString()),
                     Habilitado = habilitado != "",
                     Status = status != "",
-                    Email = collection["email"] == "" ? null : collection["email"].ToString(),
-                    //TipoParceria = Convert.ToInt32(collection["TipoParceria"].ToString()),
+                    Email = collection["email"].ToString(),
+                    TipoParceria = Convert.ToInt32(collection["TipoParceria"].ToString()),
 
                 };
 
@@ -153,21 +153,20 @@ namespace WebApp.Controllers
                 var command = new ParceiroModel.CreateUpdateParceiroCommand
                 {
                     Id = id,
-                    Nome = collection["nome"] == "" ? null : collection["nome"].ToString(),
-                    TipoPessoa = collection["tipoPessoa"] == "" ? null : collection["tipoPessoa"].ToString(),
-                    Cnpj = collection["Cnpj"] == "" ? null : collection["Cnpj"].ToString(),
-                    Cpf = collection["cpf"] == "" ? null : collection["cpf"].ToString(),
+                    Nome = collection["nome"].ToString(),
+                    TipoPessoa = collection["tipoPessoa"].ToString(),
+                    CpfCnpj = collection["tipoPessoa"] == "pj" ? collection["cpf"].ToString() : collection["cnpj"].ToString(),
                     Telefone = collection["numTelefone"] == "" ? null : collection["numTelefone"].ToString(),
                     Celular = collection["numCelular"] == "" ? null : collection["numCelular"].ToString(),
                     Cep = collection["cep"] == "" ? null : collection["cep"].ToString(),
                     Endereco = collection["endereco"] == "" ? null : collection["endereco"].ToString(),
                     Numero = collection["numero"] == "" ? null : Convert.ToInt32(collection["numero"].ToString()),
                     Bairro = collection["bairro"] == "" ? null : collection["bairro"].ToString(),
-                    MunicipioId = collection["ddlMunicipio"] == "" ? null : Convert.ToInt32(collection["ddlMunicipio"].ToString()),
+                    MunicipioId = Convert.ToInt32(collection["ddlMunicipio"].ToString()),
                     Habilitado = habilitado != "",
                     Status = status != "",
-                    Email = collection["email"] == "" ? null : collection["email"].ToString(),
-                    //TipoParceria = Convert.ToInt32(collection["TipoParceria"].ToString()),
+                    Email = collection["email"].ToString(),
+                    TipoParceria = Convert.ToInt32(collection["TipoParceria"].ToString()),
                 };
 
                 await ApiClientFactory.Instance.UpdateParceiro(command.Id, command);
@@ -183,7 +182,7 @@ namespace WebApp.Controllers
         }
 
         //[ClaimsAuthorize("Usuario", "Excluir")]
-        public ActionResult Delete(int id)
+        public ActionResult DeleteParceiro(int id)
         {
             try
             {

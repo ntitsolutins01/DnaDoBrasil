@@ -23,8 +23,7 @@ namespace WebApp.Models
             public  string? Email { get; set; }
             public  int? TipoParceria { get; set; }
             public string? TipoPessoa { get; set; }
-            public  string? Cnpj { get; set; }
-            public  string? Cpf { get; set; }
+            public string? CpfCnpj { get; set; }
             public string? Telefone { get; set; }
             public string? Celular { get; set; }
             public string? Cep { get; set; }

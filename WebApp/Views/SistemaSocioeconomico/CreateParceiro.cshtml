@@ -21,7 +21,7 @@
                     <div class="panel-body">
 
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Nome</label>
+                            <label class="col-sm-2 control-label">Nome <span class="required">*</span></label>
                             <div class="col-sm-4">
                                 <input type="text" id="nome" name="nome" class="form-control" required title="Por favor informe o Nome"/>
                             </div>
@@ -36,7 +36,7 @@
 	                        </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Selecione a Parceria</label>
+                            <label class="col-sm-2 control-label">Selecione a Parceria <span class="required">*</span></label>
                             <div class="col-sm-2">
                                 <div class="radio-custom radio-danger">
                                     <input id="empresas" name="tipoParceria" type="radio" value="1" required title="Por favor selecione a parceiria." />
@@ -48,7 +48,7 @@
                                 </div>
                                 <label class="error" for="tipoParceria"></label>
                             </div>
-                            <label class="col-sm-1 control-label">Tipo Pessoa</label>
+                            <label class="col-sm-2 control-label">Tipo Pessoa <span class="required">*</span></label>
                             <div class="col-sm-2">
                                 <div class="radio-custom radio-default">
                                     <input id="pf" name="tipoPessoa" type="radio" value="pf" checked
@@ -62,21 +62,21 @@
                                 <label class="error" for="tipoPessoa"></label>
                             </div>
                             <div v-if="params.visible" id="hideCpf">
-                                <label class="col-sm-1 control-label">CPF</label>
+                                <label class="col-sm-1 control-label">CPF <span class="required">*</span></label>
                                 <div class="col-sm-3">
                                     <input id="cpf" name="cpf"
                                            type="text" value="" class="form-control" 
                                            title="Por favor informe o cpf do parceiro."
-                                           maxlength="14" checked/>
+                                           maxlength="14"/>
                                 </div>
                             </div>
                             <div v-if="!params.visible" id="hideCnpj">
-                                <label class="col-sm-1 control-label">CNPJ</label>
+                                <label class="col-sm-1 control-label">CNPJ <span class="required">*</span></label>
                                 <div class="col-sm-3">
                                     <input id="cnpj" name="cnpj"
                                            type="text" value="" class="form-control"
                                            title="Por favor informe o cnpj do parceiro."
-                                           maxlength="14" />
+                                           maxlength="19"/>
                                 </div>
                             </div>
                             
@@ -111,8 +111,8 @@
                                 <input type="text" id="endereco" name="endereco" class="form-control" />
                             </div>
                             <label class="col-sm-1 control-label">Número</label>
-                            <div class="col-sm-1">
-                                <input type="text" id="numero" name="numero" class="form-control" />
+                            <div class="col-sm-2">
+                                <input type="number" id="numero" name="numero" class="form-control" />
                             </div>
                         </div>
                         <div class="form-group">
@@ -127,18 +127,18 @@
 
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Estado:</label>
-                            <div class="col-md-3 form-group">
+                            <label class="col-sm-2 control-label">Estado <span class="required">*</span></label>
+                            <div class="col-md-3">
                                 <select class="form-control populate select2" name="ddlEstado" id="ddlEstado"
-                                        title="Por favor informe o estado."
+                                        title="Por favor informe o estado." required
                                         asp-for="EstadoId" asp-items="Model.ListEstados">
                                     <option value="">Selecionar Estado</option>
                                 </select>
                             </div>
-                            <label class="col-sm-1 control-label">Município:</label>
-                            <div class="col-md-3 form-group">
+                            <label class="col-sm-1 control-label">Município <span class="required">*</span></label>
+                            <div class="col-md-3">
                                 <select class="form-control populate select2" name="ddlMunicipio" id="ddlMunicipio"
-                                        title="Por favor informe o município."
+                                        title="Por favor informe o município." required
                                         asp-for="MunicipioId" asp-items="Model.ListMunicipios">
                                     <option value="">Selecionar Município</option>
                                 </select>
