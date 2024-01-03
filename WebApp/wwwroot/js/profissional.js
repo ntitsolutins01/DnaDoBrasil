@@ -214,7 +214,7 @@
                 $("#ddlEstado").change(function () {
                     var sigla = $("#ddlEstado").val();
 
-                    var url = "../DivisaoAdministrativa/GetMunicipioByUf?uf=" + sigla;
+                    var url = "../../DivisaoAdministrativa/GetMunicipioByUf?uf=" + sigla;
 
                     var ddlSource = "#ddlMunicipio";
 
@@ -306,6 +306,40 @@
                     },
                     messages: {
                         cpf: { cpf: 'Formato de CPF inválido', required: "Por favor informe o número do CPF do profissional." }
+                    },
+                    highlight: function (label) {
+                        $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
+                    },
+                    success: function (label) {
+                        $(label).closest('.form-group').removeClass('has-error');
+                        label.remove();
+                    },
+                    errorPlacement: function (error, element) {
+                        var placement = element.closest('.input-group');
+                        if (!placement.get(0)) {
+                            placement = element;
+                        }
+                        if (error.text() !== '') {
+                            placement.after(error);
+                        }
+                    }
+                });
+            }
+            //Habilitar
+            if (formid === "formHabilitarProfissional") {
+
+                $("#formHabilitarProfissional").validate({
+                    rules: {
+                        "EndEmail": {
+                            required: true,
+                            email: true
+                        }
+                    },
+                    messages: {
+                        "EndEmail": {
+                            required: "Por favor informe o endereço eletrônico válido do usuário.",
+                            email: "Formato de e-mail inválido."
+                        }
                     },
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
@@ -511,13 +545,13 @@
 });
 var crud = {
     DeleteModal: function (id) {
-        $('input[name="profissionalId"]').attr('value', id);
-        $('mdDelete').modal('show');
+        $('input[name="ProfissionalId"]').attr('value', id);
+        $('#mdDeleteProfissional').modal('show');
         vm.DeleteProfissional(id)
     },
     HabilitarModal: function (id) {
         $('input[name="habilitarProfissionalId"]').attr('value', id);
-        $('#mdHabilitar').modal('show');
+        $('#mdHabilitarProfissional').modal('show');
     },
     AddAmbiente: function () {
         vm.AddAmbiente()
@@ -526,112 +560,3 @@ var crud = {
         vm.DeleteAmbiente(index)
     }
 };
-
-//var vm = new Vue({
-//    el: "#form",
-//    data: {
-//        params: {
-//            cnpj: ""
-//        },
-//        loading: false
-//    },
-//    mounted: function () {
-//        var self = this;
-//        (function ($) {
-
-//            'use strict';
-
-//            jQuery.validator.addMethod("noSpace", function (value, element) {
-//                return value == '' || value.trim().length != 0;
-//            }, "Sem espaço por favor e não o deixe vazio");
-
-//            var $numCnpj = $("#cnpj");
-//            $numCnpj.mask('00.000.000/0000-00', { reverse: false });
-
-//            var $numTel = $("#Telefone");
-//            $numTel.mask('(00) 0000-0000');
-
-//            $("#form").validate({
-//                rules: {
-//                    cnpj: { cnpj: true, required: true },
-//                    Empresa: {
-//                        noSpace: true
-//                    }
-//                },
-//                messages: {
-//                    cnpj: { cnpj: 'CNPJ inválido', required: "Por favor informe o CNPJ da empresa / órgão público" }
-//                },
-//                //submitHandler: function (form) {
-//                //    alert('ok');
-//                //},
-//                highlight: function (label) {
-//                    $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
-//                },
-//                success: function (label) {
-//                    $(label).closest('.form-group').removeClass('has-error');
-//                    label.remove();
-//                },
-//                errorPlacement: function (error, element) {
-//                    var placement = element.closest('.input-group');
-//                    if (!placement.get(0)) {
-//                        placement = element;
-//                    }
-//                    if (error.text() !== '') {
-//                        placement.after(error);
-//                    }
-//                }
-//            });
-
-//
-
-//        }).apply(this, [jQuery]);
-//    },
-//    methods: {
-//        ShowLoad: function (flag, el) {
-//            var self = this;
-
-//            self.isLoading = flag;
-//            $("#" + el).loadingOverlay({
-//                "startShowing": flag
-//            });
-//            self.loading = flag;
-
-//            if (!flag) {
-//                self.isLoading = flag;
-//                $("#" + el).removeClass("loading-overlay-showing");
-//                self.loading = flag;
-//            } else {
-//                self.isLoading = flag;
-//                $("#" + el).addClass("loading-overlay-showing");
-//                self.loading = flag;
-//            }
-//        },
-//        CancelarEdit: function (event) {
-//            var self = this;
-
-//            $("#ddlUnidadeInfraestrutura").select2("val", "0");
-
-//        },
-//        ExisteCnpj: function () {
-//            var self = this;
-//            self.ShowLoad(true, "vEmpresa");
-
-//            axios.get("GetEmpresaByCnpj/?cnpj=" + self.params.cnpj).then(result => {
-
-//                if (result.data !== false) {
-//                    new PNotify({
-//                        title: 'Empresa',
-//                        text: result.data,
-//                        type: 'error'
-//                    });
-//                }
-
-//                self.ShowLoad(false, "vEmpresa");
-
-//            }).catch(error => {
-//                Site.Notification("Erro ao buscar e analisar dados", error.response.data, "error", 1);
-//                self.ShowLoad(false, "vEmpresa");
-//            });
-//        }
-//    }
-//});

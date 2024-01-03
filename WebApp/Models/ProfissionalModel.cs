@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using System.Collections;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using WebApp.Dto;
 
 namespace WebApp.Models
@@ -15,6 +16,7 @@ namespace WebApp.Models
         public SelectList ListMunicipios { get; set; }
         public SelectList ListAmbientes { get; set; }
         public object AmbienteId { get; set; }
+        public List<AmbienteDto> Ambientes { get; set; }
 
         public class CreateUpdateProfissionalCommand
         {
