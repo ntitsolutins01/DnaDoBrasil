@@ -478,53 +478,6 @@
 
             $("#ddlAmbiente").select2("val", "0");
 
-
-            //$('#ambienteDataTable').DataTable().destroy();
-
-            //$('#ambienteDataTable').DataTable({
-            //    data: obj,
-            //    "columns": [
-            //        { "data": "id" },
-            //        { "data": "nome" },
-            //        {
-            //            "data": null,
-            //            "sortable": false,
-            //            "render": function (c) {
-            //                return "<a style='color:#F44336' href='javascript:(crud.DeleteAmbiente(\"" + c.index + "\"))'><i class='fa fa-trash'></i></a>";
-            //            }
-            //        }
-            //    ],
-            //    "paging": true,
-            //    "searching": true,
-            //    "language": {
-            //        "sEmptyTable": "Nenhum registro encontrado",
-            //        "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
-            //        "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
-            //        "sInfoFiltered": "(Filtrados de _MAX_ registros)",
-            //        "sInfoPostFix": "",
-            //        "sInfoThousands": ".",
-            //        "sLengthMenu": "_MENU_ resultados por página",
-            //        "sLoadingRecords": "Carregando...",
-            //        "sProcessing": "Processando...",
-            //        "sZeroRecords": "Nenhum registro encontrado",
-            //        "sSearch": "Pesquisar: ",
-            //        "oPaginate": {
-            //            "sNext": "Próximo →" +
-            //                "" +
-            //                "",
-            //            "sPrevious": "← Anterior",
-            //            "sFirst": "Primeiro",
-            //            "sLast": "Último"
-            //        },
-            //        "oAria": {
-            //            "sSortAscending": ": Ordenar colunas de forma ascendente",
-            //            "sSortDescending": ": Ordenar colunas de forma descendente"
-            //        }
-            //    }
-            //});
-
-            //$('#ambienteDataTable').DataTable().draw();
-
             self.ShowLoad(false, "vProfissional");
         },
         DeleteAmbiente: function (index) {
@@ -545,7 +498,7 @@
 });
 var crud = {
     DeleteModal: function (id) {
-        $('input[name="ProfissionalId"]').attr('value', id);
+        $('input[name="deleteProfissionalId"]').attr('value', id);
         $('#mdDeleteProfissional').modal('show');
         vm.DeleteProfissional(id)
     },

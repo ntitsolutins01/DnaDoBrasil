@@ -1,4 +1,4 @@
-﻿using System.Text.Encodings.Web;
+using System.Text.Encodings.Web;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -18,22 +18,23 @@ namespace WebApp.Controllers
 
     public class SistemaSocioeconomicoController : BaseController
     {
-        private readonly IOptions<UrlSettings> _appSettings;
         private readonly IEmailSender _emailSender;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IHostingEnvironment _host;
 
-        public SistemaSocioeconomicoController(IOptions<UrlSettings> appSettings,
+        public SistemaSocioeconomicoController(
+            IOptions<UrlSettings> appSettings,
             IEmailSender emailSender,
-            UserManager<IdentityUser> userManager, IHostingEnvironment host, RoleManager<IdentityRole> roleManager)
+            UserManager<IdentityUser> userManager, 
+            IHostingEnvironment host, 
+            RoleManager<IdentityRole> roleManager)
         {
-            _appSettings = appSettings;
             _emailSender = emailSender;
             _userManager = userManager;
             _host = host;
             _roleManager = roleManager;
-            ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
+            ApplicationSettings.WebApiUrl = appSettings.Value.WebApiBaseUrl;
         }
 
         public IActionResult Parceiro(int? crud, int? notify, string message = null)
@@ -91,15 +92,15 @@ namespace WebApp.Controllers
                 var command = new ParceiroModel.CreateUpdateParceiroCommand
                 {
 
-                    Nome = collection["nome"].ToString(),
-                    TipoPessoa = collection["tipoPessoa"].ToString(),
+                    Nome =  collection["nome"].ToString(),
+                    TipoPessoa =  collection["tipoPessoa"].ToString(),
                     CpfCnpj = collection["tipoPessoa"] == "pf" ? collection["cpf"].ToString() : collection["cnpj"].ToString(),
-                    Telefone = collection["numTelefone"].ToString(), 
-                    Celular = collection["numCelular"].ToString(),
-                    Cep = collection["cep"].ToString(),
-                    Endereco = collection["endereco"].ToString(),
-                    Numero = Convert.ToInt32(collection["numero"].ToString()),
-                    Bairro = collection["bairro"].ToString(),
+                    Telefone = collection["numTelefone"] == "" ? null : collection["numTelefone"].ToString(),
+                    Celular = collection["numCelular"] == "" ? null : collection["numCelular"].ToString(),
+                    Cep = collection["cep"] == "" ? null : collection["cep"].ToString(),
+                    Endereco = collection["endereco"] == "" ? null : collection["endereco"].ToString(),
+                    Numero = collection["numero"] == "" ? 0 : Convert.ToInt32(collection["numero"].ToString()),
+                    Bairro = collection["bairro"] == "" ? null : collection["bairro"].ToString(),
                     MunicipioId = Convert.ToInt32(collection["ddlMunicipio"].ToString()),
                     Habilitado = habilitado != "",
                     Status = status != "",
@@ -154,13 +155,13 @@ namespace WebApp.Controllers
                     Id = id,
                     Nome = collection["nome"].ToString(),
                     TipoPessoa = collection["tipoPessoa"].ToString(),
-                    CpfCnpj = collection["tipoPessoa"] == "pf" ? collection["cpf"].ToString() : collection["cnpj"].ToString(),
-                    Telefone = collection["numTelefone"].ToString(),
-                    Celular = collection["numCelular"].ToString(),
-                    Cep = collection["cep"].ToString(),
-                    Endereco = collection["endereco"].ToString(),
-                    Numero = Convert.ToInt32(collection["numero"].ToString()),
-                    Bairro = collection["bairro"].ToString(),
+                    CpfCnpj = collection["tipoPessoa"] == "pj" ? collection["cpf"].ToString() : collection["cnpj"].ToString(),
+                    Telefone = collection["numTelefone"] == "" ? null : collection["numTelefone"].ToString(),
+                    Celular = collection["numCelular"] == "" ? null : collection["numCelular"].ToString(),
+                    Cep = collection["cep"] == "" ? null : collection["cep"].ToString(),
+                    Endereco = collection["endereco"] == "" ? null : collection["endereco"].ToString(),
+                    Numero = collection["numero"] == "" ? null : Convert.ToInt32(collection["numero"].ToString()),
+                    Bairro = collection["bairro"] == "" ? null : collection["bairro"].ToString(),
                     MunicipioId = Convert.ToInt32(collection["ddlMunicipio"].ToString()),
                     Habilitado = habilitado != "",
                     Status = status != "",
@@ -181,7 +182,7 @@ namespace WebApp.Controllers
         }
 
         //[ClaimsAuthorize("Usuario", "Excluir")]
-        public ActionResult Delete(int id)
+        public ActionResult DeleteParceiro(int id)
         {
             try
             {

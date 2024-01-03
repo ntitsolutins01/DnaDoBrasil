@@ -1,4 +1,4 @@
-﻿@model ParceiroModel
+@model ParceiroModel
 @{
 	ViewData["Title"] = "Cadastro Sistema Socioeconomico";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -21,7 +21,7 @@
                     <div class="panel-body">
 
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Nome  <span class="required">*</span></label>
+                            <label class="col-sm-2 control-label">Nome <span class="required">*</span></label>
                             <div class="col-sm-4">
                                 <input type="text" id="nome" name="nome" class="form-control" required title="Por favor informe o Nome"/>
                             </div>
@@ -67,7 +67,7 @@
                                     <input id="cpf" name="cpf"
                                            type="text" value="" class="form-control" 
                                            title="Por favor informe o cpf do parceiro."
-                                           maxlength="14" checked/>
+                                           maxlength="14"/>
                                 </div>
                             </div>
                             <div v-if="!params.visible" id="hideCnpj">
@@ -76,7 +76,7 @@
                                     <input id="cnpj" name="cnpj"
                                            type="text" value="" class="form-control"
                                            title="Por favor informe o cnpj do parceiro."
-                                           maxlength="14" />
+                                           maxlength="19"/>
                                 </div>
                             </div>
                             
@@ -111,8 +111,8 @@
                                 <input type="text" id="endereco" name="endereco" class="form-control" />
                             </div>
                             <label class="col-sm-1 control-label">Número</label>
-                            <div class="col-sm-1">
-                                <input type="text" id="numero" name="numero" class="form-control" />
+                            <div class="col-sm-2">
+                                <input type="number" id="numero" name="numero" class="form-control" />
                             </div>
                         </div>
                         <div class="form-group">
@@ -128,17 +128,17 @@
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Estado <span class="required">*</span></label>
-                            <div class="col-md-3 form-group">
+                            <div class="col-md-3">
                                 <select class="form-control populate select2" name="ddlEstado" id="ddlEstado"
-                                        title="Por favor informe o estado." required=""
+                                        title="Por favor informe o estado." required
                                         asp-for="EstadoId" asp-items="Model.ListEstados">
                                     <option value="">Selecionar Estado</option>
                                 </select>
                             </div>
                             <label class="col-sm-1 control-label">Município <span class="required">*</span></label>
-                            <div class="col-md-3 form-group">
+                            <div class="col-md-3">
                                 <select class="form-control populate select2" name="ddlMunicipio" id="ddlMunicipio"
-                                        title="Por favor informe o município." required=""
+                                        title="Por favor informe o município." required
                                         asp-for="MunicipioId" asp-items="Model.ListMunicipios">
                                     <option value="">Selecionar Município</option>
                                 </select>

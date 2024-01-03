@@ -1,4 +1,4 @@
-﻿@model ParceiroModel
+@model ParceiroModel
 
 @{
     ViewData["Title"] = "Listagem de Parceiros";
@@ -86,13 +86,21 @@
                             <td class="text-center">@Html.DisplayFor(modelItem => item.Id)</td>
                             <td class="text-center">@Html.DisplayFor(modelItem => item.Nome)</td>
                             <td class="text-center">@Html.DisplayFor(modelItem => item.Email)</td>
-                            @if (item.Status)
+                            @if (item.Alunos!.Any())
                             {
                                 <td class="text-center"><span class="label label-danger">SIM</span></td>
                             }
                             else
                             {
                                 <td class="text-center"><span class="label label-success">NÃO</span></td>
+                            }
+                            @if (item.Status)
+                            {
+                                <td class="text-center"><span class="label label-success">ATIVO</span></td>
+                            }
+                            else
+                            {
+                                <td class="text-center"><span class="label label-danger">INATIVO</span></td>
                             }
                             @if (item.Habilitado)
                             {
@@ -122,12 +130,12 @@
         </div>
     </section>
     <!-- Modal -->
-    <div class="modal fade" id="mdExcluir" tabindex="-1" role="dialog" aria-labelledby="mdExcluirLabel" aria-hidden="true">
+    <div class="modal fade" id="mdDeleteParceiro" tabindex="-1" role="dialog" aria-labelledby="mdDeleteParceiroLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="mdExcluirLabel">
-                        <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Exclusão de Sistema Socioeconomico</strong>
+                    <h5 class="modal-title" id="mdDeleteParceiroLabel">
+                        <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Exclusão de Parceiro</strong>
                     </h5>
                 </div>
                 <div class="modal-body">
@@ -135,6 +143,7 @@
                         <i class="fa fa-question-circle"></i>
                     </div>
                     <div class="modal-text">
+                        <input type="hidden" id="deleteParceiroId" />
                         <p class="mb-0">Tem certeza que deseja <b>excluir</b> esse registro?</p>
                     </div>
                     <div class="modal-wrapper">
@@ -142,7 +151,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-thumbs-o-down"></i> &nbsp;&nbsp;Não</button>
-                    <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</button>
+                    <a id="deleteParceiroHref" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</a>
                 </div>
             </div>
         </div>
@@ -178,52 +187,55 @@
         </div>
     </div>
     <!-- Modal -->
-    <div class="modal fade" id="mdHHabilitar" tabindex="-1" role="dialog" aria-labelledby="mdHabilitarLabel" aria-hidden="true">
-	    <div class="modal-dialog" role="document">
-		    <div class="modal-content">
-			    <div class="modal-header">
-				    <h5 class="modal-title" id="mdHabilitarLabel">
-                        <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Habilitar Parceiro</strong>
-				    </h5>
-			    </div>
-                @using (@Html.BeginForm("Habilitar", "SistemaSocioeconomico", FormMethod.Post, new { id = "vParceiro", @class = "form-horizontal" }))
-			    {
-				    <input type="hidden" name="habilitarParceiroId" :value="editDto.Id" />
+    <div class="modal fade" id="mdHabilitarParceiro" tabindex="-1" role="dialog" aria-labelledby="mdHabilitarParceiroLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mdHabilitarParceiroLabel">
+                        <i class="fa fa-check-circle"></i> &nbsp;&nbsp;<strong>Habilitar Parceiro</strong>
+                    </h5>
+                </div>
+                @using (@Html.BeginForm("Habilitar", "SistemaSocioeconomico", FormMethod.Post, new { id = "formHabilitarParceiro", @class = "form-horizontal" }))
+                {
+                    <input type="hidden" name="habilitarParceiroId" :value="editDto.Id" />
 
-				    <div class="modal-body">
-					    <div class="form-group row">
-						    <label class="col-sm-2 control-label text-sm-right pt-2">Email <span class="required">*</span></label>
-						    <div class="col-sm-10">
-							    <div class="input-group">
-								    <span class="input-group-addon">
-									    <i class="fa fa-envelope"></i>
-								    </span>
-								    @* v-on:blur="ExisteEmail" *@
-								    <input type="text" id="email" name="email"
-								           class="form-control"
-								           maxlength="100"
-								           title="Por favor informe um Email válido do parceiro." required />
-							    </div>
-						    </div>
-					    </div>
-				    </div>
-				    <div class="modal-footer">
-					    <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-thumbs-o-down"></i> &nbsp;&nbsp;Não</button>
-					    <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</button>
-				    </div>
-			    }
-		    </div>
-	    </div>
+                    <div class="modal-body">
+                        <div class="form-group row">
+                            <label class="col-sm-2 control-label text-sm-right pt-2">Email <span class="required">*</span></label>
+                            <div class="col-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-envelope"></i>
+                                    </span>
+                                    <input type="text" id="email" name="email"
+                                           class="form-control"
+                                           maxlength="100"
+                                           title="Por favor informe um Email válido do Parceiro." required />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
+                        <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
+                    </div>
+                }
+            </div>
+        </div>
     </div>
 </div>
 @section CssSpecificVendor {
+    <link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css" />
+    <link rel="stylesheet" href="~/assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
     <link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />
-    <link href="~/assets/vendor/datatables/extras/tabletools/select-1.2.3/css/select.bootstrap4.css" rel="stylesheet" />
 }
 @section Scripts {
+    <script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
+    <script src="~/assets/vendor/select2/js/select2.js"></script>
+    <script src="~/assets/vendor/jquery-mask/jquery.mask.js"></script>
+    <script src="~/assets/vendor/ios7-switch/ios7-switch.js"></script>
     <script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
     <script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
-    <script src="~/assets/vendor/datatables/extras/tabletools/select-1.2.3/js/datatables.select.js"></script>
     <script src="~/js/formatTable.js"></script>
     <script src="~/js/parceiro.js"></script>
 
