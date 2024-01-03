@@ -163,27 +163,27 @@ namespace WebApp.Controllers
 				var command = new ProfissionalModel.CreateUpdateProfissionalCommand
 				{
 					Id = id,
-					Nome = collection["nome"] == "" ? null : collection["nome"].ToString(),
-					DtNascimento = collection["DtNascimento"] == "" ? null : collection["DtNascimento"].ToString(),
-					Email = collection["email"] == "" ? null : collection["email"].ToString(),
-					Sexo = collection["ddlSexo"] == "" ? null : collection["ddlSexo"].ToString(),
-					Telefone = collection["numTelefone"] == "" ? null : collection["numTelefone"].ToString(),
-					Cep = collection["cep"] == "" ? null : collection["cep"].ToString(),
-					Celular = collection["numCelular"] == "" ? null : collection["numCelular"].ToString(),
-					Cpf = collection["cpf"] == "" ? null : collection["cpf"].ToString(),
-					//AspNetUserId = collection["aspnetuserId"].ToString(),
-					Numero = collection["numero"] == "" ? null : Convert.ToInt32(collection["numero"].ToString()),
-					Bairro = collection["bairro"] == "" ? null : collection["bairro"].ToString(),
-					Endereco = collection["endereco"] == "" ? null : collection["endereco"].ToString(),
-					MunicipioId = collection["ddlMunicipio"] == "" ? null : Convert.ToInt32(collection["ddlMunicipio"].ToString()),
-					Habilitado = habilitado != "",
-					Status = status != "",
-					AmbientesIds = collection["arrAmbientes"] == "" ? null : collection["arrAmbientes"].ToString()
-				};
+                    Nome = collection["nome"] == "" ? null : collection["nome"].ToString(),
+                    DtNascimento = collection["DtNascimento"] == "" ? null : collection["DtNascimento"].ToString(),
+                    Email = collection["email"] == "" ? null : collection["email"].ToString(),
+                    Sexo = collection["ddlSexo"] == "" ? null : collection["ddlSexo"].ToString(),
+                    Telefone = collection["numTelefone"] == "" ? null : collection["numTelefone"].ToString(),
+                    Cep = collection["cep"] == "" ? null : collection["cep"].ToString(),
+                    Celular = collection["numCelular"] == "" ? null : collection["numCelular"].ToString(),
+                    Cpf = collection["cpf"] == "" ? null : collection["cpf"].ToString(),
+                    //AspNetUserId = collection["aspnetuserId"].ToString(),
+                    Numero = collection["numero"] == "" ? null : Convert.ToInt32(collection["numero"].ToString()),
+                    Bairro = collection["bairro"] == "" ? null : collection["bairro"].ToString(),
+                    Endereco = collection["endereco"] == "" ? null : collection["endereco"].ToString(),
+                    MunicipioId = collection["ddlMunicipio"] == "" ? null : Convert.ToInt32(collection["ddlMunicipio"].ToString()),
+                    Habilitado = habilitado != "",
+                    Status = status != "",
+                    AmbientesIds = collection["arrAmbientes"] == "" ? null : collection["arrAmbientes"].ToString()
+                };
 
 				await ApiClientFactory.Instance.UpdateProfissional(command.Id, command);
 
-				return RedirectToAction(nameof(Edit), new { crud = (int)EnumCrud.Updated });
+				return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
 			}
 			catch (Exception e)
 			{

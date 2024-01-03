@@ -6,6 +6,7 @@
 }
 
 
+<div id="vProfissional">
 <div class="row">
     <div class="col-md-12">
         @using (@Html.BeginForm("Edit", "Profissional", FormMethod.Post, new { id = "formEditProfissional", @class = "form-horizontal" }))
@@ -16,90 +17,100 @@
                         <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
                     </div>
 
-					<h2 class="panel-title">Alteração de Profissional</h2>
-				</header>
-				<div class="panel-body">
-					<div class="form-group">
-						<label class="col-sm-1 control-label">Nome <span class="required">*</span></label>
-						<div class="col-sm-6">
-							<input type="text" name="nome" id="nome" value="@Model.Profissional.Nome"
-								   maxlength="200" class="form-control" required title="Por favor informe o nome." />
-						</div>
-						<label class="col-sm-2 control-label">Data Nascimento </label>
-						<div class="col-sm-3">
-							<div class="input-group">
-								<span class="input-group-addon">
-									<i class="fa fa-calendar"></i>
-								</span>
-								<input id="DtNascimento" name="DtNascimento"
-									   title="Por favor informe a data de nascimento."
-									   style="z-index: auto;" value="@Model.Profissional.DtNascimento"
-									   data-plugin-datepicker data-date-format="dd/mm/yyyy" data-plugin-options='{"language": "pt-BR"}'
-									   placeholder="__/__/____" class="form-control startdate"
-									   class="form-control">
-							</div>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-1 control-label">Email <span class="required">*</span></label>
-						<div class="col-sm-5">
-							<div class="input-group">
-								<span class="input-group-addon">
-									<i class="fa fa-envelope"></i>
-								</span>
-								<input type="text" name="email" id="email" maxlength="100" class="form-control" value="@Model.Profissional.Email" />
-							</div>
-						</div>
-						<label class="col-sm-1 control-label">Sexo</label>
-						<div class="col-sm-3">
-							<select class="form-control populate select2" name="ddlSexo" id="ddlSexo"
-									title="Por favor selecione um sexo.">
-								<option value="">Selecionar Sexo</option>
-								<option value="M">MASCULINO</option>
-								<option value="F">FEMININO</option>
-							</select>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-1 control-label">Cpf <span class="required">*</span></label>
-						<div class="col-sm-2">
-							<input id="cpf" name="cpf"
-								   type="text" class="form-control" value="@Model.Profissional.CpfCnpj"
-							       maxlength="14" />
-						</div>
-						<label class="col-sm-1 control-label text-sm-right pt-2">Estado <span class="required">*</span></label>
-						<div class="col-md-3">
-							<select class="form-control populate select2" name="ddlEstado" id="ddlEstado"
-							        title="Por favor informe um Estado." required
-							        asp-for="EstadoId" asp-items="Model.ListEstados">
-								<option value="">Selecionar Estado</option>
-							</select>
-						</div>
-						<label class="col-sm-2 control-label text-sm-right pt-2">Município <span class="required">*</span></label>
-						<div class="col-md-3">
-							<select class="form-control populate select2" name="ddlMunicipio" id="ddlMunicipio"
-							        title="Por favor informe um Municipio." required
-							        asp-for="MunicipioId" asp-items="Model.ListMunicipios">
-								<option value="">Selecionar Município</option>
-							</select>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-1 control-label">Endereço</label>
-						<div class="col-sm-5">
-							<input type="text" id="endereco" name="endereco" maxlength="200" class="form-control" value="@Model.Profissional.Endereco" />
-						</div>
-						<label class="col-sm-1 control-label">Número</label>
-						<div class="col-sm-2">
-							<input type="number" id="numero" name="numero" maxlength="4" class="form-control" value="@Model.Profissional.Numero" />
-						</div>
-						<label class="col-sm-1 control-label">Cep</label>
-						<div class="col-sm-2">
-							<input type="text" id="cep" name="cep" maxlength="9" class="form-control" value="@Model.Profissional.Cep" />
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-1 control-label">Bairro </label>
+                    <h2 class="panel-title">Alteração de Profissional</h2>
+                </header>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">Nome <span class="required">*</span></label>
+                        <div class="col-sm-6">
+                            <input type="text" name="nome" id="nome" value="@Model.Profissional.Nome"
+                                   maxlength="200" class="form-control" required title="Por favor informe o nome." />
+                        </div>
+                        <label class="col-sm-2 control-label">Data Nascimento </label>
+                        <div class="col-sm-3">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </span>
+                                <input id="DtNascimento" name="DtNascimento"
+                                       title="Por favor informe a data de nascimento."
+                                       style="z-index: auto;" value="@Model.Profissional.DtNascimento"
+                                       data-plugin-datepicker data-date-format="dd/mm/yyyy" data-plugin-options='{"language": "pt-BR"}'
+                                       placeholder="__/__/____" class="form-control startdate"
+                                       class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">Email <span class="required">*</span></label>
+                        <div class="col-sm-5">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-envelope"></i>
+                                </span>
+                                <input type="text" name="email" id="email" maxlength="100" class="form-control" value="@Model.Profissional.Email" />
+                            </div>
+                        </div>
+                        <label class="col-sm-1 control-label">Sexo</label>
+                        <div class="col-sm-3">
+                            <select class="form-control populate select2" name="ddlSexo" id="ddlSexo"
+                                    title="Por favor selecione um sexo.">
+                                <option value="">Selecionar Sexo</option>
+                                @if (Model.Profissional.Sexo == "M")
+                                {
+                                    
+                                <option value="M" selected>MASCULINO</option>
+                                    <option value="F" >FEMININO</option>
+                                }
+                                else
+                                {
+                                    <option value="M" >MASCULINO</option>
+                                    <option value="F" selected>FEMININO</option>
+
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">Cpf <span class="required">*</span></label>
+                        <div class="col-sm-2">
+                            <input id="cpf" name="cpf"
+                                   type="text" class="form-control" value="@Model.Profissional.CpfCnpj"
+                                   maxlength="14" />
+                        </div>
+                        <label class="col-sm-1 control-label text-sm-right pt-2">Estado <span class="required">*</span></label>
+                        <div class="col-md-3">
+                            <select class="form-control populate select2" name="ddlEstado" id="ddlEstado"
+                                    title="Por favor informe um Estado." required
+                                    asp-for="EstadoId" asp-items="Model.ListEstados">
+                                <option value="">Selecionar Estado</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-2 control-label text-sm-right pt-2">Município <span class="required">*</span></label>
+                        <div class="col-md-3">
+                            <select class="form-control populate select2" name="ddlMunicipio" id="ddlMunicipio"
+                                    title="Por favor informe um Municipio." required
+                                    asp-for="MunicipioId" asp-items="Model.ListMunicipios">
+                                <option value="">Selecionar Município</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">Endereço</label>
+                        <div class="col-sm-5">
+                            <input type="text" id="endereco" name="endereco" maxlength="200" class="form-control" value="@Model.Profissional.Endereco" />
+                        </div>
+                        <label class="col-sm-1 control-label">Número</label>
+                        <div class="col-sm-2">
+                            <input type="number" id="numero" name="numero" maxlength="4" class="form-control" value="@Model.Profissional.Numero" />
+                        </div>
+                        <label class="col-sm-1 control-label">Cep</label>
+                        <div class="col-sm-2">
+                            <input type="text" id="cep" name="cep" maxlength="9" class="form-control" value="@Model.Profissional.Cep" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">Bairro </label>
                         <div class="col-sm-3">
                             <input type="bairro" name="bairro" maxlength="50" class="form-control" value="@Model.Profissional.Bairro" />
                         </div>
@@ -125,82 +136,18 @@
                                        title="Por favor informe o celular">
                             </div>
                         </div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-3 control-label pull-left">Cadastro ativo para login?</label>
-						<div class="col-sm-1">
-							<div class="switch switch-sm switch-success">
-								<input type="checkbox" id="status" name="status" data-plugin-ios-switch @(Model.Profissional.Status == true ? "checked" : "") />
-							</div>
-						</div>
-						<label class="col-sm-2 control-label">Cadastro habilitado a operar?</label>
-						<div class="col-sm-1">
-							<div class="switch switch-sm switch-success">
-								<input type="checkbox" id="habilitado" name="habilitado" data-plugin-ios-switch @(Model.Profissional.Habilitado == true ? "checked" : "") />
-							</div>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-1 control-label">&nbsp;&nbsp; </label>
-						<div class="col-sm-12">
-							<blockquote class="info">
-								<strong>Gerenciamento de ambientes</strong>
-							</blockquote>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-2 control-label">Ambiente</label>
-						<div class="col-sm-4">
-							<select class="form-control populate select2" name="ddlAmbiente" id="ddlAmbiente"
-									style="width: 100%" title="Por favor selecione o turno."
-									asp-for="AmbienteId" asp-items="Model.ListAmbientes">
-								<option value="">Selecionar Ambiente</option>
-							</select>
-						</div>
-						<div class="col-sm-1">
-							<a type="button" class="ml-xs btn btn-warning" href='javascript:(crud.AddAmbiente())'>
-								<i class="fa fa-plus"></i>
-							</a>
-						</div>
-					</div>
-					<div class="form-group">
-						<input type="hidden" name="arrAmbientes" />
-						<label class="col-sm-2 control-label">Adicionados</label>
-						<div class="col-sm-10">
-							<table class="table table-bordered table-striped mb-0" id="ambienteDataTable">
-                                <thead>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Nome Ambiente</th>
-                                    <th>Ação</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach (var item in Model.Ambientes)
-                                {
-                                    <tr>
-                                        <td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Id)</td>
-                                        <td class="text-center">@Html.DisplayFor(modelItem => item.Nome)</td>
-                                        <td class="actions text-center">
-                                            <a data-toggle="tooltip" data-placement="top" title="Excluir" href='javascript:(crud.DeleteModal(@item.Id))'
-                                               class="on-default remove-row" style="cursor: pointer;color: #F44336"><i class="fa fa-trash"></i></a>
-                                        </td>
-                                    </tr>
-                                }
-                                </tbody>
-							</table>
-
+                    </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label pull-left">Cadastro ativo para login?</label>
                         <div class="col-sm-1">
                             <div class="switch switch-sm switch-success">
-                                <input type="checkbox" id="status" name="status" data-plugin-ios-switch checked="checked" />
+                                <input type="checkbox" id="status" name="status" data-plugin-ios-switch @(Model.Profissional.Status == true ? "checked" : "") />
                             </div>
                         </div>
                         <label class="col-sm-2 control-label">Cadastro habilitado a operar?</label>
                         <div class="col-sm-1">
                             <div class="switch switch-sm switch-success">
-                                <input type="checkbox" id="habilitado" name="habilitado" data-plugin-ios-switch checked="checked" />
+                                <input type="checkbox" id="habilitado" name="habilitado" data-plugin-ios-switch @(Model.Profissional.Habilitado == true ? "checked" : "") />
                             </div>
                         </div>
                     </div>
@@ -222,12 +169,9 @@
                             </select>
                         </div>
                         <div class="col-sm-1">
-                            <a type="button" class="ml-xs btn btn-primary" href='javascript:(crud.AddAmbiente())'>
+                            <a type="button" class="ml-xs btn btn-warning" href='javascript:(crud.AddAmbiente())'>
                                 <i class="fa fa-plus"></i>
                             </a>
-                        </div>
-                        <div class="col-sm-5 pull-right">
-                            <a data-toggle="modal" data-target="#mdAmbiente" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Alteração de Ambiente </a>
                         </div>
                     </div>
                     <div class="form-group">
@@ -242,8 +186,20 @@
                                         <th>Ação</th>
                                     </tr>
                                 </thead>
+                                <tbody>
+                                    @foreach (var item in Model.Ambientes)
+                                    {
+                                        <tr>
+                                            <td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Id)</td>
+                                            <td class="text-center">@Html.DisplayFor(modelItem => item.Nome)</td>
+                                            <td class="actions text-center">
+                                                <a data-toggle="tooltip" data-placement="top" title="Excluir" href='javascript:(crud.DeleteModal(@item.Id))'
+                                                   class="on-default remove-row" style="cursor: pointer;color: #F44336"><i class="fa fa-trash"></i></a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
                             </table>
-
                         </div>
                     </div>
                 </div>
@@ -260,7 +216,6 @@
         }
     </div>
 </div>
-
 <!-- Modal -->
 <div class="modal fade" id="mdAmbiente" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -284,7 +239,7 @@
         </div>
     </div>
 </div>
-
+</div>
 @section CssSpecificVendor {
     <link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css" />
     <link rel="stylesheet" href="~/assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
@@ -302,29 +257,7 @@
     <script src="~/assets/vendor/bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR.min.js"></script>
     <script src="~/js/formatTable.js"></script>
     <script src="~/js/profissional.js"></script>
-    <script>
 
-
-        // iosSwitcher
-        (function ($) {
-
-            'use strict';
-
-            if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
-
-                $(function () {
-                    $('[data-plugin-ios-switch]').each(function () {
-                        var $this = $(this);
-
-                        $this.themePluginIOS7Switch();
-                    });
-                });
-
-            }
-
-        }).apply(this, [jQuery]);
-
-    </script>
 }
 
 

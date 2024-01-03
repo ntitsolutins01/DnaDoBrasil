@@ -214,7 +214,7 @@
                 $("#ddlEstado").change(function () {
                     var sigla = $("#ddlEstado").val();
 
-                    var url = "../DivisaoAdministrativa/GetMunicipioByUf?uf=" + sigla;
+                    var url = "../../DivisaoAdministrativa/GetMunicipioByUf?uf=" + sigla;
 
                     var ddlSource = "#ddlMunicipio";
 
