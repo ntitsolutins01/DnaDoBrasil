@@ -116,5 +116,21 @@ namespace WebApp.Controllers
                 return Json(ex);
             }
         }
+
+        public async Task<JsonResult> GetLocalidadeByFomento(string id)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(id)) throw new Exception("Município não informado.");
+                var resultLocal = ApiClientFactory.Instance.GetLocalidadeByFomento(Convert.ToInt32(id));
+
+                return Json(new SelectList(resultLocal, "Id", "Nome"));
+
+            }
+            catch (Exception ex)
+            {
+                return Json(ex);
+            }
+        }
 	}
 }

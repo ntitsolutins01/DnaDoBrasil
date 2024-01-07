@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
 using WebApp.Configuration;
 using WebApp.Enumerators;
@@ -52,10 +53,17 @@ namespace WebApp.Controllers
 		        SetNotifyMessage(notify, message);
 		        SetCrudMessage(crud);
 
+		        var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
+
 		        var questionarioVocacional =
 			        ApiClientFactory.Instance.GetQuestionarioByTipoLaudo((int)EnumTipoLaudo.Vocacional);
 
-		        return View(new LaudoModel() { QuestionarioVocacional = questionarioVocacional });
+
+		        return View(new LaudoModel()
+		        {
+			        QuestionarioVocacional = questionarioVocacional,
+					ListEstados = estados
+		        });
 
 	        }
 	        catch (Exception e)

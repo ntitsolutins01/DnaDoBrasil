@@ -13,12 +13,13 @@
 						<a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
 					</div>
 
-					<h2 class="panel-title">Cadastro de Fomento</h2>
+					<h2 class="panel-title">Cadastro de Laudo do Aluno</h2>
 				</header>
 				<div class="panel-body">
-
+					
+                    
                     <div class="col-md-12">
-                        <div class="tabs tabs-vertical tabs-left">
+                        <div class="tabs tabs-vertical tabs-left tabs-dark">
                             <ul class="nav nav-tabs col-sm-2 col-xs-4">
                                 <li class="active">
 									<a href="#talento-esportivo" data-toggle="tab" aria-expanded="true"><i class="fa fa-trophy"></i> Talento Esportivo</a>
@@ -26,88 +27,135 @@
                                 <li class="">
 									<a href="#vocacional" data-toggle="tab" aria-expanded="false"><i class="fa fa-star-half-o"></i> Vocacional</a>
                                 </li>
+                                <li class="">
+									<a href="#qualidade-vida" data-toggle="tab" aria-expanded="false"><i class="fa fa-star-o"></i> Qualidade de Vida </a>
+                                </li>
+                                <li class="">
+									<a href="#saude" data-toggle="tab" aria-expanded="false"><i class="fa fa-heartbeat"></i> Saúde </a>
+                                </li>
+                                <li class="">
+									<a href="#consumo-alimentar" data-toggle="tab" aria-expanded="false"><i class="fa fa-cutlery"></i> Consumo Alimentar </a>
+                                </li>
+                                <li class="">
+									<a href="#indice-positivo-saude-bucal" data-toggle="tab" aria-expanded="false"><i class="fa fa-medkit"></i> Saúde Bucal </a>
+                                </li>
                             </ul>
                             <div class="tab-content">
                                 <div id="talento-esportivo" class="tab-pane active">
-                                    <p>Talento Esportivo</p>
-									<div class="row form-group">
-										<div>
-											<label class="col-sm-2 control-label"><strong>Altura (cm) </strong><span class="required">*</span></label>
-											<div class="col-sm-4">
-												<input type="text" class="form-control" required />
-											</div>
-										</div>
-										<div>
-											<label class="col-sm-3 control-label"><strong>Massa Corporal (kg)</strong><span class="required">*</span></label>
-											<div class="col-sm-3">
-												<input type="text" class="form-control" required />
-											</div>
-										</div>
-									</div>
-									<div class="row form-group">
-										<div>
-											<label class="col-sm-2 control-label"><strong>Preensão Manual (kg)</strong><span class="required">*</span></label>
-											<div class="col-sm-4">
-												<input type="text" class="form-control" required />
-											</div>
-										</div>
-										<div>
-											<label class="col-sm-3 control-label"><strong>Flexibilidade (cm)</strong><span class="required">*</span></label>
-											<div class="col-sm-3">
-												<input type="text" class="form-control" required />
-											</div>
-										</div>
-									</div>
-									<div class="row form-group">
-										<div>
-											<label class="col-sm-2 control-label"><strong>Impulsão Horizontal (cm)</strong><span class="required">*</span></label>
-											<div class="col-sm-4">
-												<input type="text" class="form-control" required />
-											</div>
-										</div>
-										<div>
-											<label class="col-sm-3 control-label"><strong>Teste de Velocidade 20m (seg)</strong><span class="required">*</span></label>
-											<div class="col-sm-3">
-												<input type="text" class="form-control" required />
-											</div>
-										</div>
-									</div>
-									<div class="row form-group">
-										<div>
-											<label class="col-sm-2 control-label"><strong>Aptidão Física (mLO2/min)</strong><span class="required">*</span></label>
-											<div class="col-sm-4">
-												<input type="text" class="form-control" required />
-											</div>
-										</div>
-										<div>
-											<label class="col-sm-3 control-label"><strong>Agilidade (seg)</strong><span class="required">*</span></label>
-											<div class="col-sm-3">
-												<input type="text" class="form-control" required />
-											</div>
-										</div>
-									</div>
-									<div class="row form-group">
-										<div>
-											<label class="col-sm-2 control-label"><strong>Impulsão Horizontal (cm)</strong><span class="required">*</span></label>
-											<div class="col-sm-4">
-												<input type="text" class="form-control" required />
-											</div>
-										</div>
-										<div>
-											<label class="col-sm-3 control-label"><strong>Teste de Velocidade 20m (seg)</strong><span class="required">*</span></label>
-											<div class="col-sm-3">
-												<input type="text" class="form-control" required />
-											</div>
-										</div>
-									</div>
-									<div class="row form-group">
-										<div>
-											<label class="col-sm-2 control-label"><strong>Abdominal (qtd)</strong><span class="required">*</span></label>
-											<div class="col-sm-4">
-												<input type="number" class="form-control" required />
-											</div>
-										</div>
-									</div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label text-sm-right pt-2">Estado <span class="required">*</span></label>
+                                        <div class="col-md-2">
+                                            <select class="form-control populate select2" name="ddlEstado" id="ddlEstado"
+                                                    title="Por favor informe um Estado." required
+                                                    asp-for="EstadoId" asp-items="Model.ListEstados">
+                                                <option value="">Selecionar Estado</option>
+                                            </select>
+                                        </div>
+                                        <label class="col-sm-2 control-label text-sm-right pt-2">Município <span class="required">*</span></label>
+                                        <div class="col-md-3">
+                                            <select class="form-control populate select2" name="ddlMunicipio" id="ddlMunicipio"
+                                                    title="Por favor informe um Municipio." required
+                                                    asp-for="MunicipioId" asp-items="Model.ListMunicipios">
+                                                <option value="">Selecionar Município</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label text-sm-right pt-2">Localidade <span class="required">*</span></label>
+                                        <div class="col-md-3">
+                                            <select class="form-control populate select2" name="ddlLocalidade" id="ddlLocalidade"
+                                                    title="Por favor informe a localidade." required
+                                                    asp-for="LocalidadeId" asp-items="Model.ListLocalidades">
+                                                <option value="">Selecionar Localidade</option>
+                                            </select>
+                                        </div>
+                                        <label class="col-sm-2 control-label text-sm-right pt-2">Aluno <span class="required">*</span></label>
+                                        <div class="col-md-3">
+                                            <select class="form-control populate select2" name="ddlAluno" id="ddlAluno"
+                                                    title="Por favor informe um Aluno." required
+                                                    asp-for="AlunoId" asp-items="Model.ListAlunos">
+                                                <option value="">Selecionar Aluno</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div>
+                                            <label class="col-sm-2 control-label"><strong>Altura (cm) </strong></label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control"/>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label class="col-sm-3 control-label"><strong>Massa Corporal (kg)</strong></label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div>
+                                            <label class="col-sm-2 control-label"><strong>Preensão Manual (kg)</strong></label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control"/>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label class="col-sm-3 control-label"><strong>Flexibilidade (cm)</strong></label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div>
+                                            <label class="col-sm-2 control-label"><strong>Impulsão Horizontal (cm)</strong></label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control"/>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label class="col-sm-3 control-label"><strong>Teste de Velocidade 20m (seg)</strong></label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div>
+                                            <label class="col-sm-2 control-label"><strong>Aptidão Física (mLO2/min)</strong></label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control"/>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label class="col-sm-3 control-label"><strong>Agilidade (seg)</strong></label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div>
+                                            <label class="col-sm-2 control-label"><strong>Impulsão Horizontal (cm)</strong></label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control"/>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label class="col-sm-3 control-label"><strong>Teste de Velocidade 20m (seg)</strong></label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div>
+                                            <label class="col-sm-2 control-label"><strong>Abdominal (qtd)</strong></label>
+                                            <div class="col-sm-4">
+                                                <input type="number" class="form-control"/>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div id="vocacional" class="tab-pane">
                                     <p>Vocacional</p>
@@ -117,8 +165,8 @@
                                         var item = Model.QuestionarioVocacional[index];
                                         <div class="row form-group">
                                             <div class="row form-group col-sm-12">
-                                                <label class="control-label">
-                                                    <strong>@index - @item.Pergunta</strong><span class="required">*</span>
+                                                <label class="control-label col-sm-2 ">
+                                                    <strong>@index - @item.Pergunta</strong>
                                                 </label>
                                             </div>
                                             <div class="row form-group col-sm-12">
@@ -128,27 +176,7 @@
 														<input id="resp_@resp.Id" name="nomeResp_@index" type="radio" value="@resp.Id" />
 														<label for="resp_@resp.Id">@resp.RespostaQuestionario</label>
                                                     </div>
-                                                }@* 
-                                                <div class="radio-custom radio-primary col-sm-4">
-                                                    <input id="awesome" name="porto_is" type="radio" value="awesome" required/>
-                                                    <label for="awesome">Não me interessa; não faço com prazer</label>
-                                                </div>
-                                                <div class="radio-custom radio-primary col-sm-3">
-                                                    <input id="very-awesome" name="porto_is" type="radio" value="very-awesome"/>
-                                                    <label for="very-awesome">Interessa-me pouco</label>
-                                                </div>
-                                                <div class="radio-custom radio-primary col-sm-3">
-                                                    <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome"/>
-                                                    <label for="ultra-awesome">Interessa-me suficientemente</label>
-                                                </div>
-                                                <div class="radio-custom radio-primary col-sm-3">
-                                                    <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome"/>
-                                                    <label for="ultra-awesome">Interessa-me bastante</label>
-                                                </div>
-                                                <div class="radio-custom radio-primary col-sm-4">
-                                                    <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome"/>
-                                                    <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
-                                                </div> *@
+                                                }
                                             </div>
                                         </div>
                                     }
@@ -186,14 +214,18 @@
 
 
 @section CssSpecificVendor {
+    <link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css" />
+    <link rel="stylesheet" href="~/assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
 	<link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />
 }
 @section Scripts {
 	<script src="~/assets/vendor/ios7-switch/ios7-switch.js"></script>
-	<script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
+    <script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
+    <script src="~/assets/vendor/select2/js/select2.js"></script>
 	<script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
 	<script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
 	<script src="~/js/formatTable.js"></script>
+	<script src="~/js/laudo.js"></script>
 	<script>
 
 

@@ -26,22 +26,28 @@ namespace WebApp.ApiClient
                 $"{ResourceAluno}"));
             return Put(requestUrl, command);
         }
+
+        #endregion
+
+        #region Methods
+
         public List<AlunoDto> GetAlunosAll()
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 $"{ResourceAluno}"));
             return Get<List<AlunoDto>>(requestUrl);
         }
-
-        #endregion
-
-        #region Methods
-
         public AlunoDto GetAlunoById(string id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 $"{ResourceAluno}/{id}"));
             return Get<AlunoDto>(requestUrl);
+        }
+        public List<AlunoDto> GetAlunosByLocalidade(int id)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceAluno}/Localidade/{id}"));
+            return Get<List<AlunoDto>>(requestUrl);
         }
         //public List<DeficienciaDto> GetDeficienciasByAlunoId()
         //{

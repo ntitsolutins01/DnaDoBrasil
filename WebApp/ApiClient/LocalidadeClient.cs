@@ -45,11 +45,17 @@ namespace WebApp.ApiClient
                 $"{ResourceLocalidade}/Localidade/{id}"));
             return Get<LocalidadeDto>(requestUrl);
         }
-        public List<MunicipioDto> GetLocalidadeByMunicipio(string id)
+        public List<LocalidadeDto> GetLocalidadeByMunicipio(string id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 $"{ResourceLocalidade}/Municipio/{id}"));
-            return Get<List<MunicipioDto>>(requestUrl);
+            return Get<List<LocalidadeDto>>(requestUrl);
+        }
+        public List<LocalidadeDto> GetLocalidadeByFomento(int id)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceLocalidade}/Fomento/{id}"));
+            return Get<List<LocalidadeDto>>(requestUrl);
         }
 
         #endregion
