@@ -35,6 +35,7 @@
                             {
                                 <tr>
                                     <td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Id)</td>
+                                    <td class="text-center">@Html.DisplayFor(modelItem => item.Codigo)</td>
                                     <td class="text-center">@Html.DisplayFor(modelItem => item.Nome)</td>
 	                                <td class="text-center">@Html.DisplayFor(modelItem => item.Data)</td>
 	                                @if (item.Status)
@@ -111,12 +112,21 @@
 			                           title="Por favor informe o código do fomento." required />
 		                    </div>
 	                    </div>
-	                    <div class="form-group row">
+                        <div class="form-group row">
                             <label class="col-sm-3 control-label text-sm-right pt-2">Fomento</label>
                             <div class="col-sm-9">
                                 <input type="text" name="nome" class="form-control"
                                        maxlength="300" :value="editDto.Nome"
                                        title="Por favor informe o fomento." required />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 control-label text-sm-right pt-2">Status</label>
+                            <div class="col-md-3">
+                                <div class="switch switch-sm switch-primary">
+                                    <input v-if="editDto.Status" type="checkbox" id="editStatus" name="editStatus" data-plugin-ios-switch checked="checked" />
+                                    <input v-if="!editDto.Status" type="checkbox" id="editStatus" name="editStatus" data-plugin-ios-switch />
+                                </div>
                             </div>
                         </div>
                         @* <div class="form-group row">

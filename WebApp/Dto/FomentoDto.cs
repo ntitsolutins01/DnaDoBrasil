@@ -8,6 +8,6 @@
 		public int MunicipioId { get; set; }
         public int LocalidadeId { get; set; }
         public string Data { get; set; }
-        public object Codigo { get; set; }
+        public string Codigo { get; set; }
     }
 }

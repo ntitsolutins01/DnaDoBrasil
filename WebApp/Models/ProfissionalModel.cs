@@ -17,6 +17,8 @@ namespace WebApp.Models
         public SelectList ListAmbientes { get; set; }
         public object AmbienteId { get; set; }
         public List<AmbienteDto> Ambientes { get; set; }
+        public string LocalidadeId { get; set; }
+        public SelectList ListLocalidades { get; set; }
 
         public class CreateUpdateProfissionalCommand
         {
@@ -35,6 +37,7 @@ namespace WebApp.Models
             public string? Bairro { get; set; }
             public bool Status { get; set; } = true;
             public int? MunicipioId { get; set; }
+            public int? LocalidadeId { get; set; }
             public bool Habilitado { get; set; }
             public string? AmbientesIds { get; set; }
         }

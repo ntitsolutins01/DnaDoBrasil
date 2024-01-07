@@ -33,7 +33,9 @@ namespace WebApp.Controllers
 		        var deficiencias = new SelectList(ApiClientFactory.Instance.GetDeficienciaAll(), "Id", "Nome");
 
 		        return View(new AlunoModel()
-			        { Alunos = response, ListLocalidades = localidades, ListDeficiencias = deficiencias });
+		        {
+			        Alunos = response, ListLocalidades = localidades, ListDeficiencias = deficiencias
+		        });
 
 	        }
 	        catch (Exception e)
@@ -57,7 +59,11 @@ namespace WebApp.Controllers
             SetNotifyMessage(notify, message);
             SetCrudMessage(crud);
 
-            return View();
+            var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Id", "Nome");
+            return View(new AlunoModel()
+            {
+	            ListEstados = estados
+            });
         }
         public IActionResult Laudo()
 		{

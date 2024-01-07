@@ -41,11 +41,9 @@ namespace WebApp.Controllers
             SetNotifyMessage(notify, message);
             SetCrudMessage(crud);
 
-            var localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeAll(), "Id", "Nome");
             var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
             var model = new FomentoModel
             {
-                ListLocalidades = localidades,
                 ListEstados = estados
 
             };
@@ -111,6 +109,5 @@ namespace WebApp.Controllers
 
             return result;
         }
-    }
-
+	}
 }

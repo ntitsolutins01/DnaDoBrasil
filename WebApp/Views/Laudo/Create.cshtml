@@ -1,237 +1,189 @@
-﻿
+﻿@model LaudoModel
 @{
     ViewData["Title"] = "CreateLaudo";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-
 <div class="row">
 	<div class="col-md-12">
-		@using (@Html.BeginForm("Create", "Laudo", FormMethod.Post, new { id = "form", @class = "form-horizontal" }))
+		@using (@Html.BeginForm("Create", "Laudo", FormMethod.Post, new { id = "formLaudo", @class = "form-horizontal" }))
 		{
-			<section class="panel form-wizard" id="w1">
+			<section class="panel">
 				<header class="panel-heading">
 					<div class="panel-actions">
 						<a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
 					</div>
 
-					<h2 class="panel-title">Laudo do Aluno</h2>
-				</header>
-				<div class="panel-body panel-body-nopadding">
-					<div class="wizard-tabs">
-						<ul class="wizard-steps">
-							<li class="active">
-								<a href="#w1-talento-esportivo" data-toggle="tab" class="text-center">
-									<span class="badge hidden-xs">1</span>
-									Talento Esportivo
-								</a>
-							</li>
-							<li>
-								<a href="#w1-profile" data-toggle="tab" class="text-center">
-									<span class="badge hidden-xs">2</span>
-									Profile
-								</a>
-							</li>
-							<li>
-								<a href="#w1-confirm" data-toggle="tab" class="text-center">
-									<span class="badge hidden-xs">3</span>
-									Confirm
-								</a>
-							</li>
-						</ul>
-					</div>
-					<form class="form-horizontal" novalidate="novalidate">
-						<div class="tab-content">
-							<div id="w1-talento-esportivo" class="tab-pane active">
-								<div class="row form-group">
-									<div class="row col-sm-12">
-										<label class="control-label"><strong>Profissional</strong></label>
-									</div>
-									<div class="row col-sm-6">
-										<select id="company" class="form-control" title="Please select at least one company" required>
-											<option value="">Selecione um profissional</option>
-											<option value="wagner telles da silva">Wagner Telles Da Silva</option>
-										</select>
-									</div>
-								</div>
-								<div class="row form-group">
-									<div>
-										<label class="col-sm-2 control-label"><strong>Altura (cm) </strong><span class="required">*</span></label>
-										<div class="col-sm-4">
-											<input type="text" class="form-control" required />
-										</div>
-									</div>
-									<div>
-										<label class="col-sm-3 control-label"><strong>Massa Corporal (kg)</strong><span class="required">*</span></label>
-										<div class="col-sm-3">
-											<input type="text" class="form-control" required />
-										</div>
-									</div>
-								</div>
-								<div class="row form-group">
-									<div>
-										<label class="col-sm-2 control-label"><strong>Preensão Manual (kg)</strong><span class="required">*</span></label>
-										<div class="col-sm-4">
-											<input type="text" class="form-control" required />
-										</div>
-									</div>
-									<div>
-										<label class="col-sm-3 control-label"><strong>Flexibilidade (cm)</strong><span class="required">*</span></label>
-										<div class="col-sm-3">
-											<input type="text" class="form-control" required />
-										</div>
-									</div>
-								</div>
-								<div class="row form-group">
-									<div>
-										<label class="col-sm-2 control-label"><strong>Impulsão Horizontal (cm)</strong><span class="required">*</span></label>
-										<div class="col-sm-4">
-											<input type="text" class="form-control" required />
-										</div>
-									</div>
-									<div>
-										<label class="col-sm-3 control-label"><strong>Teste de Velocidade 20m (seg)</strong><span class="required">*</span></label>
-										<div class="col-sm-3">
-											<input type="text" class="form-control" required />
-										</div>
-									</div>
-								</div>
-								<div class="row form-group">
-									<div>
-										<label class="col-sm-2 control-label"><strong>Aptidão Física (mLO2/min)</strong><span class="required">*</span></label>
-										<div class="col-sm-4">
-											<input type="text" class="form-control" required />
-										</div>
-									</div>
-									<div>
-										<label class="col-sm-3 control-label"><strong>Agilidade (seg)</strong><span class="required">*</span></label>
-										<div class="col-sm-3">
-											<input type="text" class="form-control" required />
-										</div>
-									</div>
-								</div>
-								<div class="row form-group">
-									<div>
-										<label class="col-sm-2 control-label"><strong>Impulsão Horizontal (cm)</strong><span class="required">*</span></label>
-										<div class="col-sm-4">
-											<input type="text" class="form-control" required />
-										</div>
-									</div>
-									<div>
-										<label class="col-sm-3 control-label"><strong>Teste de Velocidade 20m (seg)</strong><span class="required">*</span></label>
-										<div class="col-sm-3">
-											<input type="text" class="form-control" required />
-										</div>
-									</div>
-								</div>
-								<div class="row form-group">
-									<div>
-										<label class="col-sm-2 control-label"><strong>Abdominal (qtd)</strong><span class="required">*</span></label>
-										<div class="col-sm-4">
-											<input type="number" class="form-control" required />
-										</div>
-									</div>
-								</div>
-							</div>
-							<div id="w1-profile" class="tab-pane">
-								<div class="form-group">
-									<label class="col-sm-4 control-label" for="w1-first-name">First Name</label>
-									<div class="col-sm-8">
-										<input type="text" class="form-control input-sm" name="first-name" id="w1-first-name" required>
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-sm-4 control-label" for="w1-last-name">Last Name</label>
-									<div class="col-sm-8">
-										<input type="text" class="form-control input-sm" name="last-name" id="w1-last-name" required>
-									</div>
-								</div>
-							</div>
-							<div id="w1-confirm" class="tab-pane">
-								<div class="form-group">
-									<label class="col-sm-4 control-label" for="w1-email">Email</label>
-									<div class="col-sm-8">
-										<input type="text" class="form-control input-sm" name="email" id="w1-email" required>
-									</div>
-								</div>
-								<div class="form-group">
-									<div class="col-sm-2"></div>
-									<div class="col-sm-10">
-										<div class="checkbox-custom">
-											<input type="checkbox" name="terms" id="w1-terms" required>
-											<label for="w1-terms">I agree to the terms of service</label>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</form>
-				</div>
-				<div class="panel-footer">
-					<ul class="pager">
-						<li class="previous disabled">
-							<a><i class="fa fa-angle-left"></i> Previous</a>
-						</li>
-						<li class="finish hidden pull-right">
-							<a>Finish</a>
-						</li>
-						<li class="next">
-							<a>Next <i class="fa fa-angle-right"></i></a>
-						</li>
-					</ul>
-				</div>
-			</section>
-			@* <section class="panel">
-				<header class="panel-heading">
-					<div class="panel-actions">
-						<a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
-					</div>
-
-					<h2 class="panel-title">Laudo do Aluno</h2>
+					<h2 class="panel-title">Cadastro de Fomento</h2>
 				</header>
 				<div class="panel-body">
 
-					<div class="form-group">
-						<label class="col-sm-2 control-label">Nome</label>
-						<div class="col-sm-3">
-							<input type="text" name="fullname" class="form-control" readonly="readonly" />
-						</div>
-						<label class="col-sm-1 control-label">Email </label>
-						<div class="col-sm-3">
-							<div class="input-group">
-								<span class="input-group-addon">
-									<i class="fa fa-envelope"></i>
-								</span>
-								<input type="email" name="email" class="form-control" required />
-							</div>
-						</div>
-						<label class="col-sm-1 control-label">Senha </label>
-						<div class="col-sm-2">
-							<div class="input-group">
-								<span class="input-group-addon">
-									<i class="fa fa-lock"></i>
-								</span>
-								<input id="ssenha" name="senha" class="form-control"
-									   maxlength="15" type="password"
-									   title="Por favor informe a senha.">
-							</div>
-						</div>
-					</div>
+                    <div class="col-md-12">
+                        <div class="tabs tabs-vertical tabs-left">
+                            <ul class="nav nav-tabs col-sm-2 col-xs-4">
+                                <li class="active">
+									<a href="#talento-esportivo" data-toggle="tab" aria-expanded="true"><i class="fa fa-trophy"></i> Talento Esportivo</a>
+                                </li>
+                                <li class="">
+									<a href="#vocacional" data-toggle="tab" aria-expanded="false"><i class="fa fa-star-half-o"></i> Vocacional</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div id="talento-esportivo" class="tab-pane active">
+                                    <p>Talento Esportivo</p>
+									<div class="row form-group">
+										<div>
+											<label class="col-sm-2 control-label"><strong>Altura (cm) </strong><span class="required">*</span></label>
+											<div class="col-sm-4">
+												<input type="text" class="form-control" required />
+											</div>
+										</div>
+										<div>
+											<label class="col-sm-3 control-label"><strong>Massa Corporal (kg)</strong><span class="required">*</span></label>
+											<div class="col-sm-3">
+												<input type="text" class="form-control" required />
+											</div>
+										</div>
+									</div>
+									<div class="row form-group">
+										<div>
+											<label class="col-sm-2 control-label"><strong>Preensão Manual (kg)</strong><span class="required">*</span></label>
+											<div class="col-sm-4">
+												<input type="text" class="form-control" required />
+											</div>
+										</div>
+										<div>
+											<label class="col-sm-3 control-label"><strong>Flexibilidade (cm)</strong><span class="required">*</span></label>
+											<div class="col-sm-3">
+												<input type="text" class="form-control" required />
+											</div>
+										</div>
+									</div>
+									<div class="row form-group">
+										<div>
+											<label class="col-sm-2 control-label"><strong>Impulsão Horizontal (cm)</strong><span class="required">*</span></label>
+											<div class="col-sm-4">
+												<input type="text" class="form-control" required />
+											</div>
+										</div>
+										<div>
+											<label class="col-sm-3 control-label"><strong>Teste de Velocidade 20m (seg)</strong><span class="required">*</span></label>
+											<div class="col-sm-3">
+												<input type="text" class="form-control" required />
+											</div>
+										</div>
+									</div>
+									<div class="row form-group">
+										<div>
+											<label class="col-sm-2 control-label"><strong>Aptidão Física (mLO2/min)</strong><span class="required">*</span></label>
+											<div class="col-sm-4">
+												<input type="text" class="form-control" required />
+											</div>
+										</div>
+										<div>
+											<label class="col-sm-3 control-label"><strong>Agilidade (seg)</strong><span class="required">*</span></label>
+											<div class="col-sm-3">
+												<input type="text" class="form-control" required />
+											</div>
+										</div>
+									</div>
+									<div class="row form-group">
+										<div>
+											<label class="col-sm-2 control-label"><strong>Impulsão Horizontal (cm)</strong><span class="required">*</span></label>
+											<div class="col-sm-4">
+												<input type="text" class="form-control" required />
+											</div>
+										</div>
+										<div>
+											<label class="col-sm-3 control-label"><strong>Teste de Velocidade 20m (seg)</strong><span class="required">*</span></label>
+											<div class="col-sm-3">
+												<input type="text" class="form-control" required />
+											</div>
+										</div>
+									</div>
+									<div class="row form-group">
+										<div>
+											<label class="col-sm-2 control-label"><strong>Abdominal (qtd)</strong><span class="required">*</span></label>
+											<div class="col-sm-4">
+												<input type="number" class="form-control" required />
+											</div>
+										</div>
+									</div>
+                                </div>
+                                <div id="vocacional" class="tab-pane">
+                                    <p>Vocacional</p>
 
+                                    @for (var index = 0; index < Model.QuestionarioVocacional.Count; index++)
+                                    {
+                                        var item = Model.QuestionarioVocacional[index];
+                                        <div class="row form-group">
+                                            <div class="row form-group col-sm-12">
+                                                <label class="control-label">
+                                                    <strong>@index - @item.Pergunta</strong><span class="required">*</span>
+                                                </label>
+                                            </div>
+                                            <div class="row form-group col-sm-12">
+												@foreach (var resp in @item.Respostas)
+                                                {
+                                                    <div class="radio-custom radio-default col-sm-4">
+														<input id="resp_@resp.Id" name="nomeResp_@index" type="radio" value="@resp.Id" />
+														<label for="resp_@resp.Id">@resp.RespostaQuestionario</label>
+                                                    </div>
+                                                }@* 
+                                                <div class="radio-custom radio-primary col-sm-4">
+                                                    <input id="awesome" name="porto_is" type="radio" value="awesome" required/>
+                                                    <label for="awesome">Não me interessa; não faço com prazer</label>
+                                                </div>
+                                                <div class="radio-custom radio-primary col-sm-3">
+                                                    <input id="very-awesome" name="porto_is" type="radio" value="very-awesome"/>
+                                                    <label for="very-awesome">Interessa-me pouco</label>
+                                                </div>
+                                                <div class="radio-custom radio-primary col-sm-3">
+                                                    <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome"/>
+                                                    <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                                </div>
+                                                <div class="radio-custom radio-primary col-sm-3">
+                                                    <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome"/>
+                                                    <label for="ultra-awesome">Interessa-me bastante</label>
+                                                </div>
+                                                <div class="radio-custom radio-primary col-sm-4">
+                                                    <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome"/>
+                                                    <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                                </div> *@
+                                            </div>
+                                        </div>
+                                    }
+
+                                </div>
+                                <div id="recent11" class="tab-pane">
+                                    <p>Recent</p>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat.</p>
+                                </div>
+                                <div id="recent11" class="tab-pane">
+                                    <p>Recent</p>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat.</p>
+                                </div>
+                                <div id="recent11" class="tab-pane">
+                                    <p>Recent</p>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 				</div>
 				<footer class="panel-footer">
 					<div class="row">
 						<div class="col-md-9 col-md-offset-3">
-							<button type="submit" class="btn btn-primary pull-right" style="margin-left: 5px;margin-right: 5px;"><i class="fa fa-forward"></i> &nbsp;&nbsp;Próximo</button>
-							<button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
+							<a href="@Url.Action("Index", "Laudo")" class="btn btn-dark pull-right" style="margin-left: 5px;margin-right: 5px;"><i class="fa fa-reply"></i> &nbsp;&nbsp;Voltar</a>
+							<button type="reset" class="btn btn-danger pull-right" style="margin-left: 5px;"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
 							<button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
 						</div>
 					</div>
 				</footer>
-			</section> *@
+			</section>
 		}
 	</div>
 </div>
+
 
 @section CssSpecificVendor {
 	<link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />

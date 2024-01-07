@@ -59,6 +59,13 @@ namespace WebApp.ApiClient
 	        return Get<ProfissionalDto>(requestUrl);
         }
 
+        public List<ProfissionalDto> GetProfissionaisByLocalidade(int id)
+        {
+	        var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+		        $"{ResourceProfissional}/Localidade/{id}"));
+	        return Get<List<ProfissionalDto>>(requestUrl);
+        }
+
 		#endregion
 
 	}

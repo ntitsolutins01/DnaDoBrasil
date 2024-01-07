@@ -103,9 +103,11 @@ namespace WebApp.Controllers
 					Bairro = collection["bairro"] == "" ? null : collection["bairro"].ToString(),
 					Endereco = collection["endereco"] == "" ? null : collection["endereco"].ToString(),
 					MunicipioId = collection["ddlMunicipio"] == "" ? null : Convert.ToInt32(collection["ddlMunicipio"].ToString()),
+					LocalidadeId = collection["ddlLocalidade"] == "" ? null : Convert.ToInt32(collection["ddlLocalidade"].ToString()),
 					Habilitado = habilitado != "",
 					Status = status != "",
 					AmbientesIds = collection["arrAmbientes"] == "" ? null : collection["arrAmbientes"].ToString()
+
 				};
 
 				await ApiClientFactory.Instance.CreateProfissional(command);
@@ -130,6 +132,7 @@ namespace WebApp.Controllers
 				var profissional = ApiClientFactory.Instance.GetProfissionalById(id);
 				var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", profissional.Uf);
 				var municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(profissional.Uf!), "Id", "Nome", profissional.MunicipioId);
+				var localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeByMunicipio(profissional.MunicipioId.ToString()), "Id", "Nome", profissional.LocalidadeId);
 				var listAmbientes = new SelectList(ApiClientFactory.Instance.GetAmbienteAll(), "Id", "Nome");
 
 				return View(new ProfissionalModel()
@@ -138,7 +141,9 @@ namespace WebApp.Controllers
 					ListAmbientes = listAmbientes, 
 					Profissional = profissional,
 					ListMunicipios = municipios, 
-					Ambientes = profissional.Ambientes
+					Ambientes = profissional.Ambientes,
+					ListLocalidades = localidades
+
 				});
 
 			}
@@ -176,6 +181,7 @@ namespace WebApp.Controllers
                     Bairro = collection["bairro"] == "" ? null : collection["bairro"].ToString(),
                     Endereco = collection["endereco"] == "" ? null : collection["endereco"].ToString(),
                     MunicipioId = collection["ddlMunicipio"] == "" ? null : Convert.ToInt32(collection["ddlMunicipio"].ToString()),
+                    LocalidadeId = collection["ddlLocalidade"] == "" ? null : Convert.ToInt32(collection["ddlLocalidade"].ToString()),
                     Habilitado = habilitado != "",
                     Status = status != "",
                     AmbientesIds = collection["arrAmbientes"] == "" ? null : collection["arrAmbientes"].ToString()
@@ -343,6 +349,13 @@ namespace WebApp.Controllers
 
 			await _emailSender.SendEmailAsync(user.Email, "Primeiro acesso sistema Dna Brasil",
 				message);
+		}
+
+		public async Task<List<ProfissionalDto>> GetProfissionaisByLocalidade(int id)
+		{
+			var result = ApiClientFactory.Instance.GetProfissionaisByLocalidade(id);
+
+			return result;
 		}
 	}
 

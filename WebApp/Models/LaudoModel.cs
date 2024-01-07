@@ -8,6 +8,7 @@ namespace WebApp.Models
 	{
 		public LaudoDto Laudo { get; set; }
 		public List<LaudoDto> Laudos { get; set; }
+		public List<QuestionarioDto> QuestionarioVocacional { get; set; }
 		public string LaudoId { get; set; }
 		public SelectList ListLaudos { get; set; }
 

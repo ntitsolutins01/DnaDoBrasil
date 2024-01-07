@@ -15,10 +15,9 @@
         public int? Numero { get; set; }
         public string? Cep { get; set; }
         public string? Bairro { get; set; }
-        //public List<Contrato>? Contratos { get; set; }
-        public int EstadoId { get; set; }
         public string? Uf { get; set; }
-        public int MunicipioId { get; set; }
+        public int? MunicipioId { get; set; }
+        public int? LocalidadeId { get; set; }
         public bool Status { get; set; }
         public bool Habilitado { get; set; }
         public List<AmbienteDto>? Ambientes { get; set; }

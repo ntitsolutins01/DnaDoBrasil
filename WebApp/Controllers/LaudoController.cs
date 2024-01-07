@@ -45,11 +45,27 @@ namespace WebApp.Controllers
             return View();
         }
         
-        public ActionResult Create()
+        public ActionResult Create(int? crud, int? notify, string message = null)
         {
-            return View();
+	        try
+	        {
+		        SetNotifyMessage(notify, message);
+		        SetCrudMessage(crud);
+
+		        var questionarioVocacional =
+			        ApiClientFactory.Instance.GetQuestionarioByTipoLaudo((int)EnumTipoLaudo.Vocacional);
+
+		        return View(new LaudoModel() { QuestionarioVocacional = questionarioVocacional });
+
+	        }
+	        catch (Exception e)
+	        {
+		        Console.Write(e.StackTrace);
+		        return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = e.Message });
+
+	        }
         }
 
-        
-    }
+
+	}
 }
