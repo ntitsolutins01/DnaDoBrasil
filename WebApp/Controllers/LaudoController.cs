@@ -57,11 +57,20 @@ namespace WebApp.Controllers
 
 		        var questionarioVocacional =
 			        ApiClientFactory.Instance.GetQuestionarioByTipoLaudo((int)EnumTipoLaudo.Vocacional);
+		        var questionarioQualidadeVida =
+			        ApiClientFactory.Instance.GetQuestionarioByTipoLaudo((int)EnumTipoLaudo.QualidadeVida);
+		        var questionarioConsumoAlimentar =
+			        ApiClientFactory.Instance.GetQuestionarioByTipoLaudo((int)EnumTipoLaudo.ConsumoAlimentar);
+		        var questionarioSaudeBucal =
+			        ApiClientFactory.Instance.GetQuestionarioByTipoLaudo((int)EnumTipoLaudo.SaudeBucal);
 
 
 		        return View(new LaudoModel()
 		        {
 			        QuestionarioVocacional = questionarioVocacional,
+			        QuestionarioQualidadeVida = questionarioQualidadeVida,
+			        QuestionarioConsumoAlimentar = questionarioConsumoAlimentar,
+			        QuestionarioSaudeBucal = questionarioSaudeBucal,
 					ListEstados = estados
 		        });
 

@@ -6,7 +6,12 @@ namespace WebApp.Enumerators
     {
         [Description("Vocacional")]
         Vocacional = 6,
-        [Description("Parecer Técnico")]
-        PareceTecnico = 1
+        [Description("Qualidade de Vida")]
+        QualidadeVida = 7,
+        [Description("Consumo Alimentar")]
+        ConsumoAlimentar = 8,
+        [Description("Saúde Bucal")]
+        SaudeBucal = 5
+        
     }
 }
