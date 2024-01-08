@@ -50,12 +50,6 @@ namespace WebApp.ApiClient
                 $"{ResourcePerfil}/AspNetRoleId/{aspNetRoleId}"));
             return Get<PerfilDto>(requestUrl);
 		}
-		public UsuarioDto GetUsuarioByName(string name)
-		{
-			var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-				$"{ResourceUsuario}/{name}"));
-			return Get<UsuarioDto>(requestUrl);
-		}
 
 		#endregion
 	}
