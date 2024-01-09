@@ -23,7 +23,7 @@ namespace WebApp.Controllers
 		{
 			SetNotifyMessage(notify, message);
 			SetCrudMessage(crud);
-			var response = ApiClientFactory.Instance.GetModuloAll();
+			var response = ApiClientFactory.Instance.GetModulosAll();
 
 			return View(new ModuloModel() { Modulos = response });
 		}
@@ -43,7 +43,7 @@ namespace WebApp.Controllers
 		{
 			try
 			{
-				var command = new ModuloModel.CreateUpdateModuloCommand
+				var command = new ConfiguracaoSistemaModel.CreateUpdateModuloCommand
 				{
 					Nome = collection["nome"].ToString(),
 				};
@@ -61,7 +61,7 @@ namespace WebApp.Controllers
 		//[ClaimsAuthorize("Usuario", "Alterar")]
 		public async Task<ActionResult> Edit(IFormCollection collection)
 		{
-			var command = new ModuloModel.CreateUpdateModuloCommand
+			var command = new ConfiguracaoSistemaModel.CreateUpdateModuloCommand
 			{
 				Id = Convert.ToInt32(collection["editModuloId"]),
 				Nome = collection["nome"].ToString(),

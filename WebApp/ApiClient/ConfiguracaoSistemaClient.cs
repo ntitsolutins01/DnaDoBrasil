@@ -14,7 +14,20 @@ namespace WebApp.ApiClient
                 $"{ResourceConfiguracaoSistema}/Modulo"));
             return Post(requestUrl, command);
         }
-        public Task<long> CreateFuncionalidade(ConfiguracaoSistemaModel.CreateUpdateFuncionalidadeCommand command)
+        public Task<bool> UpdateModulo(int id, ConfiguracaoSistemaModel.CreateUpdateModuloCommand command)
+        {
+	        var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+		        $"{ResourceConfiguracaoSistema}/{id}"));
+	        return Put(requestUrl, command);
+        }
+
+        public Task<bool> DeleteModulo(int id)
+        {
+	        var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+		        $"{ResourceConfiguracaoSistema}/{id}"));
+	        return Delete<bool>(requestUrl);
+        }
+		public Task<long> CreateFuncionalidade(ConfiguracaoSistemaModel.CreateUpdateFuncionalidadeCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 $"{ResourceConfiguracaoSistema}/Funcionalidade"));
@@ -37,7 +50,13 @@ namespace WebApp.ApiClient
                 $"{ResourceConfiguracaoSistema}/Funcionalidades"));
             return Get<List<FuncionalidadeDto>>(requestUrl);
         }
+        public ModuloDto GetModuloById(int id)
+        {
+	        var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+		        $"{ResourceConfiguracaoSistema}/Modulo/{id}"));
+	        return Get<ModuloDto>(requestUrl);
+        }
 
-        #endregion
-    }
+		#endregion
+	}
 }
