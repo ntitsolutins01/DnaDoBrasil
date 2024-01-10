@@ -655,7 +655,7 @@
                                             <input type="hidden" name="arrAmbienteAlunos" />
 		                                    <label class="col-sm-2 control-label">Adicionados</label>
 		                                    <div class="col-sm-10">
-                                                <table class="table table-bordered table-striped mb-0" id="AmbienteAlunoDataTable">
+                                                <table class="table table-bordered table-striped mb-0" id="ambienteAlunoDataTable">
 				                                    <thead>
 				                                    <tr>
 					                                    <th>Id</th>
@@ -880,7 +880,6 @@
 	}
 @section Scripts {
     <script src="~/assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.js"></script>
-    <script src="~/assets/vendor/bootstrap-maxlength/bootstrap-maxlength.js"></script>
     <script src="~/assets/vendor/ios7-switch/ios7-switch.js"></script>
     <script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
     <script src="~/assets/vendor/select2/js/select2.js"></script>
@@ -891,28 +890,8 @@
     <script src="~/assets/vendor/bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR.min.js"></script>
     <script src="~/js/formatTable.js"></script>
     <script src="~/js/DadosAluno.js"></script>
-    <script src="~/js/AmbienteAluno.js"></script>
     <script>
 
-        // iosSwitcher
-        (function ($) {
-
-            'use strict';
-
-            if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
-
-                $(function () {
-                    $('[data-plugin-ios-switch]').each(function () {
-                        var $this = $(this);
-
-                        $this.themePluginIOS7Switch();
-                    });
-                });
-
-            }
-
-        }).apply(this, [jQuery]);
-        
         (function ($) {
 
             'use strict';

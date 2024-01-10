@@ -27,32 +27,16 @@
 
                 $this.themePluginSelect2(opts);
             });
+
             /*
-                 * When you change the value the select via select2, it triggers
-                 * a 'change' event, but the jquery validation plugin
-                 * only re-validates on 'blur'*/
+             * When you change the value the select via select2, it triggers
+             * a 'change' event, but the jquery validation plugin
+             * only re-validates on 'blur'*/
 
             $select.on('change', function () {
                 $(this).trigger('blur');
             });
-            $("#vAmbienteAluno").validate({
-                highlight: function (label) {
-                    $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
-                },
-                success: function (label) {
-                    $(label).closest('.form-group').removeClass('has-error');
-                    label.remove();
-                },
-                errorPlacement: function (error, element) {
-                    var placement = element.closest('.input-group');
-                    if (!placement.get(0)) {
-                        placement = element;
-                    }
-                    if (error.text() !== '') {
-                        placement.after(error);
-                    }
-                }
-            });
+
 
             
         }).apply(this, [jQuery]);

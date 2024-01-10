@@ -3,7 +3,8 @@
     data: {
         params: {
             cpf: "",
-            deficiencias: []
+            deficiencias: [],
+            ambienteAlunos: []
         },
         loading: false,
     },
@@ -23,45 +24,47 @@
                 });
             }
 
+            //skin checkbox
+            if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
+
+                $(function () {
+                    $('[data-plugin-ios-switch]').each(function () {
+                        var $this = $(this);
+
+                        $this.themePluginIOS7Switch();
+                    });
+                });
+            }
+            //skin select
+            var $select = $(".select2").select2({
+                allowClear: true
+            });
+
+            $(".select2").each(function () {
+                var $this = $(this),
+                    opts = {};
+
+                var pluginOptions = $this.data('plugin-options');
+                if (pluginOptions)
+                    opts = pluginOptions;
+
+                $this.themePluginSelect2(opts);
+            });
+
+            /*
+             * When you change the value the select via select2, it triggers
+             * a 'change' event, but the jquery validation plugin
+             * only re-validates on 'blur'*/
+
+            $select.on('change', function () {
+                $(this).trigger('blur');
+            });
+
             var formid = $('form').attr('id');
 
             //inclusão
             if (formid === "formDadosAluno") {
-                //skin checkbox
-                if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
-
-                    $(function () {
-                        $('[data-plugin-ios-switch]').each(function () {
-                            var $this = $(this);
-
-                            $this.themePluginIOS7Switch();
-                        });
-                    });
-                }
-                //skin select
-                var $select = $(".select2").select2({
-                    allowClear: true
-                });
-
-                $(".select2").each(function () {
-                    var $this = $(this),
-                        opts = {};
-
-                    var pluginOptions = $this.data('plugin-options');
-                    if (pluginOptions)
-                        opts = pluginOptions;
-
-                    $this.themePluginSelect2(opts);
-                });
-
-                /*
-                 * When you change the value the select via select2, it triggers
-                 * a 'change' event, but the jquery validation plugin
-                 * only re-validates on 'blur'*/
-
-                $select.on('change', function () {
-                    $(this).trigger('blur');
-                });
+                
 
                 //clique de escolha do select
                 $("#ddlEstado").change(function () {
@@ -285,7 +288,7 @@
         },
         DeleteDeficiencia: function (index) {
             var self = this;
-            self.ShowLoad(true, "formDadosAluno");
+            //self.ShowLoad(true, "formDadosAluno");
 
             var table = $('#deficienciaDataTable').DataTable();
 
@@ -298,6 +301,32 @@
 
                 self.ShowLoad(false, "formDadosAluno");
             });
+        },
+        AddAmbienteAluno: function () {
+            var self = this;
+            self.ShowLoad(true, "vAmbienteAluno");
+
+            var mapped = $("#ddlAmbienteAluno").select2('data');
+
+            $('#ambienteAlunoDataTable').DataTable().destroy();
+
+            var table = $('#ambienteAlunoDataTable').DataTable({
+                columnDefs: [
+                    { "className": "text-center", "targets": "_all" }
+                ]
+            });
+
+            table.row.add([mapped[0].id, mapped[0].text,
+            "<a style='color:#F44336' href='javascript:(crud.DeleteAmbienteAluno(\"" + mapped[0].id + "\"))'><i class='fa fa-trash'></i></a>"])
+                .draw();
+
+            self.params.ambienteAlunos.push(mapped[0].id);
+
+            $('input[name="arrAmbienteAlunos"]').attr('value', self.params.ambienteAlunos);
+
+            $("#ddlAmbienteAluno").select2("val", "0");
+
+            self.ShowLoad(false, "vAmbienteAluno");
         }
     }
 });
@@ -310,6 +339,9 @@ var crud = {
     },
     AddDeficiencia: function () {
         vm.AddDeficiencia()
+    },
+    AddAmbienteAluno: function () {
+        vm.AddAmbienteAluno()
     },
     DeleteDeficiencia: function (index) {
         vm.DeleteDeficiencia(index)
