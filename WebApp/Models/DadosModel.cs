@@ -45,6 +45,7 @@ namespace WebApp.Models
             public int DependenciaId { get; set; }
             public int LaudosId { get; set; }
             public string? AmbientesIds { get; set; }
+            public string? DeficienciasIds { get; set; }
         }
     }
 
