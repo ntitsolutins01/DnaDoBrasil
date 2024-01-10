@@ -629,77 +629,53 @@
                 <div id="ambientes" class="tab-pane">
                     <div class="row">
                         <div class="col-md-12">
-	                        @using (@Html.BeginForm("CreateAmbientes", "Aluno", FormMethod.Post, new { id = "formAmbientesAluno", @class = "form-horizontal" }))
+                            @using (@Html.BeginForm("CreateAmbientesAluno", "Aluno", FormMethod.Post, new { id = "vAmbienteAluno", @class = "form-horizontal" }))
 	                        {
                                 <section class="panel">
                                     <div class="panel-body">
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">Ambiente</label>
-                                            <div class="col-sm-4">
-                                                <select class="form-control populate select2" name="ddlAmbiente" id="ddlAmbiente"
-                                                        style="width: 100%" title="Por favor selecione o turno."
-                                                        asp-for="AmbienteId" asp-items="Model.ListAmbientes">
-                                                    <option value="">Selecionar Ambiente</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-sm-1">
-                                                <button type="button" class="ml-xs btn btn-primary"
-                                                        data-toggle="modal" data-target="#mdAmbiente">
-                                                    <i class="fa fa-plus"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">Adicionados</label>
-                                            <div class="col-sm-10">
-                                                <table class="table table-bordered table-striped mb-0" id="datatable-default1">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Esporte</th>
-                                                            <th>Ações</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>Natação</td>
-                                                            <td class="actions">
-                                                                <a data-toggle="tooltip" data-placement="top" title="Excluir" @* asp-action="Delete" *@ asp-controller="Perfil" asp-route-id="1" class="on-default remove-row" style='color:#F44336'><i class="fa fa-trash"></i></a>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Futsal</td>
-                                                            <td class="actions">
-                                                                <a data-toggle="tooltip" data-placement="top" title="Excluir" @* asp-action="Delete" *@ asp-controller="Perfil" asp-route-id="1" class="on-default remove-row" style='color:#F44336'><i class="fa fa-trash"></i></a>
-                                                            </td>
-                                                        </tr>
-                                                        @* @foreach (var item in Model.aaData)
-                                                        {
-                                                        <tr>
-                                                        <td>@Html.DisplayFor(modelItem => item.NomUsuario)</td>
-                                                        <td>@Html.DisplayFor(modelItem => item.NumCpf)</td>
-                                                        <td>@Html.DisplayFor(modelItem => item.Email)</td>
-                                                        <td>@Html.DisplayFor(modelItem => item.NomPerfil)</td>
-                                                        <td class="actions">
-                                                        <a data-toggle="tooltip" data-placement="top" title="Editar" asp-action="Edit" asp-controller="Usuario" asp-route-id="@item.CodUsuarioLogin" class="on-default edit-row" style='color: #eea236'><i class="fa fa-pencil"></i></a>
-                                                        <a data-toggle="tooltip" data-placement="top" title="Excluir" asp-action="Delete" asp-controller="Usuario" asp-route-id="@item.CodUsuarioLogin" class="on-default remove-row" style='color: #d43f3a'><i class="fa fa-trash-o"></i></a>
-                                                        <a data-toggle="tooltip" data-placement="top" title="Excluir" asp-action="Delete" asp-controller="Usuario" asp-route-id="@item.CodUsuarioLogin" class="on-default remove-row" style='color: #d43f3a'><i class="fa fa-trash-o"></i></a>
-                                                        </td>
-                                                        </tr>
-                                                        } *@
-                                                    </tbody>
-                                                </table>
+	                                    <div class="form-group">
+		                                    <label class="col-sm-2 control-label">Ambiente</label>
+		                                    <div class="col-sm-4">
+                                                <select class="form-control populate select2" name="ddlAmbienteAluno" id="ddlAmbienteAluno"
+			                                            style="width: 100%" title="Por favor selecione o Ambiente do aluno."
+			                                            asp-for="AmbienteId" asp-items="Model.ListAmbientes">
+				                                    <option value="">Selecionar Ambiente</option>
+			                                    </select>
+		                                    </div>
+		                                    <div class="col-sm-1">
+                                                <a type="button" class="ml-xs btn btn-success" href='javascript:(crud.AddAmbienteAluno())'>
+				                                    <i class="fa fa-plus"></i>
+			                                    </a>
+		                                    </div>
+		                                    <div class="col-sm-5 pull-right">
+			                                    <a data-toggle="modal" data-target="#mdAmbiente" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Novo Ambiente </a>
+		                                    </div>
+	                                    </div>
+	                                    <div class="form-group">
+                                            <input type="hidden" name="arrAmbienteAlunos" />
+		                                    <label class="col-sm-2 control-label">Adicionados</label>
+		                                    <div class="col-sm-10">
+                                                <table class="table table-bordered table-striped mb-0" id="AmbienteAlunoDataTable">
+				                                    <thead>
+				                                    <tr>
+					                                    <th>Id</th>
+					                                    <th>Nome Ambiente</th>
+					                                    <th>Ação</th>
+				                                    </tr>
+				                                    </thead>
+			                                    </table>
 
-                                            </div>
-                                        </div>
+		                                    </div>
+	                                    </div>
                                     </div>
-                                    <footer class="panel-footer">
-                                        <div class="row">
-                                            <div class="col-md-9 col-md-offset-3">
-                                                <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
-
-                                            </div>
-                                        </div>
-                                    </footer>
+	                                <footer class="panel-footer">
+		                                <div class="row">
+			                                <div class="col-md-9 col-md-offset-3">
+				                                <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
+				                                <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
+			                                </div>
+		                                </div>
+	                                </footer>
                                 </section>
                             }
                         </div>
@@ -915,6 +891,7 @@
     <script src="~/assets/vendor/bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR.min.js"></script>
     <script src="~/js/formatTable.js"></script>
     <script src="~/js/DadosAluno.js"></script>
+    <script src="~/js/AmbienteAluno.js"></script>
     <script>
 
         // iosSwitcher

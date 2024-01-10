@@ -55,7 +55,7 @@ namespace WebApp.Controllers
         //    return View();
         //}
 
-
+        //monta tela de create aluno
         public ActionResult Create(int? crud, int? notify, string message = null)
         {
             SetNotifyMessage(notify, message);
@@ -63,11 +63,13 @@ namespace WebApp.Controllers
 
             var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
             var deficiencias = new SelectList(ApiClientFactory.Instance.GetDeficienciaAll(), "Id", "Nome");
+            var ambientes = new SelectList(ApiClientFactory.Instance.GetAmbienteAll(), "Id", "Nome");
 
             return View(new AlunoModel()
             {
                 ListEstados = estados,
-                ListDeficiencias = deficiencias
+                ListDeficiencias = deficiencias,
+                ListAmbientes = ambientes
             });
         }
         public IActionResult Laudo()
@@ -614,9 +616,29 @@ namespace WebApp.Controllers
             throw new NotImplementedException();
         }
 
-        public IActionResult CreateAmbientes()
+        //[ClaimsAuthorize("Aluno", "Alterar")]
+        [HttpPost]
+        public async Task<ActionResult> CreateAmbientesAluno(IFormCollection collection)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var ambiente = collection["ddlAmbienteAluno"].ToString();
+
+                var command = new AmbienteModel.CreateUpdateAmbienteCommand
+                {
+                    Nome = ambiente
+                };
+
+                await ApiClientFactory.Instance.CreateAmbiente(command);
+
+                return RedirectToAction(nameof(Create), new { crud = (int)EnumCrud.Created });
+            }
+            catch (Exception e)
+            {
+                Console.Write(e.StackTrace);
+                return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = e.Message });
+
+            }
         }
 
         public IActionResult CreateDeficiencia()
