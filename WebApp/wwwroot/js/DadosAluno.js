@@ -1,9 +1,11 @@
 ﻿var vm = new Vue({
     el: "#formDadosAluno",
     data: {
+        params: {
+            cpf: "",
+            ambientes: []
+        },
         loading: false,
-        editDto: { Id: "", Nome: "", Status: true, IdadeInicial: "", IdadeFinal: "", ScoreTotal: "", Descricao: "" },
-        params: {}
     },
     mounted: function () {
         var self = this;
@@ -254,6 +256,46 @@
         DeleteDadosAluno: function (id) {
             var url = "DadosAluno/Delete/" + id;
             $("#deleteDadosAlunoHref").prop("href", url);
+        },
+        AddDeficiencia: function () {
+            var self = this;
+            self.ShowLoad(true, "formDadosAluno");
+
+            var mapped = $("#ddlDeficiencia").select2('data');
+
+            $('#deficienciaDataTable').DataTable().destroy();
+
+            var table = $('#deficienciaDataTable').DataTable({
+                columnDefs: [
+                    { "className": "text-center", "targets": "_all" }
+                ]
+            });
+
+            table.row.add([mapped[0].id, mapped[0].text,
+            "<a style='color:#F44336' href='javascript:(crud.DeleteDeficiencia(\"" + mapped[0].id + "\"))'><i class='fa fa-trash'></i></a>"])
+                .draw();
+
+            self.params.Deficiencias.push(mapped[0].id);
+
+            $('input[name="arrDeficiencias"]').attr('value', self.params.Deficiencias);
+
+            $("#ddlDeficiencia").select2("val", "0");
+
+            self.ShowLoad(false, "formDadosAluno");
+        },
+        DeleteDeficiencia: function (index) {
+            var self = this;
+            self.ShowLoad(true, "formDadosAluno");
+
+            var table = $('#deficienciaDataTable').DataTable();
+
+            table.row(index).remove().draw();
+
+            $('#deficienciaDataTable tbody').on('click', 'tr', function () {
+                //alert('Row index: ' + table.row(this).index());
+                var index = table.row(this).index();
+                table.row(index).remove().draw();
+            });
         }
     }
 });
@@ -263,5 +305,11 @@ var crud = {
         $('input[name="DadosAlunoId"]').attr('value', id);
         $('#mdDeleteDadosAluno').modal('show');
         vm.DeleteDadosAluno(id)
+    },
+    AddDeficiencia: function () {
+        vm.AddDeficiencia()
+    },
+    DeleteDeficiencia: function (index) {
+        vm.DeleteDeficiencia(index)
     }
 };
