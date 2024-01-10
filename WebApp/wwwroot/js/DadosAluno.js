@@ -3,7 +3,7 @@
     data: {
         params: {
             cpf: "",
-            ambientes: []
+            deficiencias: []
         },
         loading: false,
     },
@@ -275,9 +275,9 @@
             "<a style='color:#F44336' href='javascript:(crud.DeleteDeficiencia(\"" + mapped[0].id + "\"))'><i class='fa fa-trash'></i></a>"])
                 .draw();
 
-            self.params.Deficiencias.push(mapped[0].id);
+            self.params.deficiencias.push(mapped[0].id);
 
-            $('input[name="arrDeficiencias"]').attr('value', self.params.Deficiencias);
+            $('input[name="arrDeficiencias"]').attr('value', self.params.deficiencias);
 
             $("#ddlDeficiencia").select2("val", "0");
 
