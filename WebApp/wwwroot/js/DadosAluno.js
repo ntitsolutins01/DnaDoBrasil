@@ -295,6 +295,8 @@
                 //alert('Row index: ' + table.row(this).index());
                 var index = table.row(this).index();
                 table.row(index).remove().draw();
+
+                self.ShowLoad(false, "formDadosAluno");
             });
         }
     }

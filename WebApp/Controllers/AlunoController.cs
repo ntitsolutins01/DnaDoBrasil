@@ -618,5 +618,10 @@ namespace WebApp.Controllers
         {
             throw new NotImplementedException();
         }
+
+        public IActionResult CreateDeficiencia()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
