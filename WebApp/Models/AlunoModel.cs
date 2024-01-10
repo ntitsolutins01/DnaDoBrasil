@@ -25,6 +25,10 @@ namespace WebApp.Models
         public SelectList ListFomentos { get; set; }
         public int LocalidadeId { get; set; }
         public SelectList ListLocalidades { get; set; }
+        public string SerieId { get; set; }
+        public SelectList ListSeries { get; set; }
+        public SelectList ListProfissionals { get; set; }
+        public string ProfissionalId { get; set; }
 
         public class CreateUpdateAlunoCommand
         {

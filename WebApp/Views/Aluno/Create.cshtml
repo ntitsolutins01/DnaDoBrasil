@@ -35,47 +35,70 @@
                                     <div class="panel-body">
                                         <div class="form-group">
                                             <label class="col-sm-1 control-label">Foto</label>
-                                            <div class="col-sm-4">
-                                                <div class="fileupload fileupload-new" data-provides="fileupload">
-                                                    <div class="input-append">
-                                                        <div class="uneditable-input">
-                                                            <i class="fa fa-file fileupload-exists"></i>
-                                                            <span class="fileupload-preview"></span>
-                                                        </div>
-                                                        <span class="btn btn-default btn-file">
-                                                            <span class="fileupload-exists">Change</span>
-                                                            <span class="fileupload-new">Select file</span>
-                                                            <input type="file" />
-                                                        </span>
-                                                        <a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">Remove</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <label class="col-sm-1 control-label">Nome <span class="required">*</span></label>
-                                            <div class="col-sm-3">
-                                                <input type="text" name="nome" id="nome" maxlength="200" class="form-control" required />
-                                            </div>
-                                            <label class="col-sm-1 control-label">Sexo <span class="required">*</span></label>
-                                            <div class="col-sm-2">
-                                                <select class="form-control populate select2" name="ddlSexo" id="ddlSexo"
-                                                        title="Por favor selecione um sexo." required>
-                                                    <option value="">Selecionar Sexo</option>
-                                                    <option value="M">MASCULINO</option>
-                                                    <option value="F">FEMININO</option>
-                                                </select>
-                                            </div>
+	                                        <div class="col-sm-4">
+		                                        <div class="fileupload fileupload-new" data-provides="fileupload">
+			                                        <div class="input-append">
+				                                        <div class="uneditable-input">
+					                                        <i class="fa fa-file fileupload-exists"></i>
+					                                        <span class="fileupload-preview"></span>
+				                                        </div>
+				                                        <span class="btn btn-default btn-file">
+					                                        <span class="fileupload-exists">Change</span>
+					                                        <span class="fileupload-new">Select file</span>
+					                                        <input type="file" />
+				                                        </span>
+				                                        <a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">Remove</a>
+			                                        </div>
+		                                        </div>
+	                                        </div>
+	                                        <label class="col-sm-1 control-label">CPF </label>
+	                                        <div class="col-sm-3">
+		                                        <input id="cpf" name="cpf"
+		                                               v-model="params.cpf"
+		                                               type="text" value="" class="form-control"
+		                                               maxlength="14"/>
+	                                        </div>
                                         </div>
+                                    <div class="form-group">
+	                                    <label class="col-sm-1 control-label">Nome <span class="required">*</span></label>
+	                                    <div class="col-sm-5">
+		                                    <input type="text" name="nome" id="nome" maxlength="200" class="form-control" required title="Por favor informe um nome." />
+	                                    </div>
+	                                    <label class="col-sm-1 control-label">Email <span class="required">*</span></label>
+	                                    <div class="col-sm-5">
+		                                    <div class="input-group">
+			                                    <span class="input-group-addon">
+				                                    <i class="fa fa-envelope"></i>
+			                                    </span>
+			                                    <input type="text" name="email" maxlength="100" class="form-control"/>
+		                                    </div>
+	                                    </div>
+                                    </div>
                                         <div class="form-group">
                                             <label class="col-sm-1 control-label">Etnia <span class="required">*</span></label>
-                                            <div class="col-sm-2">
-                                                <select class="form-control populate select2" name="ddlEtnia" id="ddlEtnia"
-                                                        title="Por favor selecione um etnia." readonly
-                                                @* asp-for="CodEtnia" asp-items="Model.ListEtnia" *@>
-                                                    <option value="">Selecionar Etnia</option>
-                                                </select>
-                                            </div>
+	                                        <div class="col-sm-2">
+		                                        <select class="form-control populate select2" name="ddlEtnia" id="ddlEtnia"
+		                                                title="Por favor selecione um etnia."
+		                                                @* asp-for="CodEtnia" asp-items="Model.ListEtnia" *@>
+			                                        <option value="">Selecionar Etnia</option>
+			                                        <option value="PARDOS">PARDOS</option>
+			                                        <option value="BRANCOS">BRANCOS</option>
+			                                        <option value="NEGROS">NEGROS</option>
+			                                        <option value="INDÍGENAS">INDÍGENAS</option>
+			                                        <option value="AMARELOS">AMARELOS</option>
+		                                        </select>
+	                                        </div>
+	                                        <label class="col-sm-1 control-label">Sexo <span class="required">*</span></label>
+	                                        <div class="col-sm-2">
+		                                        <select class="form-control populate select2" name="ddlSexo" id="ddlSexo"
+		                                                title="Por favor selecione um sexo." required>
+			                                        <option value="">Selecionar Sexo</option>
+			                                        <option value="M">MASCULINO</option>
+			                                        <option value="F">FEMININO</option>
+		                                        </select>
+	                                        </div>
                                             <label class="col-sm-2 control-label">Data Nascimento <span class="required">*</span></label>
-                                            <div class="col-sm-2">
+                                            <div class="col-sm-4">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">
                                                         <i class="fa fa-calendar"></i>
@@ -87,15 +110,6 @@
                                                            data-plugin-datepicker data-date-format="dd/mm/yyyy" data-plugin-options='{"language": "pt-BR"}'
                                                            placeholder="__/__/____" class="form-control startdate"
                                                            class="form-control">
-                                                </div>
-                                            </div>
-                                            <label class="col-sm-1 control-label">Email <span class="required">*</span></label>
-                                            <div class="col-sm-4">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon">
-                                                        <i class="fa fa-envelope"></i>
-                                                    </span>
-                                                    <input type="text" name="email" maxlength="100" class="form-control"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -128,37 +142,42 @@
                                                 <input type="text" name="nomePai" maxlength="150"class="form-control" />
                                             </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-1 control-label">Cpf </label>
-                                            <div class="col-sm-3">
-                                                <input id="cpf" name="cpf"
-                                                       v-model="params.cpf"
-                                                       type="text" value="" class="form-control"
-                                                       maxlength="14" />
-                                            </div>
-                                            <label class="col-lg-1 control-label text-lg-right pt-2">Telefone<span class="required">*</span></label>
-                                            <div class="col-lg-3">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon">
-                                                        <i class="fa fa-phone"></i>
-                                                    </span>
-                                                    <input id="numTelefone" name="numTelefone"class="form-control"
-                                                           maxlength="14"
-                                                           title="Por favor informe o telefone " required>
-                                                </div>
-                                            </div>
-                                            <label class="col-sm-1 control-label">Celular </label>
-                                            <div class="col-sm-3">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon">
-                                                        <i class="fa fa-phone"></i>
-                                                    </span>
-                                                    <input id="numCelular" name="numCelular"class="form-control"
-                                                           maxlength="14"
-                                                           title="Por favor informe o celular">
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <div class="form-group">
+	                                    <label class="col-sm-1 control-label text-sm-right pt-2">Estado <span class="required">*</span></label>
+	                                    <div class="col-md-2">
+		                                    <select class="form-control populate select2" name="ddlEstado" id="ddlEstado"
+		                                            title="Por favor informe um Estado." required
+		                                            asp-for="EstadoId" asp-items="Model.ListEstados">
+			                                    <option value="">Selecionar Estado</option>
+		                                    </select>
+	                                    </div>
+	                                    <label class="col-sm-1 control-label text-sm-right pt-2">Município <span class="required">*</span></label>
+	                                    <div class="col-md-3">
+		                                    <select class="form-control populate select2" name="ddlMunicipio" id="ddlMunicipio"
+		                                            title="Por favor informe um Municipio." required
+		                                            asp-for="MunicipioId" asp-items="Model.ListMunicipios">
+			                                    <option value="">Selecionar Município</option>
+		                                    </select>
+	                                    </div>
+	                                    <label class="col-sm-2 control-label text-sm-right pt-2">Localidade <span class="required">*</span></label>
+	                                    <div class="col-md-3">
+		                                    <select class="form-control populate select2" name="ddlLocalidade" id="ddlLocalidade"
+		                                            title="Por favor informe o localidade." required
+		                                            asp-for="LocalidadeId" asp-items="Model.ListLocalidades">
+			                                    <option value="">Selecionar Localidade</option>
+		                                    </select>
+	                                    </div>
+                                    </div>
+                                    <div class="form-group row">
+	                                    <label class="col-sm-3 control-label text-sm-right pt-2">Profissional <span class="required">*</span></label>
+	                                    <div class="col-md-4">
+		                                    <select class="form-control populate select2" name="ddlLocalidade" id="ddlLocalidade"
+		                                            @* title="Por favor informe o localidade." required *@
+                                                        asp-for="ProfissionalId" asp-items="Model.ListProfissionals">
+			                                    <option value="">Selecionar Localidade</option>
+		                                    </select>
+	                                    </div>
+                                    </div>
                                         <div class="form-group">
                                             <label class="col-sm-1 control-label">Endereço</label>
                                             <div class="col-sm-6">
@@ -175,25 +194,30 @@
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-1 control-label">Bairro </label>
-                                            <div class="col-sm-3">
-                                                <input type="bairro" name="bairro" maxlength="50" class="form-control"/>
-                                            </div>
-	                                        <label class="col-sm-1 control-label text-sm-right pt-2">Estado <span class="required">*</span></label>
-	                                        <div class="col-md-3">
-		                                        <select class="form-control populate select2" name="ddlEstado" id="ddlEstado"
-		                                                title="Por favor informe um Estado." required
-		                                                asp-for="EstadoId" asp-items="Model.ListEstados">
-			                                        <option value="">Selecionar Estado</option>
-		                                        </select>
+	                                        <div class="col-sm-3">
+		                                        <input type="bairro" name="bairro" maxlength="50" class="form-control"/>
 	                                        </div>
-	                                        <label class="col-sm-2 control-label text-sm-right pt-2">Município <span class="required">*</span></label>
-	                                        <div class="col-md-3">
-		                                        <select class="form-control populate select2" name="ddlMunicipio" id="ddlMunicipio"
-		                                                title="Por favor informe um Municipio." required
-		                                                asp-for="MunicipioId" asp-items="Model.ListMunicipios">
-			                                        <option value="">Selecionar Município</option>
-		                                        </select>
+	                                        <label class="col-lg-1 control-label text-lg-right pt-2">Telefone</label>
+	                                        <div class="col-lg-3">
+		                                        <div class="input-group">
+			                                        <span class="input-group-addon">
+				                                        <i class="fa fa-phone"></i>
+			                                        </span>
+			                                        <input id="numTelefone" name="numTelefone"class="form-control"
+			                                               maxlength="14">
+		                                        </div>
 	                                        </div>
+	                                        <label class="col-sm-1 control-label">Celular </label>
+	                                        <div class="col-sm-3">
+		                                        <div class="input-group">
+			                                        <span class="input-group-addon">
+				                                        <i class="fa fa-phone"></i>
+			                                        </span>
+			                                        <input id="numCelular" name="numCelular"class="form-control"
+			                                               maxlength="14">
+		                                        </div>
+	                                        </div>
+	                                        
                                         </div>
                                         @* <div class="form-group">
                                         <label class="col-sm-1 control-label">Facebook</label>
@@ -292,7 +316,6 @@
                                     <footer class="panel-footer">
                                         <div class="row">
                                             <div class="col-md-9 col-md-offset-3">
-                                                <button type="submit" class="btn btn-dark pull-right" style="margin-left: 5px;margin-right: 5px;"><i class="fa fa-reply"></i> &nbsp;&nbsp;Voltar</button>
                                                 <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
                                                 <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
 
@@ -307,7 +330,8 @@
                 <div id="dependencias" class="tab-pane">
                     <div class="row">
                         <div class="col-md-12">
-                            <form id="formDependencia" action="forms-validation.html" class="form-horizontal">
+                            @using (@Html.BeginForm("CreateDependencia", "Aluno", FormMethod.Post, new { id = "formMatriculaAluno", @class = "form-horizontal" }))
+	                        {
                                 <section class="panel">
                                     <div class="panel-body">
                                         <div class="form-group">
@@ -464,14 +488,15 @@
                                         </div>
                                     </footer>
                                 </section>
-                            </form>
+                            }
                         </div>
                     </div>
                 </div>
                 <div id="matriculas" class="tab-pane">
                     <div class="row">
                         <div class="col-md-12">
-                            <form id="form" action="forms-validation.html" class="form-horizontal">
+                        @using (@Html.BeginForm("CreateMatricula", "Aluno", FormMethod.Post, new { id = "formMatriculaAluno", @class = "form-horizontal" }))
+                        {
                                 <section class="panel">
                                     <div class="panel-body">
                                         <div class="form-group">
@@ -600,14 +625,15 @@
                                         </div>
                                     </footer>
                                 </section>
-                            </form>
+                            }
                         </div>
                     </div>
                 </div>
                 <div id="ambientes" class="tab-pane">
                     <div class="row">
                         <div class="col-md-12">
-                            <form id="form" action="forms-validation.html" class="form-horizontal">
+	                        @using (@Html.BeginForm("CreateAmbientes", "Aluno", FormMethod.Post, new { id = "formAmbientesAluno", @class = "form-horizontal" }))
+	                        {
                                 <section class="panel">
                                     <div class="panel-body">
                                         <div class="form-group">
@@ -678,14 +704,15 @@
                                         </div>
                                     </footer>
                                 </section>
-                            </form>
+                            }
                         </div>
                     </div>
                 </div>
                 <div id="vouchers" class="tab-pane">
                     <div class="row">
                         <div class="col-md-12">
-                            <form id="form" action="forms-validation.html" class="form-horizontal">
+                            @using (@Html.BeginForm("CreateVoucher", "Aluno", FormMethod.Post, new { id = "formVoucherAluno", @class = "form-horizontal" }))
+                        {
                                 <section class="panel">
                                     <div class="panel-body">
                                         <div class="form-group">
@@ -719,7 +746,7 @@
                                             <div class="col-sm-4">
                                                 <select class="form-control populate select2" name="ddlSerie" id="ddlSerie"
                                                         style="width: 100%" title="Por favor selecione a série."
-                                                @* asp-for="CodSerie" asp-items="Model.ListSerie" *@>
+                                                asp-for="SerieId" asp-items="Model.ListSeries">
                                                     <option value="">Selecionar Série</option>
                                                 </select>
                                             </div>
@@ -741,7 +768,7 @@
                                         </div>
                                     </footer>
                                 </section>
-                            </form>
+                            }
                         </div>
                     </div>
                 </div>

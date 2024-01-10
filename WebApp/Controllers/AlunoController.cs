@@ -59,7 +59,7 @@ namespace WebApp.Controllers
             SetNotifyMessage(notify, message);
             SetCrudMessage(crud);
 
-            var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Id", "Nome");
+            var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
             return View(new AlunoModel()
             {
 	            ListEstados = estados
@@ -586,5 +586,14 @@ namespace WebApp.Controllers
             }
         }
 
+        public IActionResult CreateDependencia()
+        {
+	        throw new NotImplementedException();
+        }
+
+        public IActionResult CreateAmbientes()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
