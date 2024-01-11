@@ -87,11 +87,11 @@ namespace WebApp.Controllers
             }
         }
 
-        public async Task<AmbienteDto> GetAmbienteById(int id)
+        public Task<AmbienteDto> GetAmbienteById(int id)
         {
             var result = ApiClientFactory.Instance.GetAmbienteById(id);
 
-            return result;
+            return Task.FromResult(result);
         }
     }
 }

@@ -128,11 +128,11 @@ namespace WebApp.Controllers
 			}
 		}
 
-		public async Task<RespostaDto> GetRespostaById(int id)
+		public Task<RespostaDto> GetRespostaById(int id)
 		{
 			var result = ApiClientFactory.Instance.GetRespostaById(id);
 
-			return result;
+			return Task.FromResult(result);
 		}
 	}
 }

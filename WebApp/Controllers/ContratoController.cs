@@ -101,11 +101,11 @@ namespace WebApp.Controllers
 			}
 		}
 
-		public async Task<ContratoDto> GetContratoById(int id)
+		public Task<ContratoDto> GetContratoById(int id)
 		{
 			var result = ApiClientFactory.Instance.GetContratoById(id);
 
-			return result;
+			return Task.FromResult(result);
 		}
 	}
 }

@@ -4,7 +4,8 @@
         params: {
             cpf: "",
             deficiencias: [],
-            ambienteAlunos: []
+            ambienteAlunos: [],
+            possuiDeficiencia: false
         },
         loading: false,
     },
@@ -133,19 +134,19 @@
 
                     var url = "../../Profissional/GetProfissionaisByLocalidade/?id=" + id;
 
-                    var ddlSource = "#ddlProfissional";
+                    var ddlSource = "#ddlProfissionalAluno";
 
                     $.getJSON(url,
                         { id: $(ddlSource).val() },
                         function (data) {
                             if (data.length > 0) {
                                 var items = '<option value="">Selecionar Profissional</option>';
-                                $("#ddlProfissional").empty;
+                                $("#ddlProfissionalAluno").empty;
                                 $.each(data,
                                     function (i, row) {
                                         items += "<option value='" + row.value + "'>" + row.text + "</option>";
                                     });
-                                $("#ddlProfissional").html(items);
+                                $("#ddlProfissionalAluno").html(items);
                             }
                             else {
                                 new PNotify({
@@ -234,6 +235,46 @@
                 });
             }
 
+            var datatableInit = function () {
+
+                $('.adicionados').dataTable({
+                    columnDefs: [
+                        { "className": "text-center", "targets": "_all" }
+                    ],
+                    dom: '<"row"<"col-lg-6"l><"col-lg-6"f>><"table-responsive"t>p',
+                    "language": {
+                        "sEmptyTable": "Nenhum registro encontrado",
+                        "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                        "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+                        "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+                        "sInfoPostFix": "",
+                        "sInfoThousands": ".",
+                        "sLengthMenu": "_MENU_ resultados por página",
+                        "sLoadingRecords": "Carregando...",
+                        "sProcessing": "Processando...",
+                        "sZeroRecords": "Nenhum registro encontrado",
+                        "sSearch": "Pesquisar: ",
+                        "oPaginate": {
+                            "sNext": "Próximo →" +
+                                "" +
+                                "",
+                            "sPrevious": "← Anterior",
+                            "sFirst": "Primeiro",
+                            "sLast": "Último"
+                        },
+                        "oAria": {
+                            "sSortAscending": ": Ordenar colunas de forma ascendente",
+                            "sSortDescending": ": Ordenar colunas de forma descendente"
+                        }
+                    }
+                });
+
+            };
+
+            $(function () {
+                datatableInit();
+            });
+
         }).apply(this, [jQuery]);
     },
     methods: {
@@ -262,9 +303,18 @@
         },
         AddDeficiencia: function () {
             var self = this;
-            self.ShowLoad(true, "formDadosAluno");
 
             var mapped = $("#ddlDeficiencia").select2('data');
+
+            if (self.params.deficiencias.indexOf(mapped[0].id) !== -1) {
+
+                new PNotify({
+                    title: 'Deficiência',
+                    text: 'Deficiência já foi adicionada anteriormente.',
+                    type: 'warning'
+                });
+                return;
+            }
 
             $('#deficienciaDataTable').DataTable().destroy();
 
@@ -284,29 +334,21 @@
 
             $("#ddlDeficiencia").select2("val", "0");
 
-            self.ShowLoad(false, "formDadosAluno");
-        },
-        DeleteDeficiencia: function (index) {
-            var self = this;
-            //self.ShowLoad(true, "formDadosAluno");
-
-            var table = $('#deficienciaDataTable').DataTable();
-
-            table.row(index).remove().draw();
-
-            $('#deficienciaDataTable tbody').on('click', 'tr', function () {
-                //alert('Row index: ' + table.row(this).index());
-                var index = table.row(this).index();
-                table.row(index).remove().draw();
-
-                self.ShowLoad(false, "formDadosAluno");
-            });
         },
         AddAmbienteAluno: function () {
             var self = this;
-            self.ShowLoad(true, "vAmbienteAluno");
 
             var mapped = $("#ddlAmbienteAluno").select2('data');
+
+            if (self.params.ambienteAlunos.indexOf(mapped[0].id) !== -1) {
+
+                new PNotify({
+                    title: 'Ambiente',
+                    text: 'Ambiente já foi adicionado anteriormente.',
+                    type: 'warning'
+                });
+                return;
+            }
 
             $('#ambienteAlunoDataTable').DataTable().destroy();
 
@@ -326,7 +368,53 @@
 
             $("#ddlAmbienteAluno").select2("val", "0");
 
-            self.ShowLoad(false, "vAmbienteAluno");
+        },
+        DeleteDeficiencia: function (id) {
+            var self = this;
+
+            var table = $('#deficienciaDataTable').DataTable();
+            table.rows(function (idx, data, node) {
+                    return data[0] === id;
+                })
+                .remove()
+                .draw();
+
+            $("#ddlDeficiencia").select2("val", "0");
+        },
+        DeleteAmbienteAluno: function (id) {
+            var self = this;
+
+            var table = $('#ambienteAlunoDataTable').DataTable();
+            table.rows(function (idx, data, node) {
+                    return data[0] === id;
+                })
+                .remove()
+                .draw();
+
+            $("#ddlAmbienteAluno").select2("val", "0");
+        },
+        OnClickPossuiDeficiencia(radioButton) {
+            var self = this;
+
+            self.params.possuiDeficiencia = radioButton
+
+            if (self.params.possuiDeficiencia) {
+
+                $("#divDeficiencia").show();
+
+            } else {
+
+                self.params.deficiencias = [];
+
+                $("#ddlDeficiencia").select2("val", "0");
+
+                $('#deficienciaDataTable').DataTable().destroy();
+
+                $('#deficienciaDataTable').DataTable().clear(); 
+
+                $("divDeficiencia").hide();
+
+            }
         }
     }
 });
@@ -343,7 +431,10 @@ var crud = {
     AddAmbienteAluno: function () {
         vm.AddAmbienteAluno()
     },
-    DeleteDeficiencia: function (index) {
-        vm.DeleteDeficiencia(index)
+    DeleteDeficiencia: function (id) {
+        vm.DeleteDeficiencia(id)
+    },
+    DeleteAmbienteAluno: function (id) {
+        vm.DeleteAmbienteAluno(id)
     }
 };

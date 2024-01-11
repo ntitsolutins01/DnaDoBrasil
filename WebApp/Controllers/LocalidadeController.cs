@@ -94,42 +94,42 @@ namespace WebApp.Controllers
             }
         }
 
-        public async Task<LocalidadeDto> GetLocalidadeById(int id)
+        public Task<LocalidadeDto> GetLocalidadeById(int id)
         {
             var result = ApiClientFactory.Instance.GetLocalidadeById(id);
 
-            return result;
+            return Task.FromResult(result);
         }
 
-        public async Task<JsonResult> GetLocalidadeByMunicipio(string id)
+        public Task<JsonResult> GetLocalidadeByMunicipio(string id)
         {
             try
             {
                 if (string.IsNullOrEmpty(id)) throw new Exception("Município não informado.");
                 var resultLocal = ApiClientFactory.Instance.GetLocalidadeByMunicipio(id);
 
-                return Json(new SelectList(resultLocal, "Id", "Nome"));
+                return Task.FromResult(Json(new SelectList(resultLocal, "Id", "Nome")));
 
             }
             catch (Exception ex)
             {
-                return Json(ex);
+                return Task.FromResult(Json(ex));
             }
         }
 
-        public async Task<JsonResult> GetLocalidadeByFomento(string id)
+        public Task<JsonResult> GetLocalidadeByFomento(string id)
         {
             try
             {
                 if (string.IsNullOrEmpty(id)) throw new Exception("Município não informado.");
                 var resultLocal = ApiClientFactory.Instance.GetLocalidadeByFomento(Convert.ToInt32(id));
 
-                return Json(new SelectList(resultLocal, "Id", "Nome"));
+                return Task.FromResult(Json(new SelectList(resultLocal, "Id", "Nome")));
 
             }
             catch (Exception ex)
             {
-                return Json(ex);
+                return Task.FromResult(Json(ex));
             }
         }
 	}

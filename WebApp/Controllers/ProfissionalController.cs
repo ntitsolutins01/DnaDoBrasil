@@ -238,37 +238,37 @@ namespace WebApp.Controllers
 			}
 		}
 
-		public async Task<ProfissionalDto> GetProfissionalById(int id)
+		public Task<ProfissionalDto> GetProfissionalById(int id)
 		{
 			var result = ApiClientFactory.Instance.GetProfissionalById(id);
 
-			return result;
+			return Task.FromResult(result);
 		}
 		//[ClaimsAuthorize("Profissional", "Consultar")]
-		public async Task<bool> GetProfissionalByEmail(string email)
+		public Task<bool> GetProfissionalByEmail(string email)
 		{
 			if (string.IsNullOrEmpty(email)) throw new Exception("Email não informado.");
 			var result = ApiClientFactory.Instance.GetProfissionalByEmail(email);
 
 			if (result == null)
 			{
-				return true;
+				return Task.FromResult(true);
 			}
 
-			return false;
+			return Task.FromResult(false);
 		}
 
-		public async Task<bool> GetProfissionalByCpf(string cpf)
+		public Task<bool> GetProfissionalByCpf(string cpf)
 		{
 			if (string.IsNullOrEmpty(cpf)) throw new Exception("Cpf não informado.");
 			var result = ApiClientFactory.Instance.GetProfissionalByCpf(Regex.Replace(cpf, "[^0-9a-zA-Z]+", ""));
 
 			if (result == null)
 			{
-				return true;
+				return Task.FromResult(true);
 			}
 
-			return false;
+			return Task.FromResult(false);
 		}
 		[HttpPost]
 		public async Task<ActionResult> Habilitar(IFormCollection collection)
@@ -351,12 +351,21 @@ namespace WebApp.Controllers
 				message);
 		}
 
-		public async Task<List<ProfissionalDto>> GetProfissionaisByLocalidade(int id)
+		public Task<JsonResult> GetProfissionaisByLocalidade(string id)
 		{
-			var result = ApiClientFactory.Instance.GetProfissionaisByLocalidade(id);
+            try
+            {
+                if (string.IsNullOrEmpty(id)) throw new Exception("Localidadee não informada.");
+                var resultLocal = ApiClientFactory.Instance.GetProfissionaisByLocalidade(Convert.ToInt32(id));
 
-			return result;
-		}
+                return Task.FromResult(Json(new SelectList(resultLocal, "Id", "Nome")));
+
+            }
+            catch (Exception ex)
+            {
+                return Task.FromResult(Json(ex));
+            }
+        }
 	}
 
 }

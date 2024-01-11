@@ -46,6 +46,7 @@ namespace WebApp.Models
             public int LaudosId { get; set; }
             public string? AmbientesIds { get; set; }
             public string? DeficienciasIds { get; set; }
+            public int? LocalidadeId { get; set; }
         }
     }
 

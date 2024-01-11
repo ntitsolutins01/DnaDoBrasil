@@ -86,11 +86,11 @@ namespace WebApp.Controllers
 			}
 		}
 
-		public async Task<ModuloDto> GetModuloById(int id)
+		public Task<ModuloDto> GetModuloById(int id)
 		{
 			var result = ApiClientFactory.Instance.GetModuloById(id);
 
-			return result;
+			return Task.FromResult(result);
 		}
 	}
 }

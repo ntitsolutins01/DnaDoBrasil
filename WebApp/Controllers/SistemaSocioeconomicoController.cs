@@ -195,11 +195,11 @@ namespace WebApp.Controllers
             }
         }
 
-        public async Task<ParceiroDto> GetParceiroById(int id)
+        public Task<ParceiroDto> GetParceiroById(int id)
         {
             var result = ApiClientFactory.Instance.GetParceiroById(id);
 
-            return result;
+            return Task.FromResult(result);
         }
 
         [HttpPost]

@@ -111,7 +111,7 @@ namespace WebApp.Controllers
 
 
         //[ClaimsAuthorize("Usuario", "Alterar")]
-        public async Task<ActionResult> EditTalentoEsportivo(string id, IFormCollection collection)
+        public Task<ActionResult> EditTalentoEsportivo(string id, IFormCollection collection)
         {
             var command = new TalentoEsportivoModel.CreateUpdateTalentoEsportivoCommand
             {
@@ -127,7 +127,7 @@ namespace WebApp.Controllers
 
             //await ApiClientFactory.Instance.UpdateTalentoEsportivo(command);
 
-            return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+            return Task.FromResult<ActionResult>(RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated }));
         }
         public IActionResult Vocacional()
         {
@@ -158,7 +158,7 @@ namespace WebApp.Controllers
         }
 
         //[ClaimsAuthorize("Usuario", "Alterar")]
-        public async Task<ActionResult> EditVocacional(string id, IFormCollection collection)
+        public Task<ActionResult> EditVocacional(string id, IFormCollection collection)
         {
             var command = new VocacionalModel.CreateUpdateVocacionalCommand
             {
@@ -171,7 +171,7 @@ namespace WebApp.Controllers
 
             //await ApiClientFactory.Instance.UpdateVocacional(command);
 
-            return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+            return Task.FromResult<ActionResult>(RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated }));
         }
 
 
@@ -206,7 +206,7 @@ namespace WebApp.Controllers
         }
 
         //[ClaimsAuthorize("Usuario", "Alterar")]
-        public async Task<ActionResult> EditQualidadeVida(string id, IFormCollection collection)
+        public Task<ActionResult> EditQualidadeVida(string id, IFormCollection collection)
         {
             var command = new QualidadeVidaModel.CreateUpdateQualidadeVidaCommand
             {
@@ -219,7 +219,7 @@ namespace WebApp.Controllers
 
             //await ApiClientFactory.Instance.UpdateQualidadeVida(command);
 
-            return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+            return Task.FromResult<ActionResult>(RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated }));
         }
 
         public IActionResult Saude()
@@ -255,7 +255,7 @@ namespace WebApp.Controllers
         }
 
         //[ClaimsAuthorize("Usuario", "Alterar")]
-        public async Task<ActionResult> EditSaude(string id, IFormCollection collection)
+        public Task<ActionResult> EditSaude(string id, IFormCollection collection)
         {
             var command = new SaudeModel.CreateUpdateSaudeCommand
             {
@@ -269,7 +269,7 @@ namespace WebApp.Controllers
 
             //await ApiClientFactory.Instance.UpdateSaude(command);
 
-            return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+            return Task.FromResult<ActionResult>(RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated }));
         }
         public IActionResult ConsumoAlimentar()
         {
@@ -300,7 +300,7 @@ namespace WebApp.Controllers
         }
 
         //[ClaimsAuthorize("Usuario", "Alterar")]
-        public async Task<ActionResult> EditConsumoAlimentar(string id, IFormCollection collection)
+        public Task<ActionResult> EditConsumoAlimentar(string id, IFormCollection collection)
         {
             var command = new ConsumoAlimentarModel.CreateUpdateConsumoAlimentarCommand
             {
@@ -313,7 +313,7 @@ namespace WebApp.Controllers
 
             //await ApiClientFactory.Instance.UpdateConsumoAlimentar(command);
 
-            return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+            return Task.FromResult<ActionResult>(RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated }));
         }
         public IActionResult SaudeBucal()
         {
@@ -344,7 +344,7 @@ namespace WebApp.Controllers
         }
 
         //[ClaimsAuthorize("Usuario", "Alterar")]
-        public async Task<ActionResult> EditSaudeBucal(string id, IFormCollection collection)
+        public Task<ActionResult> EditSaudeBucal(string id, IFormCollection collection)
         {
             var command = new SaudeBucalModel.CreateUpdateSaudeBucalCommand
             {
@@ -357,7 +357,7 @@ namespace WebApp.Controllers
 
             //await ApiClientFactory.Instance.UpdateSaudeBucal(command);
 
-            return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+            return Task.FromResult<ActionResult>(RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated }));
         }
 
 
@@ -375,12 +375,12 @@ namespace WebApp.Controllers
             {
                 var status = collection["status"].ToString();
                 var habilitado = collection["habilitado"].ToString();
-                var deficienciasIds = collection["arrDeficiencias"].ToString();
 
                 var command = new DadosModel.CreateUpdateDadosCommand
                 {
                     Etnia = collection["ddlEtnia"] == "" ? null : Convert.ToInt32(collection["ddlEtnia"]),
                     MunicipioId = collection["ddlMunicipio"] == "" ? null : Convert.ToInt32(collection["ddlMunicipio"].ToString()),
+                    LocalidadeId = collection["ddlProfissionalAluno"] == "" ? null : Convert.ToInt32(collection["ddlProfissionalAluno"].ToString()),
                     Nome = collection["nome"] == "" ? null : collection["nome"].ToString(),
                     DtNascimento = collection["DtNascimento"] == "" ? null : collection["DtNascimento"].ToString(),
                     Email = collection["email"] == "" ? null : collection["email"].ToString(),
@@ -394,20 +394,9 @@ namespace WebApp.Controllers
                     Endereco = collection["endereco"] == "" ? null : collection["endereco"].ToString(),
                     Numero = collection["numero"] == "" ? null : Convert.ToInt32(collection["numero"].ToString()),
                     Bairro = collection["bairro"] == "" ? null : collection["bairro"].ToString(),
-                    DeficienciasId = collection["deficienciasId"] == "" ? null : Convert.ToInt32(collection["deficienciasId"]),
                     DeficienciasIds = collection["arrDeficiencias"] == "" ? null : collection["arrDeficiencias"].ToString(),
                     Habilitado = habilitado != "",
-                    Status = status != "",
-                    //ContratosId = collection["contratosId"] == "" ? null : Convert.ToInt32(collection["contratosId"]),
-                    //RedeSocial = Convert.ToString(collection["redeSocial"]),
-                    //MatriculaId = Convert.ToInt32(collection["matriculaId"]),
-                    //VoucherId = Convert.ToInt32(collection["voucherId"]),
-                    //DependenciaId = Convert.ToInt32(collection["dependenciaId"]),
-                    //LaudosId = Convert.ToInt32(collection["laudosId"])
-                    ////Url = Convert.ToString(collection["url"]),
-
-                    //ParceiroId = collection["parceiroId"] == "" ? null : Convert.ToInt32(collection["parceiroId"]),
-                    //AspNetUserId = Convert.ToInt32(collection["aspnetUserId"]),
+                    Status = status != ""
 
                 };
 
@@ -423,7 +412,7 @@ namespace WebApp.Controllers
         }
 
         //[ClaimsAuthorize("Usuario", "Alterar")]
-        public async Task<ActionResult> EditDados(int id, IFormCollection collection)
+        public Task<ActionResult> EditDados(int id, IFormCollection collection)
         {
             try
             {
@@ -469,12 +458,12 @@ namespace WebApp.Controllers
 
                 //await ApiClientFactory.Instance.UpdateDados(command);
 
-                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+                return Task.FromResult<ActionResult>(RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated }));
             }
             catch (Exception e)
             {
                 Console.Write(e.StackTrace);
-                return RedirectToAction(nameof(Index));
+                return Task.FromResult<ActionResult>(RedirectToAction(nameof(Index)));
             }
         }
 
@@ -509,7 +498,7 @@ namespace WebApp.Controllers
         }
 
         //[ClaimsAuthorize("Usuario", "Alterar")]
-        public async Task<ActionResult> EditVoucher(string id, IFormCollection collection)
+        public Task<ActionResult> EditVoucher(string id, IFormCollection collection)
         {
             var command = new VoucherModel.CreateUpdateVoucherCommand
             {
@@ -524,7 +513,7 @@ namespace WebApp.Controllers
 
             //await ApiClientFactory.Instance.UpdateVoucher(command);
 
-            return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+            return Task.FromResult<ActionResult>(RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated }));
         }
 
 
@@ -568,7 +557,7 @@ namespace WebApp.Controllers
         }
 
         //[ClaimsAuthorize("Usuario", "Alterar")]
-        public async Task<ActionResult> EditMatricula(string id, IFormCollection collection)
+        public Task<ActionResult> EditMatricula(string id, IFormCollection collection)
         {
             var command = new MatriculaModel.CreateUpdateMatriculaCommand
             {
@@ -591,23 +580,23 @@ namespace WebApp.Controllers
 
             //await ApiClientFactory.Instance.UpdateMatricula(command);
 
-            return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+            return Task.FromResult<ActionResult>(RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated }));
         }
 
 
-        public async Task<JsonResult> GetAlunosByLocalidade(string id)
+        public Task<JsonResult> GetAlunosByLocalidade(string id)
         {
             try
             {
                 if (string.IsNullOrEmpty(id)) throw new Exception("Localidade não informado.");
                 var resultLocal = ApiClientFactory.Instance.GetAlunosByLocalidade(Convert.ToInt32(id));
 
-                return Json(new SelectList(resultLocal, "Id", "Nome"));
+                return Task.FromResult(Json(new SelectList(resultLocal, "Id", "Nome")));
 
             }
             catch (Exception ex)
             {
-                return Json(ex);
+                return Task.FromResult(Json(ex));
             }
         }
 

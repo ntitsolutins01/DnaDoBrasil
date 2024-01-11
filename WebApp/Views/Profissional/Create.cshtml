@@ -168,7 +168,7 @@
                                 <select class="form-control populate select2" name="ddlAmbiente" id="ddlAmbiente"
                                         style="width: 100%" title="Por favor selecione o turno."
                                         asp-for="AmbienteId" asp-items="Model.ListAmbientes">
-                                    <option value="">Selecionar Ambiente</option>
+                                    <option value="0">Selecionar Ambiente</option>
                                 </select>
                             </div>
                             <div class="col-sm-1">
@@ -184,7 +184,7 @@
                             <input type="hidden" name="arrAmbientes" />
                             <label class="col-sm-2 control-label">Adicionados</label>
                             <div class="col-sm-10">
-                                <table class="table table-bordered table-striped mb-0" id="ambienteDataTable">
+                                <table class="adicionados table table-bordered table-striped mb-0" id="ambienteDataTable">
                                     <thead>
                                         <tr>
                                             <th>Id</th>

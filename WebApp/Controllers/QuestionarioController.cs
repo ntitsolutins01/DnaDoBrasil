@@ -109,26 +109,26 @@ namespace WebApp.Controllers
 			}
 		}
 
-		public async Task<QuestionarioDto> GetQuestionarioById(int id)
+		public Task<QuestionarioDto> GetQuestionarioById(int id)
 		{
 			var result = ApiClientFactory.Instance.GetQuestionarioById(id);
 
-			return result;
+			return Task.FromResult(result);
 		}
-		public async Task<JsonResult> GetQuestionariosByTipoLaudo(string id)
+		public Task<JsonResult> GetQuestionariosByTipoLaudo(string id)
 		{
 			try
 			{
 				if (string.IsNullOrEmpty(id)) throw new Exception("Tipo de Laudo não informado.");
 				var resultLocal = ApiClientFactory.Instance.GetQuestionarioByTipoLaudo(Convert.ToInt32(id));
 
-				return Json(new SelectList(resultLocal, "Id", "Pergunta"));
+				return Task.FromResult(Json(new SelectList(resultLocal, "Id", "Pergunta")));
 
 			}
 			catch (Exception e)
 			{
 				Console.Write(e.StackTrace);
-				return Json(e.Message);
+				return Task.FromResult(Json(e.Message));
 			}
 		}
 	}

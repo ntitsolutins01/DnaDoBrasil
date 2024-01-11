@@ -53,7 +53,7 @@ namespace WebApp.Controllers
         }
 
         //[ClaimsAuthorize("Usuario", "Alterar")]
-        public async Task<ActionResult> Edit(string id, IFormCollection collection)
+        public Task<ActionResult> Edit(string id, IFormCollection collection)
         {
                 var command = new EscolaridadeModel.CreateUpdateEscolaridadeCommand
                 {
@@ -64,7 +64,7 @@ namespace WebApp.Controllers
 
                 //await ApiClientFactory.Instance.UpdateEscolaridade(command);
 
-                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+                return Task.FromResult<ActionResult>(RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated }));
         }
 
         //[ClaimsAuthorize("Usuario", "Excluir")]

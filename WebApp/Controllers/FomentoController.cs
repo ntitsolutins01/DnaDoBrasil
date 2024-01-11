@@ -103,11 +103,11 @@ namespace WebApp.Controllers
             }
         }
 
-        public async Task<FomentoDto> GetFomentoById(int id)
+        public Task<FomentoDto> GetFomentoById(int id)
         {
             var result = ApiClientFactory.Instance.GetFomentoById(id);
 
-            return result;
+            return Task.FromResult(result);
         }
 	}
 }

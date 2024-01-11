@@ -91,10 +91,10 @@ public class DeficienciaController : BaseController
         }
     }
 
-    public async Task<DeficienciaDto> GetDeficienciaById(int id)
+    public Task<DeficienciaDto> GetDeficienciaById(int id)
     {
         var result = ApiClientFactory.Instance.GetDeficienciaById(id);
 
-        return result;
+        return Task.FromResult(result);
     }
 }

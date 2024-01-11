@@ -419,6 +419,47 @@
                     }
                 });
             }
+
+
+            var datatableInit = function () {
+
+                $('.adicionados').dataTable({
+                    columnDefs: [
+                        { "className": "text-center", "targets": "_all" }
+                    ],
+                    dom: '<"row"<"col-lg-6"l><"col-lg-6"f>><"table-responsive"t>p',
+                    "language": {
+                        "sEmptyTable": "Nenhum registro encontrado",
+                        "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                        "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+                        "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+                        "sInfoPostFix": "",
+                        "sInfoThousands": ".",
+                        "sLengthMenu": "_MENU_ resultados por página",
+                        "sLoadingRecords": "Carregando...",
+                        "sProcessing": "Processando...",
+                        "sZeroRecords": "Nenhum registro encontrado",
+                        "sSearch": "Pesquisar: ",
+                        "oPaginate": {
+                            "sNext": "Próximo →" +
+                                "" +
+                                "",
+                            "sPrevious": "← Anterior",
+                            "sFirst": "Primeiro",
+                            "sLast": "Último"
+                        },
+                        "oAria": {
+                            "sSortAscending": ": Ordenar colunas de forma ascendente",
+                            "sSortDescending": ": Ordenar colunas de forma descendente"
+                        }
+                    }
+                });
+
+            };
+
+            $(function () {
+                datatableInit();
+            });
         }).apply(this, [jQuery]);
     },
     methods: {
@@ -520,6 +561,16 @@
 
             var mapped = $("#ddlAmbiente").select2('data');
 
+            if (self.params.ambientes.indexOf(mapped[0].id) !== -1) {
+
+                new PNotify({
+                    title: 'Ambiente',
+                    text: 'Ambiente já foi adicionado anteriormente.',
+                    type: 'warning'
+                });
+                return;
+            }
+
             $('#ambienteDataTable').DataTable().destroy();
 
             var table = $('#ambienteDataTable').DataTable({
@@ -541,18 +592,14 @@
             self.ShowLoad(false, "vProfissional");
         },
         DeleteAmbiente: function (index) {
-            var self = this;
-            self.ShowLoad(true, "vProfissional");
-
             var table = $('#ambienteDataTable').DataTable();
+            table.rows(function (idx, data, node) {
+                return data[0] === id;
+            })
+                .remove()
+                .draw();
 
-            table.row(index).remove().draw();
-
-            $('#ambienteDataTable tbody').on('click', 'tr', function () {
-                //alert('Row index: ' + table.row(this).index());
-                var index = table.row(this).index();
-                table.row(index).remove().draw();
-            });
+            $("#ddlAmbiente").select2("val", "0");
         }
     }
 });
