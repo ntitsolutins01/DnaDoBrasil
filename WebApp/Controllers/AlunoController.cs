@@ -587,12 +587,7 @@ namespace WebApp.Controllers
 
                 };
 
-<<<<<<< Updated upstream
-            return Task.FromResult<ActionResult>(RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated }));
-        }
-=======
                 //await ApiClientFactory.Instance.UpdateMatricula(command);
->>>>>>> Stashed changes
 
                 return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
             }
@@ -601,12 +596,15 @@ namespace WebApp.Controllers
                 return RedirectToAction(nameof(Index));
             }
         }
+=======
+                //await ApiClientFactory.Instance.UpdateMatricula(command);
+>>>>>>> Stashed changes
 
-        public Task<JsonResult> GetAlunosByLocalidade(string id)
+        public async Task<JsonResult> GetAlunosByLocalidade(string id)
         {
             try
             {
-                if (string.IsNullOrEmpty(id)) throw new Exception("Localidade não informado.");
+                if (string.IsNullOrEmpty(id)) throw new Exception("Localidade nï¿½o informado.");
                 var resultLocal = ApiClientFactory.Instance.GetAlunosByLocalidade(Convert.ToInt32(id));
 
                 return Task.FromResult(Json(new SelectList(resultLocal, "Id", "Nome")));
