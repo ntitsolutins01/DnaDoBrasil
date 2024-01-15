@@ -24,8 +24,8 @@ namespace WebApp.Models
             public string? NomeResponsavel3 { get; set; }
             public string? ParentescoResponsavel3 { get; set; }
             public string? CpfResponsavel3 { get; set; }
-            public string? LocalId { get; set; }
-            public string? AlunoId { get; set; }
+            public int? LocalId { get; set; }
+            public int? AlunoId { get; set; }
         }
     }
 

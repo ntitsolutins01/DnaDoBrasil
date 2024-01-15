@@ -503,12 +503,12 @@ namespace WebApp.Controllers
             var command = new VoucherModel.CreateUpdateVoucherCommand
             {
                 Id = Convert.ToInt32(id),
-                
-                Turma = collection["turma"] == "" ? null : collection["turma"].ToString(),
-                Serie = collection["ddlSerie"] == "" ? null : collection["ddlSerie"].ToString(),
-                //LocalId = localid != "" ,
-                //AlunoId = alunoid != ""
-                //Descricao = collection["descri"] == "" ? null : collection["dtVencimentoParQ"].ToString(),
+                LocalId = Convert.ToInt32(collection["localId"]),
+                Descricao = Convert.ToString(collection["descricao"]),
+                Turma = Convert.ToString(collection["turma"]),
+                Serie = Convert.ToString(collection["serie"]),
+                AlunoId = Convert.ToInt32(collection["alunoId"])
+
             };
 
             //await ApiClientFactory.Instance.UpdateVoucher(command);
@@ -528,25 +528,21 @@ namespace WebApp.Controllers
         {
             try
             {
-                var localid = collection["localid"].ToString();
-                var alunoid = collection["alunoid"].ToString();
-
-
                 var command = new MatriculaModel.CreateUpdateMatriculaCommand
                 {
-                    DtVencimentoParq = collection["dtVencimentoParQ"] == "" ? null : collection["dtVencimentoParQ"].ToString(),
-                    DtVencimentoAtestadoMedico = collection["dtVencimentoAtestado"] == "" ? null : collection["dtVencimentoAtestado"].ToString(),
-                    NomeResponsavel1 = collection["nomeResponsavel1"] == "" ? null : collection["nomeResponsavel1"].ToString(),
-                    ParentescoResponsavel1 = collection["parentesco1"] == "" ? null : collection["parentesco1"].ToString(),
-                    CpfResponsavel1 = collection["cpf1"] == "" ? null : collection["cpf1"].ToString(),
-                    NomeResponsavel2 = collection["nomeResponsavel2"] == "" ? null : collection["nomeResponsavel2"].ToString(),
-                    ParentescoResponsavel2 = collection["parentesco2"] == "" ? null : collection["parentesco2"].ToString(),
-                    CpfResponsavel2 = collection["cpf2"] == "" ? null : collection["cpf2"].ToString(),
-                    NomeResponsavel3 = collection["nomeResponsavel3"] == "" ? null : collection["nomeResponsavel3"].ToString(),
-                    ParentescoResponsavel3 = collection["parentesco3"] == "" ? null : collection["parentesco3"].ToString(),
-                    CpfResponsavel3 = collection["cpf3"] == "" ? null : collection["cpf3"].ToString(),
-                    //LocalId = localid != "" ,
-                    //AlunoId = alunoid != ""
+                    DtVencimentoParq = collection["dtVencimentoParq"].ToString(),
+                    DtVencimentoAtestadoMedico = collection["diVencimentoAtestadoMedico"].ToString(),
+                    NomeResponsavel1 = Convert.ToString(collection["nomeResponsavel1"]),
+                    ParentescoResponsavel1 = Convert.ToString(collection["parentescoResponsavel1"]),
+                    CpfResponsavel1 = Convert.ToString(collection["cpfResponsavel1"]),
+                    NomeResponsavel2 = Convert.ToString(collection["nomeResponsavel2"]),
+                    ParentescoResponsavel2 = Convert.ToString(collection["parentescoResponsavel2"]),
+                    CpfResponsavel2 = Convert.ToString(collection["cpfResponsavel2"]),
+                    NomeResponsavel3 = Convert.ToString(collection["nomeResponsavel3"]),
+                    ParentescoResponsavel3 = Convert.ToString(collection["parentescoResponsavel3"]),
+                    CpfResponsavel3 = Convert.ToString(collection["cpfResponsavel3"]),
+                    LocalId = Convert.ToInt32(collection["localId"]),
+                    AlunoId = Convert.ToInt32(collection["alunoId"])
 
                 };
 
@@ -563,48 +559,36 @@ namespace WebApp.Controllers
         //[ClaimsAuthorize("Usuario", "Alterar")]
         public Task<ActionResult> EditMatricula(string id, IFormCollection collection)
         {
-            try
+            var command = new MatriculaModel.CreateUpdateMatriculaCommand
             {
-                var localid = collection["localid"].ToString();
-                var alunoid = collection["alunoid"].ToString();
+                Id = Convert.ToInt32(id),
+                DtVencimentoParq = collection["dtVencimentoParq"].ToString(),
+                DtVencimentoAtestadoMedico = collection["diVencimentoAtestadoMedico"].ToString(),
+                NomeResponsavel1 = Convert.ToString(collection["nomeResponsavel1"]),
+                ParentescoResponsavel1 = Convert.ToString(collection["parentescoResponsavel1"]),
+                CpfResponsavel1 = Convert.ToString(collection["cpfResponsavel1"]),
+                NomeResponsavel2 = Convert.ToString(collection["nomeResponsavel2"]),
+                ParentescoResponsavel2 = Convert.ToString(collection["parentescoResponsavel2"]),
+                CpfResponsavel2 = Convert.ToString(collection["cpfResponsavel2"]),
+                NomeResponsavel3 = Convert.ToString(collection["nomeResponsavel3"]),
+                ParentescoResponsavel3 = Convert.ToString(collection["parentescoResponsavel3"]),
+                CpfResponsavel3 = Convert.ToString(collection["cpfResponsavel3"]),
+                LocalId = Convert.ToInt32(collection["localId"]),
+                AlunoId = Convert.ToInt32(collection["alunoId"])
 
-                var command = new MatriculaModel.CreateUpdateMatriculaCommand
-                {
-                    Id = Convert.ToInt32(id),
-                    DtVencimentoParq = collection["dtVencimentoParQ"] == "" ? null : collection["dtVencimentoParQ"].ToString(),
-                    DtVencimentoAtestadoMedico = collection["dtVencimentoAtestado"] == "" ? null : collection["dtVencimentoAtestado"].ToString(),
-                    NomeResponsavel1 = collection["nomeResponsavel1"] == "" ? null : collection["nomeResponsavel1"].ToString(),
-                    ParentescoResponsavel1 = collection["parentesco1"] == "" ? null : collection["parentesco1"].ToString(),
-                    CpfResponsavel1 = collection["cpf1"] == "" ? null : collection["cpf1"].ToString(),
-                    NomeResponsavel2 = collection["nomeResponsavel2"] == "" ? null : collection["nomeResponsavel2"].ToString(),
-                    ParentescoResponsavel2 = collection["parentesco2"] == "" ? null : collection["parentesco2"].ToString(),
-                    CpfResponsavel2 = collection["cpf2"] == "" ? null : collection["cpf2"].ToString(),
-                    NomeResponsavel3 = collection["nomeResponsavel3"] == "" ? null : collection["nomeResponsavel3"].ToString(),
-                    ParentescoResponsavel3 = collection["parentesco3"] == "" ? null : collection["parentesco3"].ToString(),
-                    CpfResponsavel3 = collection["cpf3"] == "" ? null : collection["cpf3"].ToString(),
-                    //LocalId = localid != "" ,
-                    //AlunoId = alunoid != 
+            };
 
-                };
+            //await ApiClientFactory.Instance.UpdateMatricula(command);
 
-                //await ApiClientFactory.Instance.UpdateMatricula(command);
-
-                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
-            }
-            catch (Exception e)
-            {
-                return RedirectToAction(nameof(Index));
-            }
+            return Task.FromResult<ActionResult>(RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated }));
         }
-=======
-                //await ApiClientFactory.Instance.UpdateMatricula(command);
->>>>>>> Stashed changes
 
-        public async Task<JsonResult> GetAlunosByLocalidade(string id)
+
+        public Task<JsonResult> GetAlunosByLocalidade(string id)
         {
             try
             {
-                if (string.IsNullOrEmpty(id)) throw new Exception("Localidade n�o informado.");
+                if (string.IsNullOrEmpty(id)) throw new Exception("Localidade não informado.");
                 var resultLocal = ApiClientFactory.Instance.GetAlunosByLocalidade(Convert.ToInt32(id));
 
                 return Task.FromResult(Json(new SelectList(resultLocal, "Id", "Nome")));
