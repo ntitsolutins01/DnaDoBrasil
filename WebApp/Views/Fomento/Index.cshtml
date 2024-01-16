@@ -26,7 +26,8 @@
                                 <th class="text-center">Id</th>
                                 <th class="text-center">Código do Fomento</th>
                                 <th class="text-center">Fomento</th>
-	                            <th class="text-center">Data</th>
+	                            <th class="text-center">Data Inicío</th>
+	                            <th class="text-center">Data fim</th>
 	                            <th class="text-center">Status</th>
                                 <th class="text-center">Ações</th>
                             </tr>
@@ -38,7 +39,8 @@
                                     <td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Id)</td>
                                     <td class="text-center">@Html.DisplayFor(modelItem => item.Codigo)</td>
                                     <td class="text-center">@Html.DisplayFor(modelItem => item.Nome)</td>
-	                                <td class="text-center">@Html.DisplayFor(modelItem => item.Data)</td>
+	                                <td class="text-center">@Html.DisplayFor(modelItem => item.DtIni)</td>
+	                                <td class="text-center">@Html.DisplayFor(modelItem => item.DtFim)</td>
 	                                @if (item.Status)
 	                                {
 		                                <td class="text-center"><span class="label label-success">ATIVO</span></td>

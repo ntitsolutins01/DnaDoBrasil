@@ -60,7 +60,9 @@ namespace WebApp.Controllers
                     LocalidadeId = Convert.ToInt32(collection["ddlLocalidade"].ToString()),
                     MunicipioId = Convert.ToInt32(collection["ddlMunicipio"].ToString()),
                     Codigo = collection["codigo"].ToString(),
-                    Nome = collection["Nome"].ToString()
+                    DtIni = collection["dtIni"].ToString(),
+                    DtFim = collection["dtFim"].ToString(),
+					Nome = collection["Nome"].ToString()
                 };
 
                 await ApiClientFactory.Instance.CreateFomento(command);
@@ -80,8 +82,10 @@ namespace WebApp.Controllers
             {
                 Id = Convert.ToInt32(collection["editFomentoId"]),
                 Codigo = collection["codigo"].ToString(),
-                Nome = collection["nome"].ToString(),
-                Status = collection["editStatus"].ToString() == "" ? false : true
+                Nome = collection["Nome"].ToString(),
+                DtIni = collection["dtIni"].ToString(),
+                DtFim = collection["dtFim"].ToString(),
+				Status = collection["editStatus"].ToString() == "" ? false : true
 			};
 
             await ApiClientFactory.Instance.UpdateFomento(command.Id, command);
