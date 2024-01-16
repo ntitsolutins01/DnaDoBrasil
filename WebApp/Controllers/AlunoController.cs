@@ -380,7 +380,8 @@ namespace WebApp.Controllers
                 {
                     Etnia = collection["ddlEtnia"] == "" ? null : collection["ddlEtnia"].ToString(),
                     MunicipioId = collection["ddlMunicipio"] == "" ? null : Convert.ToInt32(collection["ddlMunicipio"].ToString()),
-                    LocalidadeId = collection["ddlProfissionalAluno"] == "" ? null : Convert.ToInt32(collection["ddlProfissionalAluno"].ToString()),
+                    ProfissionalId = collection["ddlProfissionalAluno"] == "" ? null : Convert.ToInt32(collection["ddlProfissionalAluno"].ToString()),
+                    LocalidadeId = collection["ddlLocalidade"] == "" ? null : Convert.ToInt32(collection["ddlLocalidade"].ToString()),
                     Nome = collection["nome"] == "" ? null : collection["nome"].ToString(),
                     DtNascimento = collection["DtNascimento"] == "" ? null : collection["DtNascimento"].ToString(),
                     Email = collection["email"] == "" ? null : collection["email"].ToString(),

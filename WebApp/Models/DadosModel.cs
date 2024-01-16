@@ -37,6 +37,7 @@ namespace WebApp.Models
             public bool Habilitado { get; set; }
             public int ?DeficienciasId { get; set; } = new();
             public int? AmbientesId { get; set; } = new();
+            public int? ProfissionalId { get; set; } = new();
             public int? ParceiroId { get; set; }
             public string? Etnia { get; set; }
             public int? ContratosId { get; set; }
