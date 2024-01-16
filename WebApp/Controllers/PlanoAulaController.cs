@@ -45,8 +45,9 @@ namespace WebApp.Controllers
             {
                 var command = new PlanoAulaModel.CreateUpdatePlanoAulaCommand
                 {
-                    Nome = collection["nome"].ToString(),
-                    Grade = collection["grade"].ToString(),
+                    Nome = collection["ddlPlanoAula"].ToString(),
+                    TipoEscolaridade = collection["ddlTipoEscolaridade"].ToString(),
+                    Modalidade = collection["modalidade"].ToString(),
                     Url = collection["url"].ToString(),
                 };
 
@@ -76,9 +77,10 @@ namespace WebApp.Controllers
             var command = new PlanoAulaModel.CreateUpdatePlanoAulaCommand
             {
                 Id = Convert.ToInt32(id),
-                Nome = collection["nome"].ToString(),
-                Grade = collection["grade"].ToString(),
-                Url = collection["url"].ToString(),
+				Nome = collection["ddlPlanoAula"].ToString(),
+				TipoEscolaridade = collection["ddlTipoEscolaridade"].ToString(),
+				Modalidade = collection["modalidade"].ToString(),
+				Url = collection["url"].ToString(),
             };
 
             await ApiClientFactory.Instance.UpdatePlanoAula(id, command);

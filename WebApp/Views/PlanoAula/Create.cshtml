@@ -16,19 +16,35 @@
 				</header>
 				<div class="panel-body">
 					<div class="form-group row">
-						<label class="col-sm-3 control-label text-sm-right pt-2">Nome<span class="required">*</span></label>
+						<label class="col-sm-3 control-label text-sm-right pt-2">Plano Aula<span class="required">*</span></label>
 						<div class="col-sm-9">
-							<input type="text" name="nome" class="form-control"
-							       maxlength="150" 
-							       title="Por favor informe o Nome" required />
+							<select class="form-control populate select2" name="ddlPlanoAula" id="ddlPlanoAula"
+									style="width: 100%" title="Por favor selecione o plano aula.">
+								<option value="">Selecionar o Plano de Aula</option>
+								<option value="MATEMATICA">MATEMATICA</option>
+								<option value="EDUCAÇÃO FISICA">EDUCAÇÃO FISICA</option>
+								<option value="PORTUGUES">PORTUGUES</option>
+								<option value="CIENCIAS NATURAIS">CIENCIAS NATURAIS</option>
+								<option value="TEMAS TRANSVERSAIS">TEMAS TRANSVERSAIS</option>
+							</select>
 						</div>
 					</div>
 					<div class="form-group row">
-						<label class="col-sm-3 control-label text-sm-right pt-2">Grade <span class="required">*</span></label>
-						<div class="col-sm-9">
-							<input type="text" name="nome" class="form-control"
+						<label class="col-sm-3 control-label text-sm-right pt-2">Tipo Escolaridade <span class="required">*</span></label>
+						<div class="col-sm-3">
+							<select class="form-control populate select2" name="ddlTipoEscolaridade" id="ddlTipoEscolaridade"
+									style="width: 100%" title="Por favor selecione o tipo escolaridade.">
+								<option value="">Selecionar Tipo Escolaridade</option>
+								<option value="ENSINO MEDIO">ENSINO MEDIO</option>
+								<option value="ENSINO FUNDAMENTAL">ENSINO FUNDAMENTAL</option>
+								<option value="EJA">EJA</option>
+							</select>
+						</div>
+						<label class="col-sm-3 control-label text-sm-right pt-2">Modaliodade <span class="required">*</span></label>
+						<div class="col-sm-3">
+							<input type="text" name="modalidade" id="modalidade" class="form-control"
 							       maxlength="50" style="text-transform:uppercase"
-							       title="Por favor informe a Grade." required />
+							       title="Por favor informe a modalidade." required />
 						</div>
 					</div>
 					<div class="form-group row">
@@ -71,57 +87,58 @@
 @section Scripts {
 	<script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
 	<script src="~/js/Planoaula.js"></script>
-	<script>|
+	<script>
+		|
 
-		(function ($) {
+			(function ($) {
 
-			'use strict';
-			var crud = @ViewBag.CrudMessage;
+				'use strict';
+				var crud = @ViewBag.CrudMessage;
 
-			if (crud === 1) {
-				new PNotify({
-					title: 'Plano aula',
-					text: 'Cadastro realizado com sucesso!',
-					type: 'success'
-				});
-			} else if (crud === 2) {
-				new PNotify({
-					title: 'Plano aula',
-					text: 'Dados alterados com sucesso.',
-					type: 'warning'
-				});
-			} else if (crud === 3) {
-				new PNotify({
-					title: 'Plano aula',
-					text: 'Registro excluído com sucesso.',
-					type: 'error'
-				});
-			}
+				if (crud === 1) {
+					new PNotify({
+						title: 'Plano aula',
+						text: 'Cadastro realizado com sucesso!',
+						type: 'success'
+					});
+				} else if (crud === 2) {
+					new PNotify({
+						title: 'Plano aula',
+						text: 'Dados alterados com sucesso.',
+						type: 'warning'
+					});
+				} else if (crud === 3) {
+					new PNotify({
+						title: 'Plano aula',
+						text: 'Registro excluído com sucesso.',
+						type: 'error'
+					});
+				}
 
-			var notify = @ViewBag.NotifyMessage;
-			var messagem = '@ViewBag.Notify';
+				var notify = @ViewBag.NotifyMessage;
+				var messagem = '@ViewBag.Notify';
 
-			if (notify === 0) {
-				new PNotify({
-					title: 'Plano aula',
-					text: messagem,
-					type: 'success'
-				});
-			} else if (notify === 1) {
-				new PNotify({
-					title: 'Plano aula',
-					text: messagem,
-					type: 'warning'
-				});
-			} else if (notify === 2) {
-				new PNotify({
-					title: 'Plano aula',
-					text: messagem,
-					type: 'error'
-				});
-			}
+				if (notify === 0) {
+					new PNotify({
+						title: 'Plano aula',
+						text: messagem,
+						type: 'success'
+					});
+				} else if (notify === 1) {
+					new PNotify({
+						title: 'Plano aula',
+						text: messagem,
+						type: 'warning'
+					});
+				} else if (notify === 2) {
+					new PNotify({
+						title: 'Plano aula',
+						text: messagem,
+						type: 'error'
+					});
+				}
 
-		}).apply(this, [jQuery]);
+			}).apply(this, [jQuery]);
 
 	</script>
 }
