@@ -378,7 +378,7 @@ namespace WebApp.Controllers
 
                 var command = new DadosModel.CreateUpdateDadosCommand
                 {
-                    Etnia = collection["ddlEtnia"] == "" ? null : Convert.ToInt32(collection["ddlEtnia"]),
+                    Etnia = collection["ddlEtnia"] == "" ? null : collection["ddlEtnia"].ToString(),
                     MunicipioId = collection["ddlMunicipio"] == "" ? null : Convert.ToInt32(collection["ddlMunicipio"].ToString()),
                     LocalidadeId = collection["ddlProfissionalAluno"] == "" ? null : Convert.ToInt32(collection["ddlProfissionalAluno"].ToString()),
                     Nome = collection["nome"] == "" ? null : collection["nome"].ToString(),
@@ -425,7 +425,7 @@ namespace WebApp.Controllers
                 var command = new DadosModel.CreateUpdateDadosCommand
                 {
                     Id = Convert.ToInt32(id),
-                    Etnia = collection["ddlEtnia"] == "" ? null : Convert.ToInt32(collection["ddlEtnia"]),
+                    Etnia = collection["ddlEtnia"] == "" ? null : collection["ddlEtnia"].ToString(),
                     MunicipioId = collection["ddlMunicipio"] == "" ? null : Convert.ToInt32(collection["ddlMunicipio"].ToString()),
                     Nome = collection["nome"] == "" ? null : collection["nome"].ToString(),
                     DtNascimento = collection["DtNascimento"] == "" ? null : collection["DtNascimento"].ToString(),

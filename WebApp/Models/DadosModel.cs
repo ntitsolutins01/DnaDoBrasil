@@ -38,7 +38,7 @@ namespace WebApp.Models
             public int ?DeficienciasId { get; set; } = new();
             public int? AmbientesId { get; set; } = new();
             public int? ParceiroId { get; set; }
-            public int? Etnia { get; set; }
+            public string? Etnia { get; set; }
             public int? ContratosId { get; set; }
             public int MatriculaId { get; set; }
             public int VoucherId { get; set; }

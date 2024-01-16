@@ -4,12 +4,12 @@ namespace WebApp.Dto
 {
     public class DadosDto
     {
-        public required int AspNetUserId { get; set; }
+        public string AspNetUserId { get; set; }
         public int MunicipioId { get; set; }
-        public required string Nome { get; set; }
-        public required string Email { get; set; }
-        public required string Sexo { get; set; }
-        public required DateTime DtNascimento { get; set; }
+        public string Nome { get; set; }
+        public  string Email { get; set; }
+        public  string Sexo { get; set; }
+        public  DateTime DtNascimento { get; set; }
         public string? NomeMae { get; set; }
         public string? NomePai { get; set; }
         public string? Cpf { get; set; }
@@ -26,7 +26,7 @@ namespace WebApp.Dto
         public int DeficienciasId { get; set; } = new();
         public int AmbientesId { get; set; } = new();
         public int ParceiroId { get; set; }
-        public required int Etnia { get; set; }
+        public string? Etnia { get; set; }
         public int ContratosId { get; set; }
         public int MatriculaId { get; set; }
         public int VoucherId { get; set; }

@@ -2,7 +2,7 @@
     el: "#formFomento",
     data: {
         loading: false,
-        editDto: { Nome: "", Codigo: "", Status: "" }
+        editDto: { Nome: "", Codigo: "", Status: "", DtIni: "", DtFim: "" }
     },
     mounted: function () {
         var self = this;
@@ -226,6 +226,8 @@
                 self.editDto.Id = result.data.id;
                 self.editDto.Codigo = result.data.codigo;
                 self.editDto.Nome = result.data.nome;
+                self.editDto.DtIni = result.data.dtIni;
+                self.editDto.DtFim = result.data.dtFim;
                 if (result.data.status) {
                     self.editDto.Status = "checked";
                 }
