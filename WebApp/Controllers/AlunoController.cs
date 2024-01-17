@@ -606,7 +606,7 @@ namespace WebApp.Controllers
 
             try
             {
-                var command = new MatriculaModel.CreateUpdateMatriculaCommand
+                var command = new DependenciaModel.CreateUpdateDependenciaCommand
                 {
                     DtVencimentoParq = collection["dtVencimentoParq"].ToString(),
                     DtVencimentoAtestadoMedico = collection["diVencimentoAtestadoMedico"].ToString(),
@@ -624,7 +624,7 @@ namespace WebApp.Controllers
 
                 };
 
-                await ApiClientFactory.Instance.CreateMatricula(command);
+                await ApiClientFactory.Instance.CreateDependencia(command);
 
                 return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
             }
