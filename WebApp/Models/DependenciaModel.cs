@@ -15,8 +15,8 @@ namespace WebApp.Models
             public string? Nacionalidade { get; set; }
             public string? Naturalidade { get; set; }
             public string? NomeEscola { get; set; }
-            public int TipoEscola { get; set; }
-            public int TipoEscolaridade { get; set; }
+			public string? TipoEscola { get; set; }
+            public string? TipoEscolaridade { get; set; }
             public string? Turno { get; set; }
             public string? Serie { get; set; }
             public string? Ano { get; set; }

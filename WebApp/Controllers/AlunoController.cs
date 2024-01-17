@@ -608,19 +608,21 @@ namespace WebApp.Controllers
             {
                 var command = new DependenciaModel.CreateUpdateDependenciaCommand
                 {
-                    DtVencimentoParq = collection["dtVencimentoParq"].ToString(),
-                    DtVencimentoAtestadoMedico = collection["diVencimentoAtestadoMedico"].ToString(),
-                    NomeResponsavel1 = Convert.ToString(collection["nomeResponsavel1"]),
-                    ParentescoResponsavel1 = Convert.ToString(collection["parentescoResponsavel1"]),
-                    CpfResponsavel1 = Convert.ToString(collection["cpfResponsavel1"]),
-                    NomeResponsavel2 = Convert.ToString(collection["nomeResponsavel2"]),
-                    ParentescoResponsavel2 = Convert.ToString(collection["parentescoResponsavel2"]),
-                    CpfResponsavel2 = Convert.ToString(collection["cpfResponsavel2"]),
-                    NomeResponsavel3 = Convert.ToString(collection["nomeResponsavel3"]),
-                    ParentescoResponsavel3 = Convert.ToString(collection["parentescoResponsavel3"]),
-                    CpfResponsavel3 = Convert.ToString(collection["cpfResponsavel3"]),
-                    LocalId = Convert.ToInt32(collection["localId"]),
-                    AlunoId = Convert.ToInt32(collection["alunoId"])
+	                Doencas = collection["dtVencimentoParq"].ToString(),
+	                Nacionalidade = collection["nacionalidade"].ToString(),
+	                Naturalidade = collection["naturalidade"].ToString(),
+	                NomeEscola = collection["escola"].ToString(),
+	                TipoEscola = collection["ddlTipoEscola"].ToString(),
+	                TipoEscolaridade = collection["ddlTipoEscolaridade"].ToString(),
+	                Turno = collection["ddlTurno"].ToString(),
+	                Serie = collection["serie"].ToString(),
+	                Ano = collection["ano"].ToString(),
+	                Turma = collection["turma"].ToString(),
+	                TermoCompromisso = collection["rdbTermo"] == "true",
+	                AutorizacaoUsoImagemAudio = collection["rdbautorizacaoimagem"] == "true",
+	                AutorizacaoUsoIndicadores = collection["rdbautorizacaoindicadores"] == "true",
+	                AutorizacaoSaida = collection["rdbAutorizacao"] == "true",
+                    AlunoId = 2259
 
                 };
 
