@@ -286,7 +286,7 @@
                 <div id="dependencias" class="tab-pane">
                     <div class="row">
                         <div class="col-md-12">
-                            @using (@Html.BeginForm("CreateDependencia", "Aluno", FormMethod.Post, new { id = "formMatriculaAluno", @class = "form-horizontal" }))
+                            @using (@Html.BeginForm("CreateDependencia", "Aluno", FormMethod.Post, new { id = "formDependenciaAluno", @class = "form-horizontal" }))
                             {
                                 <section class="panel">
                                     <div class="panel-body">
@@ -438,6 +438,7 @@
                                     <footer class="panel-footer">
                                         <div class="row">
                                             <div class="col-md-9 col-md-offset-3">
+                                                <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
                                                 <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
 
                                             </div>

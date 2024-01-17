@@ -408,7 +408,7 @@ namespace WebApp.Controllers
             catch (Exception e)
             {
                 Console.Write(e.StackTrace);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Create), new { message = e.Message});
             }
         }
 
@@ -601,9 +601,37 @@ namespace WebApp.Controllers
             }
         }
 
-        public IActionResult CreateDependencia()
+        public async Task<ActionResult> CreateDependencia(IFormCollection collection)
         {
-            throw new NotImplementedException();
+
+            try
+            {
+                var command = new MatriculaModel.CreateUpdateMatriculaCommand
+                {
+                    DtVencimentoParq = collection["dtVencimentoParq"].ToString(),
+                    DtVencimentoAtestadoMedico = collection["diVencimentoAtestadoMedico"].ToString(),
+                    NomeResponsavel1 = Convert.ToString(collection["nomeResponsavel1"]),
+                    ParentescoResponsavel1 = Convert.ToString(collection["parentescoResponsavel1"]),
+                    CpfResponsavel1 = Convert.ToString(collection["cpfResponsavel1"]),
+                    NomeResponsavel2 = Convert.ToString(collection["nomeResponsavel2"]),
+                    ParentescoResponsavel2 = Convert.ToString(collection["parentescoResponsavel2"]),
+                    CpfResponsavel2 = Convert.ToString(collection["cpfResponsavel2"]),
+                    NomeResponsavel3 = Convert.ToString(collection["nomeResponsavel3"]),
+                    ParentescoResponsavel3 = Convert.ToString(collection["parentescoResponsavel3"]),
+                    CpfResponsavel3 = Convert.ToString(collection["cpfResponsavel3"]),
+                    LocalId = Convert.ToInt32(collection["localId"]),
+                    AlunoId = Convert.ToInt32(collection["alunoId"])
+
+                };
+
+                await ApiClientFactory.Instance.CreateMatricula(command);
+
+                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         //[ClaimsAuthorize("Aluno", "Alterar")]
