@@ -39,7 +39,7 @@ namespace WebApp.ApiClient
                 $"{ResourceDependencia}/{id}"));
             return Get<DependenciaDto>(requestUrl);
         }
-        public List<DependenciaDto> GetDependenciaAll()
+        public List<DependenciaDto> GetDependenciasAll()
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 $"{ResourceDependencia}"));

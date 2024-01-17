@@ -533,17 +533,17 @@ namespace WebApp.Controllers
                 {
                     DtVencimentoParq = collection["dtVencimentoParq"].ToString(),
                     DtVencimentoAtestadoMedico = collection["diVencimentoAtestadoMedico"].ToString(),
-                    NomeResponsavel1 = Convert.ToString(collection["nomeResponsavel1"]),
-                    ParentescoResponsavel1 = Convert.ToString(collection["parentescoResponsavel1"]),
-                    CpfResponsavel1 = Convert.ToString(collection["cpfResponsavel1"]),
-                    NomeResponsavel2 = Convert.ToString(collection["nomeResponsavel2"]),
-                    ParentescoResponsavel2 = Convert.ToString(collection["parentescoResponsavel2"]),
-                    CpfResponsavel2 = Convert.ToString(collection["cpfResponsavel2"]),
-                    NomeResponsavel3 = Convert.ToString(collection["nomeResponsavel3"]),
-                    ParentescoResponsavel3 = Convert.ToString(collection["parentescoResponsavel3"]),
-                    CpfResponsavel3 = Convert.ToString(collection["cpfResponsavel3"]),
+                    NomeResponsavel1 = collection["nomeResponsavel1"].ToString(),
+                    ParentescoResponsavel1 = collection["parentescoResponsavel1"].ToString(),
+                    CpfResponsavel1 = collection["cpfResponsavel1"].ToString(),
+                    NomeResponsavel2 =collection["nomeResponsavel2"].ToString(),
+                    ParentescoResponsavel2 = collection["parentescoResponsavel2"].ToString(),
+                    CpfResponsavel2 = collection["cpfResponsavel2"].ToString(),
+                    NomeResponsavel3 = collection["nomeResponsavel3"].ToString(),
+                    ParentescoResponsavel3 = collection["parentescoResponsavel3"].ToString(),
+                    CpfResponsavel3 = collection["cpfResponsavel3"].ToString(),
                     LocalId = Convert.ToInt32(collection["localId"]),
-                    AlunoId = Convert.ToInt32(collection["alunoId"])
+                    AlunoId = 2259
 
                 };
 
@@ -560,28 +560,35 @@ namespace WebApp.Controllers
         //[ClaimsAuthorize("Usuario", "Alterar")]
         public Task<ActionResult> EditMatricula(string id, IFormCollection collection)
         {
-            var command = new MatriculaModel.CreateUpdateMatriculaCommand
+            try
             {
-                Id = Convert.ToInt32(id),
-                DtVencimentoParq = collection["dtVencimentoParq"].ToString(),
-                DtVencimentoAtestadoMedico = collection["diVencimentoAtestadoMedico"].ToString(),
-                NomeResponsavel1 = Convert.ToString(collection["nomeResponsavel1"]),
-                ParentescoResponsavel1 = Convert.ToString(collection["parentescoResponsavel1"]),
-                CpfResponsavel1 = Convert.ToString(collection["cpfResponsavel1"]),
-                NomeResponsavel2 = Convert.ToString(collection["nomeResponsavel2"]),
-                ParentescoResponsavel2 = Convert.ToString(collection["parentescoResponsavel2"]),
-                CpfResponsavel2 = Convert.ToString(collection["cpfResponsavel2"]),
-                NomeResponsavel3 = Convert.ToString(collection["nomeResponsavel3"]),
-                ParentescoResponsavel3 = Convert.ToString(collection["parentescoResponsavel3"]),
-                CpfResponsavel3 = Convert.ToString(collection["cpfResponsavel3"]),
-                LocalId = Convert.ToInt32(collection["localId"]),
-                AlunoId = Convert.ToInt32(collection["alunoId"])
+                var command = new MatriculaModel.CreateUpdateMatriculaCommand
+                {
+                    Id = Convert.ToInt32(id),
+                    DtVencimentoParq = collection["dtVencimentoParq"].ToString(),
+                    DtVencimentoAtestadoMedico = collection["diVencimentoAtestadoMedico"].ToString(),
+                    NomeResponsavel1 = collection["nomeResponsavel1"].ToString(),
+                    ParentescoResponsavel1 = collection["parentescoResponsavel1"].ToString(),
+                    CpfResponsavel1 = collection["cpfResponsavel1"].ToString(),
+                    NomeResponsavel2 = collection["nomeResponsavel2"].ToString(),
+                    ParentescoResponsavel2 = collection["parentescoResponsavel2"].ToString(),
+                    CpfResponsavel2 = collection["cpfResponsavel2"].ToString(),
+                    NomeResponsavel3 = collection["nomeResponsavel3"].ToString(),
+                    ParentescoResponsavel3 = collection["parentescoResponsavel3"].ToString(),
+                    CpfResponsavel3 = collection["cpfResponsavel3"].ToString(),
+                    LocalId = Convert.ToInt32(collection["localId"]),
+                    AlunoId = 2259
 
-            };
+                };
 
-            //await ApiClientFactory.Instance.UpdateMatricula(command);
+                await ApiClientFactory.Instance.EditMatricula(command);
 
-            return Task.FromResult<ActionResult>(RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated }));
+                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction(nameof(Index));
+            }
         }
 
 
@@ -608,7 +615,7 @@ namespace WebApp.Controllers
             {
                 var command = new DependenciaModel.CreateUpdateDependenciaCommand
                 {
-	                Doencas = collection["dtVencimentoParq"].ToString(),
+	                Doencas = collection["Doenca"].ToString(),
 	                Nacionalidade = collection["nacionalidade"].ToString(),
 	                Naturalidade = collection["naturalidade"].ToString(),
 	                NomeEscola = collection["escola"].ToString(),
