@@ -203,7 +203,7 @@
                                             <label class="col-sm-3 control-label pull-left">Cadastro ativo para login?</label>
                                             <div class="col-sm-1">
                                                 <div class="switch switch-sm switch-success">
-                                                    <input type="checkbox" id="ativo" name="ativo" data-plugin-ios-switch checked="checked" />
+                                                    <input type="checkbox" id="status" name="status" data-plugin-ios-switch checked="checked" />
                                                 </div>
                                             </div>
                                             <label class="col-sm-3 control-label">Cadastro habilitado a operar?</label>
@@ -221,12 +221,12 @@
                                             <label class="col-sm-2 control-label">Possui deficiência?</label>
                                             <div class="col-sm-10">
                                                 <div class="radio-custom radio-success">
-                                                    <input type="radio" id="sim" name="rdbDeficiencia" v-on:click="OnClickPossuiDeficiencia(true)" value="sim">
+                                                    <input type="radio" id="rdbDeficienciaSim" name="rdbDeficiencia" v-on:click="OnClickPossuiDeficiencia(true)" value="true">
                                                     <label for="radioExample1">Sim</label>
                                                 </div>
 
                                                 <div class="radio-custom radio-danger">
-                                                    <input type="radio" id="nao" name="rdbDeficiencia" v-on:click="OnClickPossuiDeficiencia(false)" value="nao" checked>
+                                                    <input type="radio" id="rdbDeficienciaNao" name="rdbDeficiencia" v-on:click="OnClickPossuiDeficiencia(false)" value="false" checked>
                                                     <label for="radioExample2">Não</label>
                                                 </div>
 

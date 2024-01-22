@@ -10,7 +10,7 @@ namespace WebApp.Models
         public string DadosId { get; set; }
         public SelectList ListDadoss { get; set; }
         public SelectList ListAmbientes { get; set; }
-        public object AmbienteId { get; set; }
+        public int AmbienteId { get; set; }
         public List<AmbienteDto> Ambientes { get; set; }
 
         public class CreateUpdateDadosCommand

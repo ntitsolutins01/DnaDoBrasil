@@ -558,38 +558,38 @@ namespace WebApp.Controllers
         }
 
         //[ClaimsAuthorize("Usuario", "Alterar")]
-        public Task<ActionResult> EditMatricula(string id, IFormCollection collection)
-        {
-            try
-            {
-                var command = new MatriculaModel.CreateUpdateMatriculaCommand
-                {
-                    Id = Convert.ToInt32(id),
-                    DtVencimentoParq = collection["dtVencimentoParq"].ToString(),
-                    DtVencimentoAtestadoMedico = collection["diVencimentoAtestadoMedico"].ToString(),
-                    NomeResponsavel1 = collection["nomeResponsavel1"].ToString(),
-                    ParentescoResponsavel1 = collection["parentescoResponsavel1"].ToString(),
-                    CpfResponsavel1 = collection["cpfResponsavel1"].ToString(),
-                    NomeResponsavel2 = collection["nomeResponsavel2"].ToString(),
-                    ParentescoResponsavel2 = collection["parentescoResponsavel2"].ToString(),
-                    CpfResponsavel2 = collection["cpfResponsavel2"].ToString(),
-                    NomeResponsavel3 = collection["nomeResponsavel3"].ToString(),
-                    ParentescoResponsavel3 = collection["parentescoResponsavel3"].ToString(),
-                    CpfResponsavel3 = collection["cpfResponsavel3"].ToString(),
-                    LocalId = Convert.ToInt32(collection["localId"]),
-                    AlunoId = 2259
+        //public Task<ActionResult> EditMatricula(string id, IFormCollection collection)
+        //{
+        //    try
+        //    {
+        //        var command = new MatriculaModel.CreateUpdateMatriculaCommand
+        //        {
+        //            Id = Convert.ToInt32(id),
+        //            DtVencimentoParq = collection["dtVencimentoParq"].ToString(),
+        //            DtVencimentoAtestadoMedico = collection["diVencimentoAtestadoMedico"].ToString(),
+        //            NomeResponsavel1 = collection["nomeResponsavel1"].ToString(),
+        //            ParentescoResponsavel1 = collection["parentescoResponsavel1"].ToString(),
+        //            CpfResponsavel1 = collection["cpfResponsavel1"].ToString(),
+        //            NomeResponsavel2 = collection["nomeResponsavel2"].ToString(),
+        //            ParentescoResponsavel2 = collection["parentescoResponsavel2"].ToString(),
+        //            CpfResponsavel2 = collection["cpfResponsavel2"].ToString(),
+        //            NomeResponsavel3 = collection["nomeResponsavel3"].ToString(),
+        //            ParentescoResponsavel3 = collection["parentescoResponsavel3"].ToString(),
+        //            CpfResponsavel3 = collection["cpfResponsavel3"].ToString(),
+        //            LocalId = Convert.ToInt32(collection["localId"]),
+        //            AlunoId = 2259
 
-                };
+        //        };
 
-                await ApiClientFactory.Instance.EditMatricula(command);
+        //        await ApiClientFactory.Instance.UpdateMatricula(command);
 
-                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
-            }
-            catch (Exception e)
-            {
-                return RedirectToAction(nameof(Index));
-            }
-        }
+        //        return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //}
 
 
         public Task<JsonResult> GetAlunosByLocalidade(string id)
