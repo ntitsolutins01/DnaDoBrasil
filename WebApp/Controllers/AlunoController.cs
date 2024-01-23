@@ -482,9 +482,9 @@ namespace WebApp.Controllers
                 var command = new VoucherModel.CreateUpdateVoucherCommand
                 {
                     LocalId = Convert.ToInt32(collection["localId"]),
-                    Descricao = Convert.ToString(collection["descricao"]),
-                    Turma = Convert.ToString(collection["turma"]),
-                    Serie = Convert.ToString(collection["serie"]),
+                    Descricao =collection["descricao"].ToString(),
+                    Turma = collection["turma"].ToString(),
+                    Serie = collection["ddlSerie"].ToString(),
                     AlunoId = Convert.ToInt32(collection["alunoId"])
                 };
 
@@ -532,16 +532,17 @@ namespace WebApp.Controllers
                 var command = new MatriculaModel.CreateUpdateMatriculaCommand
                 {
                     DtVencimentoParq = collection["dtVencimentoParq"].ToString(),
-                    DtVencimentoAtestadoMedico = collection["diVencimentoAtestadoMedico"].ToString(),
+                    LocalidadeId = collection["ddlLocalidadeMatricula"].ToString(),
+                    DtVencimentoAtestadoMedico = collection["dtVencimentoAtestado"].ToString(),
                     NomeResponsavel1 = collection["nomeResponsavel1"].ToString(),
-                    ParentescoResponsavel1 = collection["parentescoResponsavel1"].ToString(),
-                    CpfResponsavel1 = collection["cpfResponsavel1"].ToString(),
+                    ParentescoResponsavel1 = collection["parentesco1"].ToString(),
+                    CpfResponsavel1 = collection["cpf1"].ToString(),
                     NomeResponsavel2 =collection["nomeResponsavel2"].ToString(),
-                    ParentescoResponsavel2 = collection["parentescoResponsavel2"].ToString(),
-                    CpfResponsavel2 = collection["cpfResponsavel2"].ToString(),
+                    ParentescoResponsavel2 = collection["parentesco2"].ToString(),
+                    CpfResponsavel2 = collection["cpf2"].ToString(),
                     NomeResponsavel3 = collection["nomeResponsavel3"].ToString(),
-                    ParentescoResponsavel3 = collection["parentescoResponsavel3"].ToString(),
-                    CpfResponsavel3 = collection["cpfResponsavel3"].ToString(),
+                    ParentescoResponsavel3 = collection["parentesco3"].ToString(),
+                    CpfResponsavel3 = collection["cpf3"].ToString(),
                     LocalId = Convert.ToInt32(collection["localId"]),
                     AlunoId = 2259
 
