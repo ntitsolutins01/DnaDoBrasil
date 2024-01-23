@@ -644,44 +644,20 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">Voucher</label>
                                             <div class="col-sm-4">
-                                                <input type="text" name="voucher" name="voucher"
-                                                       maxlength="100" placeholder="eg.: Descrição do voucher" class="form-control" />
-                                            </div>
-                                            <label class="col-sm-1 control-label">Localidade</label>
-                                            <div class="col-sm-4">
-                                                <select class="form-control populate select2" name="ddlLocalidadeVoucher" id="ddlLocalidadeVoucher"
-                                                        style="width: 100%" title="Por favor selecione a localidade."
-                                                        asp-for="LocalidadeId" asp-items="Model.ListLocalidades">
-                                                    <option value="">Selecionar Local</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-sm-1">
-                                                <button type="button" class="ml-xs btn btn-primary"
-                                                        data-toggle="modal" data-target="#mdLocalidade">
-                                                    <i class="fa fa-plus"></i>
-                                                </button>
+                                                <input type="text" id="descricao" name="descricaoVoucher"
+                                                       maxlength="100" class="form-control" />
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">Turma</label>
                                             <div class="col-sm-4">
-                                                <input type="text" name="turma" name="turma"
-                                                       maxlength="150" placeholder="eg.: Nome da turma" class="form-control" />
+                                                <input type="text" id="turma" name="turmaVoucher"
+                                                       maxlength="150" class="form-control" />
                                             </div>
-                                            <label class="col-sm-1 control-label">Série</label>
-                                            <div class="col-sm-4">
-                                                <select class="form-control populate select2" name="ddlSerie" id="ddlSerie"
-                                                        style="width: 100%" title="Por favor selecione a série."
-                                                        asp-for="SerieId" asp-items="Model.ListSeries">
-                                                    <option value="">Selecionar Série</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-sm-1">
-                                                <button type="button" class="ml-xs btn btn-primary"
-                                                        data-toggle="modal" data-target="#mdSerie">
-                                                    <i class="fa fa-plus"></i>
-                                                </button>
-                                            </div>
+                                            <label class="col-sm-2 control-label">Série</label>
+	                                        <div class="col-sm-3">
+		                                        <input type="text" id="serie" name="serieVoucher" class="form-control" />
+	                                        </div>
                                         </div>
 
                                     </div>

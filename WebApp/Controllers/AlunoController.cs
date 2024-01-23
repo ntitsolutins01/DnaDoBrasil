@@ -482,11 +482,10 @@ namespace WebApp.Controllers
             {
                 var command = new VoucherModel.CreateUpdateVoucherCommand
                 {
-                    LocalId = Convert.ToInt32(collection["localId"]),
-                    Descricao =collection["descricao"].ToString(),
-                    Turma = collection["turma"].ToString(),
-                    Serie = collection["ddlSerie"].ToString(),
-                    AlunoId = Convert.ToInt32(collection["alunoId"])
+                    Descricao =collection["descricaoVoucher"].ToString(),
+                    Turma = collection["turmaVoucher"].ToString(),
+                    Serie = collection["serieVoucher"].ToString(),
+                    AlunoId = 2260
                 };
 
                 await ApiClientFactory.Instance.CreateVoucher(command);
@@ -505,11 +504,10 @@ namespace WebApp.Controllers
             var command = new VoucherModel.CreateUpdateVoucherCommand
             {
                 Id = Convert.ToInt32(id),
-                LocalId = Convert.ToInt32(collection["localId"]),
-                Descricao = Convert.ToString(collection["descricao"]),
-                Turma = Convert.ToString(collection["turma"]),
-                Serie = Convert.ToString(collection["serie"]),
-                AlunoId = Convert.ToInt32(collection["alunoId"])
+                Descricao = collection["descricaoVoucher"].ToString(),
+                Turma = collection["turmaVoucher"].ToString(),
+                Serie = collection["serieVoucher"].ToString(),
+                AlunoId = 2260
 
             };
 
