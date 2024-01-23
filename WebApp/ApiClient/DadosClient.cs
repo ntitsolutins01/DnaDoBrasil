@@ -9,14 +9,14 @@ namespace WebApp.ApiClient
 
         #region Main Methods
 
-        public Task<long> CreateDados(DadosModel.CreateUpdateDadosCommand command)
+        public Task<long> CreateDados(AlunoModel.CreateUpdateDadosAlunoCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 $"{ResourceDados}"));
             return Post(requestUrl, command);
         }
 
-        public Task<bool> UpdateDados(int id, DadosModel.CreateUpdateDadosCommand command)
+        public Task<bool> UpdateDados(int id, AlunoModel.CreateUpdateDadosAlunoCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 $"{ResourceDados}/{id}"));

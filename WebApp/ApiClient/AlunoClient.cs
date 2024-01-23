@@ -14,18 +14,18 @@ namespace WebApp.ApiClient
 
         #region Main Methods
 
-        public Task<long> CreateAluno(AlunoModel.CreateUpdateAlunoCommand command)
-        {
-            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceAluno}"));
-            return Post(requestUrl, command);
-        }
-        public Task<bool> UpdateAluno(AlunoModel.CreateUpdateAlunoCommand command)
-        {
-            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceAluno}"));
-            return Put(requestUrl, command);
-        }
+        //public Task<long> CreateAluno(AlunoModel.CreateUpdateAlunoCommand command)
+        //{
+        //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+        //        $"{ResourceAluno}"));
+        //    return Post(requestUrl, command);
+        //}
+        //public Task<bool> UpdateAluno(AlunoModel.CreateUpdateAlunoCommand command)
+        //{
+        //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+        //        $"{ResourceAluno}"));
+        //    return Put(requestUrl, command);
+        //}
 
         #endregion
 

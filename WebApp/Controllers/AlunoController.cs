@@ -376,7 +376,7 @@ namespace WebApp.Controllers
                 var status = collection["status"].ToString();
                 var habilitado = collection["habilitado"].ToString();
 
-                var command = new DadosModel.CreateUpdateDadosCommand
+                var command = new AlunoModel.CreateUpdateDadosAlunoCommand()
                 {
                     Etnia = collection["ddlEtnia"] == "" ? null : collection["ddlEtnia"].ToString(),
                     MunicipioId = collection["ddlMunicipio"] == "" ? null : Convert.ToInt32(collection["ddlMunicipio"].ToString()),
@@ -420,10 +420,9 @@ namespace WebApp.Controllers
 
                 var status = collection["status"].ToString();
                 var habilitado = collection["habilitado"].ToString();
-                var ambientesIds = collection["arrAmbientes"];
 
 
-                var command = new DadosModel.CreateUpdateDadosCommand
+                var command = new AlunoModel.CreateUpdateDadosAlunoCommand
                 {
                     Id = Convert.ToInt32(id),
                     Etnia = collection["ddlEtnia"] == "" ? null : collection["ddlEtnia"].ToString(),

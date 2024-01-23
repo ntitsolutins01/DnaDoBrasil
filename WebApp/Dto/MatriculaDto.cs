@@ -15,7 +15,7 @@
         public string? ParentescoResponsavel3 { get; set; }
         public string? CpfResponsavel3 { get; set; }
         public int LocalId { get; set; }
-        public required int AlunoId { get; set; }
+        public AlunoDto Aluno { get; set; }
 
     }
 }
