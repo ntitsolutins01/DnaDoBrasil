@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
 using WebApp.Configuration;
+using WebApp.Dto;
 using WebApp.Enumerators;
 using WebApp.Factory;
 using WebApp.Models;
@@ -56,7 +57,7 @@ namespace WebApp.Controllers
         //}
 
         //monta tela de create aluno
-        public ActionResult Create(int? crud, int? notify, string message = null)
+        public ActionResult Create(int? crud, int? notify, int? alunoMunicipioId, string message = null)
         {
             SetNotifyMessage(notify, message);
             SetCrudMessage(crud);
@@ -64,7 +65,14 @@ namespace WebApp.Controllers
             var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
             var deficiencias = new SelectList(ApiClientFactory.Instance.GetDeficienciaAll(), "Id", "Nome");
             var ambientes = new SelectList(ApiClientFactory.Instance.GetAmbienteAll(), "Id", "Nome");
-            var localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeAll(), "Id", "Nome");
+
+            SelectList localidades = null;
+
+            localidades = alunoMunicipioId != null
+                ? new SelectList(ApiClientFactory.Instance.GetLocalidadeByMunicipio(alunoMunicipioId.ToString()), "Id",
+                    "Nome")
+                : new SelectList(ApiClientFactory.Instance.GetLocalidadeAll(), "Id", "Nome");
+
 
             return View(new AlunoModel()
             {
