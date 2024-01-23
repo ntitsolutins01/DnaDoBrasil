@@ -26,7 +26,6 @@ namespace WebApp.Models
             public string? CpfResponsavel3 { get; set; }
             public int? LocalId { get; set; }
             public int? AlunoId { get; set; }
-            public string? LocalidadeId { get; set; }
         }
     }
 

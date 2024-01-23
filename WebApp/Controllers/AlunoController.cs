@@ -57,7 +57,7 @@ namespace WebApp.Controllers
         //}
 
         //monta tela de create aluno
-        public ActionResult Create(int? crud, int? notify, int? alunoMunicipioId, string message = null)
+        public ActionResult Create(int? crud, int? notify, string message = null)
         {
             SetNotifyMessage(notify, message);
             SetCrudMessage(crud);
@@ -66,20 +66,12 @@ namespace WebApp.Controllers
             var deficiencias = new SelectList(ApiClientFactory.Instance.GetDeficienciaAll(), "Id", "Nome");
             var ambientes = new SelectList(ApiClientFactory.Instance.GetAmbienteAll(), "Id", "Nome");
 
-            SelectList localidades = null;
-
-            localidades = alunoMunicipioId != null
-                ? new SelectList(ApiClientFactory.Instance.GetLocalidadeByMunicipio(alunoMunicipioId.ToString()), "Id",
-                    "Nome")
-                : new SelectList(ApiClientFactory.Instance.GetLocalidadeAll(), "Id", "Nome");
-
 
             return View(new AlunoModel()
             {
                 ListEstados = estados,
                 ListDeficiencias = deficiencias,
                 ListAmbientes = ambientes,
-                ListLocalidades = localidades
             });
         }
         public IActionResult Laudo()
@@ -541,7 +533,6 @@ namespace WebApp.Controllers
                 var command = new MatriculaModel.CreateUpdateMatriculaCommand
                 {
                     DtVencimentoParq = collection["dtVencimentoParq"].ToString(),
-                    LocalidadeId = collection["ddlLocalidadeMatricula"].ToString(),
                     DtVencimentoAtestadoMedico = collection["dtVencimentoAtestado"].ToString(),
                     NomeResponsavel1 = collection["nomeResponsavel1"].ToString(),
                     ParentescoResponsavel1 = collection["parentesco1"].ToString(),
@@ -552,7 +543,6 @@ namespace WebApp.Controllers
                     NomeResponsavel3 = collection["nomeResponsavel3"].ToString(),
                     ParentescoResponsavel3 = collection["parentesco3"].ToString(),
                     CpfResponsavel3 = collection["cpf3"].ToString(),
-                    LocalId = Convert.ToInt32(collection["localId"]),
                     AlunoId = 2259
 
                 };
@@ -586,7 +576,6 @@ namespace WebApp.Controllers
         //            NomeResponsavel3 = collection["nomeResponsavel3"].ToString(),
         //            ParentescoResponsavel3 = collection["parentescoResponsavel3"].ToString(),
         //            CpfResponsavel3 = collection["cpfResponsavel3"].ToString(),
-        //            LocalId = Convert.ToInt32(collection["localId"]),
         //            AlunoId = 2259
 
         //        };
