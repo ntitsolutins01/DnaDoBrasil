@@ -5,28 +5,28 @@ namespace WebApp.ApiClient
 {
     public partial class DnaApiClient
     {
-        private const string ResourceDados = "Alunos";
+        private const string ResourceAlunos = "Alunos";
 
         #region Main Methods
 
         public Task<long> CreateDados(AlunoModel.CreateUpdateDadosAlunoCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceDados}"));
+                $"{ResourceAlunos}"));
             return Post(requestUrl, command);
         }
 
         public Task<bool> UpdateDados(int id, AlunoModel.CreateUpdateDadosAlunoCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceDados}/{id}"));
+                $"{ResourceAlunos}/{id}"));
             return Put(requestUrl, command);
         }
 
         public Task<bool> DeleteDados(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceDados}/{id}"));
+                $"{ResourceAlunos}/{id}"));
             return Delete<bool>(requestUrl);
         }
 
@@ -38,19 +38,19 @@ namespace WebApp.ApiClient
         public List<AlunoDto> GetAlunosAll()
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceAluno}"));
+                $"{ResourceAlunos}"));
             return Get<List<AlunoDto>>(requestUrl);
         }
         public AlunoDto GetAlunoById(string id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceAluno}/{id}"));
+                $"{ResourceAlunos}/{id}"));
             return Get<AlunoDto>(requestUrl);
         }
         public List<AlunoDto> GetAlunosByLocalidade(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceAluno}/Localidade/{id}"));
+                $"{ResourceAlunos}/Localidade/{id}"));
             return Get<List<AlunoDto>>(requestUrl);
         }
 
