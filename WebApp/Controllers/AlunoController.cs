@@ -64,12 +64,14 @@ namespace WebApp.Controllers
             var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
             var deficiencias = new SelectList(ApiClientFactory.Instance.GetDeficienciaAll(), "Id", "Nome");
             var ambientes = new SelectList(ApiClientFactory.Instance.GetAmbienteAll(), "Id", "Nome");
+            var localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeAll(), "Id", "Nome");
 
             return View(new AlunoModel()
             {
                 ListEstados = estados,
                 ListDeficiencias = deficiencias,
-                ListAmbientes = ambientes
+                ListAmbientes = ambientes,
+                ListLocalidades = localidades
             });
         }
         public IActionResult Laudo()

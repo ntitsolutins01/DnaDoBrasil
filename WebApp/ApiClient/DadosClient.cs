@@ -34,20 +34,28 @@ namespace WebApp.ApiClient
 
         #region Methods
 
-        public List<DadosDto> GetDadosAll()
+
+        public List<AlunoDto> GetAlunosAll()
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceDados}"));
-            return Get<List<DadosDto>>(requestUrl);
+                $"{ResourceAluno}"));
+            return Get<List<AlunoDto>>(requestUrl);
         }
-
-        public DadosDto GetDadosById(string id)
+        public AlunoDto GetAlunoById(string id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceDados}/{id}"));
-            return Get<DadosDto>(requestUrl);
-
-            #endregion
+                $"{ResourceAluno}/{id}"));
+            return Get<AlunoDto>(requestUrl);
         }
+        public List<AlunoDto> GetAlunosByLocalidade(int id)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceAluno}/Localidade/{id}"));
+            return Get<List<AlunoDto>>(requestUrl);
+        }
+
+
+        #endregion
+    
     }
 }
