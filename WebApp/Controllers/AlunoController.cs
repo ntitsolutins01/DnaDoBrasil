@@ -649,11 +649,9 @@ namespace WebApp.Controllers
         {
             try
             {
-                var ambiente = collection["ddlAmbienteAluno"].ToString();
-
                 var command = new AmbienteModel.CreateUpdateAmbienteCommand
                 {
-                    Nome = ambiente
+                    AmbientesIds = collection["arrAmbienteAlunos"] == "" ? null : collection["arrAmbienteAlunos"].ToString()
                 };
 
                 await ApiClientFactory.Instance.CreateAmbiente(command);

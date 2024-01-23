@@ -3,8 +3,8 @@
     public class MatriculaDto
     {
         public string Id { get; set; }
-        public DateTime DtVencimentoParq { get; set; }
-        public DateTime DtVencimentoAtestadoMedico { get; set; }
+        public string? DtVencimentoParq { get; set; }
+        public string? DtVencimentoAtestadoMedico { get; set; }
         public string? NomeResponsavel1 { get; set; }
         public string? ParentescoResponsavel1 { get; set; }
         public string? CpfResponsavel1 { get; set; }

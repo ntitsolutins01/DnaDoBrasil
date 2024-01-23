@@ -114,6 +114,7 @@
                             <td class="text-center"><span class="label label-danger">INATIVO</span></td>
                         }
                         <td class="actions">
+                            <a data-toggle="tooltip" data-placement="top" title="Editar" asp-action="Edit" asp-controller="Aluno" asp-route-Id="@item.Id" class="on-default edit-row" style='color: #FF9800'><i class="fa fa-pencil"></i></a>
                             <a data-toggle="tooltip" data-placement="top" title="Novo Laudo" asp-action="Laudo" asp-controller="Aluno" asp-route-id="@item.Id" class="on-default remove-row" style='color:#4CAF50'><i class="fa fa-file-text"></i></a>
                         </td>
                     </tr>
