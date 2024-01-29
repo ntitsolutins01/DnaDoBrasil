@@ -191,14 +191,8 @@
     }
 });
 var crud = {
-    DeleteModal: function (id) {
-        $('input[name="AlunoId"]').attr('value', id);
-        $('#mdDeleteAluno').modal('show');
-        vm.DeleteAluno(id)
-    },
-    EditModal: function (id) {
-        $('input[name="AlunoId"]').attr('value', id);
-        $('#mdEditAluno').modal('show');
-        vm.EditAluno(id)
+    CarterinhaModal: function (id) {
+        $('input[name="carteirinhaAlunoId"]').attr('value', id);
+        $('#mdCarteirinhaAluno').modal('show');
     }
 };
