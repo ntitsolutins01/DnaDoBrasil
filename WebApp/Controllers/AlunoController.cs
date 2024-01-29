@@ -751,7 +751,7 @@ namespace WebApp.Controllers
 
        
 
-        public async Task<IActionResult> EditDeficiencia(IFormCollection collection)
+        public async Task<IActionResult> EditDeficiencia(int id, IFormCollection collection)
         {
             try
             {
@@ -763,7 +763,7 @@ namespace WebApp.Controllers
                     Status = status != ""
                 };
 
-                await ApiClientFactory.Instance.CreateDeficiencia(command);
+                await ApiClientFactory.Instance.UpdateDeficiencia(id, command);
 
                 return RedirectToAction(nameof(EditDeficiencia), new { crud = (int)EnumCrud.Created });
             }
@@ -772,5 +772,39 @@ namespace WebApp.Controllers
                 return RedirectToAction(nameof(Index));
             }
         }
+
+        public async Task<IActionResult> EditDependencia(int id, IFormCollection collection)
+        {
+			try
+			{
+				var command = new DependenciaModel.CreateUpdateDependenciaCommand
+				{
+					Doencas = collection["Doenca"].ToString(),
+					Nacionalidade = collection["nacionalidade"].ToString(),
+					Naturalidade = collection["naturalidade"].ToString(),
+					NomeEscola = collection["escola"].ToString(),
+					TipoEscola = collection["ddlTipoEscola"].ToString(),
+					TipoEscolaridade = collection["ddlTipoEscolaridade"].ToString(),
+					Turno = collection["ddlTurno"].ToString(),
+					Serie = collection["serie"].ToString(),
+					Ano = collection["ano"].ToString(),
+					Turma = collection["turma"].ToString(),
+					TermoCompromisso = collection["rdbTermo"] == "true",
+					AutorizacaoUsoImagemAudio = collection["rdbautorizacaoimagem"] == "true",
+					AutorizacaoUsoIndicadores = collection["rdbautorizacaoindicadores"] == "true",
+					AutorizacaoSaida = collection["rdbAutorizacao"] == "true",
+					AlunoId = 2259
+
+				};
+
+				await ApiClientFactory.Instance.UpdateDependencia(id, command);
+
+				return RedirectToAction(nameof(EditDependencia), new { crud = (int)EnumCrud.Created });
+			}
+			catch (Exception e)
+			{
+				return RedirectToAction(nameof(Index));
+			}
+		}
     }
 }
