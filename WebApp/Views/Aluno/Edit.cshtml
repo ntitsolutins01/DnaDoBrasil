@@ -21,9 +21,9 @@
                 <li>
                     <a href="#ambientes" data-toggle="tab">Ambientes</a>
                 </li>
-                <li>
+                @* <li>
                     <a href="#vouchers" data-toggle="tab">Vouchers</a>
-                </li>
+                </li> *@
             </ul>
             <div class="tab-content">
                 <div id="dados" class="tab-pane active">
@@ -286,7 +286,7 @@
                 <div id="dependencias" class="tab-pane">
                     <div class="row">
                         <div class="col-md-12">
-                            @using (@Html.BeginForm("CreateDependencia", "Aluno", FormMethod.Post, new { id = "formDependenciaAluno", @class = "form-horizontal" }))
+                            @using (@Html.BeginForm("EditDependencia", "Aluno", FormMethod.Post, new { id = "formDependenciaAluno", @class = "form-horizontal" }))
                             {
                                 <section class="panel">
                                     <div class="panel-body">
@@ -294,7 +294,7 @@
                                             <div class="col-sm-9">
                                                 <div class="radio-custom radio-success">
                                                     <input type="radio" id="rdbAutorizacaoSim" name="rdbAutorizacao" value="true">
-                                                    <label for="rdbAutorizacaoSim">
+                                                    <label for="rdbAutorizacaoSim">1
                                                         Autorizo o mesmo a se ausentar das dependências do
                                                         Centro Olímpico e Paralímpico sem a presença de um responsável após o
                                                         término de suas atividades.
@@ -315,7 +315,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-1 control-label">Doenças</label>
                                             <div class="col-sm-11">
-                                                <textarea class="form-control" rows="3" id="Doenca" name="Doenca"
+                                                <textarea class="form-control" rows="3" id="Doenca" name="Doenca" value="@Model.Dependecia.Doencas"
                                                           data-plugin-maxlength maxlength="400"></textarea>
                                                 <p>
                                                     <code>limite</code> 400.
@@ -326,12 +326,12 @@
                                             <label class="col-sm-1 control-label">Nacionalidade</label>
                                             <div class="col-sm-5">
 
-                                                <input type="text" id="nacionalidade" name="nacionalidade" class="form-control" />
+                                                <input type="text" id="nacionalidade" name="nacionalidade" class="form-control" value="@Model.Dependecia.Nacionalidade" />
                                             </div>
                                             <label class="col-sm-1 control-label">Naturalidade</label>
                                             <div class="col-sm-5">
 
-                                                <input type="text" id="naturalidade" name="naturalidade" class="form-control" />
+                                                <input type="text" id="naturalidade" name="naturalidade" class="form-control" value="@Model.Dependecia.Naturalidade"  />
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -342,12 +342,12 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">Nome Escola</label>
                                             <div class="col-sm-4">
-                                                <input type="text" id="escola" name="escola" class="form-control" />
+                                                <input type="text" id="escola" name="escola" class="form-control" value="@Model.Dependecia.NomeEscola" />
                                             </div>
 
                                             <label class="col-sm-2 control-label">Tipo Escola</label>
                                             <div class="col-sm-4">
-                                                <select class="form-control populate select2" name="ddlTipoEscola" id="ddlTipoEscola"
+                                                <select class="form-control populate select2" name="ddlTipoEscola" id="ddlTipoEscola" 
                                                         style="width: 100%" title="Por favor selecione o tipo da escola.">
                                                     <option value="">Selecionar Tipo Escola</option>
                                                     <option value="PRIVADA">PRIVADA</option>
@@ -360,17 +360,11 @@
                                             <div class="col-sm-4">
                                                 <select class="form-control populate select2" name="ddlTipoEscolaridade" id="ddlTipoEscolaridade"
                                                         style="width: 100%" title="Por favor selecione o tipo escolaridade.">
-	                                                <option value="">Selecionar Tipo Escolaridade</option>
+                                                    <option value="">Selecionar Tipo Escolaridade</option>
 	                                                <option value="ENSINO MEDIO">ENSINO MEDIO</option>
 	                                                <option value="ENSINO FUNDAMENTAL">ENSINO FUNDAMENTAL</option>
 	                                                <option value="EJA">EJA</option>
                                                 </select>
-                                            </div>
-                                            <div class="col-sm-1">
-                                                <button type="button" class="ml-xs btn btn-primary"
-                                                        data-toggle="modal" data-target="#mdTipoEscolaridade">
-                                                    <i class="fa fa-plus"></i>
-                                                </button>
                                             </div>
                                             <label class="col-sm-2 control-label">Turno</label>
                                             <div class="col-sm-3">
@@ -386,15 +380,15 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">Série</label>
                                             <div class="col-sm-3">
-                                                <input type="text" id="serie" name="serie" class="form-control" />
+                                                <input type="text" id="serie" name="serie" class="form-control" /> value="@Model.Dependecia.Serie"
                                             </div>
                                             <label class="col-sm-1 control-label">Ano </label>
                                             <div class="col-sm-2">
-                                                <input type="text" id="ano" name="ano" class="form-control" />
+                                                <input type="text" id="ano" name="ano" class="form-control" /> value="@Model.Dependecia.Ano"
                                             </div>
                                             <label class="col-sm-1 control-label">Turma</label>
                                             <div class="col-sm-3">
-                                                <input type="text" id="turma" name="turma" class="form-control" />
+                                                <input type="text" id="turma" name="turma" class="form-control" /> value="@Model.Dependecia.Turma" 
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -455,7 +449,7 @@
                 <div id="matriculas" class="tab-pane">
                     <div class="row">
                         <div class="col-md-12">
-                            @using (@Html.BeginForm("CreateMatricula", "Aluno", FormMethod.Post, new { id = "formMatriculaAluno", @class = "form-horizontal" }))
+                            @using (@Html.BeginForm($"EditMatricula", "Aluno", FormMethod.Post, new { id = "formMatriculaAluno", @class = "form-horizontal" }))
                             {
                                 <section class="panel">
                                     <div class="panel-body">
@@ -467,12 +461,6 @@
                                                         asp-for="LocalidadeId" asp-items="Model.ListLocalidades">
                                                     <option value="">Selecionar Localidade</option>
                                                 </select>
-                                            </div>
-                                            <div class="col-sm-1">
-                                                <button type="button" class="ml-xs btn btn-primary"
-                                                        data-toggle="modal" data-target="#mdLocalidade">
-                                                    <i class="fa fa-plus"></i>
-                                                </button>
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -598,7 +586,7 @@
                 <div id="ambientes" class="tab-pane">
                     <div class="row">
                         <div class="col-md-12">
-                            @using (@Html.BeginForm("CreateAmbientesAluno", "Aluno", FormMethod.Post, new { id = "vAmbienteAluno", @class = "form-horizontal" }))
+                            @using (@Html.BeginForm("EditAmbientesAluno", "Aluno", FormMethod.Post, new { id = "vAmbienteAluno", @class = "form-horizontal" }))
                             {
                                 <section class="panel">
                                     <div class="panel-body">
@@ -616,9 +604,7 @@
                                                     <i class="fa fa-plus"></i>
                                                 </a>
                                             </div>
-                                            <div class="col-sm-5 pull-right">
-                                                <a data-toggle="modal" data-target="#mdAmbiente" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Novo Ambiente </a>
-                                            </div>
+                                           
                                         </div>
                                         <div class="form-group">
                                             <input type="hidden" name="arrAmbienteAlunos" />
@@ -653,7 +639,7 @@
                 <div id="vouchers" class="tab-pane">
                     <div class="row">
                         <div class="col-md-12">
-                            @using (@Html.BeginForm("CreateVoucher", "Aluno", FormMethod.Post, new { id = "formVoucherAluno", @class = "form-horizontal" }))
+                            @using (@Html.BeginForm("EditVoucher", "Aluno", FormMethod.Post, new { id = "formVoucherAluno", @class = "form-horizontal" }))
                             {
                                 <section class="panel">
                                     <div class="panel-body">
@@ -748,7 +734,7 @@
 <div class="modal fade" id="mdDeficiencia" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            @using (@Html.BeginForm("CreateDeficiencia", "Aluno", FormMethod.Post, new { id = "formDadosAluno", @class = "form-horizontal" }))
+            @using (@Html.BeginForm("EditDeficiencia", "Aluno", FormMethod.Post, new { id = "formDadosAluno", @class = "form-horizontal" }))
             {
                 <div class="modal-header">
                     <h5 class="modal-title"><i class="fa fa-plus"></i> &nbsp;&nbsp;<strong>Nova Deficiencia</strong></h5>

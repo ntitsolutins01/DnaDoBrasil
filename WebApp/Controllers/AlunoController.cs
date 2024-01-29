@@ -556,37 +556,38 @@ namespace WebApp.Controllers
         }
 
         //[ClaimsAuthorize("Usuario", "Alterar")]
-        //public Task<ActionResult> EditMatricula(string id, IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        var command = new MatriculaModel.CreateUpdateMatriculaCommand
-        //        {
-        //            Id = Convert.ToInt32(id),
-        //            DtVencimentoParq = collection["dtVencimentoParq"].ToString(),
-        //            DtVencimentoAtestadoMedico = collection["diVencimentoAtestadoMedico"].ToString(),
-        //            NomeResponsavel1 = collection["nomeResponsavel1"].ToString(),
-        //            ParentescoResponsavel1 = collection["parentescoResponsavel1"].ToString(),
-        //            CpfResponsavel1 = collection["cpfResponsavel1"].ToString(),
-        //            NomeResponsavel2 = collection["nomeResponsavel2"].ToString(),
-        //            ParentescoResponsavel2 = collection["parentescoResponsavel2"].ToString(),
-        //            CpfResponsavel2 = collection["cpfResponsavel2"].ToString(),
-        //            NomeResponsavel3 = collection["nomeResponsavel3"].ToString(),
-        //            ParentescoResponsavel3 = collection["parentescoResponsavel3"].ToString(),
-        //            CpfResponsavel3 = collection["cpfResponsavel3"].ToString(),
-        //            AlunoId = 2259
+        public async Task<ActionResult> EditMatricula(int id, IFormCollection collection)
+        {
+            try
+            {
+                var command = new MatriculaModel.CreateUpdateMatriculaCommand
+                {
+                    Id = Convert.ToInt32(id),
+                    DtVencimentoParq = collection["dtVencimentoParq"].ToString(),
+                    DtVencimentoAtestadoMedico = collection["dtVencimentoAtestado"].ToString(),
+                    NomeResponsavel1 = collection["nomeResponsavel1"].ToString(),
+                    ParentescoResponsavel1 = collection["parentesco1"].ToString(),
+                    CpfResponsavel1 = collection["cpf1"].ToString(),
+                    NomeResponsavel2 = collection["nomeResponsavel2"].ToString(),
+                    ParentescoResponsavel2 = collection["parentesco2"].ToString(),
+                    CpfResponsavel2 = collection["cpf2"].ToString(),
+                    NomeResponsavel3 = collection["nomeResponsavel3"].ToString(),
+                    ParentescoResponsavel3 = collection["parentesco3"].ToString(),
+                    CpfResponsavel3 = collection["cpf3"].ToString(),
+                    AlunoId = 2259
 
-        //        };
 
-        //        await ApiClientFactory.Instance.UpdateMatricula(command);
+                };
 
-        //        return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //}
+                await ApiClientFactory.Instance.UpdateMatricula(id, command);
+
+                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+        }
 
 
         public Task<JsonResult> GetAlunosByLocalidade(string id)
@@ -662,10 +663,74 @@ namespace WebApp.Controllers
 
             }
         }
-
-        public IActionResult CreateDeficiencia()
+        public async Task<ActionResult> EditAmbientesAluno(int id ,IFormCollection collection)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var command = new AmbienteModel.CreateUpdateAmbienteCommand
+                {
+                    Id = Convert.ToInt32(id),
+                    AmbientesIds = collection["arrAmbienteAlunos"] == "" ? null : collection["arrAmbienteAlunos"].ToString()
+                };
+
+                await ApiClientFactory.Instance.UpdateAmbiente(id,command);
+
+                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
+            }
+            catch (Exception e)
+            {
+                Console.Write(e.StackTrace);
+                return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = e.Message });
+
+            }
+        }
+
+        //[ClaimsAuthorize("Aluno", "Alterar")]
+        [HttpPost]
+        public async Task<ActionResult> CreateDeficiencia(IFormCollection collection)
+        {
+            try
+            {
+                var status = collection["status"].ToString();
+
+                var command = new DeficienciaModel.CreateUpdateDeficienciaCommand
+                {
+                    Nome = collection["deficiencia"].ToString(),
+                    Status = status != ""
+                };
+
+                await ApiClientFactory.Instance.CreateDeficiencia(command);
+
+                return RedirectToAction(nameof(Create), new { crud = (int)EnumCrud.Created });
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
+       
+
+        public async Task<IActionResult> EditDeficiencia(IFormCollection collection)
+        {
+            try
+            {
+                var status = collection["status"].ToString();
+
+                var command = new DeficienciaModel.CreateUpdateDeficienciaCommand
+                {
+                    Nome = collection["deficiencia"].ToString(),
+                    Status = status != ""
+                };
+
+                await ApiClientFactory.Instance.CreateDeficiencia(command);
+
+                return RedirectToAction(nameof(EditDeficiencia), new { crud = (int)EnumCrud.Created });
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction(nameof(Index));
+            }
         }
     }
 }
