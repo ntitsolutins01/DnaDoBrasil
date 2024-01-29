@@ -85,16 +85,20 @@ namespace WebApp.Controllers
                 var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
                 var ambientes = ApiClientFactory.Instance.GetAmbienteAll();
                 var aluno = ApiClientFactory.Instance.GetAlunoById(id);
-                var dependencia = ApiClientFactory.Instance.GetDependenciaById(aluno.DependenciaId);
-                var matricula = ApiClientFactory.Instance.GetMatriculaById(aluno.MatriculaId);
+                var dependencia = aluno.DependenciaId == null
+                    ? null
+                    : ApiClientFactory.Instance.GetDependenciaById((int)aluno.DependenciaId);
+                var matricula = aluno.MatriculaId == null
+                    ? null
+                    : ApiClientFactory.Instance.GetMatriculaById((int)aluno.MatriculaId);
 
                 return View(new AlunoModel()
                 {
                     ListEstados = estados,
                     Ambientes = aluno.Ambientes,
                     Aluno = aluno,
-                    Dependecia = dependencia,
-                    Matricula = matricula
+                    Dependecia = dependencia!,
+                    Matricula = matricula!
 
 
 

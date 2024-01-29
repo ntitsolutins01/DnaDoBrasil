@@ -3,7 +3,6 @@
     public class AlunoDto
     {
         public int Id { get; set; }
-        public int MunicipioId { get; set; }
         public  int AspNetUserId { get; set; }
         public  string Nome { get; set; }
         public  string Email { get; set; }
@@ -24,7 +23,11 @@
         public bool Habilitado { get; set; }
         public int Idade { get; set; }
         public List<AmbienteDto>? Ambientes { get; set; }
-        public int DependenciaId { get; set; }
-        public int MatriculaId { get; set; }
+        public int? MunicipioId { get; set; }
+        public string? NomeMunicipio { get; set; }
+        public int? LocalidadeId { get; set; }
+        public int? DependenciaId { get; set; }
+        public int? MatriculaId { get; set; }
+        public string? NomeLocalidade { get; set; }
     }
 }
