@@ -30,13 +30,13 @@ namespace WebApp.Controllers
                 SetCrudMessage(crud);
 
                 var response = ApiClientFactory.Instance.GetAlunosAll();
-                var localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeAll(), "Id", "Nome");
+                var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
                 var deficiencias = new SelectList(ApiClientFactory.Instance.GetDeficienciaAll(), "Id", "Nome");
 
                 return View(new AlunoModel()
                 {
                     Alunos = response,
-                    ListLocalidades = localidades,
+                    ListEstados = estados,
                     ListDeficiencias = deficiencias
                 });
 
@@ -73,6 +73,40 @@ namespace WebApp.Controllers
                 ListDeficiencias = deficiencias,
                 ListAmbientes = ambientes,
             });
+        }
+
+        public ActionResult Edit(int id, int? crud, int? notify, string message = null)
+        {
+            try
+            {
+                SetNotifyMessage(notify, message);
+                SetCrudMessage(crud);
+
+                var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
+                var ambientes = ApiClientFactory.Instance.GetAmbienteAll();
+                var aluno = ApiClientFactory.Instance.GetAlunoById(id);
+                var dependencia = ApiClientFactory.Instance.GetDependenciaById(aluno.DependenciaId);
+                var matricula = ApiClientFactory.Instance.GetMatriculaById(aluno.MatriculaId);
+
+                return View(new AlunoModel()
+                {
+                    ListEstados = estados,
+                    Ambientes = aluno.Ambientes,
+                    Aluno = aluno,
+                    Dependecia = dependencia,
+                    Matricula = matricula
+
+
+
+                });
+
+            }
+            catch (Exception e)
+            {
+                Console.Write(e.StackTrace);
+                return RedirectToAction(nameof(Edit), new { notify = (int)EnumNotify.Error, message = e.Message });
+
+            }
         }
         public IActionResult Laudo()
         {
@@ -413,6 +447,8 @@ namespace WebApp.Controllers
                 return RedirectToAction(nameof(Create), new { message = e.Message});
             }
         }
+
+
 
         //[ClaimsAuthorize("Usuario", "Alterar")]
         public Task<ActionResult> EditDados(int id, IFormCollection collection)

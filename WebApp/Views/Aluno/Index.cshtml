@@ -5,10 +5,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
-<div class="row">
-    <div class="col-md-12">
-        <form id="formAluno" action="forms-validation.html" class="form-horizontal">
+<div id="vAluno">
+    <div class="row">
+        <div class="col-md-12">
             <section class="panel">
                 <header class="panel-heading">
                     <div class="panel-actions">
@@ -19,34 +18,33 @@
                 </header>
                 <div class="panel-body">
 
-                    <label class="col-sm-1 control-label">Aluno</label>
-                    <div class="col-md-3 form-group">
-                        <input type="text" name="aluno" class="form-control" placeholder="eg.: Descrição completa do nome do aluno"
-                               maxlength="60" />
+                    <div class="form-group row">
+                        <label class="col-sm-3 control-label text-sm-right pt-2">Estado <span class="required">*</span></label>
+                        <div class="col-md-4">
+                            <select class="form-control populate select2" name="ddlEstado" id="ddlEstado"
+                                    title="Por favor informe o estado." required
+                                    asp-for="EstadoId" asp-items="Model.ListEstados">
+                                <option value="">Selecionar Estado</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-1 control-label text-sm-right pt-2">Municipio <span class="required">*</span></label>
+                        <div class="col-md-4">
+                            <select class="form-control populate select2" name="ddlMunicipio" id="ddlMunicipio"
+                                    title="Por favor informe o municipio." required
+                                    asp-for="MunicipioId" asp-items="Model.ListMunicipios">
+                                <option value="">Selecionar Municipio</option>
+                            </select>
+                        </div>
                     </div>
-
-                    <label class="col-sm-1 control-label" style="width: 12.499999995%">CPF</label>
-                    <div class="col-md-3 form-group">
-                        <input id="cpf" name="cpf" type="text" value="" class="form-control" 
-                               placeholder="eg.: Número do CPF do aluno" maxlength="14" />
-                    </div>
-
-                    <label class="col-sm-1 control-label">Deficiência </label>
-                    <div class="col-md-3 form-group">
-                        <select class="form-control populate select2" name="ddlDeficiencia" id="ddlDeficiencia"
-                                title="Por favor selecione uma deficiencia." required
-                        asp-for="DeficienciaId" asp-items="Model.ListDeficiencias">
-                            <option value="">Selecionar Local</option>
-                        </select>
-                    </div>
-
-                    <label class="col-sm-1 control-label">Localidade</label>
-                    <div class="col-md-3 form-group">
-                        <select class="form-control populate select2" name="ddlLocalidade" id="ddlLocalidade"
-                                title="localidadeSelect" required
-                                asp-for="LocalidadeId" asp-items="Model.ListLocalidades">
-                            <option value="">Selecionar Localidade</option>
-                        </select>
+                    <div class="form-group row">
+                        <label class="col-sm-3 control-label text-sm-right pt-2">Localidade <span class="required">*</span></label>
+                        <div class="col-md-4">
+                            <select class="form-control populate select2" name="ddlLocalidade" id="ddlLocalidade"
+                                    title="Por favor informe o localidade." required
+                                    asp-for="LocalidadeId" asp-items="Model.ListLocalidades">
+                                <option value="">Selecionar Localidade</option>
+                            </select>
+                        </div>
                     </div>
 
                     <label class="col-sm-3 control-label">Cadastros ativos</label>
@@ -60,83 +58,85 @@
                 <footer class="panel-footer">
                     <div class="row">
                         <div class="col-md-9 col-md-offset-3">
-                            <button type="submit" class="btn btn-primary pull-right" style="margin-left: 5px;margin-right: 5px;"><i class="fa fa-search"></i> &nbsp;&nbsp;Pesquisar</button>
+                            <a type="submit" class="btn btn-primary pull-right"
+                               href='javascript:(crud.Pesquisar())'
+                               style="margin-left: 5px;margin-right: 5px;">
+                                <i class="fa fa-search"></i> &nbsp;&nbsp;Pesquisar
+                            </a>
                         </div>
                     </div>
                 </footer>
             </section>
-        </form>
+        </div>
     </div>
-</div>
 
-<section class="panel">
-    <header class="panel-heading">
-        <div class="panel-actions">
-            <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
-        </div>
-
-        <h2 class="panel-title">Listagem de Alunos</h2>
-
-    </header>
-    <div class="panel-body">
-        <div class="form-group row">
-            <div class="col-sm-2 pull-right">
-                <a href="@Url.Action("Create", "Aluno")" id="addToTable" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Novo Aluno </a>
+    <section class="panel">
+        <header class="panel-heading">
+            <div class="panel-actions">
+                <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
             </div>
-        </div>
-        <table class="table table-bordered table-striped mb-0" id="datatable-default">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Nome</th>
-                    <th>Email</th>
-                    @* <th>Pesquisas</th>
-                    <th>Laudos</th> *@
-                    <th>Data de Nascimento</th>
-                    <th>Status</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.Alunos)
-                {
+
+            <h2 class="panel-title">Listagem de Alunos</h2>
+
+        </header>
+        <div class="panel-body">
+            <div class="form-group row">
+                <div class="col-sm-2 pull-right">
+                    <a href="@Url.Action("Create", "Aluno")" id="addToTable" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Novo Aluno </a>
+                </div>
+            </div>
+            <table class="table table-bordered table-striped mb-0" id="datatable-default">
+                <thead>
                     <tr>
-                        <td>@Html.DisplayFor(modelItem => item.Id)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Nome)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Email)</td>
-                        <td>@Html.DisplayFor(modelItem => item.DtNascimento)</td>
-                        @if (item.Status)
-                        {
-                            <td class="text-center"><span class="label label-success">ATIVO</span></td>
-                        }
-                        else
-                        {
-                            <td class="text-center"><span class="label label-danger">INATIVO</span></td>
-                        }
-                        <td class="actions">
-                            <a data-toggle="tooltip" data-placement="top" title="Editar" asp-action="Edit" asp-controller="Aluno" asp-route-Id="@item.Id" class="on-default edit-row" style='color: #FF9800'><i class="fa fa-pencil"></i></a>
-                            <a data-toggle="tooltip" data-placement="top" title="Carteirinha" asp-action="Laudo" asp-controller="Aluno" asp-route-id="@item.Id" class="on-default remove-row" style='color:#4CAF50'><i class="fa fa-file-text"></i></a>
-                            <a data-toggle="tooltip" data-placement="top" title="Editar"
-                               href='javascript:(crud.CarterinhaModal(@item.Id))'
-                               class="on-default edit-row" style='color: #FF9800'>
-                                <i class="fa fa-pencil"></i>
-                            </a>
-                        </td>
+                        <th>Id</th>
+                        <th>Nome</th>
+                        <th>Email</th>
+                        @* <th>Pesquisas</th>
+                        <th>Laudos</th> *@
+                        <th>Data de Nascimento</th>
+                        <th>Status</th>
+                        <th>Ações</th>
                     </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-</section>
-<!-- Modal -->
-<div class="modal fade" id="mdCarteirinhaAluno" tabindex="-1" role="dialog" aria-labelledby="mdCarteirinhaAlunoLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="mdCarteirinhaAlunoLabel">
-                    <i class="fa fa-address-card-o"></i> &nbsp;&nbsp;<strong>Carteirinha Aluno</strong>
-                </h5>
-            </div>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Alunos)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                            <td>@Html.DisplayFor(modelItem => item.DtNascimento)</td>
+                            @if (item.Status)
+                            {
+                                <td class="text-center"><span class="label label-success">ATIVO</span></td>
+                            }
+                            else
+                            {
+                                <td class="text-center"><span class="label label-danger">INATIVO</span></td>
+                            }
+                            <td class="actions">
+                                <a data-toggle="tooltip" data-placement="top" title="Editar" asp-action="Edit" asp-controller="Aluno" asp-route-Id="@item.Id" class="on-default edit-row" style='color: #FF9800'><i class="fa fa-pencil"></i></a>
+                                <a data-toggle="tooltip" data-placement="top" title="Editar"
+                                   href='javascript:(crud.CarterinhaModal(@item.Id))'
+                                   class="on-default edit-row" style='color: #8E24AA'>
+                                    <i class="fa fa-address-card-o"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <!-- Modal -->
+    <div class="modal fade" id="mdCarteirinhaAluno" tabindex="-1" role="dialog" aria-labelledby="mdCarteirinhaAlunoLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mdCarteirinhaAlunoLabel">
+                        <i class="fa fa-address-card-o"></i> &nbsp;&nbsp;<strong>Carteirinha Aluno</strong>
+                    </h5>
+                </div>
                 <input type="hidden" name="carteirinhaAlunoId" :value="editDto.Id" />
 
                 <div class="modal-body">
@@ -160,20 +160,20 @@
                 <div class="modal-footer">
                     <button type="reset" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
                 </div>
+            </div>
         </div>
     </div>
 </div>
-
 
 
 @section CssSpecificVendor {
     <link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css" />
     <link rel="stylesheet" href="~/assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
     <link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />
-    }
+}
 @section Scripts {
-	<script src="~/assets/vendor/select2/js/select2.js"></script>
-	<script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
+    <script src="~/assets/vendor/select2/js/select2.js"></script>
+    <script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
     <script src="~/assets/vendor/ios7-switch/ios7-switch.js"></script>
     <script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
     <script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
@@ -181,7 +181,7 @@
     <script src="~/js/alunos.js"></script>
 
     <script>
-        
+
         (function ($) {
 
             'use strict';

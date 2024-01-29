@@ -33,7 +33,7 @@ namespace WebApp.ApiClient
 
         #region Methods
 
-        public MatriculaDto GetMatriculaById(string id)
+        public MatriculaDto GetMatriculaById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 $"{ResourceMatricula}/{id}"));

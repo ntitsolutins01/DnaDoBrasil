@@ -33,7 +33,7 @@ namespace WebApp.ApiClient
 
         #region Methods
 
-        public DependenciaDto GetDependenciaById(string id)
+        public DependenciaDto GetDependenciaById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 $"{ResourceDependencia}/{id}"));

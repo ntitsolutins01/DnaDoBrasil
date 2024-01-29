@@ -23,5 +23,8 @@
         public bool Status { get; set; }
         public bool Habilitado { get; set; }
         public int Idade { get; set; }
+        public List<AmbienteDto>? Ambientes { get; set; }
+        public int DependenciaId { get; set; }
+        public int MatriculaId { get; set; }
     }
 }

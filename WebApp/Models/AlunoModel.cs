@@ -30,6 +30,8 @@ namespace WebApp.Models
         public SelectList ListProfissionals { get; set; }
         public string ProfissionalId { get; set; }
         public DependenciaDto Dependecia { get; set; }
+        public List<AmbienteDto>? Ambientes { get; set; }
+        public MatriculaDto Matricula { get; set; }
 
 
         public class CreateUpdateDadosAlunoCommand
