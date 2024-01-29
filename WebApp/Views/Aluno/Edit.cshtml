@@ -327,7 +327,8 @@
                                             <label class="col-sm-1 control-label">Nacionalidade</label>
                                             <div class="col-sm-5">
 
-                                                <input type="text" id="nacionalidade" name="nacionalidade" class="form-control" value="@if (Model.Dependecia != null) { @Model.Dependecia.Nacionalidade }" />
+	                                            <input type="text" id="nacionalidade" name="nacionalidade" class="form-control" 
+	                                                   value="@if (Model.Dependecia != null) { @Model.Dependecia.Nacionalidade }" />
                                             </div>
                                             <label class="col-sm-1 control-label">Naturalidade</label>
                                             <div class="col-sm-5">
@@ -386,12 +387,12 @@
                                             </div>
                                             <label class="col-sm-1 control-label">Ano </label>
                                             <div class="col-sm-2">
-                                                <input type="text" id="ano" name="ano" class="form-control" /> value="@Model.Dependecia.Ano"
+                                                <input type="text" id="ano" name="ano" class="form-control"value="@if (Model.Dependecia !=null) {@Model.Dependecia.Ano}" /> 
                                             </div>
                                             <label class="col-sm-1 control-label">Turma</label>
                                             <div class="col-sm-3">
-                                                <input type="text" id="turma" name="turma" class="form-control" /> value="@Model.Dependecia.Turma" 
-                                            </div>
+												<input type="text" id="turma" name="turma" class="form-control" value="@if (Model.Dependecia !=null) {@Model.Dependecia.Turma}" />
+											</div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">Termo de compromisso</label>
