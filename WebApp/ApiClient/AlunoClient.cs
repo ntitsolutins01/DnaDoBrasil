@@ -44,7 +44,7 @@ namespace WebApp.ApiClient
         public AlunoDto GetAlunoById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceAlunos}/{id}"));
+                $"{ResourceAlunos}/Aluno/{id}"));
             return Get<AlunoDto>(requestUrl);
         }
         public List<AlunoDto> GetAlunosByLocalidade(int id)

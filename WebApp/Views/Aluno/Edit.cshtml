@@ -315,7 +315,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-1 control-label">Doenças</label>
                                             <div class="col-sm-11">
-                                                <textarea class="form-control" rows="3" id="Doenca" name="Doenca" value="@Model.Dependecia.Doencas"
+                                                <textarea class="form-control" rows="3" id="Doenca" name="Doenca" value="@{ Model.Dependecia == null ? "" : Model.Dependecia.Doencas }"
                                                           data-plugin-maxlength maxlength="400"></textarea>
                                                 <p>
                                                     <code>limite</code> 400.
