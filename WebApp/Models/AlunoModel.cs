@@ -50,7 +50,7 @@ namespace WebApp.Models
             public string? Celular { get; set; }
             public string? Cep { get; set; }
             public string? Endereco { get; set; }
-            public int? Numero { get; set; }
+            public string? Numero { get; set; }
             public string? Bairro { get; set; }
             public string? RedeSocial { get; set; }
             public string? Url { get; set; }
