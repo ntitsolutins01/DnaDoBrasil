@@ -80,9 +80,40 @@ namespace WebApp.Controllers
 		        Console.Write(e.StackTrace);
 		        return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = e.Message });
 
-	        }
+            }
         }
 
+        //[ClaimsAuthorize("Usuario", "Incluir")]
+        [HttpPost]
+        public async Task<ActionResult> Create(IFormCollection collection)
+        {
+            try
+            {
+                var command = new LaudoModel.CreateUpdateLaudoCommand()
+                {
+                    ImpulsaoHorizontal = Convert.ToDecimal(collection["impulsaoHorizontal"].ToString()),
+                    Flexibilidade = Convert.ToDecimal(collection["flexibilidade"].ToString()),
+                    PreensaoManual = Convert.ToDecimal(collection["preensaoManual"].ToString()),
+                    Velocidade = Convert.ToDecimal(collection["testeVelocidade"].ToString()),
+                    AptidaoFisica = Convert.ToDecimal(collection["aptidaoFisica"].ToString()),
+                    Agilidade = Convert.ToDecimal(collection["agilidade"].ToString()),
+                    Abdominal = Convert.ToDecimal(collection["abdominal"].ToString()),
+                    Altura = Convert.ToDecimal(collection["altura"].ToString()),
+                    AlunoId = Convert.ToInt32(collection["ddlAluno"].ToString()),
+                    EnvergaduraSaude = Convert.ToInt32(collection["envergaduraSaude"].ToString()),
+                    MassaCorporalSaude = Convert.ToInt32(collection["massaCorporalSaude"].ToString()),
+                    AlturaSaude = Convert.ToInt32(collection["alturaSaude"].ToString()),
+                };
 
-	}
+                await ApiClientFactory.Instance.CreateLaudo(command);
+
+                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
+    }
 }

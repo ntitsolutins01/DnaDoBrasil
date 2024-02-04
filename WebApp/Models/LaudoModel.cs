@@ -28,13 +28,23 @@ namespace WebApp.Models
         public class CreateUpdateLaudoCommand
 		{
 			public int Id { get; set; }
-			public string Nome { get; set; }
-			public bool Status { get; set; } = true;
-			public string Descricao { get; set; }
-			public int IdadeInicial { get; set; }
-			public int IdadeFinal { get; set; }
-			public int ScoreTotal { get; set; }
-		}
+            public decimal? Flexibilidade { get; set; }
+            public decimal? PreensaoManual { get; set; }
+            public decimal? Velocidade { get; set; }
+            public decimal? ImpulsaoHorizontal { get; set; }
+            public decimal? AptidaoFisica { get; set; }
+            public decimal? Abdominal { get; set; }
+            public decimal? Imc { get; set; }
+            public decimal? Quadrado { get; set; }
+            public string? Encaminhamento { get; set; }
+            public decimal? Altura { get; set; }
+            public decimal? Peso { get; set; }
+            public decimal? Agilidade { get; set; }
+            public int? AlunoId { get; set; }
+            public decimal? EnvergaduraSaude { get; set; }
+            public decimal? MassaCorporalSaude { get; set; }
+            public decimal? AlturaSaude { get; set; }
+        }
 	}
 
 }

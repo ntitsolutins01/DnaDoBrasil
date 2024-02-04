@@ -42,6 +42,7 @@
     <None Include="wwwroot\assets\vendor\axios\axios.min.js" />
     <None Include="wwwroot\assets\vendor\axios\axios.min.map" />
     <None Include="wwwroot\assets\vendor\datatables\media\js\dataTables.select.min.js" />
+    <None Include="wwwroot\assets\vendor\fuelux\js\spinner.js" />
     <None Include="wwwroot\assets\vendor\jquery-mask\jquery.mask.js" />
     <None Include="wwwroot\assets\vendor\vue\vue.js" />
     <None Include="wwwroot\EmailTemplates\ConfirmEmail.html" />

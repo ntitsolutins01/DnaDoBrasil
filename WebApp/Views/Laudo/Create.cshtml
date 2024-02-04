@@ -74,7 +74,7 @@
                                     </a>
                                 </li>
                                 <li class="">
-                                    <a href="#consumo-alimentar"data-toggle="tab" aria-expanded="false">
+                                    <a href="#consumo-alimentar" data-toggle="tab" aria-expanded="false">
                                         <i class="fa fa-cutlery" style="color: #47a447;"></i>
                                         <span style="color: #47a447;">Consumo Alimentar</span>
                                     </a>
@@ -82,12 +82,12 @@
                                 <li class="">
                                     <a href="#saude-bucal"
                                        data-toggle="tab" aria-expanded="false">
-                                        <i class="fa fa-medkit" style="color: #5bc0de;"></i> 
+                                        <i class="fa fa-medkit" style="color: #5bc0de;"></i>
                                         <span style="color: #5bc0de;">Saúde Bucal</span>
                                     </a>
                                 </li>
                                 <li class="">
-                                    <a href="#qualidade-vida"data-toggle="tab" aria-expanded="false">
+                                    <a href="#qualidade-vida" data-toggle="tab" aria-expanded="false">
                                         <i class="fa fa-star-o" style="color: #00a4a9;"></i>
                                         <span style="color: #00a4a9;">Qualidade de Vida</span>
                                     </a>
@@ -101,18 +101,42 @@
                                 </li>
                             </ul>
                             <div class="tab-content">
-                                <div id="talento-esportivo" class="tab-pane active">
+                                <div id="saude" class="tab-pane active">
+                                    <div class="row form-group">
+                                        <div>
+                                            <label class="col-sm-2 control-label"><strong>Altura (cm) </strong></label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" id="alturaSaude" name="alturaSaude" maxlength="6" />
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label class="col-sm-3 control-label"><strong>Massa Corporal (kg) </strong></label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="massaCorporalSaude" name="massaCorporalSaude" maxlength="6" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div>
+                                            <label class="col-sm-2 control-label"><strong>Envergadura (cm)</strong></label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" id="envergaduraSaude" name="envergaduraSaude" maxlength="6" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="talento-esportivo" class="tab-pane">
                                     <div class="row form-group">
                                         <div>
                                             <label class="col-sm-2 control-label"><strong>Altura (cm) </strong></label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" />
+                                                <input type="text" class="form-control" id="altura" name="altura" maxlength="6" />
                                             </div>
                                         </div>
                                         <div>
                                             <label class="col-sm-3 control-label"><strong>Massa Corporal (kg)</strong></label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" />
+                                                <input type="text" class="form-control" id="massaCorporal" name="massaCorporal" maxlength="6" />
                                             </div>
                                         </div>
                                     </div>
@@ -120,13 +144,13 @@
                                         <div>
                                             <label class="col-sm-2 control-label"><strong>Preensão Manual (kg)</strong></label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" />
+                                                <input type="text" class="form-control" id="preensaoManual" name="preensaoManual" maxlength="6" />
                                             </div>
                                         </div>
                                         <div>
                                             <label class="col-sm-3 control-label"><strong>Flexibilidade (cm)</strong></label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" />
+                                                <input type="text" class="form-control" id="flexibilidade" name="flexibilidade" maxlength="6" />
                                             </div>
                                         </div>
                                     </div>
@@ -134,13 +158,18 @@
                                         <div>
                                             <label class="col-sm-2 control-label"><strong>Impulsão Horizontal (cm)</strong></label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" />
+                                                <input type="text" class="form-control" id="impulsaoHorizontal" name="impulsaoHorizontal" maxlength="6" />
                                             </div>
                                         </div>
                                         <div>
                                             <label class="col-sm-3 control-label"><strong>Teste de Velocidade 20m (seg)</strong></label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" />
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-clock-o"></i>
+                                                    </span>
+                                                    <input type="text" id="testeVelocidade" name="testeVelocidade" data-plugin-timepicker class="form-control" data-plugin-options='{ "showMeridian": false, "explicitMode": true, "setDefaultTime": false }'>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -148,27 +177,18 @@
                                         <div>
                                             <label class="col-sm-2 control-label"><strong>Aptidão Física (mLO2/min)</strong></label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" />
+                                                <input type="text" class="form-control" id="aptidaoFisica" name="aptidaoFisica" maxlength="6" />
                                             </div>
                                         </div>
                                         <div>
                                             <label class="col-sm-3 control-label"><strong>Agilidade (seg)</strong></label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row form-group">
-                                        <div>
-                                            <label class="col-sm-2 control-label"><strong>Impulsão Horizontal (cm)</strong></label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" />
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <label class="col-sm-3 control-label"><strong>Teste de Velocidade 20m (seg)</strong></label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" />
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-clock-o"></i>
+                                                    </span>
+                                                    <input type="text" id="agilidade" name="agilidade" data-plugin-timepicker class="form-control" data-plugin-options='{ "showMeridian": false, "explicitMode": true , "setDefaultTime": false }'>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -176,7 +196,24 @@
                                         <div>
                                             <label class="col-sm-2 control-label"><strong>Abdominal (qtd)</strong></label>
                                             <div class="col-sm-3">
-                                                <input type="number" class="form-control" />
+                                                <div data-plugin-spinner data-plugin-options='{ "value":0, "step": 5, "min": 0, "max": 200 }'>
+                                                    <div class="input-group">
+                                                        <div class="spinner-buttons input-group-btn">
+                                                            <button type="button" class="btn btn-default spinner-up">
+                                                                <i class="fa fa-plus"></i>
+                                                            </button>
+                                                        </div>
+                                                        <input type="text" class="spinner-input form-control" maxlength="3" readonly id="abdominal" name="abdominal">
+                                                        <div class="spinner-buttons input-group-btn">
+                                                            <button type="button" class="btn btn-default spinner-down">
+                                                                <i class="fa fa-minus"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <p>
+                                                    <code>contagem</code> de 5 em 5
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
@@ -227,30 +264,6 @@
                                             </div>
                                         </div>
                                     }
-                                </div>
-                                <div id="saude" class="tab-pane">
-                                    <div class="row form-group">
-                                        <div>
-                                            <label class="col-sm-2 control-label"><strong>Altura (cm) </strong><span class="required">*</span></label>
-                                            <div class="col-sm-4">
-                                                <input type="text" class="form-control" required />
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <label class="col-sm-3 control-label"><strong>Massa Corporal (kg)</strong><span class="required">*</span></label>
-                                            <div class="col-sm-3">
-                                                <input type="text" class="form-control" required />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row form-group">
-                                        <div>
-                                            <label class="col-sm-2 control-label"><strong>Envergadura (cm)</strong><span class="required">*</span></label>
-                                            <div class="col-sm-4">
-                                                <input type="text" class="form-control" required />
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                                 <div id="consumo-alimentar" class="tab-pane">
                                     @for (var index = 0; index < Model.QuestionarioConsumoAlimentar.Count; index++)
@@ -320,38 +333,22 @@
     <link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css" />
     <link rel="stylesheet" href="~/assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
     <link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />
+    <link href="~/assets/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/assets/vendor/bootstrap-timepicker/css/bootstrap-timepicker.css" />
 }
 @section Scripts {
     <script src="~/assets/vendor/ios7-switch/ios7-switch.js"></script>
     <script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
     <script src="~/assets/vendor/select2/js/select2.js"></script>
+    <script src="~/assets/vendor/jquery-mask/jquery.mask.js"></script>
     <script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
     <script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    <script src="~/assets/vendor/bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+    <script src="~/assets/vendor/bootstrap-timepicker/bootstrap-timepicker.js"></script>
+    <script src="~/assets/vendor/fuelux/js/spinner.js"></script>
     <script src="~/js/formatTable.js"></script>
     <script src="~/js/laudo.js"></script>
-    <script>
-
-
-        // iosSwitcher
-        (function ($) {
-
-            'use strict';
-
-            if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
-
-                $(function () {
-                    $('[data-plugin-ios-switch]').each(function () {
-                        var $this = $(this);
-
-                        $this.themePluginIOS7Switch();
-                    });
-                });
-
-            }
-
-        }).apply(this, [jQuery]);
-
-    </script>
 }
 
 

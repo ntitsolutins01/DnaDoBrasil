@@ -9,16 +9,119 @@
         (function ($) {
             'use strict';
 
-            if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
+            // iosSwitcher
+            (function ($) {
 
-                $(function () {
-                    $('[data-plugin-ios-switch]').each(function () {
+                'use strict';
+
+                if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
+
+                    $(function () {
+                        $('[data-plugin-ios-switch]').each(function () {
+                            var $this = $(this);
+
+                            $this.themePluginIOS7Switch();
+                        });
+                    });
+
+                }
+
+            }).apply(this, [jQuery]);
+
+            // TimePicker
+            (function (theme, $) {
+
+                theme = theme || {};
+
+                var instanceName = '__timepicker';
+
+                var PluginTimePicker = function ($el, opts) {
+                    return this.initialize($el, opts);
+                };
+
+                PluginTimePicker.defaults = {
+                    disableMousewheel: true
+                };
+
+                PluginTimePicker.prototype = {
+                    initialize: function ($el, opts) {
+                        if ($el.data(instanceName)) {
+                            return this;
+                        }
+
+                        this.$el = $el;
+
+                        this
+                            .setData()
+                            .setOptions(opts)
+                            .build();
+
+                        return this;
+                    },
+
+                    setData: function () {
+                        this.$el.data(instanceName, this);
+
+                        return this;
+                    },
+
+                    setOptions: function (opts) {
+                        this.options = $.extend(true, {}, PluginTimePicker.defaults, opts);
+
+                        return this;
+                    },
+
+                    build: function () {
+                        this.$el.timepicker(this.options);
+
+                        return this;
+                    }
+                };
+
+                // expose to scope
+                $.extend(theme, {
+                    PluginTimePicker: PluginTimePicker
+                });
+
+                // jquery plugin
+                $.fn.themePluginTimePicker = function (opts) {
+                    return this.each(function () {
                         var $this = $(this);
 
-                        $this.themePluginIOS7Switch();
+                        if ($this.data(instanceName)) {
+                            return $this.data(instanceName);
+                        } else {
+                            return new PluginTimePicker($this, opts);
+                        }
+
                     });
-                });
-            }
+                }
+
+            }).apply(this, [window.theme, jQuery]);
+
+            // TimePicker
+            (function ($) {
+
+                'use strict';
+
+                if ($.isFunction($.fn['timepicker'])) {
+
+                    $(function () {
+                        $('[data-plugin-timepicker]').each(function () {
+                            var $this = $(this),
+                                opts = {};
+
+                            var pluginOptions = $this.data('plugin-options');
+                            if (pluginOptions)
+                                opts = pluginOptions;
+
+                            $this.themePluginTimePicker(opts);
+                        });
+                    });
+
+                }
+
+            }).apply(this, [jQuery]);
 
             var formid = $('form').attr('id');
 
@@ -159,6 +262,26 @@
                             }
                         });
                 });
+
+                //mascara dos inputs
+                var $numAltura = $("#altura");
+                $numAltura.mask('000,00', { reverse: false });
+                var $numMassaCorporal = $("#massaCorporal");
+                $numMassaCorporal.mask('000,00', { reverse: false });
+                var $numPreensaoManual = $("#preensaoManual");
+                $numPreensaoManual.mask('000,00', { reverse: false });
+                var $numFlexibilidade = $("#flexibilidade");
+                $numFlexibilidade.mask('000,00', { reverse: false });
+                var $numImpulsaoHorizontal = $("#impulsaoHorizontal");
+                $numImpulsaoHorizontal.mask('000,00', { reverse: false });
+                var $numAptidaoFisica = $("#aptidaoFisica");
+                $numAptidaoFisica.mask('000,00', { reverse: false });
+                var $numAlturaSaude = $("#alturaSaude");
+                $numAlturaSaude.mask('000,00', { reverse: false });
+                var $numMassaCorporalSaude = $("#massaCorporalSaude");
+                $numMassaCorporalSaude.mask('000,00', { reverse: false });
+                var $numEnvergaduraSaude = $("#envergaduraSaude");
+                $numEnvergaduraSaude.mask('000,00', { reverse: false });
 
                 $("#formLaudo").validate({
                     highlight: function (label) {

@@ -448,7 +448,7 @@ namespace WebApp.Controllers
             catch (Exception e)
             {
                 Console.Write(e.StackTrace);
-                return RedirectToAction(nameof(Create), new { message = e.Message});
+                return RedirectToAction(nameof(Create), new { notify = (int)EnumNotify.Error, message = e.Message});
             }
         }
 

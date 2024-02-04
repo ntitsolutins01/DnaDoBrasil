@@ -14,10 +14,17 @@
 					<h2 class="panel-title">Filtro de pesquisa</h2>
 				</header>
 				<div class="panel-body">
-
+                    <label class="col-sm-2 control-label">Fomento:</label>
+                    <div class="col-md-4 form-group">
+                        <select class="form-control populate select2" name="ddlFomento" id="ddlFomento" style="width:100%"
+                                title="periodoSelect"
+                                asp-for="FomentoId" asp-items="Model.ListFomentos">
+                            <option value="">Selecionar Fomento</option>
+                        </select>
+                    </div>
 					<label class="col-sm-2 control-label">Estado:</label>
 					<div class="col-md-4 form-group">
-						<select class="form-control populate select2" name="ddlEstado" id="ddlEstado"
+						<select class="form-control populate select2" name="ddlEstado" id="ddlEstado" style="width:100%"
 								title="estadoSelect" required
 								asp-for="EstadoId" asp-items="Model.ListEstados">
 							<option value="">Selecionar Estado</option>
@@ -25,7 +32,7 @@
 					</div>
 					<label class="col-sm-2 control-label">Cidade:</label>
 					<div class="col-md-4 form-group">
-						<select class="form-control populate select2" name="ddlMunicipio" id="ddlMunicipio"
+						<select class="form-control populate select2" name="ddlMunicipio" id="ddlMunicipio" style="width:100%"
 								title="cidadeSelect" required
 								asp-for="CidadeId" asp-items="Model.ListCidades">
 							<option value="">Selecionar Cidade</option>
@@ -33,20 +40,10 @@
 					</div>
 					<label class="col-sm-2 control-label">Localidade:</label>
 					<div class="col-md-4 form-group">
-						<select class="form-control populate select2" name="ddlLocalidade" id="ddlLocalidade"
+						<select class="form-control populate select2" name="ddlLocalidade" id="ddlLocalidade" style="width:100%"
 								title="localidadeSelect" required
 								asp-for="LocalidadeId" asp-items="Model.ListLocalidades">
 							<option value="">Selecionar Localidade</option>
-						</select>
-					</div>
-					<label class="col-sm-2 control-label">Periodo:</label>
-					<div class="col-md-4 form-group">
-						<select class="form-control populate select2" name="ddlPeriodo" id="ddlPeriodo"
-								title="periodoSelect">
-							<option value="">Selecionar Periodo</option>
-							<option value="matutino">MATUNINO</option>
-							<option value="vespertino">VESPERTINO</option>
-							<option value="noturno">NOTURNO</option>
 						</select>
 					</div>
 				</div>
@@ -135,7 +132,7 @@
 							<div class="summary">
 								<h4 class="title">Cadastros masculino</h4>
 								<div class="info">
-									<strong class="amount">0</strong>
+									<strong class="amount">@Model.Indicadores.CadastrosMasculinos</strong>
 								</div>
 							</div>
 						</div>
@@ -156,7 +153,7 @@
 							<div class="summary">
 								<h4 class="title">Cadastros feminino</h4>
 								<div class="info">
-									<strong class="amount">0</strong>
+									<strong class="amount">@Model.Indicadores.CadastrosFemininos</strong>
 								</div>
 							</div>
 						</div>
@@ -177,7 +174,7 @@
 							<div class="summary">
 								<h4 class="title">Alunos Cadastrados</h4>
 								<div class="info">
-									<strong class="amount">0</strong>
+									<strong class="amount">@Model.Indicadores.AlunosCadastrados</strong>
 								</div>
 							</div>
 						</div>

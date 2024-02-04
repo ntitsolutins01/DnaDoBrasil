@@ -22,7 +22,7 @@
                 <div class="form-group row">
                     <label class="col-sm-3 control-label text-sm-right pt-2">Estado <span class="required">*</span></label>
                     <div class="col-md-4">
-                        <select class="form-control populate select2" name="ddlEstado" id="ddlEstado"
+                        <select class="form-control populate select2" name="ddlEstado" id="ddlEstado" style="width:100%"
                                 title="Por favor informe o estado." required
                                 asp-for="EstadoId" asp-items="Model.ListEstados">
                             <option value="">Selecionar Estado</option>
@@ -30,7 +30,7 @@
                     </div>
                     <label class="col-sm-1 control-label text-sm-right pt-2">Municipio <span class="required">*</span></label>
                     <div class="col-md-4">
-                        <select class="form-control populate select2" name="ddlMunicipio" id="ddlMunicipio"
+                            <select class="form-control populate select2" name="ddlMunicipio" id="ddlMunicipio" style="width:100%"
                                 title="Por favor informe o municipio." required
                                 asp-for="MunicipioId" asp-items="Model.ListMunicipios">
                             <option value="">Selecionar Municipio</option>
@@ -40,7 +40,7 @@
                 <div class="form-group row">
                     <label class="col-sm-3 control-label text-sm-right pt-2">Localidade <span class="required">*</span></label>
                     <div class="col-md-4">
-                        <select class="form-control populate select2" name="ddlLocalidade" id="ddlLocalidade"
+                            <select class="form-control populate select2" name="ddlLocalidade" id="ddlLocalidade" style="width:100%"    
                                 title="Por favor informe o localidade." required
                                 asp-for="LocalidadeId" asp-items="Model.ListLocalidades">
                             <option value="">Selecionar Localidade</option>

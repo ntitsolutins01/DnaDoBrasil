@@ -24,12 +24,17 @@ namespace WebApp.Controllers
 
 		public IActionResult Index()
 		{
+			var fomentos = new SelectList(ApiClientFactory.Instance.GetFomentoAll(), "Id", "Nome");
 			var localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeAll(), "Id", "Nome");
 			var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
+			var indicadores = ApiClientFactory.Instance.GetIndicadoresByFilter();
+
 			var model = new DashboardModel
 			{
+				ListFomentos = fomentos,
 				ListLocalidades = localidades,
-				ListEstados = estados
+				ListEstados = estados,
+				Indicadores = indicadores
 
 			};
 			return View(model);
