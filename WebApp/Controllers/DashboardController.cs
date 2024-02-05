@@ -9,7 +9,7 @@ using WebApp.Utility;
 
 namespace WebApp.Controllers
 {
-    public class DashboardController : BaseController
+	public class DashboardController : BaseController
 	{
 		private readonly ILogger<DashboardController> _logger;
 		private readonly IOptions<UrlSettings> _appSettings;
@@ -22,12 +22,20 @@ namespace WebApp.Controllers
 			ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
 		}
 
-		public IActionResult Index()
+		public IActionResult Index(IFormCollection collection)
 		{
+			var searchFilter = new DashboardIndicadoresDto
+			{
+					FomentoId = collection["ddlFomento"].ToString(),
+					Estado = collection["ddlEstado"].ToString(),
+					MunicipioId = collection["ddlMunicipio"].ToString(),
+					LocalidadeId = collection["ddlLocalidade"].ToString()
+			};
+
 			var fomentos = new SelectList(ApiClientFactory.Instance.GetFomentoAll(), "Id", "Nome");
 			var localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeAll(), "Id", "Nome");
 			var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
-			var indicadores = ApiClientFactory.Instance.GetIndicadoresByFilter();
+			var indicadores = ApiClientFactory.Instance.GetIndicadoresByFilter(searchFilter);
 
 			var model = new DashboardModel
 			{
@@ -39,21 +47,21 @@ namespace WebApp.Controllers
 			};
 			return View(model);
 		}
-		
-        public Task<JsonResult> GetMunicipioByUf(string uf)
-        {
-            try
-            {
-                if (string.IsNullOrEmpty(uf)) throw new Exception("Estado não informado.");
-                var resultLocal = ApiClientFactory.Instance.GetMunicipiosByUf(uf);
 
-                return Task.FromResult(Json(new SelectList(resultLocal, "Id", "Nome")));
+		public Task<JsonResult> GetMunicipioByUf(string uf)
+		{
+			try
+			{
+				if (string.IsNullOrEmpty(uf)) throw new Exception("Estado não informado.");
+				var resultLocal = ApiClientFactory.Instance.GetMunicipiosByUf(uf);
 
-            }
-            catch (Exception ex)
-            {
-                return Task.FromResult(Json(ex.Message));
-            }
-        }
-    }
+				return Task.FromResult(Json(new SelectList(resultLocal, "Id", "Nome")));
+
+			}
+			catch (Exception ex)
+			{
+				return Task.FromResult(Json(ex.Message));
+			}
+		}
+	}
 }

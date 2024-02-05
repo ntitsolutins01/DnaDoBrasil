@@ -53,6 +53,12 @@ namespace WebApp.ApiClient
                 $"{ResourceAlunos}/Localidade/{id}"));
             return Get<List<AlunoDto>>(requestUrl);
         }
+        public List<SelectListDto> GetNomeAlunosAll(string id)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceAlunos}/NomeAlunos/{id}"));
+            return Get<List<SelectListDto>>(requestUrl);
+        }
 
 
         #endregion

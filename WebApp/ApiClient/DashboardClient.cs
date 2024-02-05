@@ -1,5 +1,6 @@
 ﻿using WebApp.Dto;
 using WebApp.Models;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace WebApp.ApiClient
 {
@@ -9,17 +10,25 @@ namespace WebApp.ApiClient
 
 		#region Main Methods
 
-        #endregion
 
-        #region Methods
+		public DashboardIndicadoresDto GetIndicadoresByFilter(DashboardIndicadoresDto searchFilter)
+		{
+			var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+				$"{ResourceDashboard}/Indicadores"));
+			return GetFiltro(requestUrl, searchFilter);
+		}
 
-        public DashboardIndicadoresDto GetIndicadoresByFilter()
-        {
-            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceDashboard}/Indicadores"));
-            return Get<DashboardIndicadoresDto>(requestUrl);
-        }
+		#endregion
 
-        #endregion
-    }
+		#region Methods
+
+		//public Task<DashboardIndicadoresDto>  GetIndicadoresByFilter(SearchDashboardDto searchFilter)
+		//      {
+		//	var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+		//		$"{ResourceDashboard}/Indicadores"));
+		//	var result = Get(requestUrl, searchFilter);
+		//}
+
+		#endregion
+	}
 }

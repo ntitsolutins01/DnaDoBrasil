@@ -626,8 +626,8 @@ namespace WebApp.Controllers
         {
             try
             {
-                if (string.IsNullOrEmpty(id)) throw new Exception("Localidade não informado.");
-                var resultLocal = ApiClientFactory.Instance.GetAlunosByLocalidade(Convert.ToInt32(id));
+                if (string.IsNullOrEmpty(id)) throw new Exception("Localidade não informada.");
+                var resultLocal = ApiClientFactory.Instance.GetNomeAlunosAll(id);
 
                 return Task.FromResult(Json(new SelectList(resultLocal, "Id", "Nome")));
 
