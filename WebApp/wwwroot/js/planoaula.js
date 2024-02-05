@@ -1,8 +1,8 @@
 ﻿var vm = new Vue({
-    el: "#formPlanoAula",
+    el: "#vPlanoAula",
     data: {
         loading: false,
-        editDto: { Id: "", PlanoAula: "", TipoEscolaridade: "" }
+        editDto: { Id: "", PlanoAula: "", TipoEscolaridade: "", Modalidade: "" }
 },
     mounted: function () {
         var self = this;
@@ -40,6 +40,31 @@
                         placement.after(error);
                     }
                 }
+            });
+
+            //skin select
+            var $select = $(".select2").select2({
+                allowClear: true
+            });
+
+            $(".select2").each(function () {
+                var $this = $(this),
+                    opts = {};
+
+                var pluginOptions = $this.data('plugin-options');
+                if (pluginOptions)
+                    opts = pluginOptions;
+
+                $this.themePluginSelect2(opts);
+            });
+
+            /*
+             * When you change the value the select via select2, it triggers
+             * a 'change' event, but the jquery validation plugin
+             * only re-validates on 'blur'*/
+
+            $select.on('change', function () {
+                $(this).trigger('blur');
             });
 
             $("#formEditPlanoAula").validate({
@@ -89,11 +114,13 @@
         EditPlanoAula: function (id) {
             var self = this;
 
-            axios.get("PlanoAula/GetPlanoAulaById/?id=" + id).then(result => {
+            axios.get("../PlanoAula/GetPlanoAulaById/?id=" + id).then(result => {
 
                 self.editDto.Id = result.data.id;
-                self.editDto.PlanoAula = result.data.planoaula;
+                self.editDto.PlanoAula = result.data.nome;
+                self.editDto.Modalidade = result.data.modalidade;
                 self.editDto.TipoEscolaridade = result.data.tipoescolaridade;
+                $('.ddlPlanoAula option[value="' + self.editDto.PlanoAula +'"]')
 
             }).catch(error => {
                 Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
@@ -103,12 +130,12 @@
 });
 var crud = {
     DeleteModal: function (id) {
-        $('input[name="PlanoAulaId"]').attr('value', id);
+        $('input[name="deletePlanoAulaId"]').attr('value', id);
         $('#mdDeletePlanoAula').modal('show');
         vm.DeletePlanoAula(id)
     },
     EditModal: function (id) {
-        $('input[name="PlanoAulaId"]').attr('value', id);
+        $('input[name="editPlanoAulaId"]').attr('value', id);
         $('#mdEditPlanoAula').modal('show');
         vm.EditPlanoAula(id)
     }
