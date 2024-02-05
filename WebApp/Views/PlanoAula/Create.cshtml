@@ -5,7 +5,7 @@
 
 <div class="row">
 	<div class="col-md-12">
-		@using (@Html.BeginForm("Create", "Planoaula", FormMethod.Post, new { id = "formPlanoaula", @class = "form-horizontal" }))
+		@using (@Html.BeginForm("Create", "Planoaula", FormMethod.Post, new { id = "formPlanoAula", @class = "form-horizontal" }))
 		{
 			<section class="panel">
 				<header class="panel-heading">
@@ -81,14 +81,18 @@
 	</div>
 </div>
 @section CssSpecificVendor {
-	<link rel="stylesheet" href="~/assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.css" />
+	<link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css" />
+	<link rel="stylesheet" href="~/assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
+	<link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />
 }
-
 @section Scripts {
+	<script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
+	<script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
 	<script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
+	<script src="~/assets/vendor/select2/js/select2.js"></script>
+	<script src="~/js/formatTable.js"></script>
 	<script src="~/js/Planoaula.js"></script>
-	<script>
-		|
+		
 
 			(function ($) {
 

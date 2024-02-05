@@ -4,7 +4,7 @@
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div id="formPlanoAula">
+<div id="vPlanoAula">
 	<div class="row">
 		<div class="col-md-12">
 			<section class="panel">
@@ -22,201 +22,212 @@
 					</div>
 					<table class="table table-bordered table-striped mb-0" id="datatable-default">
 						<thead>
-							<tr>
-								<th class="text-center">Id</th>
-								<th class="text-center">Plano Aula</th>
-								<th class="text-center">Tipo Escolaridade</th>
-								<th class="text-center">Modalidade</th>
-								<th class="text-center">Ações</th>
-							</tr>
+						<tr>
+							<th class="text-center">Id</th>
+							<th class="text-center">Plano Aula</th>
+							<th class="text-center">Tipo Escolaridade</th>
+							<th class="text-center">Modalidade</th>
+							<th class="text-center">Ações</th>
+						</tr>
 						</thead>
 						<tbody>
-							@foreach (var item in Model.PlanosAulas)
-							{
-								<tr>
-									<td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Id)</td>
-									<td class="text-center">@Html.DisplayFor(modelItem => item.PlanoAula)</td>
-									<td class="text-center">@Html.DisplayFor(modelItem => item.TipoEscolaridade)</td>
-									<td class="text-center">@Html.DisplayFor(modelItem => item.Modalidade)</td>
-									<td class="actions">
-										<a data-toggle="tooltip" data-placement="top" title="Download"
-										@* asp-action="Edit" *@ asp-controller="Perfil" asp-route-id="1" class="on-default edit-row"
-										   style='color: #1565C0'><i class="fa fa-download"></i></a>
-										<a data-toggle="tooltip" data-placement="top" title="Excluir" asp-action="Delete" asp-controller="Usuario" asp-route-id="1"
-										   class="on-default remove-row" style='color:#F44336'><i class="fa fa-trash"></i></a>
-									</td>
-								</tr>
-							}
+						@foreach (var item in Model.PlanosAulas)
+						{
+							<tr>
+								<td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Id)</td>
+								<td class="text-center">@Html.DisplayFor(modelItem => item.Nome)</td>
+								<td class="text-center">@Html.DisplayFor(modelItem => item.TipoEscolaridade)</td>
+								<td class="text-center">@Html.DisplayFor(modelItem => item.Modalidade)</td>
+								<td class="actions">
+									<a data-toggle="tooltip" data-placement="top" title="Download"
+									   asp-action="Edit" asp-controller="Perfil" asp-route-id="1" class="on-default edit-row"
+									   style='color: #1565C0'><i class="fa fa-download"></i></a>
+									<a data-toggle="tooltip" data-placement="top" title="Editar"
+									   href='javascript:(crud.EditModal(@item.Id))'
+									   class="on-default edit-row" style='color: #FF9800'>
+										<i class="fa fa-pencil"></i>
+									</a>
+									<a data-toggle="tooltip" data-placement="top" title="Excluir" href='javascript:(crud.DeleteModal(@item.Id))'
+									   class="on-default remove-row" style="cursor: pointer;color: #F44336"><i class="fa fa-trash"></i></a>
+								</td>
+							</tr>
+						}
 						</tbody>
 					</table>
 				</div>
 			</section>
 		</div>
-		<!-- Modal -->
-		<div class="modal fade" id="mdDeletePlanoAula" tabindex="-1" role="dialog" aria-labelledby="mdDeletePlanoAulaLabel" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="mdDeletePlanoAulaLabel">
-							<i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Exclusão de Plano Aula</strong>
-						</h5>
+	</div>
+	<!-- Modal -->
+	<div class="modal fade" id="mdDeletePlanoAula" tabindex="-1" role="dialog" aria-labelledby="mdDeletePlanoAulaLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="mdDeletePlanoAulaLabel">
+						<i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Exclusão de PlanoAula</strong>
+					</h5>
+				</div>
+				<div class="modal-body">
+					<div class="modal-icon">
+						<i class="fa fa-question-circle"></i>
 					</div>
-					<div class="modal-body">
-						<div class="modal-icon">
-							<i class="fa fa-question-circle"></i>
-						</div>
-						<div class="modal-text">
-							<input type="hidden" id="deletePlanoAulaId" />
-							<p class="mb-0">Tem certeza que deseja <b>excluir</b> esse registro?</p>
-						</div>
-						<div class="modal-wrapper">
-						</div>
+					<div class="modal-text">
+						<input type="hidden" id="deletePlanoAulaId" />
+						<p class="mb-0">Tem certeza que deseja <b>excluir</b> esse registro?</p>
 					</div>
-					<div class="modal-footer">
-						<button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-thumbs-o-down"></i> &nbsp;&nbsp;Não</button>
-						<a id="deletePlanoAulaHref" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</a>
+					<div class="modal-wrapper">
 					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-thumbs-o-down"></i> &nbsp;&nbsp;Não</button>
+					<a id="deletePlanoAulaHref" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</a>
 				</div>
 			</div>
 		</div>
-		<!-- Modal -->
-		<div class="modal fade" id="mdEditPlanoAula" tabindex="-1" role="dialog" aria-labelledby="mdEditPlanoAulaLabel" aria-hidden="true">
-			<div class="modal-dialog modal-lg" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="mdEditPlanoAulaLabel">
-							<i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Alterar PlanoAula</strong>
-						</h5>
-					</div>
-					@using (@Html.BeginForm("Edit", "PlanoAula", FormMethod.Post, new { id = "formEditPlanoAula", @class = "form-horizontal" }))
-					{
-						<input type="hidden" name="editPlanoAulaId" :value="editDto.Id" />
+	</div>
+	<!-- Modal -->
+	<div class="modal fade" id="mdEditPlanoAula" tabindex="-1" role="dialog" aria-labelledby="mdEditPlanoAulaLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="mdEditPlanoAulaLabel">
+						<i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Alterar PlanoAula</strong>
+					</h5>
+				</div>
+				@using (@Html.BeginForm("Edit", "PlanoAula", FormMethod.Post, new { id = "formEditPlanoAula", @class = "form-horizontal" }))
+				{
+					<input type="hidden" name="editPlanoAulaId" :value="editDto.Id" />
 
-						<div class="modal-body">
-							<div class="form-group row">
-								<label class="col-sm-3 control-label text-sm-right pt-2">Plano Aula<span class="required">*</span></label>
-								<div class="col-sm-9">
-									<select class="form-control populate select2" name="ddlPlanoAula" id="ddlPlanoAula"
-											style="width: 100%" title="Por favor selecione o plano aula.">
-										<option value="">Selecionar o Plano de Aula</option>
-										<option value="MATEMATICA">MATEMATICA</option>
-										<option value="EDUCAÇÃO FISICA">EDUCAÇÃO FISICA</option>
-										<option value="PORTUGUES">PORTUGUES</option>
-										<option value="CIENCIAS NATURAIS">CIENCIAS NATURAIS</option>
-										<option value="TEMAS TRANSVERSAIS">TEMAS TRANSVERSAIS</option>
-									</select>
-								</div>
+					<div class="modal-body">
+						<div class="form-group row ddlPlanoAula">
+							<label class="col-sm-3 control-label text-sm-right pt-2">Plano Aula<span class="required">*</span></label>
+							<div class="col-sm-9">
+								<select class="form-control populate select2" name="ddlPlanoAula" id="ddlPlanoAula"
+								        style="width: 100%" title="Por favor selecione o plano aula.">
+									<option value="">Selecionar o Plano de Aula</option>
+									<option value="MATEMATICA">MATEMATICA</option>
+									<option value="EDUCAÇÃO FISICA">EDUCAÇÃO FISICA</option>
+									<option value="PORTUGUES">PORTUGUES</option>
+									<option value="CIENCIAS NATURAIS">CIENCIAS NATURAIS</option>
+									<option value="TEMAS TRANSVERSAIS">TEMAS TRANSVERSAIS</option>
+								</select>
 							</div>
-							<div class="form-group row">
-								<label class="col-sm-3 control-label text-sm-right pt-2">Tipo Escolaridade <span class="required">*</span></label>
-								<div class="col-sm-3">
-									<select class="form-control populate select2" name="ddlTipoEscolaridade" id="ddlTipoEscolaridade"
-											style="width: 100%" title="Por favor selecione o tipo escolaridade.">
-										<option value="">Selecionar Tipo Escolaridade</option>
-										<option value="ENSINO MEDIO">ENSINO MEDIO</option>
-										<option value="ENSINO FUNDAMENTAL">ENSINO FUNDAMENTAL</option>
-										<option value="EJA">EJA</option>
-									</select>
-								</div>
-								<label class="col-sm-3 control-label text-sm-right pt-2">Modaliodade <span class="required">*</span></label>
-								<div class="col-sm-3">
-									<input type="text" name="modalidade" id="modalidade" class="form-control"
-										   maxlength="50" style="text-transform:uppercase"
-										   title="Por favor informe a modalidade." required />
-								</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-3 control-label text-sm-right pt-2">Tipo Escolaridade <span class="required">*</span></label>
+							<div class="col-sm-9">
+								<select class="form-control populate select2" name="ddlTipoEscolaridade" id="ddlTipoEscolaridade"
+								        style="width: 100%" title="Por favor selecione o tipo escolaridade.">
+									<option value="">Selecionar Tipo Escolaridade</option>
+									<option value="ENSINO MEDIO">ENSINO MEDIO</option>
+									<option value="ENSINO FUNDAMENTAL">ENSINO FUNDAMENTAL</option>
+									<option value="EJA">EJA</option>
+								</select>
 							</div>
-							<div class="form-group row">
-								<label class="col-sm-3 control-label text-sm-right pt-2">Arquivo</label>
-								<div class="col-sm-9">
-									<div class="fileupload fileupload-new" data-provides="fileupload">
-										<div class="input-append">
-											<div class="uneditable-input">
-												<i class="fa fa-file fileupload-exists"></i>
-												<span class="fileupload-preview"></span>
-											</div>
-											<span class="btn btn-default btn-file">
-												<span class="fileupload-exists">Alterar</span>
-												<span class="fileupload-new">Selecionar Arquivo</span>
-												<input type="file" />
-											</span>
-											<a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">Remover</a>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-3 control-label text-sm-right pt-2">Modaliodade <span class="required">*</span></label>
+							<div class="col-sm-9">
+								<input type="text" name="modalidade" id="modalidade" class="form-control"
+									   maxlength="50" style="text-transform:uppercase" :value="editDto.Modalidade"
+								       title="Por favor informe a modalidade." required />
+							</div>
+						</div>
+						@* <div class="form-group row">
+							<label class="col-sm-3 control-label text-sm-right pt-2">Arquivo</label>
+							<div class="col-sm-9">
+								<div class="fileupload fileupload-new" data-provides="fileupload">
+									<div class="input-append">
+										<div class="uneditable-input">
+											<i class="fa fa-file fileupload-exists"></i>
+											<span class="fileupload-preview"></span>
 										</div>
+										<span class="btn btn-default btn-file">
+											<span class="fileupload-exists">Alterar</span>
+											<span class="fileupload-new">Selecionar Arquivo</span>
+											<input type="file" />
+										</span>
+										<a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">Remover</a>
 									</div>
 								</div>
 							</div>
-						</div>
-						<div class="modal-footer">
-							<button type="reset" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
-							<button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
-						</div>
-					}
-				</div>
+						</div> *@
+					</div>
+					<div class="modal-footer">
+						<button type="reset" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
+						<button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
+					</div>
+				}
 			</div>
 		</div>
 	</div>
 </div>
 
 @section CssSpecificVendor {
+	<link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css" />
+	<link rel="stylesheet" href="~/assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
 	<link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />
 }
 @section Scripts {
 	<script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
 	<script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
+	<script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
+	<script src="~/assets/vendor/select2/js/select2.js"></script>
 	<script src="~/js/formatTable.js"></script>
 	<script src="~/js/Planoaula.js"></script>
 
 	<script>
-		|
+			
 
-			(function ($) {
+		(function ($) {
 
-				'use strict';
-				var crud = @ViewBag.CrudMessage;
+			'use strict';
+			var crud = @ViewBag.CrudMessage;
 
-				if (crud === 1) {
-					new PNotify({
-						title: 'Plano aula',
-						text: 'Cadastro realizado com sucesso!',
-						type: 'success'
-					});
-				} else if (crud === 2) {
-					new PNotify({
-						title: 'Plano aula',
-						text: 'Dados alterados com sucesso.',
-						type: 'warning'
-					});
-				} else if (crud === 3) {
-					new PNotify({
-						title: 'Plano aula',
-						text: 'Registro excluído com sucesso.',
-						type: 'error'
-					});
-				}
+			if (crud === 1) {
+				new PNotify({
+					title: 'Plano aula',
+					text: 'Cadastro realizado com sucesso!',
+					type: 'success'
+				});
+			} else if (crud === 2) {
+				new PNotify({
+					title: 'Plano aula',
+					text: 'Dados alterados com sucesso.',
+					type: 'warning'
+				});
+			} else if (crud === 3) {
+				new PNotify({
+					title: 'Plano aula',
+					text: 'Registro excluído com sucesso.',
+					type: 'error'
+				});
+			}
 
-				var notify = @ViewBag.NotifyMessage;
-				var messagem = '@ViewBag.Notify';
+			var notify = @ViewBag.NotifyMessage;
+			var messagem = '@ViewBag.Notify';
 
-				if (notify === 0) {
-					new PNotify({
-						title: 'Plano aula',
-						text: messagem,
-						type: 'success'
-					});
-				} else if (notify === 1) {
-					new PNotify({
-						title: 'Plano aula',
-						text: messagem,
-						type: 'warning'
-					});
-				} else if (notify === 2) {
-					new PNotify({
-						title: 'Plano aula',
-						text: messagem,
-						type: 'error'
-					});
-				}
+			if (notify === 0) {
+				new PNotify({
+					title: 'Plano aula',
+					text: messagem,
+					type: 'success'
+				});
+			} else if (notify === 1) {
+				new PNotify({
+					title: 'Plano aula',
+					text: messagem,
+					type: 'warning'
+				});
+			} else if (notify === 2) {
+				new PNotify({
+					title: 'Plano aula',
+					text: messagem,
+					type: 'error'
+				});
+			}
 
-			}).apply(this, [jQuery]);
+		}).apply(this, [jQuery]);
 
 	</script>
 

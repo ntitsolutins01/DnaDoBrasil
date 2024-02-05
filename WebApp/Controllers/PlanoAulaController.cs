@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using WebApp.Configuration;
+using WebApp.Dto;
 using WebApp.Enumerators;
 using WebApp.Factory;
 using WebApp.Models;
@@ -61,29 +62,19 @@ namespace WebApp.Controllers
             }
         }
 
-        //[ClaimsAuthorize("PlanoAula", "Alterar")]
-        public ActionResult Edit(string id)
-        {
-            var obj = ApiClientFactory.Instance.GetPlanoAulaById(id);
-
-            var model = new PlanoAulaModel() { PlanoAula = obj };
-
-            return View(model);
-        }
-
         //[ClaimsAuthorize("Usuario", "Alterar")]
-        public async Task<ActionResult> Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Edit(IFormCollection collection)
         {
             var command = new PlanoAulaModel.CreateUpdatePlanoAulaCommand
             {
-                Id = Convert.ToInt32(id),
+	            Id = Convert.ToInt32(collection["editPlanoAulaId"]),
 				Nome = collection["ddlPlanoAula"].ToString(),
 				TipoEscolaridade = collection["ddlTipoEscolaridade"].ToString(),
 				Modalidade = collection["modalidade"].ToString(),
 				Url = collection["url"].ToString(),
             };
 
-            await ApiClientFactory.Instance.UpdatePlanoAula(id, command);
+            await ApiClientFactory.Instance.UpdatePlanoAula(command.Id, command);
 
             return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
         }
@@ -101,5 +92,12 @@ namespace WebApp.Controllers
                 return RedirectToAction(nameof(Index));
             }
         }
-    }
+
+        public Task<PlanoAulaDto> GetPlanoAulaById(int id)
+        {
+	        var result = ApiClientFactory.Instance.GetPlanoAulaById(id);
+
+	        return Task.FromResult(result);
+        }
+	}
 }
