@@ -265,23 +265,23 @@
 
                 //mascara dos inputs
                 var $numAltura = $("#altura");
-                $numAltura.mask('000,00', { reverse: false });
+                $numAltura.mask('000', { reverse: false });
                 var $numMassaCorporal = $("#massaCorporal");
-                $numMassaCorporal.mask('000,00', { reverse: false });
+                $numMassaCorporal.mask('000', { reverse: false });
                 var $numPreensaoManual = $("#preensaoManual");
-                $numPreensaoManual.mask('000,00', { reverse: false });
+                $numPreensaoManual.mask('000', { reverse: false });
                 var $numFlexibilidade = $("#flexibilidade");
-                $numFlexibilidade.mask('000,00', { reverse: false });
+                $numFlexibilidade.mask('000', { reverse: false });
                 var $numImpulsaoHorizontal = $("#impulsaoHorizontal");
-                $numImpulsaoHorizontal.mask('000,00', { reverse: false });
+                $numImpulsaoHorizontal.mask('000', { reverse: false });
                 var $numAptidaoFisica = $("#aptidaoFisica");
-                $numAptidaoFisica.mask('000,00', { reverse: false });
+                $numAptidaoFisica.mask('000', { reverse: false });
                 var $numAlturaSaude = $("#alturaSaude");
-                $numAlturaSaude.mask('000,00', { reverse: false });
+                $numAlturaSaude.mask('000', { reverse: false });
                 var $numMassaCorporalSaude = $("#massaCorporalSaude");
-                $numMassaCorporalSaude.mask('000,00', { reverse: false });
+                $numMassaCorporalSaude.mask('000', { reverse: false });
                 var $numEnvergaduraSaude = $("#envergaduraSaude");
-                $numEnvergaduraSaude.mask('000,00', { reverse: false });
+                $numEnvergaduraSaude.mask('000', { reverse: false });
 
                 $("#formLaudo").validate({
                     highlight: function (label) {
