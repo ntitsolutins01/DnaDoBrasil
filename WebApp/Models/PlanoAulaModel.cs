@@ -9,7 +9,9 @@ namespace WebApp.Models
         public List<PlanoAulaDto> PlanosAulas { get; set; }
         public string PlanoAulaId { get; set; }
         public SelectList ListPlanoAulas { get; set; }
-        
+        public SelectList ListModalidades { get; set; }
+        public int ModalidadeId { get; set; }
+
         public class CreateUpdatePlanoAulaCommand
         {
 
@@ -18,6 +20,7 @@ namespace WebApp.Models
             public string? TipoEscolaridade { get; set; }
             public string? Modalidade { get; set; }
             public string? Url { get; set; }
+            public string NomeArquivo { get; set; }
         }
     }
 }

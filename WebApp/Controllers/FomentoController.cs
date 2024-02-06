@@ -22,6 +22,8 @@ namespace WebApp.Controllers
 
         public IActionResult Index(int? crud, int? notify, string message = null)
         {
+
+            ViewBag.Status = true;
             SetNotifyMessage(notify, message);
             SetCrudMessage(crud);
             var response = ApiClientFactory.Instance.GetFomentoAll();
@@ -110,7 +112,7 @@ namespace WebApp.Controllers
         public Task<FomentoDto> GetFomentoById(int id)
         {
             var result = ApiClientFactory.Instance.GetFomentoById(id);
-
+            
             return Task.FromResult(result);
         }
 	}

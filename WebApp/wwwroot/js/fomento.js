@@ -225,12 +225,12 @@
 
                 self.editDto.Id = result.data.id;
                 self.editDto.Codigo = result.data.codigo;
+                self.editDto.MunicipioEstado = result.data.municipioEstado;
+                self.editDto.Localidade = result.data.localidade;
                 self.editDto.Nome = result.data.nome;
                 self.editDto.DtIni = result.data.dtIni;
                 self.editDto.DtFim = result.data.dtFim;
-                if (result.data.status) {
-                    self.editDto.Status = "checked";
-                }
+                self.editDto.Status = result.data.status;
             }).catch(error => {
                 Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
             });

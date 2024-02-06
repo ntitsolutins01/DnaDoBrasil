@@ -11,8 +11,8 @@ namespace WebApp.Models
         public SelectList ListLocalidades { get; set; }
         public string EstadoId { get; set; }
         public SelectList ListEstados { get; set; }
-        public string CidadeId { get; set; }
-        public SelectList ListCidades { get; set; }
+        public string MunicipioId { get; set; }
+        public SelectList ListMunicipios { get; set; }
         public DashboardIndicadoresDto Indicadores { get; set; }
 	}
 

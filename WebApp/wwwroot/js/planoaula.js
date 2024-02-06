@@ -119,8 +119,10 @@
                 self.editDto.Id = result.data.id;
                 self.editDto.PlanoAula = result.data.nome;
                 self.editDto.Modalidade = result.data.modalidade;
-                self.editDto.TipoEscolaridade = result.data.tipoescolaridade;
-                $('.ddlPlanoAula option[value="' + self.editDto.PlanoAula +'"]')
+                self.editDto.TipoEscolaridade = result.data.tipoEscolaridade;
+                $('[name=ddlPlanoAula]').val(result.data.nome).trigger('change');
+                $('[name=ddlTipoEscolaridade]').val(result.data.tipoEscolaridade).trigger('change');
+                $('[name=ddlModalidade]').val(result.data.modalidade).trigger('change');
 
             }).catch(error => {
                 Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
