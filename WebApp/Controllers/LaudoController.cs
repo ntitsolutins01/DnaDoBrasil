@@ -89,7 +89,45 @@ namespace WebApp.Controllers
         {
             try
             {
-                var command = new LaudoModel.CreateUpdateLaudoCommand()
+	            var listVocacisonal= new List<string>();
+
+	            foreach (var item in collection)	
+	            {
+		            if (item.Key.Contains("nomeRespVocacional"))
+		            {
+			            listVocacisonal.Add(item.Value);
+		            }
+	            }
+
+	            var listQualidadeDeVida = new List<string>();
+
+	            foreach (var item in collection)
+	            {
+		            if (item.Key.Contains("nomeRespQualidadeVida"))
+		            {
+			            listQualidadeDeVida.Add(item.Value);
+		            }
+	            }
+	            var listConsumoAlimentar = new List<string>();
+
+	            foreach (var item in collection)
+	            {
+		            if (item.Key.Contains("nomeRespConsumoAlimentar"))
+		            {
+			            listConsumoAlimentar.Add(item.Value);
+		            }
+	            }
+	            var listSaudeBucal = new List<string>();
+
+	            foreach (var item in collection)
+	            {
+		            if (item.Key.Contains("nomeRespSaudeBucal"))
+		            {
+						listSaudeBucal.Add(item.Value);
+		            }
+	            }
+	           
+				var command = new LaudoModel.CreateUpdateLaudoCommand()
                 {
                     ImpulsaoHorizontal = Convert.ToDecimal(collection["impulsaoHorizontal"].ToString()),
                     Flexibilidade = Convert.ToDecimal(collection["flexibilidade"].ToString()),
@@ -103,6 +141,10 @@ namespace WebApp.Controllers
                     EnvergaduraSaude = Convert.ToInt32(collection["envergaduraSaude"].ToString()),
                     MassaCorporalSaude = Convert.ToInt32(collection["massaCorporalSaude"].ToString()),
                     AlturaSaude = Convert.ToInt32(collection["alturaSaude"].ToString()),
+                    ListVocacional = listVocacisonal.ToArray(),
+                    listQualidadeDeVida = listQualidadeDeVida.ToArray(),
+                    listConsumoAlimentar = listConsumoAlimentar.ToArray(),
+                    listSaudeBucal = listSaudeBucal.ToArray(),
                 };
 
                 await ApiClientFactory.Instance.CreateLaudo(command);
