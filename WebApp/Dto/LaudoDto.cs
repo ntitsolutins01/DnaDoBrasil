@@ -9,5 +9,6 @@
         public ConsumoAlimentarDto ConsumoAlimentar { get; set; }
         public SaudeBucalDto SaudeBucal { get; set; }
         public  AlunoDto Aluno { get; set; }
+        public string Id { get; set; }
     }
 }
