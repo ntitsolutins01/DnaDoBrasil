@@ -29,20 +29,51 @@ namespace WebApp.Controllers
 					FomentoId = collection["ddlFomento"].ToString(),
 					Estado = collection["ddlEstado"].ToString(),
 					MunicipioId = collection["ddlMunicipio"].ToString(),
-					LocalidadeId = collection["ddlLocalidade"].ToString()
+					LocalidadeId = collection["ddlLocalidade"].ToString(),
+                    DeficienciaId = collection["ddlDeficiencia"].ToString(),
+                    Etnia = collection["ddlEtnia"].ToString()
 			};
 
-			var fomentos = new SelectList(ApiClientFactory.Instance.GetFomentoAll(), "Id", "Nome");
-			var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
 			var indicadores = ApiClientFactory.Instance.GetIndicadoresByFilter(searchFilter);
+			var fomentos = new SelectList(ApiClientFactory.Instance.GetFomentoAll(), "Id", "Nome", indicadores.FomentoId);
+			var deficiencias = new SelectList(ApiClientFactory.Instance.GetDeficienciaAll(), "Id", "Nome", indicadores.DeficienciaId);
+			var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", indicadores.Estado);
+
+            List<SelectListDto> list = new List<SelectListDto>
+            {
+                new() { IdNome = "PARDOS", Nome = "PARDOS" },
+                new() { IdNome = "BRANCOS", Nome = "BRANCOS" },
+                new() { IdNome = "NEGROS", Nome = "NEGROS" },
+                new() { IdNome = "INDÍGENAS", Nome = "INDÍGENAS" },
+                new() { IdNome = "AMARELOS", Nome = "AMARELOS" }
+            };
+
+            var etnias = new SelectList(list, "IdNome", "Nome", indicadores.Etnia);
+            SelectList municipios = null;
+
+            if (!string.IsNullOrEmpty(indicadores.Estado))
+            {
+                municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(indicadores.Estado), "Id", "Nome", indicadores.MunicipioId);
+            }
+            SelectList localidades = null;
+
+            if (!string.IsNullOrEmpty(indicadores.LocalidadeId))
+            {
+                localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeByMunicipio(indicadores.MunicipioId), "Id", "Nome", indicadores.LocalidadeId);
+            }
+			
 
 			var model = new DashboardModel
 			{
 				ListFomentos = fomentos,
 				ListEstados = estados,
-				Indicadores = indicadores
+				Indicadores = indicadores,
+				ListDeficiencias = deficiencias,
+				ListMunicipios = municipios!,
+                ListEtnias = etnias,
+				ListLocalidades = localidades!
 
-			};
+            };
 			return View(model);
 		}
 

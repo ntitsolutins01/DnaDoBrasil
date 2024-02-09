@@ -14,6 +14,10 @@ namespace WebApp.Models
         public string MunicipioId { get; set; }
         public SelectList ListMunicipios { get; set; }
         public DashboardIndicadoresDto Indicadores { get; set; }
-	}
+        public SelectList ListDeficiencias { get; set; }
+        public string DeficienciaId { get; set; }
+        public SelectList ListEtnias { get; set; }
+        public string EtniaId { get; set; }
+    }
 
 }

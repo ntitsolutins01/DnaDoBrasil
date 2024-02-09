@@ -59,9 +59,14 @@ namespace WebApp.ApiClient
                 $"{ResourceAlunos}/NomeAlunos/{id}"));
             return Get<List<SelectListDto>>(requestUrl);
         }
-
+        public AlunosFilterDto GetAlunosByFilter(AlunosFilterDto searchFilter)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceAlunos}/Filter"));
+            return GetFiltro(requestUrl, searchFilter);
+        }
 
         #endregion
-    
+
     }
 }

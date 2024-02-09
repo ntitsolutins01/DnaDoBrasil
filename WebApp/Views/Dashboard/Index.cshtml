@@ -33,7 +33,7 @@
                         <div class="col-md-4 form-group">
                             <select class="form-control populate select2" name="ddlMunicipio" id="ddlMunicipio" style="width:100%"
                                     asp-for="MunicipioId" asp-items="Model.ListMunicipios">
-                                <option value="">Selecionar Cidade</option>
+                                <option value="">Selecionar Municipio</option>
                             </select>
                         </div>
                         <label class="col-sm-2 control-label">Localidade:</label>
@@ -41,6 +41,21 @@
                             <select class="form-control populate select2" name="ddlLocalidade" id="ddlLocalidade" style="width:100%"
                                     asp-for="LocalidadeId" asp-items="Model.ListLocalidades">
                                 <option value="">Selecionar Localidade</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-2 control-label">Deficiencia:</label>
+                        <div class="col-md-4 form-group">
+						<select class="form-control populate select2" name="ddlDeficiencia" id="ddlDeficiencia"
+                                    asp-for="DeficienciaId" asp-items="Model.ListDeficiencias">
+                                <option value="">Selecionar Deficiência</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-2 control-label">Etnia:</label>
+                        <div class="col-md-4 form-group">
+                        <select class="form-control populate select2" name="ddlEtnia" id="ddlEtnia" style="width:100%"
+                                    title="Por favor selecione um etnia."
+                                    asp-for="EtniaId" asp-items="Model.ListEtnias">
+                                <option value="">Selecionar Etnia</option>
                             </select>
                         </div>
                     </div>
@@ -391,11 +406,11 @@
 					<a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
 				</div>
 
-				<h2 class="panel-title">Talento Esportivo</h2>
+				<h2 class="panel-title">Etnia</h2>
 				<p class="panel-subtitle">Sintético</p>
 			</header>
 			<div class="panel-body">
-				<div id="containerTalentoEsportivoSintetico"></div>
+				<div id="containerEtniaSintetico"></div>
 			</div>
 		</section>
 	</div>
@@ -535,7 +550,7 @@
 
 		});
 
-		Highcharts.chart('containerTalentoEsportivoSintetico', {
+		Highcharts.chart('containerEtniaSintetico', {
 			chart: {
 				type: 'variablepie'
 			},
@@ -552,45 +567,35 @@
 				minPointSize: 10,
 				innerSize: '20%',
 				zMin: 0,
-				name: 'countries',
+				name: 'etnias',
 				borderRadius: 5,
 				data: [{
-					name: 'Spain',
+					name: 'PARDOS',
 					y: 505992,
 					z: 92
 				}, {
-					name: 'France',
+					name: 'BRANCOS',
 					y: 551695,
 					z: 119
 				}, {
-					name: 'Poland',
+					name: 'NEGROS',
 					y: 312679,
 					z: 121
 				}, {
-					name: 'Czech Republic',
+					name: 'INDÍGENAS',
 					y: 78865,
 					z: 136
 				}, {
-					name: 'Italy',
+					name: 'AMARELOS',
 					y: 301336,
 					z: 200
-				}, {
-					name: 'Switzerland',
-					y: 41284,
-					z: 213
-				}, {
-					name: 'Germany',
-					y: 357114,
-					z: 235
 				}],
 				colors: [
 					'#EF5350',
 					'#EC407A',
 					'#AB47BC',
 					'#7E57C2',
-					'#5C6BC0',
-					'#42A5F5',
-					'#29B6F6'
+					'#5C6BC0'
 				]
 			}]
 		});

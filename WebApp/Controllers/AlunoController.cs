@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
+using NuGet.Protocol.Core.Types;
 using WebApp.Configuration;
 using WebApp.Dto;
 using WebApp.Enumerators;
@@ -22,23 +23,64 @@ namespace WebApp.Controllers
             ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
         }
 
-        public ActionResult Index(int? crud, int? notify, string message = null)
+        public ActionResult Index(int? crud, int? notify, IFormCollection collection, string message = null)
         {
             try
             {
                 SetNotifyMessage(notify, message);
                 SetCrudMessage(crud);
 
-                var response = ApiClientFactory.Instance.GetAlunosAll();
-                var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
-                var deficiencias = new SelectList(ApiClientFactory.Instance.GetDeficienciaAll(), "Id", "Nome");
-
-                return View(new AlunoModel()
+                var searchFilter = new AlunosFilterDto
                 {
-                    Alunos = response,
+                    FomentoId = collection["ddlFomento"].ToString(),
+                    Estado = collection["ddlEstado"].ToString(),
+                    MunicipioId = collection["ddlMunicipio"].ToString(),
+                    LocalidadeId = collection["ddlLocalidade"].ToString(),
+                    DeficienciaId = collection["ddlDeficiencia"].ToString(),
+                    Etnia = collection["ddlEtnia"].ToString()
+                };
+
+                var result = ApiClientFactory.Instance.GetAlunosByFilter(searchFilter);
+
+                var fomentos = new SelectList(ApiClientFactory.Instance.GetFomentoAll(), "Id", "Nome", searchFilter.FomentoId);
+                var deficiencias = new SelectList(ApiClientFactory.Instance.GetDeficienciaAll(), "Id", "Nome", searchFilter.DeficienciaId);
+                var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", searchFilter.Estado);
+
+                List<SelectListDto> list = new List<SelectListDto>
+                {
+                    new() { IdNome = "PARDOS", Nome = "PARDOS" },
+                    new() { IdNome = "BRANCOS", Nome = "BRANCOS" },
+                    new() { IdNome = "NEGROS", Nome = "NEGROS" },
+                    new() { IdNome = "INDÍGENAS", Nome = "INDÍGENAS" },
+                    new() { IdNome = "AMARELOS", Nome = "AMARELOS" }
+                };
+
+                var etnias = new SelectList(list, "IdNome", "Nome", searchFilter.Etnia);
+                SelectList municipios = null;
+
+                if (!string.IsNullOrEmpty(searchFilter.Estado))
+                {
+                    municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(searchFilter.Estado), "Id", "Nome", searchFilter.MunicipioId);
+                }
+                SelectList localidades = null;
+
+                if (!string.IsNullOrEmpty(searchFilter.LocalidadeId))
+                {
+                    localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeByMunicipio(searchFilter.MunicipioId), "Id", "Nome", searchFilter.LocalidadeId);
+                }
+
+                var model = new AlunoModel
+                {
+                    ListFomentos = fomentos,
                     ListEstados = estados,
-                    ListDeficiencias = deficiencias
-                });
+                    ListDeficiencias = deficiencias,
+                    ListMunicipios = municipios!,
+                    ListEtnias = etnias,
+                    ListLocalidades = localidades!,
+                    Alunos = result.Alunos
+
+                };
+                return View(model);
 
             }
             catch (Exception e)
@@ -81,10 +123,23 @@ namespace WebApp.Controllers
             {
                 SetNotifyMessage(notify, message);
                 SetCrudMessage(crud);
-
-                var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
-                var ambientes = ApiClientFactory.Instance.GetAmbienteAll();
                 var aluno = ApiClientFactory.Instance.GetAlunoById(id);
+                var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", aluno.Estado);
+                var municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(aluno.Estado), "Id", "Nome", aluno.MunicipioId);
+                var localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeByMunicipio(aluno.MunicipioId), "Id", "Nome", aluno.LocalidadeId);
+                var profissionais = new SelectList(ApiClientFactory.Instance.GetProfissionaisByLocalidade(Convert.ToInt32(aluno.LocalidadeId)), "Id", "Nome", aluno.ProfissionalId);
+
+                List<SelectListDto> list = new List<SelectListDto>
+                {
+                    new() { IdNome = "PARDOS", Nome = "PARDOS" },
+                    new() { IdNome = "BRANCOS", Nome = "BRANCOS" },
+                    new() { IdNome = "NEGROS", Nome = "NEGROS" },
+                    new() { IdNome = "INDÍGENAS", Nome = "INDÍGENAS" },
+                    new() { IdNome = "AMARELOS", Nome = "AMARELOS" }
+                };
+
+                var etnias = new SelectList(list, "IdNome", "Nome", aluno.Etnia);
+                var ambientes = ApiClientFactory.Instance.GetAmbienteAll();
                 var dependencia = aluno.DependenciaId == null
                     ? null
                     : ApiClientFactory.Instance.GetDependenciaById((int)aluno.DependenciaId);
@@ -98,9 +153,11 @@ namespace WebApp.Controllers
                     Ambientes = aluno.Ambientes,
                     Aluno = aluno,
                     Dependecia = dependencia!,
-                    Matricula = matricula!
-
-
+                    Matricula = matricula!,
+                    ListMunicipios = municipios,
+                    ListLocalidades = localidades,
+                    ListProfissionais = profissionais,
+                    ListEtnias = etnias,
 
                 });
 
@@ -455,7 +512,7 @@ namespace WebApp.Controllers
 
 
         //[ClaimsAuthorize("Usuario", "Alterar")]
-        public Task<ActionResult> EditDados(int id, IFormCollection collection)
+        public async Task<ActionResult> EditDados(int id, IFormCollection collection)
         {
             try
             {
@@ -486,18 +543,18 @@ namespace WebApp.Controllers
                     Bairro = collection["bairro"] == "" ? null : collection["bairro"].ToString(),
                     DeficienciasIds = collection["arrDeficiencias"] == "" ? null : collection["arrDeficiencias"].ToString(),
                     Habilitado = habilitado != "",
-                    Status = status != ""
+                    Status = status != "",
 
 				};
 
-                //await ApiClientFactory.Instance.UpdateDados(command);
+                await ApiClientFactory.Instance.UpdateDados(id, command);
 
-                return Task.FromResult<ActionResult>(RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated }));
+                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
             }
             catch (Exception e)
             {
                 Console.Write(e.StackTrace);
-                return Task.FromResult<ActionResult>(RedirectToAction(nameof(Index)));
+                return RedirectToAction(nameof(Index), new { notify = EnumNotify.Error, mesage = e.Message });
             }
         }
 
@@ -630,6 +687,22 @@ namespace WebApp.Controllers
                 var resultLocal = ApiClientFactory.Instance.GetNomeAlunosAll(id);
 
                 return Task.FromResult(Json(new SelectList(resultLocal, "Id", "Nome")));
+
+            }
+            catch (Exception ex)
+            {
+                return Task.FromResult(Json(ex));
+            }
+        }
+
+        public Task<JsonResult> GetAlunoById(string id)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(id)) throw new Exception("Id do Aluno não informado.");
+                var result = ApiClientFactory.Instance.GetAlunoById(Convert.ToInt32(id));
+
+                return Task.FromResult(Json(result));
 
             }
             catch (Exception ex)

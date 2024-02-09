@@ -1,7 +1,8 @@
 ﻿var vm = new Vue({
-    el: "#formPesquisarAluno",
+    el: "#vPesquisarAluno",
     data: {
-        loading: false
+        loading: false,
+        editDto: { Id: "", Nome: "", Status: true, Email: "", Sexo: "", DtNascimento: "", MunicipioEstado: "", NomeLocalidade: "" }
     },
     mounted: function () {
         var self = this;
@@ -98,14 +99,29 @@
             var url = "Aluno/Delete/" + id;
             $("#deleteAlunoHref").prop("href", url);
         },
-        EditAluno: function (id) {
+        CarteirinhaAluno: function (id) {
             var self = this;
+
+            
+
 
             axios.get("Aluno/GetAlunoById/?id=" + id).then(result => {
 
                 self.editDto.Id = result.data.id;
                 self.editDto.Nome = result.data.nome;
                 self.editDto.Status = result.data.status;
+                self.editDto.Email = result.data.email;
+                self.editDto.Sexo = result.data.sexo;
+                self.editDto.DtNascimento = result.data.dtNascimento;
+                self.editDto.MunicipioEstado = result.data.municipioEstado;
+                self.editDto.NomeLocalidade = result.data.nomeLocalidade;
+                self.editDto.Controle = result.data.controle;
+
+                $('#qr').ClassyQR({
+                    create: true,// signals the library to create the image tag inside the container div.
+                    type: 'text',// text/url/sms/email/call/locatithe text to encode in the QR. on/wifi/contact, default is TEXT
+                    text: self.editDto.Id // the text to encode in the QR.
+                });
 
             }).catch(error => {
                 Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
@@ -117,5 +133,6 @@ var crud = {
     CarterinhaModal: function (id) {
         $('input[name="carteirinhaAlunoId"]').attr('value', id);
         $('#mdCarteirinhaAluno').modal('show');
+        vm.CarteirinhaAluno(id);
     }
 };

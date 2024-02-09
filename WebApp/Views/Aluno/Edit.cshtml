@@ -30,7 +30,7 @@
                 <div id="dados" class="tab-pane active">
                     <div class="row">
                         <div class="col-md-12">
-                            @using (@Html.BeginForm("EditDados", "Aluno", FormMethod.Post, new { id = "formDadosAlunoEdit", @class = "form-horizontal" }))
+                            @using (@Html.BeginForm("EditDados", "Aluno", FormMethod.Post, new { id = "formDadosAluno", @class = "form-horizontal" }))
                             {
                                 <section class="panel">
                                     <div class="panel-body">
@@ -78,15 +78,10 @@
                                         <div class="form-group">
                                             <label class="col-sm-1 control-label">Etnia <span class="required">*</span></label>
                                             <div class="col-sm-2">
-                                                <select class="form-control populate select2" name="ddlEtnia" id="ddlEtnia"
+                                                <select class="form-control populate select2" name="ddlEtnia" id="ddlEtnia" style="width:100%"
                                                         title="Por favor selecione um etnia."
-                                                @* asp-for="CodEtnia" asp-items="Model.ListEtnia" *@>
+                                                        asp-for="EtniaId" asp-items="Model.ListEtnias">
                                                     <option value="">Selecionar Etnia</option>
-                                                    <option value="PARDOS">PARDOS</option>
-                                                    <option value="BRANCOS">BRANCOS</option>
-                                                    <option value="NEGROS">NEGROS</option>
-                                                    <option value="INDÍGENAS">INDÍGENAS</option>S
-                                                    <option value="AMARELOS">AMARELOS</option>
                                                 </select>
                                             </div>
                                             <label class="col-sm-1 control-label">Sexo <span class="required">*</span></label>
@@ -145,7 +140,7 @@
                                             <div class="col-md-4">
                                                 <select class="form-control populate select2" name="ddlProfissionalAluno" id="ddlProfissionalAluno"
                                                         title="Por favor informe o profissional." required
-                                                        asp-for="ProfissionalId" asp-items="Model.ListProfissionals">
+                                                        asp-for="ProfissionalId" asp-items="Model.ListProfissionais">
                                                     <option value="">Selecionar Profissional</option>
                                                 </select>
                                             </div>

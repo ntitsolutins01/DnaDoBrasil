@@ -17,7 +17,9 @@
 		public string Estado { get; set; }
 		public string MunicipioId { get; set; }
 		public string LocalidadeId { get; set; }
+        public string DeficienciaId { get; set; }
+        public string Etnia { get; set; }
 
-		#endregion
+        #endregion
 	}
 }
