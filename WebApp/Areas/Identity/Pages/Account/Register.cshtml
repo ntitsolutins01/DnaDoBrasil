@@ -45,27 +45,58 @@
                         </select>
                     </div>
                     <div class="form-group mb-lg">
+                        <label>Áreas desejadas</label>
+                        
+                        <select class="form-control populate select2" name="ddlAreaDesejada" id="ddlAreaDesejada" style="width:100%"
+                                title="Por favor selecione as área desejada."
+                                asp-for="AreaId" asp-items="Model.ListAreas">
+                            <option value="">Selecionar Etnia</option>
+                        </select>
+                    </div>
+                    <div class="form-group mb-lg">
                         <label>Nome</label>
-                        <input asp-for="Input.Nome" name="Input.Nome" id="Input.Nome" type="text" class="form-control input-lg" required
+                        <input name="nome" id="nome" type="text" class="form-control input-lg" required
                                title="Por favor informe o nome." />
                     </div>
                     <div class="form-group mb-lg">
-                        <label>E-mail</label>
-                        <input asp-for="Input.Email" name="Input.Email" id="Input.Email" type="email" class="form-control input-lg" required
-                               title="Por favor informe o email." />
+                        <label>CPF</label>
+                        <input name="cpf" id="cpf" type="text" class="form-control input-lg" required
+                               title="Por favor informe o cpf." />
+                    </div>
+                    <div class="form-group mb-lg">
+                        <label>Sexo</label>
+                        <select class="form-control populate select2" name="ddlSexo" id="ddlSexo"
+                                title="Por favor selecione um sexo." required>
+                            <option value="">Selecionar Sexo</option>
+                            <option value="M">MASCULINO</option>
+                            <option value="F">FEMININO</option>
+                        </select>
                     </div>
                     <div class="form-group mb-lg">
                         <label>Data Nascimento</label>
-                        <input id="dtFim" name="dtFim"
+                        <input id="dtNasc" name="dtNasc"
                                required
-                               title="Por favor informe a data de fim."
+                               title="Por favor informe a data de nascimento."
                                style="z-index: auto;"
                                data-plugin-datepicker data-date-format="dd/mm/yyyy" data-plugin-options='{"language": "pt-BR"}'
                                placeholder="__/__/____" class="form-control startdate"
                                class="form-control">
                     </div>
+                    <div class="form-group mb-lg">
+                        <label>E-mail</label>
+                        <input name="Input.Email" id="Input.Email" type="email" class="form-control input-lg" required
+                               title="Por favor informe o email." />
+                    </div>
+                    <div class="form-group mb-lg">
+                        <label>E-mail</label>
+                        <select class="form-control populate select2" name="ddlEtnia" id="ddlEtnia" style="width:100%"
+                                title="Por favor selecione um etnia."
+                                asp-for="EtniaId" asp-items="Model.ListEtnias">
+                            <option value="">Selecionar Etnia</option>
+                        </select>
+                    </div>
 
-                    <div class="form-group mb-none">
+                    @* <div class="form-group mb-none">
                         <div class="row">
                             <div class="col-sm-6 mb-lg">
                                 <label>Senha</label>
@@ -76,7 +107,7 @@
                                 <input asp-for="Input.ConfirmPassword" name="Input.ConfirmPassword" id="Input.ConfirmPassword" type="password" class="form-control input-lg" />
                             </div>
                         </div>
-                    </div>
+                    </div> *@
                     <div class="row">
                         <div class="col-sm-8">
                             <div class="checkbox-custom checkbox-default">
@@ -90,7 +121,7 @@
                         </div>
                     </div>
 
-                    <p class="text-center">Já possui uma conta? <a class="nav-link text-dark" asp-page="/Account/Login">Entrar!</a></p>
+                    @* <p class="text-center">Já possui uma conta? <a class="nav-link text-dark" asp-page="/Account/Login">Entrar!</a></p> *@
 
                 </form>
             </div>

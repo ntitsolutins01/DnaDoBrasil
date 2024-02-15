@@ -98,6 +98,9 @@
                 //mascara dos inputs
                 var $numCpf = $("#cpf");
                 $numCpf.mask('000.000.000-00', { reverse: false });
+                //mascara dos inputs
+                var $numDtNasc = $("#cpf");
+                $numDtNasc.mask('00/00/0000', { reverse: false });
 
                 jQuery.validator.addMethod("cpf", function (cpf, element) {
                     var regex = /^\d{3}\.\d{3}\.\d{3}\-\d{2}$/;

@@ -18,7 +18,9 @@ using Microsoft.Extensions.Options;
 using WebApp.Areas.Identity.Models;
 using WebApp.Configuration;
 using WebApp.Data;
+using WebApp.Dto;
 using WebApp.Factory;
+using WebApp.Models;
 using WebApp.Utility;
 
 namespace WebApp.Areas.Identity.Pages.Account
@@ -50,46 +52,49 @@ namespace WebApp.Areas.Identity.Pages.Account
             ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
         }
 
-        [BindProperty]
-        public InputModel Input { get; set; }
-
         public string ReturnUrl { get; set; }
 
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
         public int EstadoId { get; set; }
         public int MunicipioId { get; set; }
         public int LocalidadeId { get; set; }
+        public int EtniaId { get; set; }
+        public int AreaId { get; set; }
         public SelectList ListEstados { get; set; }
         public SelectList ListMunicipios { get; set; }
         public SelectList ListLocalidades { get; set; }
-
-        public class InputModel
-        {
-            [Required]
-            [EmailAddress]
-            [Display(Name = "Email")]
-            public string Email { get; set; }
-
-            [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
-            [DataType(DataType.Password)]
-            [Display(Name = "Password")]
-            public string Password { get; set; }
-
-            [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "A senha e senha de confirmação não combinam")]
-            public string ConfirmPassword { get; set; }
-
-            public int Nome { get; set; }
-            public string DtNascimento { get; set; }
-        }
+        public SelectList ListEtnias { get; set; }
+        public SelectList ListAreas { get; set; }
 
         public async Task OnGetAsync(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             ListEstados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
+
+            List<SelectListDto> list = new List<SelectListDto>
+            {
+                new() { IdNome = "PARDOS", Nome = "PARDOS" },
+                new() { IdNome = "BRANCOS", Nome = "BRANCOS" },
+                new() { IdNome = "NEGROS", Nome = "NEGROS" },
+                new() { IdNome = "INDÍGENAS", Nome = "INDÍGENAS" },
+                new() { IdNome = "AMARELOS", Nome = "AMARELOS" }
+            };
+
+            var etnias = new SelectList(list, "IdNome", "Nome");
+            ListEtnias = etnias;
+
+            List<SelectListDto> listArea = new List<SelectListDto>
+            {
+                new() { Id = 1, Nome = "Atividades Esportivas e Detecção de Talentos" },
+                new() { Id = 2, Nome = "Preparatório para Vestibular e Aula de Reforço" },
+                new() { Id = 3, Nome = "Temática com os Direitos Humanos" },
+                new() { Id = 4, Nome = "Oficinas Profissionalizantes" },
+                new() { Id = 5, Nome = "Atividade de Arte e Cultura" }
+            };
+
+            var areas = new SelectList(listArea, "Id", "Nome");
+            ListAreas = areas;
 
         }
 
@@ -99,11 +104,21 @@ namespace WebApp.Areas.Identity.Pages.Account
             returnUrl ??= Url.Content("~/");
 
 
+            var command = new AlunoModel.CreateUpdateDadosAlunoCommand()
+            {
+                Etnia = collection["ddlEtnia"] == "" ? null : collection["ddlEtnia"].ToString(),
+                MunicipioId = collection["ddlMunicipio"] == "" ? null : Convert.ToInt32(collection["ddlMunicipio"].ToString()),
+                LocalidadeId = collection["ddlLocalidade"] == "" ? null : Convert.ToInt32(collection["ddlLocalidade"].ToString()),
+                Nome = collection["nome"] == "" ? null : collection["nome"].ToString(),
+                DtNascimento = collection["dtNasc"] == "" ? null : collection["DtNascimento"].ToString(),
+                Email = collection["email"] == "" ? null : collection["email"].ToString(),
+                Sexo = collection["ddlSexo"] == "" ? null : collection["ddlSexo"].ToString(),
+            };
 
 
             if (!ModelState.IsValid) return Page();
-            var user = new IdentityUser { UserName = Input.Email, Email = Input.Email, EmailConfirmed = true, PhoneNumberConfirmed = true};
-            var result = await _userManager.CreateAsync(user, Input.Password);
+            var user = new IdentityUser { UserName = command.Email, Email = command.Email, EmailConfirmed = true, PhoneNumberConfirmed = true};
+            var result = await _userManager.CreateAsync(user, "12345678");
             if (!result.Succeeded)
             {
 	            foreach (var error in result.Errors)
@@ -115,15 +130,18 @@ namespace WebApp.Areas.Identity.Pages.Account
 				return Page();
             }
 
+
             _logger.LogInformation($"O usuário {user.UserName} criou uma nova conta com senha.");
 
-            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-            var callbackUrl = Url.Page(
-                "/Account/ConfirmEmail",
-                pageHandler: null,
-                values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
-                protocol: Request.Scheme);
+            
+
+            //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            //code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+            //var callbackUrl = Url.Page(
+            //    "/Account/ConfirmEmail",
+            //    pageHandler: null,
+            //    values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
+            //    protocol: Request.Scheme);
 
             //await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
             //    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
@@ -147,17 +165,17 @@ namespace WebApp.Areas.Identity.Pages.Account
             // First registered user will be given all roles.
             if (roleCount == 0)
             {
-	            await _roleManager.CreateAsync(new IdentityRole { Name = UserRoles.Administrator });
+	            await _roleManager.CreateAsync(new IdentityRole { Name = UserRoles.Aluno });
 
 	            // set this registering user as admin/everything
 	            await _userManager.AddToRolesAsync(user,
-		            new[] { UserRoles.Administrator });
+		            new[] { UserRoles.Aluno });
             }
 
-            await _userManager.AddToRoleAsync(user, UserRoles.Administrator);
+            await _userManager.AddToRoleAsync(user, UserRoles.Aluno);
 
             await _signInManager.SignInAsync(user, isPersistent: false);
-            return LocalRedirect(returnUrl);
+            return RedirectToPage("RegisterConfirmation", new { email = command.Email, returnUrl = returnUrl });
         }
     }
 }
