@@ -1,4 +1,4 @@
-var vm = new Vue({
+Ôªøvar vm = new Vue({
     el: "#vRegister",
     data: {
         loading: false
@@ -58,7 +58,7 @@ var vm = new Vue({
                             else {
                                 new PNotify({
                                     title: 'Fomento',
-                                    text: 'MunicÌpios n„o encontrados.',
+                                    text: 'Munic√≠pios n√£o encontrados.',
                                     type: 'warning'
                                 });
                             }
@@ -88,7 +88,7 @@ var vm = new Vue({
                             else {
                                 new PNotify({
                                     title: 'Localidades',
-                                    text: 'Localidades n„o encontradas.',
+                                    text: 'Localidades n√£o encontradas.',
                                     type: 'warning'
                                 });
                             }
@@ -140,7 +140,7 @@ var vm = new Vue({
                     return true;
 
 
-                }, "Informe um CPF v·lido");
+                }, "Informe um CPF v√°lido");
 
                 $("#formRegister").validate({
                     rules: {
@@ -161,18 +161,18 @@ var vm = new Vue({
                     },
                     messages: {
                         "EndEmail": {
-                            required: "Por favor informe o endereÁo eletrÙnico v·lido do usu·rio.",
-                            email: "Formato de e-mail inv·lido."
+                            required: "Por favor informe o endere√ßo eletr√¥nico v√°lido do usu√°rio.",
+                            email: "Formato de e-mail inv√°lido."
                         },
-                        cpf: { cpf: 'Formato de CPF inv·lido', required: "Por favor informe o n˙mero do CPF do usu·rio." },
+                        cpf: { cpf: 'Formato de CPF inv√°lido', required: "Por favor informe o n√∫mero do CPF do usu√°rio." },
                         "Input.Password": {
                             required: "Por favor informe sua senha.",
-                            minlength: jQuery.validator.format("Formato de senha inv·lido, a senha deve conter no mÌnimo 8 digitos.")
+                            minlength: jQuery.validator.format("Formato de senha inv√°lido, a senha deve conter no m√≠nimo 8 digitos.")
                         },
                         "Input.ConfirmPassword": {
                             required: "Por favor informe sua senha.",
-                            minlength: jQuery.validator.format("Formato de senha inv·lido, a senha deve conter no mÌnimo 8 digitos."),
-                            //equalTo: "As senhas digitadas s„o diferentes. Por favor, repita a operaÁ„o."
+                            minlength: jQuery.validator.format("Formato de senha inv√°lido, a senha deve conter no m√≠nimo 8 digitos."),
+                            //equalTo: "As senhas digitadas s√£o diferentes. Por favor, repita a opera√ß√£o."
                         }
                     },
                     highlight: function (label) {
