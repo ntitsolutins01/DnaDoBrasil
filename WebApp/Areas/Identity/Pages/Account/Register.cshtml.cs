@@ -60,11 +60,13 @@ namespace WebApp.Areas.Identity.Pages.Account
         public int LocalidadeId { get; set; }
         public int EtniaId { get; set; }
         public int AreaId { get; set; }
+        public int DeficienciaId { get; set; }
         public SelectList ListEstados { get; set; }
         public SelectList ListMunicipios { get; set; }
         public SelectList ListLocalidades { get; set; }
         public SelectList ListEtnias { get; set; }
         public SelectList ListAreas { get; set; }
+        public SelectList ListDeficiencia { get; set; }
 
         public async Task OnGetAsync(string returnUrl = null)
         {
@@ -95,6 +97,9 @@ namespace WebApp.Areas.Identity.Pages.Account
 
             var areas = new SelectList(listArea, "Id", "Nome");
             ListAreas = areas;
+
+            var deficiencias = new SelectList(ApiClientFactory.Instance.GetDeficienciaAll(), "Id", "Nome");
+            ListDeficiencia = deficiencias;
 
         }
 

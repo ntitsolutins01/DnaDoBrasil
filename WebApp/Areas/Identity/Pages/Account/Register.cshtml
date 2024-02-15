@@ -50,13 +50,23 @@
                         <select class="form-control populate select2" name="ddlAreaDesejada" id="ddlAreaDesejada" style="width:100%"
                                 title="Por favor selecione as área desejada."
                                 asp-for="AreaId" asp-items="Model.ListAreas">
-                            <option value="">Selecionar Etnia</option>
+                            <option value="">Selecionar Áreda Desejada</option>
                         </select>
                     </div>
                     <div class="form-group mb-lg">
                         <label>Nome</label>
                         <input name="nome" id="nome" type="text" class="form-control input-lg" required
-                               title="Por favor informe o nome." />
+                               title="Por favor informe o nome completo." />
+                    </div>
+                    <div class="form-group mb-lg">
+                        <label>Nome da Mãe</label>
+                        <input name="nome" id="nome" type="text" class="form-control input-lg" required
+                               title="Por favor informe o nome da mãe." />
+                    </div>
+                    <div class="form-group mb-lg">
+                        <label>Nome do Responsável</label>
+                        <input name="nome" id="nome" type="text" class="form-control input-lg" required
+                               title="Por favor informe o nome do responsável." />
                     </div>
                     <div class="form-group mb-lg">
                         <label>CPF</label>
@@ -88,10 +98,18 @@
                                title="Por favor informe o email." />
                     </div>
                     <div class="form-group mb-lg">
-                        <label>E-mail</label>
+                        <label>Etnia</label>
                         <select class="form-control populate select2" name="ddlEtnia" id="ddlEtnia" style="width:100%"
                                 title="Por favor selecione um etnia."
                                 asp-for="EtniaId" asp-items="Model.ListEtnias">
+                            <option value="">Selecionar Etnia</option>
+                        </select>
+                    </div>
+                    <div class="form-group mb-lg">
+                        <label>Deficiência</label>
+                        <select class="form-control populate select2" name="ddlEtnia" id="ddlEtnia" style="width:100%"
+                                title="Por favor selecione um etnia."
+                                asp-for="EficienciaId" asp-items="Model.ListEficiencia">
                             <option value="">Selecionar Etnia</option>
                         </select>
                     </div>
