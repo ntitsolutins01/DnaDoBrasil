@@ -156,8 +156,9 @@ namespace WebApp.Controllers
                 return RedirectToAction(nameof(Index));
             }
         }
-        //[ClaimsAuthorize("Usuario", "Alterar")]
-        public async Task<ActionResult> Edit(IFormCollection collection)
+		//[ClaimsAuthorize("Usuario", "Alterar")]
+		[HttpPost]
+        public async Task<ActionResult> Edit(int id, IFormCollection collection)
         {
 			try
 			{
@@ -229,5 +230,49 @@ namespace WebApp.Controllers
 			}
         }
 
-	}
+        public ActionResult Edit(int id, int? crud, int? notify, string message = null)
+        {
+            try
+            {
+                SetNotifyMessage(notify, message);
+                SetCrudMessage(crud);
+                var laudo = ApiClientFactory.Instance.GetLaudoById(id);
+
+                var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
+
+                var questionarioVocacional =
+                    ApiClientFactory.Instance.GetQuestionarioByTipoLaudo((int)EnumTipoLaudo.Vocacional);
+                var questionarioQualidadeVida =
+                    ApiClientFactory.Instance.GetQuestionarioByTipoLaudo((int)EnumTipoLaudo.QualidadeVida);
+                var questionarioConsumoAlimentar =
+                    ApiClientFactory.Instance.GetQuestionarioByTipoLaudo((int)EnumTipoLaudo.ConsumoAlimentar);
+                var questionarioSaudeBucal =
+                    ApiClientFactory.Instance.GetQuestionarioByTipoLaudo((int)EnumTipoLaudo.SaudeBucal);
+
+
+                return View(new LaudoModel()
+                {
+                    QuestionarioVocacional = questionarioVocacional,
+                    QuestionarioQualidadeVida = questionarioQualidadeVida,
+                    QuestionarioConsumoAlimentar = questionarioConsumoAlimentar,
+                    QuestionarioSaudeBucal = questionarioSaudeBucal,
+                    ListEstados = estados,
+					Laudo = laudo
+                });
+
+            }
+            catch (Exception e)
+            {
+                Console.Write(e.StackTrace);
+                return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = e.Message });
+
+            }
+
+
+
+
+        }
+
+
+    }
 }
