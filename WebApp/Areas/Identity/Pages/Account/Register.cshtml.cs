@@ -11,10 +11,15 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using WebApp.Areas.Identity.Models;
+using WebApp.Configuration;
 using WebApp.Data;
+using WebApp.Factory;
+using WebApp.Utility;
 
 namespace WebApp.Areas.Identity.Pages.Account
 {
@@ -27,19 +32,22 @@ namespace WebApp.Areas.Identity.Pages.Account
         private readonly IEmailSender _emailSender;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly ApplicationDbContext _db;
+        private readonly IOptions<UrlSettings> _appSettings;
 
-		public RegisterModel(
+        public RegisterModel(IOptions<UrlSettings> app,
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender, RoleManager<IdentityRole> roleManager, ApplicationDbContext db)
         {
+            _appSettings = app;
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
             _roleManager = roleManager;
             _db = db;
+            ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
         }
 
         [BindProperty]
@@ -48,6 +56,12 @@ namespace WebApp.Areas.Identity.Pages.Account
         public string ReturnUrl { get; set; }
 
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
+        public int EstadoId { get; set; }
+        public int MunicipioId { get; set; }
+        public int LocalidadeId { get; set; }
+        public SelectList ListEstados { get; set; }
+        public SelectList ListMunicipios { get; set; }
+        public SelectList ListLocalidades { get; set; }
 
         public class InputModel
         {
@@ -66,12 +80,17 @@ namespace WebApp.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "A senha e senha de confirmação não combinam")]
             public string ConfirmPassword { get; set; }
+
+            public int Nome { get; set; }
+            public string DtNascimento { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            ListEstados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
+
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)

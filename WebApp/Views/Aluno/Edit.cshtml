@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<input type="hidden" name="EditAlunoId" value="@Model.Aluno.Id"/>
+<input type="hidden" name="EditAlunoId" value="@Model.Aluno.Id" />
 <div class="row">
     <div class="col-md-12">
         <div class="tabs">
@@ -30,7 +30,7 @@
                 <div id="dados" class="tab-pane active">
                     <div class="row">
                         <div class="col-md-12">
-                            @using (@Html.BeginForm("EditDados", "Aluno", FormMethod.Post, new { id = "formDadosAluno", @class = "form-horizontal" }))
+                            @using (@Html.BeginForm("Edit", "Aluno", FormMethod.Post, new { id = "formDadosAluno", @class = "form-horizontal", @enctype = "multipart/form-data" }))
                             {
                                 <section class="panel">
                                     <div class="panel-body">
@@ -268,6 +268,7 @@
                                     <footer class="panel-footer">
                                         <div class="row">
                                             <div class="col-md-9 col-md-offset-3">
+                                                <a href="@Url.Action("Index", "Aluno")" class="btn btn-dark pull-right" style="margin-left: 5px;margin-right: 5px;"><i class="fa fa-reply"></i> &nbsp;&nbsp;Voltar</a>
                                                 <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
                                                 <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
 
@@ -409,7 +410,7 @@
                                             <label class="col-sm-2 control-label">Termo de compromisso</label>
                                             <div class="col-sm-1">
                                                 <div class="radio-custom radio-primary">
-                                                    <input id="termoSim" name="rdbTermo" type="radio" value="true"/>
+                                                    <input id="termoSim" name="rdbTermo" type="radio" value="true" />
                                                     <label for="termoSim">Sim</label>
                                                 </div>
                                                 <div class="radio-custom radio-primary">

@@ -10,17 +10,21 @@ using WebApp.Enumerators;
 using WebApp.Factory;
 using WebApp.Models;
 using WebApp.Utility;
+using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
 namespace WebApp.Controllers
 {
     public class AlunoController : BaseController
     {
         private readonly IOptions<UrlSettings> _appSettings;
+        private readonly IHostingEnvironment _host;
 
-        public AlunoController(IOptions<UrlSettings> app)
+        public AlunoController(IOptions<UrlSettings> app,
+            IHostingEnvironment host)
         {
             _appSettings = app;
             ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
+            _host = host;
         }
 
         public ActionResult Index(int? crud, int? notify, IFormCollection collection, string message = null)
@@ -91,14 +95,7 @@ namespace WebApp.Controllers
             }
         }
 
-        //public ActionResult Create()
-        //{
 
-
-        //    return View();
-        //}
-
-        //monta tela de create aluno
         public ActionResult Create(int? crud, int? notify, string message = null)
         {
             SetNotifyMessage(notify, message);
@@ -107,13 +104,23 @@ namespace WebApp.Controllers
             var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
             var deficiencias = new SelectList(ApiClientFactory.Instance.GetDeficienciaAll(), "Id", "Nome");
             var ambientes = new SelectList(ApiClientFactory.Instance.GetAmbienteAll(), "Id", "Nome");
+            List<SelectListDto> list = new List<SelectListDto>
+            {
+                new() { IdNome = "PARDOS", Nome = "PARDOS" },
+                new() { IdNome = "BRANCOS", Nome = "BRANCOS" },
+                new() { IdNome = "NEGROS", Nome = "NEGROS" },
+                new() { IdNome = "INDÍGENAS", Nome = "INDÍGENAS" },
+                new() { IdNome = "AMARELOS", Nome = "AMARELOS" }
+            };
 
+            var etnias = new SelectList(list, "IdNome", "Nome");
 
             return View(new AlunoModel()
             {
                 ListEstados = estados,
                 ListDeficiencias = deficiencias,
                 ListAmbientes = ambientes,
+                ListEtnias = etnias,
             });
         }
 
@@ -470,6 +477,21 @@ namespace WebApp.Controllers
         {
             try
             {
+                string filePath = null;
+
+                foreach (var file in collection.Files)
+                {
+                    if (file.Length <= 0) continue;
+                    var fileName = Path.GetFileName(collection.Files[0].FileName);
+                    filePath = Path.Combine(_host.WebRootPath, $"FotoAlunos/{fileName}");
+
+                    if (!Directory.Exists(Path.Combine(_host.WebRootPath, $"FotoAlunos")))
+                        Directory.CreateDirectory(Path.Combine(_host.WebRootPath, $"FotoAlunos"));
+
+                    using Stream fileStream = new FileStream(filePath, FileMode.Create);
+                    await file.CopyToAsync(fileStream);
+                }
+
                 var status = collection["status"].ToString();
                 var habilitado = collection["habilitado"].ToString();
 
@@ -494,7 +516,8 @@ namespace WebApp.Controllers
 					Bairro = collection["bairro"] == "" ? null : collection["bairro"].ToString(),
                     DeficienciasIds = collection["arrDeficiencias"] == "" ? null : collection["arrDeficiencias"].ToString(),
                     Habilitado = habilitado != "",
-                    Status = status != ""
+                    Status = status != "",
+                    Url = filePath
 
                 };
 
@@ -512,10 +535,25 @@ namespace WebApp.Controllers
 
 
         //[ClaimsAuthorize("Usuario", "Alterar")]
-        public async Task<ActionResult> EditDados(int id, IFormCollection collection)
+        [HttpPost]
+        public async Task<ActionResult> Edit(int id, IFormCollection collection)
         {
             try
             {
+                string filePath = null;
+
+                foreach (var file in collection.Files)
+                {
+                    if (file.Length <= 0) continue;
+                    var fileName = Path.GetFileName(collection.Files[0].FileName);
+                    filePath = Path.Combine(_host.WebRootPath, $"PlanosAulas/{fileName}");
+
+                    if (!Directory.Exists(Path.Combine(_host.WebRootPath, $"PlanosAulas")))
+                        Directory.CreateDirectory(Path.Combine(_host.WebRootPath, $"PlanosAulas"));
+
+                    using Stream fileStream = new FileStream(filePath, FileMode.Create);
+                    await file.CopyToAsync(fileStream);
+                }
 
                 var status = collection["status"].ToString();
                 var habilitado = collection["habilitado"].ToString();
@@ -544,8 +582,9 @@ namespace WebApp.Controllers
                     DeficienciasIds = collection["arrDeficiencias"] == "" ? null : collection["arrDeficiencias"].ToString(),
                     Habilitado = habilitado != "",
                     Status = status != "",
+                    Url = filePath
 
-				};
+                };
 
                 await ApiClientFactory.Instance.UpdateDados(id, command);
 
