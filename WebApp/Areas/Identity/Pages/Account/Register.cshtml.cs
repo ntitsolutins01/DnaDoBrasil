@@ -67,6 +67,7 @@ namespace WebApp.Areas.Identity.Pages.Account
         public SelectList ListEtnias { get; set; }
         public SelectList ListAreas { get; set; }
         public SelectList ListDeficiencia { get; set; }
+        public SelectList ListEficiencia { get; set; }
 
         public async Task OnGetAsync(string returnUrl = null)
         {
