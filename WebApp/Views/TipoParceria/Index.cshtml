@@ -1,4 +1,4 @@
-﻿@* @model WebApp.Models.TipoParceriaModel
+﻿@model WebApp.Models.TipoParceriaModel
 @{
     ViewData["Title"] = "Listagem de TipoParcerias";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -12,19 +12,20 @@
                     <div class="panel-actions">
                         <a href="#" class="card-action card-action-toggle" data-card-toggle></a>
                     </div>
-                    <h2 class="panel-title">Listagem deTipoParcerias</h2>
+                    <h2 class="panel-title">Listagem de Tipos Parcerias</h2>
                 </header>
                 <div class="panel-body">
                     <div class="form-group row">
                         <div class="col-sm-12 pull-right">
-                            <a href="@Url.Action("Create", "TipoParceria")" id="addToTable" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> NovoTipoParceria </a>
+                            <a href="@Url.Action("Create", "TipoParceria")" id="addToTable" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Novo Tipo Parceria </a>
                         </div>
                     </div>
                     <table class="table table-bordered table-striped mb-0" id="datatable-default">
                         <thead>
                             <tr>
                                 <th class="text-center">Id</th>
-                                <th class="text-center">Nome doTipoParceria</th>
+                                <th class="text-center">Parceria</th>
+                                <th class="text-center">Nome do Tipo Parceria</th>
                                 <th class="text-center">Status</th>
                                 <th class="text-center">Ações</th>
                             </tr>
@@ -34,6 +35,18 @@
                             {
                                 <tr>
                                     <td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Id)</td>
+                                    @switch (item.Parceria)
+                                    {
+                                        case 1:
+                                            <td class="text-center">Empresas parceiras</td>
+                                            break;
+                                        case 2:
+                                            <td class="text-center">Clubes e Federações</td>
+                                            break;
+                                        case 3:
+                                            <td class="text-center">Assistência Social</td>
+                                            break;
+                                    }
                                     <td class="text-center">@Html.DisplayFor(modelItem => item.Nome)</td>
                                     @if (item.Status)
                                     {
@@ -66,7 +79,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="mdDeleteTipoParceriaLabel">
-                        <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Exclusão deTipoParceria</strong>
+                        <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Exclusão de Tipo Parceria</strong>
                     </h5>
                 </div>
                 <div class="modal-body">
@@ -93,7 +106,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="mdEditTipoParceriaLabel">
-                        <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>AlterarTipoParceria</strong>
+                        <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Alterar Tipo Parceria</strong>
                     </h5>
                 </div>
                 @using (@Html.BeginForm("Edit", "TipoParceria", FormMethod.Post, new { id = "formEditTipoParceria", @class = "form-horizontal" }))
@@ -102,11 +115,18 @@
 
                     <div class="modal-body">
                         <div class="form-group row">
-                            <label class="col-sm-3 control-label text-sm-right pt-2">TipoParceria <span class="required">*</span></label>
+                            <label class="col-sm-3 control-label text-sm-right pt-2">Parceria <span class="required">*</span></label>
+                            <div class="col-sm-7">
+                                <input type="text" name="parceria" class="form-control"
+                                       maxlength="150" :value="editDto.Parceria" readonly />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 control-label text-sm-right pt-2">Nome Tipo Parceria <span class="required">*</span></label>
                             <div class="col-sm-7">
                                 <input type="text" name="nome" class="form-control"
-                                       maxlength="80" :value="editDto.Nome"
-                                       title="Por favor informe oTipoParceria." required />
+                                       maxlength="150" :value="editDto.Nome"
+                                       title="Por favor informe o Tipo Parceria." required />
                             </div>
                         </div>
                         <div class="form-group row">
@@ -153,14 +173,14 @@
 
             if (crub === 1) {
                 new PNotify({
-                    title: 'TipoParceria',
+                    title: 'Tipo Parceria',
                     text: 'Cadastro realizado com sucesso!',
                     type: 'success'
                 });
                 crub = 0;
             } else if (crub === 2) {
                 new PNotify({
-                    title: 'TipoParceria',
+                    title: 'Tipo Parceria',
                     text: 'Dados alterados com sucesso.',
                     type: 'warning',
                     icon: 'fa fa-pencil'
@@ -168,7 +188,7 @@
                 crub = 0;
             } else if (crub === 3) {
                 new PNotify({
-                    title: 'TipoParceria',
+                    title: 'Tipo Parceria',
                     text: 'Registro excluído com sucesso.',
                     type: 'error',
                     icon: 'fa fa-trash-o'
@@ -182,21 +202,21 @@
 
             if (notify === 0) {
                 new PNotify({
-                    title: 'TipoParceria',
+                    title: 'Tipo Parceria',
                     text: messagem,
                     type: 'success'
                 });
                 crub = 0;
             } else if (notify === 1) {
                 new PNotify({
-                    title: 'TipoParceria',
+                    title: 'Tipo Parceria',
                     text: messagem,
                     type: 'warning'
                 });
                 crub = 0;
             } else if (notify === 2) {
                 new PNotify({
-                    title: 'TipoParceria',
+                    title: 'Tipo Parceria',
                     text: messagem,
                     type: 'error'
                 });
@@ -213,4 +233,3 @@
 
 
 
- *@

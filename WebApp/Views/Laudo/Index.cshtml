@@ -23,17 +23,12 @@
 					<table class="table table-bordered table-striped mb-0" id="datatable-default">
 						<thead>
 							<tr>
-								<th class="text-center">Id</th>
-								@* <th class="text-center">Estado</th>
-								<th class="text-center">Município</th> *@
-								<th class="text-center">Escola</th>
-								<th class="text-center">Encaminhamento</th>
-								<th class="text-center">Estudante</th>
-								<th class="text-center">Idade</th>
-								<th class="text-center">Sexo</th>
-								<th class="text-center">Altura</th>
-								<th class="text-center">Peso</th>
-								@* <th class="text-center">Laudo</th> *@
+                                <th class="text-center">AlunoId</th>
+                                <th class="text-center">ConsumoAlimentarId</th>
+                                <th class="text-center">QualidadeDeVidaId</th>
+                                <th class="text-center">SaudeBucalId</th>
+                                <th class="text-center">SaudeId</th>
+                                <th class="text-center">VocacionalId</th>
 								<th class="text-center">Ações</th>
 							</tr>
 						</thead>
@@ -41,27 +36,21 @@
 							@foreach (var item in Model.Laudos)
 							{
 								<tr>
-									<td class="text-center">@Html.DisplayFor(modelItem => item.Aluno.Nome)</td>
-									<td class="text-center">@Html.DisplayFor(modelItem => item.Aluno.Nome)</td>
-									<td class="text-center">@Html.DisplayFor(modelItem => item.Aluno.Nome)</td>
-									<td class="text-center">@Html.DisplayFor(modelItem => item.Aluno.Idade)</td>
-									<td class="text-center">@Html.DisplayFor(modelItem => item.Aluno.Sexo)</td>
-									<td class="text-center">@Html.DisplayFor(modelItem => item.TalentoEsportivo.Altura)</td>
-									<td class="text-center">@Html.DisplayFor(modelItem => item.TalentoEsportivo.Peso)</td>
-									
-									@* <td class="text-center">@Html.DisplayFor(modelItem => item.TalentoEsportivo.)</td>
-									<td class="text-center">@Html.DisplayFor(modelItem => item.ConsumoAlimentar)</td>
-									<td class="text-center">@Html.DisplayFor(modelItem => item.QualidadeDeVidail)</td>
-									<td class="text-center">@Html.DisplayFor(modelItem => item.Indicador)</td> *@
+									<td class="text-center">@Html.DisplayFor(modelItem => item.AlunoId)</td>
+									<td class="text-center">@Html.DisplayFor(modelItem => item.ConsumoAlimentarId)</td>
+									<td class="text-center">@Html.DisplayFor(modelItem => item.QualidadeDeVidaId)</td>
+									<td class="text-center">@Html.DisplayFor(modelItem => item.SaudeBucalId)</td>
+									<td class="text-center">@Html.DisplayFor(modelItem => item.SaudeId)</td>
+									<td class="text-center">@Html.DisplayFor(modelItem => item.VocacionalId)</td>
 									<td class="actions">
 										<a data-toggle="tooltip" data-placement="top" title="Editar"
-										   href='javascript:(crud.EditModal(@item.Id))'
+                                           href='javascript:(crud.EditModal(@item.AlunoId))'
 										   class="on-default edit-row" style='color: #FF9800'>
 											<i class="fa fa-pencil"></i>
 										</a>
-										<a data-toggle="tooltip" data-placement="top" title="Detalhar" asp-action="Details" asp-controller="Laudo" asp-route-id="1" class="on-default edit-row" style='color: #eea236'><i class="fa fa-address-card"></i></a>
-										<a data-toggle="tooltip" data-placement="top" title="Avaliação Completa" asp-action="Details" asp-controller="Laudo" asp-route-id="1" class="on-default edit-row" style='color: #d2322d'><i class="fa fa-bar-chart"></i></a>
-										<a data-toggle="tooltip" data-placement="top" title="Relatório" asp-action="Details" asp-controller="Laudo" asp-route-id="1" class="on-default edit-row" style='color: #47a447'><i class="fa fa-file-text"></i></a>
+                                        <a data-toggle="tooltip" data-placement="top" title="Detalhar" asp-action="Details" asp-controller="Laudo" asp-route-id="@item.AlunoId" class="on-default edit-row" style='color: #eea236'><i class="fa fa-address-card"></i></a>
+                                        <a data-toggle="tooltip" data-placement="top" title="Avaliação Completa" asp-action="Details" asp-controller="Laudo" asp-route-id="@item.AlunoId" class="on-default edit-row" style='color: #d2322d'><i class="fa fa-bar-chart"></i></a>
+                                        <a data-toggle="tooltip" data-placement="top" title="Relatório" asp-action="Details" asp-controller="Laudo" asp-route-id="@item.AlunoId" class="on-default edit-row" style='color: #47a447'><i class="fa fa-file-text"></i></a>
 									</td>
 								</tr>
 							}
@@ -69,353 +58,6 @@
 					</table>
 				</div>
 			</section>
-		</div>
-	</div>
-	<!-- Modal -->
-	<div class="modal fade" id="mdDeleteLaudo" tabindex="-1" role="dialog" aria-labelledby="mdDeleteLaudoLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="mdDeleteLaudoLabel">
-						<i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Exclusão de Laudo</strong>
-					</h5>
-				</div>
-				<div class="modal-body">
-					<div class="modal-icon">
-						<i class="fa fa-question-circle"></i>
-					</div>
-					<div class="modal-text">
-						<input type="hidden" id="deleteLaudoId" />
-						<p class="mb-0">Tem certeza que deseja <b>excluir</b> esse registro?</p>
-					</div>
-					<div class="modal-wrapper">
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-thumbs-o-down"></i> &nbsp;&nbsp;Não</button>
-					<a id="deleteLaudoHref" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</a>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Modal -->
-	<div class="modal fade" id="mdEditLaudo" tabindex="-1" role="dialog" aria-labelledby="mdEditLaudoLabel" aria-hidden="true">
-		<div class="modal-dialog modal-lg" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="mdEditLaudoLabel">
-						<i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Alterar Laudo</strong>
-					</h5>
-				</div>
-				@using (@Html.BeginForm("Edit", "Laudo", FormMethod.Post, new { id = "formEditLaudo", @class = "form-horizontal" }))
-				{
-					<input type="hidden" name="editLaudoId" :value="editDto.Id" />
-
-                    <div class="modal-body">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label text-sm-right pt-2">Estado <span class="required">*</span></label>
-                                <div class="col-md-4">
-                                    <select class="form-control populate select2" name="ddlEstado" id="ddlEstado"
-                                            title="Por favor informe um Estado." required
-                                            asp-for="EstadoId" asp-items="Model.ListEstados">
-                                        <option value="">Selecionar Estado</option>
-                                    </select>
-                                </div>
-                                <label class="col-sm-2 control-label text-sm-right pt-2">Município <span class="required">*</span></label>
-                                <div class="col-md-4">
-                                    <select class="form-control populate select2" name="ddlMunicipio" id="ddlMunicipio"
-                                            title="Por favor informe um Municipio." required
-                                            asp-for="MunicipioId" asp-items="Model.ListMunicipios">
-                                        <option value="">Selecionar Município</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label text-sm-right pt-2">Localidade <span class="required">*</span></label>
-                                <div class="col-md-4">
-                                    <select class="form-control populate select2" name="ddlLocalidade" id="ddlLocalidade"
-                                            title="Por favor informe a localidade." required
-                                            asp-for="LocalidadeId" asp-items="Model.ListLocalidades">
-                                        <option value="">Selecionar Localidade</option>
-                                    </select>
-                                </div>
-                                <label class="col-sm-2 control-label text-sm-right pt-2">Aluno <span class="required">*</span></label>
-                                <div class="col-md-4">
-                                    <select class="form-control populate select2" name="ddlAluno" id="ddlAluno"
-                                            title="Por favor informe um Aluno." required
-                                            asp-for="AlunoId" asp-items="Model.ListAlunos">
-                                        <option value="">Selecionar Aluno</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-12 form-group">
-                            &nbsp;
-                            &nbsp;
-                        </div>
-                        <div class="col-md-12">
-                            <div class="tabs tabs-vertical tabs-left">
-                                <ul class="nav nav-tabs col-sm-2 col-xs-4">
-                                    <li class="active">
-                                        <a href="#saude" data-toggle="tab" aria-expanded="false">
-                                            <i class="fa fa-heartbeat" style="color: #d2322d;"></i>
-                                            <span style="color: #d2322d;">Saúde</span>
-                                        </a>
-                                    </li>
-                                    <li class="">
-                                        <a href="#talento-esportivo" data-toggle="tab" aria-expanded="true">
-                                            <i class="fa fa-trophy" style="color: #ed9c28;"></i>
-                                            <span style="color: #ed9c28;">Talento Esportivo</span>
-                                        </a>
-                                    </li>
-                                    <li class="">
-                                        <a href="#consumo-alimentar" data-toggle="tab" aria-expanded="false">
-                                            <i class="fa fa-cutlery" style="color: #47a447;"></i>
-                                            <span style="color: #47a447;">Consumo Alimentar</span>
-                                        </a>
-                                    </li>
-                                    <li class="">
-                                        <a href="#saude-bucal"
-                                           data-toggle="tab" aria-expanded="false">
-                                            <i class="fa fa-medkit" style="color: #5bc0de;"></i>
-                                            <span style="color: #5bc0de;">Saúde Bucal</span>
-                                        </a>
-                                    </li>
-                                    <li class="">
-                                        <a href="#qualidade-vida" data-toggle="tab" aria-expanded="false">
-                                            <i class="fa fa-star-o" style="color: #00a4a9;"></i>
-                                            <span style="color: #00a4a9;">Qualidade de Vida</span>
-                                        </a>
-                                    </li>
-                                    <li class="">
-                                        <a href="#vocacional"
-                                           data-toggle="tab" aria-expanded="false">
-                                            <i class="fa fa-star-half-o" style="color: #a787c0;"></i>
-                                            <span style="color: #a787c0;">Vocacional</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                                <div class="tab-content">
-                                    <div id="saude" class="tab-pane active">
-                                        <div class="row form-group">
-                                            <div>
-                                                <label class="col-sm-2 control-label"><strong>Altura (cm) </strong></label>
-                                                <div class="col-sm-4">
-                                                    <input type="text" class="form-control" id="alturaSaude" name="alturaSaude" maxlength="3" />
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <label class="col-sm-3 control-label"><strong>Massa Corporal (kg) </strong></label>
-                                                <div class="col-sm-3">
-                                                    <input type="text" class="form-control" id="massaCorporalSaude" name="massaCorporalSaude" maxlength="3" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <div>
-                                                <label class="col-sm-2 control-label"><strong>Envergadura (cm)</strong></label>
-                                                <div class="col-sm-4">
-                                                    <input type="text" class="form-control" id="envergaduraSaude" name="envergaduraSaude" maxlength="3" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div id="talento-esportivo" class="tab-pane">
-                                        <div class="row form-group">
-                                            <div>
-                                                <label class="col-sm-2 control-label"><strong>Altura (cm) </strong></label>
-                                                <div class="col-sm-3">
-                                                    <input type="text" class="form-control" id="altura" name="altura" maxlength="3" />
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <label class="col-sm-3 control-label"><strong>Massa Corporal (kg)</strong></label>
-                                                <div class="col-sm-3">
-                                                    <input type="text" class="form-control" id="massaCorporal" name="massaCorporal" maxlength="3" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <div>
-                                                <label class="col-sm-2 control-label"><strong>Preensão Manual (kg)</strong></label>
-                                                <div class="col-sm-3">
-                                                    <input type="text" class="form-control" id="preensaoManual" name="preensaoManual" maxlength="3" />
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <label class="col-sm-3 control-label"><strong>Flexibilidade (cm)</strong></label>
-                                                <div class="col-sm-3">
-                                                    <input type="text" class="form-control" id="flexibilidade" name="flexibilidade" maxlength="3" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <div>
-                                                <label class="col-sm-2 control-label"><strong>Impulsão Horizontal (cm)</strong></label>
-                                                <div class="col-sm-3">
-                                                    <input type="text" class="form-control" id="impulsaoHorizontal" name="impulsaoHorizontal" maxlength="3" />
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <label class="col-sm-3 control-label"><strong>Teste de Velocidade 20m (seg)</strong></label>
-                                                <div class="col-sm-3">
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon">
-                                                            <i class="fa fa-clock-o"></i>
-                                                        </span>
-                                                        <input type="text" id="testeVelocidade" name="testeVelocidade" value="00:00" data-plugin-timepicker class="form-control" data-plugin-options='{ "showMeridian": false, "explicitMode": true, "setDefaultTime": false }'>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <div>
-                                                <label class="col-sm-2 control-label"><strong>Aptidão Física (mLO2/min)</strong></label>
-                                                <div class="col-sm-3">
-                                                    <input type="text" class="form-control" id="aptidaoFisica" name="aptidaoFisica" maxlength="6" />
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <label class="col-sm-3 control-label"><strong>Agilidade (seg)</strong></label>
-                                                <div class="col-sm-3">
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon">
-                                                            <i class="fa fa-clock-o"></i>
-                                                        </span>
-                                                        <input type="text" id="agilidade" name="agilidade" value="00:00" data-plugin-timepicker class="form-control" data-plugin-options='{ "showMeridian": false, "explicitMode": true , "setDefaultTime": false }'>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <div>
-                                                <label class="col-sm-2 control-label"><strong>Abdominal (qtd)</strong></label>
-                                                <div class="col-sm-3">
-                                                    <div data-plugin-spinner data-plugin-options='{ "value":0, "step": 5, "min": 0, "max": 200 }'>
-                                                        <div class="input-group">
-                                                            <div class="spinner-buttons input-group-btn">
-                                                                <button type="button" class="btn btn-default spinner-up">
-                                                                    <i class="fa fa-plus"></i>
-                                                                </button>
-                                                            </div>
-                                                            <input type="text" class="spinner-input form-control" maxlength="3" readonly id="abdominal" name="abdominal">
-                                                            <div class="spinner-buttons input-group-btn">
-                                                                <button type="button" class="btn btn-default spinner-down">
-                                                                    <i class="fa fa-minus"></i>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <p>
-                                                        <code>contagem</code> de 5 em 5
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div id="vocacional" class="tab-pane">
-                                        @for (var index = 0; index < Model.QuestionarioVocacional.Count; index++)
-                                        {
-                                            var item = Model.QuestionarioVocacional[index];
-                                            <div class="form-group">
-                                                <div class="col-sm-12">
-                                                    <label class="control-label">
-                                                        <strong>@index - @item.Pergunta</strong>
-                                                    </label>
-                                                    <input type="hidden" id="perguntaVocacional_@item.Id" />
-                                                </div>
-                                                <div class="col-sm-12">
-                                                    @foreach (var resp in @item.Respostas)
-                                                    {
-                                                        <div class="radio-custom radio-default col-sm-3">
-                                                            <input id="respVocacional_@resp.Id" name="nomeRespVocacional_@index" type="radio" value="@resp.Id" />
-                                                            <label for="respVocacional_@resp.Id">@resp.RespostaQuestionario</label>
-                                                        </div>
-                                                    }
-                                                </div>
-                                            </div>
-                                        }
-
-                                    </div>
-                                    <div id="qualidade-vida" class="tab-pane">
-                                        @for (var index = 0; index < Model.QuestionarioQualidadeVida.Count; index++)
-                                        {
-                                            var item = Model.QuestionarioQualidadeVida[index];
-                                            <div class="form-group">
-                                                <div class="col-sm-12">
-                                                    <label class="control-label">
-                                                        <strong>@index - @item.Pergunta</strong>
-                                                    </label>
-                                                    <input type="hidden" id="perguntaQualidadeVida_@item.Id" />
-                                                </div>
-                                                <div class="col-sm-12">
-                                                    @foreach (var resp in @item.Respostas)
-                                                    {
-                                                        <div class="radio-custom radio-default col-sm-2">
-                                                            <input id="respQualidadeVida_@resp.Id" name="nomeRespQualidadeVida_@index" type="radio" value="@resp.Id" />
-                                                            <label for="respQualidadeVida_@resp.Id">@resp.RespostaQuestionario</label>
-                                                        </div>
-                                                    }
-                                                </div>
-                                            </div>
-                                        }
-                                    </div>
-                                    <div id="consumo-alimentar" class="tab-pane">
-                                        @for (var index = 0; index < Model.QuestionarioConsumoAlimentar.Count; index++)
-                                        {
-                                            var item = Model.QuestionarioConsumoAlimentar[index];
-                                            <div class="form-group">
-                                                <div class="col-sm-12">
-                                                    <label class="control-label">
-                                                        <strong>@index - @item.Pergunta</strong>
-                                                    </label>
-                                                    <input type="hidden" id="perguntaConsumoAlimentar_@item.Id" />
-                                                </div>
-                                                <div class="col-sm-12">
-                                                    @foreach (var resp in @item.Respostas)
-                                                    {
-                                                        <div class="radio-custom radio-default col-sm-3">
-                                                            <input id="respConsumoAlimentar_@resp.Id" name="nomeRespConsumoAlimentar_@index" type="radio" value="@resp.Id" />
-                                                            <label for="respConsumoAlimentar_@resp.Id">@resp.RespostaQuestionario</label>
-                                                        </div>
-                                                    }
-                                                </div>
-                                            </div>
-                                        }
-                                    </div>
-                                    <div id="saude-bucal" class="tab-pane">
-                                        @for (var index = 0; index < Model.QuestionarioSaudeBucal.Count; index++)
-                                        {
-                                            var item = Model.QuestionarioSaudeBucal[index];
-                                            <div class="form-group">
-                                                <div class="col-sm-12">
-                                                    <label class="control-label">
-                                                        <strong>@index - @item.Pergunta</strong>
-                                                    </label>
-                                                </div>
-                                                <div class="col-sm-12">
-                                                    @foreach (var resp in @item.Respostas)
-                                                    {
-                                                        <div class="radio-custom radio-default col-sm-3">
-                                                            <input id="respSaudeBucal_@resp.Id" name="nomeRespSaudeBucal_@index" type="radio" value="@resp.Id" />
-                                                            <label for="respSaudeBucal_@resp.Id">@resp.RespostaQuestionario</label>
-                                                        </div>
-                                                    }
-                                                </div>
-                                            </div>
-                                        }
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-					<div class="modal-footer">
-						<button type="reset" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
-						<button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
-					</div>
-				}
-			</div>
 		</div>
 	</div>
 </div>

@@ -88,6 +88,38 @@ var vm = new Vue({
                         });
                 });
 
+                $('input[type=radio][name=parceria]').change(function () {
+                        var id = this.value
+
+                    var url = "../SistemaSocioeconomico/GetTiposParceriasByParceria?id=" + id;
+
+                    var ddlSource = "#ddlTipoParceria";
+
+                            $.getJSON(url, { id: $(ddlSource).val() },
+                                function (data) {
+                                    if (data.length > 0) {
+                                        var items = '<option value="">Selecionar Tipo Parceria</option>';
+                                        $("#ddlTipoParceria").empty;
+                                        $.each(data,
+                                            function (i, row) {
+                                                items += "<option value='" + row.value + "'>" + row.text + "</option>";
+                                            });
+                                        $("#ddlTipoParceria").html(items);
+                                    }
+                                    else {
+                                        var items = '<option value="">Selecionar Tipo Parceria</option>';
+                                        $("#ddlTipoParceria").empty;
+                                        $("#ddlTipoParceria").html(items);
+                                        new PNotify({
+                                            title: 'Tipo Parceria',
+                                            text: 'Não existe Tipo Parceria cadastrada para esta Parceria',
+                                            type: 'warning'
+                                        });
+                                    }
+                                });
+                        
+                });
+
                 var $numCpf = $("#cpf");
                 $numCpf.mask('000.000.000-00', { reverse: false });
 

@@ -2,13 +2,11 @@
 {
     public class LaudoDto
     {
-        public TalentoEsportivoDto TalentoEsportivo { get; set; }
-        public VocacionalDto Vocacional { get; set; }
-        public QualidadeVidaDto QualidadeDeVida { get; set; }
-        public SaudeDto Saude { get; set; }
-        public ConsumoAlimentarDto ConsumoAlimentar { get; set; }
-        public SaudeBucalDto SaudeBucal { get; set; }
-        public  AlunoDto Aluno { get; set; }
-        public string Id { get; set; }
+        public int? VocacionalId { get; set; }
+        public int? QualidadeDeVidaId { get; set; }
+        public int? SaudeId { get; set; }
+        public int? ConsumoAlimentarId { get; set; }
+        public int? SaudeBucalId { get; set; }
+        public int? AlunoId { get; set; }
     }
 }
