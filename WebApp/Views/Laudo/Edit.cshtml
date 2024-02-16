@@ -63,39 +63,39 @@
                             <ul class="nav nav-tabs col-sm-2 col-xs-4">
                                 <li class="active">
                                     <a href="#saude" data-toggle="tab" aria-expanded="false">
-                                        <i class="fa fa-heartbeat" style="color: #d2322d;"></i>
+                                        <i class="fa fa-heartbeat"  value="@Model.Laudo.Saude" style="color: #d2322d;"></i>
                                         <span style="color: #d2322d;">Saúde</span>
                                     </a>
                                 </li>
                                 <li class="">
                                     <a href="#talento-esportivo" data-toggle="tab" aria-expanded="true">
-                                        <i class="fa fa-trophy" style="color: #ed9c28;"></i>
+                                        <i class="fa fa-trophy" value="@Model.Laudo.TalentoEsportivo" style="color: #ed9c28;"></i>
                                         <span style="color: #ed9c28;">Talento Esportivo</span>
                                     </a>
                                 </li>
                                 <li class="">
                                     <a href="#consumo-alimentar" data-toggle="tab" aria-expanded="false">
-                                        <i class="fa fa-cutlery" style="color: #47a447;"></i>
+                                        <i class="fa fa-cutlery" value="@Model.Laudo.ConsumoAlimentar" style="color: #47a447;"></i>
                                         <span style="color: #47a447;">Consumo Alimentar</span>
                                     </a>
                                 </li>
                                 <li class="">
                                     <a href="#saude-bucal"
                                        data-toggle="tab" aria-expanded="false">
-                                        <i class="fa fa-medkit" style="color: #5bc0de;"></i>
+                                        <i class="fa fa-medkit" value="@Model.Laudo.SaudeBucal" style="color: #5bc0de;"></i>
                                         <span style="color: #5bc0de;">Saúde Bucal</span>
                                     </a>
                                 </li>
                                 <li class="">
                                     <a href="#qualidade-vida" data-toggle="tab" aria-expanded="false">
-                                        <i class="fa fa-star-o" style="color: #00a4a9;"></i>
+                                        <i class="fa fa-star-o" value="@Model.Laudo.QualidadeDeVida" style="color: #00a4a9;"></i>
                                         <span style="color: #00a4a9;">Qualidade de Vida</span>
                                     </a>
                                 </li>
                                 <li class="">
                                     <a href="#vocacional"
                                        data-toggle="tab" aria-expanded="false">
-                                        <i class="fa fa-star-half-o" style="color: #a787c0;"></i>
+                                        <i class="fa fa-star-half-o" value="@Model.Laudo.Vocacional" style="color: #a787c0;"></i>
                                         <span style="color: #a787c0;">Vocacional</span>
                                     </a>
                                 </li>
@@ -106,13 +106,13 @@
                                         <div>
                                             <label class="col-sm-2 control-label"><strong>Altura (cm) </strong></label>
                                             <div class="col-sm-4">
-                                                <input type="text" class="form-control" id="alturaSaude" name="alturaSaude" maxlength="3" />
+                                                <input type="text" class="form-control" value="@Model.Laudo.Altura" id="alturaSaude" name="alturaSaude" maxlength="3" />
                                             </div>
                                         </div>
                                         <div>
                                             <label class="col-sm-3 control-label"><strong>Massa Corporal (kg) </strong></label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="massaCorporalSaude" name="massaCorporalSaude" maxlength="3" />
+                                                <input type="text" class="form-control" value="@Model.Laudo.MassaCorporal" id="massaCorporalSaude" name="massaCorporalSaude" maxlength="3" />
                                             </div>
                                         </div>
                                     </div>
@@ -120,7 +120,7 @@
                                         <div>
                                             <label class="col-sm-2 control-label"><strong>Envergadura (cm)</strong></label>
                                             <div class="col-sm-4">
-                                                <input type="text" class="form-control" id="envergaduraSaude" name="envergaduraSaude" maxlength="3" />
+                                                <input type="text" class="form-control" value="@Model.Laudo.Envergadura" id="envergaduraSaude" name="envergaduraSaude" maxlength="3" />
                                             </div>
                                         </div>
                                     </div>
@@ -130,13 +130,13 @@
                                         <div>
                                             <label class="col-sm-2 control-label"><strong>Altura (cm) </strong></label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="altura" name="altura" maxlength="3" />
+                                                <input type="text" class="form-control" value="@Model.Laudo.Altura" id="altura" name="altura" maxlength="3" />
                                             </div>
                                         </div>
                                         <div>
                                             <label class="col-sm-3 control-label"><strong>Massa Corporal (kg)</strong></label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="massaCorporal" name="massaCorporal" maxlength="3" />
+                                                <input type="text" class="form-control" value="@Model.Laudo.MassaCorporal" id="massaCorporal" name="massaCorporal" maxlength="3" />
                                             </div>
                                         </div>
                                     </div>
@@ -144,13 +144,13 @@
                                         <div>
                                             <label class="col-sm-2 control-label"><strong>Preensão Manual (kg)</strong></label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="preensaoManual" name="preensaoManual" maxlength="3" />
+                                                <input type="text" class="form-control" value="@Model.Laudo.PreensaoManual" id="preensaoManual" name="preensaoManual" maxlength="3" />
                                             </div>
                                         </div>
                                         <div>
                                             <label class="col-sm-3 control-label"><strong>Flexibilidade (cm)</strong></label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="flexibilidade" name="flexibilidade" maxlength="3" />
+                                                <input type="text" class="form-control" value="@Model.Laudo.Flexibilidade" id="flexibilidade" name="flexibilidade" maxlength="3" />
                                             </div>
                                         </div>
                                     </div>
@@ -158,7 +158,7 @@
                                         <div>
                                             <label class="col-sm-2 control-label"><strong>Impulsão Horizontal (cm)</strong></label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="impulsaoHorizontal" name="impulsaoHorizontal" maxlength="3" />
+                                                <input type="text" class="form-control" value="@Model.Laudo.ImpulsaoHorizontal" id="impulsaoHorizontal" name="impulsaoHorizontal" maxlength="3" />
                                             </div>
                                         </div>
                                         <div>
@@ -177,7 +177,7 @@
                                         <div>
                                             <label class="col-sm-2 control-label"><strong>Aptidão Física (mLO2/min)</strong></label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="aptidaoFisica" name="aptidaoFisica" maxlength="6" />
+                                                <input type="text" class="form-control" value="@Model.Laudo.AptidaoFísica" id="aptidaoFisica" name="aptidaoFisica" maxlength="6" />
                                             </div>
                                         </div>
                                         <div>
