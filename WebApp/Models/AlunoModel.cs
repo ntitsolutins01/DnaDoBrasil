@@ -71,6 +71,14 @@ namespace WebApp.Models
             public string? AmbientesIds { get; set; }
             public string? DeficienciasIds { get; set; }
             public int? LocalidadeId { get; set; }
+            public string? EstadoId { get; set; }
+            public string? endereco { get; set; }
+            public string? AreaId { get; set; }
+            public string? CPF { get; set; }
+            public string? DeficienciaId { get; set; }
+            public string? NomecompletodoAluno { get; set; }
+            public string? NomecompletodaMae { get; set; }
+            public string? NomecompletodoResponsável { get; set; }
         }
     }
 

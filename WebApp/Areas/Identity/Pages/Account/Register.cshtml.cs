@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
@@ -118,7 +119,21 @@ namespace WebApp.Areas.Identity.Pages.Account
                 Nome = collection["nome"] == "" ? null : collection["nome"].ToString(),
                 DtNascimento = collection["dtNasc"] == "" ? null : collection["DtNascimento"].ToString(),
                 Email = collection["email"] == "" ? null : collection["email"].ToString(),
+                EstadoId = collection["ddlEstado"] == "" ? null : collection["ddlEstado"].ToString(),
+                endereco = collection["endereco"] == "" ? null : collection["endereco"].ToString(),
                 Sexo = collection["ddlSexo"] == "" ? null : collection["ddlSexo"].ToString(),
+                AreaId = collection["ddlAreaDesejada"] == "" ? null : collection["ddlAreaDesejada"].ToString(),
+                CPF = collection["cpf"] == "" ? null : collection["cpf"].ToString(),
+                DeficienciaId = collection["ddlDefiencia"] == "" ? null : collection["ddlDefiencia"].ToString(),
+                NomecompletodoAluno = collection["nomeA"] == "" ? null : collection["nomeA"].ToString(),
+                NomecompletodaMae = collection["nomeM"] == "" ? null : collection["nomeM"].ToString(),
+                NomecompletodoResponsável = collection["nomeR"] == "" ? null : collection["nomeR"].ToString(),
+                //autorizado = collection["autorizado"] == "" ? null : collection["autorizado].ToString(),
+                //CPF = collection["cpf"] == "" ? null : collection["cpf"].ToString(),
+                //CPF = collection["cpf"] == "" ? null : collection["cpf"].ToString(),
+                //CPF = collection["cpf"] == "" ? null : collection["cpf"].ToString(),
+                //CPF = collection["cpf"] == "" ? null : collection["cpf"].ToString(),
+                //CPF = collection["cpf"] == "" ? null : collection["cpf"].ToString(),
             };
 
 
