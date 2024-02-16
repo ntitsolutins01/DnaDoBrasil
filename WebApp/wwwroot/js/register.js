@@ -11,6 +11,17 @@
             var formid = $('form').attr('id');
 
             if (formid === "formRegister") {
+                if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
+
+                    $(function () {
+                        $('[data-plugin-ios-switch]').each(function () {
+                            var $this = $(this);
+
+                            $this.themePluginIOS7Switch();
+                        });
+                    });
+
+                }
 
                 var $select = $(".select2").select2({
                     allowClear: true
@@ -151,32 +162,14 @@
                             required: true,
                             email: true
                         },
-                        cpf: { cpf: true, required: true },
-                        "Input.Password": {
-                            required: true,
-                            minlength: 8
-                        },
-                        "Input.ConfirmPassword": {
-                            required: true,
-                            minlength: 8,
-                            //equalTo: "#Input.Password"
-                        },
+                        cpf: { cpf: true, required: true }
                     },
                     messages: {
                         "EndEmail": {
                             required: "Por favor informe o endereço eletrônico válido do usuário.",
                             email: "Formato de e-mail inválido."
                         },
-                        cpf: { cpf: 'Formato de CPF inválido', required: "Por favor informe o número do CPF do usuário." },
-                        "Input.Password": {
-                            required: "Por favor informe sua senha.",
-                            minlength: jQuery.validator.format("Formato de senha inválido, a senha deve conter no mínimo 8 digitos.")
-                        },
-                        "Input.ConfirmPassword": {
-                            required: "Por favor informe sua senha.",
-                            minlength: jQuery.validator.format("Formato de senha inválido, a senha deve conter no mínimo 8 digitos."),
-                            //equalTo: "As senhas digitadas são diferentes. Por favor, repita a operação."
-                        }
+                        cpf: { cpf: 'Formato de CPF inválido', required: "Por favor informe o número do CPF do usuário." }
                     },
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
