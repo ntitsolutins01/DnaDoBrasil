@@ -50,13 +50,16 @@
                                title="Por favor informe o endereço." />
                     </div>
                     <div class="form-group mb-lg">
-                        <label>Áreas desejadas</label>
-                        
-                        <select multiple data-plugin-selectTwo class="form-control populate" name="ddlAreaDesejada" id="ddlAreaDesejada" style="width:100%"
-                                title="Por favor selecione as área desejada."
+                        <label>Áreas desejadas</label><br/>
+                        <select class="form-control populate" multiple="multiple" data-plugin-multiselect data-plugin-options='{ "maxHeight": 200 }' id="ms_example0"
                                 asp-for="AreaId" asp-items="Model.ListAreas">
                             <option value="">Selecionar Áreda Desejada</option>
                         </select>
+                        @* <select multiple data-plugin-selectTwo class="form-control populate" name="ddlAreaDesejada" id="ddlAreaDesejada" style="width:100%"
+                                title="Por favor selecione as área desejada."
+                                asp-for="AreaId" asp-items="Model.ListAreas">
+                            <option value="">Selecionar Áreda Desejada</option>
+                        </select> *@
                     </div>
                     <div class="form-group mb-lg">
                         <label>Nome completo do Aluno</label>
@@ -132,8 +135,13 @@
                     </div>
                     <div class="form-group mb-lg">
                         <label>Aluno está autorizado a sair sozinho?</label><br/>
-                        <div class="switch switch-sm switch-success">
-                            <input type="checkbox" id="autorizado" name="autorizado" data-plugin-ios-switch  />
+                        <div class="radio-custom radio-success">
+                            <input type="radio" id="autorizadoSim" name="autorizado" value="true" required="">
+                            <label>Sim</label>
+                        </div>
+                        <div class="radio-custom radio-danger">
+                            <input type="radio" id="autorizadoNao" name="autorizado" value="false" required="">
+                            <label>Não</label>
                         </div>
                         <p>
                             <code>O estudante pode deixar o local desacompanhado do responsável.</code>
@@ -141,14 +149,24 @@
                     </div>
                     <div class="form-group mb-lg">
                         <label>Participação no programa DNA DO BRASIL TALENTOS e compartilhamento dos dados pessoais do estudante.</label><br />
-                        <div class="switch switch-sm switch-success">
-                            <input type="checkbox" id="participacao" name="participacao" data-plugin-ios-switch  />
+                        <div class="radio-custom radio-success">
+                            <input type="radio" id="participacaoSim" name="participacao" value="true" required="">
+                            <label>Sim</label>
+                        </div>
+                        <div class="radio-custom radio-danger">
+                            <input type="radio" id="participacaoNao" name="participacao"  value="false" required="">
+                            <label>Não</label>
                         </div>
                     </div>
                     <div class="form-group mb-lg">
                         <label>Utilização da imagem</label><br />
-                        <div class="switch switch-sm switch-success">
-                            <input type="checkbox" id="utilizacaoImagem" name="utilizacaoImagem" data-plugin-ios-switch />
+                        <div class="radio-custom radio-success">
+                            <input type="radio" id="utilizacaoImagemSim" name="utilizacaoImagem" value="true" required="">
+                            <label>Sim</label>
+                        </div>
+                        <div class="radio-custom radio-danger">
+                            <input type="radio" id="utilizacaoImagemNao" name="utilizacaoImagem" value="false" required="">
+                            <label>Não</label>
                         </div>
                         <p>
                             <code>O Idecace, a título gratuito e não oneroso, para fins de divulgação/publicação em qualquer material de foto, vídeo, documentos em geral, relatórios bem como em todo e qualquer veículo de comunicação</code>
@@ -156,8 +174,13 @@
                     </div>
                     <div class="form-group mb-lg">
                         <label>Todos os alunos que estiver apto a participar das atividades no Ceu das Artes, Documentação exigida no primeiro dia de aula.</label><br />
-                        <div class="switch switch-sm switch-success">
-                            <input type="checkbox" id="copiaDoc" name="copiaDoc" data-plugin-ios-switch />
+                        <div class="radio-custom radio-success">
+                            <input type="radio" id="copiaDocImagemSim" name="copiaDoc" value="true" required="">
+                            <label>Sim</label>
+                        </div>
+                        <div class="radio-custom radio-danger">
+                            <input type="radio" id="copiaDocImagemNao" name="copiaDoc" value="false" required="">
+                            <label>Não</label>
                         </div>
                         <p>
                             <code>Cópia do documento de indentidade do aluno. Cópia do documento de identidade do responsável legal.</code>
