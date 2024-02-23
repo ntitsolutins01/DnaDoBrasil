@@ -1,5 +1,5 @@
 var vm = new Vue({
-    el: "#formAmbiente",
+    el: "#formModalidade",
     data: {
         loading: false,
         editDto: { Id: "", Nome: "", Status: true }
@@ -22,9 +22,9 @@ var vm = new Vue({
 
             var formid = $('form').attr('id');
 
-            if (formid === "formEditAmbiente") {
+            if (formid === "formEditModalidade") {
 
-                $("#formEditAmbiente").validate({
+                $("#formEditModalidade").validate({
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
                     },
@@ -44,9 +44,9 @@ var vm = new Vue({
                 });
             } 
 
-            if (formid === "formAmbiente") {
+            if (formid === "formModalidade") {
 
-                $("#formAmbiente").validate({
+                $("#formModalidade").validate({
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
                     },
@@ -87,14 +87,14 @@ var vm = new Vue({
                 self.loading = flag;
             }
         },
-        DeleteAmbiente: function (id) {
-            var url = "Ambiente/Delete/" + id;
-            $("#deleteAmbienteHref").prop("href", url);
+        DeleteModalidade: function (id) {
+            var url = "Modalidade/Delete/" + id;
+            $("#deleteModalidadeHref").prop("href", url);
         },
-        EditAmbiente: function (id) {
+        EditModalidade: function (id) {
             var self = this;
 
-            axios.get("Ambiente/GetAmbienteById/?id=" + id).then(result => {
+            axios.get("Modalidade/GetModalidadeById/?id=" + id).then(result => {
 
                 self.editDto.Id = result.data.id;
                 self.editDto.Nome = result.data.nome;
@@ -109,13 +109,13 @@ var vm = new Vue({
 
 var crud = {
     DeleteModal: function (id) {
-        $('input[name="AmbienteId"]').attr('value', id);
-        $('#mdDeleteAmbiente').modal('show');
-        vm.DeleteAmbiente(id)
+        $('input[name="ModalidadeId"]').attr('value', id);
+        $('#mdDeleteModalidade').modal('show');
+        vm.DeleteModalidade(id)
     },
     EditModal: function (id) {
-        $('input[name="AmbienteId"]').attr('value', id);
-        $('#mdEditAmbiente').modal('show');
-        vm.EditAmbiente(id)
+        $('input[name="ModalidadeId"]').attr('value', id);
+        $('#mdEditModalidade').modal('show');
+        vm.EditModalidade(id)
     }
 };

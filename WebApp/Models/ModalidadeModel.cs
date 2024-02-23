@@ -4,14 +4,14 @@ using WebApp.Dto;
 
 namespace WebApp.Models
 {
-    public class AmbienteModel
+    public class ModalidadeModel
     {
         public AmbienteDto Ambiente { get; set; }
         public List<AmbienteDto> Ambientes { get; set; }
         public string AmbienteId { get; set; }
         public SelectList ListAmbientes { get; set; }
 
-        public class CreateUpdateAmbienteCommand
+        public class CreateUpdateModalidadeCommand
         {
             public int Id { get; set; }
             public string Nome { get; set; }

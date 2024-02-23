@@ -9,11 +9,11 @@ using WebApp.Utility;
 
 namespace WebApp.Controllers
 {
-    public class AmbienteController : BaseController
+    public class ModalidadeController : BaseController
     {
         private readonly IOptions<UrlSettings> _appSettings;
 
-        public AmbienteController(IOptions<UrlSettings> appSettings)
+        public ModalidadeController(IOptions<UrlSettings> appSettings)
         {
             _appSettings = appSettings;
             ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
@@ -23,9 +23,9 @@ namespace WebApp.Controllers
         {
             SetNotifyMessage(notify, message);
             SetCrudMessage(crud);
-            var response = ApiClientFactory.Instance.GetAmbienteAll();
+            var response = ApiClientFactory.Instance.GetModalidadeAll();
 
-            return View(new AmbienteModel() { Ambientes = response });
+            return View(new ModalidadeModel() { Modalidades = response });
         }
 
         //[ClaimsAuthorize("ConfiguracaoSistema", "Incluir")]
@@ -43,12 +43,12 @@ namespace WebApp.Controllers
         {
             try
             {
-                var command = new AmbienteModel.CreateUpdateAmbienteCommand
+                var command = new ModalidadeModel.CreateUpdateModalidadeCommand
                 {
                     Nome = collection["nome"].ToString()
                 };
 
-                await ApiClientFactory.Instance.CreateAmbiente(command);
+                await ApiClientFactory.Instance.CreateModalidade(command);
 
                 return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
             }
@@ -61,14 +61,14 @@ namespace WebApp.Controllers
         //[ClaimsAuthorize("Usuario", "Alterar")]
         public async Task<ActionResult> Edit(IFormCollection collection)
         {
-            var command = new AmbienteModel.CreateUpdateAmbienteCommand
+            var command = new ModalidadeModel.CreateUpdateModalidadeCommand
             {
-                Id = Convert.ToInt32(collection["editAmbienteId"]),
+                Id = Convert.ToInt32(collection["editModalidadeId"]),
                 Nome = collection["nome"].ToString(),
                 Status = collection["editStatus"].ToString() == "" ? false : true
             };
 
-            await ApiClientFactory.Instance.UpdateAmbiente(command.Id, command);
+            await ApiClientFactory.Instance.UpdateModalidade(command.Id, command);
 
             return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
         }
@@ -78,7 +78,7 @@ namespace WebApp.Controllers
         {
             try
             {
-                ApiClientFactory.Instance.DeleteAmbiente(id);
+                ApiClientFactory.Instance.DeleteModalidade(id);
                 return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
             }
             catch
@@ -87,9 +87,9 @@ namespace WebApp.Controllers
             }
         }
 
-        public Task<AmbienteDto> GetAmbienteById(int id)
+        public Task<ModalidadeDto> GetModalidadeById(int id)
         {
-            var result = ApiClientFactory.Instance.GetAmbienteById(id);
+            var result = ApiClientFactory.Instance.GetModalidadeById(id);
 
             return Task.FromResult(result);
         }

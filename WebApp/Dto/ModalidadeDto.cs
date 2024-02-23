@@ -1,6 +1,6 @@
 ﻿namespace WebApp.Dto
 {
-    public class AmbienteDto
+    public class ModalidadeDto
     {
         public string Id { get; set; }
         public string Nome { get; set; }

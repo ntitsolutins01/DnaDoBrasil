@@ -5,27 +5,27 @@ namespace WebApp.ApiClient
 {
     public partial class DnaApiClient
     {
-	    private const string ResourceAmbiente = "Ambientes";
+	    private const string ResourceModalidade = "Modalidades";
 
 		#region Main Methods
 
-		public Task<long> CreateAmbiente(AmbienteModel.CreateUpdateAmbienteCommand command)
+		public Task<long> CreateModalidade(ModalidadeModel.CreateUpdateModalidadeCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceAmbiente}"));
+                $"{ResourceModalidade}"));
             return Post(requestUrl, command);
         }
-        public Task<bool> UpdateAmbiente(int id, AmbienteModel.CreateUpdateAmbienteCommand command)
+        public Task<bool> UpdateModalidade(int id, ModalidadeModel.CreateUpdateModalidadeCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceAmbiente}/{id}"));
+                $"{ResourceModalidade}/{id}"));
             return Put(requestUrl, command);
         }
 
-        public Task<bool> DeleteAmbiente(int id)
+        public Task<bool> DeleteModalidade(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceAmbiente}/{id}"));
+                $"{ResourceModalidade}/{id}"));
             return Delete<bool>(requestUrl);
         }
 
@@ -33,17 +33,17 @@ namespace WebApp.ApiClient
 
         #region Methods
 
-        public AmbienteDto GetAmbienteById(int id)
+        public ModalidadeDto GetModalidadeById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceAmbiente}/Ambiente/{id}"));
-            return Get<AmbienteDto>(requestUrl);
+                $"{ResourceModalidade}/Modalidade/{id}"));
+            return Get<ModalidadeDto>(requestUrl);
         }
-        public List<AmbienteDto> GetAmbienteAll()
+        public List<ModalidadeDto> GetModalidadeAll()
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceAmbiente}"));
-            return Get<List<AmbienteDto>>(requestUrl);
+                $"{ResourceModalidade}"));
+            return Get<List<ModalidadeDto>>(requestUrl);
         }
 
         #endregion
