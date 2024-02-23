@@ -1,10 +1,10 @@
-﻿@model WebApp.Models.AmbienteModel
+﻿@model WebApp.Models.ModalidadeModel
 @{
-    ViewData["Title"] = "Listagem de Ambientes";
+    ViewData["Title"] = "Listagem de Modalidades";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div id="formAmbiente">
+<div id="formModalidade">
     <div class="row">
         <div class="col-lg-12">
             <section class="panel">
@@ -12,25 +12,25 @@
                     <div class="panel-actions">
                         <a href="#" class="card-action card-action-toggle" data-card-toggle></a>
                     </div>
-                    <h2 class="panel-title">Listagem de Ambientes</h2>
+                    <h2 class="panel-title">Listagem de Modalidades</h2>
                 </header>
                 <div class="panel-body">
                     <div class="form-group row">
                         <div class="col-sm-12 pull-right">
-                            <a href="@Url.Action("Create", "Ambiente")" id="addToTable" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Novo Ambiente </a>
+                            <a href="@Url.Action("Create", "Modalidade")" id="addToTable" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Novo Modalidade </a>
                         </div>
                     </div>
                     <table class="table table-bordered table-striped mb-0" id="datatable-default">
                         <thead>
                             <tr>
                                 <th class="text-center">Id</th>
-                                <th class="text-center">Nome do Ambiente</th>
+                                <th class="text-center">Nome do Modalidade</th>
                                 <th class="text-center">Status</th>
                                 <th class="text-center">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var item in Model.Ambientes)
+                            @foreach (var item in Model.Modalidades)
                             {
                                 <tr>
                                     <td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Id)</td>
@@ -61,12 +61,12 @@
         </div>
     </div>
     <!-- Modal -->
-    <div class="modal fade" id="mdDeleteAmbiente" tabindex="-1" role="dialog" aria-labelledby="mdDeleteAmbienteLabel" aria-hidden="true">
+    <div class="modal fade" id="mdDeleteModalidade" tabindex="-1" role="dialog" aria-labelledby="mdDeleteModalidadeLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="mdDeleteAmbienteLabel">
-                        <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Exclusão de Ambiente</strong>
+                    <h5 class="modal-title" id="mdDeleteModalidadeLabel">
+                        <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Exclusão de Modalidade</strong>
                     </h5>
                 </div>
                 <div class="modal-body">
@@ -74,7 +74,7 @@
                         <i class="fa fa-question-circle"></i>
                     </div>
                     <div class="modal-text">
-                        <input type="hidden" id="deleteAmbienteId" />
+                        <input type="hidden" id="deleteModalidadeId" />
                         <p class="mb-0">Tem certeza que deseja <b>excluir</b> esse registro?</p>
                     </div>
                     <div class="modal-wrapper">
@@ -82,31 +82,31 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-thumbs-o-down"></i> &nbsp;&nbsp;Não</button>
-                    <a id="deleteAmbienteHref" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</a>
+                    <a id="deleteModalidadeHref" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</a>
                 </div>
             </div>
         </div>
     </div>
     <!-- Modal -->
-    <div class="modal fade" id="mdEditAmbiente" tabindex="-1" role="dialog" aria-labelledby="mdEditAmbienteLabel" aria-hidden="true">
+    <div class="modal fade" id="mdEditModalidade" tabindex="-1" role="dialog" aria-labelledby="mdEditModalidadeLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="mdEditAmbienteLabel">
-                        <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Alterar Ambiente</strong>
+                    <h5 class="modal-title" id="mdEditModalidadeLabel">
+                        <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Alterar Modalidade</strong>
                     </h5>
                 </div>
-                @using (@Html.BeginForm("Edit", "Ambiente", FormMethod.Post, new { id = "formEditAmbiente", @class = "form-horizontal" }))
+                @using (@Html.BeginForm("Edit", "Modalidade", FormMethod.Post, new { id = "formEditModalidade", @class = "form-horizontal" }))
                 {
-                    <input type="hidden" name="editAmbienteId" :value="editDto.Id" />
+                    <input type="hidden" name="editModalidadeId" :value="editDto.Id" />
 
                     <div class="modal-body">
                         <div class="form-group row">
-                            <label class="col-sm-3 control-label text-sm-right pt-2">Ambiente <span class="required">*</span></label>
+                            <label class="col-sm-3 control-label text-sm-right pt-2">Modalidade <span class="required">*</span></label>
                             <div class="col-sm-7">
                                 <input type="text" name="nome" class="form-control"
                                        maxlength="80" :value="editDto.Nome"
-                                       title="Por favor informe o ambiente." required />
+                                       title="Por favor informe o Modalidade." required />
                             </div>
                         </div>
                         <div class="form-group row">
@@ -142,7 +142,7 @@
     <script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
     <script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
     <script src="~/js/formatTable.js"></script>
-    <script src="~/js/ambiente.js"></script>
+    <script src="~/js/Modalidade.js"></script>
 
     <script>
 
@@ -153,14 +153,14 @@
 
             if (crub === 1) {
                 new PNotify({
-                    title: 'Ambiente',
+                    title: 'Modalidade',
                     text: 'Cadastro realizado com sucesso!',
                     type: 'success'
                 });
                 crub = 0;
             } else if (crub === 2) {
                 new PNotify({
-                    title: 'Ambiente',
+                    title: 'Modalidade',
                     text: 'Dados alterados com sucesso.',
                     type: 'warning',
                     icon: 'fa fa-pencil'
@@ -168,7 +168,7 @@
                 crub = 0;
             } else if (crub === 3) {
                 new PNotify({
-                    title: 'Ambiente',
+                    title: 'Modalidade',
                     text: 'Registro excluído com sucesso.',
                     type: 'error',
                     icon: 'fa fa-trash-o'
@@ -182,21 +182,21 @@
 
             if (notify === 0) {
                 new PNotify({
-                    title: 'Ambiente',
+                    title: 'Modalidade',
                     text: messagem,
                     type: 'success'
                 });
                 crub = 0;
             } else if (notify === 1) {
                 new PNotify({
-                    title: 'Ambiente',
+                    title: 'Modalidade',
                     text: messagem,
                     type: 'warning'
                 });
                 crub = 0;
             } else if (notify === 2) {
                 new PNotify({
-                    title: 'Ambiente',
+                    title: 'Modalidade',
                     text: messagem,
                     type: 'error'
                 });
