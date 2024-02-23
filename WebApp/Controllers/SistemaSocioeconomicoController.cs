@@ -70,7 +70,10 @@ namespace WebApp.Controllers
                 
                 var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
 
-                return View(new ParceiroModel() { ListEstados = estados });
+
+                var tiposParcerias = new SelectList(ApiClientFactory.Instance.GetTipoParceriaAll().Where(x => x.Parceria == 1), "Id", "Nome");
+
+                return View(new ParceiroModel() { ListEstados = estados, ListTiposParcerias = tiposParcerias });
 
             }
             catch (Exception e)
@@ -200,6 +203,24 @@ namespace WebApp.Controllers
             var result = ApiClientFactory.Instance.GetParceiroById(id);
 
             return Task.FromResult(result);
+        }
+
+
+        public Task<JsonResult> GetTiposParceriasByParceria(string id)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(id)) throw new Exception("Parceria não informado.");
+                var resultLocal = ApiClientFactory.Instance.GetTipoParceriaAll()
+                    .Where(x => x.Parceria == Convert.ToInt32(id) && x.Status == true);
+
+                return Task.FromResult(Json(new SelectList(resultLocal, "Id", "Nome")));
+
+            }
+            catch (Exception ex)
+            {
+                return Task.FromResult(Json(ex));
+            }
         }
 
         [HttpPost]

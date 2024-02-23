@@ -2,7 +2,6 @@
     el: "#formLaudo",
     data: {
         loading: false,
-        editDto: { Id: "", Nome: "", Status: true, IdadeInicial:"", IdadeFinal:"", ScoreTotal:"", Descricao:"" }
     },
     mounted: function () {
         var self = this;
@@ -324,40 +323,19 @@
                 $("#" + el).addClass("loading-overlay-showing");
                 self.loading = flag;
             }
-        },
-        DeleteLaudo: function (id) {
-            var url = "Laudo/Delete/" + id;
-            $("#deleteLaudoHref").prop("href", url);
-        },
-        EditLaudo: function (id) {
-            var self = this;
-
-            axios.get("Laudo/GetLaudoById/?id=" + id).then(result => {
-
-                self.editDto.Id = result.data.id;
-                self.editDto.Nome = result.data.nome;
-                self.editDto.Descricao = result.data.descricao;
-                self.editDto.IdadeInicial = result.data.idadeInicial;
-                self.editDto.IdadeFinal = result.data.idadeFinal;
-                self.editDto.ScoreTotal = result.data.scoreTotal;
-                self.editDto.Status = result.data.status;
-
-            }).catch(error => {
-                Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
-            });
         }
     }
 });
 
 var crud = {
-    DeleteModal: function (id) {
-        $('input[name="LaudoId"]').attr('value', id);
-        $('#mdDeleteLaudo').modal('show');
-        vm.DeleteLaudo(id)
-    },
-    EditModal: function (id) {
-        $('input[name="LaudoId"]').attr('value', id);
-        $('#mdEditLaudo').modal('show');
-        vm.EditLaudo(id)
-    }
+    //DeleteModal: function (id) {
+    //    $('input[name="LaudoId"]').attr('value', id);
+    //    $('#mdDeleteLaudo').modal('show');
+    //    vm.DeleteLaudo(id)
+    //},
+    //EditModal: function (id) {
+    //    $('input[name="LaudoId"]').attr('value', id);
+    //    $('#mdEditLaudo').modal('show');
+    //    vm.EditLaudo(id)
+    //}
 };

@@ -13,6 +13,8 @@ namespace WebApp.Models
         public SelectList ListEstados { get; set; }
         public string MunicipioId { get; set; }
         public SelectList ListMunicipios { get; set; }
+        public SelectList ListTiposParcerias { get; set; }
+        public int TipoParceriaId { get; set; }
 
         public class CreateUpdateParceiroCommand
         {

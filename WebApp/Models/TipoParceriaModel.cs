@@ -9,29 +9,13 @@ namespace WebApp.Models
         public List<TipoParceriaDto> TipoParcerias { get; set; }
         public string TipoParceriaId { get; set; }
         public SelectList ListTipoParcerias { get; set; }
-        public string EstadoId { get; set; }
-        public SelectList ListEstados { get; set; }
-        public string MunicipioId { get; set; }
-        public SelectList ListMunicipios { get; set; }
 
         public class CreateUpdateTipoParceriaCommand
         {
             public int Id { get; set; }
-            public int? AspNetUserId { get; set; }
-            public int? MunicipioId { get; set; }
             public string? Nome { get; set; }
-            public string? Email { get; set; }
-            public int? TipoTipoParceria { get; set; }
-            public string? TipoPessoa { get; set; }
-            public string? CpfCnpj { get; set; }
-            public string? Telefone { get; set; }
-            public string? Celular { get; set; }
-            public string? Cep { get; set; }
-            public string? Endereco { get; set; }
-            public int? Numero { get; set; }
-            public string? Bairro { get; set; }
-            public bool Status { get; set; } = true;
-            public bool Habilitado { get; set; }
+            public int? Parceria { get; set; }
+            public bool Status { get; set; }
         }
     }
 

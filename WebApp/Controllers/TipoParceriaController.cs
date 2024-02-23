@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
+using NuGet.Protocol.Core.Types;
 using WebApp.Configuration;
 using WebApp.Dto;
 using WebApp.Enumerators;
@@ -34,6 +36,7 @@ namespace WebApp.Controllers
             SetNotifyMessage(notify, message);
             SetCrudMessage(crud);
 
+
             return View();
         }
 
@@ -45,7 +48,9 @@ namespace WebApp.Controllers
             {
                 var command = new TipoParceriaModel.CreateUpdateTipoParceriaCommand
                 {
-                    Nome = collection["nome"].ToString()
+                    Nome = collection["tipoParceria"].ToString(),
+                    Parceria = Convert.ToInt32(collection["ddlParceria"].ToString()),
+                    Status = true
                 };
 
                 await ApiClientFactory.Instance.CreateTipoParceria(command);
@@ -58,41 +63,42 @@ namespace WebApp.Controllers
             }
         }
 
-        ////[ClaimsAuthorize("Usuario", "Alterar")]
-        //public async Task<ActionResult> Edit(IFormCollection collection)
-        //{
-        //    var command = new TipoParceriaModel.CreateUpdateTipoParceriaCommand
-        //    {
-        //        Id = Convert.ToInt32(collection["editTipoParceriaId"]),
-        //        Nome = collection["nome"].ToString(),
-        //        Status = collection["editStatus"].ToString() == "" ? false : true
-        //    };
+        //[ClaimsAuthorize("Usuario", "Alterar")]
+        public async Task<ActionResult> Edit(IFormCollection collection)
+        {
+            var command = new TipoParceriaModel.CreateUpdateTipoParceriaCommand
+            {
+                Id = Convert.ToInt32(collection["editTipoParceriaId"]),
+                Nome = collection["nome"].ToString(),
+                //Parceria = Convert.ToInt32(collection["ddlParceria"].ToString()),
+                Status = collection["editStatus"].ToString() == "" ? false : true
+            };
 
-        //    await ApiClientFactory.Instance.UpdateTipoParceria(command.Id, command);
+            await ApiClientFactory.Instance.UpdateTipoParceria(command.Id, command);
 
-        //    return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
-        //}
+            return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+        }
 
-        ////[ClaimsAuthorize("Usuario", "Excluir")]
-        //public ActionResult Delete(int id)
-        //{
-        //    try
-        //    {
-        //        ApiClientFactory.Instance.DeleteTipoParceria(id);
-        //        return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
-        //    }
-        //    catch
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //}
+        //[ClaimsAuthorize("Usuario", "Excluir")]
+        public ActionResult Delete(int id)
+        {
+            try
+            {
+                ApiClientFactory.Instance.DeleteTipoParceria(id);
+                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
+            }
+            catch
+            {
+                return RedirectToAction(nameof(Index));
+            }
+        }
 
-        //public Task<TipoParceriaDto> GetTipoParceriaById(int id)
-        //{
-        //    var result = ApiClientFactory.Instance.GetTipoParceriaById(id);
+        public Task<TipoParceriaDto> GetTipoParceriaById(int id)
+        {
+            var result = ApiClientFactory.Instance.GetTipoParceriaById(id);
 
-        //    return Task.FromResult(result);
-        //}
+            return Task.FromResult(result);
+        }
     }
 
     

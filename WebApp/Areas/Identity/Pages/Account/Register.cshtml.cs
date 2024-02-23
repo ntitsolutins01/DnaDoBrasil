@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -122,18 +122,7 @@ namespace WebApp.Areas.Identity.Pages.Account
                 EstadoId = collection["ddlEstado"] == "" ? null : collection["ddlEstado"].ToString(),
                 endereco = collection["endereco"] == "" ? null : collection["endereco"].ToString(),
                 Sexo = collection["ddlSexo"] == "" ? null : collection["ddlSexo"].ToString(),
-                AreaId = collection["ddlAreaDesejada"] == "" ? null : collection["ddlAreaDesejada"].ToString(),
-                CPF = collection["cpf"] == "" ? null : collection["cpf"].ToString(),
-                DeficienciaId = collection["ddlDefiencia"] == "" ? null : collection["ddlDefiencia"].ToString(),
-                NomecompletodoAluno = collection["nomeA"] == "" ? null : collection["nomeA"].ToString(),
-                NomecompletodaMae = collection["nomeM"] == "" ? null : collection["nomeM"].ToString(),
-                NomecompletodoResponsável = collection["nomeR"] == "" ? null : collection["nomeR"].ToString(),
-                //autorizado = collection["autorizado"] == "" ? null : collection["autorizado].ToString(),
-                //CPF = collection["cpf"] == "" ? null : collection["cpf"].ToString(),
-                //CPF = collection["cpf"] == "" ? null : collection["cpf"].ToString(),
-                //CPF = collection["cpf"] == "" ? null : collection["cpf"].ToString(),
-                //CPF = collection["cpf"] == "" ? null : collection["cpf"].ToString(),
-                //CPF = collection["cpf"] == "" ? null : collection["cpf"].ToString(),
+                
             };
 
 
@@ -153,8 +142,6 @@ namespace WebApp.Areas.Identity.Pages.Account
 
 
             _logger.LogInformation($"O usuário {user.UserName} criou uma nova conta com senha.");
-
-            
 
             //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             //code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
@@ -196,6 +183,24 @@ namespace WebApp.Areas.Identity.Pages.Account
             await _userManager.AddToRoleAsync(user, UserRoles.Aluno);
 
             await _signInManager.SignInAsync(user, isPersistent: false);
+
+            var idAluno = await ApiClientFactory.Instance.CreateDados(command);
+
+            var autorizado = collection["autorizado"].ToString();
+            var utilizacaoImagem = collection["utilizacaoImagem"].ToString();
+            var participacao = collection["participacao"].ToString();
+
+            var commandDependencia = new DependenciaModel.CreateUpdateDependenciaCommand()
+            {
+                AlunoId = (int?)idAluno,
+                AutorizacaoSaida = autorizado != "",
+                AutorizacaoUsoImagemAudio = utilizacaoImagem != "",
+                AutorizacaoUsoIndicadores = participacao != ""
+
+            };
+
+            await ApiClientFactory.Instance.CreateDependencia(commandDependencia);
+
             return RedirectToPage("RegisterConfirmation", new { email = command.Email, returnUrl = returnUrl });
         }
     }
