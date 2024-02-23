@@ -103,7 +103,7 @@ namespace WebApp.Controllers
 
             var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
             var deficiencias = new SelectList(ApiClientFactory.Instance.GetDeficienciaAll(), "Id", "Nome");
-            var ambientes = new SelectList(ApiClientFactory.Instance.GetAmbienteAll(), "Id", "Nome");
+            var modalidades = new SelectList(ApiClientFactory.Instance.GetModalidadeAll(), "Id", "Nome");
             List<SelectListDto> list = new List<SelectListDto>
             {
                 new() { IdNome = "PARDO", Nome = "PARDO" },
@@ -119,7 +119,7 @@ namespace WebApp.Controllers
             {
                 ListEstados = estados,
                 ListDeficiencias = deficiencias,
-                ListAmbientes = ambientes,
+                ListModalidades = modalidades,
                 ListEtnias = etnias,
             });
         }
@@ -146,7 +146,7 @@ namespace WebApp.Controllers
                 };
 
                 var etnias = new SelectList(list, "IdNome", "Nome", aluno.Etnia);
-                var ambientes = ApiClientFactory.Instance.GetAmbienteAll();
+                var modalidades = ApiClientFactory.Instance.GetModalidadeAll();
                 var dependencia = aluno.DependenciaId == null
                     ? null
                     : ApiClientFactory.Instance.GetDependenciaById((int)aluno.DependenciaId);
@@ -157,7 +157,7 @@ namespace WebApp.Controllers
                 return View(new AlunoModel()
                 {
                     ListEstados = estados,
-                    Ambientes = aluno.Ambientes,
+                    Modalidades = aluno.Modalidades,
                     Aluno = aluno,
                     Dependecia = dependencia!,
                     Matricula = matricula!,
@@ -787,16 +787,16 @@ namespace WebApp.Controllers
 
         //[ClaimsAuthorize("Aluno", "Alterar")]
         [HttpPost]
-        public async Task<ActionResult> CreateAmbientesAluno(IFormCollection collection)
+        public async Task<ActionResult> CreateModalidadesAluno(IFormCollection collection)
         {
             try
             {
-                var command = new AmbienteModel.CreateUpdateAmbienteCommand
+                var command = new ModalidadeModel.CreateUpdateModalidadeCommand
                 {
-                    AmbientesIds = collection["arrAmbienteAlunos"] == "" ? null : collection["arrAmbienteAlunos"].ToString()
+                    ModalidadesIds = collection["arrModalidadeAlunos"] == "" ? null : collection["arrModalidadeAlunos"].ToString()
                 };
 
-                await ApiClientFactory.Instance.CreateAmbiente(command);
+                await ApiClientFactory.Instance.CreateModalidade(command);
 
                 return RedirectToAction(nameof(Create), new { crud = (int)EnumCrud.Created });
             }
@@ -807,17 +807,17 @@ namespace WebApp.Controllers
 
             }
         }
-        public async Task<ActionResult> EditAmbientesAluno(int id ,IFormCollection collection)
+        public async Task<ActionResult> EditModalidadesAluno(int id ,IFormCollection collection)
         {
             try
             {
-                var command = new AmbienteModel.CreateUpdateAmbienteCommand
+                var command = new ModalidadeModel.CreateUpdateModalidadeCommand
                 {
                     Id = Convert.ToInt32(id),
-                    AmbientesIds = collection["arrAmbienteAlunos"] == "" ? null : collection["arrAmbienteAlunos"].ToString()
+                    ModalidadesIds = collection["arrModalidadeAlunos"] == "" ? null : collection["arrModalidadeAlunos"].ToString()
                 };
 
-                await ApiClientFactory.Instance.UpdateAmbiente(id,command);
+                await ApiClientFactory.Instance.UpdateModalidade(id,command);
 
                 return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
             }

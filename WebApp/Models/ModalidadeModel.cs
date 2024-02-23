@@ -36,6 +36,7 @@ namespace WebApp.Models
             public int AlturaIni { get; init; }
             public int AlturaFim { get; init; }
             public bool Status { get; set; }
+            public string? ModalidadesIds { get; set; }
         }
     }
 

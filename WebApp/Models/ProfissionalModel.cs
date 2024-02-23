@@ -14,9 +14,9 @@ namespace WebApp.Models
         public SelectList ListEstados { get; set; }
         public string MunicipioId { get; set; }
         public SelectList ListMunicipios { get; set; }
-        public SelectList ListAmbientes { get; set; }
-        public object AmbienteId { get; set; }
-        public List<AmbienteDto> Ambientes { get; set; }
+        public SelectList ListModalidades { get; set; }
+        public object ModalidadeId { get; set; }
+        public List<ModalidadeDto> Modalidades { get; set; }
         public string LocalidadeId { get; set; }
         public SelectList ListLocalidades { get; set; }
 
@@ -39,7 +39,7 @@ namespace WebApp.Models
             public int? MunicipioId { get; set; }
             public int? LocalidadeId { get; set; }
             public bool Habilitado { get; set; }
-            public string? AmbientesIds { get; set; }
+            public string? ModalidadesIds { get; set; }
         }
     }
 

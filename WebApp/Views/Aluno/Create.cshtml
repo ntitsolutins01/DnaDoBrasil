@@ -19,7 +19,7 @@
                     <a href="#matriculas" data-toggle="tab">Matrículas</a>
                 </li>
                 <li>
-                    <a href="#ambientes" data-toggle="tab">Ambientes</a>
+                    <a href="#modalidades" data-toggle="tab">Modalidades</a>
                 </li>
                 <li>
                     <a href="#vouchers" data-toggle="tab">Vouchers</a>
@@ -577,40 +577,40 @@
                         </div>
                     </div>
                 </div>
-                <div id="ambientes" class="tab-pane">
+                <div id="modalidades" class="tab-pane">
                     <div class="row">
                         <div class="col-md-12">
-                            @using (@Html.BeginForm("CreateAmbientesAluno", "Aluno", FormMethod.Post, new { id = "vAmbienteAluno", @class = "form-horizontal" }))
+                            @using (@Html.BeginForm("CreateModalidadesAluno", "Aluno", FormMethod.Post, new { id = "vModalidadeAluno", @class = "form-horizontal" }))
                             {
                                 <section class="panel">
                                     <div class="panel-body">
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label">Ambiente</label>
+                                            <label class="col-sm-2 control-label">Modalidade</label>
                                             <div class="col-sm-4">
-                                                <select class="form-control populate select2" name="ddlAmbienteAluno" id="ddlAmbienteAluno"
-                                                        style="width: 100%" title="Por favor selecione o Ambiente do aluno."
-                                                        asp-for="AmbienteId" asp-items="Model.ListAmbientes">
-                                                    <option value="0">Selecionar Ambiente</option>
+                                                <select class="form-control populate select2" name="ddlModalidadeAluno" id="ddlModalidadeAluno"
+                                                        style="width: 100%" title="Por favor selecione o Modalidade do aluno."
+                                                        asp-for="ModalidadeId" asp-items="Model.ListModalidades">
+                                                    <option value="0">Selecionar Modalidade</option>
                                                 </select>
                                             </div>
                                             <div class="col-sm-1">
-                                                <a type="button" class="ml-xs btn btn-success" href='javascript:(crud.AddAmbienteAluno())'>
+                                                <a type="button" class="ml-xs btn btn-success" href='javascript:(crud.AddModalidadeAluno())'>
                                                     <i class="fa fa-plus"></i>
                                                 </a>
                                             </div>
                                             <div class="col-sm-5 pull-right">
-                                                <a data-toggle="modal" data-target="#mdAmbiente" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Novo Ambiente </a>
+                                                <a data-toggle="modal" data-target="#mdModalidade" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Novo Modalidade </a>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <input type="hidden" name="arrAmbienteAlunos" />
+                                            <input type="hidden" name="arrModalidadeAlunos" />
                                             <label class="col-sm-2 control-label">Adicionados</label>
                                             <div class="col-sm-10">
-                                                <table class="adicionados table table-bordered table-striped mb-0" id="ambienteAlunoDataTable">
+                                                <table class="adicionados table table-bordered table-striped mb-0" id="modalidadeAlunoDataTable">
                                                     <thead>
                                                         <tr>
                                                             <th>Id</th>
-                                                            <th>Nome Ambiente</th>
+                                                            <th>Nome Modalidade</th>
                                                             <th>Ação</th>
                                                         </tr>
                                                     </thead>
@@ -678,15 +678,15 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="mdAmbiente" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="mdModalidade" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title"><i class="fa fa-plus"></i> &nbsp;&nbsp;<strong>Novo Ambiente</strong></h5>
+                <h5 class="modal-title"><i class="fa fa-plus"></i> &nbsp;&nbsp;<strong>Novo Modalidade</strong></h5>
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">Nome Ambiente<span class="required">*</span></label>
+                    <label class="col-sm-3 control-label">Nome Modalidade<span class="required">*</span></label>
                     <div class="col-sm-9">
 
                         <input type="email" name="email" class="form-control" required />

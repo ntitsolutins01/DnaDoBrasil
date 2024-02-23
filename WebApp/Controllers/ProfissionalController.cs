@@ -65,9 +65,9 @@ namespace WebApp.Controllers
 				SetCrudMessage(crud);
 
 				var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
-				var ambientes = new SelectList(ApiClientFactory.Instance.GetAmbienteAll(), "Id", "Nome");
+				var modalidades = new SelectList(ApiClientFactory.Instance.GetModalidadeAll(), "Id", "Nome");
 
-				return View(new ProfissionalModel() { ListEstados = estados, ListAmbientes = ambientes });
+				return View(new ProfissionalModel() { ListEstados = estados, ListModalidades = modalidades });
 
 			}
 			catch (Exception e)
@@ -86,7 +86,7 @@ namespace WebApp.Controllers
 			{
 				var status = collection["status"].ToString();
 				var habilitado = collection["habilitado"].ToString();
-				var ambientesIds = collection["arrAmbientes"];
+				var modalidadesIds = collection["arrModalidades"];
 
 				var command = new ProfissionalModel.CreateUpdateProfissionalCommand
 				{
@@ -106,7 +106,7 @@ namespace WebApp.Controllers
 					LocalidadeId = collection["ddlLocalidade"] == "" ? null : Convert.ToInt32(collection["ddlLocalidade"].ToString()),
 					Habilitado = habilitado != "",
 					Status = status != "",
-					AmbientesIds = collection["arrAmbientes"] == "" ? null : collection["arrAmbientes"].ToString()
+					ModalidadesIds = collection["arrModalidades"] == "" ? null : collection["arrModalidades"].ToString()
 
 				};
 
@@ -133,15 +133,15 @@ namespace WebApp.Controllers
 				var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", profissional.Uf);
 				var municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(profissional.Uf!), "Id", "Nome", profissional.MunicipioId);
 				var localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeByMunicipio(profissional.MunicipioId.ToString()), "Id", "Nome", profissional.LocalidadeId);
-				var listAmbientes = new SelectList(ApiClientFactory.Instance.GetAmbienteAll(), "Id", "Nome");
+				var listModalidades = new SelectList(ApiClientFactory.Instance.GetModalidadeAll(), "Id", "Nome");
 
 				return View(new ProfissionalModel()
 				{
 					ListEstados = estados, 
-					ListAmbientes = listAmbientes, 
+					ListModalidades = listModalidades, 
 					Profissional = profissional,
 					ListMunicipios = municipios, 
-					Ambientes = profissional.Ambientes,
+					Modalidades = profissional.Modalidades,
 					ListLocalidades = localidades
 
 				});
@@ -163,7 +163,7 @@ namespace WebApp.Controllers
 			{
 				var status = collection["status"].ToString();
 				var habilitado = collection["habilitado"].ToString();
-				var ambientesIds = collection["arrAmbientes"];
+				var modalidadesIds = collection["arrModalidades"];
 
 				var command = new ProfissionalModel.CreateUpdateProfissionalCommand
 				{
@@ -184,7 +184,7 @@ namespace WebApp.Controllers
                     LocalidadeId = collection["ddlLocalidade"] == "" ? null : Convert.ToInt32(collection["ddlLocalidade"].ToString()),
                     Habilitado = habilitado != "",
                     Status = status != "",
-                    AmbientesIds = collection["arrAmbientes"] == "" ? null : collection["arrAmbientes"].ToString()
+                    ModalidadesIds = collection["arrModalidades"] == "" ? null : collection["arrModalidades"].ToString()
                 };
 
 				await ApiClientFactory.Instance.UpdateProfissional(command.Id, command);
@@ -201,18 +201,18 @@ namespace WebApp.Controllers
 
 		//[ClaimsAuthorize("Profissional", "Alterar")]
 		[HttpPost]
-		public async Task<ActionResult> CreateAmbiente(IFormCollection collection)
+		public async Task<ActionResult> CreateModalidade(IFormCollection collection)
 		{
 			try
 			{
-				var ambiente = collection["ambiente"].ToString();
+				var modalidade = collection["modalidade"].ToString();
 
-				var command = new AmbienteModel.CreateUpdateAmbienteCommand
+				var command = new ModalidadeModel.CreateUpdateModalidadeCommand
 				{
-					Nome = ambiente
+					Nome = modalidade
 				};
 
-				await ApiClientFactory.Instance.CreateAmbiente(command);
+				await ApiClientFactory.Instance.CreateModalidade(command);
 
 				return RedirectToAction(nameof(Create), new { crud = (int)EnumCrud.Created });
 			}
