@@ -52,11 +52,11 @@ namespace WebApp.Controllers
 
                 List<SelectListDto> list = new List<SelectListDto>
                 {
-                    new() { IdNome = "PARDOS", Nome = "PARDOS" },
-                    new() { IdNome = "BRANCOS", Nome = "BRANCOS" },
-                    new() { IdNome = "NEGROS", Nome = "NEGROS" },
-                    new() { IdNome = "INDÍGENAS", Nome = "INDÍGENAS" },
-                    new() { IdNome = "AMARELOS", Nome = "AMARELOS" }
+                    new() { IdNome = "PARDO", Nome = "PARDO" },
+                    new() { IdNome = "BRANCO", Nome = "BRANCO" },
+                    new() { IdNome = "PRETO", Nome = "PRETO" },
+                    new() { IdNome = "INDÍGENA", Nome = "INDÍGENA" },
+                    new() { IdNome = "AMARELO", Nome = "AMARELO" }
                 };
 
                 var etnias = new SelectList(list, "IdNome", "Nome", searchFilter.Etnia);
@@ -106,11 +106,11 @@ namespace WebApp.Controllers
             var ambientes = new SelectList(ApiClientFactory.Instance.GetAmbienteAll(), "Id", "Nome");
             List<SelectListDto> list = new List<SelectListDto>
             {
-                new() { IdNome = "PARDOS", Nome = "PARDOS" },
-                new() { IdNome = "BRANCOS", Nome = "BRANCOS" },
-                new() { IdNome = "NEGROS", Nome = "NEGROS" },
-                new() { IdNome = "INDÍGENAS", Nome = "INDÍGENAS" },
-                new() { IdNome = "AMARELOS", Nome = "AMARELOS" }
+                new() { IdNome = "PARDO", Nome = "PARDO" },
+                new() { IdNome = "BRANCO", Nome = "BRANCO" },
+                new() { IdNome = "PRETO", Nome = "PRETO" },
+                new() { IdNome = "INDÍGENA", Nome = "INDÍGENA" },
+                new() { IdNome = "AMARELO", Nome = "AMARELO" }
             };
 
             var etnias = new SelectList(list, "IdNome", "Nome");
@@ -138,11 +138,11 @@ namespace WebApp.Controllers
 
                 List<SelectListDto> list = new List<SelectListDto>
                 {
-                    new() { IdNome = "PARDOS", Nome = "PARDOS" },
-                    new() { IdNome = "BRANCOS", Nome = "BRANCOS" },
-                    new() { IdNome = "NEGROS", Nome = "NEGROS" },
-                    new() { IdNome = "INDÍGENAS", Nome = "INDÍGENAS" },
-                    new() { IdNome = "AMARELOS", Nome = "AMARELOS" }
+                    new() { IdNome = "PARDO", Nome = "PARDO" },
+                    new() { IdNome = "BRANCO", Nome = "BRANCO" },
+                    new() { IdNome = "PRETO", Nome = "PRETO" },
+                    new() { IdNome = "INDÍGENA", Nome = "INDÍGENA" },
+                    new() { IdNome = "AMARELO", Nome = "AMARELO" }
                 };
 
                 var etnias = new SelectList(list, "IdNome", "Nome", aluno.Etnia);
