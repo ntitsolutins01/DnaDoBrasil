@@ -4,7 +4,7 @@
         params: {
             cpf: "",
             deficiencias: [],
-            ambienteAlunos: [],
+            modalidadeAlunos: [],
             possuiDeficiencia: false
         },
         loading: false,
@@ -334,38 +334,38 @@
             $("#ddlDeficiencia").select2("val", "0");
 
         },
-        AddAmbienteAluno: function () {
+        AddModalidadeAluno: function () {
             var self = this;
 
-            var mapped = $("#ddlAmbienteAluno").select2('data');
+            var mapped = $("#ddlModalidadeAluno").select2('data');
 
-            if (self.params.ambienteAlunos.indexOf(mapped[0].id) !== -1) {
+            if (self.params.modalidadeAlunos.indexOf(mapped[0].id) !== -1) {
 
                 new PNotify({
-                    title: 'Ambiente',
-                    text: 'Ambiente já foi adicionado anteriormente.',
+                    title: 'Modalidade',
+                    text: 'Modalidade já foi adicionado anteriormente.',
                     type: 'warning'
                 });
                 return;
             }
 
-            $('#ambienteAlunoDataTable').DataTable().destroy();
+            $('#modalidadeAlunoDataTable').DataTable().destroy();
 
-            var table = $('#ambienteAlunoDataTable').DataTable({
+            var table = $('#modalidadeAlunoDataTable').DataTable({
                 columnDefs: [
                     { "className": "text-center", "targets": "_all" }
                 ]
             });
 
             table.row.add([mapped[0].id, mapped[0].text,
-            "<a style='color:#F44336' href='javascript:(crud.DeleteAmbienteAluno(\"" + mapped[0].id + "\"))'><i class='fa fa-trash'></i></a>"])
+            "<a style='color:#F44336' href='javascript:(crud.DeleteModalidadeAluno(\"" + mapped[0].id + "\"))'><i class='fa fa-trash'></i></a>"])
                 .draw();
 
-            self.params.ambienteAlunos.push(mapped[0].id);
+            self.params.modalidadeAlunos.push(mapped[0].id);
 
-            $('input[name="arrAmbienteAlunos"]').attr('value', self.params.ambienteAlunos);
+            $('input[name="arrModalidadeAlunos"]').attr('value', self.params.modalidadeAlunos);
 
-            $("#ddlAmbienteAluno").select2("val", "0");
+            $("#ddlModalidadeAluno").select2("val", "0");
 
         },
         DeleteDeficiencia: function (id) {
@@ -380,17 +380,17 @@
 
             $("#ddlDeficiencia").select2("val", "0");
         },
-        DeleteAmbienteAluno: function (id) {
+        DeleteModalidadeAluno: function (id) {
             var self = this;
 
-            var table = $('#ambienteAlunoDataTable').DataTable();
+            var table = $('#modalidadeAlunoDataTable').DataTable();
             table.rows(function (idx, data, node) {
                     return data[0] === id;
                 })
                 .remove()
                 .draw();
 
-            $("#ddlAmbienteAluno").select2("val", "0");
+            $("#ddlModalidadeAluno").select2("val", "0");
         },
         OnClickPossuiDeficiencia(radioButton) {
             var self = this;
@@ -427,13 +427,13 @@ var crud = {
     AddDeficiencia: function () {
         vm.AddDeficiencia()
     },
-    AddAmbienteAluno: function () {
-        vm.AddAmbienteAluno()
+    AddModalidadeAluno: function () {
+        vm.AddModalidadeAluno()
     },
     DeleteDeficiencia: function (id) {
         vm.DeleteDeficiencia(id)
     },
-    DeleteAmbienteAluno: function (id) {
-        vm.DeleteAmbienteAluno(id)
+    DeleteModalidadeAluno: function (id) {
+        vm.DeleteModalidadeAluno(id)
     }
 };

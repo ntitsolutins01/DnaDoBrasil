@@ -45,7 +45,8 @@ namespace WebApp.Controllers
             {
                 var command = new ModalidadeModel.CreateUpdateModalidadeCommand
                 {
-                    Nome = collection["nome"].ToString()
+                    Nome = collection["nome"].ToString(),
+                    AbdominalPranchaIni = Convert.ToInt32(collection["nome"].ToString())
                 };
 
                 await ApiClientFactory.Instance.CreateModalidade(command);

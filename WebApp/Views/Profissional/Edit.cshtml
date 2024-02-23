@@ -165,39 +165,39 @@
                             <label class="col-sm-1 control-label">&nbsp;&nbsp; </label>
                             <div class="col-sm-12">
                                 <blockquote class="info">
-                                    <strong>Gerenciamento de ambientes</strong>
+                                    <strong>Gerenciamento de modalidades</strong>
                                 </blockquote>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Ambiente</label>
+                            <label class="col-sm-2 control-label">Modalidade</label>
                             <div class="col-sm-4">
-                                <select class="form-control populate select2" name="ddlAmbiente" id="ddlAmbiente"
+                                <select class="form-control populate select2" name="ddlModalidade" id="ddlModalidade"
                                         style="width: 100%" title="Por favor selecione o turno."
-                                        asp-for="AmbienteId" asp-items="Model.ListAmbientes">
-                                    <option value="">Selecionar Ambiente</option>
+                                        asp-for="ModalidadeId" asp-items="Model.ListModalidades">
+                                    <option value="">Selecionar Modalidade</option>
                                 </select>
                             </div>
                             <div class="col-sm-1">
-                                <a type="button" class="ml-xs btn btn-warning" href='javascript:(crud.AddAmbiente())'>
+                                <a type="button" class="ml-xs btn btn-warning" href='javascript:(crud.AddModalidade())'>
                                     <i class="fa fa-plus"></i>
                                 </a>
                             </div>
                         </div>
                         <div class="form-group">
-                            <input type="hidden" name="arrAmbientes" />
+                            <input type="hidden" name="arrModalidades" />
                             <label class="col-sm-2 control-label">Adicionados</label>
                             <div class="col-sm-10">
-                                <table class="table table-bordered table-striped mb-0" id="ambienteDataTable">
+                                <table class="table table-bordered table-striped mb-0" id="modalidadeDataTable">
                                     <thead>
                                         <tr>
                                             <th>Id</th>
-                                            <th>Nome Ambiente</th>
+                                            <th>Nome Modalidade</th>
                                             <th>Ação</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach (var item in Model.Ambientes)
+                                        @foreach (var item in Model.Modalidades)
                                         {
                                             <tr>
                                                 <td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Id)</td>
@@ -227,15 +227,15 @@
         </div>
     </div>
     <!-- Modal -->
-    <div class="modal fade" id="mdAmbiente" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="mdModalidade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title"><i class="fa fa-plus"></i> &nbsp;&nbsp;<strong>Novo Ambiente</strong></h5>
+                    <h5 class="modal-title"><i class="fa fa-plus"></i> &nbsp;&nbsp;<strong>Novo Modalidade</strong></h5>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Nome Ambiente<span class="required">*</span></label>
+                        <label class="col-sm-3 control-label">Nome Modalidade<span class="required">*</span></label>
                         <div class="col-sm-9">
 
                             <input type="email" name="email" class="form-control" required />

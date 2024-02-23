@@ -35,7 +35,7 @@ namespace WebApp.Controllers
 			SetNotifyMessage(notify, message);
 			SetCrudMessage(crud);
 			var response = ApiClientFactory.Instance.GetPlanosAulasAll();
-			var modalidades = new SelectList(ApiClientFactory.Instance.GetAmbienteAll(), "Nome", "Nome");
+			var modalidades = new SelectList(ApiClientFactory.Instance.GetModalidadeAll(), "Nome", "Nome");
 
 			return View(new PlanoAulaModel() { PlanosAulas = response, ListModalidades = modalidades });
 		}
@@ -46,7 +46,7 @@ namespace WebApp.Controllers
 			SetNotifyMessage(notify, message);
 			SetCrudMessage(crud);
 
-			var modalidades = new SelectList(ApiClientFactory.Instance.GetAmbienteAll(), "Nome", "Nome");
+			var modalidades = new SelectList(ApiClientFactory.Instance.GetModalidadeAll(), "Nome", "Nome");
 
 			return View(new PlanoAulaModel() { ListModalidades = modalidades });
 		}
