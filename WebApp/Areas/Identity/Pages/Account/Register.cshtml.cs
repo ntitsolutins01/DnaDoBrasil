@@ -1,11 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Numerics;
 using System.Text;
-using System.Text.Encodings.Web;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -13,13 +6,12 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using WebApp.Areas.Identity.Models;
 using WebApp.Configuration;
 using WebApp.Data;
 using WebApp.Dto;
+using WebApp.Enumerators;
 using WebApp.Factory;
 using WebApp.Models;
 using WebApp.Utility;
@@ -69,10 +61,32 @@ namespace WebApp.Areas.Identity.Pages.Account
         public SelectList ListAreas { get; set; }
         public SelectList ListDeficiencia { get; set; }
         public SelectList ListEficiencia { get; set; }
+        public int NotifyMessage { get; set; }
+        public string Notify { get; set; }
 
-        public async Task OnGetAsync(string returnUrl = null)
+        public async Task OnGetAsync(int? notify, string message = null, string returnUrl = null)
         {
             ReturnUrl = returnUrl;
+            switch (notify)
+            {
+                case (int)EnumNotify.Success:
+                    NotifyMessage = (int)EnumNotify.Success;
+                    Notify = message;
+                    break;
+                case (int)EnumNotify.Error:
+                    NotifyMessage = (int)EnumNotify.Error;
+                    Notify = message;
+                    break;
+                case (int)EnumNotify.Warning:
+                    NotifyMessage = (int)EnumNotify.Warning;
+                    Notify = message;
+                    break;
+                default:
+                    NotifyMessage = -1;
+                    Notify = "null";
+                    break;
+            }
+
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             ListEstados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
 
@@ -105,6 +119,8 @@ namespace WebApp.Areas.Identity.Pages.Account
 
         }
 
+
+
         public async Task<IActionResult> OnPostAsync(IFormCollection collection)
         {
             string returnUrl = null;
@@ -113,33 +129,40 @@ namespace WebApp.Areas.Identity.Pages.Account
 
             var command = new AlunoModel.CreateUpdateDadosAlunoCommand()
             {
-                Etnia = collection["ddlEtnia"] == "" ? null : collection["ddlEtnia"].ToString(),
                 MunicipioId = collection["ddlMunicipio"] == "" ? null : Convert.ToInt32(collection["ddlMunicipio"].ToString()),
                 LocalidadeId = collection["ddlLocalidade"] == "" ? null : Convert.ToInt32(collection["ddlLocalidade"].ToString()),
+                Endereco = collection["endereco"] == "" ? null : collection["endereco"].ToString(),
+                AreasDesejadas = collection["ddlAreaDesejada"] == "" ? null : collection["ddlAreaDesejada"].ToString(),
                 Nome = collection["nome"] == "" ? null : collection["nome"].ToString(),
-                DtNascimento = collection["dtNasc"] == "" ? null : collection["DtNascimento"].ToString(),
-                Email = collection["email"] == "" ? null : collection["email"].ToString(),
-                EstadoId = collection["ddlEstado"] == "" ? null : collection["ddlEstado"].ToString(),
-                endereco = collection["endereco"] == "" ? null : collection["endereco"].ToString(),
+                Cpf = collection["cpf"] == "" ? null : collection["cpf"].ToString(),
                 Sexo = collection["ddlSexo"] == "" ? null : collection["ddlSexo"].ToString(),
-                
+                DtNascimento = collection["dtNasc"] == "" ? null : collection["dtNasc"].ToString(),
+                Email = collection["email"] == "" ? null : collection["email"].ToString(),
+                Etnia = collection["ddlEtnia"] == "" ? null : collection["ddlEtnia"].ToString(),
+                NomeMae = collection["nomeMae"] == "" ? null : collection["nomeMae"].ToString(),
+                NomeResponsavel = collection["nomeResp"] == "" ? null : collection["nomeResp"].ToString(),
+                DeficienciasIds = collection["ddlDeficiencia"] == "" ? null : collection["ddlDeficiencia"].ToString(),
+                Habilitado = true,
+                Status = true
             };
 
 
             if (!ModelState.IsValid) return Page();
             var user = new IdentityUser { UserName = command.Email, Email = command.Email, EmailConfirmed = true, PhoneNumberConfirmed = true};
             var result = await _userManager.CreateAsync(user, "12345678");
+            StringBuilder msg = new StringBuilder();
             if (!result.Succeeded)
             {
 	            foreach (var error in result.Errors)
 	            {
 		            ModelState.AddModelError(string.Empty, error.Description);
-	            }
+                    msg.AppendLine(error.Description);
+                }
 
-				// Se chegamos até aqui, algo falhou, exiba novamente o formulário
-				return Page();
+                // Se chegamos até aqui, algo falhou, exiba novamente o formulário
+                //return Page();
+                return RedirectToPage("Register", new { notify = (int)EnumNotify.Error, message = msg });
             }
-
 
             _logger.LogInformation($"O usuário {user.UserName} criou uma nova conta com senha.");
 
@@ -166,19 +189,25 @@ namespace WebApp.Areas.Identity.Pages.Account
 
             // Setup database roles
             //var userCount = _db.Users.Count();
-            var roleCount = _db.Roles.Count();
+            //var roleCount = _db.Roles.Count();
 
             // NOTE: This is not necessarily best practice at all.
             // First registered user will add the default roles, rather than doing this in a migration.
             // First registered user will be given all roles.
-            if (roleCount == 0)
-            {
-	            await _roleManager.CreateAsync(new IdentityRole { Name = UserRoles.Aluno });
+            //if (roleCount == 0)
+            //{
+	           // await _roleManager.CreateAsync(new IdentityRole { Name = UserRoles.Aluno });
 
-	            // set this registering user as admin/everything
-	            await _userManager.AddToRolesAsync(user,
-		            new[] { UserRoles.Aluno });
-            }
+	           // // set this registering user as admin/everything
+	           // await _userManager.AddToRolesAsync(user,
+		          //  new[] { UserRoles.Aluno });
+            //}
+
+            await _roleManager.CreateAsync(new IdentityRole { Name = UserRoles.Aluno });
+
+            // set this registering user as admin/everything
+            await _userManager.AddToRolesAsync(user,
+                new[] { UserRoles.Aluno });
 
             await _userManager.AddToRoleAsync(user, UserRoles.Aluno);
 
@@ -186,16 +215,19 @@ namespace WebApp.Areas.Identity.Pages.Account
 
             var idAluno = await ApiClientFactory.Instance.CreateDados(command);
 
-            var autorizado = collection["autorizado"].ToString();
-            var utilizacaoImagem = collection["utilizacaoImagem"].ToString();
-            var participacao = collection["participacao"].ToString();
+            var autorizado = Convert.ToBoolean(collection["autorizado"].ToString());
+            var utilizacaoImagem = Convert.ToBoolean(collection["utilizacaoImagem"].ToString());
+            var participacao = Convert.ToBoolean(collection["participacao"].ToString());
+            var copiaDoc = collection["copiaDoc"].ToString() != "";
 
             var commandDependencia = new DependenciaModel.CreateUpdateDependenciaCommand()
             {
                 AlunoId = (int?)idAluno,
-                AutorizacaoSaida = autorizado != "",
-                AutorizacaoUsoImagemAudio = utilizacaoImagem != "",
-                AutorizacaoUsoIndicadores = participacao != ""
+                AutorizacaoSaida = autorizado,
+                AutorizacaoUsoImagemAudio = utilizacaoImagem,
+                AutorizacaoUsoIndicadores = participacao,
+                TermoCompromisso = true
+
 
             };
 

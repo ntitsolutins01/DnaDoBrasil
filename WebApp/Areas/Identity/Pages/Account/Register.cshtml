@@ -1,4 +1,4 @@
-﻿@page
+@page
 @model RegisterModel
 @{
     ViewData["Title"] = "Registrar";
@@ -51,9 +51,8 @@
                     </div>
                     <div class="form-group mb-lg">
                         <label>Áreas desejadas</label><br/>
-                        <select class="form-control populate" multiple="multiple" data-plugin-multiselect data-plugin-options='{ "maxHeight": 200 }' id="ms_example0"
-                                asp-for="AreaId" asp-items="Model.ListAreas">
-                            <option value="">Selecionar Áreda Desejada</option>
+                        <select class="form-control populate" multiple="multiple" data-plugin-multiselect data-plugin-options='{ "maxHeight": 200 }' id="ddlAreaDesejada" name="ddlAreaDesejada" style="width:100%"  asp-for="AreaId" asp-items="Model.ListAreas" required
+                              title="Por favor selecione ao menos uma área desejada.">
                         </select>
                         @* <select multiple data-plugin-selectTwo class="form-control populate" name="ddlAreaDesejada" id="ddlAreaDesejada" style="width:100%"
                                 title="Por favor selecione as área desejada."
@@ -98,28 +97,27 @@
                     </div>
                     <div class="form-group mb-lg">
                         <label>E-mail</label>
-                        <input name="Input.Email" id="Input.Email" type="email" class="form-control" required
+                        <input name="email" id="email" type="email" class="form-control" required
                                title="Por favor informe o email." />
                     </div>
                     <div class="form-group mb-lg">
                         <label>Etnia</label>
                         <select class="form-control populate select2" name="ddlEtnia" id="ddlEtnia" style="width:100%"
-                                title="Por favor selecione um etnia."
+                                title="Por favor selecione um etnia." required
                                 asp-for="EtniaId" asp-items="Model.ListEtnias">
                             <option value="">Selecionar Etnia</option>
                         </select>
                     </div>
                     <div class="form-group mb-lg">
                         <label>Deficiência</label>
-                        <select class="form-control populate select2" multiple name="ddlDefiencia" id="ddlDefiencia" style="width:100%"
-                                title="Por favor selecione um etnia."
+                        <select class="form-control populate" multiple="multiple" data-plugin-multiselect data-plugin-options='{ "maxHeight": 200 }' id="ddlDeficiencia" name="ddlDeficiencia" style="width:100%" required
+                                title="Por favor selecione uma deficiência."
                                 asp-for="DeficienciaId" asp-items="Model.ListDeficiencia">
-                            <option value="">Selecionar Deficiência</option>
                         </select>
                     </div>
                     <div class="form-group mb-lg">
                         <label>Nome completo da Mãe</label>
-                        <input name="nomeM" id="nomeM" type="text" class="form-control" required
+                        <input name="nomeMae" id="nomeMae" type="text" class="form-control" required
                                title="Por favor informe o nome da mãe." />
                         <p>
                             <code>Sem abreviações</code>
@@ -127,7 +125,7 @@
                     </div>
                     <div class="form-group mb-lg">
                         <label>Nome completo do Responsável</label>
-                        <input name="nomeR" id="nomeR" type="text" class="form-control" required
+                        <input name="nomeResp" id="nomeResp" type="text" class="form-control" required
                                title="Por favor informe o nome do responsável." />
                         <p>
                             <code>Sem abreviações</code>
@@ -136,13 +134,14 @@
                     <div class="form-group mb-lg">
                         <label>Aluno está autorizado a sair sozinho?</label><br/>
                         <div class="radio-custom radio-success">
-                            <input type="radio" id="autorizadoSim" name="autorizado" value="true" required="">
+                            <input type="radio" id="autorizadoSim" name="autorizado" value="true" required title="Por favor selecione uma opção">
                             <label>Sim</label>
                         </div>
                         <div class="radio-custom radio-danger">
-                            <input type="radio" id="autorizadoNao" name="autorizado" value="false" required="">
+                            <input type="radio" id="autorizadoNao" name="autorizado" value="false" required title="Por favor selecione uma opção">
                             <label>Não</label>
                         </div>
+                        <label class="error" for="autorizado"></label>
                         <p>
                             <code>O estudante pode deixar o local desacompanhado do responsável.</code>
                         </p>
@@ -150,24 +149,26 @@
                     <div class="form-group mb-lg">
                         <label>Participação no programa DNA DO BRASIL TALENTOS e compartilhamento dos dados pessoais do estudante.</label><br />
                         <div class="radio-custom radio-success">
-                            <input type="radio" id="participacaoSim" name="participacao" value="true" required="">
+                            <input type="radio" id="participacaoSim" name="participacao" value="true" required title="Por favor selecione uma opção">
                             <label>Sim</label>
                         </div>
                         <div class="radio-custom radio-danger">
-                            <input type="radio" id="participacaoNao" name="participacao"  value="false" required="">
+                            <input type="radio" id="participacaoNao" name="participacao" value="false" required title="Por favor selecione uma opção">
                             <label>Não</label>
                         </div>
+                        <label class="error" for="participacao"></label>
                     </div>
                     <div class="form-group mb-lg">
                         <label>Utilização da imagem</label><br />
                         <div class="radio-custom radio-success">
-                            <input type="radio" id="utilizacaoImagemSim" name="utilizacaoImagem" value="true" required="">
+                            <input type="radio" id="utilizacaoImagemSim" name="utilizacaoImagem" value="true" required title="Por favor selecione uma opção">
                             <label>Sim</label>
                         </div>
                         <div class="radio-custom radio-danger">
-                            <input type="radio" id="utilizacaoImagemNao" name="utilizacaoImagem" value="false" required="">
+                            <input type="radio" id="utilizacaoImagemNao" name="utilizacaoImagem" value="false" required title="Por favor selecione uma opção">
                             <label>Não</label>
                         </div>
+                        <label class="error" for="utilizacaoImagem"></label>
                         <p>
                             <code>O Idecace, a título gratuito e não oneroso, para fins de divulgação/publicação em qualquer material de foto, vídeo, documentos em geral, relatórios bem como em todo e qualquer veículo de comunicação</code>
                         </p>
@@ -175,36 +176,25 @@
                     <div class="form-group mb-lg">
                         <label>Todos os alunos que estiver apto a participar das atividades no Ceu das Artes, Documentação exigida no primeiro dia de aula.</label><br />
                         <div class="radio-custom radio-success">
-                            <input type="radio" id="copiaDocImagemSim" name="copiaDoc" value="true" required="">
+                            <input type="radio" id="copiaDocImagemSim" name="copiaDoc" value="true" required title="Por favor selecione uma opção">
                             <label>Sim</label>
                         </div>
                         <div class="radio-custom radio-danger">
-                            <input type="radio" id="copiaDocImagemNao" name="copiaDoc" value="false" required="">
+                            <input type="radio" id="copiaDocImagemNao" name="copiaDoc" value="false" required title="Por favor selecione uma opção">
                             <label>Não</label>
                         </div>
+                        <label class="error" for="copiaDoc"></label>
                         <p>
                             <code>Cópia do documento de indentidade do aluno. Cópia do documento de identidade do responsável legal.</code>
                         </p>
                     </div>
-
-                    @* <div class="form-group mb-none">
-                        <div class="row">
-                            <div class="col-sm-6 mb-lg">
-                                <label>Senha</label>
-                                <input asp-for="Input.Password" name="Input.Password" id="Input.Password" type="password" class="form-control" />
-                            </div>
-                            <div class="col-sm-6 mb-lg">
-                                <label>Confirmar Senha</label>
-                                <input asp-for="Input.ConfirmPassword" name="Input.ConfirmPassword" id="Input.ConfirmPassword" type="password" class="form-control" />
-                            </div>
-                        </div>
-                    </div> *@
                     <div class="row">
                         <div class="col-sm-8">
                             <div class="checkbox-custom checkbox-default">
                                 <input id="AgreeTerms" name="agreeterms" type="checkbox" required title="Por favor leia com atenção para aceitar ao termo."/>
                                 <label for="AgreeTerms">Eu concordo com os <a href="#" data-toggle="modal" data-target="#mdTermo">termos</a></label>
                             </div>
+                            <label class="error" for="agreeterms"></label>
                         </div>
                         <div class="col-sm-4 text-right">
                             <button type="submit" class="btn btn-primary hidden-xs">Registrar</button>
@@ -251,4 +241,36 @@
 
 @section Scripts {
     <script src="~/js/register.js"></script>
+    <script>
+
+        (function ($) {
+
+            'use strict';
+
+            var notify = @Model.NotifyMessage;
+            var messagem = '@Model.Notify';
+
+            if (notify === 0) {
+                new PNotify({
+                    title: 'Aluno',
+                    text: messagem,
+                    type: 'success'
+                });
+            } else if (notify === 1) {
+                new PNotify({
+                    title: 'Aluno',
+                    text: messagem,
+                    type: 'warning'
+                });
+            } else if (notify === 2) {
+                new PNotify({
+                    title: 'Aluno',
+                    text: messagem,
+                    type: 'error'
+                });
+            }
+
+
+        }).apply(this, [jQuery]);
+    </script>
 }
