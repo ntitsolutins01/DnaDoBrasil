@@ -3,13 +3,11 @@
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<div id="vModalidade">
 <div class="row">
 	<div class="col-md-12">
-<<<<<<< HEAD:WebApp/Views/Modalidade/Create.cshtml
 		@using (@Html.BeginForm("Create", "Modalidade", FormMethod.Post, new { id = "formModalidade", @class = "form-horizontal" }))
-=======
-		@using (@Html.BeginForm("Create", "Modalidade", FormMethod.Post, new { id = "formAmbiente", @class = "form-horizontal" }))
->>>>>>> 1c842b0bf8342edc02593be1bf6c3e758ebe6186:WebApp/Views/Ambiente/Create.cshtml
+
 		{
 			<section class="panel">
 				<header class="panel-heading">
@@ -32,12 +30,12 @@
 					<div class="form-group row">
 						<label class="col-sm-3 control-label text-sm-right pt-2">Vo2 Max Ini <span class="required">*</span></label>
 						<div class="col-sm-9">
-							<input type="number" name="vo2MaxIni" class="form-control" maxlength="2"
+							<input type="number" name="vo2MaxIni" class="form-control" maxlength="2"  
 								   title="Por favor informe o Vo2 Max Inicial." required />
 						</div>
 						<label class="col-sm-3 control-label text-sm-right pt-2">Vo2 Max Fim <span class="required">*</span></label>
 						<div class="col-sm-9">
-                            <input type="number" name="vo2MaxFim" class="form-control" maxlength="2"
+                            <input type="number" name="vo2MaxFim" class="form-control" maxlength="2"  
 								   title="Por favor informe o Vo2 Max Final." required />
 						</div>
 					</div>
@@ -55,7 +53,7 @@
 		}
 	</div>
 </div>
-
+</div>
 @section Scripts {
 	<script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
 	<script src="~/assets/vendor/jquery-mask/jquery.mask.js"></script>

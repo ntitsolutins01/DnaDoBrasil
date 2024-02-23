@@ -1,5 +1,5 @@
 var vm = new Vue({
-    el: "#formModalidade",
+    el: "#vModalidade",
     data: {
         loading: false,
         editDto: { Id: "", Nome: "", Status: true }
