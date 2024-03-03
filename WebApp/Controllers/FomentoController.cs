@@ -22,6 +22,8 @@ namespace WebApp.Controllers
 
         public IActionResult Index(int? crud, int? notify, string message = null)
         {
+
+            ViewBag.Status = true;
             SetNotifyMessage(notify, message);
             SetCrudMessage(crud);
             var response = ApiClientFactory.Instance.GetFomentoAll();
@@ -41,11 +43,9 @@ namespace WebApp.Controllers
             SetNotifyMessage(notify, message);
             SetCrudMessage(crud);
 
-            var localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeAll(), "Id", "Nome");
             var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
             var model = new FomentoModel
             {
-                ListLocalidades = localidades,
                 ListEstados = estados
 
             };
@@ -61,7 +61,10 @@ namespace WebApp.Controllers
                 {
                     LocalidadeId = Convert.ToInt32(collection["ddlLocalidade"].ToString()),
                     MunicipioId = Convert.ToInt32(collection["ddlMunicipio"].ToString()),
-                    Nome = collection["Nome"].ToString()
+                    Codigo = collection["codigo"].ToString(),
+                    DtIni = collection["dtIni"].ToString(),
+                    DtFim = collection["dtFim"].ToString(),
+					Nome = collection["Nome"].ToString()
                 };
 
                 await ApiClientFactory.Instance.CreateFomento(command);
@@ -80,8 +83,11 @@ namespace WebApp.Controllers
             var command = new FomentoModel.CreateUpdateFomentoCommand
             {
                 Id = Convert.ToInt32(collection["editFomentoId"]),
-                Nome = collection["nome"].ToString(),
-                Status = collection["editStatus"].ToString() == "" ? false : true
+                Codigo = collection["codigo"].ToString(),
+                Nome = collection["Nome"].ToString(),
+                DtIni = collection["dtIni"].ToString(),
+                DtFim = collection["dtFim"].ToString(),
+				Status = collection["editStatus"].ToString() == "" ? false : true
 			};
 
             await ApiClientFactory.Instance.UpdateFomento(command.Id, command);
@@ -103,12 +109,11 @@ namespace WebApp.Controllers
             }
         }
 
-        public async Task<FomentoDto> GetFomentoById(int id)
+        public Task<FomentoDto> GetFomentoById(int id)
         {
             var result = ApiClientFactory.Instance.GetFomentoById(id);
-
-            return result;
+            
+            return Task.FromResult(result);
         }
-    }
-
+	}
 }

@@ -5,133 +5,254 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
-<div class="row">
-    <div class="col-md-12">
-        <form id="formAluno" action="forms-validation.html" class="form-horizontal">
-            <section class="panel">
-                <header class="panel-heading">
-                    <div class="panel-actions">
-                        <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
-                    </div>
-
-                    <h2 class="panel-title">Filtro de pesquisa</h2>
-                </header>
-                <div class="panel-body">
-
-                    <label class="col-sm-1 control-label">Aluno</label>
-                    <div class="col-md-3 form-group">
-                        <input type="text" name="aluno" class="form-control" placeholder="eg.: Descrição completa do nome do aluno"
-                               maxlength="60" />
-                    </div>
-
-                    <label class="col-sm-1 control-label" style="width: 12.499999995%">CPF</label>
-                    <div class="col-md-3 form-group">
-                        <input id="cpf" name="cpf" type="text" value="" class="form-control" 
-                               placeholder="eg.: Número do CPF do aluno" maxlength="14" />
-                    </div>
-
-                    <label class="col-sm-1 control-label">Deficiência </label>
-                    <div class="col-md-3 form-group">
-                        <select class="form-control populate select2" name="ddlDeficiencia" id="ddlDeficiencia"
-                                title="Por favor selecione uma deficiencia." required
-                        asp-for="DeficienciaId" asp-items="Model.ListDeficiencias">
-                            <option value="">Selecionar Local</option>
-                        </select>
-                    </div>
-
-                    <label class="col-sm-1 control-label">Localidade</label>
-                    <div class="col-md-3 form-group">
-                        <select class="form-control populate select2" name="ddlLocalidade" id="ddlLocalidade"
-                                title="localidadeSelect" required
-                                asp-for="LocalidadeId" asp-items="Model.ListLocalidades">
-                            <option value="">Selecionar Localidade</option>
-                        </select>
-                    </div>
-
-                    <label class="col-sm-3 control-label">Cadastros ativos</label>
-                    <div class="col-md-3 form-group">
-                        <div class="switch switch-sm switch-primary">
-                            <input type="checkbox" id="AlunoIncluir" name="AlunoIncluir" data-plugin-ios-switch checked="checked" />
+<div id="vPesquisarAluno">
+    <div class="row">
+        <div class="col-md-12">
+            @using (@Html.BeginForm("Index", "Aluno", FormMethod.Post, new { id = "formPesquisarAluno", @class = "form-horizontal" }))
+            {
+                <section class="panel">
+                    <header class="panel-heading">
+                        <div class="panel-actions">
+                            <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
+                        </div>
+                        <h2 class="panel-title">Filtro de pesquisa</h2>
+                    </header>
+                    <div class="panel-body">
+                        <label class="col-sm-2 control-label">Fomento:</label>
+                        <div class="col-md-4 form-group">
+                            <select class="form-control populate select2" name="ddlFomento" id="ddlFomento" style="width:100%"
+                                    asp-for="FomentoId" asp-items="Model.ListFomentos">
+                                <option value="">Selecionar Fomento</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-2 control-label">Estado:</label>
+                        <div class="col-md-4 form-group">
+                            <select class="form-control populate select2" name="ddlEstado" id="ddlEstado" style="width:100%"
+                                    asp-for="EstadoId" asp-items="Model.ListEstados">
+                                <option value="">Selecionar Estado</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-2 control-label">Municipio:</label>
+                        <div class="col-md-4 form-group">
+                            <select class="form-control populate select2" name="ddlMunicipio" id="ddlMunicipio" style="width:100%"
+                                    asp-for="MunicipioId" asp-items="Model.ListMunicipios">
+                                <option value="">Selecionar Municipio</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-2 control-label">Localidade:</label>
+                        <div class="col-md-4 form-group">
+                            <select class="form-control populate select2" name="ddlLocalidade" id="ddlLocalidade" style="width:100%"
+                                    asp-for="LocalidadeId" asp-items="Model.ListLocalidades">
+                                <option value="">Selecionar Localidade</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-2 control-label">Deficiencia:</label>
+                        <div class="col-md-4 form-group">
+                            <select class="form-control populate select2" name="ddlDeficiencia" id="ddlDeficiencia"
+                                    asp-for="DeficienciaId" asp-items="Model.ListDeficiencias">
+                                <option value="">Selecionar Deficiência</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-2 control-label">Etnia:</label>
+                        <div class="col-md-4 form-group">
+                            <select class="form-control populate select2" name="ddlEtnia" id="ddlEtnia" style="width:100%"
+                                    title="Por favor selecione um etnia."
+                                    asp-for="EtniaId" asp-items="Model.ListEtnias">
+                                <option value="">Selecionar Etnia</option>
+                            </select>
                         </div>
                     </div>
-
-                </div>
-                <footer class="panel-footer">
-                    <div class="row">
-                        <div class="col-md-9 col-md-offset-3">
-                            <button type="submit" class="btn btn-primary pull-right" style="margin-left: 5px;margin-right: 5px;"><i class="fa fa-search"></i> &nbsp;&nbsp;Pesquisar</button>
+                    <footer class="panel-footer">
+                        <div class="row">
+                            <div class="col-md-9 col-md-offset-3">
+                                <button type="submit" class="btn btn-primary pull-right" style="margin-left: 5px;margin-right: 5px;"><i class="fa fa-search"></i> &nbsp;&nbsp;Pesquisar</button>
+                            </div>
                         </div>
-                    </div>
-                </footer>
-            </section>
-        </form>
-    </div>
-</div>
-
-<section class="panel">
-    <header class="panel-heading">
-        <div class="panel-actions">
-            <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
+                    </footer>
+                </section>
+            }
         </div>
+    </div>
 
-        <h2 class="panel-title">Listagem de Alunos</h2>
+    <section class="panel">
+        <header class="panel-heading">
+            <div class="panel-actions">
+                <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
+            </div>
 
-    </header>
-    <div class="panel-body">
-        <div class="form-group row">
-            <div class="col-sm-2 pull-right">
-                <a href="@Url.Action("Create", "Aluno")" id="addToTable" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Novo Aluno </a>
+            <h2 class="panel-title">Listagem de Alunos</h2>
+
+        </header>
+        <div class="panel-body">
+            <div class="form-group row">
+                <div class="col-sm-2 pull-right">
+                    <a href="@Url.Action("Create", "Aluno")" id="addToTable" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Novo Aluno </a>
+                </div>
+            </div>
+            <table class="table table-bordered table-striped mb-0" id="datatable-default">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nome</th>
+                        <th>Email</th>
+                        @* <th>Pesquisas</th>
+                        <th>Laudos</th> *@
+                        <th>Data de Nascimento</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Alunos)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                            <td>@Html.DisplayFor(modelItem => item.DtNascimento)</td>
+                            @if (item.Status)
+                            {
+                                <td class="text-center"><span class="label label-success">ATIVO</span></td>
+                            }
+                            else
+                            {
+                                <td class="text-center"><span class="label label-danger">INATIVO</span></td>
+                            }
+                            <td class="actions">
+                                <a data-toggle="tooltip" data-placement="top" title="Editar" asp-action="Edit" asp-controller="Aluno" asp-route-Id="@item.Id" class="on-default edit-row" style='color: #FF9800'><i class="fa fa-pencil"></i></a>
+                                <a data-toggle="tooltip" data-placement="top" title="Carteirinha"
+                                   href='javascript:(crud.CarterinhaModal(@item.Id))'
+                                   class="on-default edit-row" style='color: #8E24AA'>
+                                    <i class="fa fa-address-card-o"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <!-- Modal -->
+    <div class="modal fade" id="mdCarteirinhaAluno" tabindex="-1" role="dialog" aria-labelledby="mdCarteirinhaAlunoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mdCarteirinhaAlunoLabel">
+                        <i class="fa fa-address-card-o"></i> &nbsp;&nbsp;<strong>Carteirinha Aluno</strong>
+                    </h5>
+                </div>
+                <input type="hidden" name="carteirinhaAlunoId" :value="editDto.Id" />
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-4 col-lg-3">
+                            <section class="panel">
+                                <div class="panel-body">
+                                    <div class="thumb-info mb-md">
+
+                                        <img src="~/assets/images/logo.png" width="150" height="70" style="margin-left: 15px" />
+                                        <div class="qrcode" id="qr" style="margin-left: -28px">
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="col-md-8 col-lg-9">
+                            <div class="tabs">
+                                <ul class="nav nav-tabs">
+                                    <li class="active">
+                                        <a href="#frente" data-toggle="tab">Frente</a>
+                                    </li>
+                                    <li>
+                                        <a href="#verso" data-toggle="tab">Verso</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div id="frente" class="tab-pane active">
+
+                                        <div class="form-group">
+                                            <div class="widget-profile-info">
+                                                <div class="profile-picture">
+                                                    <img :src="editDto.Url" style="margin-left: 15px;">
+                                                </div>
+                                                <div class="profile-info">
+                                                    <h4 class="name text-weight-semibold">{{editDto.Nome}}</h4>
+                                                    <h5 class="role">Aluno</h5>
+                                                    <div class="profile-footer">
+                                                        <a href="#">(edit profile)</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">Email</label>
+                                            <div class="col-md-8">
+                                                <input type="text" readonly="readonly" :value="editDto.Email" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">Sexo</label>
+                                            <div class="col-md-8">
+                                                <input type="text" readonly="readonly" :value="editDto.Sexo" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">Data Nascimento</label>
+                                            <div class="col-md-8">
+                                                <input type="text" readonly="readonly" :value="editDto.DtNascimento" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="verso" class="tab-pane">
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">Município / Estado</label>
+                                            <div class="col-md-8">
+                                                <input type="text" readonly="readonly" :value="editDto.MunicipioEstado" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">Sexo</label>
+                                            <div class="col-md-8">
+                                                <input type="text" readonly="readonly" :value="editDto.Sexo" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">Unidade Escolar</label>
+                                            <div class="col-md-8">
+                                                <input type="text" readonly="readonly" :value="editDto.NomeLocalidade" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">Controle</label>
+                                            <div class="col-md-8">
+                                                <input type="text" readonly="readonly" :value="editDto.Controle" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="reset" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
+                </div>
             </div>
         </div>
-        <table class="table table-bordered table-striped mb-0" id="datatable-default">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Nome</th>
-                    <th>Email</th>
-                    @* <th>Pesquisas</th>
-                    <th>Laudos</th> *@
-                    <th>Data de Nascimento</th>
-                    <th>Status</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.Alunos)
-                {
-                    <tr>
-                        <td>@Html.DisplayFor(modelItem => item.Id)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Nome)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Email)</td>
-                        <td>@Html.DisplayFor(modelItem => item.DtNascimento)</td>
-                        @if (item.Status)
-                        {
-                            <td class="text-center"><span class="label label-success">ATIVO</span></td>
-                        }
-                        else
-                        {
-                            <td class="text-center"><span class="label label-danger">INATIVO</span></td>
-                        }
-                        <td class="actions">
-                            <a data-toggle="tooltip" data-placement="top" title="Novo Laudo" asp-action="Laudo" asp-controller="Aluno" asp-route-id="@item.Id" class="on-default remove-row" style='color:#4CAF50'><i class="fa fa-file-text"></i></a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
     </div>
-</section>
 
-
+</div>
 
 @section CssSpecificVendor {
     <link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css" />
     <link rel="stylesheet" href="~/assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
     <link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />
-    }
+}
 @section Scripts {
+    <script src="~/assets/vendor/classy-qr/jquery.classyqr.js"></script>
     <script src="~/assets/vendor/select2/js/select2.js"></script>
+    <script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
     <script src="~/assets/vendor/ios7-switch/ios7-switch.js"></script>
     <script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
     <script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
@@ -139,10 +260,45 @@
     <script src="~/js/alunos.js"></script>
 
     <script>
-        
+
         (function ($) {
 
             'use strict';
+            if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
+
+                $(function () {
+                    $('[data-plugin-ios-switch]').each(function () {
+                        var $this = $(this);
+
+                        $this.themePluginIOS7Switch();
+                    });
+                });
+            }
+
+            var $select = $(".select2").select2({
+                allowClear: true
+            });
+
+            $(".select2").each(function () {
+                var $this = $(this),
+                    opts = {};
+
+                var pluginOptions = $this.data('plugin-options');
+                if (pluginOptions)
+                    opts = pluginOptions;
+
+                $this.themePluginSelect2(opts);
+            });
+
+            /*
+             * When you change the value the select via select2, it triggers
+             * a 'change' event, but the jquery validation plugin
+             * only re-validates on 'blur'*/
+
+            $select.on('change', function () {
+                $(this).trigger('blur');
+            });
+
             var crub = @ViewBag.CrudMessage;
 
             if (crub === 1) {

@@ -225,30 +225,30 @@ namespace WebApp.Controllers
         }
 
         //[ClaimsAuthorize("Usuario", "Consultar")]
-        public async Task<bool> GetUsuarioByEmail(string email)
+        public Task<bool> GetUsuarioByEmail(string email)
         {
             if (string.IsNullOrEmpty(email)) throw new Exception("Email não informado.");
             var result = ApiClientFactory.Instance.GetUsuarioByEmail(email);
 
             if (result == null)
             {
-                return true;
+                return Task.FromResult(true);
             }
 
-            return false;
+            return Task.FromResult(false);
         }
 
-        public async Task<bool> GetUsuarioByCpf(string cpf)
+        public Task<bool> GetUsuarioByCpf(string cpf)
         {
             if (string.IsNullOrEmpty(cpf)) throw new Exception("Cpf não informado.");
             var result = ApiClientFactory.Instance.GetUsuarioByCpf(Regex.Replace(cpf, "[^0-9a-zA-Z]+", ""));
 
             if (result == null)
             {
-                return true;
+                return Task.FromResult(true);
             }
 
-            return false;
+            return Task.FromResult(false);
         }
     }
 }

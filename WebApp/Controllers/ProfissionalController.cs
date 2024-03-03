@@ -12,6 +12,7 @@ using WebApp.Enumerators;
 using WebApp.Factory;
 using WebApp.Models;
 using WebApp.Utility;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace WebApp.Controllers
 {
@@ -64,9 +65,9 @@ namespace WebApp.Controllers
 				SetCrudMessage(crud);
 
 				var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
-				var ambientes = new SelectList(ApiClientFactory.Instance.GetAmbienteAll(), "Id", "Nome");
+				var modalidades = new SelectList(ApiClientFactory.Instance.GetModalidadeAll(), "Id", "Nome");
 
-				return View(new ProfissionalModel() { ListEstados = estados, ListAmbientes = ambientes });
+				return View(new ProfissionalModel() { ListEstados = estados, ListModalidades = modalidades });
 
 			}
 			catch (Exception e)
@@ -85,26 +86,28 @@ namespace WebApp.Controllers
 			{
 				var status = collection["status"].ToString();
 				var habilitado = collection["habilitado"].ToString();
-				var ambientesIds = collection["arrAmbientes"];
+				var modalidadesIds = collection["arrModalidades"];
 
 				var command = new ProfissionalModel.CreateUpdateProfissionalCommand
 				{
-					Nome = collection["nome"].ToString(),
-					DtNascimento = collection["DtNascimento"].ToString(),
-					Email = collection["email"].ToString(),
-					Sexo = collection["ddlSexo"].ToString(),
-					Telefone = collection["numTelefone"].ToString(),
-					Cep = collection["cep"].ToString(),
-					Celular = collection["numCelular"].ToString(),
-					Cpf = collection["cpf"].ToString(),
+					Nome = collection["nome"] == "" ? null : collection["nome"].ToString(),
+					DtNascimento = collection["DtNascimento"] == "" ? null : collection["DtNascimento"].ToString(),
+					Email = collection["email"] == "" ? null : collection["email"].ToString(),
+					Sexo = collection["ddlSexo"] == "" ? null : collection["ddlSexo"].ToString(),
+					Telefone = collection["numTelefone"] == "" ? null : collection["numTelefone"].ToString(),
+					Cep = collection["cep"] == "" ? null : collection["cep"].ToString(),
+					Celular = collection["numCelular"] == "" ? null : collection["numCelular"].ToString(),
+					Cpf = collection["cpf"] == "" ? null : collection["cpf"].ToString(),
 					//AspNetUserId = collection["aspnetuserId"].ToString(),
 					Numero = collection["numero"] == "" ? null : Convert.ToInt32(collection["numero"].ToString()),
-					Bairro = collection["bairro"].ToString(),
-					Endereco = collection["endereco"].ToString(),
+					Bairro = collection["bairro"] == "" ? null : collection["bairro"].ToString(),
+					Endereco = collection["endereco"] == "" ? null : collection["endereco"].ToString(),
 					MunicipioId = collection["ddlMunicipio"] == "" ? null : Convert.ToInt32(collection["ddlMunicipio"].ToString()),
-					Habilitado = habilitado == "",
+					LocalidadeId = collection["ddlLocalidade"] == "" ? null : Convert.ToInt32(collection["ddlLocalidade"].ToString()),
+					Habilitado = habilitado != "",
 					Status = status != "",
-					AmbientesIds = ambientesIds.ToArray() //collection["arrAmbientes"] == "" ? null : collection["arrAmbientes"]
+					ModalidadesIds = collection["arrModalidades"] == "" ? null : collection["arrModalidades"].ToString()
+
 				};
 
 				await ApiClientFactory.Instance.CreateProfissional(command);
@@ -119,35 +122,74 @@ namespace WebApp.Controllers
 			}
 		}
 
+		public ActionResult Edit(int id, int? crud, int? notify, string message = null)
+		{
+			try
+			{
+				SetNotifyMessage(notify, message);
+				SetCrudMessage(crud);
+
+				var profissional = ApiClientFactory.Instance.GetProfissionalById(id);
+				var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", profissional.Uf);
+				var municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(profissional.Uf!), "Id", "Nome", profissional.MunicipioId);
+				var localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeByMunicipio(profissional.MunicipioId.ToString()), "Id", "Nome", profissional.LocalidadeId);
+				var listModalidades = new SelectList(ApiClientFactory.Instance.GetModalidadeAll(), "Id", "Nome");
+
+				return View(new ProfissionalModel()
+				{
+					ListEstados = estados, 
+					ListModalidades = listModalidades, 
+					Profissional = profissional,
+					ListMunicipios = municipios, 
+					Modalidades = profissional.Modalidades,
+					ListLocalidades = localidades
+
+				});
+
+			}
+			catch (Exception e)
+			{
+				Console.Write(e.StackTrace);
+				return RedirectToAction(nameof(Edit), new { notify = (int)EnumNotify.Error, message = e.Message });
+
+			}
+		}
+
 		//[ClaimsAuthorize("Profissional", "Alterar")]
-		public async Task<ActionResult> Edit(IFormCollection collection)
+		[HttpPost]
+		public async Task<ActionResult> Edit(int id, IFormCollection collection)
 		{
 			try
 			{
 				var status = collection["status"].ToString();
 				var habilitado = collection["habilitado"].ToString();
+				var modalidadesIds = collection["arrModalidades"];
+
 				var command = new ProfissionalModel.CreateUpdateProfissionalCommand
 				{
-					Nome = collection["nome"].ToString(),
-					DtNascimento = collection["DtNascimento"].ToString(),
-					Email = collection["email"].ToString(),
-					Sexo = collection["ddlSexo"].ToString(),
-					Telefone = collection["numTelefone"].ToString(),
-					Cep = collection["cep"].ToString(),
-					Celular = collection["numCelular"].ToString(),
-					Cpf = collection["cpf"].ToString(),
-					//AspNetUserId = collection["aspnetuserId"].ToString(),
-					//Numero = Convert.ToInt32(collection["numero"].ToString()),
-					Bairro = collection["bairro"].ToString(),
-					Endereco = collection["endereco"].ToString(),
-					//MunicipioId = Convert.ToInt32(collection["ddlMunicipio"].ToString()),
-					Habilitado = habilitado == "",
-					Status = status != ""
-				};
+					Id = id,
+                    Nome = collection["nome"] == "" ? null : collection["nome"].ToString(),
+                    DtNascimento = collection["DtNascimento"] == "" ? null : collection["DtNascimento"].ToString(),
+                    Email = collection["email"] == "" ? null : collection["email"].ToString(),
+                    Sexo = collection["ddlSexo"] == "" ? null : collection["ddlSexo"].ToString(),
+                    Telefone = collection["numTelefone"] == "" ? null : collection["numTelefone"].ToString(),
+                    Cep = collection["cep"] == "" ? null : collection["cep"].ToString(),
+                    Celular = collection["numCelular"] == "" ? null : collection["numCelular"].ToString(),
+                    Cpf = collection["cpf"] == "" ? null : collection["cpf"].ToString(),
+                    //AspNetUserId = collection["aspnetuserId"].ToString(),
+                    Numero = collection["numero"] == "" ? null : Convert.ToInt32(collection["numero"].ToString()),
+                    Bairro = collection["bairro"] == "" ? null : collection["bairro"].ToString(),
+                    Endereco = collection["endereco"] == "" ? null : collection["endereco"].ToString(),
+                    MunicipioId = collection["ddlMunicipio"] == "" ? null : Convert.ToInt32(collection["ddlMunicipio"].ToString()),
+                    LocalidadeId = collection["ddlLocalidade"] == "" ? null : Convert.ToInt32(collection["ddlLocalidade"].ToString()),
+                    Habilitado = habilitado != "",
+                    Status = status != "",
+                    ModalidadesIds = collection["arrModalidades"] == "" ? null : collection["arrModalidades"].ToString()
+                };
 
 				await ApiClientFactory.Instance.UpdateProfissional(command.Id, command);
 
-				return RedirectToAction(nameof(Edit), new { crud = (int)EnumCrud.Updated });
+				return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
 			}
 			catch (Exception e)
 			{
@@ -159,18 +201,18 @@ namespace WebApp.Controllers
 
 		//[ClaimsAuthorize("Profissional", "Alterar")]
 		[HttpPost]
-		public async Task<ActionResult> CreateAmbiente(IFormCollection collection)
+		public async Task<ActionResult> CreateModalidade(IFormCollection collection)
 		{
 			try
 			{
-				var ambiente = collection["ambiente"].ToString();
+				var modalidade = collection["modalidade"].ToString();
 
-				var command = new AmbienteModel.CreateUpdateAmbienteCommand
+				var command = new ModalidadeModel.CreateUpdateModalidadeCommand
 				{
-					Nome = ambiente
+					Nome = modalidade
 				};
 
-				await ApiClientFactory.Instance.CreateAmbiente(command);
+				await ApiClientFactory.Instance.CreateModalidade(command);
 
 				return RedirectToAction(nameof(Create), new { crud = (int)EnumCrud.Created });
 			}
@@ -196,37 +238,37 @@ namespace WebApp.Controllers
 			}
 		}
 
-		public async Task<ProfissionalDto> GetProfissionalById(int id)
+		public Task<ProfissionalDto> GetProfissionalById(int id)
 		{
 			var result = ApiClientFactory.Instance.GetProfissionalById(id);
 
-			return result;
+			return Task.FromResult(result);
 		}
 		//[ClaimsAuthorize("Profissional", "Consultar")]
-		public async Task<bool> GetProfissionalByEmail(string email)
+		public Task<bool> GetProfissionalByEmail(string email)
 		{
 			if (string.IsNullOrEmpty(email)) throw new Exception("Email não informado.");
 			var result = ApiClientFactory.Instance.GetProfissionalByEmail(email);
 
 			if (result == null)
 			{
-				return true;
+				return Task.FromResult(true);
 			}
 
-			return false;
+			return Task.FromResult(false);
 		}
 
-		public async Task<bool> GetProfissionalByCpf(string cpf)
+		public Task<bool> GetProfissionalByCpf(string cpf)
 		{
 			if (string.IsNullOrEmpty(cpf)) throw new Exception("Cpf não informado.");
 			var result = ApiClientFactory.Instance.GetProfissionalByCpf(Regex.Replace(cpf, "[^0-9a-zA-Z]+", ""));
 
 			if (result == null)
 			{
-				return true;
+				return Task.FromResult(true);
 			}
 
-			return false;
+			return Task.FromResult(false);
 		}
 		[HttpPost]
 		public async Task<ActionResult> Habilitar(IFormCollection collection)
@@ -308,6 +350,22 @@ namespace WebApp.Controllers
 			await _emailSender.SendEmailAsync(user.Email, "Primeiro acesso sistema Dna Brasil",
 				message);
 		}
+
+		public Task<JsonResult> GetProfissionaisByLocalidade(string id)
+		{
+            try
+            {
+                if (string.IsNullOrEmpty(id)) throw new Exception("Localidadee não informada.");
+                var resultLocal = ApiClientFactory.Instance.GetProfissionaisByLocalidade(Convert.ToInt32(id));
+
+                return Task.FromResult(Json(new SelectList(resultLocal, "Id", "Nome")));
+
+            }
+            catch (Exception ex)
+            {
+                return Task.FromResult(Json(ex));
+            }
+        }
 	}
 
 }

@@ -50,7 +50,7 @@ namespace WebApp.Controllers
         //[ClaimsAuthorize("Perfil", "Incluir")]
         public ActionResult Create()
         {
-            var responseModulos = ApiClientFactory.Instance.GetModuloAll();
+            var responseModulos = ApiClientFactory.Instance.GetModulosAll();
 
             var model = new PerfilModel { Modulos = responseModulos };
             return View(model);
@@ -63,7 +63,7 @@ namespace WebApp.Controllers
             try
             {
                 ListDictionary list = new ListDictionary();
-                var responseModulos = ApiClientFactory.Instance.GetModuloAll();
+                var responseModulos = ApiClientFactory.Instance.GetModulosAll();
 
                 foreach (var modulo in responseModulos)
                 {
@@ -110,7 +110,7 @@ namespace WebApp.Controllers
             if (id == null)
                 return RedirectToActionResult();
             var obj = GetPerfilByAspNetRoleId(perfil.AspNetRoleId);
-            var responseModulos = ApiClientFactory.Instance.GetModuloAll();
+            var responseModulos = ApiClientFactory.Instance.GetModulosAll();
 
             var listClaim = new List<Claim>();
 
@@ -130,7 +130,7 @@ namespace WebApp.Controllers
             try
             {
                 ListDictionary list = new ListDictionary();
-                var responseModulos = ApiClientFactory.Instance.GetModuloAll();
+                var responseModulos = ApiClientFactory.Instance.GetModulosAll();
                 var perfil = ApiClientFactory.Instance.GetPerfilById(id);
 
                 foreach (var modulo in responseModulos)

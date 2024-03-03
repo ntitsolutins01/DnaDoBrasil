@@ -1,72 +1,77 @@
 ﻿var vm = new Vue({
-    el: "#formAluno",
+    el: "#vPesquisarAluno",
     data: {
-        loading: false
+        loading: false,
+        editDto: { Id: "", Nome: "", Status: true, Email: "", Sexo: "", DtNascimento: "", MunicipioEstado: "", NomeLocalidade: "" }
     },
     mounted: function () {
         var self = this;
         (function ($) {
             'use strict';
 
-            if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
-
-                $(function () {
-                    $('[data-plugin-ios-switch]').each(function () {
-                        var $this = $(this);
-
-                        $this.themePluginIOS7Switch();
-                    });
-                });
-            }
-
             var formid = $('form').attr('id');
 
-            if (formid === "formAluno") {
-                var $select = $(".select2").select2({
-                    allowClear: true
+            if (formid === "formPesquisarAluno") {
+
+                //clique de escolha do select
+                $("#ddlEstado").change(function () {
+                    var sigla = $("#ddlEstado").val();
+
+                    var url = "../../DivisaoAdministrativa/GetMunicipioByUf?uf=" + sigla;
+
+                    var ddlSource = "#ddlMunicipio";
+
+                    $.getJSON(url,
+                        { id: $(ddlSource).val() },
+                        function (data) {
+                            if (data.length > 0) {
+                                var items = '<option value="">Selecionar Municipio</option>';
+                                $("#ddlMunicipio").empty;
+                                $.each(data,
+                                    function (i, row) {
+                                        items += "<option value='" + row.value + "'>" + row.text + "</option>";
+                                    });
+                                $("#ddlMunicipio").html(items);
+                            }
+                            else {
+                                new PNotify({
+                                    title: 'Usuario',
+                                    text: data,
+                                    type: 'warning'
+                                });
+                            }
+                        });
                 });
 
-                $(".select2").each(function () {
-                    var $this = $(this),
-                        opts = {};
+                //clique de escolha do select
+                $("#ddlMunicipio").change(function () {
+                    var id = $("#ddlMunicipio").val();
 
-                    var pluginOptions = $this.data('plugin-options');
-                    if (pluginOptions)
-                        opts = pluginOptions;
+                    var url = "../../Localidade/GetLocalidadeByMunicipio?id=" + id;
 
-                    $this.themePluginSelect2(opts);
+                    var ddlSource = "#ddlLocalidade";
+
+                    $.getJSON(url,
+                        { id: $(ddlSource).val() },
+                        function (data) {
+                            if (data.length > 0) {
+                                var items = '<option value="">Selecionar Localidade</option>';
+                                $("#ddlLocalidade").empty;
+                                $.each(data,
+                                    function (i, row) {
+                                        items += "<option value='" + row.value + "'>" + row.text + "</option>";
+                                    });
+                                $("#ddlLocalidade").html(items);
+                            }
+                            else {
+                                new PNotify({
+                                    title: 'Localidades',
+                                    text: 'Localidades não encontradas.',
+                                    type: 'warning'
+                                });
+                            }
+                        });
                 });
-
-                /*
-                 * When you change the value the select via select2, it triggers
-                 * a 'change' event, but the jquery validation plugin
-                 * only re-validates on 'blur'*/
-
-                $select.on('change', function () {
-                    $(this).trigger('blur');
-                });
-
-
-                $("#formAluno").validate({
-                    highlight: function (label) {
-                        $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
-                    },
-                    success: function (label) {
-                        $(label).closest('.form-group').removeClass('has-error');
-                        label.remove();
-                    },
-                    errorPlacement: function (error, element) {
-                        var placement = element.closest('.input-group');
-                        if (!placement.get(0)) {
-                            placement = element;
-                        }
-                        if (error.text() !== '') {
-                            placement.after(error);
-                        }
-                    }
-                });
-
-
             }
         }).apply(this, [jQuery]);
     },
@@ -89,6 +94,46 @@
                 $("#" + el).addClass("loading-overlay-showing");
                 self.loading = flag;
             }
+        },
+        DeleteAluno: function (id) {
+            var url = "Aluno/Delete/" + id;
+            $("#deleteAlunoHref").prop("href", url);
+        },
+        CarteirinhaAluno: function (id) {
+            var self = this;
+
+            
+
+
+            axios.get("Aluno/GetAlunoById/?id=" + id).then(result => {
+
+                self.editDto.Id = result.data.id;
+                self.editDto.Nome = result.data.nome;
+                self.editDto.Status = result.data.status;
+                self.editDto.Email = result.data.email;
+                self.editDto.Sexo = result.data.sexo;
+                self.editDto.DtNascimento = result.data.dtNascimento;
+                self.editDto.MunicipioEstado = result.data.municipioEstado;
+                self.editDto.NomeLocalidade = result.data.nomeLocalidade;
+                self.editDto.Controle = result.data.controle;
+                self.editDto.Url = result.data.url;
+
+                $('#qr').ClassyQR({
+                    create: true,// signals the library to create the image tag inside the container div.
+                    type: 'text',// text/url/sms/email/call/locatithe text to encode in the QR. on/wifi/contact, default is TEXT
+                    text: self.editDto.Id // the text to encode in the QR.
+                });
+
+            }).catch(error => {
+                Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
+            });
         }
     }
 });
+var crud = {
+    CarterinhaModal: function (id) {
+        $('input[name="carteirinhaAlunoId"]').attr('value', id);
+        $('#mdCarteirinhaAluno').modal('show');
+        vm.CarteirinhaAluno(id);
+    }
+};

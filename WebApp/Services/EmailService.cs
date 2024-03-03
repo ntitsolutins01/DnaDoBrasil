@@ -86,7 +86,7 @@ namespace WebApp.Services
 
 
         //metodo para teste de envio de email local usando MimeMessage
-        public async Task SendEmailAsync(string email, string subject, string htmlMessage)
+        public Task SendEmailAsync(string email, string subject, string htmlMessage)
         {
             try
             {
@@ -122,6 +122,8 @@ namespace WebApp.Services
                 Console.WriteLine(e);
                 throw;
             }
+
+            return Task.CompletedTask;
         }
 
         //metodo para teste de envio de email ambiente dna

@@ -8,5 +8,10 @@
 		public int MunicipioId { get; set; }
         public int LocalidadeId { get; set; }
         public string Data { get; set; }
+        public string Codigo { get; set; }
+        public string DtIni { get; set; }
+        public string DtFim { get; set; }
+        public string? MunicipioEstado { get; init; }
+        public string? Localidade { get; init; }
     }
 }

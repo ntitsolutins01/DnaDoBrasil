@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html class="sidebar-light sidebar-left-big-icons">
 <head>
 
@@ -20,7 +20,6 @@
     <link rel="stylesheet" href="~/assets/vendor/bootstrap/css/bootstrap.css" />
 
     <link rel="stylesheet" href="~/assets/vendor/font-awesome/css/font-awesome.css" />
-    <link rel="stylesheet" href="~/assets/vendor/magnific-popup/magnific-popup.css" />
     <link rel="stylesheet" href="~/assets/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.css" />
 
     <!-- Specific Page Vendor CSS -->
@@ -52,7 +51,7 @@
         <header class="header">
             <div class="logo-container">
                 <a href="../1.7.0" class="logo">
-                    <img src="~/assets/images/logo.png" width="75" height="35" alt="Porto Admin" />
+                    <img src="~/assets/images/logo.png" width="75" height="35" alt="Dna do Brasil" />
                 </a>
                 <div class="visible-xs toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-opened">
                     <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
@@ -149,8 +148,8 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="@Url.Action("Index", "Contrato")">
-                                                Contratos
+                                            <a href="@Url.Action("Index", "TipoParceria")">
+                                                Tipo Parceria
                                             </a>
                                         </li>
                                         <li>
@@ -163,9 +162,14 @@
                                                 Resposta
                                             </a>
                                         </li>
-                                        <li>
-                                            <a href="@Url.Action("Index", "Serie")">
-                                                Série
+	                                    <li>
+		                                    <a href="@Url.Action("Index", "Serie")">
+			                                    Série
+		                                    </a>
+	                                    </li>
+	                                    <li>
+                                            <a href="@Url.Action("Index", "Modulo")">
+                                                Módulo
                                             </a>
                                         </li>
                                     </ul>
@@ -211,12 +215,12 @@
                                         <span></>Laudos</span>
                                     </a>
                                 </li>
-                                <li class="nav-parent nav-expanded">
+                                @* <li class="nav-parent nav-expanded">
                                     <a href="@Url.Action("Index", "Transacao")">
                                         <i class="fa fa-exchange" aria-hidden="true"></i>
                                         <span>Transações</span>
                                     </a>
-                                </li>
+                                </li> *@
                                 <li class="nav-parent nav-expanded">
                                     <a href="@Url.Action("Index", "PlanoAula")">
                                         <i class="fa fa-book" aria-hidden="true"></i>
@@ -275,39 +279,16 @@
     <script src="~/assets/vendor/bootstrap/js/bootstrap.js"></script>
     <script src="~/assets/vendor/nanoscroller/nanoscroller.js"></script>
     <script src="~/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-    <script src="~/assets/vendor/magnific-popup/jquery.magnific-popup.js"></script>
-    <script src="~/assets/vendor/jquery-placeholder/jquery-placeholder.js"></script>
 
     <!-- Specific Page Vendor -->
     <script src="~/assets/vendor/jquery-ui/jquery-ui.js"></script>
-    <script src="~/assets/vendor/jqueryui-touch-punch/jqueryui-touch-punch.js"></script>
-    <script src="~/assets/vendor/jquery-appear/jquery-appear.js"></script>
     <script src="~/assets/vendor/bootstrap-multiselect/bootstrap-multiselect.js"></script>
-    <script src="~/assets/vendor/jquery.easy-pie-chart/jquery.easy-pie-chart.js"></script>
-    <script src="~/assets/vendor/flot/jquery.flot.js"></script>
-    <script src="~/assets/vendor/flot.tooltip/flot.tooltip.js"></script>
-    <script src="~/assets/vendor/flot/jquery.flot.pie.js"></script>
-    <script src="~/assets/vendor/flot/jquery.flot.categories.js"></script>
-    <script src="~/assets/vendor/flot/jquery.flot.resize.js"></script>
-    <script src="~/assets/vendor/jquery-sparkline/jquery-sparkline.js"></script>
-    <script src="~/assets/vendor/raphael/raphael.js"></script>
     <script src="~/assets/vendor/morris.js/morris.js"></script>
-    <script src="~/assets/vendor/gauge/gauge.js"></script>
-    <script src="~/assets/vendor/snap.svg/snap.svg.js"></script>
     <script src="~/assets/vendor/liquid-meter/liquid.meter.js"></script>
-    <script src="~/assets/vendor/jqvmap/jquery.vmap.js"></script>
-    <script src="~/assets/vendor/jqvmap/data/jquery.vmap.sampledata.js"></script>
-    <script src="~/assets/vendor/jqvmap/maps/jquery.vmap.world.js"></script>
-    <script src="~/assets/vendor/jqvmap/maps/continents/jquery.vmap.africa.js"></script>
-    <script src="~/assets/vendor/jqvmap/maps/continents/jquery.vmap.asia.js"></script>
-    <script src="~/assets/vendor/jqvmap/maps/continents/jquery.vmap.australia.js"></script>
-    <script src="~/assets/vendor/jqvmap/maps/continents/jquery.vmap.europe.js"></script>
-    <script src="~/assets/vendor/jqvmap/maps/continents/jquery.vmap.north-america.js"></script>
-    <script src="~/assets/vendor/jqvmap/maps/continents/jquery.vmap.south-america.js"></script>
     <script src="~/assets/vendor/pnotify/pnotify.custom.js"></script>
 
     <!-- Theme Base, Components and Settings -->
-    <script src="~/assets/javascripts/theme.js"></script> 30285888000117 18
+    <script src="~/assets/javascripts/theme.js"></script> 
 
     <!-- Theme Custom -->
     <script src="~/assets/javascripts/theme.custom.js"></script>
@@ -317,9 +298,6 @@
     <script src="~/assets/vendor/vue/vue.js"></script>
     <script src="~/assets/vendor/axios/axios.min.js"></script>
     <script src="~/js/main.js"></script>
-
-    <!-- Examples -->
-    <script src="~/assets/javascripts/dashboard/examples.dashboard.js"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

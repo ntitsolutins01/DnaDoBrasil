@@ -20,9 +20,13 @@
 	<!-- Vendor CSS -->
 	<link rel="stylesheet" href="~/assets/vendor/bootstrap/css/bootstrap.css" />
 
-	<link rel="stylesheet" href="~/assets/vendor/font-awesome/css/font-awesome.css" />
-	<link rel="stylesheet" href="~/assets/vendor/magnific-popup/magnific-popup.css" />
-	<link rel="stylesheet" href="~/assets/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.css" />
+    <link rel="stylesheet" href="~/assets/vendor/font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css" />
+    <link rel="stylesheet" href="~/assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
+    <link rel="stylesheet" href="~/assets/vendor/bootstrap-multiselect/bootstrap-multiselect.css" />
+    <link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />
+    <link rel="stylesheet" href="~/assets/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.css" />
+    <link rel="stylesheet" href="~/assets/vendor/pnotify/pnotify.custom.css" />
 
 	<!-- Theme CSS -->
 	<link rel="stylesheet" href="~/assets/stylesheets/theme.css" />
@@ -46,9 +50,14 @@
 	<script src="~/assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
 	<script src="~/assets/vendor/bootstrap/js/bootstrap.js"></script>
 	<script src="~/assets/vendor/nanoscroller/nanoscroller.js"></script>
-	<script src="~/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-	<script src="~/assets/vendor/magnific-popup/jquery.magnific-popup.js"></script>
-	<script src="~/assets/vendor/jquery-placeholder/jquery-placeholder.js"></script>
+    <script src="~/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    <script src="~/assets/vendor/bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+    <script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
+    <script src="~/assets/vendor/select2/js/select2.js"></script>
+    <script src="~/assets/vendor/bootstrap-multiselect/bootstrap-multiselect.js"></script>
+    <script src="~/assets/vendor/jquery-mask/jquery.mask.js"></script>
+    <script src="~/assets/vendor/ios7-switch/ios7-switch.js"></script>
+    <script src="~/assets/vendor/pnotify/pnotify.custom.js"></script>   
 
 	<!-- Theme Base, Components and Settings -->
 	<script src="~/assets/javascripts/theme.js"></script>
@@ -57,7 +66,9 @@
 	<script src="~/assets/javascripts/theme.custom.js"></script>
 
 	<!-- Theme Initialization Files -->
-	<script src="~/assets/javascripts/theme.init.js"></script>
+    <script src="~/assets/javascripts/theme.init.js"></script>
+    <script src="~/assets/vendor/vue/vue.js"></script>
+    <script src="~/assets/vendor/axios/axios.min.js"></script>
 	@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

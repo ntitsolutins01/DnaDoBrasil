@@ -24,8 +24,10 @@
                         <thead>
                             <tr>
                                 <th class="text-center">Id</th>
+                                <th class="text-center">Código do Fomento</th>
                                 <th class="text-center">Fomento</th>
-	                            <th class="text-center">Data</th>
+	                            <th class="text-center">Data Inicío</th>
+	                            <th class="text-center">Data fim</th>
 	                            <th class="text-center">Status</th>
                                 <th class="text-center">Ações</th>
                             </tr>
@@ -35,8 +37,10 @@
                             {
                                 <tr>
                                     <td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Id)</td>
+                                    <td class="text-center">@Html.DisplayFor(modelItem => item.Codigo)</td>
                                     <td class="text-center">@Html.DisplayFor(modelItem => item.Nome)</td>
-	                                <td class="text-center">@Html.DisplayFor(modelItem => item.Data)</td>
+	                                <td class="text-center">@Html.DisplayFor(modelItem => item.DtIni)</td>
+	                                <td class="text-center">@Html.DisplayFor(modelItem => item.DtFim)</td>
 	                                @if (item.Status)
 	                                {
 		                                <td class="text-center"><span class="label label-success">ATIVO</span></td>
@@ -45,7 +49,7 @@
 	                                {
 		                                <td class="text-center"><span class="label label-danger">INATIVO</span></td>
 	                                }
-                                    <td class="actions">
+                                    <td class="actions text-center">
                                         <a data-toggle="tooltip" data-placement="top" title="Editar"
                                            href='javascript:(crud.EditModal(@item.Id))'
                                            class="on-default edit-row" style='color: #FF9800'>
@@ -91,7 +95,7 @@
     </div>
     <!-- Modal -->
     <div class="modal fade" id="mdEditFomento" tabindex="-1" role="dialog" aria-labelledby="mdEditFomentoLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="mdEditFomentoLabel">
@@ -103,12 +107,77 @@
                     <input type="hidden" name="editFomentoId" :value="editDto.Id" />
 
                     <div class="modal-body">
+	                    <div class="form-group row">
+		                    <label class="col-sm-3 control-label text-sm-right pt-2">Código</label>
+		                    <div class="col-sm-9">
+			                    <input type="text" name="codigo" class="form-control"
+			                           maxlength="50" :value="editDto.Codigo"
+			                           title="Por favor informe o código do fomento." required />
+		                    </div>
+	                    </div>
                         <div class="form-group row">
                             <label class="col-sm-3 control-label text-sm-right pt-2">Fomento</label>
                             <div class="col-sm-9">
                                 <input type="text" name="nome" class="form-control"
-                                       maxlength="80" :value="editDto.Nome"
-                                       title="Por favor informe o Fomento." required />
+                                       maxlength="300" :value="editDto.Nome"
+                                       title="Por favor informe o fomento." required />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 control-label text-sm-right pt-2">Município / UF</label>
+                            <div class="col-sm-5">
+                                <input type="text" name="municipio" class="form-control" :value="editDto.MunicipioEstado" readonly />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 control-label text-sm-right pt-2">Localidade</label>
+                            <div class="col-sm-9">
+                                <input type="text" name="localidade" class="form-control" :value="editDto.Localidade" readonly />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 control-label text-sm-right pt-2">Data de Início <span class="required">*</span></label>
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </span>
+                                    <input id="dtIni" name="dtIni"
+                                           required :value="editDto.DtIni"
+                                           title="Por favor informe a data de início."
+                                           style="z-index: auto;"
+                                           data-plugin-datepicker data-date-format="dd/mm/yyyy" data-plugin-options='{"language": "pt-BR"}'
+                                           placeholder="__/__/____" class="form-control startdate"
+                                           class="form-control">
+                                </div>
+                            </div>
+                            <label class="col-sm-2 control-label text-sm-right pt-2">Data de Fim <span class="required">*</span></label>
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </span>
+                                    <input id="dtFim" name="dtFim"
+                                           required :value="editDto.DtFim"
+                                           title="Por favor informe a data de fim."
+                                           style="z-index: auto;"
+                                           data-plugin-datepicker data-date-format="dd/mm/yyyy" data-plugin-options='{"language": "pt-BR"}'
+                                           placeholder="__/__/____" class="form-control startdate"
+                                           class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 control-label text-sm-right pt-2">Status</label>
+                            <div class="col-md-3">
+                                <div class="switch switch-sm switch-primary">
+                                    <div v-show="editDto.Status">
+                                        <input type="checkbox" id="editStatus" name="editStatus" data-plugin-ios-switch checked="checked"/>
+                                    </div>
+                                    <div v-show="!editDto.Status">
+                                        <input type="checkbox" id="editStatus" name="editStatus" data-plugin-ios-switch/>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         @* <div class="form-group row">
@@ -152,6 +221,7 @@
 @section CssSpecificVendor {
     <link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css" />
     <link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />
+    <link href="~/assets/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.css" rel="stylesheet" />
 }
 @section Scripts {
     <script src="~/assets/vendor/ios7-switch/ios7-switch.js"></script>

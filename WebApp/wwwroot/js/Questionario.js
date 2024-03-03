@@ -2,7 +2,7 @@
     el: "#formQuestionario",
     data: {
         loading: false,
-        editDto: { Id: "",TipoLaudo: "", Pergunta: "" }
+        editDto: { Id: "",TipoLaudo: "", Pergunta: "", Quadrabte:"", Questao:"" }
     },
     mounted: function () {
         var self = this;
@@ -125,6 +125,8 @@
                 self.editDto.Id = result.data.id;
                 self.editDto.TipoLaudo = result.data.tipoLaudo.nome;
                 self.editDto.Pergunta = result.data.pergunta;
+                self.editDto.Quadrante = result.data.quadrante;
+                self.editDto.Questao = result.data.questao;
                
             }).catch(error => {
                 Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);

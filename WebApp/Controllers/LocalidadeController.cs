@@ -50,7 +50,7 @@ namespace WebApp.Controllers
                 {
                     Nome = collection["nome"].ToString(),
                     Descricao = collection["descricao"].ToString(),
-					MunicipioId = collection["ddlMunicipio"].ToString()
+					MunicipioId = Convert.ToInt32(collection["ddlMunicipio"].ToString())
                 };
 
                 await ApiClientFactory.Instance.CreateLocalidade(command);
@@ -71,6 +71,7 @@ namespace WebApp.Controllers
                 Id = Convert.ToInt32(collection["editLocalidadeId"]),
                 Nome = collection["nome"].ToString(),
                 Descricao = collection["descricao"].ToString(),
+                MunicipioId = Convert.ToInt32(collection["editMunicipioId"].ToString()),
                 Status = collection["editStatus"].ToString() == "" ? false : true
 			};
 
@@ -93,11 +94,43 @@ namespace WebApp.Controllers
             }
         }
 
-        public async Task<LocalidadeDto> GetLocalidadeById(int id)
+        public Task<LocalidadeDto> GetLocalidadeById(int id)
         {
             var result = ApiClientFactory.Instance.GetLocalidadeById(id);
 
-            return result;
+            return Task.FromResult(result);
         }
-    }
+
+        public Task<JsonResult> GetLocalidadeByMunicipio(string id)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(id)) throw new Exception("Município não informado.");
+                var resultLocal = ApiClientFactory.Instance.GetLocalidadeByMunicipio(id);
+
+                return Task.FromResult(Json(new SelectList(resultLocal, "Id", "Nome")));
+
+            }
+            catch (Exception ex)
+            {
+                return Task.FromResult(Json(ex));
+            }
+        }
+
+        public Task<JsonResult> GetLocalidadeByFomento(string id)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(id)) throw new Exception("Município não informado.");
+                var resultLocal = ApiClientFactory.Instance.GetLocalidadeByFomento(Convert.ToInt32(id));
+
+                return Task.FromResult(Json(new SelectList(resultLocal, "Id", "Nome")));
+
+            }
+            catch (Exception ex)
+            {
+                return Task.FromResult(Json(ex));
+            }
+        }
+	}
 }

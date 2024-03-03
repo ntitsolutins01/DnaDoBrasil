@@ -1,4 +1,4 @@
-﻿using System.Text.Encodings.Web;
+using System.Text.Encodings.Web;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -18,22 +18,23 @@ namespace WebApp.Controllers
 
     public class SistemaSocioeconomicoController : BaseController
     {
-        private readonly IOptions<UrlSettings> _appSettings;
         private readonly IEmailSender _emailSender;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IHostingEnvironment _host;
 
-        public SistemaSocioeconomicoController(IOptions<UrlSettings> appSettings,
+        public SistemaSocioeconomicoController(
+            IOptions<UrlSettings> appSettings,
             IEmailSender emailSender,
-            UserManager<IdentityUser> userManager, IHostingEnvironment host, RoleManager<IdentityRole> roleManager)
+            UserManager<IdentityUser> userManager, 
+            IHostingEnvironment host, 
+            RoleManager<IdentityRole> roleManager)
         {
-            _appSettings = appSettings;
             _emailSender = emailSender;
             _userManager = userManager;
             _host = host;
             _roleManager = roleManager;
-            ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
+            ApplicationSettings.WebApiUrl = appSettings.Value.WebApiBaseUrl;
         }
 
         public IActionResult Parceiro(int? crud, int? notify, string message = null)
@@ -41,8 +42,8 @@ namespace WebApp.Controllers
             try
             {
                 SetNotifyMessage(notify, message);
-                SetCrudMessage(crud); 
-                
+                SetCrudMessage(crud);
+
                 var response = ApiClientFactory.Instance.GetParceiroAll();
                 var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
 
@@ -66,14 +67,13 @@ namespace WebApp.Controllers
                 SetNotifyMessage(notify, message);
                 SetCrudMessage(crud);
 
+                
                 var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
-                var model = new ParceiroModel
-                {
-                    ListEstados = estados
 
-                };
 
-                return View(model);
+                var tiposParcerias = new SelectList(ApiClientFactory.Instance.GetTipoParceriaAll().Where(x => x.Parceria == 1), "Id", "Nome");
+
+                return View(new ParceiroModel() { ListEstados = estados, ListTiposParcerias = tiposParcerias });
 
             }
             catch (Exception e)
@@ -89,22 +89,27 @@ namespace WebApp.Controllers
         {
             try
             {
+                var status = collection["status"].ToString();
+                var habilitado = collection["habilitado"].ToString();
+
                 var command = new ParceiroModel.CreateUpdateParceiroCommand
                 {
 
-                    Nome = collection["nome"].ToString(),
-                    TipoPessoa = collection["TipoPessoa"].ToString(),
-                    CpfCnpj = collection["cpfCnpj"].ToString(),
-                    Telefone = collection["Telefone"].ToString(),
-                    Celular = collection["Celular"].ToString(),
-                    Endereco = collection["Endereço"].ToString(),
-                    Numero = Convert.ToInt32(collection["numero"].ToString()),
-                    Bairro = collection["Bairro"].ToString(),
-                    Habilitado = collection["habilitado"].ToString() == "1" ? true : false, //TODO: Verificar condicional para resgate radio button
-                    Status = collection["status"].ToString() == "1" ? true : false,
-                    Email = collection["Email"].ToString(),
-                    TipoParceria = Convert.ToInt32(collection["TipoParceria"].ToString()), //TODO: Verificar condicional para resgate checkbox
-                                                                                           //Habilitado = collection["habilitado"].ToString()
+                    Nome =  collection["nome"].ToString(),
+                    TipoPessoa =  collection["tipoPessoa"].ToString(),
+                    CpfCnpj = collection["tipoPessoa"] == "pf" ? collection["cpf"].ToString() : collection["cnpj"].ToString(),
+                    Telefone = collection["numTelefone"] == "" ? null : collection["numTelefone"].ToString(),
+                    Celular = collection["numCelular"] == "" ? null : collection["numCelular"].ToString(),
+                    Cep = collection["cep"] == "" ? null : collection["cep"].ToString(),
+                    Endereco = collection["endereco"] == "" ? null : collection["endereco"].ToString(),
+                    Numero = collection["numero"] == "" ? 0 : Convert.ToInt32(collection["numero"].ToString()),
+                    Bairro = collection["bairro"] == "" ? null : collection["bairro"].ToString(),
+                    MunicipioId = Convert.ToInt32(collection["ddlMunicipio"].ToString()),
+                    Habilitado = habilitado != "",
+                    Status = status != "",
+                    Email = collection["email"].ToString(),
+                    TipoParceria = Convert.ToInt32(collection["TipoParceria"].ToString()),
+
                 };
 
                 await ApiClientFactory.Instance.CreateParceiro(command);
@@ -124,25 +129,13 @@ namespace WebApp.Controllers
             try
             {
                 ParceiroModel model = new ParceiroModel();
-
-                var obj = ApiClientFactory.Instance.GetParceiroById(id);
-
-                if (obj != null)
                 {
-                    var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", obj.Uf);
-                    var municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(obj.Uf), "Id", "Nome", obj.MunicipioId);
+                    var parceiro = ApiClientFactory.Instance.GetParceiroById(id);
+                    var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
 
-                    model = new ParceiroModel()
-                    {
-                        ListEstados = estados,
-                        ListMunicipios = municipios,
-                        Parceiro = obj
-                    };
-
-                    return View(model);
+                    return View(new ParceiroModel() { ListEstados = estados, Parceiro = parceiro });
                 }
 
-                return RedirectToAction(nameof(Parceiro), new { notify = (int)EnumNotify.Error, message = "Parceiro não encontrado" });
             }
             catch (Exception e)
             {
@@ -152,36 +145,51 @@ namespace WebApp.Controllers
             }
         }
         //[ClaimsAuthorize("Usuario", "Alterar")]
-        public async Task<ActionResult> Edit(string id, IFormCollection collection)
-        {
-            var command = new ParceiroModel.CreateUpdateParceiroCommand
-            {
-                Id = Convert.ToInt32(id),
-                Nome = collection["nome"].ToString(),
-                TipoPessoa = collection["TipoPessoa"].ToString(),
-                CpfCnpj = collection["cpfCnpj"].ToString(),
-                Telefone = collection["Telefone"].ToString(),
-                Celular = collection["Celular"].ToString(),
-                Endereco = collection["Endereço"].ToString(),
-                Numero = Convert.ToInt32(collection["numero"].ToString()),
-                Bairro = collection["Bairro"].ToString(),
-                Habilitado = collection["habilitado"].ToString() == "1" ? true : false, //TODO: Verificar condicional para resgate radio button
-                Status = collection["status"].ToString() == "1" ? true : false,
-                Email = collection["Email"].ToString(),
-                TipoParceria = Convert.ToInt32(collection["TipoParceria"].ToString()), //TODO: Verificar condicional para resgate checkbox
-            };
-
-            //await ApiClientFactory.Instance.UpdateParceiro(command);
-
-            return RedirectToAction(nameof(Parceiro), new { crud = (int)EnumCrud.Updated });
-        }
-
-        //[ClaimsAuthorize("Usuario", "Excluir")]
-        public ActionResult Delete(string id)
+        [HttpPost]
+        public async Task<ActionResult> Edit(int id, IFormCollection collection)
         {
             try
             {
-                //ApiClientFactory.Instance.DeleteParceiro(id);
+                var status = collection["status"].ToString();
+                var habilitado = collection["habilitado"].ToString();
+
+                var command = new ParceiroModel.CreateUpdateParceiroCommand
+                {
+                    Id = id,
+                    Nome = collection["nome"].ToString(),
+                    TipoPessoa = collection["tipoPessoa"].ToString(),
+                    CpfCnpj = collection["tipoPessoa"] == "pj" ? collection["cpf"].ToString() : collection["cnpj"].ToString(),
+                    Telefone = collection["numTelefone"] == "" ? null : collection["numTelefone"].ToString(),
+                    Celular = collection["numCelular"] == "" ? null : collection["numCelular"].ToString(),
+                    Cep = collection["cep"] == "" ? null : collection["cep"].ToString(),
+                    Endereco = collection["endereco"] == "" ? null : collection["endereco"].ToString(),
+                    Numero = collection["numero"] == "" ? null : Convert.ToInt32(collection["numero"].ToString()),
+                    Bairro = collection["bairro"] == "" ? null : collection["bairro"].ToString(),
+                    MunicipioId = Convert.ToInt32(collection["ddlMunicipio"].ToString()),
+                    Habilitado = habilitado != "",
+                    Status = status != "",
+                    Email = collection["email"].ToString(),
+                    TipoParceria = Convert.ToInt32(collection["TipoParceria"].ToString()),
+                };
+
+                await ApiClientFactory.Instance.UpdateParceiro(command.Id, command);
+
+                return RedirectToAction(nameof(EditParceiro), new { crud = (int)EnumCrud.Updated });
+            }
+            catch (Exception e)
+            {
+                Console.Write(e.StackTrace);
+                return RedirectToAction(nameof(Parceiro), new { notify = (int)EnumNotify.Error, message = e.Message });
+
+            }
+        }
+
+        //[ClaimsAuthorize("Usuario", "Excluir")]
+        public ActionResult DeleteParceiro(int id)
+        {
+            try
+            {
+                ApiClientFactory.Instance.DeleteParceiro(id);
                 return RedirectToAction(nameof(Parceiro), new { crud = (int)EnumCrud.Deleted });
             }
             catch
@@ -190,11 +198,29 @@ namespace WebApp.Controllers
             }
         }
 
-        public async Task<ParceiroDto> GetParceiroById(int id)
+        public Task<ParceiroDto> GetParceiroById(int id)
         {
             var result = ApiClientFactory.Instance.GetParceiroById(id);
 
-            return result;
+            return Task.FromResult(result);
+        }
+
+
+        public Task<JsonResult> GetTiposParceriasByParceria(string id)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(id)) throw new Exception("Parceria não informado.");
+                var resultLocal = ApiClientFactory.Instance.GetTipoParceriaAll()
+                    .Where(x => x.Parceria == Convert.ToInt32(id) && x.Status == true);
+
+                return Task.FromResult(Json(new SelectList(resultLocal, "Id", "Nome")));
+
+            }
+            catch (Exception ex)
+            {
+                return Task.FromResult(Json(ex));
+            }
         }
 
         [HttpPost]

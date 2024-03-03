@@ -122,10 +122,32 @@
 							</div>
 						</div>
 						<div class="form-group row">
-							<label class="col-sm-3 control-label text-sm-right pt-2">Status</label>
-							<div class="col-md-3">
+							<label class="col-sm-4 control-label text-sm-right pt-2">Estado </label>
+							<div class="col-sm-8">
+								<input type="text" name="estado" class="form-control"
+									   maxlength="60" :value="editDto.Estado" readonly />
+
+							</div>
+						</div>
+						<div class="form-group row">
+
+							<input type="hidden" name="editMunicipioId" :value="editDto.MunicipioId" />
+							<label class="col-sm-4 control-label text-sm-right pt-2">Município </label>
+							<div class="col-sm-8">
+								<input type="text" name="municipio" class="form-control"
+								       maxlength="150" readonly :value="editDto.Municipio" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-4 control-label text-sm-right pt-2">Status</label>
+							<div class="col-md-8">
 								<div class="switch switch-sm switch-primary">
-									<input type="checkbox" id="editStatus" name="editStatus" data-plugin-ios-switch checked="checked" />
+									<div v-show="editDto.Status">
+										<input type="checkbox" id="editStatus" name="editStatus" data-plugin-ios-switch checked="checked" />
+									</div>
+									<div v-show="!editDto.Status">
+										<input type="checkbox" id="editStatus" name="editStatus" data-plugin-ios-switch />
+									</div>
 								</div>
 							</div>
 						</div>

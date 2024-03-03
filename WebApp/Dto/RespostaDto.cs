@@ -5,5 +5,6 @@
         public int Id { get; set; }
         public string RespostaQuestionario { get; set; }
         public QuestionarioDto Questionario { get; set; }
+        public int ValorPesoResposta { get; set; }
     }
 }

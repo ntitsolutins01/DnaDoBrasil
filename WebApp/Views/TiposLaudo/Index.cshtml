@@ -116,7 +116,12 @@
                             <label class="col-sm-3 control-label text-sm-right pt-2">Status</label>
                             <div class="col-md-3">
                                 <div class="switch switch-sm switch-primary">
-                                    <input type="checkbox" id="editStatus" name="editStatus" data-plugin-ios-switch checked="checked" />
+                                    <div v-show="editDto.Status">
+                                        <input type="checkbox" id="editStatus" name="editStatus" data-plugin-ios-switch checked="checked" />
+                                    </div>
+                                    <div v-show="!editDto.Status">
+                                        <input type="checkbox" id="editStatus" name="editStatus" data-plugin-ios-switch />
+                                    </div>
                                 </div>
                             </div>
                         </div>

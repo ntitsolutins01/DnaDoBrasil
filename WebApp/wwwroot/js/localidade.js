@@ -148,6 +148,11 @@ var vm = new Vue({
                 self.editDto.Id = result.data.id;
                 self.editDto.Nome = result.data.nome;
                 self.editDto.Descricao = result.data.descricao;
+                self.editDto.MunicipioId = result.data.municipioId;
+                self.editDto.EstadoId = result.data.estadoId;
+                self.editDto.Municipio = result.data.nomeMunicipio;
+                self.editDto.Estado = result.data.nomeEstado;
+                self.editDto.Status = result.data.status;
 
             }).catch(error => {
                 Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);

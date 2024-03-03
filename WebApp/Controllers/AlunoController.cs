@@ -3,48 +3,188 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
+using NuGet.Protocol.Core.Types;
 using WebApp.Configuration;
+using WebApp.Dto;
 using WebApp.Enumerators;
 using WebApp.Factory;
 using WebApp.Models;
 using WebApp.Utility;
+using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
 namespace WebApp.Controllers
 {
-	public class AlunoController : BaseController
+    public class AlunoController : BaseController
     {
         private readonly IOptions<UrlSettings> _appSettings;
+        private readonly IHostingEnvironment _host;
 
-        public AlunoController(IOptions<UrlSettings> app)
+        public AlunoController(IOptions<UrlSettings> app,
+            IHostingEnvironment host)
         {
             _appSettings = app;
             ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
+            _host = host;
         }
 
-        public ActionResult Index(int? crud, int? notify, string message = null)
+        public ActionResult Index(int? crud, int? notify, IFormCollection collection, string message = null)
+        {
+            try
+            {
+                SetNotifyMessage(notify, message);
+                SetCrudMessage(crud);
+
+                var searchFilter = new AlunosFilterDto
+                {
+                    FomentoId = collection["ddlFomento"].ToString(),
+                    Estado = collection["ddlEstado"].ToString(),
+                    MunicipioId = collection["ddlMunicipio"].ToString(),
+                    LocalidadeId = collection["ddlLocalidade"].ToString(),
+                    DeficienciaId = collection["ddlDeficiencia"].ToString(),
+                    Etnia = collection["ddlEtnia"].ToString()
+                };
+
+                var result = ApiClientFactory.Instance.GetAlunosByFilter(searchFilter);
+
+                var fomentos = new SelectList(ApiClientFactory.Instance.GetFomentoAll(), "Id", "Nome", searchFilter.FomentoId);
+                var deficiencias = new SelectList(ApiClientFactory.Instance.GetDeficienciaAll(), "Id", "Nome", searchFilter.DeficienciaId);
+                var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", searchFilter.Estado);
+
+                List<SelectListDto> list = new List<SelectListDto>
+                {
+                    new() { IdNome = "PARDO", Nome = "PARDO" },
+                    new() { IdNome = "BRANCO", Nome = "BRANCO" },
+                    new() { IdNome = "PRETO", Nome = "PRETO" },
+                    new() { IdNome = "INDÍGENA", Nome = "INDÍGENA" },
+                    new() { IdNome = "AMARELO", Nome = "AMARELO" }
+                };
+
+                var etnias = new SelectList(list, "IdNome", "Nome", searchFilter.Etnia);
+                SelectList municipios = null;
+
+                if (!string.IsNullOrEmpty(searchFilter.Estado))
+                {
+                    municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(searchFilter.Estado), "Id", "Nome", searchFilter.MunicipioId);
+                }
+                SelectList localidades = null;
+
+                if (!string.IsNullOrEmpty(searchFilter.LocalidadeId))
+                {
+                    localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeByMunicipio(searchFilter.MunicipioId), "Id", "Nome", searchFilter.LocalidadeId);
+                }
+
+                var model = new AlunoModel
+                {
+                    ListFomentos = fomentos,
+                    ListEstados = estados,
+                    ListDeficiencias = deficiencias,
+                    ListMunicipios = municipios!,
+                    ListEtnias = etnias,
+                    ListLocalidades = localidades!,
+                    Alunos = result.Alunos
+
+                };
+                return View(model);
+
+            }
+            catch (Exception e)
+            {
+                Console.Write(e.StackTrace);
+                return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = e.Message });
+
+            }
+        }
+
+
+        public ActionResult Create(int? crud, int? notify, string message = null)
         {
             SetNotifyMessage(notify, message);
             SetCrudMessage(crud);
 
-            var response = ApiClientFactory.Instance.GetAlunosAll();
-            var localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeAll(), "Id", "Nome");
+            var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
             var deficiencias = new SelectList(ApiClientFactory.Instance.GetDeficienciaAll(), "Id", "Nome");
+            var modalidades = new SelectList(ApiClientFactory.Instance.GetModalidadeAll(), "Id", "Nome");
+            List<SelectListDto> list = new List<SelectListDto>
+            {
+                new() { IdNome = "PARDO", Nome = "PARDO" },
+                new() { IdNome = "BRANCO", Nome = "BRANCO" },
+                new() { IdNome = "PRETO", Nome = "PRETO" },
+                new() { IdNome = "INDÍGENA", Nome = "INDÍGENA" },
+                new() { IdNome = "AMARELO", Nome = "AMARELO" }
+            };
 
-            return View(new AlunoModel() { Alunos = response, ListLocalidades = localidades, ListDeficiencias = deficiencias });
+            var etnias = new SelectList(list, "IdNome", "Nome");
+
+            return View(new AlunoModel()
+            {
+                ListEstados = estados,
+                ListDeficiencias = deficiencias,
+                ListModalidades = modalidades,
+                ListEtnias = etnias,
+            });
         }
-        public IActionResult Create()
-		{
-			return View();
-		}
-		public IActionResult Laudo()
-		{
-			return View();
-		}
-		public IActionResult TalentoEsportivo()
-		{
 
-			return View();
-		}
+        public ActionResult Edit(int id, int? crud, int? notify, string message = null)
+        {
+            try
+            {
+                SetNotifyMessage(notify, message);
+                SetCrudMessage(crud);
+                var aluno = ApiClientFactory.Instance.GetAlunoById(id);
+                var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", aluno.Estado);
+                var municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(aluno.Estado), "Id", "Nome", aluno.MunicipioId);
+                var localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeByMunicipio(aluno.MunicipioId), "Id", "Nome", aluno.LocalidadeId);
+                var profissionais = new SelectList(ApiClientFactory.Instance.GetProfissionaisByLocalidade(Convert.ToInt32(aluno.LocalidadeId)), "Id", "Nome", aluno.ProfissionalId);
+
+                List<SelectListDto> list = new List<SelectListDto>
+                {
+                    new() { IdNome = "PARDO", Nome = "PARDO" },
+                    new() { IdNome = "BRANCO", Nome = "BRANCO" },
+                    new() { IdNome = "PRETO", Nome = "PRETO" },
+                    new() { IdNome = "INDÍGENA", Nome = "INDÍGENA" },
+                    new() { IdNome = "AMARELO", Nome = "AMARELO" }
+                };
+
+                var etnias = new SelectList(list, "IdNome", "Nome", aluno.Etnia);
+                var modalidades = ApiClientFactory.Instance.GetModalidadeAll();
+                var dependencia = aluno.DependenciaId == null
+                    ? null
+                    : ApiClientFactory.Instance.GetDependenciaById((int)aluno.DependenciaId);
+                var matricula = aluno.MatriculaId == null
+                    ? null
+                    : ApiClientFactory.Instance.GetMatriculaById((int)aluno.MatriculaId);
+
+                return View(new AlunoModel()
+                {
+                    ListEstados = estados,
+                    Modalidades = aluno.Modalidades,
+                    Aluno = aluno,
+                    Dependecia = dependencia!,
+                    Matricula = matricula!,
+                    ListMunicipios = municipios,
+                    ListLocalidades = localidades,
+                    ListProfissionais = profissionais,
+                    ListEtnias = etnias,
+
+                });
+
+            }
+            catch (Exception e)
+            {
+                Console.Write(e.StackTrace);
+                return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = e.Message });
+
+            }
+        }
+        public IActionResult Laudo()
+        {
+            return View();
+        }
+        public IActionResult TalentoEsportivo()
+        {
+
+            return View();
+        }
 
         //[ClaimsAuthorize("Usuario", "Incluir")]
         [HttpPost]
@@ -75,7 +215,7 @@ namespace WebApp.Controllers
 
 
         //[ClaimsAuthorize("Usuario", "Alterar")]
-        public async Task<ActionResult> EditTalentoEsportivo(string id, IFormCollection collection)
+        public Task<ActionResult> EditTalentoEsportivo(string id, IFormCollection collection)
         {
             var command = new TalentoEsportivoModel.CreateUpdateTalentoEsportivoCommand
             {
@@ -87,16 +227,16 @@ namespace WebApp.Controllers
                 AptidaoFisica = Convert.ToInt32(collection["aptdaoFisica"]),
                 Agilidade = Convert.ToInt32(collection["agilidade"]),
                 Abdominal = Convert.ToInt32(collection["abdominal"])
-        };
+            };
 
             //await ApiClientFactory.Instance.UpdateTalentoEsportivo(command);
 
-            return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+            return Task.FromResult<ActionResult>(RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated }));
         }
         public IActionResult Vocacional()
-		{
-			return View();
-		}
+        {
+            return View();
+        }
 
         //[ClaimsAuthorize("Usuario", "Incluir")]
         [HttpPost]
@@ -122,7 +262,7 @@ namespace WebApp.Controllers
         }
 
         //[ClaimsAuthorize("Usuario", "Alterar")]
-        public async Task<ActionResult> EditVocacional(string id, IFormCollection collection)
+        public Task<ActionResult> EditVocacional(string id, IFormCollection collection)
         {
             var command = new VocacionalModel.CreateUpdateVocacionalCommand
             {
@@ -135,15 +275,15 @@ namespace WebApp.Controllers
 
             //await ApiClientFactory.Instance.UpdateVocacional(command);
 
-            return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+            return Task.FromResult<ActionResult>(RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated }));
         }
 
 
 
         public IActionResult QualidadeVida()
-		{
-			return View();
-		}
+        {
+            return View();
+        }
 
 
         //[ClaimsAuthorize("Usuario", "Incluir")]
@@ -170,7 +310,7 @@ namespace WebApp.Controllers
         }
 
         //[ClaimsAuthorize("Usuario", "Alterar")]
-        public async Task<ActionResult> EditQualidadeVida(string id, IFormCollection collection)
+        public Task<ActionResult> EditQualidadeVida(string id, IFormCollection collection)
         {
             var command = new QualidadeVidaModel.CreateUpdateQualidadeVidaCommand
             {
@@ -183,13 +323,13 @@ namespace WebApp.Controllers
 
             //await ApiClientFactory.Instance.UpdateQualidadeVida(command);
 
-            return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+            return Task.FromResult<ActionResult>(RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated }));
         }
 
         public IActionResult Saude()
-		{
-			return View();
-		}
+        {
+            return View();
+        }
 
 
         //[ClaimsAuthorize("Usuario", "Incluir")]
@@ -219,7 +359,7 @@ namespace WebApp.Controllers
         }
 
         //[ClaimsAuthorize("Usuario", "Alterar")]
-        public async Task<ActionResult> EditSaude(string id, IFormCollection collection)
+        public Task<ActionResult> EditSaude(string id, IFormCollection collection)
         {
             var command = new SaudeModel.CreateUpdateSaudeCommand
             {
@@ -233,12 +373,12 @@ namespace WebApp.Controllers
 
             //await ApiClientFactory.Instance.UpdateSaude(command);
 
-            return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+            return Task.FromResult<ActionResult>(RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated }));
         }
         public IActionResult ConsumoAlimentar()
-		{
-			return View();
-		}
+        {
+            return View();
+        }
 
         //[ClaimsAuthorize("Usuario", "Incluir")]
         [HttpPost]
@@ -264,7 +404,7 @@ namespace WebApp.Controllers
         }
 
         //[ClaimsAuthorize("Usuario", "Alterar")]
-        public async Task<ActionResult> EditConsumoAlimentar(string id, IFormCollection collection)
+        public Task<ActionResult> EditConsumoAlimentar(string id, IFormCollection collection)
         {
             var command = new ConsumoAlimentarModel.CreateUpdateConsumoAlimentarCommand
             {
@@ -277,12 +417,12 @@ namespace WebApp.Controllers
 
             //await ApiClientFactory.Instance.UpdateConsumoAlimentar(command);
 
-            return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+            return Task.FromResult<ActionResult>(RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated }));
         }
         public IActionResult SaudeBucal()
-		{
-			return View();
-		}
+        {
+            return View();
+        }
 
         //[ClaimsAuthorize("Usuario", "Incluir")]
         [HttpPost]
@@ -308,7 +448,7 @@ namespace WebApp.Controllers
         }
 
         //[ClaimsAuthorize("Usuario", "Alterar")]
-        public async Task<ActionResult> EditSaudeBucal(string id, IFormCollection collection)
+        public Task<ActionResult> EditSaudeBucal(string id, IFormCollection collection)
         {
             var command = new SaudeBucalModel.CreateUpdateSaudeBucalCommand
             {
@@ -321,7 +461,7 @@ namespace WebApp.Controllers
 
             //await ApiClientFactory.Instance.UpdateSaudeBucal(command);
 
-            return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+            return Task.FromResult<ActionResult>(RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated }));
         }
 
 
@@ -337,92 +477,125 @@ namespace WebApp.Controllers
         {
             try
             {
-                var command = new DadosModel.CreateUpdateDadosCommand
+                string filePath = null;
+
+                foreach (var file in collection.Files)
                 {
-                    AspNetUserId = Convert.ToInt32(collection["aspnetUserId"]),
-                    MunicipioId = Convert.ToInt32(collection["municipioId"]),
-                    Nome = Convert.ToString(collection["nome"]),
-                    Email = Convert.ToString(collection["email"]),
-                    Sexo = Convert.ToString(collection["sexo"]),
-                    DtNascimento = Convert.ToDateTime(collection["dtNascimento"].ToString()),
-                    NomeMae = Convert.ToString(collection["nomeMae"]),
-                    NomePai = Convert.ToString(collection["nomePai"]),
-                    Cpf = Convert.ToString(collection["cpf"]),
-                    Telefone = Convert.ToString(collection["telefone"]),
-                    Celular = Convert.ToString(collection["celular"]),
-                    Cep = Convert.ToString(collection["cep"]),
-                    Endereco = Convert.ToString(collection["endereco"]),
-                    Numero = Convert.ToString(collection["numero"]),
-                    Bairro = Convert.ToString(collection["bairro"]),
-                    RedeSocial = Convert.ToString(collection["redeSocial"]),
-                    Url = Convert.ToString(collection["url"]),
-                    Status = Convert.ToBoolean(collection["status"]),
-                    Habilitado = Convert.ToBoolean(collection["status"]),
-                    DeficienciasId = Convert.ToInt32(collection["deficienciasId"]),
-                    AmbientesId = Convert.ToInt32(collection["ambientesId"]),
-                    ParceiroId = Convert.ToInt32(collection["parceiroId"]),
-                    Etnia = Convert.ToInt32(collection["etnia"]),
-                    ContratosId = Convert.ToInt32(collection["contratosId"]),
-                    MatriculaId = Convert.ToInt32(collection["matriculaId"]),
-                    VoucherId = Convert.ToInt32(collection["voucherId"]),
-                    DependenciaId = Convert.ToInt32(collection["dependenciaId"]),
-                    LaudosId = Convert.ToInt32(collection["laudosId"])
+                    if (file.Length <= 0) continue;
+                    var fileName = Path.GetFileName(collection.Files[0].FileName);
+                    filePath = Path.Combine(_host.WebRootPath, $"FotoAlunos/{fileName}");
+
+                    if (!Directory.Exists(Path.Combine(_host.WebRootPath, $"FotoAlunos")))
+                        Directory.CreateDirectory(Path.Combine(_host.WebRootPath, $"FotoAlunos"));
+
+                    using Stream fileStream = new FileStream(filePath, FileMode.Create);
+                    await file.CopyToAsync(fileStream);
+                }
+
+                var status = collection["status"].ToString();
+                var habilitado = collection["habilitado"].ToString();
+
+                var command = new AlunoModel.CreateUpdateDadosAlunoCommand()
+                {
+                    Etnia = collection["ddlEtnia"] == "" ? null : collection["ddlEtnia"].ToString(),
+                    MunicipioId = collection["ddlMunicipio"] == "" ? null : Convert.ToInt32(collection["ddlMunicipio"].ToString()),
+                    ProfissionalId = collection["ddlProfissionalAluno"] == "" ? null : Convert.ToInt32(collection["ddlProfissionalAluno"].ToString()),
+                    LocalidadeId = collection["ddlLocalidade"] == "" ? null : Convert.ToInt32(collection["ddlLocalidade"].ToString()),
+                    Nome = collection["nome"] == "" ? null : collection["nome"].ToString(),
+                    DtNascimento = collection["DtNascimento"] == "" ? null : collection["DtNascimento"].ToString(),
+                    Email = collection["email"] == "" ? null : collection["email"].ToString(),
+                    Sexo = collection["ddlSexo"] == "" ? null : collection["ddlSexo"].ToString(),
+                    NomeMae = collection["nomeMae"] == "" ? null : collection["nomeMae"].ToString(),
+                    NomePai = collection["nomePai"] == "" ? null : collection["nomePai"].ToString(),
+                    Telefone = collection["numTelefone"] == "" ? null : collection["numTelefone"].ToString(),
+                    Cep = collection["cep"] == "" ? null : collection["cep"].ToString(),
+                    Celular = collection["numCelular"] == "" ? null : collection["numCelular"].ToString(),
+                    Cpf = collection["cpf"] == "" ? null : collection["cpf"].ToString(),
+                    Endereco = collection["endereco"] == "" ? null : collection["endereco"].ToString(),
+					Numero = collection["numero"] == "" ? null : collection["numero"].ToString(),
+					Bairro = collection["bairro"] == "" ? null : collection["bairro"].ToString(),
+                    DeficienciasIds = collection["arrDeficiencias"] == "" ? null : collection["arrDeficiencias"].ToString(),
+                    Habilitado = habilitado != "",
+                    Status = status != "",
+                    Url = filePath
 
                 };
 
                 await ApiClientFactory.Instance.CreateDados(command);
 
-                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
+                return RedirectToAction(nameof(Edit), new { id = command.Id, crud = (int)EnumCrud.Created });
             }
             catch (Exception e)
             {
-                return RedirectToAction(nameof(Index));
+                Console.Write(e.StackTrace);
+                return RedirectToAction(nameof(Create), new { notify = (int)EnumNotify.Error, message = e.Message});
             }
         }
 
+
+
         //[ClaimsAuthorize("Usuario", "Alterar")]
-        public async Task<ActionResult> EditDados(string id, IFormCollection collection)
+        [HttpPost]
+        public async Task<ActionResult> Edit(int id, IFormCollection collection)
         {
-            var command = new DadosModel.CreateUpdateDadosCommand
+            try
             {
-                Id = Convert.ToInt32(id),
-                AspNetUserId = Convert.ToInt32(collection["aspnetUserId"]),
-                MunicipioId = Convert.ToInt32(collection["municipioId"]),
-                Nome = Convert.ToString(collection["nome"]),
-                Email = Convert.ToString(collection["email"]),
-                Sexo = Convert.ToString(collection["sexo"]),
-                DtNascimento = Convert.ToDateTime(collection["dtNascimento"].ToString()),
-                NomeMae = Convert.ToString(collection["nomeMae"]),
-                NomePai = Convert.ToString(collection["nomePai"]),
-                Cpf = Convert.ToString(collection["cpf"]),
-                Telefone = Convert.ToString(collection["telefone"]),
-                Celular = Convert.ToString(collection["celular"]),
-                Cep = Convert.ToString(collection["cep"]),
-                Endereco = Convert.ToString(collection["endereco"]),
-                Numero = Convert.ToString(collection["numero"]),
-                Bairro = Convert.ToString(collection["bairro"]),
-                RedeSocial = Convert.ToString(collection["redeSocial"]),
-                Url = Convert.ToString(collection["url"]),
-                Status = Convert.ToBoolean(collection["status"]),
-                Habilitado = Convert.ToBoolean(collection["status"]),
-                DeficienciasId = Convert.ToInt32(collection["deficienciasId"]),
-                AmbientesId = Convert.ToInt32(collection["ambientesId"]),
-                ParceiroId = Convert.ToInt32(collection["parceiroId"]),
-                Etnia = Convert.ToInt32(collection["etnia"]),
-                ContratosId = Convert.ToInt32(collection["contratosId"]),
-                MatriculaId = Convert.ToInt32(collection["matriculaId"]),
-                VoucherId = Convert.ToInt32(collection["voucherId"]),
-                DependenciaId = Convert.ToInt32(collection["dependenciaId"]),
-                LaudosId = Convert.ToInt32(collection["laudosId"])
+                string filePath = null;
 
-            };
+                foreach (var file in collection.Files)
+                {
+                    if (file.Length <= 0) continue;
+                    var fileName = Path.GetFileName(collection.Files[0].FileName);
+                    filePath = Path.Combine(_host.WebRootPath, $"PlanosAulas/{fileName}");
 
-            //await ApiClientFactory.Instance.UpdateDados(command);
+                    if (!Directory.Exists(Path.Combine(_host.WebRootPath, $"PlanosAulas")))
+                        Directory.CreateDirectory(Path.Combine(_host.WebRootPath, $"PlanosAulas"));
 
-            return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+                    using Stream fileStream = new FileStream(filePath, FileMode.Create);
+                    await file.CopyToAsync(fileStream);
+                }
+
+                var status = collection["status"].ToString();
+                var habilitado = collection["habilitado"].ToString();
+
+
+                var command = new AlunoModel.CreateUpdateDadosAlunoCommand
+                {
+                    Id = Convert.ToInt32(id),
+                    Etnia = collection["ddlEtnia"] == "" ? null : collection["ddlEtnia"].ToString(),
+                    MunicipioId = collection["ddlMunicipio"] == "" ? null : Convert.ToInt32(collection["ddlMunicipio"].ToString()),
+                    ProfissionalId = collection["ddlProfissionalAluno"] == "" ? null : Convert.ToInt32(collection["ddlProfissionalAluno"].ToString()),
+                    LocalidadeId = collection["ddlLocalidade"] == "" ? null : Convert.ToInt32(collection["ddlLocalidade"].ToString()),
+                    Nome = collection["nome"] == "" ? null : collection["nome"].ToString(),
+                    DtNascimento = collection["DtNascimento"] == "" ? null : collection["DtNascimento"].ToString(),
+                    Email = collection["email"] == "" ? null : collection["email"].ToString(),
+                    Sexo = collection["ddlSexo"] == "" ? null : collection["ddlSexo"].ToString(),
+                    NomeMae = collection["nomeMae"] == "" ? null : collection["nomeMae"].ToString(),
+                    NomePai = collection["nomePai"] == "" ? null : collection["nomePai"].ToString(),
+                    Telefone = collection["numTelefone"] == "" ? null : collection["numTelefone"].ToString(),
+                    Cep = collection["cep"] == "" ? null : collection["cep"].ToString(),
+                    Celular = collection["numCelular"] == "" ? null : collection["numCelular"].ToString(),
+                    Cpf = collection["cpf"] == "" ? null : collection["cpf"].ToString(),
+                    Endereco = collection["endereco"] == "" ? null : collection["endereco"].ToString(),
+                    Numero = collection["numero"] == "" ? null : collection["numero"].ToString(),
+                    Bairro = collection["bairro"] == "" ? null : collection["bairro"].ToString(),
+                    DeficienciasIds = collection["arrDeficiencias"] == "" ? null : collection["arrDeficiencias"].ToString(),
+                    Habilitado = habilitado != "",
+                    Status = status != "",
+                    Url = filePath
+
+                };
+
+                await ApiClientFactory.Instance.UpdateDados(id, command);
+
+                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+            }
+            catch (Exception e)
+            {
+                Console.Write(e.StackTrace);
+                return RedirectToAction(nameof(Index), new { notify = EnumNotify.Error, mesage = e.Message });
+            }
         }
-
-
 
         public IActionResult Voucher()
         {
@@ -437,11 +610,10 @@ namespace WebApp.Controllers
             {
                 var command = new VoucherModel.CreateUpdateVoucherCommand
                 {
-                    LocalId = Convert.ToInt32(collection["localId"]),
-                    Descricao = Convert.ToString(collection["descricao"]),
-                    Turma = Convert.ToString(collection["turma"]),
-                    Serie = Convert.ToString(collection["serie"]),
-                    AlunoId = Convert.ToInt32(collection["alunoId"])
+                    Descricao =collection["descricaoVoucher"].ToString(),
+                    Turma = collection["turmaVoucher"].ToString(),
+                    Serie = collection["serieVoucher"].ToString(),
+                    AlunoId = 2260
                 };
 
                 await ApiClientFactory.Instance.CreateVoucher(command);
@@ -455,22 +627,21 @@ namespace WebApp.Controllers
         }
 
         //[ClaimsAuthorize("Usuario", "Alterar")]
-        public async Task<ActionResult> EditVoucher(string id, IFormCollection collection)
+        public Task<ActionResult> EditVoucher(string id, IFormCollection collection)
         {
             var command = new VoucherModel.CreateUpdateVoucherCommand
             {
                 Id = Convert.ToInt32(id),
-                LocalId = Convert.ToInt32(collection["localId"]),
-                Descricao = Convert.ToString(collection["descricao"]),
-                Turma = Convert.ToString(collection["turma"]),
-                Serie = Convert.ToString(collection["serie"]),
-                AlunoId = Convert.ToInt32(collection["alunoId"])
+                Descricao = collection["descricaoVoucher"].ToString(),
+                Turma = collection["turmaVoucher"].ToString(),
+                Serie = collection["serieVoucher"].ToString(),
+                AlunoId = 2260
 
             };
 
             //await ApiClientFactory.Instance.UpdateVoucher(command);
 
-            return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+            return Task.FromResult<ActionResult>(RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated }));
         }
 
 
@@ -487,19 +658,18 @@ namespace WebApp.Controllers
             {
                 var command = new MatriculaModel.CreateUpdateMatriculaCommand
                 {
-                    DtVencimentoParq = Convert.ToDateTime(collection["dtVencimentoParq"].ToString()),
-                    DtVencimentoAtestadoMedico = Convert.ToDateTime(collection["diVencimentoAtestadoMedico"].ToString()),
-                    NomeResponsavel1 = Convert.ToString(collection["nomeResponsavel1"]),
-                    ParentescoResponsavel1 = Convert.ToString(collection["parentescoResponsavel1"]),
-                    CpfResponsavel1 = Convert.ToString(collection["cpfResponsavel1"]),
-                    NomeResponsavel2 = Convert.ToString(collection["nomeResponsavel2"]),
-                    ParentescoResponsavel2 = Convert.ToString(collection["parentescoResponsavel2"]),
-                    CpfResponsavel2 = Convert.ToString(collection["cpfResponsavel2"]),
-                    NomeResponsavel3 = Convert.ToString(collection["nomeResponsavel3"]),
-                    ParentescoResponsavel3 = Convert.ToString(collection["parentescoResponsavel3"]),
-                    CpfResponsavel3 = Convert.ToString(collection["cpfResponsavel3"]),
-                    LocalId = Convert.ToInt32(collection["localId"]),
-                    AlunoId = Convert.ToInt32(collection["alunoId"])
+                    DtVencimentoParq = collection["dtVencimentoParq"].ToString(),
+                    DtVencimentoAtestadoMedico = collection["dtVencimentoAtestado"].ToString(),
+                    NomeResponsavel1 = collection["nomeResponsavel1"].ToString(),
+                    ParentescoResponsavel1 = collection["parentesco1"].ToString(),
+                    CpfResponsavel1 = collection["cpf1"].ToString(),
+                    NomeResponsavel2 =collection["nomeResponsavel2"].ToString(),
+                    ParentescoResponsavel2 = collection["parentesco2"].ToString(),
+                    CpfResponsavel2 = collection["cpf2"].ToString(),
+                    NomeResponsavel3 = collection["nomeResponsavel3"].ToString(),
+                    ParentescoResponsavel3 = collection["parentesco3"].ToString(),
+                    CpfResponsavel3 = collection["cpf3"].ToString(),
+                    AlunoId = 2259
 
                 };
 
@@ -514,33 +684,231 @@ namespace WebApp.Controllers
         }
 
         //[ClaimsAuthorize("Usuario", "Alterar")]
-        public async Task<ActionResult> EditMatricula(string id, IFormCollection collection)
+        public async Task<ActionResult> EditMatricula(int id, IFormCollection collection)
         {
-            var command = new MatriculaModel.CreateUpdateMatriculaCommand
+            try
             {
-                Id = Convert.ToInt32(id),
-                DtVencimentoParq = Convert.ToDateTime(collection["dtVencimentoParq"].ToString()),
-                DtVencimentoAtestadoMedico = Convert.ToDateTime(collection["diVencimentoAtestadoMedico"].ToString()),
-                NomeResponsavel1 = Convert.ToString(collection["nomeResponsavel1"]),
-                ParentescoResponsavel1 = Convert.ToString(collection["parentescoResponsavel1"]),
-                CpfResponsavel1 = Convert.ToString(collection["cpfResponsavel1"]),
-                NomeResponsavel2 = Convert.ToString(collection["nomeResponsavel2"]),
-                ParentescoResponsavel2 = Convert.ToString(collection["parentescoResponsavel2"]),
-                CpfResponsavel2 = Convert.ToString(collection["cpfResponsavel2"]),
-                NomeResponsavel3 = Convert.ToString(collection["nomeResponsavel3"]),
-                ParentescoResponsavel3 = Convert.ToString(collection["parentescoResponsavel3"]),
-                CpfResponsavel3 = Convert.ToString(collection["cpfResponsavel3"]),
-                LocalId = Convert.ToInt32(collection["localId"]),
-                AlunoId = Convert.ToInt32(collection["alunoId"])
+                var command = new MatriculaModel.CreateUpdateMatriculaCommand
+                {
+                    Id = Convert.ToInt32(id),
+                    DtVencimentoParq = collection["dtVencimentoParq"].ToString(),
+                    DtVencimentoAtestadoMedico = collection["dtVencimentoAtestado"].ToString(),
+                    NomeResponsavel1 = collection["nomeResponsavel1"].ToString(),
+                    ParentescoResponsavel1 = collection["parentesco1"].ToString(),
+                    CpfResponsavel1 = collection["cpf1"].ToString(),
+                    NomeResponsavel2 = collection["nomeResponsavel2"].ToString(),
+                    ParentescoResponsavel2 = collection["parentesco2"].ToString(),
+                    CpfResponsavel2 = collection["cpf2"].ToString(),
+                    NomeResponsavel3 = collection["nomeResponsavel3"].ToString(),
+                    ParentescoResponsavel3 = collection["parentesco3"].ToString(),
+                    CpfResponsavel3 = collection["cpf3"].ToString(),
+                    AlunoId = 2259
 
-            };
 
-            //await ApiClientFactory.Instance.UpdateMatricula(command);
+                };
 
-            return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+                await ApiClientFactory.Instance.UpdateMatricula(id, command);
+
+                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction(nameof(Index));
+            }
         }
 
 
+        public Task<JsonResult> GetAlunosByLocalidade(string id)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(id)) throw new Exception("Localidade não informada.");
+                var resultLocal = ApiClientFactory.Instance.GetNomeAlunosAll(id);
 
+                return Task.FromResult(Json(new SelectList(resultLocal, "Id", "Nome")));
+
+            }
+            catch (Exception ex)
+            {
+                return Task.FromResult(Json(ex));
+            }
+        }
+
+        public Task<JsonResult> GetAlunoById(string id)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(id)) throw new Exception("Id do Aluno não informado.");
+                var result = ApiClientFactory.Instance.GetAlunoById(Convert.ToInt32(id));
+
+                return Task.FromResult(Json(result));
+
+            }
+            catch (Exception ex)
+            {
+                return Task.FromResult(Json(ex));
+            }
+        }
+
+        public async Task<ActionResult> CreateDependencia(IFormCollection collection)
+        {
+
+            try
+            {
+                var command = new DependenciaModel.CreateUpdateDependenciaCommand
+                {
+	                Doencas = collection["Doenca"].ToString(),
+	                Nacionalidade = collection["nacionalidade"].ToString(),
+	                Naturalidade = collection["naturalidade"].ToString(),
+	                NomeEscola = collection["escola"].ToString(),
+	                TipoEscola = collection["ddlTipoEscola"].ToString(),
+	                TipoEscolaridade = collection["ddlTipoEscolaridade"].ToString(),
+	                Turno = collection["ddlTurno"].ToString(),
+	                Serie = collection["serie"].ToString(),
+	                Ano = collection["ano"].ToString(),
+	                Turma = collection["turma"].ToString(),
+	                TermoCompromisso = collection["rdbTermo"] == "true",
+	                AutorizacaoUsoImagemAudio = collection["rdbautorizacaoimagem"] == "true",
+	                AutorizacaoUsoIndicadores = collection["rdbautorizacaoindicadores"] == "true",
+	                AutorizacaoSaida = collection["rdbAutorizacao"] == "true",
+                    AlunoId = 2259
+
+                };
+
+                await ApiClientFactory.Instance.CreateDependencia(command);
+
+                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
+        //[ClaimsAuthorize("Aluno", "Alterar")]
+        [HttpPost]
+        public async Task<ActionResult> CreateModalidadesAluno(IFormCollection collection)
+        {
+            try
+            {
+                var command = new ModalidadeModel.CreateUpdateModalidadeCommand
+                {
+                    ModalidadesIds = collection["arrModalidadeAlunos"] == "" ? null : collection["arrModalidadeAlunos"].ToString()
+                };
+
+                await ApiClientFactory.Instance.CreateModalidade(command);
+
+                return RedirectToAction(nameof(Create), new { crud = (int)EnumCrud.Created });
+            }
+            catch (Exception e)
+            {
+                Console.Write(e.StackTrace);
+                return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = e.Message });
+
+            }
+        }
+        public async Task<ActionResult> EditModalidadesAluno(int id ,IFormCollection collection)
+        {
+            try
+            {
+                var command = new ModalidadeModel.CreateUpdateModalidadeCommand
+                {
+                    Id = Convert.ToInt32(id),
+                    ModalidadesIds = collection["arrModalidadeAlunos"] == "" ? null : collection["arrModalidadeAlunos"].ToString()
+                };
+
+                await ApiClientFactory.Instance.UpdateModalidade(id,command);
+
+                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
+            }
+            catch (Exception e)
+            {
+                Console.Write(e.StackTrace);
+                return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = e.Message });
+
+            }
+        }
+
+        //[ClaimsAuthorize("Aluno", "Alterar")]
+        [HttpPost]
+        public async Task<ActionResult> CreateDeficiencia(IFormCollection collection)
+        {
+            try
+            {
+                var status = collection["status"].ToString();
+
+                var command = new DeficienciaModel.CreateUpdateDeficienciaCommand
+                {
+                    Nome = collection["deficiencia"].ToString(),
+                    Status = status != ""
+                };
+
+                await ApiClientFactory.Instance.CreateDeficiencia(command);
+
+                return RedirectToAction(nameof(Create), new { crud = (int)EnumCrud.Created });
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
+       
+
+        public async Task<IActionResult> EditDeficiencia(int id, IFormCollection collection)
+        {
+            try
+            {
+                var status = collection["status"].ToString();
+
+                var command = new DeficienciaModel.CreateUpdateDeficienciaCommand
+                {
+                    Nome = collection["deficiencia"].ToString(),
+                    Status = status != ""
+                };
+
+                await ApiClientFactory.Instance.UpdateDeficiencia(id, command);
+
+                return RedirectToAction(nameof(EditDeficiencia), new { crud = (int)EnumCrud.Created });
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
+        public async Task<IActionResult> EditDependencia(int id, IFormCollection collection)
+        {
+			try
+			{
+				var command = new DependenciaModel.CreateUpdateDependenciaCommand
+				{
+					Doencas = collection["Doenca"].ToString(),
+					Nacionalidade = collection["nacionalidade"].ToString(),
+					Naturalidade = collection["naturalidade"].ToString(),
+					NomeEscola = collection["escola"].ToString(),
+					TipoEscola = collection["ddlTipoEscola"].ToString(),
+					TipoEscolaridade = collection["ddlTipoEscolaridade"].ToString(),
+					Turno = collection["ddlTurno"].ToString(),
+					Serie = collection["serie"].ToString(),
+					Ano = collection["ano"].ToString(),
+					Turma = collection["turma"].ToString(),
+					TermoCompromisso = collection["rdbTermo"] == "true",
+					AutorizacaoUsoImagemAudio = collection["rdbautorizacaoimagem"] == "true",
+					AutorizacaoUsoIndicadores = collection["rdbautorizacaoindicadores"] == "true",
+					AutorizacaoSaida = collection["rdbAutorizacao"] == "true",
+					AlunoId = 2259
+
+				};
+
+				await ApiClientFactory.Instance.UpdateDependencia(id, command);
+
+				return RedirectToAction(nameof(EditDependencia), new { crud = (int)EnumCrud.Created });
+			}
+			catch (Exception e)
+			{
+				return RedirectToAction(nameof(Index));
+			}
+		}
     }
 }

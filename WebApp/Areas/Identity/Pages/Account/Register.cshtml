@@ -1,4 +1,4 @@
-﻿@page
+@page
 @model RegisterModel
 @{
     ViewData["Title"] = "Registrar";
@@ -15,35 +15,186 @@
                 <h2 class="title text-uppercase text-weight-bold m-none"><i class="fa fa-user mr-xs"></i> Registrar</h2>
             </div>
             <div class="panel-body">
-                <form asp-route-returnUrl="@Model.ReturnUrl" method="post" id="form">
+                <form asp-route-returnUrl="@Model.ReturnUrl" method="post" id="formRegister">
                     @if (Request.HasFormContentType)
                     {
                         <div asp-validation-summary="All" class="alert alert-mini alert-danger margin-bottom-30"></div>
                     }
                     <div class="form-group mb-lg">
+                        <label>Estado</label>
+                        <select class="form-control populate select2" name="ddlEstado" id="ddlEstado"
+                                title="Por favor informe um Estado." required
+                                asp-for="EstadoId" asp-items="Model.ListEstados">
+                            <option value="">Selecionar Estado</option>
+                        </select>
+                    </div>
+                    <div class="form-group mb-lg">
+                        <label>Municipio</label>
+                        <select class="form-control populate select2" name="ddlMunicipio" id="ddlMunicipio"
+                                title="Por favor informe um Municipio." required
+                                asp-for="MunicipioId" asp-items="Model.ListMunicipios">
+                            <option value="">Selecionar Município</option>
+                        </select>
+                    </div>
+                    <div class="form-group mb-lg">
+                        <label>Localidade</label>
+                        <select class="form-control populate select2" name="ddlLocalidade" id="ddlLocalidade"
+                                title="Por favor informe o localidade." required
+                                asp-for="LocalidadeId" asp-items="Model.ListLocalidades">
+                            <option value="">Selecionar Localidade</option>
+                        </select>
+                    </div>
+                    <div class="form-group mb-lg">
+                        <label>Endereço</label>
+                        <input name="endereco" id="endereco" type="text" class="form-control" required
+                               title="Por favor informe o endereço." />
+                    </div>
+                    <div class="form-group mb-lg">
+                        <label>Áreas desejadas</label><br/>
+                        <select class="form-control populate" multiple="multiple" data-plugin-multiselect data-plugin-options='{ "maxHeight": 200 }' id="ddlAreaDesejada" name="ddlAreaDesejada" style="width:100%"  asp-for="AreaId" asp-items="Model.ListAreas" required
+                              title="Por favor selecione ao menos uma área desejada.">
+                        </select>
+                        @* <select multiple data-plugin-selectTwo class="form-control populate" name="ddlAreaDesejada" id="ddlAreaDesejada" style="width:100%"
+                                title="Por favor selecione as área desejada."
+                                asp-for="AreaId" asp-items="Model.ListAreas">
+                            <option value="">Selecionar Áreda Desejada</option>
+                        </select> *@
+                    </div>
+                    <div class="form-group mb-lg">
+                        <label>Nome completo do Aluno</label>
+                        <input name="nomeA" id="nomeA" type="text" class="form-control" required
+                               title="Por favor informe o nome completo." />
+                        <p>
+                            <code>Sem abreviações</code>
+                        </p>
+                    </div>
+                    <div class="form-group mb-lg">
+                        <label>CPF</label>
+                        <input name="cpf" id="cpf" type="text" class="form-control" required
+                               title="Por favor informe o cpf." />
+                        <p>
+                            <code>Caso o aluno não possua, digite onze vezes o numero 0</code>
+                        </p>
+                    </div>
+                    <div class="form-group mb-lg">
+                        <label>Sexo</label>
+                        <select class="form-control populate select2" name="ddlSexo" id="ddlSexo"
+                                title="Por favor selecione um sexo." required>
+                            <option value="">Selecionar Sexo</option>
+                            <option value="M">MASCULINO</option>
+                            <option value="F">FEMININO</option>
+                        </select>
+                    </div>
+                    <div class="form-group mb-lg">
+                        <label>Data Nascimento</label>
+                        <input id="dtNasc" name="dtNasc"
+                               required
+                               title="Por favor informe a data de nascimento."
+                               style="z-index: auto;"
+                               data-plugin-datepicker data-date-format="dd/mm/yyyy" data-plugin-options='{"language": "pt-BR"}'
+                               placeholder="__/__/____" class="form-control startdate"
+                               class="form-control">
+                    </div>
+                    <div class="form-group mb-lg">
                         <label>E-mail</label>
-                        <input asp-for="Input.Email" name="Input.Email" id="Input.Email" type="email" class="form-control input-lg" />
+                        <input name="email" id="email" type="email" class="form-control" required
+                               title="Por favor informe o email." />
                     </div>
-
-                    <div class="form-group mb-none">
-                        <div class="row">
-                            <div class="col-sm-6 mb-lg">
-                                <label>Senha</label>
-                                <input asp-for="Input.Password" name="Input.Password" id="Input.Password" type="password" class="form-control input-lg" />
-                            </div>
-                            <div class="col-sm-6 mb-lg">
-                                <label>Confirmar Senha</label>
-                                <input asp-for="Input.ConfirmPassword" name="Input.ConfirmPassword" id="Input.ConfirmPassword" type="password" class="form-control input-lg" />
-                            </div>
+                    <div class="form-group mb-lg">
+                        <label>Etnia</label>
+                        <select class="form-control populate select2" name="ddlEtnia" id="ddlEtnia" style="width:100%"
+                                title="Por favor selecione um etnia." required
+                                asp-for="EtniaId" asp-items="Model.ListEtnias">
+                            <option value="">Selecionar Etnia</option>
+                        </select>
+                    </div>
+                    <div class="form-group mb-lg">
+                        <label>Deficiência</label>
+                        <select class="form-control populate" multiple="multiple" data-plugin-multiselect data-plugin-options='{ "maxHeight": 200 }' id="ddlDeficiencia" name="ddlDeficiencia" style="width:100%" required
+                                title="Por favor selecione uma deficiência."
+                                asp-for="DeficienciaId" asp-items="Model.ListDeficiencia">
+                        </select>
+                    </div>
+                    <div class="form-group mb-lg">
+                        <label>Nome completo da Mãe</label>
+                        <input name="nomeMae" id="nomeMae" type="text" class="form-control" required
+                               title="Por favor informe o nome da mãe." />
+                        <p>
+                            <code>Sem abreviações</code>
+                        </p>
+                    </div>
+                    <div class="form-group mb-lg">
+                        <label>Nome completo do Responsável</label>
+                        <input name="nomeResp" id="nomeResp" type="text" class="form-control" required
+                               title="Por favor informe o nome do responsável." />
+                        <p>
+                            <code>Sem abreviações</code>
+                        </p>
+                    </div>
+                    <div class="form-group mb-lg">
+                        <label>Aluno está autorizado a sair sozinho?</label><br/>
+                        <div class="radio-custom radio-success">
+                            <input type="radio" id="autorizadoSim" name="autorizado" value="true" required title="Por favor selecione uma opção">
+                            <label>Sim</label>
                         </div>
+                        <div class="radio-custom radio-danger">
+                            <input type="radio" id="autorizadoNao" name="autorizado" value="false" required title="Por favor selecione uma opção">
+                            <label>Não</label>
+                        </div>
+                        <label class="error" for="autorizado"></label>
+                        <p>
+                            <code>O estudante pode deixar o local desacompanhado do responsável.</code>
+                        </p>
                     </div>
-
+                    <div class="form-group mb-lg">
+                        <label>Participação no programa DNA DO BRASIL TALENTOS e compartilhamento dos dados pessoais do estudante.</label><br />
+                        <div class="radio-custom radio-success">
+                            <input type="radio" id="participacaoSim" name="participacao" value="true" required title="Por favor selecione uma opção">
+                            <label>Sim</label>
+                        </div>
+                        <div class="radio-custom radio-danger">
+                            <input type="radio" id="participacaoNao" name="participacao" value="false" required title="Por favor selecione uma opção">
+                            <label>Não</label>
+                        </div>
+                        <label class="error" for="participacao"></label>
+                    </div>
+                    <div class="form-group mb-lg">
+                        <label>Utilização da imagem</label><br />
+                        <div class="radio-custom radio-success">
+                            <input type="radio" id="utilizacaoImagemSim" name="utilizacaoImagem" value="true" required title="Por favor selecione uma opção">
+                            <label>Sim</label>
+                        </div>
+                        <div class="radio-custom radio-danger">
+                            <input type="radio" id="utilizacaoImagemNao" name="utilizacaoImagem" value="false" required title="Por favor selecione uma opção">
+                            <label>Não</label>
+                        </div>
+                        <label class="error" for="utilizacaoImagem"></label>
+                        <p>
+                            <code>O Idecace, a título gratuito e não oneroso, para fins de divulgação/publicação em qualquer material de foto, vídeo, documentos em geral, relatórios bem como em todo e qualquer veículo de comunicação</code>
+                        </p>
+                    </div>
+                    <div class="form-group mb-lg">
+                        <label>Todos os alunos que estiver apto a participar das atividades no Ceu das Artes, Documentação exigida no primeiro dia de aula.</label><br />
+                        <div class="radio-custom radio-success">
+                            <input type="radio" id="copiaDocImagemSim" name="copiaDoc" value="true" required title="Por favor selecione uma opção">
+                            <label>Sim</label>
+                        </div>
+                        <div class="radio-custom radio-danger">
+                            <input type="radio" id="copiaDocImagemNao" name="copiaDoc" value="false" required title="Por favor selecione uma opção">
+                            <label>Não</label>
+                        </div>
+                        <label class="error" for="copiaDoc"></label>
+                        <p>
+                            <code>Cópia do documento de indentidade do aluno. Cópia do documento de identidade do responsável legal.</code>
+                        </p>
+                    </div>
                     <div class="row">
                         <div class="col-sm-8">
                             <div class="checkbox-custom checkbox-default">
-                                <input id="AgreeTerms" name="agreeterms" type="checkbox"/>
-                                <label for="AgreeTerms">Eu concordo com os <a href="#">termos de uso</a></label>
+                                <input id="AgreeTerms" name="agreeterms" type="checkbox" required title="Por favor leia com atenção para aceitar ao termo."/>
+                                <label for="AgreeTerms">Eu concordo com os <a href="#" data-toggle="modal" data-target="#mdTermo">termos</a></label>
                             </div>
+                            <label class="error" for="agreeterms"></label>
                         </div>
                         <div class="col-sm-4 text-right">
                             <button type="submit" class="btn btn-primary hidden-xs">Registrar</button>
@@ -51,7 +202,7 @@
                         </div>
                     </div>
 
-                    <p class="text-center">Já possui uma conta? <a class="nav-link text-dark" asp-page="/Account/Login">Entrar!</a></p>
+                    @* <p class="text-center">Já possui uma conta? <a class="nav-link text-dark" asp-page="/Account/Login">Entrar!</a></p> *@
 
                 </form>
             </div>
@@ -60,71 +211,66 @@
         <p class="text-center text-muted mt-md mb-md">&copy; Copyright 2024. Todos os direitos reservados.</p>
     </div>
 </section>
-
-@section Scripts {
-    <script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
-    <script src="~/js/login.js"></script>
-}
-
-
-@*<h2>@ViewData["Title"]</h2>
-
-<div class="row">
-    <div class="col-md-4">
-        <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h4>Create a new account.</h4>
-            <hr />
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Input.Email"></label>
-                <input asp-for="Input.Email" class="form-control" />
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
+<!-- Modal -->
+<div class="modal fade" id="mdTermo" tabindex="-1" role="dialog" aria-labelledby="mdTermoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mdTermoLabel">
+                    <i class="fa fa-file"></i> &nbsp;&nbsp;<strong>TERMO DE AUTORIZAÇÃO E CONSENTIMENTO / ASSENTIMENTO</strong>
+                </h5>
             </div>
-            <div class="form-group">
-                <label asp-for="Input.Password"></label>
-                <input asp-for="Input.Password" class="form-control" />
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.ConfirmPassword"></label>
-                <input asp-for="Input.ConfirmPassword" class="form-control" />
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-            </div>
-            <button type="submit" class="btn btn-default">Register</button>
-        </form>
-    </div>
-    <div class="col-md-6 col-md-offset-2">
-        <section>
-            <h4>Use another service to register.</h4>
-            <hr />
-            @{
-                if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                {
-                    <div>
-                        <p>
-                            There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
-                            for details on setting up this ASP.NET application to support logging in via external services.
-                        </p>
-                    </div>
-                }
-                else
-                {
-                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                        <div>
-                            <p>
-                                @foreach (var provider in Model.ExternalLogins)
-                                {
-                                    <button type="submit" class="btn btn-default" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                                }
+
+            <div class="modal-body">
+                <ul class="list-unstyled search-results-list">
+                    <li>
+                        <div class="result-data">
+                            <p class="text-justify">
+                                O Programa DNA DO BRASIL-TALENTOS objetiva a integração do desenvolvimento acadêmico e esportivo dos estudantes, com domínio nas áreas de oportunização, promoção e desenvolvimento no esporte, na saúde, no desenvolvimento psicossocial e na vocação profissionalizante. O Programa utiliza, com exclusividade, uma metodologia para análise psicossocial e vocacional, as quais permitem nortear o talento esportivo ou a carreira e potencializar a construção do Plano de Desenvolvimento Pessoal e Profissional de cada indivíduo avaliado. Para participação no Programa, faz-se necessária a autorização dos pais e/ou responsáveis, bem como o consentimento para a aplicação do protocolo avaliativo, em 3 períodos distintos, o qual direcionará o estudante conforme o seu talento profissional ou esportivo. A participação é voluntária, podendo ser interrompida sem que nenhuma implicação recaia sobre o avaliado. O Programa trabalha com 5 dimensões centrais do desenvolvimento humano (físico-motor, saúde, qualidade de vida, vocacional e educacional) e, também, levanta dados e trabalha com recursos sobre a violência contra crianças e adolescentes, sobre a saúde bucal, sobre a educação alimentar e sobre indicadores educacionais. Os dados serão inseridos em uma plataforma própria e os pais e/ou responsáveis terão acesso a esses dados por meio do aplicativo do estudante/famílias. Serão gerados automaticamente laudos e relatórios indicando fragilidades e potencialidades em cada uma das variáveis. DECLARO que: 1. Estou ciente que o tratamento de dados pessoais coletados é condição para a participação do estudantes no Programa DNA DO BRASIL TALENTOS e que posso requerer, como titular dos dados, a qualquer momento e mediante requisição, os direitos elencados no Art. 18, da Lei 13.709, de 14 de agosto de 2018 - LGPD. 2 - O(a) estudante não possui qualquer enfermidade que o/a impeça da prática esportiva e não passou por qualquer procedimento cirúrgico nos últi prática; 3. Tenho conhecimento de que a bateria de testes poderá consistir na realização de testes físico motores,índices de saúde, inventários psicossociais,e teste de aptidão e interesses profissionais. - Para crianças e adolescentes (maiores que 6 anos e menores de 18 anos de idade) e para legalmente incapaz. O Instituto para o Desenvolvimento da Criança e do Adolescente pela Cultura e Esporte (IDECACE) convida você a participar do estudo Extração e Modelagem de Features do Programa DNA do Brasil - Talentos: desenvolvimento físico-motor, saúde e qualidade de vida de crianças e adolescentes. Informamos que seu pai/mãe ou responsável legal permitiu a sua participação. Analisamos a aplicação de protocolo avaliativo com estudantes para a prática de diferentes modalidades esportivas nos estados e municípios brasileiros, empregando dados do Programa DNA do Brasil – Talentos. Gostaríamos muito de contar com a sua participação, porém, você não é obrigado a participar e não tem problema em desistir. Outras crianças e/ou adolescentes participantes desta pesquisa tem de 6 a 17 anos de idade. A pesquisa será feita no ambiente onde os participantes (crianças/adolescente) realizarão os testes físico-motores e responderão os questionários psicossocial, vocacional, nutricional e odontológico. A sua participação é importante, pois através dos testes serão gerados automaticamente laudos e relatórios indicando fragilidades e potencialidades individuais. As suas informações ficarão sob sigilo, ninguém saberá que você está participando da pesquisa. Não compartilharemos com outras pessoas as suas informações. Os resultados da pesquisa serão utilizados para produção de material cientifico sem identificar (dados pessoais, vídeos, imagens e áudios de gravações) os participantes (crianças/adolescentes). Aceito participar da pesquisa Extração e Modelagem de Features do Programa DNA do Brasil - Talentos: desenvolvimento físico-motor, saúde e qualidade de vida de crianças e adolescentes. Entendi as coisas ruins e as coisas boas que podem acontecer. Entendi que posso dizer “sim” e participar, mas que, a qualquer momento, posso dizer “não” e desistir e que ninguém vai ficar com raiva/chateado comigo. Os pesquisadores esclareceram minhas dúvidas e conversaram com os meus familiares/responsável legal. Recebi uma cópia deste termo de assentimento, li e quero/concordo em participar da pesquisa/estudo.
                             </p>
                         </div>
-                    </form>
-                }
-            }
-        </section>
+                    </li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="reset" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-remove"></i> &nbsp;&nbsp;Fechar</button>
+            </div>
+        </div>
     </div>
 </div>
 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}*@
+    <script src="~/js/register.js"></script>
+    <script>
+
+        (function ($) {
+
+            'use strict';
+
+            var notify = @Model.NotifyMessage;
+            var messagem = '@Model.Notify';
+
+            if (notify === 0) {
+                new PNotify({
+                    title: 'Aluno',
+                    text: messagem,
+                    type: 'success'
+                });
+            } else if (notify === 1) {
+                new PNotify({
+                    title: 'Aluno',
+                    text: messagem,
+                    type: 'warning'
+                });
+            } else if (notify === 2) {
+                new PNotify({
+                    title: 'Aluno',
+                    text: messagem,
+                    type: 'error'
+                });
+            }
+
+
+        }).apply(this, [jQuery]);
+    </script>
+}
