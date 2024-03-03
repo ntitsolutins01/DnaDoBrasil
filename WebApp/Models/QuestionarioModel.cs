@@ -14,6 +14,8 @@ namespace WebApp.Models
             public int Id { get; set; }
             public string Pergunta { get; set; }
             public int TipoLaudoId { get; set; }
+            public int Quadrante { get; set; }
+            public int Questao { get; set; }
         }
 	}
 

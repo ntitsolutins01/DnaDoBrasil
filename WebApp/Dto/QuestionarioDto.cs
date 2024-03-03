@@ -8,5 +8,7 @@ namespace WebApp.Dto
         public string Pergunta { get; set; }
         public TiposLaudoDto TipoLaudo { get; set; }
         public List<RespostaDto> Respostas { get; set; }
+        public int Quadrante { get; set; }
+        public int Questao { get; set; }
     }
 }

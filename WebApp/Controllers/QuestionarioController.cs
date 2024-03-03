@@ -58,6 +58,8 @@ namespace WebApp.Controllers
 				{
 					Pergunta = collection["pergunta"].ToString(),
 					TipoLaudoId = Convert.ToInt32(collection["ddlTipoLaudo"].ToString()),
+					Quadrante = Convert.ToInt32(collection["quadrante"].ToString()),
+					Questao = Convert.ToInt32(collection["questao"].ToString()),
 
 				};
 
@@ -81,7 +83,9 @@ namespace WebApp.Controllers
 				{
 					Id = Convert.ToInt32(collection["editQuestionarioId"]),
 					Pergunta = collection["pergunta"].ToString(),
-				};
+                    Quadrante = Convert.ToInt32(collection["quadrante"].ToString()),
+                    Questao = Convert.ToInt32(collection["questao"].ToString()),
+                };
 
 				await ApiClientFactory.Instance.UpdateQuestionario(command.Id, command);
 
