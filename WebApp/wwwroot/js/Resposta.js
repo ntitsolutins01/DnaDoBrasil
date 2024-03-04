@@ -143,7 +143,7 @@
                 self.editDto.Id = result.data.id;
                 self.editDto.Questionario = result.data.questionario.nome;
                 self.editDto.TipoLaudo = result.data.questionario.tipoLaudo.nome;
-                self.editDto.Resposta = result.data.respostaQuestionario;
+                self.editDto.Resposta = result.data.resposta;
                 self.editDto.ValorPesoResposta = result.data.valorPesoResposta;
                
             }).catch(error => {

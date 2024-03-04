@@ -225,7 +225,7 @@
                                         <div class="form-group">
                                             <div class="col-sm-12">
                                                 <label class="control-label">
-                                                    <strong>@index - @item.Pergunta</strong>
+                                                    <strong>@item.Questao - @item.Pergunta</strong>
                                                 </label>
                                                 <input type="hidden" id="perguntaVocacional_@item.Id" />
                                             </div>
@@ -233,7 +233,7 @@
                                                 @foreach (var resp in @item.Respostas)
                                                 {
                                                     <div class="radio-custom radio-default col-sm-3">
-                                                        <input id="respVocacional_@resp.Id" name="nomeRespVocacional_@index" type="radio" value="@resp.Id" />
+                                                        <input id="respVocacional_@resp.Id" name="nomeRespVocacional_@index" type="radio" value="@resp.Id-@resp.ValorPesoResposta" />
                                                         <label for="respVocacional_@resp.Id">@resp.RespostaQuestionario</label>
                                                     </div>
                                                 }
@@ -249,7 +249,7 @@
                                         <div class="form-group">
                                             <div class="col-sm-12">
                                                 <label class="control-label">
-                                                    <strong>@index - @item.Pergunta</strong>
+                                                    <strong>@item.Questao - @item.Pergunta</strong>
                                                 </label>
                                                 <input type="hidden" id="perguntaQualidadeVida_@item.Id" />
                                             </div>
@@ -257,7 +257,7 @@
                                                 @foreach (var resp in @item.Respostas)
                                                 {
                                                     <div class="radio-custom radio-default col-sm-2">
-                                                        <input id="respQualidadeVida_@resp.Id" name="nomeRespQualidadeVida_@index" type="radio" value="@resp.Id" />
+                                                        <input id="respQualidadeVida_@resp.Id" name="nomeRespQualidadeVida_@index" type="radio" value="@resp.Id-@resp.ValorPesoResposta" />
                                                         <label for="respQualidadeVida_@resp.Id">@resp.RespostaQuestionario</label>
                                                     </div>
                                                 }
@@ -272,7 +272,7 @@
                                         <div class="form-group">
                                             <div class="col-sm-12">
                                                 <label class="control-label">
-                                                    <strong>@index - @item.Pergunta</strong>
+                                                    <strong>@item.Questao - @item.Pergunta</strong>
                                                 </label>
                                                 <input type="hidden" id="perguntaConsumoAlimentar_@item.Id" />
                                             </div>
@@ -280,7 +280,7 @@
                                                 @foreach (var resp in @item.Respostas)
                                                 {
                                                     <div class="radio-custom radio-default col-sm-3">
-                                                        <input id="respConsumoAlimentar_@resp.Id" name="nomeRespConsumoAlimentar_@index" type="radio" value="@resp.Id" />
+                                                        <input id="respConsumoAlimentar_@resp.Id" name="nomeRespConsumoAlimentar_@index" type="radio" value="@resp.Id-@resp.ValorPesoResposta" />
                                                         <label for="respConsumoAlimentar_@resp.Id">@resp.RespostaQuestionario</label>
                                                     </div>
                                                 }
@@ -295,14 +295,14 @@
                                         <div class="form-group">
                                             <div class="col-sm-12">
                                                 <label class="control-label">
-                                                    <strong>@index - @item.Pergunta</strong>
+                                                    <strong>@item.Questao - @item.Pergunta</strong>
                                                 </label>
                                             </div>
                                             <div class="col-sm-12">
                                                 @foreach (var resp in @item.Respostas)
                                                 {
                                                     <div class="radio-custom radio-default col-sm-3">
-                                                        <input id="respSaudeBucal_@resp.Id" name="nomeRespSaudeBucal_@index" type="radio" value="@resp.Id" />
+                                                        <input id="respSaudeBucal_@resp.Id" name="nomeRespSaudeBucal_@index" type="radio" value="@resp.Id-@resp.ValorPesoResposta" />
                                                         <label for="respSaudeBucal_@resp.Id">@resp.RespostaQuestionario</label>
                                                     </div>
                                                 }

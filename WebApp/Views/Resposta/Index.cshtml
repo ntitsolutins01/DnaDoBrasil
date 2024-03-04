@@ -37,8 +37,8 @@
                             {
                                 <tr>
                                     <td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Id)</td>
-                                    <td class="text-center">@Html.DisplayFor(modelItem => item.Questionario.TipoLaudo.Nome)</td>
-                                    <td class="text-center">@Html.DisplayFor(modelItem => item.Questionario.Pergunta)</td>
+                                    <td class="text-center" style="width:150px;">@Html.DisplayFor(modelItem => item.Questionario.TipoLaudo.Nome)</td>
+                                    <td class="text-center">@Html.DisplayFor(modelItem => item.Questionario.Id) - @Html.DisplayFor(modelItem => item.Questionario.Pergunta)</td>
                                     <td class="text-center">@Html.DisplayFor(modelItem => item.RespostaQuestionario)</td>
                                     <td class="text-center">@Html.DisplayFor(modelItem => item.ValorPesoResposta)</td>
                                     <td class="actions text-center">
@@ -108,9 +108,9 @@
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-3 control-label text-sm-right pt-2">Questionário: </label>
-                        <div class="col-sm-4">
+                        <div class="col-sm-8">
                             <input type="text" name="descricao" class="form-control"
-                                   maxlength="80" :value="editDto.Questionario"
+                                   maxlength="80" :value="editDto.Pergunta"
                                    title="Por favor informe o questionário." readonly />
                         </div>
                     </div>
