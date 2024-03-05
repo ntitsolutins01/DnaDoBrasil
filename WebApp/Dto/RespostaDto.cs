@@ -3,8 +3,11 @@
     public class RespostaDto
     {
         public int Id { get; set; }
-        public string RespostaQuestionario { get; set; }
-        public QuestionarioDto Questionario { get; set; }
-        public int ValorPesoResposta { get; set; }
+        public int QuestionarioId { get; set; }
+        public required string Pergunta { get; set; }
+        public int TipoLaudoId { get; set; }
+        public required string NomeTipoLaudo { get; set; }
+        public required string RespostaQuestionario { get; set; }
+        public required int ValorPesoResposta { get; set; }
     }
 }

@@ -281,6 +281,10 @@
                 $numMassaCorporalSaude.mask('000', { reverse: false });
                 var $numEnvergaduraSaude = $("#envergaduraSaude");
                 $numEnvergaduraSaude.mask('000', { reverse: false });
+                var $numTesteVelocidade = $("#testeVelocidade");
+                $numTesteVelocidade.mask('00:00', { reverse: false });
+                var $numAptidaoFisica = $("#aptidaoFisica");
+                $numAptidaoFisica.mask('00:00', { reverse: false });
 
                 $("#formLaudo").validate({
                     highlight: function (label) {

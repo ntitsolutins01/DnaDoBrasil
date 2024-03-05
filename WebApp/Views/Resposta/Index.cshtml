@@ -37,8 +37,8 @@
                             {
                                 <tr>
                                     <td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Id)</td>
-                                    <td class="text-center" style="width:150px;">@Html.DisplayFor(modelItem => item.Questionario.TipoLaudo.Nome)</td>
-                                    <td class="text-center">@Html.DisplayFor(modelItem => item.Questionario.Id) - @Html.DisplayFor(modelItem => item.Questionario.Pergunta)</td>
+                                    <td class="text-center" style="width:150px;">@Html.DisplayFor(modelItem => item.NomeTipoLaudo)</td>
+                                    <td class="text-center">@Html.DisplayFor(modelItem => item.QuestionarioId) - @Html.DisplayFor(modelItem => item.Pergunta)</td>
                                     <td class="text-center">@Html.DisplayFor(modelItem => item.RespostaQuestionario)</td>
                                     <td class="text-center">@Html.DisplayFor(modelItem => item.ValorPesoResposta)</td>
                                     <td class="actions text-center">
