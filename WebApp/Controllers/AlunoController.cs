@@ -294,9 +294,10 @@ namespace WebApp.Controllers
             {
                 var command = new QualidadeVidaModel.CreateUpdateQualidadeVidaCommand
                 {
-                    ProfissionalId = Convert.ToInt32(collection["profissionalId"]),
-                    QuestionarioId = Convert.ToInt32(collection["questionarioId"]),
-                    Resposta = Convert.ToString(collection["profissionalId"])
+	                ProfissionalId = Convert.ToInt32(collection["profissionalId"]),
+	                QuestionarioId = Convert.ToInt32(collection["questionarioId"]),
+	                Resposta = Convert.ToString(collection["profissionalId"]),
+	                AlunoId = 0
                 };
 
                 await ApiClientFactory.Instance.CreateQualidadeVida(command);
@@ -314,11 +315,11 @@ namespace WebApp.Controllers
         {
             var command = new QualidadeVidaModel.CreateUpdateQualidadeVidaCommand
             {
-                Id = Convert.ToInt32(id),
-                ProfissionalId = Convert.ToInt32(collection["profissionalId"]),
-                QuestionarioId = Convert.ToInt32(collection["questionarioId"]),
-                Resposta = Convert.ToString(collection["profissionalId"])
-
+	            Id = Convert.ToInt32(id),
+	            ProfissionalId = Convert.ToInt32(collection["profissionalId"]),
+	            QuestionarioId = Convert.ToInt32(collection["questionarioId"]),
+	            Resposta = Convert.ToString(collection["profissionalId"]),
+	            AlunoId = 0
             };
 
             //await ApiClientFactory.Instance.UpdateQualidadeVida(command);

@@ -16,6 +16,8 @@ namespace WebApp.Models
             public int ProfissionalId { get; init; }
             public required int AlunoId { get; init; }
             public string[] ListQualidadeDeVida { get; set; }
+            public int QuestionarioId { get; set; }
+            public string Resposta { get; set; }
         }
     }
 

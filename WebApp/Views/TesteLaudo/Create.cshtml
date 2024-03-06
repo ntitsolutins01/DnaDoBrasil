@@ -1,222 +1,127 @@
 ﻿@{
-    ViewData["Title"] = "Inclusão de TesteLaudo";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewData["Title"] = "Inclusão de TesteLaudo";
+	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div id="vTesteLaudo">
-    <div class="row">
-        <div class="col-md-12">
-            @using (@Html.BeginForm("Create", "TesteLaudo", FormMethod.Post, new { id = "formTesteLaudo", @class = "form-horizontal" }))
+	<div class="row">
+		<div class="col-md-12">
+			@using (@Html.BeginForm("Create", "TesteLaudo", FormMethod.Post, new { id = "formTesteLaudo", @class = "form-horizontal" }))
 
-            {
-                <section class="panel">
-                    <header class="panel-heading">
-                        <div class="panel-actions">
-                            <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
-                        </div>
+			{
+				<section class="panel">
+					<header class="panel-heading">
+						<div class="panel-actions">
+							<a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
+						</div>
 
-                        <h2 class="panel-title">Cadastro de TesteLaudo</h2>
-                    </header>
-                    <div class="panel-body">
+						<h2 class="panel-title">Cadastro de TesteLaudo</h2>
+					</header>
+					<div class="panel-body">
 
-                        <div class="form-group row">
-                            <label class="col-sm-3 control-label text-sm-right pt-2">TesteLaudo <span class="required">*</span></label>
-                            <div class="col-sm-8">
-                                <input type="text" name="nome" class="form-control"
-                                       maxlength="80"
-                                       title="Por favor informe a TesteLaudo." required />
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-3 control-label text-sm-right pt-2">Vo2 Max Inicial <span class="required">*</span></label>
-                            <div class="col-sm-3">
-                                <input type="number" name="vo2MaxIni" class="form-control" maxlength="2"
-                                       title="Por favor informe o Vo2 Max Inicial." required />
-                            </div>
-                            <label class="col-sm-2 control-label text-sm-right pt-2">Vo2 Max Final <span class="required">*</span></label>
-                            <div class="col-sm-3">
-                                <input type="number" name="vo2MaxFim" class="form-control" maxlength="2"
-                                       title="Por favor informe o Vo2 Max Final." required />
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-3 control-label text-sm-right pt-2">Vinte Metros Inicial <span class="required">*</span></label>
-                            <div class="col-sm-3">
-                                <input type="number" name="vinteMetrosIni" class="form-control" maxlength="2"
-                                       title="Por favor informe o Vinte Metros Inicial." required />
-                            </div>
-                            <label class="col-sm-2 control-label text-sm-right pt-2">Vinte Metros Final <span class="required">*</span></label>
-                            <div class="col-sm-3">
-                                <input type="number" name="vinteMetrosFim" class="form-control" maxlength="2"
-                                       title="Por favor informe o Vinte Metros Final." required />
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-3 control-label text-sm-right pt-2">Shutlle Run Inicial <span class="required">*</span></label>
-                            <div class="col-sm-3">
-                                <input type="number" name="shutlleRunIni" class="form-control" maxlength="2"
-                                       title="Por favor informe o Shutlle Run Inicial." required />
-                            </div>
-                            <label class="col-sm-2 control-label text-sm-right pt-2">Shutlle Run Final <span class="required">*</span></label>
-                            <div class="col-sm-3">
-                                <input type="number" name="shutlleRunFim" class="form-control" maxlength="2"
-                                       title="Por favor informe o Shutlle Run Final." required />
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-3 control-label text-sm-right pt-2">Flexibilidade Inicial <span class="required">*</span></label>
-                            <div class="col-sm-3">
-                                <input type="number" name="flexibilidadeIni" class="form-control" maxlength="2"
-                                       title="Por favor informe o Flexibilidade Inicial." required />
-                            </div>
-                            <label class="col-sm-2 control-label text-sm-right pt-2">Flexibilidade Final <span class="required">*</span></label>
-                            <div class="col-sm-3">
-                                <input type="number" name="flexibilidadeFim" class="form-control" maxlength="2"
-                                       title="Por favor informe o Flexibilidade Final." required />
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-3 control-label text-sm-right pt-2">Preensao Manual Inicial <span class="required">*</span></label>
-                            <div class="col-sm-3">
-                                <input type="number" name="preensaoManualIni" class="form-control" maxlength="2"
-                                       title="Por favor informe o Preensao Manual Inicial." required />
-                            </div>
-                            <label class="col-sm-2 control-label text-sm-right pt-2">Preensao Manual Final <span class="required">*</span></label>
-                            <div class="col-sm-3">
-                                <input type="number" name="preensaoManualFim" class="form-control" maxlength="2"
-                                       title="Por favor informe o Preensao Manual Final." required />
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-3 control-label text-sm-right pt-2">Abdominal Prancha Inicial <span class="required">*</span></label>
-                            <div class="col-sm-3">
-                                <input type="number" name="abdominalPranchaIni" class="form-control" maxlength="2"
-                                       title="Por favor informe o Abdominal Prancha Inicial." required />
-                            </div>
-                            <label class="col-sm-2 control-label text-sm-right pt-2">Abdominal Prancha Final <span class="required">*</span></label>
-                            <div class="col-sm-3">
-                                <input type="number" name="abdominalPranchaFim" class="form-control" maxlength="2"
-                                       title="Por favor informe o Abdominal Prancha Final." required />
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-3 control-label text-sm-right pt-2">Impulsao Inicial <span class="required">*</span></label>
-                            <div class="col-sm-3">
-                                <input type="number" name="impulsaoIni" class="form-control" maxlength="2"
-                                       title="Por favor informe o Impulsao Inicial." required />
-                            </div>
-                            <label class="col-sm-2 control-label text-sm-right pt-2">Impulsao Final <span class="required">*</span></label>
-                            <div class="col-sm-3">
-                                <input type="number" name="impulsaoFim" class="form-control" maxlength="2"
-                                       title="Por favor informe o Impulsao Final." required />
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-3 control-label text-sm-right pt-2">Envergadura Inicial <span class="required">*</span></label>
-                            <div class="col-sm-3">
-                                <input type="number" name="envergaduraIni" class="form-control" maxlength="2"
-                                       title="Por favor informe o Envergadura Inicial." required />
-                            </div>
-                            <label class="col-sm-2 control-label text-sm-right pt-2">Envergadura Final <span class="required">*</span></label>
-                            <div class="col-sm-3">
-                                <input type="number" name="envergaduraFim" class="form-control" maxlength="2"
-                                       title="Por favor informe o Envergadura Final." required />
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-3 control-label text-sm-right pt-2">Peso Inicial <span class="required">*</span></label>
-                            <div class="col-sm-3">
-                                <input type="number" name="pesoIni" class="form-control" maxlength="2"
-                                       title="Por favor informe o Peso Inicial." required />
-                            </div>
-                            <label class="col-sm-2 control-label text-sm-right pt-2">Peso Final <span class="required">*</span></label>
-                            <div class="col-sm-3">
-                                <input type="number" name="pesoFim" class="form-control" maxlength="2"
-                                       title="Por favor informe o Peso Final." required />
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-3 control-label text-sm-right pt-2">Altura Inicial <span class="required">*</span></label>
-                            <div class="col-sm-3">
-                                <input type="number" name="alturaIni" class="form-control" maxlength="2"
-                                       title="Por favor informe o Altura Inicial." required />
-                            </div>
-                            <label class="col-sm-2 control-label text-sm-right pt-2">Altura Final <span class="required">*</span></label>
-                            <div class="col-sm-3">
-                                <input type="number" name="alturaFim" class="form-control" maxlength="2"
-                                       title="Por favor informe o Altura Final." required />
-                            </div>
-                        </div>
-                    </div>
-                    <footer class="panel-footer">
-                        <div class="row">
-                            <div class="col-md-9 col-md-offset-3">
-                                <a href="@Url.Action("Index", "TesteLaudo")" class="btn btn-dark pull-right" style="margin-left: 5px;margin-right: 5px;"><i class="fa fa-reply"></i> &nbsp;&nbsp;Voltar</a>
-                                <button type="reset" class="btn btn-danger pull-right" style="margin-left: 5px;"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
-                                <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
-                            </div>
-                        </div>
-                    </footer>
-                </section>
-            }
-        </div>
-    </div>
+						<div class="form-group row">
+							<label class="col-sm-3 control-label text-sm-right pt-2">Classificação <span class="required">*</span></label>
+							<div class="col-sm-8">
+								<input type="text" name="classificacao" class="form-control"
+									   maxlength="80"
+									   title="Por favor informe a classificação." required />
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-3 control-label text-sm-right pt-2">Ponto Inicial <span class="required">*</span></label>
+							<div class="col-sm-3">
+								<input type="number" name="pontoInicial" class="form-control" maxlength="2"
+									   title="Por favor informe o ponto inicial." required />
+							</div>
+							<label class="col-sm-2 control-label text-sm-right pt-2">Ponto Final <span class="required">*</span></label>
+							<div class="col-sm-3">
+								<input type="number" name="pontoFinal" class="form-control" maxlength="2"
+									   title="Por favor informe o ponto final." required />
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-3 control-label text-sm-right pt-2">Aviso <span class="required">*</span></label>
+							<div class="col-sm-3">
+								<input type="number" name="aviso" class="form-control" maxlength="2"
+									   title="Por favor informe o aviso." required />
+							</div>
+							<label class="col-sm-2 control-label text-sm-right pt-2">Texto <span class="required">*</span></label>
+							<div class="col-sm-3">
+								<input type="number" name="texto" class="form-control" maxlength="2"
+									   title="Por favor informe o texto." required />
+
+							</div>
+						</div>
+					</div>
+					<footer class="panel-footer">
+						<div class="row">
+							<div class="col-md-9 col-md-offset-3">
+								<a href="@Url.Action("Index", "TesteLaudo")" class="btn btn-dark pull-right" style="margin-left: 5px;margin-right: 5px;"><i class="fa fa-reply"></i> &nbsp;&nbsp;Voltar</a>
+								<button type="reset" class="btn btn-danger pull-right" style="margin-left: 5px;"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
+								<button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
+							</div>
+						</div>
+					</footer>
+				</section>
+			}
+		</div>
+	</div>
 </div>
 @section Scripts {
-    <script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
-    <script src="~/assets/vendor/jquery-mask/jquery.mask.js"></script>
-    <script src="~/js/TesteLaudo.js"></script>
-    <script>
+	<script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
+	<script src="~/assets/vendor/jquery-mask/jquery.mask.js"></script>
+	<script src="~/js/TesteLaudo.js"></script>
+	<script>
 
-        (function ($) {
+		(function ($) {
 
-            'use strict';
-            var crud = @ViewBag.CrudMessage;
+			'use strict';
+			var crud = @ViewBag.CrudMessage;
 
-            if (crud === 1) {
-                new PNotify({
-                    title: 'TesteLaudo',
-                    text: 'Cadastro realizado com sucesso!',
-                    type: 'success'
-                });
-            } else if (crud === 2) {
-                new PNotify({
-                    title: 'TesteLaudo',
-                    text: 'Dados alterados com sucesso.',
-                    type: 'warning'
-                });
-            } else if (crud === 3) {
-                new PNotify({
-                    title: 'TesteLaudo',
-                    text: 'Registro excluído com sucesso.',
-                    type: 'error'
-                });
-            }
+			if (crud === 1) {
+				new PNotify({
+					title: 'TesteLaudo',
+					text: 'Cadastro realizado com sucesso!',
+					type: 'success'
+				});
+			} else if (crud === 2) {
+				new PNotify({
+					title: 'TesteLaudo',
+					text: 'Dados alterados com sucesso.',
+					type: 'warning'
+				});
+			} else if (crud === 3) {
+				new PNotify({
+					title: 'TesteLaudo',
+					text: 'Registro excluído com sucesso.',
+					type: 'error'
+				});
+			}
 
-            var notify = @ViewBag.NotifyMessage;
-            var messagem = '@ViewBag.Notify';
+			var notify = @ViewBag.NotifyMessage;
+			var messagem = '@ViewBag.Notify';
 
-            if (notify === 0) {
-                new PNotify({
-                    title: 'TesteLaudo',
-                    text: messagem,
-                    type: 'success'
-                });
-            } else if (notify === 1) {
-                new PNotify({
-                    title: 'TesteLaudo',
-                    text: messagem,
-                    type: 'warning'
-                });
-            } else if (notify === 2) {
-                new PNotify({
-                    title: 'TesteLaudo',
-                    text: messagem,
-                    type: 'error'
-                });
-            }
+			if (notify === 0) {
+				new PNotify({
+					title: 'TesteLaudo',
+					text: messagem,
+					type: 'success'
+				});
+			} else if (notify === 1) {
+				new PNotify({
+					title: 'TesteLaudo',
+					text: messagem,
+					type: 'warning'
+				});
+			} else if (notify === 2) {
+				new PNotify({
+					title: 'TesteLaudo',
+					text: messagem,
+					type: 'error'
+				});
+			}
 
-        }).apply(this, [jQuery]);
+		}).apply(this, [jQuery]);
 
-    </script>
+	</script>
 }

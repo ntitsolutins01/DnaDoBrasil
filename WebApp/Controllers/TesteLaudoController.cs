@@ -45,28 +45,11 @@ namespace WebApp.Controllers
             {
                 var command = new TesteLaudoModel.CreateUpdateTesteLaudoCommand
                 {
-                    Nome = collection["nome"].ToString(),
-                    Vo2MaxIni = Convert.ToInt32(collection["vo2MaxIni"].ToString()),
-                    Vo2MaxFim = Convert.ToInt32(collection["vo2MaxFim"].ToString()),
-                    VinteMetrosIni = Convert.ToInt32(collection["vinteMetrosIni"].ToString()),
-                    VinteMetrosFim = Convert.ToInt32(collection["vinteMetrosFim"].ToString()),
-                    ShutlleRunIni = Convert.ToInt32(collection["shutlleRunIni"].ToString()),
-                    ShutlleRunFim = Convert.ToInt32(collection["shutlleRunFim"].ToString()),
-                    FlexibilidadeIni = Convert.ToInt32(collection["flexibilidadeIni"].ToString()),
-                    FlexibilidadeFim = Convert.ToInt32(collection["flexibilidadeFim"].ToString()),
-                    PreensaoManualIni = Convert.ToInt32(collection["preensaoManualIni"].ToString()),
-                    PreensaoManualFim = Convert.ToInt32(collection["preensaoManualFim"].ToString()),
-                    AbdominalPranchaIni = Convert.ToInt32(collection["abdominalPranchaIni"].ToString()),
-                    AbdominalPranchaFim = Convert.ToInt32(collection["abdominalPranchaFim"].ToString()),
-                    ImpulsaoIni = Convert.ToInt32(collection["impulsaoIni"].ToString()),
-                    ImpulsaoFim = Convert.ToInt32(collection["impulsaoFim"].ToString()),
-                    EnvergaduraIni = Convert.ToInt32(collection["envergaduraIni"].ToString()),
-                    EnvergaduraFim = Convert.ToInt32(collection["envergaduraFim"].ToString()),
-                    PesoIni = Convert.ToInt32(collection["pesoIni"].ToString()),
-                    PesoFim = Convert.ToInt32(collection["pesoFim"].ToString()),
-                    AlturaIni = Convert.ToInt32(collection["alturaIni"].ToString()),
-                    AlturaFim = Convert.ToInt32(collection["alturaFim"].ToString()),
-                    Status = true
+                    Classificacao = collection["classificacao"].ToString(),
+                    PontoInicial = Convert.ToInt32(collection["pontoInicial"].ToString()),
+                    PontoFinal = Convert.ToInt32(collection["pontoFinal"].ToString()),
+                    Aviso = Convert.ToInt32(collection["aviso"].ToString()),
+                    Texto = Convert.ToInt32(collection["texto"].ToString()),
                 };
 
                 await ApiClientFactory.Instance.CreateTesteLaudo(command);
@@ -85,29 +68,12 @@ namespace WebApp.Controllers
             var command = new TesteLaudoModel.CreateUpdateTesteLaudoCommand
             {
                 Id = Convert.ToInt32(collection["editTesteLaudoId"]),
-                Nome = collection["nome"].ToString(),
-                Vo2MaxIni = Convert.ToInt32(collection["vo2MaxIni"].ToString()),
-                Vo2MaxFim = Convert.ToInt32(collection["vo2MaxFim"].ToString()),
-                VinteMetrosIni = Convert.ToInt32(collection["vinteMetrosIni"].ToString()),
-                VinteMetrosFim = Convert.ToInt32(collection["vinteMetrosFim"].ToString()),
-                ShutlleRunIni = Convert.ToInt32(collection["shutlleRunIni"].ToString()),
-                ShutlleRunFim = Convert.ToInt32(collection["shutlleRunFim"].ToString()),
-                FlexibilidadeIni = Convert.ToInt32(collection["flexibilidadeIni"].ToString()),
-                FlexibilidadeFim = Convert.ToInt32(collection["flexibilidadeFim"].ToString()),
-                PreensaoManualIni = Convert.ToInt32(collection["preensaoManualIni"].ToString()),
-                PreensaoManualFim = Convert.ToInt32(collection["preensaoManualFim"].ToString()),
-                AbdominalPranchaIni = Convert.ToInt32(collection["abdominalPranchaIni"].ToString()),
-                AbdominalPranchaFim = Convert.ToInt32(collection["abdominalPranchaFim"].ToString()),
-                ImpulsaoIni = Convert.ToInt32(collection["impulsaoIni"].ToString()),
-                ImpulsaoFim = Convert.ToInt32(collection["impulsaoFim"].ToString()),
-                EnvergaduraIni = Convert.ToInt32(collection["envergaduraIni"].ToString()),
-                EnvergaduraFim = Convert.ToInt32(collection["envergaduraFim"].ToString()),
-                PesoIni = Convert.ToInt32(collection["pesoIni"].ToString()),
-                PesoFim = Convert.ToInt32(collection["pesoFim"].ToString()),
-                AlturaIni = Convert.ToInt32(collection["alturaIni"].ToString()),
-                AlturaFim = Convert.ToInt32(collection["alturaFim"].ToString()),
-                Status = collection["editStatus"].ToString() == "" ? false : true
-            };
+                Classificacao = collection["classificacao"].ToString(),
+                PontoInicial = Convert.ToInt32(collection["pontoInicial"].ToString()),
+                PontoFinal = Convert.ToInt32(collection["pontoFinal"].ToString()),
+                Aviso = Convert.ToInt32(collection["aviso"].ToString()),
+                Texto = Convert.ToInt32(collection["texto"].ToString()),
+			};
 
             await ApiClientFactory.Instance.UpdateTesteLaudo(command.Id, command);
 
