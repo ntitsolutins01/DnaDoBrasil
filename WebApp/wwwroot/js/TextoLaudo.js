@@ -1,5 +1,5 @@
 var vm = new Vue({
-    el: "#vTesteLaudo",
+    el: "#vTextoLaudo",
     data: {
         loading: false,
         editDto: { Id: "", Nome: "", Vo2MaxIni: "", Vo2MaxFim: "", VinteMetrosIni: "", VinteMetrosFim: "", ShutlleRunIni: "", ShutlleRunFim: "", FlexibilidadeIni: "", FlexibilidadeFim: "", PreensaoManualIni: "", PreensaoManualFim: "", AbdominalPranchaIni: "", AbdominalPranchaFim: "", ImpulsaoIni: "", ImpulsaoFim: "", EnvergaduraIni: "", EnvergaduraFim: "", PesoIni: "", PesoFim: "", AlturaIni: "", AlturaFim: "", Status: true }
@@ -22,9 +22,9 @@ var vm = new Vue({
 
             var formid = $('form').attr('id');
 
-            if (formid === "formEditTesteLaudo") {
+            if (formid === "formEditTextoLaudo") {
 
-                $("#formEditTesteLaudo").validate({
+                $("#formEditTextoLaudo").validate({
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
                     },
@@ -44,9 +44,9 @@ var vm = new Vue({
                 });
             } 
 
-            if (formid === "formTesteLaudo") {
+            if (formid === "formTextoLaudo") {
 
-                $("#formTesteLaudo").validate({
+                $("#formTextoLaudo").validate({
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
                     },
@@ -87,14 +87,14 @@ var vm = new Vue({
                 self.loading = flag;
             }
         },
-        DeleteTesteLaudo: function (id) {
-            var url = "TesteLaudo/Delete/" + id;
-            $("#deleteTesteLaudoHref").prop("href", url);
+        DeleteTextoLaudo: function (id) {
+            var url = "TextoLaudo/Delete/" + id;
+            $("#deleteTextoLaudoHref").prop("href", url);
         },
-        EditTesteLaudo: function (id) {
+        EditTextoLaudo: function (id) {
             var self = this;
 
-            axios.get("TesteLaudo/GetTesteLaudoById/?id=" + id).then(result => {
+            axios.get("TextoLaudo/GetTextoLaudoById/?id=" + id).then(result => {
 
                 self.editDto.Id = result.data.id;
                 self.editDto.Nome = result.data.nome;
@@ -129,13 +129,13 @@ var vm = new Vue({
 
 var crud = {
     DeleteModal: function (id) {
-        $('input[name="TesteLaudoId"]').attr('value', id);
-        $('#mdDeleteTesteLaudo').modal('show');
-        vm.DeleteTesteLaudo(id)
+        $('input[name="TextoLaudoId"]').attr('value', id);
+        $('#mdDeleteTextoLaudo').modal('show');
+        vm.DeleteTextoLaudo(id)
     },
     EditModal: function (id) {
-        $('input[name="TesteLaudoId"]').attr('value', id);
-        $('#mdEditTesteLaudo').modal('show');
-        vm.EditTesteLaudo(id)
+        $('input[name="TextoLaudoId"]').attr('value', id);
+        $('#mdEditTextoLaudo').modal('show');
+        vm.EditTextoLaudo(id)
     }
 };

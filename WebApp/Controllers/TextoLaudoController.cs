@@ -9,11 +9,11 @@ using WebApp.Utility;
 
 namespace WebApp.Controllers
 {
-    public class TesteLaudoController : BaseController
+    public class TextoLaudoController : BaseController
     {
         private readonly IOptions<UrlSettings> _appSettings;
 
-        public TesteLaudoController(IOptions<UrlSettings> appSettings)
+        public TextoLaudoController(IOptions<UrlSettings> appSettings)
         {
             _appSettings = appSettings;
             ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
@@ -23,9 +23,9 @@ namespace WebApp.Controllers
         {
             SetNotifyMessage(notify, message);
             SetCrudMessage(crud);
-            var response = ApiClientFactory.Instance.GetTesteLaudoAll();
+            var response = ApiClientFactory.Instance.GetTextoLaudoAll();
 
-            return View(new TesteLaudoModel() { TesteLaudos = response });
+            return View(new TextoLaudoModel() { TextosLaudos = response });
         }
 
         //[ClaimsAuthorize("ConfiguracaoSistema", "Incluir")]
@@ -43,7 +43,7 @@ namespace WebApp.Controllers
         {
             try
             {
-                var command = new TesteLaudoModel.CreateUpdateTesteLaudoCommand
+                var command = new TextoLaudoModel.CreateUpdateTextoLaudoCommand
                 {
                     Classificacao = collection["classificacao"].ToString(),
                     PontoInicial = Convert.ToInt32(collection["pontoInicial"].ToString()),
@@ -52,7 +52,7 @@ namespace WebApp.Controllers
                     Texto = Convert.ToInt32(collection["texto"].ToString()),
                 };
 
-                await ApiClientFactory.Instance.CreateTesteLaudo(command);
+                await ApiClientFactory.Instance.CreateTextoLaudo(command);
 
                 return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
             }
@@ -65,9 +65,9 @@ namespace WebApp.Controllers
         //[ClaimsAuthorize("Usuario", "Alterar")]
         public async Task<ActionResult> Edit(IFormCollection collection)
         {
-            var command = new TesteLaudoModel.CreateUpdateTesteLaudoCommand
+            var command = new TextoLaudoModel.CreateUpdateTextoLaudoCommand
             {
-                Id = Convert.ToInt32(collection["editTesteLaudoId"]),
+                Id = Convert.ToInt32(collection["editTextoLaudoId"]),
                 Classificacao = collection["classificacao"].ToString(),
                 PontoInicial = Convert.ToInt32(collection["pontoInicial"].ToString()),
                 PontoFinal = Convert.ToInt32(collection["pontoFinal"].ToString()),
@@ -75,7 +75,7 @@ namespace WebApp.Controllers
                 Texto = Convert.ToInt32(collection["texto"].ToString()),
 			};
 
-            await ApiClientFactory.Instance.UpdateTesteLaudo(command.Id, command);
+            await ApiClientFactory.Instance.UpdateTextoLaudo(command.Id, command);
 
             return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
         }
@@ -85,7 +85,7 @@ namespace WebApp.Controllers
         {
             try
             {
-                ApiClientFactory.Instance.DeleteTesteLaudo(id);
+                ApiClientFactory.Instance.DeleteTextoLaudo(id);
                 return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
             }
             catch
@@ -94,9 +94,9 @@ namespace WebApp.Controllers
             }
         }
 
-        public Task<TesteLaudoDto> GetTesteLaudoById(int id)
+        public Task<TextoLaudoDto> GetTextoLaudoById(int id)
         {
-            var result = ApiClientFactory.Instance.GetTesteLaudoById(id);
+            var result = ApiClientFactory.Instance.GetTextoLaudoById(id);
 
             return Task.FromResult(result);
         }

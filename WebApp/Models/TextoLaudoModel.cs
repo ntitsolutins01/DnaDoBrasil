@@ -4,21 +4,21 @@ using WebApp.Dto;
 
 namespace WebApp.Models
 {
-    public class TesteLaudoModel
+    public class TextoLaudoModel
     {
-        public TesteLaudoDto TesteLaudo { get; set; }
-        public List<TesteLaudoDto> TesteLaudos { get; set; }
-        public string TesteLaudoId { get; set; }
-        public SelectList ListTesteLaudos { get; set; }
+        public TextoLaudoDto TextoLaudo { get; set; }
+        public List<TextoLaudoDto> TextosLaudos { get; set; }
+        public string TextoLaudoId { get; set; }
+        public SelectList ListTextosLaudos { get; set; }
 
-        public class CreateUpdateTesteLaudoCommand
+        public class CreateUpdateTextoLaudoCommand
         {
+            public int Id { get; set; }
             public string Classificacao { get; set; }
             public decimal PontoInicial { get; set; }
             public decimal PontoFinal { get; set; }
             public int Aviso { get; set; }
             public int Texto { get; set; }
-            public int Id { get; set; }
         }
     }
 

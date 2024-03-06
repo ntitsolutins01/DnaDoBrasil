@@ -5,27 +5,27 @@ namespace WebApp.ApiClient
 {
     public partial class DnaApiClient
     {
-	    private const string ResourceTesteLaudo = "TesteLaudos";
+	    private const string ResourceTextoLaudo = "TextosLaudos";
 
 		#region Main Methods
 
-		public Task<long> CreateTesteLaudo(TesteLaudoModel.CreateUpdateTesteLaudoCommand command)
+		public Task<long> CreateTextoLaudo(TextoLaudoModel.CreateUpdateTextoLaudoCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceTesteLaudo}"));
+                $"{ResourceTextoLaudo}"));
             return Post(requestUrl, command);
         }
-        public Task<bool> UpdateTesteLaudo(int id, TesteLaudoModel.CreateUpdateTesteLaudoCommand command)
+        public Task<bool> UpdateTextoLaudo(int id, TextoLaudoModel.CreateUpdateTextoLaudoCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceTesteLaudo}/{id}"));
+                $"{ResourceTextoLaudo}/{id}"));
             return Put(requestUrl, command);
         }
 
-        public Task<bool> DeleteTesteLaudo(int id)
+        public Task<bool> DeleteTextoLaudo(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceTesteLaudo}/{id}"));
+                $"{ResourceTextoLaudo}/{id}"));
             return Delete<bool>(requestUrl);
         }
 
@@ -33,17 +33,17 @@ namespace WebApp.ApiClient
 
         #region Methods
 
-        public TesteLaudoDto GetTesteLaudoById(int id)
+        public TextoLaudoDto GetTextoLaudoById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceTesteLaudo}/TesteLaudo/{id}"));
-            return Get<TesteLaudoDto>(requestUrl);
+                $"{ResourceTextoLaudo}/TextoLaudo/{id}"));
+            return Get<TextoLaudoDto>(requestUrl);
         }
-        public List<TesteLaudoDto> GetTesteLaudoAll()
+        public List<TextoLaudoDto> GetTextoLaudoAll()
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceTesteLaudo}"));
-            return Get<List<TesteLaudoDto>>(requestUrl);
+                $"{ResourceTextoLaudo}"));
+            return Get<List<TextoLaudoDto>>(requestUrl);
         }
 
         #endregion
