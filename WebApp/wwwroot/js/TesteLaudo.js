@@ -1,0 +1,141 @@
+var vm = new Vue({
+    el: "#vTesteLaudo",
+    data: {
+        loading: false,
+        editDto: { Id: "", Nome: "", Vo2MaxIni: "", Vo2MaxFim: "", VinteMetrosIni: "", VinteMetrosFim: "", ShutlleRunIni: "", ShutlleRunFim: "", FlexibilidadeIni: "", FlexibilidadeFim: "", PreensaoManualIni: "", PreensaoManualFim: "", AbdominalPranchaIni: "", AbdominalPranchaFim: "", ImpulsaoIni: "", ImpulsaoFim: "", EnvergaduraIni: "", EnvergaduraFim: "", PesoIni: "", PesoFim: "", AlturaIni: "", AlturaFim: "", Status: true }
+    },
+    mounted: function () {
+        var self = this;
+        (function ($) {
+            'use strict';
+
+            if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
+
+                $(function () {
+                    $('[data-plugin-ios-switch]').each(function () {
+                        var $this = $(this);
+
+                        $this.themePluginIOS7Switch();
+                    });
+                });
+            }
+
+            var formid = $('form').attr('id');
+
+            if (formid === "formEditTesteLaudo") {
+
+                $("#formEditTesteLaudo").validate({
+                    highlight: function (label) {
+                        $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
+                    },
+                    success: function (label) {
+                        $(label).closest('.form-group').removeClass('has-error');
+                        label.remove();
+                    },
+                    errorPlacement: function (error, element) {
+                        var placement = element.closest('.input-group');
+                        if (!placement.get(0)) {
+                            placement = element;
+                        }
+                        if (error.text() !== '') {
+                            placement.after(error);
+                        }
+                    }
+                });
+            } 
+
+            if (formid === "formTesteLaudo") {
+
+                $("#formTesteLaudo").validate({
+                    highlight: function (label) {
+                        $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
+                    },
+                    success: function (label) {
+                        $(label).closest('.form-group').removeClass('has-error');
+                        label.remove();
+                    },
+                    errorPlacement: function (error, element) {
+                        var placement = element.closest('.input-group');
+                        if (!placement.get(0)) {
+                            placement = element;
+                        }
+                        if (error.text() !== '') {
+                            placement.after(error);
+                        }
+                    }
+                });
+            } 
+        }).apply(this, [jQuery]);
+    },
+    methods: {
+        ShowLoad: function (flag, el) {
+            var self = this;
+
+            self.isLoading = flag;
+            $("#" + el).loadingOverlay({
+                "startShowing": flag
+            });
+            self.loading = flag;
+
+            if (!flag) {
+                self.isLoading = flag;
+                $("#" + el).removeClass("loading-overlay-showing");
+                self.loading = flag;
+            } else {
+                self.isLoading = flag;
+                $("#" + el).addClass("loading-overlay-showing");
+                self.loading = flag;
+            }
+        },
+        DeleteTesteLaudo: function (id) {
+            var url = "TesteLaudo/Delete/" + id;
+            $("#deleteTesteLaudoHref").prop("href", url);
+        },
+        EditTesteLaudo: function (id) {
+            var self = this;
+
+            axios.get("TesteLaudo/GetTesteLaudoById/?id=" + id).then(result => {
+
+                self.editDto.Id = result.data.id;
+                self.editDto.Nome = result.data.nome;
+                self.editDto.Status = result.data.status;
+                self.editDto.Vo2MaxIni = result.data.vo2MaxIni;
+                self.editDto.Vo2MaxFim = result.data.vo2MaxFim;
+                self.editDto.VinteMetrosIni = result.data.vinteMetrosIni;
+                self.editDto.VinteMetrosFim = result.data.vinteMetrosFim;
+                self.editDto.ShutlleRunIni = result.data.shutlleRunIni;
+                self.editDto.ShutlleRunFim = result.data.shutlleRunFim;
+                self.editDto.FlexibilidadeIni = result.data.flexibilidadeIni;
+                self.editDto.FlexibilidadeFim = result.data.flexibilidadeFim;
+                self.editDto.PreensaoManualIni = result.data.preensaoManualIni;
+                self.editDto.PreensaoManualFim = result.data.preensaoManualFim;
+                self.editDto.AbdominalPranchaIni = result.data.abdominalPranchaIni;
+                self.editDto.AbdominalPranchaFim = result.data.abdominalPranchaFim;
+                self.editDto.ImpulsaoIni = result.data.impulsaoIni;
+                self.editDto.ImpulsaoFim = result.data.impulsaoFim;
+                self.editDto.EnvergaduraIni = result.data.envergaduraIni;
+                self.editDto.EnvergaduraFim = result.data.envergaduraFim;
+                self.editDto.PesoIni = result.data.pesoIni;
+                self.editDto.PesoFim = result.data.pesoFim;
+                self.editDto.AlturaIni = result.data.alturaIni;
+                self.editDto.AlturaFim = result.data.alturaFim  ;
+
+            }).catch(error => {
+                Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
+            });
+        }
+    }
+});
+
+var crud = {
+    DeleteModal: function (id) {
+        $('input[name="TesteLaudoId"]').attr('value', id);
+        $('#mdDeleteTesteLaudo').modal('show');
+        vm.DeleteTesteLaudo(id)
+    },
+    EditModal: function (id) {
+        $('input[name="TesteLaudoId"]').attr('value', id);
+        $('#mdEditTesteLaudo').modal('show');
+        vm.EditTesteLaudo(id)
+    }
+};
