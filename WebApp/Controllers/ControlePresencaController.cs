@@ -47,10 +47,10 @@ namespace WebApp.Controllers
                 {
 					MunicipioId = collection["ddlMunicipio"] == "" ? null : Convert.ToInt32(collection["ddlMunicipio"].ToString()).ToString(),
 					LocalidadeId = collection["ddlLocalidade"] == "" ? null : Convert.ToInt32(collection["ddlLocalidade"].ToString()),
-					Controle = Convert.ToInt32(collection["controle"].ToString()),
-					Justificativa = Convert.ToInt32(collection["justificativa"].ToString()),
-                    AlunoId = 0
-                };
+					Controle = collection["controle"].ToString(),
+					Justificativa = collection["justificativa"].ToString(),
+                    AlunoId = collection["ddlAluno"] == "" ? null : Convert.ToInt32(collection["ddlAluno"].ToString()).ToString(),
+				};
 
                 await ApiClientFactory.Instance.CreateControlePresenca(command);
 
@@ -68,11 +68,11 @@ namespace WebApp.Controllers
             var command = new ControlePresencaModel.CreateUpdateControlePresencaCommand
             {
                 Id = Convert.ToInt32(collection["editControlePresencaId"]),
-				MunicipioId = collection["ddlMunicipio"] == "" ? null : Convert.ToInt32(collection["ddlMunicipio"].ToString()).ToString(),
-				LocalidadeId = collection["ddlLocalidade"] == "" ? null : Convert.ToInt32(collection["ddlLocalidade"].ToString()),
-				Controle = Convert.ToInt32(collection["controle"].ToString()),
-				Justificativa = Convert.ToInt32(collection["justificativa"].ToString()),
-				AlunoId = 0
+                MunicipioId = collection["ddlMunicipio"] == "" ? null : Convert.ToInt32(collection["ddlMunicipio"].ToString()).ToString(),
+                LocalidadeId = collection["ddlLocalidade"] == "" ? null : Convert.ToInt32(collection["ddlLocalidade"].ToString()),
+                Controle = collection["controle"].ToString(),
+                Justificativa = collection["justificativa"].ToString(),
+                AlunoId = collection["ddlAluno"] == "" ? null : Convert.ToInt32(collection["ddlAluno"].ToString()).ToString(),
 			};
 
             await ApiClientFactory.Instance.UpdateControlePresenca(command.Id, command);

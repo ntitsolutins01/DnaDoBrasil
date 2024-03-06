@@ -39,14 +39,6 @@
 									<td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Aluno)</td>
 									<td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Controle)>
 									<td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Justificativa)</td>
-										@if (item.Status)
-										{
-										<td class="text-center"><span class="label label-success">ATIVO</span></td>
-										}
-										else
-										{
-										<td class="text-center"><span class="label label-danger">INATIVO</span></td>
-										}
 									<td class="actions">
 										<a data-toggle="tooltip" data-placement="top" title="Editar"
 										   href='javascript:(crud.EditModal(@item.Id))'
@@ -105,65 +97,33 @@
 					<input type="hidden" name="editControlePresencaId" :value="editDto.Id" />
 
 					<div class="modal-body">
-						<div class="form-group">
-							<label class="col-sm-2 control-label text-sm-right pt-2">Estado <span class="required">*</span></label>
-							<div class="col-md-4">
-								<select class="form-control populate select2" name="ddlEstado" id="ddlEstado"
-										title="Por favor informe um Estado." required
-										asp-for="EstadoId" asp-items="Model.ListEstados">
-									<option value="">Selecionar Estado</option>
-								</select>
+						<div class="form-group row">
+							<label class="col-sm-3 control-label text-sm-right pt-2">Município / UF</label>
+							<div class="col-sm-5">
+								<input type="text" name="municipio" class="form-control" :value="editDto.MunicipioEstado" readonly />
 							</div>
-							<label class="col-sm-2 control-label text-sm-right pt-2">Município <span class="required">*</span></label>
-							<div class="col-md-4">
-								<select class="form-control populate select2" name="ddlMunicipio" id="ddlMunicipio"
-										title="Por favor informe um Municipio." required
-										asp-for="MunicipioId" asp-items="Model.ListMunicipios">
-									<option value="">Selecionar Município</option>
-								</select>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-3 control-label text-sm-right pt-2">Localidade</label>
+							<div class="col-sm-9">
+								<input type="text" name="localidade" class="form-control" :value="editDto.Localidade" readonly />
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-2 control-label text-sm-right pt-2">Localidade <span class="required">*</span></label>
+							<label class="col-sm-3 control-label text-sm-right pt-2">Aluno <span class="required">*</span></label>
 							<div class="col-md-4">
-								<select class="form-control populate select2" name="ddlLocalidade" id="ddlLocalidade"
-										title="Por favor informe a localidade." required
-										asp-for="LocalidadeId" asp-items="Model.ListLocalidades">
-									<option value="">Selecionar Localidade</option>
-								</select>
-							</div>
-							<label class="col-sm-2 control-label text-sm-right pt-2">Aluno <span class="required">*</span></label>
-							<div class="col-md-4">
-								<select class="form-control populate select2" name="ddlAluno" id="ddlAluno"
-										title="Por favor informe um Aluno." required
-										asp-for="AlunoId" asp-items="Model.ListAlunos">
-									<option value="">Selecionar Aluno</option>
-								</select>
+								<input type="text" name="aluno" class="form-control" :value="editDto.NomeAluno" readonly />
 							</div>
 						</div>
 						<div class="form-group row">
 							<label class="col-sm-3 control-label text-sm-right pt-2">Controle <span class="required">*</span></label>
 							<div class="col-sm-3">
-								<input type="number" name="controle" class="form-control" maxlength="2"
+								<input type="text" name="controle" class="form-control" maxlength="1" :value="editDto.Controle"
 									   title="Por favor informe o controle." required />
 							</div>
 							<label class="col-sm-2 control-label text-sm-right pt-2">Justificativa <span class="required">*</span></label>
 							<div class="col-sm-3">
-								<input type="number" name="justificativa" class="form-control" maxlength="2"
-									   title="Por favor informe a justificativa." required />
-							</div>
-						</div>
-						<div class="form-group row">
-							<label class="col-sm-3 control-label text-sm-right pt-2">Status</label>
-							<div class="col-md-3">
-								<div class="switch switch-sm switch-primary">
-									<div v-show="editDto.Status">
-										<input type="checkbox" id="editStatus" name="editStatus" data-plugin-ios-switch checked="checked" />
-									</div>
-									<div v-show="!editDto.Status">
-										<input type="checkbox" id="editStatus" name="editStatus" data-plugin-ios-switch />
-									</div>
-								</div>
+								<textarea class="form-control" rows="3" maxlength="500" :value="editDto.Justificativa" name="justificativa"></textarea>
 							</div>
 						</div>
 					</div>
@@ -178,14 +138,12 @@
 </div>
 
 @section CssSpecificVendor {
-	<link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />
+	<link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css" />
+	<link rel="stylesheet" href="~/assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
 }
 @section Scripts {
 	<script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
-	<script src="~/assets/vendor/ios7-switch/ios7-switch.js"></script>
-	<script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
-	<script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
-	<script src="~/js/formatTable.js"></script>
+	<script src="~/assets/vendor/select2/js/select2.js"></script>
 	<script src="~/js/ControlePresenca.js"></script>
 
 	<script>
