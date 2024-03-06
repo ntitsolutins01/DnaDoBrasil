@@ -4,6 +4,7 @@
     {
         public TalentoEsportivoDto TalentoEsportivo { get; set; }
         public VocacionalDto Vocacional { get; set; }
+        public string? StatusQualidadeDeVida { get; set; }
         public QualidadeVidaDto QualidadeDeVida { get; set; }
         public SaudeDto Saude { get; set; }
         public ConsumoAlimentarDto ConsumoAlimentar { get; set; }

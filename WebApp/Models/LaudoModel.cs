@@ -28,6 +28,13 @@ namespace WebApp.Models
         public class CreateUpdateLaudoCommand
 		{
 			public int Id { get; set; }
+            public string? StatusQualidadeDeVida { get; set; }
+            public string[] listQualidadeDeVida { get; set; }
+
+
+
+
+
             public decimal? Flexibilidade { get; set; }
             public decimal? PreensaoManual { get; set; }
             public decimal? Velocidade { get; set; }
@@ -46,7 +53,6 @@ namespace WebApp.Models
             public decimal? AlturaSaude { get; set; }
             public string[] ListVocacional { get; set; }
             public string[] listSaudeBucal { get; set; }
-            public string[] listQualidadeDeVida { get; set; }
             public string[] listConsumoAlimentar { get; set; }
 		}
 	}

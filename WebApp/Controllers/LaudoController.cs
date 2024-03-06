@@ -126,8 +126,25 @@ namespace WebApp.Controllers
 						listSaudeBucal.Add(item.Value);
 		            }
 	            }
+
+                var command = new LaudoModel.CreateUpdateLaudoCommand();
+
+                if (listQualidadeDeVida.Any())
+                {
+                    var totalRespQualidadeDeVida = ApiClientFactory.Instance.GetQuestionarioByTipoLaudo((int)EnumTipoLaudo.QualidadeVida).Count;
+
+                    await ApiClientFactory.Instance.CreateQualidadeVida(
+                        new QualidadeVidaModel.CreateUpdateQualidadeVidaCommand()
+                        {
+                            ListQualidadeDeVida = listQualidadeDeVida.ToArray(),
+                            ProfissionalId = Convert.ToInt32(collection["ddlProfissional"].ToString()),
+                            AlunoId = Convert.ToInt32(collection["ddlProfissional"].ToString())
+                        });
+
+                    command.StatusQualidadeDeVida = listQualidadeDeVida.Count == totalRespQualidadeDeVida ? "F" : "A";
+                }
 	           
-				var command = new LaudoModel.CreateUpdateLaudoCommand()
+				command = new LaudoModel.CreateUpdateLaudoCommand()
                 {
                     ImpulsaoHorizontal = Convert.ToDecimal(collection["impulsaoHorizontal"].ToString()),
                     Flexibilidade = Convert.ToDecimal(collection["flexibilidade"].ToString()),
