@@ -39,7 +39,7 @@ namespace WebApp.ApiClient
                 $"{ResourceTextoLaudo}/TextoLaudo/{id}"));
             return Get<TextoLaudoDto>(requestUrl);
         }
-        public List<TextoLaudoDto> GetTextoLaudoAll()
+        public List<TextoLaudoDto> GetTextosLaudosAll()
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 $"{ResourceTextoLaudo}"));

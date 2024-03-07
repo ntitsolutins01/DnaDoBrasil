@@ -2,7 +2,7 @@ var vm = new Vue({
     el: "#vTextoLaudo",
     data: {
         loading: false,
-        editDto: { Id: "", Nome: "", Vo2MaxIni: "", Vo2MaxFim: "", VinteMetrosIni: "", VinteMetrosFim: "", ShutlleRunIni: "", ShutlleRunFim: "", FlexibilidadeIni: "", FlexibilidadeFim: "", PreensaoManualIni: "", PreensaoManualFim: "", AbdominalPranchaIni: "", AbdominalPranchaFim: "", ImpulsaoIni: "", ImpulsaoFim: "", EnvergaduraIni: "", EnvergaduraFim: "", PesoIni: "", PesoFim: "", AlturaIni: "", AlturaFim: "", Status: true }
+        editDto: { Id: "", Classificacao: "", PontoInicial: "", PontoFinal: "", Aviso: "", Txto: "" }
     },
     mounted: function () {
         var self = this;
@@ -97,28 +97,11 @@ var vm = new Vue({
             axios.get("TextoLaudo/GetTextoLaudoById/?id=" + id).then(result => {
 
                 self.editDto.Id = result.data.id;
-                self.editDto.Nome = result.data.nome;
-                self.editDto.Status = result.data.status;
-                self.editDto.Vo2MaxIni = result.data.vo2MaxIni;
-                self.editDto.Vo2MaxFim = result.data.vo2MaxFim;
-                self.editDto.VinteMetrosIni = result.data.vinteMetrosIni;
-                self.editDto.VinteMetrosFim = result.data.vinteMetrosFim;
-                self.editDto.ShutlleRunIni = result.data.shutlleRunIni;
-                self.editDto.ShutlleRunFim = result.data.shutlleRunFim;
-                self.editDto.FlexibilidadeIni = result.data.flexibilidadeIni;
-                self.editDto.FlexibilidadeFim = result.data.flexibilidadeFim;
-                self.editDto.PreensaoManualIni = result.data.preensaoManualIni;
-                self.editDto.PreensaoManualFim = result.data.preensaoManualFim;
-                self.editDto.AbdominalPranchaIni = result.data.abdominalPranchaIni;
-                self.editDto.AbdominalPranchaFim = result.data.abdominalPranchaFim;
-                self.editDto.ImpulsaoIni = result.data.impulsaoIni;
-                self.editDto.ImpulsaoFim = result.data.impulsaoFim;
-                self.editDto.EnvergaduraIni = result.data.envergaduraIni;
-                self.editDto.EnvergaduraFim = result.data.envergaduraFim;
-                self.editDto.PesoIni = result.data.pesoIni;
-                self.editDto.PesoFim = result.data.pesoFim;
-                self.editDto.AlturaIni = result.data.alturaIni;
-                self.editDto.AlturaFim = result.data.alturaFim  ;
+                self.editDto.Classificacao = result.data.classificacao;
+                self.editDto.PontoInicial = result.data.pontoinicial;
+                self.editDto.PontoFinal = result.data.pontofinal;
+                self.editDto.Aviso = result.data.aviso;
+                self.editDto.Texto = result.data.texto;
 
             }).catch(error => {
                 Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
@@ -129,12 +112,12 @@ var vm = new Vue({
 
 var crud = {
     DeleteModal: function (id) {
-        $('input[name="TextoLaudoId"]').attr('value', id);
+        $('input[name="deleteTextoLaudoId"]').attr('value', id);
         $('#mdDeleteTextoLaudo').modal('show');
         vm.DeleteTextoLaudo(id)
     },
     EditModal: function (id) {
-        $('input[name="TextoLaudoId"]').attr('value', id);
+        $('input[name="editTextoLaudoId"]').attr('value', id);
         $('#mdEditTextoLaudo').modal('show');
         vm.EditTextoLaudo(id)
     }
