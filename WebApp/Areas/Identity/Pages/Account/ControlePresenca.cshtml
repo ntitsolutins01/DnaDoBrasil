@@ -1,0 +1,126 @@
+@page
+@model ControlePresencaModel
+@{
+    ViewData["Title"] = "Registrar";
+}
+
+<section class="body-sign">
+    <div class="center-sign">
+        <a href="/" class="logo pull-left">
+            <img src="~/assets/images/logo.png" height="94" alt="Dna do Brasil" />
+        </a>
+
+        <div class="panel panel-sign">
+            <div class="panel-title-sign mt-xl text-right">
+                <h2 class="title text-uppercase text-weight-bold m-none"><i class="fa fa-user mr-xs"></i> Controle de Presença</h2>
+            </div>
+            <div class="panel-body">
+
+                <div class="btn-group btn-group-justified">
+                    <a class="btn btn-success btn-lg" role="button" href="#" data-toggle="modal" data-target="#mdTermo"><i class="fa fa-user-plus"></i><br />Presença</a>
+                    <a class="btn btn-danger btn-lg" role="button" href="#" data-toggle="modal" data-target="#mdTermo"><i class="fa fa-user-times"></i><br />Falta</a>
+                    <a class="btn btn-warning btn-lg" role="button" href="#" data-toggle="modal" data-target="#mdTermo"><i class="fa fa-file-text"></i><br />Justificativa</a>
+                </div>
+            </div>
+        </div>
+
+        <p class="text-center text-muted mt-md mb-md">&copy; Copyright 2024. Todos os direitos reservados.</p>
+    </div>
+</section>
+<!-- Modal -->
+<div class="modal fade" id="mdTermo" tabindex="-1" role="dialog" aria-labelledby="mdTermoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mdTermoLabel">
+                    <i class="fa fa-unlock-alt"></i> &nbsp;&nbsp;<strong>Validar Login</strong>
+                </h5>
+            </div>
+            <form asp-route-returnUrl="@Model.ReturnUrl" autocomplete="off" method="post" id="formControlePresenca">
+                @if (Request.HasFormContentType)
+                {
+                    <div asp-validation-summary="All" class="alert alert-mini alert-danger margin-bottom-30"></div>
+                }
+                <div class="modal-body">
+                    <div class="form-group mb-lg">
+                        <label>Usuário</label>
+                        <div class="input-group input-group-icon">
+                            <input asp-for="Login.Email" type="text" class="form-control form-control-lg" />
+                            <span class="input-group-addon">
+                                <span class="icon icon-lg">
+                                    <i class="fa fa-user"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-lg">
+                        <div class="clearfix">
+                            <label class="pull-left">Senha</label>
+                            <a asp-page="./ForgotPassword" class="pull-right">Senha perdida?</a>
+                        </div>
+                        <div class="input-group input-group-icon">
+                            <input asp-for="Login.Password" type="password" class="form-control form-control-lg" />
+                            <span class="input-group-addon">
+                                <span class="icon icon-lg">
+                                    <i class="fa fa-lock"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group mb-lg">
+                        <label>Justificativa</label>
+                        <div class="input-group input-group-icon">
+                            <textarea asp-for="Login.Justificativa" rows="3" class="form-control form-control-lg"></textarea>
+                            <span class="input-group-addon">
+                                <span class="icon icon-lg">
+                                    <i class="fa fa-file-text-o"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="reset" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-remove"></i> &nbsp;&nbsp;Fechar</button>
+                    <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/register.js"></script>
+    <script>
+
+        (function ($) {
+
+            'use strict';
+
+            var notify = @Model.NotifyMessage;
+            var messagem = '@Model.Notify';
+
+            if (notify === 0) {
+                new PNotify({
+                    title: 'Aluno',
+                    text: messagem,
+                    type: 'success'
+                });
+            } else if (notify === 1) {
+                new PNotify({
+                    title: 'Aluno',
+                    text: messagem,
+                    type: 'warning'
+                });
+            } else if (notify === 2) {
+                new PNotify({
+                    title: 'Aluno',
+                    text: messagem,
+                    type: 'error'
+                });
+            }
+
+
+        }).apply(this, [jQuery]);
+    </script>
+}

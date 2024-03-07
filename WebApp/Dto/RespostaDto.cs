@@ -8,6 +8,6 @@
         public int TipoLaudoId { get; set; }
         public required string NomeTipoLaudo { get; set; }
         public required string RespostaQuestionario { get; set; }
-        public required int ValorPesoResposta { get; set; }
+        public required decimal ValorPesoResposta { get; set; }
     }
 }

@@ -115,6 +115,8 @@ var vm = new Vue({
                         });
                 });
 
+
+
             }
 
 
@@ -157,3 +159,62 @@ var crud = {
         vm.DeleteDashboard(id)
     }
 };
+
+$(function () {
+
+    Highcharts.chart('containerPresenca', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: undefined
+        },
+        xAxis: {
+            categories: ['Jav', 'Fev', 'Mar',
+                'Abr', 'Mai', 'Jun',
+                'Jul', 'Ago', 'Set',
+                'Out', 'Nov', 'Dez'],
+            labels: {
+                    style: {
+                        fontSize: '15px'
+                    }
+                }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'QUantidade de Presenças e Faltas',
+                style: {
+                    fontSize: '10px'
+                }
+            },
+            labels: {
+                style: {
+                    fontSize: '15px'
+                }
+            }
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        tooltip: {
+            style: {
+                fontSize: '15px'
+            }
+        },
+        colors: ['#4CAF50', '#F44336'],
+        series: [
+            {
+                name: 'Presença',
+                data: [406292, 260000, 107000, 68300, 27500, 14500]
+            },
+            {
+                name: 'Falta',
+                data: [51086, 136000, 5500, 141000, 107180, 77000]
+            }
+        ]
+    });
+});

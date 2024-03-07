@@ -1,681 +1,627 @@
 ﻿@model DashboardModel
 @{
-	ViewData["Title"] = "Dashboard";
+    ViewData["Title"] = "Dashboard";
 }
 
 <div class="col-md-6 col-lg-12 col-xl-6">
-	<div class="row">
-			@using (@Html.BeginForm("Index", "Dashboard", FormMethod.Post, new { id = "formDashboard", @class = "form-horizontal" }))
-            {
-                <section class="panel">
-                    <header class="panel-heading">
-                        <div class="panel-actions">
-                            <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
-                        </div>
-                        <h2 class="panel-title">Filtro de pesquisa</h2>
-                    </header>
-                    <div class="panel-body">
-                        <label class="col-sm-2 control-label">Fomento:</label>
-                        <div class="col-md-4 form-group">
-                            <select class="form-control populate select2" name="ddlFomento" id="ddlFomento" style="width:100%"
-                                    asp-for="FomentoId" asp-items="Model.ListFomentos">
-                                <option value="">Selecionar Fomento</option>
-                            </select>
-                        </div>
-                        <label class="col-sm-2 control-label">Estado:</label>
-                        <div class="col-md-4 form-group">
-                            <select class="form-control populate select2" name="ddlEstado" id="ddlEstado" style="width:100%"
-                                    asp-for="EstadoId" asp-items="Model.ListEstados">
-                                <option value="">Selecionar Estado</option>
-                            </select>
-                        </div>
-                        <label class="col-sm-2 control-label">Municipio:</label>
-                        <div class="col-md-4 form-group">
-                            <select class="form-control populate select2" name="ddlMunicipio" id="ddlMunicipio" style="width:100%"
-                                    asp-for="MunicipioId" asp-items="Model.ListMunicipios">
-                                <option value="">Selecionar Municipio</option>
-                            </select>
-                        </div>
-                        <label class="col-sm-2 control-label">Localidade:</label>
-                        <div class="col-md-4 form-group">
-                            <select class="form-control populate select2" name="ddlLocalidade" id="ddlLocalidade" style="width:100%"
-                                    asp-for="LocalidadeId" asp-items="Model.ListLocalidades">
-                                <option value="">Selecionar Localidade</option>
-                            </select>
-                        </div>
-                        <label class="col-sm-2 control-label">Deficiencia:</label>
-                        <div class="col-md-4 form-group">
-						<select class="form-control populate select2" name="ddlDeficiencia" id="ddlDeficiencia"
-                                    asp-for="DeficienciaId" asp-items="Model.ListDeficiencias">
-                                <option value="">Selecionar Deficiência</option>
-                            </select>
-                        </div>
-                        <label class="col-sm-2 control-label">Etnia:</label>
-                        <div class="col-md-4 form-group">
+    <div class="row">
+        @using (@Html.BeginForm("Index", "Dashboard", FormMethod.Post, new { id = "formDashboard", @class = "form-horizontal" }))
+        {
+            <section class="panel">
+                <header class="panel-heading">
+                    <div class="panel-actions">
+                        <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
+                    </div>
+                    <h2 class="panel-title">Filtro de pesquisa</h2>
+                </header>
+                <div class="panel-body">
+                    <label class="col-sm-2 control-label">Fomento:</label>
+                    <div class="col-md-4 form-group">
+                        <select class="form-control populate select2" name="ddlFomento" id="ddlFomento" style="width:100%"
+                                asp-for="FomentoId" asp-items="Model.ListFomentos">
+                            <option value="">Selecionar Fomento</option>
+                        </select>
+                    </div>
+                    <label class="col-sm-2 control-label">Estado:</label>
+                    <div class="col-md-4 form-group">
+                        <select class="form-control populate select2" name="ddlEstado" id="ddlEstado" style="width:100%"
+                                asp-for="EstadoId" asp-items="Model.ListEstados">
+                            <option value="">Selecionar Estado</option>
+                        </select>
+                    </div>
+                    <label class="col-sm-2 control-label">Municipio:</label>
+                    <div class="col-md-4 form-group">
+                        <select class="form-control populate select2" name="ddlMunicipio" id="ddlMunicipio" style="width:100%"
+                                asp-for="MunicipioId" asp-items="Model.ListMunicipios">
+                            <option value="">Selecionar Municipio</option>
+                        </select>
+                    </div>
+                    <label class="col-sm-2 control-label">Localidade:</label>
+                    <div class="col-md-4 form-group">
+                        <select class="form-control populate select2" name="ddlLocalidade" id="ddlLocalidade" style="width:100%"
+                                asp-for="LocalidadeId" asp-items="Model.ListLocalidades">
+                            <option value="">Selecionar Localidade</option>
+                        </select>
+                    </div>
+                    <label class="col-sm-2 control-label">Deficiencia:</label>
+                    <div class="col-md-4 form-group">
+                        <select class="form-control populate select2" name="ddlDeficiencia" id="ddlDeficiencia"
+                                asp-for="DeficienciaId" asp-items="Model.ListDeficiencias">
+                            <option value="">Selecionar Deficiência</option>
+                        </select>
+                    </div>
+                    <label class="col-sm-2 control-label">Etnia:</label>
+                    <div class="col-md-4 form-group">
                         <select class="form-control populate select2" name="ddlEtnia" id="ddlEtnia" style="width:100%"
-                                    title="Por favor selecione um etnia."
-                                    asp-for="EtniaId" asp-items="Model.ListEtnias">
-                                <option value="">Selecionar Etnia</option>
-                            </select>
+                                title="Por favor selecione um etnia."
+                                asp-for="EtniaId" asp-items="Model.ListEtnias">
+                            <option value="">Selecionar Etnia</option>
+                        </select>
+                    </div>
+                </div>
+                <footer class="panel-footer">
+                    <div class="row">
+                        <div class="col-md-9 col-md-offset-3">
+                            <button type="submit" class="btn btn-primary pull-right" style="margin-left: 5px;margin-right: 5px;"><i class="fa fa-search"></i> &nbsp;&nbsp;Pesquisar</button>
                         </div>
                     </div>
-                    <footer class="panel-footer">
-                        <div class="row">
-                            <div class="col-md-9 col-md-offset-3">
-                                <button type="submit" class="btn btn-primary pull-right" style="margin-left: 5px;margin-right: 5px;"><i class="fa fa-search"></i> &nbsp;&nbsp;Pesquisar</button>
+                </footer>
+            </section>
+        }
+        <div class="col-md-4 col-xl-12">
+            <section class="panel">
+                <div class="panel-body bg-primary" style="background-color: #673AB7 !important">
+                    <div class="widget-summary">
+                        <div class="widget-summary-col widget-summary-col-icon">
+                            <div class="summary-icon">
+                                <i class="fa fa-bar-chart"></i>
                             </div>
                         </div>
-                    </footer>
-                </section>
-            }
-            <div class="col-md-4 col-xl-12">
-			<section class="panel">
-				<div class="panel-body bg-primary" style="background-color: #673AB7 !important">
-					<div class="widget-summary">
-						<div class="widget-summary-col widget-summary-col-icon">
-							<div class="summary-icon">
-								<i class="fa fa-bar-chart"></i>
-							</div>
-						</div>
-						<div class="widget-summary-col">
-							<div class="summary">
-								<h4 class="title">Avaliações DNA do Brasil</h4>
-								<div class="info">
-									<strong class="amount">0</strong>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
-		</div>
-		<div class="col-md-4 col-xl-12">
-			<section class="panel">
-				<div class="panel-body bg-primary" style="background-color: #F44336 !important">
-					<div class="widget-summary">
-						<div class="widget-summary-col widget-summary-col-icon">
-							<div class="summary-icon">
-								<i class="fa fa-file-text"></i>
-							</div>
-						</div>
-						<div class="widget-summary-col">
-							<div class="summary">
-								<h4 class="title">Laudos em andamento</h4>
-								<div class="info">
-									<strong class="amount">0</strong>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
-		</div>
-		<div class="col-md-4 col-xl-12">
-			<section class="panel">
-				<div class="panel-body bg-primary" style="background-color: #4CAF50 !important">
-					<div class="widget-summary">
-						<div class="widget-summary-col widget-summary-col-icon">
-							<div class="summary-icon">
-								<i class="fa fa-check-square"></i>
-							</div>
-						</div>
-						<div class="widget-summary-col">
-							<div class="summary">
-								<h4 class="title">Laudos Finalizados</h4>
-								<div class="info">
-									<strong class="amount">0</strong>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
-		</div>
-		<div class="col-md-4 col-xl-12">
-			<section class="panel">
-				<div class="panel-body bg-primary" style="background-color: #3F51B5 !important">
-					<div class="widget-summary">
-						<div class="widget-summary-col widget-summary-col-icon">
-							<div class="summary-icon">
-								<i class="fa fa-male"></i>
-							</div>
-						</div>
-						<div class="widget-summary-col">
-							<div class="summary">
-								<h4 class="title">Cadastros masculino</h4>
-								<div class="info">
-									<strong class="amount">@Model.Indicadores.CadastrosMasculinos</strong>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
-		</div>
-		<div class="col-md-4 col-xl-12">
-			<section class="panel">
-				<div class="panel-body bg-primary" style="background-color: #E91E63 !important">
-					<div class="widget-summary">
-						<div class="widget-summary-col widget-summary-col-icon">
-							<div class="summary-icon">
-								<i class="fa fa-female"></i>
-							</div>
-						</div>
-						<div class="widget-summary-col">
-							<div class="summary">
-								<h4 class="title">Cadastros feminino</h4>
-								<div class="info">
-									<strong class="amount">@Model.Indicadores.CadastrosFemininos</strong>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
-		</div>
-		<div class="col-md-4 col-xl-12">
-			<section class="panel">
-				<div class="panel-body bg-primary" style="background-color: #2196F3 !important">
-					<div class="widget-summary">
-						<div class="widget-summary-col widget-summary-col-icon">
-							<div class="summary-icon">
-								<i class="fa fa-users"></i>
-							</div>
-						</div>
-						<div class="widget-summary-col">
-							<div class="summary">
-								<h4 class="title">Alunos Cadastrados</h4>
-								<div class="info">
-									<strong class="amount">@Model.Indicadores.AlunosCadastrados</strong>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
-		</div>
-		<div class="col-md-4 col-xl-12">
-			<section class="panel">
-				<div class="panel-body bg-primary" style="background-color: #3F51B5 !important">
-					<div class="widget-summary">
-						<div class="widget-summary-col widget-summary-col-icon">
-							<div class="summary-icon">
-								<i class="fa fa-id-card"></i>
-							</div>
-						</div>
-						<div class="widget-summary-col">
-							<div class="summary">
-								<h4 class="title">Laudos Masculino</h4>
-								<div class="info">
-									<strong class="amount">0</strong>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
-		</div>
-		<div class="col-md-4 col-xl-12">
-			<section class="panel">
-				<div class="panel-body bg-primary" style="background-color: #E91E63 !important">
-					<div class="widget-summary">
-						<div class="widget-summary-col widget-summary-col-icon">
-							<div class="summary-icon">
-								<i class="fa fa-id-card-o"></i>
-							</div>
-						</div>
-						<div class="widget-summary-col">
-							<div class="summary">
-								<h4 class="title">Laudos Feminino</h4>
-								<div class="info">
-									<strong class="amount">0</strong>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
-		</div>
-	</div>
-	@* <div class="row">
-	<div class="col-md-12 col-lg-6 col-xl-6">
-	</div>
-	<div class="col-md-12 col-lg-6 col-xl-6">
+                        <div class="widget-summary-col">
+                            <div class="summary">
+                                <h4 class="title">Avaliações DNA do Brasil</h4>
+                                <div class="info">
+                                    <strong class="amount">0</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="col-md-4 col-xl-12">
+            <section class="panel">
+                <div class="panel-body bg-primary" style="background-color: #F44336 !important">
+                    <div class="widget-summary">
+                        <div class="widget-summary-col widget-summary-col-icon">
+                            <div class="summary-icon">
+                                <i class="fa fa-file-text"></i>
+                            </div>
+                        </div>
+                        <div class="widget-summary-col">
+                            <div class="summary">
+                                <h4 class="title">Laudos em andamento</h4>
+                                <div class="info">
+                                    <strong class="amount">0</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="col-md-4 col-xl-12">
+            <section class="panel">
+                <div class="panel-body bg-primary" style="background-color: #4CAF50 !important">
+                    <div class="widget-summary">
+                        <div class="widget-summary-col widget-summary-col-icon">
+                            <div class="summary-icon">
+                                <i class="fa fa-check-square"></i>
+                            </div>
+                        </div>
+                        <div class="widget-summary-col">
+                            <div class="summary">
+                                <h4 class="title">Laudos Finalizados</h4>
+                                <div class="info">
+                                    <strong class="amount">0</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="col-md-4 col-xl-12">
+            <section class="panel">
+                <div class="panel-body bg-primary" style="background-color: #3F51B5 !important">
+                    <div class="widget-summary">
+                        <div class="widget-summary-col widget-summary-col-icon">
+                            <div class="summary-icon">
+                                <i class="fa fa-male"></i>
+                            </div>
+                        </div>
+                        <div class="widget-summary-col">
+                            <div class="summary">
+                                <h4 class="title">Cadastros masculino</h4>
+                                <div class="info">
+                                    <strong class="amount">@Model.Indicadores.CadastrosMasculinos</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="col-md-4 col-xl-12">
+            <section class="panel">
+                <div class="panel-body bg-primary" style="background-color: #E91E63 !important">
+                    <div class="widget-summary">
+                        <div class="widget-summary-col widget-summary-col-icon">
+                            <div class="summary-icon">
+                                <i class="fa fa-female"></i>
+                            </div>
+                        </div>
+                        <div class="widget-summary-col">
+                            <div class="summary">
+                                <h4 class="title">Cadastros feminino</h4>
+                                <div class="info">
+                                    <strong class="amount">@Model.Indicadores.CadastrosFemininos</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="col-md-4 col-xl-12">
+            <section class="panel">
+                <div class="panel-body bg-primary" style="background-color: #2196F3 !important">
+                    <div class="widget-summary">
+                        <div class="widget-summary-col widget-summary-col-icon">
+                            <div class="summary-icon">
+                                <i class="fa fa-users"></i>
+                            </div>
+                        </div>
+                        <div class="widget-summary-col">
+                            <div class="summary">
+                                <h4 class="title">Alunos Cadastrados</h4>
+                                <div class="info">
+                                    <strong class="amount">@Model.Indicadores.AlunosCadastrados</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="col-md-4 col-xl-12">
+            <section class="panel">
+                <div class="panel-body bg-primary" style="background-color: #3F51B5 !important">
+                    <div class="widget-summary">
+                        <div class="widget-summary-col widget-summary-col-icon">
+                            <div class="summary-icon">
+                                <i class="fa fa-id-card"></i>
+                            </div>
+                        </div>
+                        <div class="widget-summary-col">
+                            <div class="summary">
+                                <h4 class="title">Laudos Masculino</h4>
+                                <div class="info">
+                                    <strong class="amount">0</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="col-md-4 col-xl-12">
+            <section class="panel">
+                <div class="panel-body bg-primary" style="background-color: #E91E63 !important">
+                    <div class="widget-summary">
+                        <div class="widget-summary-col widget-summary-col-icon">
+                            <div class="summary-icon">
+                                <i class="fa fa-id-card-o"></i>
+                            </div>
+                        </div>
+                        <div class="widget-summary-col">
+                            <div class="summary">
+                                <h4 class="title">Laudos Feminino</h4>
+                                <div class="info">
+                                    <strong class="amount">0</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    @* <div class="row">
+    <div class="col-md-12 col-lg-6 col-xl-6">
+    </div>
+    <div class="col-md-12 col-lg-6 col-xl-6">
 
-	</div>
-	</div> *@
+    </div>
+    </div> *@
 </div>
 
 
 
 <div class="row">
-	<div class="col-lg-4 col-md-12">
-		<section class="panel">
-			<header class="panel-heading">
-				<div class="panel-actions">
-					<a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
-				</div>
+    <div class="col-lg-4 col-md-12">
+        <section class="panel">
+            <header class="panel-heading">
+                <div class="panel-actions">
+                    <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
+                </div>
 
-				<h2 class="panel-title">Laudos</h2>
-			</header>
-			<div class="panel-body">
-				<div id="container"></div>
-			</div>
-		</section>
-	</div>
-	<div class="col-lg-8 col-md-12">
-		<section class="panel">
-			<header class="panel-heading">
-				<div class="panel-actions">
-					<a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
-				</div>
-				<h2 class="panel-title">Status dos Laudos</h2>
-			</header>
-			<div class="panel-body">
-				<div class="table-responsive">
-					<table class="table table-striped mb-none">
-						<thead>
-							<tr>
-								<th>Laudos</th>
-								<th>Finalizados</th>
-								<th>Em Andamento</th>
-								<th>Progresso</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td><span class="label label-success" style="background-color: #ea4153 !important">Talento Esportivo</span></td>
-								<td>28652</td>
-								<td>33693</td>
-								<td>
-									<div class="progress progress-sm progress-half-rounded m-none mt-xs light">
-										<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 45.96%;">
-											00.00%
-										</div>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td><span class="label label-success" style="background-color: #f2a845 !important">Saúde</span></td>
-								<td>28422</td>
-								<td>33955</td>
-								<td>
-									<div class="progress progress-sm progress-half-rounded m-none mt-xs light">
-										<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 45.56%;">
-											00.00%
-										</div>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td><span class="label label-warning" style="background-color: #6be2e3 !important">Qualidade de vida</span></td>
-								<td>7566</td>
-								<td>23028</td>
-								<td>
-									<div class="progress progress-sm progress-half-rounded m-none mt-xs light">
-										<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 24.73%;">
-											00.00%
-										</div>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td><span class="label label-success" style="background-color: #6937f4 !important">Vocacional</span></td>
-								<td>5668</td>
-								<td>17424</td>
-								<td>
-									<div class="progress progress-sm progress-half-rounded m-none mt-xs light">
-										<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 24.55%;">
-											00.00%
-										</div>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td><span class="label label-warning" style="background-color: #777 !important">Consumo Alimentar</span></td>
-								<td>5299</td>
-								<td>51493</td>
-								<td>
-									<div class="progress progress-sm progress-half-rounded m-none mt-xs light">
-										<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 9.33%;">
-											00.00%
-										</div>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td><span class="label label-danger" style="background-color: #777 !important">Saude Bucal</span></td>
-								<td>5306</td>
-								<td>50286</td>
-								<td>
-									<div class="progress progress-sm progress-half-rounded m-none mt-xs light">
-										<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 9.54%;">
-											00.00%
-										</div>
-									</div>
-								</td>
-							</tr>
+                <h2 class="panel-title">Laudos</h2>
+            </header>
+            <div class="panel-body">
+                <div id="container"></div>
+            </div>
+        </section>
+    </div>
+    <div class="col-lg-8 col-md-12">
+        <section class="panel">
+            <header class="panel-heading">
+                <div class="panel-actions">
+                    <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
+                </div>
+                <h2 class="panel-title">Status dos Laudos</h2>
+            </header>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-striped mb-none">
+                        <thead>
+                            <tr>
+                                <th>Laudos</th>
+                                <th>Finalizados</th>
+                                <th>Em Andamento</th>
+                                <th>Progresso</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="label label-success" style="background-color: #ea4153 !important">Talento Esportivo</span></td>
+                                <td>28652</td>
+                                <td>33693</td>
+                                <td>
+                                    <div class="progress progress-sm progress-half-rounded m-none mt-xs light">
+                                        <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 45.96%;">
+                                            00.00%
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span class="label label-success" style="background-color: #f2a845 !important">Saúde</span></td>
+                                <td>28422</td>
+                                <td>33955</td>
+                                <td>
+                                    <div class="progress progress-sm progress-half-rounded m-none mt-xs light">
+                                        <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 45.56%;">
+                                            00.00%
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span class="label label-warning" style="background-color: #6be2e3 !important">Qualidade de vida</span></td>
+                                <td>7566</td>
+                                <td>23028</td>
+                                <td>
+                                    <div class="progress progress-sm progress-half-rounded m-none mt-xs light">
+                                        <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 24.73%;">
+                                            00.00%
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span class="label label-success" style="background-color: #6937f4 !important">Vocacional</span></td>
+                                <td>5668</td>
+                                <td>17424</td>
+                                <td>
+                                    <div class="progress progress-sm progress-half-rounded m-none mt-xs light">
+                                        <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 24.55%;">
+                                            00.00%
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span class="label label-warning" style="background-color: #777 !important">Consumo Alimentar</span></td>
+                                <td>5299</td>
+                                <td>51493</td>
+                                <td>
+                                    <div class="progress progress-sm progress-half-rounded m-none mt-xs light">
+                                        <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 9.33%;">
+                                            00.00%
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span class="label label-danger" style="background-color: #777 !important">Saude Bucal</span></td>
+                                <td>5306</td>
+                                <td>50286</td>
+                                <td>
+                                    <div class="progress progress-sm progress-half-rounded m-none mt-xs light">
+                                        <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 9.54%;">
+                                            00.00%
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
 
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</section>
-	</div>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
 </div>
 
 
 <div class="row">
-	<div class="col-md-12">
-		<section class="panel">
-			<header class="panel-heading">
-				<div class="panel-actions">
-					<a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
-				</div>
+    <div class="col-md-12">
+        <section class="panel">
+            <header class="panel-heading">
+                <div class="panel-actions">
+                    <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
+                </div>
 
-				<h2 class="panel-title">Evolutivo - Desempenho Físico-Motor</h2>
-			</header>
-			<div class="panel-body">
-				<div id="containerEvolutivo"></div>
-			</div>
-		</section>
-	</div>
+                <h2 class="panel-title">Evolutivo - Desempenho Físico-Motor</h2>
+            </header>
+            <div class="panel-body">
+                <div id="containerEvolutivo"></div>
+            </div>
+        </section>
+    </div>
 </div>
 <div class="row">
-	<div class="col-md-12">
-		<section class="panel">
-			<header class="panel-heading">
-				<div class="panel-actions">
-					<a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
-				</div>
+    <div class="col-md-12">
+        <section class="panel">
+            <header class="panel-heading">
+                <div class="panel-actions">
+                    <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
+                </div>
 
-				<h2 class="panel-title">Presença</h2>
-			</header>
-			<div class="panel-body">
-				<div id="containerPresenca"></div>
-			</div>
-		</section>
-	</div>
+                <h2 class="panel-title">Controle de Presenças</h2>
+            </header>
+            <div class="panel-body">
+                <div id="containerPresenca"></div>
+            </div>
+        </section>
+    </div>
 </div>
 
 <div class="row">
-	<div class="col-lg-5 col-md-12">
-		<section class="panel">
-			<header class="panel-heading">
-				<div class="panel-actions">
-					<a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
-				</div>
+    <div class="col-lg-5 col-md-12">
+        <section class="panel">
+            <header class="panel-heading">
+                <div class="panel-actions">
+                    <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
+                </div>
 
-				<h2 class="panel-title">Etnia</h2>
-				<p class="panel-subtitle">Sintético</p>
-			</header>
-			<div class="panel-body">
-				<div id="containerEtniaSintetico"></div>
-			</div>
-		</section>
-	</div>
-	<div class="col-lg-7 col-md-12">
-		<section class="panel">
-			<header class="panel-heading">
-				<div class="panel-actions">
-					<a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
-				</div>
+                <h2 class="panel-title">Etnia</h2>
+                <p class="panel-subtitle">Sintético</p>
+            </header>
+            <div class="panel-body">
+                <div id="containerEtniaSintetico"></div>
+            </div>
+        </section>
+    </div>
+    <div class="col-lg-7 col-md-12">
+        <section class="panel">
+            <header class="panel-heading">
+                <div class="panel-actions">
+                    <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
+                </div>
 
-				<h2 class="panel-title">Talento Esportivo</h2>
-				<p class="panel-subtitle">Analítico</p>
-			</header>
-			<div class="panel-body">
-				<div class="table-responsive">
-					<div id="containerTalentoEsportivoAnalitico"></div>
+                <h2 class="panel-title">Talento Esportivo</h2>
+                <p class="panel-subtitle">Analítico</p>
+            </header>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <div id="containerTalentoEsportivoAnalitico"></div>
 
-				</div>
-			</div>
-		</section>
-	</div>
+                </div>
+            </div>
+        </section>
+    </div>
 </div>
 @section CssSpecificVendor {
-	<link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css" />
-	<link rel="stylesheet" href="~/assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
+    <link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css" />
+    <link rel="stylesheet" href="~/assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
 }
 @section Scripts {
-	<script src="https://code.highcharts.com/highcharts.js"></script>
-	<script src="https://code.highcharts.com/modules/variable-pie.js"></script>
-	<script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
-	<script src="~/assets/vendor/select2/js/select2.js"></script>
-	<script src="~/js/dashboard.js"></script>
-	<script>
-		$(function () {
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/variable-pie.js"></script>
+    <script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
+    <script src="~/assets/vendor/select2/js/select2.js"></script>
+    <script src="~/js/dahsboard.js"></script>
+    <script>
+        $(function () {
 
-			Highcharts.chart('container', {
+            Highcharts.chart('container', {
 
-				chart: {
-					type: 'column',
-					inverted: false
-				},
+                chart: {
+                    type: 'column',
+                    inverted: false
+                },
 
-				title: {
-					text: undefined
-				},
+                title: {
+                    text: undefined
+                },
 
-				xAxis: {
-					categories: ['Hoje', 'Última semana', 'Última mês']
-				},
+                xAxis: {
+                    categories: ['Hoje', 'Última semana', 'Última mês']
+                },
 
-				yAxis: {
-					title: {
-						text: 'Laudos'
-					}
-				},
+                yAxis: {
+                    title: {
+                        text: 'Laudos'
+                    }
+                },
 
-				plotOptions: {
-					columnrange: {
-						dataLabels: {
-							enabled: true,
-							formatter: function () {
-								return this.y;
-							}
-						}
-					}
-				},
+                plotOptions: {
+                    columnrange: {
+                        dataLabels: {
+                            enabled: true,
+                            formatter: function () {
+                                return this.y;
+                            }
+                        }
+                    }
+                },
 
-				legend: {
-					enabled: false
-				},
+                legend: {
+                    enabled: false
+                },
 
-				series: [{
-					name: 'Total',
-					data: [
-						{ y: 20.1, color: '#3949AB' },
-						{ y: 34.4, color: '#8E24AA' },
-						{ y: 11.7, color: '#1E88E5' }
-					]
-				}]
+                series: [{
+                    name: 'Total',
+                    data: [
+                        { y: 20.1, color: '#3949AB' },
+                        { y: 34.4, color: '#8E24AA' },
+                        { y: 11.7, color: '#1E88E5' }
+                    ]
+                }]
 
-			});
+            });
 
-		});
+        });
 
-		$(function () {
 
-			Highcharts.chart('containerPresenca', {
+        Highcharts.chart('containerEtniaSintetico', {
+            chart: {
+                type: 'variablepie'
+            },
+            title: {
+                text: undefined
+            },
+            tooltip: {
+                headerFormat: '',
+                pointFormat: '<span style="color:{point.color}">\u25CF</span> <b> {point.name}</b><br/>' +
+                    'Area (square km): <b>{point.y}</b><br/>' +
+                    'Population density (people per square km): <b>{point.z}</b><br/>'
+            },
+            series: [{
+                minPointSize: 10,
+                innerSize: '20%',
+                zMin: 0,
+                name: 'etnias',
+                borderRadius: 5,
+                data: [{
+                    name: 'PARDOS',
+                    y: 505992,
+                    z: 92
+                }, {
+                    name: 'BRANCOS',
+                    y: 551695,
+                    z: 119
+                }, {
+                    name: 'PRETOS',
+                    y: 312679,
+                    z: 121
+                }, {
+                    name: 'INDÍGENAS',
+                    y: 78865,
+                    z: 136
+                }, {
+                    name: 'AMARELOS',
+                    y: 301336,
+                    z: 200
+                }],
+                colors: [
+                    '#EF5350',
+                    '#EC407A',
+                    '#AB47BC',
+                    '#7E57C2',
+                    '#5C6BC0'
+                ]
+            }]
+        });
 
-				chart: {
-					type: 'column',
-					inverted: false
-				},
+        Highcharts.chart('containerTalentoEsportivoAnalitico', {
+            chart: {
+                type: 'bar'
+            },
+            title: {
+                text: undefined
+            },
+            xAxis: {
+                categories: ['Atletismo (Arremessos)', 'Atletismo (Corrida de Fundo)', 'Atletismo (Saltos)', 'Basquetebol', 'Ginástica']
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Total'
+                }
+            },
+            legend: {
+                reversed: true
+            },
+            plotOptions: {
+                series: {
+                    stacking: 'normal',
+                    dataLabels: {
+                        enabled: true
+                    }
+                }
+            },
+            series: [{
+                name: 'Feminino',
+                color: '#EC407A',
+                data: [5, 3, 12, 6, 11]
+            }, {
+                name: 'Masculino',
+                data: [5, 15, 8, 5, 8]
+            }]
+        });
 
-				title: {
-					text: undefined
-				},
+        Highcharts.chart('containerEvolutivo', {
+            xAxis: {
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            },
+            title: {
+                text: undefined
+            },
 
-				xAxis: {
-					categories: ['Jav', 'Fev', 'Mar',
-						'Abr', 'Mai', 'Jun',
-						'Jul', 'Ago', 'Set',
-						'Out', 'Nov', 'Dez']
-				},
+            yAxis: {
+                title: {
+                    text: undefined
+                }
+            },
 
-				yAxis: {
-					title: {
-						text: 'Laudos'
-					}
-				},
-
-				plotOptions: {
-					columnrange: {
-						dataLabels: {
-							enabled: true,
-							formatter: function () {
-								return this.y;
-							}
-						}
-					}
-				},
-
-				legend: {
-					enabled: false
-				},
-
-				series: [{
-					name: 'Total',
-					data: [
-						{ y: 20.1 }, { y: 34.4 }, { y: 11.7 },
-						{ y: 43.1 }, { y: 56.4 }, { y: 76.7 },
-						{ y: 23.1 }, { y: 34.4 }, { y: 97.7 },
-						{ y: 22.1 }, { y: 67.4 }, { y: 54.7 },
-					]
-				}]
-
-			});
-
-		});
-
-		Highcharts.chart('containerEtniaSintetico', {
-			chart: {
-				type: 'variablepie'
-			},
-			title: {
-				text: undefined
-			},
-			tooltip: {
-				headerFormat: '',
-				pointFormat: '<span style="color:{point.color}">\u25CF</span> <b> {point.name}</b><br/>' +
-					'Area (square km): <b>{point.y}</b><br/>' +
-					'Population density (people per square km): <b>{point.z}</b><br/>'
-			},
-			series: [{
-				minPointSize: 10,
-				innerSize: '20%',
-				zMin: 0,
-				name: 'etnias',
-				borderRadius: 5,
-				data: [{
-					name: 'PARDOS',
-					y: 505992,
-					z: 92
-				}, {
-					name: 'BRANCOS',
-					y: 551695,
-					z: 119
-				}, {
-					name: 'PRETOS',
-					y: 312679,
-					z: 121
-				}, {
-					name: 'INDÍGENAS',
-					y: 78865,
-					z: 136
-				}, {
-					name: 'AMARELOS',
-					y: 301336,
-					z: 200
-				}],
-				colors: [
-					'#EF5350',
-					'#EC407A',
-					'#AB47BC',
-					'#7E57C2',
-					'#5C6BC0'
-				]
-			}]
-		});
-
-		Highcharts.chart('containerTalentoEsportivoAnalitico', {
-			chart: {
-				type: 'bar'
-			},
-			title: {
-				text: undefined
-			},
-			xAxis: {
-				categories: ['Atletismo (Arremessos)', 'Atletismo (Corrida de Fundo)', 'Atletismo (Saltos)', 'Basquetebol', 'Ginástica']
-			},
-			yAxis: {
-				min: 0,
-				title: {
-					text: 'Total'
-				}
-			},
-			legend: {
-				reversed: true
-			},
-			plotOptions: {
-				series: {
-					stacking: 'normal',
-					dataLabels: {
-						enabled: true
-					}
-				}
-			},
-			series: [{
-				name: 'Feminino',
-				color: '#EC407A',
-				data: [5, 3, 12, 6, 11]
-			}, {
-				name: 'Masculino',
-				data: [5, 15, 8, 5, 8]
-			}]
-		});
-
-		Highcharts.chart('containerEvolutivo', {
-			xAxis: {
-				categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-			},
-			title: {
-				text: undefined
-			},
-
-			yAxis: {
-				title: {
-					text: undefined
-				}
-			},
-
-			series: [{
-				name: 'Velocidade',
-				data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
-				color: '#DAF7A6'
-			}, {
-				name: 'Flexibilidade muscular',
-				data: [24916, 37941, 29742, 29851, 32490, 30282,
-					38121, 36885, 33726, 34243, 31050],
-				color: '#FFC300'
-			}, {
-				name: 'Forca de membro superiores',
-				data: [11744, 30000, 16005, 19771, 20185, 24377,
-					32147, 30912, 29243, 29213, 25663],
-				color: '#FF5733'
-			}, {
-				name: 'Agilidade',
-				data: [null, null, null, null, null, null, null,
-					null, 11164, 11218, 10077],
-				color: '#900C3F'
-			}, {
-				name: 'Resistencia abdominal',
-				data: [21908, 5548, 8105, 11248, 8989, 11816, 18274,
-					17300, 13053, 11906, 10073],
-				color: '#581845'
-			}]
-		});
-	</script>
+            series: [{
+                name: 'Velocidade',
+                data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
+                color: '#DAF7A6'
+            }, {
+                name: 'Flexibilidade muscular',
+                data: [24916, 37941, 29742, 29851, 32490, 30282,
+                    38121, 36885, 33726, 34243, 31050],
+                color: '#FFC300'
+            }, {
+                name: 'Forca de membro superiores',
+                data: [11744, 30000, 16005, 19771, 20185, 24377,
+                    32147, 30912, 29243, 29213, 25663],
+                color: '#FF5733'
+            }, {
+                name: 'Agilidade',
+                data: [null, null, null, null, null, null, null,
+                    null, 11164, 11218, 10077],
+                color: '#900C3F'
+            }, {
+                name: 'Resistencia abdominal',
+                data: [21908, 5548, 8105, 11248, 8989, 11816, 18274,
+                    17300, 13053, 11906, 10073],
+                color: '#581845'
+            }]
+        });
+    </script>
 }
