@@ -8,7 +8,7 @@ namespace WebApp.Models
     public class ControlePresencaModel
     {
         public ControlePresencaDto ControlePresenca { get; set; }
-        public List<ControlePresencaDto> ControlePresencas { get; set; }
+        public List<ControlePresencaDto> ControlesPresencas { get; set; }
         public string ControlePresencaId { get; set; }
         public SelectList ListControlePresencas { get; set; }
         public int LocalidadeId { get; set; }

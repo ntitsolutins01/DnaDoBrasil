@@ -2,10 +2,16 @@
 {
     public class ControlePresencaDto
     {
-		public int Id { get; set; }
-		public required AlunoDto Aluno { get; init; }
-		public required string Controle { get; init; }
-		public string? Justificativa { get; init; }
-		public bool Status { get; init; } = true;
-	}
+        public int Id { get; set; }
+        public int AlunoId { get; set; }
+        public required string NomeAluno { get; set; }
+        public required string Controle { get; set; }
+        public string? Justificativa { get; set; }
+        public string? MunicipioEstado { get; set; }
+        public string? NomeLocalidade { get; set; }
+        public string? Data { get; set; }
+		public int? LocalidadeId { get; set; }
+        public int? MunicipioId { get; set; }
+        public bool Status { get; set; }
+    }
 }

@@ -2,7 +2,7 @@ var vm = new Vue({
     el: "#vControlePresenca",
     data: {
         loading: false,
-        editDto: { Id: "", Controle: "", Justificativa: "", Data: "", NomeAluno: "" }
+        editDto: { Id: "", Controle: "", Justificativa: "", Data: "", NomeAluno: "", MunicipioEstado: "", NomeLocalidade: "", AlunoId: "" }
     },
     mounted: function () {
         var self = this;
@@ -214,6 +214,9 @@ var vm = new Vue({
                 self.editDto.Data = result.data.data;
                 self.editDto.Justificativa = result.data.justificativa;
                 self.editDto.NomeAluno = result.data.nomeAluno;
+                self.editDto.MunicipioEstado = result.data.municipioEstado;
+                self.editDto.NomeLocalidade = result.data.nomeLocalidade;
+                self.editDto.AlunoId = result.data.alunoId;
    
             }).catch(error => {
                 Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
@@ -224,12 +227,12 @@ var vm = new Vue({
 
 var crud = {
     DeleteModal: function (id) {
-        $('input[name="ControlePresencaId"]').attr('value', id);
+        $('input[name="deleteControlePresencaId"]').attr('value', id);
         $('#mdDeleteControlePresenca').modal('show');
         vm.DeleteControlePresenca(id)
     },
     EditModal: function (id) {
-        $('input[name="ControlePresencaId"]').attr('value', id);
+        $('input[name="editControlePresencaId"]').attr('value', id);
         $('#mdEditControlePresenca').modal('show');
         vm.EditControlePresenca(id)
     }
