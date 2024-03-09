@@ -24,6 +24,7 @@
                         <thead>
                             <tr>
                                 <th class="text-center">Id</th>
+	                            <th class="text-center">Tipo Laudo</th>
 	                            <th class="text-center">Classificação</th>
 	                            <th class="text-center">Ponto Inicial</th>
 	                            <th class="text-center">Ponto Final</th>
@@ -37,6 +38,7 @@
                             {
                                 <tr>
                                     <td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Id)</td>
+                                    <td class="text-center">@Html.DisplayFor(modelItem => item.NomeTipoLaudo)</td>
                                     <td class="text-center">@Html.DisplayFor(modelItem => item.Classificacao)</td>
                                     <td class="text-center">@Html.DisplayFor(modelItem => item.PontoInicial)</td>
                                     <td class="text-center">@Html.DisplayFor(modelItem => item.PontoFinal)</td>
@@ -101,38 +103,51 @@
 
 	                <div class="modal-body">
 
-		                <div class="form-group row">
-			                <label class="col-sm-3 control-label text-sm-right pt-2">Classificação <span class="required">*</span></label>
-			                <div class="col-sm-8">
-				                <input type="text" name="classificacao" class="form-control"
+                        <div class="form-group row">
+                            <label class="col-sm-3 control-label text-sm-right pt-2">Tipo Laudo <span class="required">*</span></label>
+                            <div class="col-sm-3">
+                                <input type="text" name="tipoLaudo" class="form-control"
+                                       maxlength="100" :value="editDto.NomeTipoLaudo"
+                                       title="Por favor informe o Tipo Laudo." required readonly/>
+                            </div>
+                        </div>
+                        
+                        
+                        
+                        <div class="form-group row">
+                            <label class="col-sm-3 control-label text-sm-right pt-2">Classificação <span class="required">*</span></label>
+                            <div class="col-sm-4">
+                                <input type="text" name="classificacao" class="form-control"
                                        maxlength="100" :value="editDto.Classificacao"
-				                       title="Por favor informe a classificação." required />
-			                </div>
-		                </div>
-		                <div class="form-group row">
-			                <label class="col-sm-3 control-label text-sm-right pt-2">Ponto Inicial <span class="required">*</span></label>
-			                <div class="col-sm-3">
-                                <input type="number" name="pontoInicial" class="form-control" :value="editDto.PontoInicial"
-				                       title="Por favor informe o ponto inicial." required />
-			                </div>
-			                <label class="col-sm-2 control-label text-sm-right pt-2">Ponto Final <span class="required">*</span></label>
-			                <div class="col-sm-3">
-                                <input type="number" name="pontoFinal" class="form-control" :value="editDto.PontoFinal"
-				                       title="Por favor informe o ponto final." required />
-			                </div>
-		                </div>
-		                <div class="form-group row">
-			                <label class="col-sm-3 control-label text-sm-right pt-2">Aviso <span class="required">*</span></label>
-			                <div class="col-sm-3">
+                                       title="Por favor informe a classificação." required />
+                            </div>
+							
+                            <label class="col-sm-1 control-label text-sm-right pt-2">Aviso <span class="required">*</span></label>
+                            <div class="col-sm-3">
                                 <input type="text" name="aviso" class="form-control" maxlength="100" :value="editDto.Aviso"
-				                       title="Por favor informe o aviso." required />
-			                </div>
-			                <label class="col-sm-3 control-label text-sm-right pt-2">Texto <span class="required">*</span></label>
-			                <div class="col-sm-3">
-                                <textarea class="form-control" rows="3" maxlength="500" :value="editDto.Texto" name="texto"></textarea>
-			                </div>
-		                </div>
-	                </div>
+                                       title="Por favor informe o aviso." required />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 control-label text-sm-right pt-2">Ponto Inicial <span class="required">*</span></label>
+                            <div class="col-sm-3">
+                                <input type="number" name="pontoInicial" class="form-control"
+                                       title="Por favor informe o ponto inicial." required :value="editDto.PontoInicial" />
+                            </div>
+                            <label class="col-sm-2 control-label text-sm-right pt-2">Ponto Final <span class="required">*</span></label>
+                            <div class="col-sm-3">
+                                <input type="number" name="pontoFinal" class="form-control" :value="editDto.PontoFinal"
+                                       title="Por favor informe o ponto final." required />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 control-label text-sm-right pt-2">Texto <span class="required">*</span></label>
+                            <div class="col-sm-8">
+                                <textarea class="form-control" rows="3" maxlength="500" name="texto" :value="editDto.Texto"></textarea>
+                            </div>
+                        </div>
+
+                    </div>
                     <div class="modal-footer">
                         <button type="reset" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
                         <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>

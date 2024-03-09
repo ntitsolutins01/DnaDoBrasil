@@ -14,11 +14,12 @@ namespace WebApp.Models
         public class CreateUpdateTextoLaudoCommand
         {
             public int Id { get; set; }
-            public string Classificacao { get; set; }
-            public decimal PontoInicial { get; set; }
-            public decimal PontoFinal { get; set; }
-            public int Aviso { get; set; }
-            public int Texto { get; set; }
+            public int? TipoLaudoId { get; init; }
+            public string? Classificacao { get; init; }
+            public decimal PontoInicial { get; init; }
+            public decimal PontoFinal { get; init; }
+            public string? Aviso { get; init; }
+            public string? Texto { get; init; }
         }
     }
 

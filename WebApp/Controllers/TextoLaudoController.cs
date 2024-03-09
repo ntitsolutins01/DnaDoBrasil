@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
 using WebApp.Configuration;
 using WebApp.Dto;
@@ -35,8 +36,9 @@ namespace WebApp.Controllers
 			{
 				SetNotifyMessage(notify, message);
 				SetCrudMessage(crud);
+				var tipoLaudos = new SelectList(ApiClientFactory.Instance.GetTiposLaudoAll(), "Id", "Nome");
 
-				return View();
+				return View(new TiposLaudoModel(){ ListTiposLaudos = tipoLaudos});
 			}
 			catch (Exception e)
 			{
@@ -54,11 +56,12 @@ namespace WebApp.Controllers
 			{
 				var command = new TextoLaudoModel.CreateUpdateTextoLaudoCommand
 				{
+					TipoLaudoId = Convert.ToInt32(collection["ddlTipoLaudo"].ToString()),
 					Classificacao = collection["classificacao"].ToString(),
-					PontoInicial = Convert.ToInt32(collection["pontoInicial"].ToString()),
-					PontoFinal = Convert.ToInt32(collection["pontoFinal"].ToString()),
-					Aviso = Convert.ToInt32(collection["aviso"].ToString()),
-					Texto = Convert.ToInt32(collection["texto"].ToString()),
+					PontoInicial = Convert.ToDecimal(collection["pontoInicial"].ToString()),
+					PontoFinal = Convert.ToDecimal(collection["pontoFinal"].ToString()),
+					Aviso = collection["aviso"].ToString(),
+					Texto = collection["texto"].ToString(),
 				};
 
 				await ApiClientFactory.Instance.CreateTextoLaudo(command);
@@ -80,10 +83,10 @@ namespace WebApp.Controllers
 				{
 					Id = Convert.ToInt32(collection["editTextoLaudoId"]),
 					Classificacao = collection["classificacao"].ToString(),
-					PontoInicial = Convert.ToInt32(collection["pontoInicial"].ToString()),
-					PontoFinal = Convert.ToInt32(collection["pontoFinal"].ToString()),
-					Aviso = Convert.ToInt32(collection["aviso"].ToString()),
-					Texto = Convert.ToInt32(collection["texto"].ToString()),
+					PontoInicial = Convert.ToDecimal(collection["pontoInicial"].ToString()),
+					PontoFinal = Convert.ToDecimal(collection["pontoFinal"].ToString()),
+					Aviso = collection["aviso"].ToString(),
+					Texto = collection["texto"].ToString()
 				};
 
 				await ApiClientFactory.Instance.UpdateTextoLaudo(command.Id, command);

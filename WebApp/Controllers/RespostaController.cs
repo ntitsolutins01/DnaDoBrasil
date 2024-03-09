@@ -96,12 +96,14 @@ namespace WebApp.Controllers
 		public async Task<ActionResult> Edit(IFormCollection collection)
 		{
 			try
-			{
-				var command = new RespostaModel.CreateUpdateRespostaCommand
-				{
-					Id = Convert.ToInt32(collection["editRespostaId"]),
-					RespostaQuestionario = collection["resposta"].ToString(),
-                    ValorPesoResposta = Convert.ToInt32(collection["valorPeso"].ToString()),
+            {
+                var command = new RespostaModel.CreateUpdateRespostaCommand
+                {
+                    Id = Convert.ToInt32(collection["editRespostaId"]),
+                    RespostaQuestionario = collection["resposta"].ToString(),
+                    ValorPesoResposta = collection["tipoLaudo"].ToString() == "Vocacional"
+                        ? Convert.ToDecimal(collection["valorPesoDecimal"].ToString())
+                        : Convert.ToDecimal(collection["valorPeso"].ToString())
                 };
 
 				await ApiClientFactory.Instance.UpdateResposta(command.Id, command);

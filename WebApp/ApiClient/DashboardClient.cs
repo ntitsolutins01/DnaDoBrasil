@@ -11,24 +11,30 @@ namespace WebApp.ApiClient
 		#region Main Methods
 
 
-		public DashboardIndicadoresDto GetIndicadoresByFilter(DashboardIndicadoresDto searchFilter)
+		public DashboardDto GetDashboardByFilter(DashboardDto searchFilter)
 		{
 			var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-				$"{ResourceDashboard}/Indicadores"));
+				$"{ResourceDashboard}"));
 			return GetFiltro(requestUrl, searchFilter);
 		}
 
-		#endregion
+        public DashboardDto GraficoControlePresencasByFilter(DashboardDto searchFilter)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceDashboard}/GraficoControlePresencas"));
+            return GetFiltro(requestUrl, searchFilter);
+        }
+        #endregion
 
-		#region Methods
+        #region Methods
 
-		//public Task<DashboardIndicadoresDto>  GetIndicadoresByFilter(SearchDashboardDto searchFilter)
-		//      {
-		//	var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-		//		$"{ResourceDashboard}/Indicadores"));
-		//	var result = Get(requestUrl, searchFilter);
-		//}
+        //public Task<DashboardIndicadoresDto>  GetIndicadoresByFilter(SearchDashboardDto searchFilter)
+        //      {
+        //	var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+        //		$"{ResourceDashboard}/Indicadores"));
+        //	var result = Get(requestUrl, searchFilter);
+        //}
 
-		#endregion
-	}
+        #endregion
+    }
 }

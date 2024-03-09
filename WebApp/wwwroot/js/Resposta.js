@@ -2,7 +2,7 @@
     el: "#formResposta",
     data: {
         loading: false,
-        editDto: { Id: "", Questionario: "", Resposta: "", TipoLaudo: "", ValorPesoResposta: "" }
+        editDto: { Id: "", Questionario: "", Resposta: "", TipoLaudo: "", ValorPesoResposta: "", Vocacional:true }
     },
     mounted: function () {
         var self = this;
@@ -87,6 +87,12 @@
 
             if (formid === "formEditResposta") {
 
+
+                //mascara dos inputs
+                var valorPesoDecimal = $("#valorPesoDecimal");
+                valorPesoDecimal.mask('0.00', { reverse: false });
+
+
                 $("#formEditResposta").validate({
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
@@ -107,7 +113,7 @@
                 });
             }
 
-
+            
 
         }).apply(this, [jQuery]);
     },
@@ -141,11 +147,16 @@
             axios.get("Resposta/GetRespostaById/?id=" + id).then(result => {
 
                 self.editDto.Id = result.data.id;
-                self.editDto.Questionario = result.data.questionario.nome;
-                self.editDto.TipoLaudo = result.data.questionario.tipoLaudo.nome;
-                self.editDto.Resposta = result.data.resposta;
+                self.editDto.Questionario = result.data.pergunta;
+                self.editDto.TipoLaudo = result.data.nomeTipoLaudo;
+                self.editDto.Resposta = result.data.respostaQuestionario;
                 self.editDto.ValorPesoResposta = result.data.valorPesoResposta;
-               
+                if (result.data.nomeTipoLaudo === 'Vocacional') {
+                    self.editDto.Vocacional = true;
+                } else {
+                    self.editDto.Vocacional = false;
+                }
+
             }).catch(error => {
                 Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
             });

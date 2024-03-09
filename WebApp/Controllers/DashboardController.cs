@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
+using NuGet.Protocol.Core.Types;
 using WebApp.Configuration;
 using WebApp.Dto;
 using WebApp.Factory;
@@ -24,7 +25,7 @@ namespace WebApp.Controllers
 
 		public IActionResult Index(IFormCollection collection)
 		{
-			var searchFilter = new DashboardIndicadoresDto
+			var searchFilter = new DashboardDto
 			{
 					FomentoId = collection["ddlFomento"].ToString(),
 					Estado = collection["ddlEstado"].ToString(),
@@ -34,7 +35,7 @@ namespace WebApp.Controllers
                     Etnia = collection["ddlEtnia"].ToString()
 			};
 
-			var indicadores = ApiClientFactory.Instance.GetIndicadoresByFilter(searchFilter);
+			var indicadores = ApiClientFactory.Instance.GetDashboardByFilter(searchFilter);
 			var fomentos = new SelectList(ApiClientFactory.Instance.GetFomentoAll(), "Id", "Nome", indicadores.FomentoId);
 			var deficiencias = new SelectList(ApiClientFactory.Instance.GetDeficienciaAll(), "Id", "Nome", indicadores.DeficienciaId);
 			var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", indicadores.Estado);
@@ -92,5 +93,60 @@ namespace WebApp.Controllers
 				return Task.FromResult(Json(ex.Message));
 			}
 		}
-	}
+
+        public Task<JsonResult> GetPesquisaDashboardByFilter([FromBody] DashboardDto search)
+        {
+            try
+            {
+                var dashboard = ApiClientFactory.Instance.GetDashboardByFilter(search);
+                var fomentos = new SelectList(ApiClientFactory.Instance.GetFomentoAll(), "Id", "Nome", dashboard.FomentoId);
+                var deficiencias = new SelectList(ApiClientFactory.Instance.GetDeficienciaAll(), "Id", "Nome", dashboard.DeficienciaId);
+                var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", dashboard.Estado);
+
+                List<SelectListDto> list = new List<SelectListDto>
+                {
+                    new() { IdNome = "PARDO", Nome = "PARDO" },
+                    new() { IdNome = "BRANCO", Nome = "BRANCO" },
+                    new() { IdNome = "PRETO", Nome = "PRETO" },
+                    new() { IdNome = "INDÍGENA", Nome = "INDÍGENA" },
+                    new() { IdNome = "AMARELO", Nome = "AMARELO" }
+                };
+
+                var etnias = new SelectList(list, "IdNome", "Nome", dashboard.Etnia);
+                SelectList municipios = null;
+
+                if (!string.IsNullOrEmpty(dashboard.Estado))
+                {
+                    municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(dashboard.Estado), "Id", "Nome", dashboard.MunicipioId);
+                }
+                SelectList localidades = null;
+
+                if (!string.IsNullOrEmpty(dashboard.LocalidadeId))
+                {
+                    localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeByMunicipio(dashboard.MunicipioId), "Id", "Nome", dashboard.LocalidadeId);
+                }
+
+
+				var model = new DashboardModel
+                {
+                    ListFomentos = fomentos,
+                    ListEstados = estados,
+                    Indicadores = dashboard,
+                    ListDeficiencias = deficiencias,
+                    ListMunicipios = municipios!,
+                    ListEtnias = etnias,
+                    ListLocalidades = localidades!,
+                    ListFaltasAnual = dashboard.ListFaltasAnual,
+                    ListPresencasAnual = dashboard.ListPresencasAnual
+                };
+
+                return Task.FromResult(Json(model));
+
+            }
+            catch (Exception ex)
+            {
+                return Task.FromResult(Json(ex));
+            }
+        }
+    }
 }

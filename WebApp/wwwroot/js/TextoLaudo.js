@@ -2,7 +2,7 @@ var vm = new Vue({
     el: "#vTextoLaudo",
     data: {
         loading: false,
-        editDto: { Id: "", Classificacao: "", PontoInicial: "", PontoFinal: "", Aviso: "", Txto: "" }
+        editDto: { Id: "", Classificacao: "", PontoInicial: "", PontoFinal: "", Aviso: "", Txto: "", NomeTipoLaudo:"" }
     },
     mounted: function () {
         var self = this;
@@ -45,6 +45,29 @@ var vm = new Vue({
             } 
 
             if (formid === "formTextoLaudo") {
+                var $select = $(".select2").select2({
+                    allowClear: true
+                });
+
+                $(".select2").each(function () {
+                    var $this = $(this),
+                        opts = {};
+
+                    var pluginOptions = $this.data('plugin-options');
+                    if (pluginOptions)
+                        opts = pluginOptions;
+
+                    $this.themePluginSelect2(opts);
+                });
+
+                /*
+                 * When you change the value the select via select2, it triggers
+                 * a 'change' event, but the jquery validation plugin
+                 * only re-validates on 'blur'*/
+
+                $select.on('change', function () {
+                    $(this).trigger('blur');
+                });
 
                 $("#formTextoLaudo").validate({
                     highlight: function (label) {
@@ -98,10 +121,11 @@ var vm = new Vue({
 
                 self.editDto.Id = result.data.id;
                 self.editDto.Classificacao = result.data.classificacao;
-                self.editDto.PontoInicial = result.data.pontoinicial;
-                self.editDto.PontoFinal = result.data.pontofinal;
+                self.editDto.PontoInicial = result.data.pontoInicial;
+                self.editDto.PontoFinal = result.data.pontoFinal;
                 self.editDto.Aviso = result.data.aviso;
                 self.editDto.Texto = result.data.texto;
+                self.editDto.NomeTipoLaudo = result.data.nomeTipoLaudo;
 
             }).catch(error => {
                 Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);

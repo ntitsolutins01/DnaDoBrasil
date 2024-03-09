@@ -1,6 +1,6 @@
 ﻿namespace WebApp.Dto
 {
-	public class DashboardIndicadoresDto
+	public class DashboardDto
 	{
 		public int AvaliacoesDna { get; set; }
 		public int LaudosAndamentos { get; set; }
@@ -10,6 +10,8 @@
 		public int AlunosCadastrados { get; set; }
 		public int LaudosMasculinos { get; set; }
 		public int LaudosFemininos { get; set; }
+		public int[]? ListPresencasAnual { get; set; }
+		public int[]? ListFaltasAnual { get; set; }
 
 		#region SearchFilter
 		public string Sexo { get; set; }

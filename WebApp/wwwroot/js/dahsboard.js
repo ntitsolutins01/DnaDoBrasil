@@ -10,6 +10,17 @@ var vm = new Vue({
             var formid = $('form').attr('id');
 
             if (formid === "formDashboard") {
+                var obj = {
+                    FomentoId: $("#ddlFomento").val(),
+                    Estado: $("#ddlEstado").val(),
+                    MunicipioId: $("#ddlMunicipio").val(),
+                    LocalidadeId: $("#ddlLocalidade").val(),
+                    DeficienciaId: $("#ddlDeficiencia").val(),
+                    Etnia: $("#ddlEtnia").val()
+                }
+
+                self.GetControlePresencas(obj);
+
                 var $select = $(".select2").select2({
                     allowClear: true
                 });
@@ -148,6 +159,173 @@ var vm = new Vue({
         DeleteDashboard: function (id) {
             var url = "Dashboard/Delete/" + id;
             $("#deleteDashboardHref").prop("href", url);
+        },
+        GetControlePresencas: function (obj) {
+
+            var self = this;
+
+            axios.post("Dashboard/GetPesquisaDashboardByFilter", obj).then(result => {
+
+                $(function () {
+
+                    Highcharts.chart('containerPresenca', {
+                        chart: {
+                            type: 'column'
+                        },
+                        title: {
+                            text: undefined
+                        },
+                        xAxis: {
+                            categories: ['Jav', 'Fev', 'Mar',
+                                'Abr', 'Mai', 'Jun',
+                                'Jul', 'Ago', 'Set',
+                                'Out', 'Nov', 'Dez'],
+                            labels: {
+                                style: {
+                                    fontSize: '15px'
+                                }
+                            }
+                        },
+                        yAxis: {
+                            min: 0,
+                            title: {
+                                text: 'Quantidade de Presenças e Faltas',
+                                style: {
+                                    fontSize: '10px'
+                                }
+                            },
+                            labels: {
+                                style: {
+                                    fontSize: '15px'
+                                }
+                            }
+                        },
+                        plotOptions: {
+                            column: {
+                                pointPadding: 0.2,
+                                borderWidth: 0
+                            }
+                        },
+                        tooltip: {
+                            style: {
+                                fontSize: '15px'
+                            }
+                        },
+                        legend: {
+                            itemStyle: {
+                                fontSize: '15px'
+                            }
+                        },
+                        colors: ['#4CAF50', '#F44336'],
+                        series: [
+                            {
+                                name: 'Presença',
+                                data: result.data.listPresencasAnual
+                            },
+                            {
+                                name: 'Falta',
+                                data: result.data.listFaltasAnual
+                            }
+                        ]
+                    });
+                });
+            }).catch(error => {
+                Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
+            });
+        },
+        GetPesquisaDashboard: function () {
+
+            var self = this;
+
+            var obj = {
+                FomentoId: $("#ddlFomento").val(),
+                Estado: $("#ddlEstado").val(),
+                MunicipioId: $("#ddlMunicipio").val(),
+                LocalidadeId: $("#ddlLocalidade").val(),
+                DeficienciaId: $("#ddlDeficiencia").val(),
+                Etnia: $("#ddlEtnia").val()
+            }
+            axios.post("Dashboard/GetPesquisaDashboardByFilter", obj).then(result => {
+                $("#cadastrosMasculinos").text(result.data.indicadores.cadastrosMasculinos);
+                $("#avaliacoesDna").text(result.data.indicadores.avaliacoesDna);
+                $("#laudosAndamentos").text(result.data.indicadores.laudosAndamentos);
+                $("#laudosFinalizados").text(result.data.indicadores.laudosFinalizados);
+                $("#cadastrosFemininos").text(result.data.indicadores.cadastrosFemininos);
+                $("#alunosCadastrados").text(result.data.indicadores.alunosCadastrados);
+                $("#laudosMasculinos").text(result.data.indicadores.laudosMasculinos);
+                $("#laudosMasculinos").text(result.data.indicadores.laudosMasculinos);
+                self.SetGraficoControlePresenca(result)
+            }).catch(error => {
+                Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
+            });
+        },
+        SetGraficoControlePresenca: function (result) {
+
+            var self = this;
+
+            $(function () {
+
+                Highcharts.chart('containerPresenca', {
+                    chart: {
+                        type: 'column'
+                    },
+                    title: {
+                        text: undefined
+                    },
+                    xAxis: {
+                        categories: ['Jav', 'Fev', 'Mar',
+                            'Abr', 'Mai', 'Jun',
+                            'Jul', 'Ago', 'Set',
+                            'Out', 'Nov', 'Dez'],
+                        labels: {
+                            style: {
+                                fontSize: '15px'
+                            }
+                        }
+                    },
+                    yAxis: {
+                        min: 0,
+                        title: {
+                            text: 'Quantidade de Presenças e Faltas',
+                            style: {
+                                fontSize: '10px'
+                            }
+                        },
+                        labels: {
+                            style: {
+                                fontSize: '15px'
+                            }
+                        }
+                    },
+                    plotOptions: {
+                        column: {
+                            pointPadding: 0.2,
+                            borderWidth: 0
+                        }
+                    },
+                    tooltip: {
+                        style: {
+                            fontSize: '15px'
+                        }
+                    },
+                    legend: {
+                        itemStyle: {
+                            fontSize: '15px'
+                        }
+                    },
+                    colors: ['#4CAF50', '#F44336'],
+                    series: [
+                        {
+                            name: 'Presença',
+                            data: result.data.listPresencasAnual
+                        },
+                        {
+                            name: 'Falta',
+                            data: result.data.listFaltasAnual
+                        }
+                    ]
+                });
+            });
         }
     }
 });
@@ -159,67 +337,3 @@ var crud = {
         vm.DeleteDashboard(id)
     }
 };
-
-$(function () {
-
-    Highcharts.chart('containerPresenca', {
-        chart: {
-            type: 'column'
-        },
-        title: {
-            text: undefined
-        },
-        xAxis: {
-            categories: ['Jav', 'Fev', 'Mar',
-                'Abr', 'Mai', 'Jun',
-                'Jul', 'Ago', 'Set',
-                'Out', 'Nov', 'Dez'],
-            labels: {
-                    style: {
-                        fontSize: '15px'
-                    }
-                }
-        },
-        yAxis: {
-            min: 0,
-            title: {
-                text: 'Quantidade de Presenças e Faltas',
-                style: {
-                    fontSize: '10px'
-                }
-            },
-            labels: {
-                style: {
-                    fontSize: '15px'
-                }
-            }
-        },
-        plotOptions: {
-            column: {
-                pointPadding: 0.2,
-                borderWidth: 0
-            }
-        },
-        tooltip: {
-            style: {
-                fontSize: '15px'
-            }
-        },
-        legend: {
-            itemStyle: {
-                fontSize: '15px'
-            }
-        },
-        colors: ['#4CAF50', '#F44336'],
-        series: [
-            {
-                name: 'Presença',
-                data: [406292, 260000, 107000, 68300, 27500, 14500]
-            },
-            {
-                name: 'Falta',
-                data: [51086, 136000, 5500, 141000, 107180, 77000]
-            }
-        ]
-    });
-});
