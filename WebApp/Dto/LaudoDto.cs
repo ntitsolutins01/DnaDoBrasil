@@ -2,27 +2,20 @@
 {
     public class LaudoDto
     {
-        public TalentoEsportivoDto TalentoEsportivo { get; set; }
-        public VocacionalDto Vocacional { get; set; }
-        public string? StatusQualidadeDeVida { get; set; }
-        public QualidadeVidaDto QualidadeDeVida { get; set; }
-        public SaudeDto Saude { get; set; }
-        public ConsumoAlimentarDto ConsumoAlimentar { get; set; }
-        public SaudeBucalDto SaudeBucal { get; set; }
-        public  AlunoDto Aluno { get; set; }
-        public int Id { get; set; }
-        public string Altura { get; set; }
-        public string MassaCorporal { get; set; }
-        public object Envergadura { get; set; }
-        public object PreensaoManual { get; set; }
-        public object Flexibilidade { get; set; }
-        public object ImpulsaoHorizontal { get; set; }
-        public object AptidaoFísica { get; set; }
+        public int? AlunoId { get; set; }
+
+        public int? TalentoEsportivoId { get; set; }
         public int? VocacionalId { get; set; }
         public int? QualidadeDeVidaId { get; set; }
         public int? SaudeId { get; set; }
         public int? ConsumoAlimentarId { get; set; }
         public int? SaudeBucalId { get; set; }
-        public int? AlunoId { get; set; }
+        public int? Id { get; set; }
+        public string? NomeAluno { get; set; }
+        public string? MunicipioEstado { get; set; }
+        public int? LocalidadeId { get; set; }
+        public string? Localidade { get; set; }
+        public string? Encaminhamento { get; set; }
+        public string? StatusLaudo { get; set; }
     }
 }

@@ -47,14 +47,16 @@ namespace WebApp.Models
             public decimal? Altura { get; set; }
             public decimal? Peso { get; set; }
             public decimal? Agilidade { get; set; }
-            public int? AlunoId { get; set; }
-            public decimal? EnvergaduraSaude { get; set; }
-            public decimal? MassaCorporalSaude { get; set; }
-            public decimal? AlturaSaude { get; set; }
+
+
             public string[] ListVocacional { get; set; }
             public string[] listSaudeBucal { get; set; }
             public string[] listConsumoAlimentar { get; set; }
-		}
+            
+            
+            public int SaudeId { get; set; }
+            public required int AlunoId { get; set; }
+        }
 	}
 
 }

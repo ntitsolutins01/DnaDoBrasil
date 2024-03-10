@@ -27,7 +27,8 @@
                                 <th class="text-center">Nome Aluno</th>
                                 <th class="text-center">Município / Uf</th>
                                 <th class="text-center">Localidade</th>
-                                <th class="text-center">Talento Esportivo</th>
+                                <th class="text-center">Encaminhamento</th>
+                                <th class="text-center">Status do Laudo</th>
 								<th class="text-center">Ações</th>
 							</tr>
 						</thead>
@@ -36,11 +37,19 @@
 							{
 								<tr>
 									<td class="text-center">@Html.DisplayFor(modelItem => item.Id)</td>
-									<td class="text-center">@Html.DisplayFor(modelItem => item.Aluno.Nome)</td>
-									<td class="text-center">@Html.DisplayFor(modelItem => item.Aluno.MunicipioEstado)</td>
-									<td class="text-center">@Html.DisplayFor(modelItem => item.Aluno.NomeLocalidade)</td>
-									<td class="text-center">@Html.DisplayFor(modelItem => item.TalentoEsportivo.Abdominal)</td>
-									<td class="actions">
+									<td class="text-center">@Html.DisplayFor(modelItem => item.NomeAluno)</td>
+									<td class="text-center">@Html.DisplayFor(modelItem => item.MunicipioEstado)</td>
+									<td class="text-center">@Html.DisplayFor(modelItem => item.Localidade)</td>
+									<td class="text-center">@Html.DisplayFor(modelItem => item.Encaminhamento)</td>
+									@if (item.StatusLaudo == "F")
+                                    {
+                                        <td class="text-center"><span class="label label-success">FINALIZADO</span></td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-center"><span class="label label-warning">EM ANDAMENTO</span></td>
+                                    }
+									<td class="actions text-center">
 										<a data-toggle="tooltip" data-placement="top" title="Editar"
                                            href='javascript:(crud.EditModal(@item.AlunoId))'
 										   class="on-default edit-row" style='color: #FF9800'>

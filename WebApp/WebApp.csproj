@@ -50,7 +50,11 @@
     <None Include="wwwroot\assets\vendor\axios\axios.min.map" />
     <None Include="wwwroot\assets\vendor\datatables\media\js\dataTables.select.min.js" />
     <None Include="wwwroot\assets\vendor\fuelux\js\spinner.js" />
+    <None Include="wwwroot\assets\vendor\gauge\gauge.coffee" />
+    <None Include="wwwroot\assets\vendor\gauge\gauge.js" />
+    <None Include="wwwroot\assets\vendor\gauge\gauge.min.js" />
     <None Include="wwwroot\assets\vendor\jquery-mask\jquery.mask.js" />
+    <None Include="wwwroot\assets\vendor\snap.svg\snap.svg.js" />
     <None Include="wwwroot\assets\vendor\vue\vue.js" />
     <None Include="wwwroot\EmailTemplates\ConfirmEmail.html" />
     <None Include="wwwroot\EmailTemplates\EmailPadrao.html" />

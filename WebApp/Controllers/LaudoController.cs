@@ -42,8 +42,13 @@ namespace WebApp.Controllers
 		}
 
 		public ActionResult Details(int id)
-        {
-            return View();
+		{
+			var aluno =  ApiClientFactory.Instance.GetAlunoById(id);
+			var model = new AlunoModel()
+			{
+				Aluno = aluno
+			};
+            return View(model);
         }
         
         public ActionResult Create(int? crud, int? notify, string message = null)
@@ -127,7 +132,14 @@ namespace WebApp.Controllers
 		            }
 	            }
 
-                var command = new LaudoModel.CreateUpdateLaudoCommand();
+                if (string.IsNullOrEmpty(collection["ddlAluno"].ToString()))
+                {
+                    return RedirectToAction(nameof(Create), new { notify = (int)EnumNotify.Error, message = "Erro ao executar esta ação. Favor Informar o Aluno." });
+                }
+                var command = new LaudoModel.CreateUpdateLaudoCommand
+                {
+                    AlunoId = Convert.ToInt32(collection["ddlAluno"].ToString())
+                };
 
                 if (listQualidadeDeVida.Any())
                 {
@@ -143,28 +155,38 @@ namespace WebApp.Controllers
 
                     command.StatusQualidadeDeVida = listQualidadeDeVida.Count == totalRespQualidadeDeVida ? "F" : "A";
                 }
-	           
-				command = new LaudoModel.CreateUpdateLaudoCommand()
-                {
-                    ImpulsaoHorizontal = Convert.ToDecimal(collection["impulsaoHorizontal"].ToString()),
-                    Flexibilidade = Convert.ToDecimal(collection["flexibilidade"].ToString()),
-                    PreensaoManual = Convert.ToDecimal(collection["preensaoManual"].ToString()),
-                    Velocidade = Convert.ToDecimal(collection["testeVelocidade"].ToString()),
-                    AptidaoFisica = Convert.ToDecimal(collection["aptidaoFisica"].ToString()),
-                    Agilidade = Convert.ToDecimal(collection["agilidade"].ToString()),
-                    Abdominal = Convert.ToDecimal(collection["abdominal"].ToString()),
-                    Altura = Convert.ToDecimal(collection["altura"].ToString()),
-                    AlunoId = Convert.ToInt32(collection["ddlAluno"].ToString()),
-                    EnvergaduraSaude = Convert.ToInt32(collection["envergaduraSaude"].ToString()),
-                    MassaCorporalSaude = Convert.ToInt32(collection["massaCorporalSaude"].ToString()),
-                    AlturaSaude = Convert.ToInt32(collection["alturaSaude"].ToString()),
-                    ListVocacional = listVocacisonal.ToArray(),
-                    listQualidadeDeVida = listQualidadeDeVida.ToArray(),
-                    listConsumoAlimentar = listConsumoAlimentar.ToArray(),
-                    listSaudeBucal = listSaudeBucal.ToArray(),
-                };
 
-                await ApiClientFactory.Instance.CreateLaudo(command);
+                var contSaude = collection.Count(item => item.Key.Contains("Saude"));
+
+                var commandSaude = new SaudeModel.CreateUpdateSaudeCommand()
+                {
+					ProfissionalId = null, //collection["ddlProfissiona"] == "" ? null : Convert.ToInt32(collection["ddlProfissiona"].ToString()),
+                    //AlunoId = collection["ddlAluno"] == "" ? null : Convert.ToInt32(collection["ddlAluno"].ToString()),
+                    EnvergaduraSaude = collection["envergaduraSaude"] == "" ? null : Convert.ToInt32(collection["envergaduraSaude"].ToString()),
+                    MassaCorporalSaude = collection["massaCorporalSaude"] == "" ? null : Convert.ToInt32(collection["massaCorporalSaude"].ToString()),
+                    AlturaSaude = collection["alturaSaude"] == "" ? null : Convert.ToInt32(collection["alturaSaude"].ToString()),
+					StatusSaude = contSaude == 3 ? "F" : "A"
+					//ImpulsaoHorizontal = collection["impulsaoHorizontal"] == "" ? null : Convert.ToDecimal(collection["impulsaoHorizontal"].ToString()),
+					//Flexibilidade = collection["flexibilidade"] == "" ? null : Convert.ToDecimal(collection["flexibilidade"].ToString()),
+					//PreensaoManual = collection["preensaoManual"] == "" ? null : Convert.ToDecimal(collection["preensaoManual"].ToString()),
+					//Velocidade = collection["testeVelocidade"] == "" ? null : Convert.ToDecimal(collection["testeVelocidade"].ToString()),
+					//AptidaoFisica = collection["aptidaoFisica"] == "" ? null : Convert.ToDecimal(collection["aptidaoFisica"].ToString()),
+					//Agilidade = collection["agilidade"] == "" ? null : Convert.ToDecimal(collection["agilidade"].ToString()),
+					//Abdominal = collection["abdominal"] == "" ? null : Convert.ToDecimal(collection["abdominal"].ToString()),
+					//Altura = collection["altura"] == "" ? null : Convert.ToDecimal(collection["altura"].ToString()),
+					//ListVocacional = listVocacisonal.ToArray(),
+					//listQualidadeDeVida = listQualidadeDeVida.ToArray(),
+					//listConsumoAlimentar = listConsumoAlimentar.ToArray(),
+					//listSaudeBucal = listSaudeBucal.ToArray(),
+				};
+
+                var saudeId = await ApiClientFactory.Instance.CreateSaude(commandSaude);
+
+                await ApiClientFactory.Instance.CreateLaudo(new LaudoModel.CreateUpdateLaudoCommand()
+                {
+					AlunoId = Convert.ToInt32(collection["ddlAluno"].ToString()),
+                    SaudeId = (int)saudeId
+                });
 
                 return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
             }
@@ -228,9 +250,9 @@ namespace WebApp.Controllers
 					Abdominal = Convert.ToDecimal(collection["abdominal"].ToString()),
 					Altura = Convert.ToDecimal(collection["altura"].ToString()),
 					AlunoId = Convert.ToInt32(collection["ddlAluno"].ToString()),
-					EnvergaduraSaude = Convert.ToInt32(collection["envergaduraSaude"].ToString()),
-					MassaCorporalSaude = Convert.ToInt32(collection["massaCorporalSaude"].ToString()),
-					AlturaSaude = Convert.ToInt32(collection["alturaSaude"].ToString()),
+					//EnvergaduraSaude = Convert.ToInt32(collection["envergaduraSaude"].ToString()),
+					//MassaCorporalSaude = Convert.ToInt32(collection["massaCorporalSaude"].ToString()),
+					//AlturaSaude = Convert.ToInt32(collection["alturaSaude"].ToString()),
 					ListVocacional = listVocacisonal.ToArray(),
 					listQualidadeDeVida = listQualidadeDeVida.ToArray(),
 					listConsumoAlimentar = listConsumoAlimentar.ToArray(),

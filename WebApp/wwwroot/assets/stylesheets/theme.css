@@ -10887,7 +10887,7 @@ html.dark .panel-group .panel-accordion .form-control {
 	position: relative;
 	max-height: 200px;
 	max-width: 200px;
-	margin: 0 auto;
+	/*margin: 0 auto;*/
 	width: 100%;
 	padding-bottom: 50%;
 }
@@ -10912,7 +10912,7 @@ html.dark .panel-group .panel-accordion .form-control {
 
 .liquid-meter-wrapper.liquid-meter-sm .liquid-meter {
 	max-height: 150px;
-	max-width: 150px;
+	max-width: 90px;
 }
 
 .liquid-meter-wrapper.liquid-meter-md .liquid-meter {

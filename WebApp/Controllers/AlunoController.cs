@@ -341,10 +341,10 @@ namespace WebApp.Controllers
             {
                 var command = new SaudeModel.CreateUpdateSaudeCommand
                 {
-                    ProfissionalId = Convert.ToInt32(collection["profissionalId"]),
-                    Altura = Convert.ToInt32(collection["altura"]),
-                    Massa = Convert.ToInt32(collection["massa"]),
-                    Envergadura = Convert.ToInt32(collection["envergadura"])
+                    //ProfissionalId = Convert.ToInt32(collection["profissionalId"]),
+                    //Altura = Convert.ToInt32(collection["altura"]),
+                    //Massa = Convert.ToInt32(collection["massa"]),
+                    //Envergadura = Convert.ToInt32(collection["envergadura"])
 
 
                 };
@@ -366,9 +366,9 @@ namespace WebApp.Controllers
             {
                 Id = Convert.ToInt32(id),
                 ProfissionalId = Convert.ToInt32(collection["profissionalId"]),
-                Altura = Convert.ToInt32(collection["altura"]),
-                Massa = Convert.ToInt32(collection["massa"]),
-                Envergadura = Convert.ToInt32(collection["envergadura"])
+                //Altura = Convert.ToInt32(collection["altura"]),
+                //Massa = Convert.ToInt32(collection["massa"]),
+                //Envergadura = Convert.ToInt32(collection["envergadura"])
 
             };
 
