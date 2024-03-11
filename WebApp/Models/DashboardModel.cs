@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using System.Collections;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using WebApp.Dto;
 
 namespace WebApp.Models
@@ -20,6 +21,7 @@ namespace WebApp.Models
         public string EtniaId { get; set; }
         public int[]? ListPresencasAnual { get; set; }
         public int[]? ListFaltasAnual { get; set; }
-	}
+        public List<LaudoDto> Laudos { get; set; }
+    }
 
 }

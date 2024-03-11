@@ -3,7 +3,8 @@
     data: {
         params: {
             cpf: "",
-            ambientes: []
+            ambientes: [],
+            modalidadeProfissional: [],
         },
         loading: false,
         editDto: { Id: "", Nome: "", DtNascimento: "", Email: "", AspNetUserId: "", Sexo: "", Cpf: "", Telefone: "", Celular: "", Endereco: "", Numero: "", Cep: "", Bairro: "", Municipio: "", Ambientes: "", Contratos: "", Status: true }
@@ -131,6 +132,10 @@
 
                 var $numCep = $("#cep");
                 $numCep.mask('00000-000');
+
+                var $numDtNasc = $("#DtNascimento");
+                $numDtNasc.mask('00/00/0000', { reverse: false });
+
 
                 jQuery.validator.addMethod("cpf", function (cpf, element) {
                     var regex = /^\d{3}\.\d{3}\.\d{3}\-\d{2}$/;
@@ -315,6 +320,9 @@
 
                 var $numCep = $("#cep");
                 $numCep.mask('00000-000');
+
+                var $numDtNasc = $("#DtNascimento");
+                $numDtNasc.mask('00/00/0000', { reverse: false });
 
                 jQuery.validator.addMethod("cpf", function (cpf, element) {
                     var regex = /^\d{3}\.\d{3}\.\d{3}\-\d{2}$/;
@@ -618,5 +626,51 @@ var crud = {
     },
     DeleteAmbiente: function (index) {
         vm.DeleteAmbiente(index)
+    },
+    DeleteModalidadeProfissional: function (id) {
+        var self = this;
+
+        var table = $('#modalidadeDataTable').DataTable();
+        table.rows(function (idx, data, node) {
+            return data[0] === id;
+        })
+            .remove()
+            .draw();
+
+        $("#ddlModalidade").select2("val", "0");
+    },
+    AddModalidade: function () {
+        var self = this;
+
+        var mapped = $("#ddlModalidade").select2('data');
+
+        if (self.params.modalidadeProfissional.indexOf(mapped[0].id) !== -1) {
+
+            new PNotify({
+                title: 'Modalidade',
+                text: 'Modalidade já foi adicionado anteriormente.',
+                type: 'warning'
+            });
+            return;
+        }
+
+        $('#modalidadeDataTable').DataTable().destroy();
+
+        var table = $('#modalidadeDataTable').DataTable({
+            columnDefs: [
+                { "className": "text-center", "targets": "_all" }
+            ]
+        });
+
+        table.row.add([mapped[0].id, mapped[0].text,
+        "<a style='color:#F44336' href='javascript:(crud.DeleteModalidadeProfissional(\"" + mapped[0].id + "\"))'><i class='fa fa-trash'></i></a>"])
+            .draw();
+
+        self.params.modalidadeProfissional.push(mapped[0].id);
+
+        $('input[name="arrModalidadeProfissional"]').attr('value', self.params.modalidadeProfissional);
+
+        $("#ddlModalidade").select2("val", "0");
+
     }
 };

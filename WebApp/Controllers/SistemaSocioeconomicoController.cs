@@ -53,7 +53,7 @@ namespace WebApp.Controllers
             catch (Exception e)
             {
                 Console.Write(e.StackTrace);
-                return RedirectToAction(nameof(CreateParceiro), new { notify = (int)EnumNotify.Error, message = e.Message });
+                return RedirectToAction(nameof(CreateParceiro), new { notify = (int)EnumNotify.Error, message = $"Erro ao executar esta ação. Favor entrar em contato com o administrador do sistema. {e.Message}"  });
 
             }
 
@@ -79,7 +79,7 @@ namespace WebApp.Controllers
             catch (Exception e)
             {
                 Console.Write(e.StackTrace);
-                return RedirectToAction(nameof(Parceiro), new { notify = (int)EnumNotify.Error, message = e.Message });
+                return RedirectToAction(nameof(Parceiro), new { notify = (int)EnumNotify.Error, message = $"Erro ao executar esta ação. Favor entrar em contato com o administrador do sistema. {e.Message}" });
 
             }
         }
@@ -97,18 +97,18 @@ namespace WebApp.Controllers
 
                     Nome =  collection["nome"].ToString(),
                     TipoPessoa =  collection["tipoPessoa"].ToString(),
-                    CpfCnpj = collection["tipoPessoa"] == "pf" ? collection["cpf"].ToString() : collection["cnpj"].ToString(),
-                    Telefone = collection["numTelefone"] == "" ? null : collection["numTelefone"].ToString(),
-                    Celular = collection["numCelular"] == "" ? null : collection["numCelular"].ToString(),
-                    Cep = collection["cep"] == "" ? null : collection["cep"].ToString(),
-                    Endereco = collection["endereco"] == "" ? null : collection["endereco"].ToString(),
-                    Numero = collection["numero"] == "" ? 0 : Convert.ToInt32(collection["numero"].ToString()),
-                    Bairro = collection["bairro"] == "" ? null : collection["bairro"].ToString(),
+                    CpfCnpj = collection["tipoPessoa"].ToString() == "pf" ? collection["cpf"].ToString() : collection["cnpj"].ToString(),
+                    Telefone = collection["numTelefone"].ToString() == "" ? null : collection["numTelefone"].ToString(),
+                    Celular = collection["numCelular"].ToString() == "" ? null : collection["numCelular"].ToString(),
+                    Cep = collection["cep"].ToString() == "" ? null : collection["cep"].ToString(),
+                    Endereco = collection["endereco"].ToString() == "" ? null : collection["endereco"].ToString(),
+                    Numero = collection["numero"].ToString() == "" ? 0 : Convert.ToInt32(collection["numero"].ToString()),
+                    Bairro = collection["bairro"].ToString() == "" ? null : collection["bairro"].ToString(),
                     MunicipioId = Convert.ToInt32(collection["ddlMunicipio"].ToString()),
                     Habilitado = habilitado != "",
                     Status = status != "",
                     Email = collection["email"].ToString(),
-                    TipoParceria = Convert.ToInt32(collection["TipoParceria"].ToString()),
+                    TipoParceriaId = Convert.ToInt32(collection["ddlTipoParceria"].ToString()),
 
                 };
 
@@ -119,7 +119,7 @@ namespace WebApp.Controllers
             catch (Exception e)
             {
                 Console.Write(e.StackTrace);
-                return RedirectToAction(nameof(Parceiro), new { notify = (int)EnumNotify.Error, message = e.Message });
+                return RedirectToAction(nameof(Parceiro), new { notify = (int)EnumNotify.Error, message = $"Erro ao executar esta ação. Favor entrar em contato com o administrador do sistema. {e.Message}" });
 
             }
         }
@@ -140,7 +140,7 @@ namespace WebApp.Controllers
             catch (Exception e)
             {
                 Console.Write(e.StackTrace);
-                return RedirectToAction(nameof(Parceiro), new { notify = (int)EnumNotify.Error, message = e.Message });
+                return RedirectToAction(nameof(Parceiro), new { notify = (int)EnumNotify.Error, message = $"Erro ao executar esta ação. Favor entrar em contato com o administrador do sistema. {e.Message}" });
 
             }
         }
@@ -169,7 +169,7 @@ namespace WebApp.Controllers
                     Habilitado = habilitado != "",
                     Status = status != "",
                     Email = collection["email"].ToString(),
-                    TipoParceria = Convert.ToInt32(collection["TipoParceria"].ToString()),
+                    TipoParceriaId = Convert.ToInt32(collection["TipoParceria"].ToString()),
                 };
 
                 await ApiClientFactory.Instance.UpdateParceiro(command.Id, command);
@@ -179,7 +179,7 @@ namespace WebApp.Controllers
             catch (Exception e)
             {
                 Console.Write(e.StackTrace);
-                return RedirectToAction(nameof(Parceiro), new { notify = (int)EnumNotify.Error, message = e.Message });
+                return RedirectToAction(nameof(Parceiro), new { notify = (int)EnumNotify.Error, message = $"Erro ao executar esta ação. Favor entrar em contato com o administrador do sistema. {e.Message}" });
 
             }
         }

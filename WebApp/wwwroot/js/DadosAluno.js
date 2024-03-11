@@ -171,6 +171,9 @@
                 var $numCep = $("#cep");
                 $numCep.mask('00000-000');
 
+                var $numDtNasc = $("#DtNascimento");
+                $numDtNasc.mask('00/00/0000', { reverse: false });
+
                 jQuery.validator.addMethod("cpf", function (cpf, element) {
                     var regex = /^\d{3}\.\d{3}\.\d{3}\-\d{2}$/;
                     var add, rev, i;

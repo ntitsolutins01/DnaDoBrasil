@@ -522,9 +522,9 @@ namespace WebApp.Controllers
 
                 };
 
-                await ApiClientFactory.Instance.CreateDados(command);
+                var alunoId = await ApiClientFactory.Instance.CreateDados(command);
 
-                return RedirectToAction(nameof(Edit), new { id = command.Id, crud = (int)EnumCrud.Created });
+                return RedirectToAction(nameof(Edit), new { id = alunoId, crud = (int)EnumCrud.Created });
             }
             catch (Exception e)
             {

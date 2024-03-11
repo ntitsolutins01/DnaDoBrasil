@@ -10643,9 +10643,9 @@ body .ui-pnotify.icon-nb .notification .ui-pnotify-icon > span {
 	margin-right: 4px;
 }
 
-.panel-group .panel-accordion .panel-body {
-	border-radius: 0 0 5px 5px;
-}
+	.panel-group .panel-accordion .panel-body {
+		border-radius: 15px 15px 15px 15px;
+	}
 
 .panel-group .panel-accordion.panel-accordion-first {
 	border-radius: 0 0 5px 5px;

@@ -9,5 +9,6 @@
         public int Massa { get; set; }
         public int? Envergadura { get; set; }
         public string? DataRealizacaoTeste { get; set; }
+        public string? Imc { get; set; }
     }
 }

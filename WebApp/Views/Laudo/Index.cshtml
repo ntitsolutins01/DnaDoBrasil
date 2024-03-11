@@ -40,7 +40,14 @@
 									<td class="text-center">@Html.DisplayFor(modelItem => item.NomeAluno)</td>
 									<td class="text-center">@Html.DisplayFor(modelItem => item.MunicipioEstado)</td>
 									<td class="text-center">@Html.DisplayFor(modelItem => item.Localidade)</td>
-									<td class="text-center">@Html.DisplayFor(modelItem => item.Encaminhamento)</td>
+									@if (string.IsNullOrEmpty(item.Encaminhamento))
+                                    {
+                                        <td class="text-center"><span class="label label-dark">EM DESENVOLVIMENTO</span></td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-center"><span class="label label-success">FINALIZADO</span></td>
+                                    }
 									@if (item.StatusLaudo == "F")
                                     {
                                         <td class="text-center"><span class="label label-success">FINALIZADO</span></td>

@@ -83,11 +83,21 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="col-sm-4">
-                                                        <div class=" alert alert-info">
-                                                            <strong>0%</strong>
-                                                            <div>
-                                                                <label class="control-label">Indice Positivo de Saúde</label>
-                                                            </div>
+                                                        <div class="row form-group">
+                                                            <a data-toggle="modal" data-target="#mdDetalhamento">
+                                                                <section class="panel col-md-12">
+                                                                    <div class="panel-body bg-danger-less">
+                                                                        <div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-right">
+                                                                            <div class="circular-bar-chart" data-percent="24.22" data-plugin-options='{ "barColor": "#546E7A", "delay": 300, "size": 50, "lineWidth": 5 }'>
+                                                                                <strong>Average</strong>
+                                                                                <label><span class="percent">24.22</span></label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="h4 text-weight-bold mb-none">Indice de massa corporal (IMC)</div>
+                                                                        <p class="text-xs mb-none">Normal/Adequado</p>
+                                                                    </div>
+                                                                </section>
+                                                            </a>
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-4">
@@ -108,38 +118,23 @@
                                                     </div>
                                                 </div>
                                             
-                                                <div class="row form-group">
-                                                    <a data-toggle="modal" data-target="#mdDetalhamento">
-                                                        <section class="panel col-md-4">
-                                                            <div class="panel-body bg-danger-less">
-                                                                <div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-right">
-                                                                    <div class="circular-bar-chart" data-percent="45" data-plugin-options='{ "barColor": "#2baab1", "delay": 300, "size": 50, "lineWidth": 4 }'>
-                                                                        <strong>Average</strong>
-                                                                        <label><span class="percent">45</span>%</label>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="h4 text-weight-bold mb-none">Indice de massa corporal (IMC)</div>
-                                                                <p class="text-xs mb-none">Normal/Adequado</p>
-                                                            </div>
-                                                        </section>
-                                                    </a>
-                                                </div>
+                                                
 
-                                                <div class="row form-group">
+                                                @* <div class="row form-group">
                                                         <label class="col-md-2 control-label" for="textareaDefault">Plano de aula </label>
                                                         <div class="col-md-10">
                                                             <textarea class="form-control" rows="2" id="recommend"></textarea>
                                                         </div>
-                                                </div>
+                                                </div> *@
                                             </div>
-                                            <footer class="panel-footer">
+                                            @* <footer class="panel-footer">
 											    <div class="row">
 												    <div class="col-md-9 col-md-offset-3">
 													    <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
 
 												    </div>
 											    </div>
-										    </footer>
+										    </footer> *@
                                         </section>
                                     </form>
                                 </div>
@@ -1208,7 +1203,7 @@
             <div class="modal-body">
                 <div class="scrollable visible-slider colored-slider" data-plugin-scrollable style="height: 350px;">
                     <div class="scrollable-content">
-                        <div class="modal-text">
+                        <div class="modal-text">    
                             <div>
                                 <label>
                                     O que é o índice de massa corporal é importante, pois é uma medida internacional usada para definir doenças sérias, crônicas e preveníeis, como a obesidade.
@@ -1240,6 +1235,15 @@
 
 
 @section Scripts {
+
+    <script src="~/assets/vendor/jquery.easy-pie-chart/jquery.easy-pie-chart.js"></script>
+    <script src="~/assets/vendor/flot/jquery.flot.js"></script>
+    <script src="~/assets/vendor/flot.tooltip/flot.tooltip.js"></script>
+    <script src="~/assets/vendor/flot/jquery.flot.pie.js"></script>
+    <script src="~/assets/vendor/flot/jquery.flot.categories.js"></script>
+    <script src="~/assets/vendor/flot/jquery.flot.resize.js"></script>
+    <script src="~/assets/vendor/jquery-sparkline/jquery-sparkline.js"></script>
+    <script src="~/assets/vendor/raphael/raphael.js"></script>
     <script src="~/assets/vendor/morris.js/morris.js"></script>
     <script src="~/assets/vendor/gauge/gauge.js"></script>
     <script src="~/assets/vendor/snap.svg/snap.svg.js"></script>
