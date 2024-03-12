@@ -39,8 +39,8 @@
 								<tr>
 									<td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Id)</td>
 									<td class="text-center">@Html.DisplayFor(modelItem => item.Sexo)</td>
-									<td class="text-center">@Html.DisplayFor(modelItem => item.Classificacao)</td>
 									<td class="text-center">@Html.DisplayFor(modelItem => item.Idade)</td>
+									<td class="text-center">@Html.DisplayFor(modelItem => item.Classificacao)</td>
 									<td class="text-center">@Html.DisplayFor(modelItem => item.ValorInicial)</td>
 									<td class="text-center">@Html.DisplayFor(modelItem => item.ValorFinal)</td>
 									@if (item.Status)
@@ -135,12 +135,12 @@
 						<div class="form-group row">
 							<label class="col-sm-3 control-label text-sm-right pt-2">Valor Inicial <span class="required">*</span></label>
 							<div class="col-sm-3">
-								<input type="number" name="valorInicial" class="form-control"
+								<input type="number" name="valorInicial" class="form-control" maxlength="3"
 									   title="Por favor informe o valor inicial." required />
 							</div>
 							<label class="col-sm-2 control-label text-sm-right pt-2">Valor Final <span class="required">*</span></label>
 							<div class="col-sm-3">
-								<input type="number" name="valorFinal" class="form-control"
+								<input type="number" name="valorFinal" class="form-control" maxlength="3"
 									   title="Por favor informe o valor final." required />
 							</div>
 						</div>

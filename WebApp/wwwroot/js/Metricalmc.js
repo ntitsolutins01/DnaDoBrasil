@@ -24,6 +24,12 @@ var vm = new Vue({
 
             if (formid === "formEditMetricaImc ") {
 
+                //mascara dos inputs
+                var valorInicial = $("#valorInicial");
+                valorInicial.mask('0.00', { reverse: false });
+                var valorFinal = $("#valorFinal");
+                valorFinal.mask('0.00', { reverse: false });
+
                 $("#formEditMetricaImc ").validate({
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
@@ -45,6 +51,13 @@ var vm = new Vue({
             } 
 
             if (formid === "formMetricaImc ") {
+
+                //mascara dos inputs
+                var valorInicial = $("#valorInicial");
+                valorInicial.mask('0.00', { reverse: false });
+                var valorFinal = $("#valorFinal");
+                valorFinal.mask('0.00', { reverse: false });
+
                 var $select = $(".select2").select2({
                     allowClear: true
                 });
