@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using WebApp.Dto;
 
 namespace WebApp.Models
@@ -14,14 +13,13 @@ namespace WebApp.Models
         public SelectList ListEstados { get; set; }
         public string MunicipioId { get; set; }
         public SelectList ListMunicipios { get; set; }
-        public DashboardDto Indicadores { get; set; }
+        public DashboardDto Dashboard { get; set; }
         public SelectList ListDeficiencias { get; set; }
         public string DeficienciaId { get; set; }
         public SelectList ListEtnias { get; set; }
         public string EtniaId { get; set; }
         public int[]? ListPresencasAnual { get; set; }
         public int[]? ListFaltasAnual { get; set; }
-        public List<LaudoDto> Laudos { get; set; }
     }
 
 }

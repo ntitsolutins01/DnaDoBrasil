@@ -10,16 +10,9 @@ var vm = new Vue({
             var formid = $('form').attr('id');
 
             if (formid === "formDashboard") {
-                var obj = {
-                    FomentoId: $("#ddlFomento").val(),
-                    Estado: $("#ddlEstado").val(),
-                    MunicipioId: $("#ddlMunicipio").val(),
-                    LocalidadeId: $("#ddlLocalidade").val(),
-                    DeficienciaId: $("#ddlDeficiencia").val(),
-                    Etnia: $("#ddlEtnia").val()
-                }
 
-                self.GetControlePresencas(obj);
+                self.GetPesquisaDashboard();
+
 
                 var $select = $(".select2").select2({
                     allowClear: true
@@ -160,79 +153,6 @@ var vm = new Vue({
             var url = "Dashboard/Delete/" + id;
             $("#deleteDashboardHref").prop("href", url);
         },
-        GetControlePresencas: function (obj) {
-
-            var self = this;
-
-            axios.post("Dashboard/GetPesquisaDashboardByFilter", obj).then(result => {
-
-                $(function () {
-
-                    Highcharts.chart('containerPresenca', {
-                        chart: {
-                            type: 'column'
-                        },
-                        title: {
-                            text: undefined
-                        },
-                        xAxis: {
-                            categories: ['Jav', 'Fev', 'Mar',
-                                'Abr', 'Mai', 'Jun',
-                                'Jul', 'Ago', 'Set',
-                                'Out', 'Nov', 'Dez'],
-                            labels: {
-                                style: {
-                                    fontSize: '15px'
-                                }
-                            }
-                        },
-                        yAxis: {
-                            min: 0,
-                            title: {
-                                text: 'Quantidade de Presenças e Faltas',
-                                style: {
-                                    fontSize: '10px'
-                                }
-                            },
-                            labels: {
-                                style: {
-                                    fontSize: '15px'
-                                }
-                            }
-                        },
-                        plotOptions: {
-                            column: {
-                                pointPadding: 0.2,
-                                borderWidth: 0
-                            }
-                        },
-                        tooltip: {
-                            style: {
-                                fontSize: '15px'
-                            }
-                        },
-                        legend: {
-                            itemStyle: {
-                                fontSize: '15px'
-                            }
-                        },
-                        colors: ['#4CAF50', '#F44336'],
-                        series: [
-                            {
-                                name: 'Presença',
-                                data: result.data.listPresencasAnual
-                            },
-                            {
-                                name: 'Falta',
-                                data: result.data.listFaltasAnual
-                            }
-                        ]
-                    });
-                });
-            }).catch(error => {
-                Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
-            });
-        },
         GetPesquisaDashboard: function () {
 
             var self = this;
@@ -246,14 +166,59 @@ var vm = new Vue({
                 Etnia: $("#ddlEtnia").val()
             }
             axios.post("Dashboard/GetPesquisaDashboardByFilter", obj).then(result => {
-                $("#cadastrosMasculinos").text(result.data.indicadores.cadastrosMasculinos);
-                $("#avaliacoesDna").text(result.data.indicadores.avaliacoesDna);
-                $("#laudosAndamentos").text(result.data.indicadores.laudosAndamentos);
-                $("#laudosFinalizados").text(result.data.indicadores.laudosFinalizados);
-                $("#cadastrosFemininos").text(result.data.indicadores.cadastrosFemininos);
-                $("#alunosCadastrados").text(result.data.indicadores.alunosCadastrados);
-                $("#laudosMasculinos").text(result.data.indicadores.laudosMasculinos);
-                $("#laudosMasculinos").text(result.data.indicadores.laudosMasculinos);
+                $("#cadastrosMasculinos").text(result.data.dashboard.cadastrosMasculinos);
+                $("#avaliacoesDna").text(result.data.dashboard.avaliacoesDna);
+                $("#laudosAndamentos").text(result.data.dashboard.laudosAndamentos);
+                $("#laudosFinalizados").text(result.data.dashboard.laudosFinalizados);
+                $("#cadastrosFemininos").text(result.data.dashboard.cadastrosFemininos);
+                $("#alunosCadastrados").text(result.data.dashboard.alunosCadastrados);
+                $("#laudosMasculinos").text(result.data.dashboard.laudosMasculinos);
+                $("#laudosMasculinos").text(result.data.dashboard.laudosMasculinos);
+
+                $("#totSaudeFinalizado").text(result.data.dashboard.statusLaudos.totSaudeFinalizado);
+                $("#totSaudeAndamento").text(result.data.dashboard.statusLaudos.totSaudeAndamento);
+
+                var percentSaude = result.data.dashboard.statusLaudos.progressoSaude +'%'
+                $('#progressoSaude').css('width', percentSaude);
+                $('#vlProgressoSaude').text(result.data.dashboard.statusLaudos.progressoSaude + ' %');
+
+
+                $("#totTalentoEsportivoFinalizado").text(result.data.dashboard.statusLaudos.totTalentoEsportivoFinalizado);
+                $("#totTalentoEsportivoAndamento").text(result.data.dashboard.statusLaudos.totTalentoEsportivoAndamento);
+
+                var percentTalentoEsportivo = result.data.dashboard.statusLaudos.progressoTalentoEsportivo +'%'
+                $('#progressoTalentoEsportivo').css('width', percentTalentoEsportivo);
+                $('#vlProgressoTalentoEsportivo').text(result.data.dashboard.statusLaudos.progressoTalentoEsportivo + ' %');
+
+                $("#totConsumoAlimentarFinalizado").text(result.data.dashboard.statusLaudos.totConsumoAlimentarFinalizado);
+                $("#totConsumoAlimentarAndamento").text(result.data.dashboard.statusLaudos.totConsumoAlimentarAndamento);
+
+                var percentConsumoAlimentar = result.data.dashboard.statusLaudos.progressoConsumoAlimentar + '%'
+                $('#progressoConsumoAlimentar').css('width', percentConsumoAlimentar);
+                $('#vlProgressoConsumoAlimentar').text(result.data.dashboard.statusLaudos.progressoConsumoAlimentar + ' %');
+
+                $("#totSaudeBucalFinalizado").text(result.data.dashboard.statusLaudos.totSaudeBucalFinalizado);
+                $("#totSaudeBucalAndamento").text(result.data.dashboard.statusLaudos.totSaudeBucalAndamento);
+
+                var percentSaudeBucal = result.data.dashboard.statusLaudos.progressoSaudeBucal + '%'
+                $('#progressoSaudeBucal').css('width', percentSaudeBucal);
+                $('#vlProgressoSaudeBucal').text(result.data.dashboard.statusLaudos.progressoSaudeBucal + ' %');
+
+                $("#totQualidadeDeVidaFinalizado").text(result.data.dashboard.statusLaudos.totQualidadeDeVidaFinalizado);
+                $("#totQualidadeDeVidaAndamento").text(result.data.dashboard.statusLaudos.totQualidadeDeVidaAndamento);
+
+                var percentQualidadeDeVida = result.data.dashboard.statusLaudos.progressoQualidadeDeVida + '%'
+                $('#progressoQualidadeDeVida').css('width', percentQualidadeDeVida);
+                $('#vlProgressoQualidadeDeVida').text(result.data.dashboard.statusLaudos.progressoQualidadeDeVida + ' %');
+
+                $("#totVocacionalFinalizado").text(result.data.dashboard.statusLaudos.totVocacionalFinalizado);
+                $("#totVocacionalAndamento").text(result.data.dashboard.statusLaudos.totVocacionalAndamento);
+
+                var percentVocacional = result.data.dashboard.statusLaudos.progressoVocacional + '%'
+                $('#progressoVocacional').css('width', percentVocacional);
+                $('#vlProgressoVocacional').text(result.data.dashboard.statusLaudos.progressoVocacional + ' %');
+
+
                 self.SetGraficoControlePresenca(result)
             }).catch(error => {
                 Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);

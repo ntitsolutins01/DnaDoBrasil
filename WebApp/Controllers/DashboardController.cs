@@ -23,7 +23,7 @@ namespace WebApp.Controllers
 			ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
 		}
 
-		public IActionResult Index(IFormCollection collection)
+		public async Task<IActionResult> Index(IFormCollection collection)
 		{
 			var searchFilter = new DashboardDto
 			{
@@ -35,10 +35,11 @@ namespace WebApp.Controllers
                     Etnia = collection["ddlEtnia"].ToString()
 			};
 
-			var indicadores = ApiClientFactory.Instance.GetDashboardByFilter(searchFilter);
-			var fomentos = new SelectList(ApiClientFactory.Instance.GetFomentoAll(), "Id", "Nome", indicadores.FomentoId);
-			var deficiencias = new SelectList(ApiClientFactory.Instance.GetDeficienciaAll(), "Id", "Nome", indicadores.DeficienciaId);
-			var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", indicadores.Estado);
+            var dashboard = new DashboardDto();
+
+			var fomentos = new SelectList(ApiClientFactory.Instance.GetFomentoAll(), "Id", "Nome", dashboard.FomentoId);
+			var deficiencias = new SelectList(ApiClientFactory.Instance.GetDeficienciaAll(), "Id", "Nome", dashboard.DeficienciaId);
+			var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", dashboard.Estado);
 
             List<SelectListDto> list = new List<SelectListDto>
             {
@@ -49,32 +50,33 @@ namespace WebApp.Controllers
                 new() { IdNome = "AMARELO", Nome = "AMARELO" }
             };
 
-            var etnias = new SelectList(list, "IdNome", "Nome", indicadores.Etnia);
+            var etnias = new SelectList(list, "IdNome", "Nome", dashboard.Etnia);
             SelectList municipios = null;
 
-            if (!string.IsNullOrEmpty(indicadores.Estado))
+            if (!string.IsNullOrEmpty(dashboard.Estado))
             {
-                municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(indicadores.Estado), "Id", "Nome", indicadores.MunicipioId);
+                municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(dashboard.Estado), "Id", "Nome", dashboard.MunicipioId);
             }
             SelectList localidades = null;
 
-            if (!string.IsNullOrEmpty(indicadores.LocalidadeId))
+            if (!string.IsNullOrEmpty(dashboard.LocalidadeId))
             {
-                localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeByMunicipio(indicadores.MunicipioId), "Id", "Nome", indicadores.LocalidadeId);
+                localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeByMunicipio(dashboard.MunicipioId), "Id", "Nome", dashboard.LocalidadeId);
             }
-			
-
-			var model = new DashboardModel
+            
+            var model = new DashboardModel
 			{
 				ListFomentos = fomentos,
 				ListEstados = estados,
-				Indicadores = indicadores,
+				Dashboard = dashboard,
 				ListDeficiencias = deficiencias,
 				ListMunicipios = municipios!,
                 ListEtnias = etnias,
 				ListLocalidades = localidades!
-
             };
+
+            model.Dashboard.StatusLaudos = new StatusLaudosDto();
+
 			return View(model);
 		}
 
@@ -94,58 +96,26 @@ namespace WebApp.Controllers
 			}
 		}
 
-        public Task<JsonResult> GetPesquisaDashboardByFilter([FromBody] DashboardDto search)
+        public async Task<JsonResult> GetPesquisaDashboardByFilter([FromBody] DashboardDto search)
         {
             try
             {
                 var dashboard = ApiClientFactory.Instance.GetDashboardByFilter(search);
-                var fomentos = new SelectList(ApiClientFactory.Instance.GetFomentoAll(), "Id", "Nome", dashboard.FomentoId);
-                var deficiencias = new SelectList(ApiClientFactory.Instance.GetDeficienciaAll(), "Id", "Nome", dashboard.DeficienciaId);
-                var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", dashboard.Estado);
-
-                List<SelectListDto> list = new List<SelectListDto>
-                {
-                    new() { IdNome = "PARDO", Nome = "PARDO" },
-                    new() { IdNome = "BRANCO", Nome = "BRANCO" },
-                    new() { IdNome = "PRETO", Nome = "PRETO" },
-                    new() { IdNome = "INDÍGENA", Nome = "INDÍGENA" },
-                    new() { IdNome = "AMARELO", Nome = "AMARELO" }
-                };
-
-                var etnias = new SelectList(list, "IdNome", "Nome", dashboard.Etnia);
-                SelectList municipios = null;
-
-                if (!string.IsNullOrEmpty(dashboard.Estado))
-                {
-                    municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(dashboard.Estado), "Id", "Nome", dashboard.MunicipioId);
-                }
-                SelectList localidades = null;
-
-                if (!string.IsNullOrEmpty(dashboard.LocalidadeId))
-                {
-                    localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeByMunicipio(dashboard.MunicipioId), "Id", "Nome", dashboard.LocalidadeId);
-                }
-
 
 				var model = new DashboardModel
                 {
-                    ListFomentos = fomentos,
-                    ListEstados = estados,
-                    Indicadores = dashboard,
-                    ListDeficiencias = deficiencias,
-                    ListMunicipios = municipios!,
-                    ListEtnias = etnias,
-                    ListLocalidades = localidades!,
+                    Dashboard = dashboard,
+                   
                     ListFaltasAnual = dashboard.ListFaltasAnual,
-                    ListPresencasAnual = dashboard.ListPresencasAnual
+                    ListPresencasAnual = dashboard.ListPresencasAnual,
                 };
 
-                return Task.FromResult(Json(model));
+                return await Task.FromResult(Json(model));
 
             }
             catch (Exception ex)
             {
-                return Task.FromResult(Json(ex));
+                return await Task.FromResult(Json(ex));
             }
         }
     }

@@ -28,12 +28,6 @@ namespace WebApp.ApiClient
 
         #region Methods
 
-        //public Task<DashboardIndicadoresDto>  GetIndicadoresByFilter(SearchDashboardDto searchFilter)
-        //      {
-        //	var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-        //		$"{ResourceDashboard}/Indicadores"));
-        //	var result = Get(requestUrl, searchFilter);
-        //}
 
         #endregion
     }

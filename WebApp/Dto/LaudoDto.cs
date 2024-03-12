@@ -4,7 +4,11 @@
     {
         public int? AlunoId { get; set; }
 
-        public int? TalentoEsportivoId { get; set; }
+        public string? NomeTipoLaudo { get; set; }
+        public string? LaudosFinalizados { get; set; }
+        public string? LaudosAndamentos { get; set; }
+        public double? Progresso { get; set; }
+
         public int? VocacionalId { get; set; }
         public int? QualidadeDeVidaId { get; set; }
         public int? SaudeId { get; set; }

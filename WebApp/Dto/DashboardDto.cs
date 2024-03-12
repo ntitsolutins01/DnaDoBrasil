@@ -12,9 +12,10 @@
 		public int LaudosFemininos { get; set; }
 		public int[]? ListPresencasAnual { get; set; }
 		public int[]? ListFaltasAnual { get; set; }
+        public StatusLaudosDto? StatusLaudos { get; set; }
 
-		#region SearchFilter
-		public string Sexo { get; set; }
+        #region SearchFilter
+        public string Sexo { get; set; }
 		public string FomentoId { get; set; }
 		public string Estado { get; set; }
 		public string MunicipioId { get; set; }
