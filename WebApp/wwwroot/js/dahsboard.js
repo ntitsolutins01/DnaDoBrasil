@@ -219,7 +219,10 @@ var vm = new Vue({
                 $('#vlProgressoVocacional').text(result.data.dashboard.statusLaudos.progressoVocacional + ' %');
 
 
-                self.SetGraficoControlePresenca(result)
+                self.SetGraficoControlePresenca(result);
+                self.setGraficoLaudosPeriodo(result);
+                self.setGraficoSaudePercentual(result);
+
             }).catch(error => {
                 Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
             });
@@ -290,6 +293,134 @@ var vm = new Vue({
                         }
                     ]
                 });
+            });
+        },
+        setGraficoLaudosPeriodo: function (result) {
+            $(function () {
+
+                Highcharts.chart('containerLaudos', {
+
+                    chart: {
+                        type: 'column',
+                        inverted: false
+                    },
+
+                    title: {
+                        text: undefined
+                    },
+
+                    xAxis: {
+                        categories: ['Últimos 3 meses', 'Últimos 6 meses', 'Em 1 ano'],
+                        labels: {
+                            style: {
+                                fontSize: '15px'
+                            }
+                        }
+                    },
+
+                    yAxis: {
+                        title: {
+                            text: 'Laudos',
+                            style: {
+                                fontSize: '10px'
+                            },
+                            labels: {
+                                style: {
+                                    fontSize: '15px'
+                                }
+                            }
+                        }
+                    },
+
+                    plotOptions: {
+                        columnrange: {
+                            dataLabels: {
+                                enabled: true,
+                                formatter: function () {
+                                    return this.y;
+                                }
+                            }
+                        }
+                    },
+                    tooltip: {
+                        style: {
+                            fontSize: '15px'
+                        }
+                    },
+
+                    legend: {
+                        itemStyle: {
+                            fontSize: '15px'
+                        },
+                        enabled: false
+                    },
+
+                    series: [{
+                        name: 'Total',
+                        data: [
+                            { y: result.data.dashboard.ultimos3Meses, color: '#3949AB' },
+                            { y: result.data.dashboard.ultimos6Meses, color: '#8E24AA' },
+                            { y: result.data.dashboard.em1Ano, color: '#1E88E5' }
+                        ]
+                    }]
+
+                });
+
+            });
+        },
+        setGraficoSaudePercentual: function (result) {
+            $(function () {
+
+                Highcharts.chart('containerSaudePercentual', {
+                    chart: {
+                        type: 'variablepie'
+                    },
+                    title: {
+                        text: undefined
+                    },
+                    tooltip: {
+                        headerFormat: '',
+                        pointFormat: '<span style="color:{point.color}">\u25CF</span> <b> {point.name}</b><br/>' +
+                            'Area (square km): <b>{point.y}</b><br/>' +
+                            'Population density (people per square km): <b>{point.z}</b><br/>'
+                    },
+                    series: [{
+                        minPointSize: 10,
+                        innerSize: '20%',
+                        zMin: 0,
+                        name: 'etnias',
+                        borderRadius: 5,
+                        data: [{
+                            name: 'PARDOS',
+                            y: 505992,
+                            z: 92
+                        }, {
+                            name: 'BRANCOS',
+                            y: 551695,
+                            z: 119
+                        }, {
+                            name: 'PRETOS',
+                            y: 312679,
+                            z: 121
+                        }, {
+                            name: 'INDÍGENAS',
+                            y: 78865,
+                            z: 136
+                        }, {
+                            name: 'AMARELOS',
+                            y: 301336,
+                            z: 200
+                        }],
+                        colors: [
+                            '#EF5350',
+                            '#EC407A',
+                            '#AB47BC',
+                            '#7E57C2',
+                            '#5C6BC0'
+                        ]
+                    }]
+                });
+
             });
         }
     }

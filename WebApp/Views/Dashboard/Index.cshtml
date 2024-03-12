@@ -463,11 +463,11 @@
                     <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
                 </div>
 
-                <h2 class="panel-title">Etnia</h2>
-                <p class="panel-subtitle">Sintético</p>
+                <h2 class="panel-title">Saúde (%)</h2>
+                <p class="panel-subtitle">Percentual grafico de saúde dos alunos </p>
             </header>
             <div class="panel-body">
-                <div id="containerEtniaSintetico"></div>
+                <div id="containerSaudePercentual"></div>
             </div>
         </section>
     </div>
@@ -501,107 +501,10 @@
     <script src="~/assets/vendor/select2/js/select2.js"></script>
     <script src="~/js/dahsboard.js"></script>
     <script>
-        $(function () {
-
-            Highcharts.chart('containerLaudos', {
-
-                chart: {
-                    type: 'column',
-                    inverted: false
-                },
-
-                title: {
-                    text: undefined
-                },
-
-                xAxis: {
-                    categories: ['Últimos 3 meses', 'Últimos 6 meses', 'Em 1 ano']
-                },
-
-                yAxis: {
-                    title: {
-                        text: 'Laudos'
-                    }
-                },
-
-                plotOptions: {
-                    columnrange: {
-                        dataLabels: {
-                            enabled: true,
-                            formatter: function () {
-                                return this.y;
-                            }
-                        }
-                    }
-                },
-
-                legend: {
-                    enabled: false
-                },
-
-                series: [{
-                    name: 'Total',
-                    data: [
-                        { y: 20.1, color: '#3949AB' },
-                        { y: 34.4, color: '#8E24AA' },
-                        { y: 11.7, color: '#1E88E5' }
-                    ]
-                }]
-
-            });
-
-        });
+        
 
 
-        Highcharts.chart('containerEtniaSintetico', {
-            chart: {
-                type: 'variablepie'
-            },
-            title: {
-                text: undefined
-            },
-            tooltip: {
-                headerFormat: '',
-                pointFormat: '<span style="color:{point.color}">\u25CF</span> <b> {point.name}</b><br/>' +
-                    'Area (square km): <b>{point.y}</b><br/>' +
-                    'Population density (people per square km): <b>{point.z}</b><br/>'
-            },
-            series: [{
-                minPointSize: 10,
-                innerSize: '20%',
-                zMin: 0,
-                name: 'etnias',
-                borderRadius: 5,
-                data: [{
-                    name: 'PARDOS',
-                    y: 505992,
-                    z: 92
-                }, {
-                    name: 'BRANCOS',
-                    y: 551695,
-                    z: 119
-                }, {
-                    name: 'PRETOS',
-                    y: 312679,
-                    z: 121
-                }, {
-                    name: 'INDÍGENAS',
-                    y: 78865,
-                    z: 136
-                }, {
-                    name: 'AMARELOS',
-                    y: 301336,
-                    z: 200
-                }],
-                colors: [
-                    '#EF5350',
-                    '#EC407A',
-                    '#AB47BC',
-                    '#7E57C2',
-                    '#5C6BC0'
-                ]
-            }]
-        });
+        
 
         Highcharts.chart('containerTalentoEsportivoAnalitico', {
             chart: {

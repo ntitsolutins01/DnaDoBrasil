@@ -77,7 +77,8 @@ namespace WebApp.Controllers
 
             model.Dashboard.StatusLaudos = new StatusLaudosDto();
 
-			return View(model);
+
+            return View(model);
 		}
 
 		public Task<JsonResult> GetMunicipioByUf(string uf)

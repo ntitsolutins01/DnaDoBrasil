@@ -13,6 +13,9 @@
 		public int[]? ListPresencasAnual { get; set; }
 		public int[]? ListFaltasAnual { get; set; }
         public StatusLaudosDto? StatusLaudos { get; set; }
+		public int Ultimos3Meses { get; set; }
+		public int Ultimos6Meses { get; set; }
+		public int Em1Ano { get; set; }
 
         #region SearchFilter
         public string Sexo { get; set; }
