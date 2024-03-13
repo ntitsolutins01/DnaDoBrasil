@@ -16,8 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="wwwroot\assets\vendor\**" />
-    <Content Remove="wwwroot\assets\stylesheets\**" />
+
   </ItemGroup>
 
   <ItemGroup>
