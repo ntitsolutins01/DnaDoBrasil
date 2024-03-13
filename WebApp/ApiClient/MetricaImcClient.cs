@@ -36,7 +36,7 @@ namespace WebApp.ApiClient
         public MetricaImcDto GetMetricaImcById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceMetricaImc }/MetricaImc /{id}"));
+                $"{ResourceMetricaImc }/MetricaImc/{id}"));
             return Get<MetricaImcDto>(requestUrl);
         }
         public List<MetricaImcDto> GetMetricasImcAll()

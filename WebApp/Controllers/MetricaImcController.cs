@@ -36,9 +36,9 @@ namespace WebApp.Controllers
 			{
 				SetNotifyMessage(notify, message);
 				SetCrudMessage(crud);
-				var tipoLaudos = new SelectList(ApiClientFactory.Instance.GetMetricasImcAll(), "Id", "Nome");
+				var metricas = new SelectList(ApiClientFactory.Instance.GetMetricasImcAll(), "Id", "Nome");
 
-				return View(new MetricaImcModel(){ ListMetricasImc = tipoLaudos});
+				return View(new MetricaImcModel(){ ListMetricasImc = metricas});
 			}
 			catch (Exception e)
 			{
@@ -58,7 +58,7 @@ namespace WebApp.Controllers
 				{
 					Classificacao = collection["classificacao"].ToString(),
 					Idade = Convert.ToInt32(collection["idade"].ToString()),
-					ValorInicial = Convert.ToDecimal(collection["valorFinal"].ToString()),
+					ValorInicial = Convert.ToDecimal(collection["valorInicial"].ToString()),
 					ValorFinal = Convert.ToDecimal(collection["valorFinal"].ToString()),
 					Sexo = collection["ddlSexo"].ToString()
 				};
@@ -83,7 +83,7 @@ namespace WebApp.Controllers
 					Id = Convert.ToInt32(collection["editMetricaImcId"]),
 					Classificacao = collection["classificacao"].ToString(),
 					Idade = Convert.ToInt32(collection["idade"].ToString()),
-					ValorInicial = Convert.ToDecimal(collection["valorFinal"].ToString()),
+					ValorInicial = Convert.ToDecimal(collection["valorInicial"].ToString()),
 					ValorFinal = Convert.ToDecimal(collection["valorFinal"].ToString()),
 					Sexo = collection["ddlSexo"].ToString(),
 					Status = collection["editStatus"].ToString() == "" ? false : true
