@@ -1,6 +1,6 @@
 ﻿@model WebApp.Models.MetricaImcModel
 @{
-	ViewData["Title"] = "Listagem de MetricasImc";
+	ViewData["Title"] = "Listagem de Métricas Imc";
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -12,12 +12,12 @@
 					<div class="panel-actions">
 						<a href="#" class="card-action card-action-toggle" data-card-toggle></a>
 					</div>
-					<h2 class="panel-title">Listagem de MetricasImc</h2>
+					<h2 class="panel-title">Listagem de Métricas Imc</h2>
 				</header>
 				<div class="panel-body">
 					<div class="form-group row">
 						<div class="col-sm-12 pull-right">
-							<a href="@Url.Action("Create", "MetricaImc")" id="addToTable" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Novo MetricaImc </a>
+							<a href="@Url.Action("Create", "MetricaImc")" id="addToTable" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Nova Métrica Imc </a>
 						</div>
 					</div>
 					<table class="table table-bordered table-striped mb-0" id="datatable-default">
@@ -111,7 +111,7 @@
                         <div class="form-group row">
                             <label class="col-sm-2 control-label">Sexo <span class="required">*</span></label>
                             <div class="col-sm-3">
-								<input type="text" name="classificacao" class="form-control" :value="editDto.Sexo" readonly/>
+								<input type="text" name="sexo" class="form-control" :value="editDto.Sexo" readonly/>
                             </div>
                             <label class="col-sm-2 control-label text-sm-right pt-2">Classificação <span class="required">*</span></label>
                             <div class="col-sm-5">

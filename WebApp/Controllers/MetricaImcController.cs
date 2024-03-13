@@ -85,7 +85,6 @@ namespace WebApp.Controllers
 					Idade = Convert.ToInt32(collection["idade"].ToString()),
 					ValorInicial = Convert.ToDecimal(collection["valorInicial"].ToString()),
 					ValorFinal = Convert.ToDecimal(collection["valorFinal"].ToString()),
-					Sexo = collection["ddlSexo"].ToString(),
 					Status = collection["editStatus"].ToString() == "" ? false : true
 				};
 

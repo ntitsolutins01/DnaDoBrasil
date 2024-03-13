@@ -392,23 +392,23 @@ var vm = new Vue({
                         borderRadius: 5,
                         data: [{
                             name: 'PARDOS',
-                            y: 505992,
+                            y: 25,
                             z: 92
                         }, {
                             name: 'BRANCOS',
-                            y: 551695,
+                            y: 25,
                             z: 119
                         }, {
                             name: 'PRETOS',
-                            y: 312679,
+                            y: 25,
                             z: 121
                         }, {
                             name: 'INDÍGENAS',
-                            y: 78865,
+                            y: 25,
                             z: 136
                         }, {
                             name: 'AMARELOS',
-                            y: 301336,
+                            y: 25,
                             z: 200
                         }],
                         colors: [
