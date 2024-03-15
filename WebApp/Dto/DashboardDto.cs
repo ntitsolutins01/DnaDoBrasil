@@ -16,9 +16,10 @@
 		public int Ultimos3Meses { get; set; }
 		public int Ultimos6Meses { get; set; }
 		public int Em1Ano { get; set; }
+		public Dictionary<string, decimal>? PercentualSaude { get; set; }
 
-        #region SearchFilter
-        public string Sexo { get; set; }
+		#region SearchFilter
+		public string Sexo { get; set; }
 		public string FomentoId { get; set; }
 		public string Estado { get; set; }
 		public string MunicipioId { get; set; }

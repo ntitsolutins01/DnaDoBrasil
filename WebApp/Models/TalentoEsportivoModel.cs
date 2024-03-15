@@ -18,7 +18,7 @@ namespace WebApp.Models
             public int? ImpulsaoHorizontal { get; set; }
             public int? AptidaoFisica { get; set; }
             public int? Agilidade { get; set; }
-            public int? Abdominal { get; set; }
+            public bool? Abdominal { get; set; }
             public int Id { get; internal set; }
 
         }

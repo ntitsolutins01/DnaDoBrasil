@@ -369,6 +369,7 @@ var vm = new Vue({
             });
         },
         setGraficoSaudePercentual: function (result) {
+            var teste = result.data.dashboard.percentualSaude.OBESIDADEGRAU1;
             $(function () {
 
                 Highcharts.chart('containerSaudePercentual', {
@@ -382,7 +383,7 @@ var vm = new Vue({
                         headerFormat: '',
                         pointFormat: '<span style="color:{point.color}">\u25CF</span> <b> {point.name}</b><br/>' +
                             'Area (square km): <b>{point.y}</b><br/>' +
-                            'Population density (people per square km): <b>{point.z}</b><br/>'
+                            'Population density (people per square km): <b>{point.y}</b><br/>'
                     },
                     series: [{
                         minPointSize: 10,
@@ -391,32 +392,27 @@ var vm = new Vue({
                         name: 'etnias',
                         borderRadius: 5,
                         data: [{
-                            name: 'PARDOS',
-                            y: 25,
+                            name: 'ABAIXO DO NORMAL',
+                            y: result.data.dashboard.percentualSaude.ABAIXODONORMAL,
                             z: 92
                         }, {
-                            name: 'BRANCOS',
-                            y: 25,
+                            name: 'NORMAL',
+                            y: result.data.dashboard.percentualSaude.NORMAL,
                             z: 119
                         }, {
-                            name: 'PRETOS',
-                            y: 25,
+                            name: 'SOBREPESO',
+                            y: result.data.dashboard.percentualSaude.SOBREPESO,
                             z: 121
                         }, {
-                            name: 'INDÍGENAS',
-                            y: 25,
+                            name: 'OBESIDADE',
+                            y: result.data.dashboard.percentualSaude.OBESIDADE,
                             z: 136
-                        }, {
-                            name: 'AMARELOS',
-                            y: 25,
-                            z: 200
                         }],
                         colors: [
                             '#EF5350',
                             '#EC407A',
                             '#AB47BC',
-                            '#7E57C2',
-                            '#5C6BC0'
+                            '#7E57C2'
                         ]
                     }]
                 });

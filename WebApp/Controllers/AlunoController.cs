@@ -200,7 +200,7 @@ namespace WebApp.Controllers
                     ImpulsaoHorizontal = Convert.ToInt32(collection["impulsaoHorizontal"]),
                     AptidaoFisica = Convert.ToInt32(collection["aptdaoFisica"]),
                     Agilidade = Convert.ToInt32(collection["agilidade"]),
-                    Abdominal = Convert.ToInt32(collection["abdominal"])
+                    Abdominal = Convert.ToBoolean(collection["abdominal"])
                 };
 
                 await ApiClientFactory.Instance.CreateTalentoEsportivo(command);
@@ -226,7 +226,7 @@ namespace WebApp.Controllers
                 ImpulsaoHorizontal = Convert.ToInt32(collection["impulsaoHorizontal"]),
                 AptidaoFisica = Convert.ToInt32(collection["aptdaoFisica"]),
                 Agilidade = Convert.ToInt32(collection["agilidade"]),
-                Abdominal = Convert.ToInt32(collection["abdominal"])
+                Abdominal = Convert.ToBoolean(collection["abdominal"])
             };
 
             //await ApiClientFactory.Instance.UpdateTalentoEsportivo(command);

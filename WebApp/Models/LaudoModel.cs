@@ -24,6 +24,8 @@ namespace WebApp.Models
 		public SelectList ListMunicipios { get; set; }
         public string AlunoId { get; set; }
         public SelectList ListAlunos { get; set; }
+        public SelectList ListProfissionais { get; set; }
+        public string ProfissionalId { get; set; }
 
         public class CreateUpdateLaudoCommand
 		{
@@ -40,7 +42,7 @@ namespace WebApp.Models
             public decimal? Velocidade { get; set; }
             public decimal? ImpulsaoHorizontal { get; set; }
             public decimal? AptidaoFisica { get; set; }
-            public decimal? Abdominal { get; set; }
+            public bool Abdominal { get; set; }
             public decimal? Imc { get; set; }
             public decimal? Quadrado { get; set; }
             public string? Encaminhamento { get; set; }
