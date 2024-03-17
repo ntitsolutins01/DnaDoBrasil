@@ -1,4 +1,6 @@
-﻿namespace WebApp.Dto
+﻿using WebApp.Models;
+
+namespace WebApp.Dto
 {
 	public class DashboardDto
 	{
@@ -17,9 +19,15 @@
 		public int Ultimos6Meses { get; set; }
 		public int Em1Ano { get; set; }
 		public Dictionary<string, decimal>? PercentualSaude { get; set; }
+        public TotalizadorSexoSaudeDto? ListTotalizadorSaudeSexo { get; set; }
+        public TotalizadorTalentoDto? ListTotalizadorTalento { get; set; }
+        public List<DataTalento> ListPercTalento { get; set; }
+        public List<string>? ListPercTalentoCategorias { get; set; }
+        public List<DataTalento>? ListValorTalentoMasc { get; set; }
+        public List<DataTalento>? ListValorTalentoFem { get; set; }
 
-		#region SearchFilter
-		public string Sexo { get; set; }
+        #region SearchFilter
+        public string Sexo { get; set; }
 		public string FomentoId { get; set; }
 		public string Estado { get; set; }
 		public string MunicipioId { get; set; }

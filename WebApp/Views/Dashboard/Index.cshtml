@@ -478,12 +478,48 @@
                     <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
                 </div>
 
-                <h2 class="panel-title">Talento Esportivo</h2>
-                <p class="panel-subtitle">Analítico</p>
+                <h2 class="panel-title">Saúde</h2>
+                <p class="panel-subtitle">Totalizador de Alunos por Sexo</p>
             </header>
             <div class="panel-body">
                 <div class="table-responsive">
-                    <div id="containerTalentoEsportivoAnalitico"></div>
+                    <div id="containerSaudeSexo"></div>
+
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-5 col-md-12">
+        <section class="panel">
+            <header class="panel-heading">
+                <div class="panel-actions">
+                    <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
+                </div>
+
+                <h2 class="panel-title">Talento Esportivo (%)</h2>
+                <p class="panel-subtitle">Percentual grafico de talentos esportivos dos alunos </p>
+            </header>
+            <div class="panel-body">
+                <div id="containerTalentoPercentual"></div>
+            </div>
+        </section>
+    </div>
+    <div class="col-lg-7 col-md-12">
+        <section class="panel">
+            <header class="panel-heading">
+                <div class="panel-actions">
+                    <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
+                </div>
+
+                <h2 class="panel-title">Talento</h2>
+                <p class="panel-subtitle">Totalizador de Alunos por Sexo</p>
+            </header>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <div id="containerTalento"></div>
 
                 </div>
             </div>
@@ -501,47 +537,12 @@
     <script src="~/assets/vendor/select2/js/select2.js"></script>
     <script src="~/js/dahsboard.js"></script>
     <script>
+
+
+
+
+
         
-
-
-        
-
-        Highcharts.chart('containerTalentoEsportivoAnalitico', {
-            chart: {
-                type: 'bar'
-            },
-            title: {
-                text: undefined
-            },
-            xAxis: {
-                categories: ['Atletismo (Arremessos)', 'Atletismo (Corrida de Fundo)', 'Atletismo (Saltos)', 'Basquetebol', 'Ginástica']
-            },
-            yAxis: {
-                min: 0,
-                title: {
-                    text: 'Total'
-                }
-            },
-            legend: {
-                reversed: true
-            },
-            plotOptions: {
-                series: {
-                    stacking: 'normal',
-                    dataLabels: {
-                        enabled: true
-                    }
-                }
-            },
-            series: [{
-                name: 'Feminino',
-                color: '#EC407A',
-                data: [5, 3, 12, 6, 11]
-            }, {
-                name: 'Masculino',
-                data: [5, 15, 8, 5, 8]
-            }]
-        });
 
         Highcharts.chart('containerEvolutivo', {
             xAxis: {

@@ -178,7 +178,7 @@ var vm = new Vue({
                 $("#totSaudeFinalizado").text(result.data.dashboard.statusLaudos.totSaudeFinalizado);
                 $("#totSaudeAndamento").text(result.data.dashboard.statusLaudos.totSaudeAndamento);
 
-                var percentSaude = result.data.dashboard.statusLaudos.progressoSaude +'%'
+                var percentSaude = result.data.dashboard.statusLaudos.progressoSaude + '%'
                 $('#progressoSaude').css('width', percentSaude);
                 $('#vlProgressoSaude').text(result.data.dashboard.statusLaudos.progressoSaude + ' %');
 
@@ -186,7 +186,7 @@ var vm = new Vue({
                 $("#totTalentoEsportivoFinalizado").text(result.data.dashboard.statusLaudos.totTalentoEsportivoFinalizado);
                 $("#totTalentoEsportivoAndamento").text(result.data.dashboard.statusLaudos.totTalentoEsportivoAndamento);
 
-                var percentTalentoEsportivo = result.data.dashboard.statusLaudos.progressoTalentoEsportivo +'%'
+                var percentTalentoEsportivo = result.data.dashboard.statusLaudos.progressoTalentoEsportivo + '%'
                 $('#progressoTalentoEsportivo').css('width', percentTalentoEsportivo);
                 $('#vlProgressoTalentoEsportivo').text(result.data.dashboard.statusLaudos.progressoTalentoEsportivo + ' %');
 
@@ -220,8 +220,11 @@ var vm = new Vue({
 
 
                 self.SetGraficoControlePresenca(result);
-                self.setGraficoLaudosPeriodo(result);
-                self.setGraficoSaudePercentual(result);
+                self.SetGraficoLaudosPeriodo(result);
+                self.SetGraficoSaudePercentual(result);
+                self.SetGraficoTotalizadorSaudeSexo(result);
+                self.SetGraficoTalentoPercentual(result);
+                self.SetGraficoTotalizadorTalento(result);
 
             }).catch(error => {
                 Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
@@ -285,17 +288,17 @@ var vm = new Vue({
                     series: [
                         {
                             name: 'Presença',
-                            data: result.data.listPresencasAnual
+                            data: result.data.dashboard.listPresencasAnual
                         },
                         {
                             name: 'Falta',
-                            data: result.data.listFaltasAnual
+                            data: result.data.dashboard.listFaltasAnual
                         }
                     ]
                 });
             });
         },
-        setGraficoLaudosPeriodo: function (result) {
+        SetGraficoLaudosPeriodo: function (result) {
             $(function () {
 
                 Highcharts.chart('containerLaudos', {
@@ -368,8 +371,7 @@ var vm = new Vue({
 
             });
         },
-        setGraficoSaudePercentual: function (result) {
-            var teste = result.data.dashboard.percentualSaude.OBESIDADEGRAU1;
+        SetGraficoSaudePercentual: function (result) {
             $(function () {
 
                 Highcharts.chart('containerSaudePercentual', {
@@ -382,31 +384,49 @@ var vm = new Vue({
                     tooltip: {
                         headerFormat: '',
                         pointFormat: '<span style="color:{point.color}">\u25CF</span> <b> {point.name}</b><br/>' +
-                            'Area (square km): <b>{point.y}</b><br/>' +
-                            'Population density (people per square km): <b>{point.y}</b><br/>'
+                            '<b>{point.y} %</b> dos Alunos',
+                        style: {
+                            fontSize: '12px'
+                        }
+                    },
+                    legend: {
+                        itemStyle: {
+                            fontSize: '2px'
+                        }
+                    },
+                    plotOptions: {
+                        variablepie: {
+                            dataLabels: {
+                                enabled: true,
+                                style: {
+                                    fontSize: '12px',
+                                    fontWeight: '400'
+                                }
+                            }
+                        }
                     },
                     series: [{
                         minPointSize: 10,
                         innerSize: '20%',
                         zMin: 0,
-                        name: 'etnias',
+                        name: 'Percentual de Saúde dos Alunos',
                         borderRadius: 5,
                         data: [{
                             name: 'ABAIXO DO NORMAL',
                             y: result.data.dashboard.percentualSaude.ABAIXODONORMAL,
-                            z: 92
+                            z: 50
                         }, {
                             name: 'NORMAL',
                             y: result.data.dashboard.percentualSaude.NORMAL,
-                            z: 119
+                            z: 50
                         }, {
                             name: 'SOBREPESO',
                             y: result.data.dashboard.percentualSaude.SOBREPESO,
-                            z: 121
+                            z: 50
                         }, {
                             name: 'OBESIDADE',
                             y: result.data.dashboard.percentualSaude.OBESIDADE,
-                            z: 136
+                            z: 50
                         }],
                         colors: [
                             '#EF5350',
@@ -414,6 +434,217 @@ var vm = new Vue({
                             '#AB47BC',
                             '#7E57C2'
                         ]
+                    }]
+                });
+
+            });
+        },
+        SetGraficoTotalizadorSaudeSexo: function (result) {
+            var teste = result.data.dashboard.listTotalizadorSaudeSexo;
+
+            $(function () {
+
+                Highcharts.chart('containerSaudeSexo', {
+                    chart: {
+                        type: 'bar'
+                    },
+                    title: {
+                        text: undefined
+                    },
+                    xAxis: {
+                        categories: ['Baixo Peso', 'Acima do Peso', 'Risco de Colesterol Alto e Diabetes',
+                            'Risco de Hipertensão Arterial e Transtornos Cardíacos', 'Pré – disposição a resistência a insulina',
+                            'Pré – disposição a desequilíbrios musculares', 'Índice positivo de saúde'],
+
+                        labels: {
+                            style: {
+                                fontSize: '12px'
+                            }
+                        }
+                    },
+                    yAxis: {
+                        min: 0,
+                        title: {
+                            text: 'Total',
+                            style: {
+                                fontSize: '12px'
+                            }
+                        },
+
+                        labels: {
+                            style: {
+                                fontSize: '12px'
+                            }
+                        }
+                    },
+                    legend: {
+                        reversed: true,
+                        itemStyle: {
+                            fontSize: '12px'
+                        }
+                    },
+                    tooltip: {
+                        style: {
+                            fontSize: '12px'
+                        }
+                    },
+                    plotOptions: {
+                        series: {
+                            stacking: 'normal',
+                            dataLabels: {
+                                enabled: true,
+                                style: {
+                                    fontSize: '12px',
+                                    fontWeight: '400'
+                                }
+                            }
+                        }
+                    },
+                    series: [{
+                        name: 'Feminino',
+                        color: '#EC407A',
+                        data: [
+                            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeFeminino.baixoPeso,
+                            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeFeminino.acimaPeso,
+                            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeFeminino.riscoColesterolAlto,
+                            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeFeminino.riscoHipertensao,
+                            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeFeminino.resistenciaInsulina,
+                            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeFeminino.desequilibrioMuscular,
+                            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeFeminino.indicePositivoSaude
+                        ]
+                    }, {
+                        name: 'Masculino',
+                        data: [
+
+                            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeMasculino.baixoPeso,
+                            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeMasculino.acimaPeso,
+                            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeMasculino.riscoColesterolAlto,
+                            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeMasculino.riscoHipertensao,
+                            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeMasculino.resistenciaInsulina,
+                            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeMasculino.desequilibrioMuscular,
+                            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeMasculino.indicePositivoSaude
+                        ]
+                    }]
+                });
+
+            });
+        },
+        SetGraficoTalentoPercentual: function (result) {
+            $(function () {
+
+                Highcharts.chart('containerTalentoPercentual', {
+                    chart: {
+                        type: 'variablepie'
+                    },
+                    title: {
+                        text: undefined
+                    },
+                    tooltip: {
+                        headerFormat: '',
+                        pointFormat: '<span style="color:{point.color}">\u25CF</span> <b> {point.name}</b><br/>' +
+                            '<b>{point.y} %</b> dos Alunos',
+                        style: {
+                            fontSize: '12px'
+                        }
+                    },
+                    legend: {
+                        itemStyle: {
+                            fontSize: '2px'
+                        }
+                    },
+                    plotOptions: {
+                        variablepie: {
+                            dataLabels: {
+                                enabled: true,
+                                style: {
+                                    fontSize: '12px',
+                                    fontWeight: '400'
+                                }
+                            }
+                        }
+                    },
+                    series: [{
+                        minPointSize: 10,
+                        innerSize: '20%',
+                        zMin: 0,
+                        name: 'Percentual de Saúde dos Alunos',
+                        borderRadius: 5,
+                        data: result.data.dashboard.listPercTalento,
+                        colors: [
+                            '#EF5350',
+                            '#EC407A',
+                            '#AB47BC',
+                            '#7E57C2'
+                        ]
+                    }]
+                });
+
+            });
+        },
+        SetGraficoTotalizadorTalento: function (result) {
+            $(function () {
+
+                Highcharts.chart('containerTalento', {
+                    chart: {
+                        type: 'bar'
+                    },
+                    title: {
+                        text: undefined
+                    },
+                    xAxis: {
+                        categories: result.data.dashboard.listPercTalentoCategorias,
+
+                        labels: {
+                            style: {
+                                fontSize: '12px'
+                            }
+                        }
+                    },
+                    yAxis: {
+                        min: 0,
+                        title: {
+                            text: 'Total',
+                            style: {
+                                fontSize: '12px'
+                            }
+                        },
+
+                        labels: {
+                            style: {
+                                fontSize: '12px'
+                            }
+                        }
+                    },
+                    legend: {
+                        reversed: true,
+                        itemStyle: {
+                            fontSize: '12px'
+                        }
+                    },
+                    tooltip: {
+                        style: {
+                            fontSize: '12px'
+                        }
+                    },
+                    plotOptions: {
+                        series: {
+                            stacking: 'normal',
+                            dataLabels: {
+                                enabled: true,
+                                style: {
+                                    fontSize: '12px',
+                                    fontWeight: '400'
+                                }
+                            }
+                        }
+                    },
+                    series: [{
+                        name: 'Feminino',
+                        color: '#EC407A',
+                        data: result.data.dashboard.listValorTalentoFem
+                    }, {
+                        name: 'Masculino',
+                        data: result.data.dashboard.listValorTalentoMasc
                     }]
                 });
 

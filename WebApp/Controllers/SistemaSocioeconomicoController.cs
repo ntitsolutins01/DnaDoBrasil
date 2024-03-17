@@ -53,7 +53,7 @@ namespace WebApp.Controllers
             catch (Exception e)
             {
                 Console.Write(e.StackTrace);
-                return RedirectToAction(nameof(CreateParceiro), new { notify = (int)EnumNotify.Error, message = $"Erro ao executar esta ação. Favor entrar em contato com o administrador do sistema. {e.Message}"  });
+                return RedirectToAction(nameof(Parceiro), new { notify = (int)EnumNotify.Error, message = $"Erro ao executar esta ação. Favor entrar em contato com o administrador do sistema. {e.Message}"  });
 
             }
 

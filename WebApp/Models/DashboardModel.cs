@@ -18,8 +18,14 @@ namespace WebApp.Models
         public string DeficienciaId { get; set; }
         public SelectList ListEtnias { get; set; }
         public string EtniaId { get; set; }
-        public int[]? ListPresencasAnual { get; set; }
-        public int[]? ListFaltasAnual { get; set; }
+        public DataTalento DataTalento { get; set; }
+    }
+
+    public class DataTalento
+    {
+        public string name { get; set; }
+        public decimal y { get; set; }
+        public int z { get; set; }
     }
 
 }

@@ -10,36 +10,36 @@ using WebApp.Utility;
 
 namespace WebApp.Controllers
 {
-	public class DashboardController : BaseController
-	{
-		private readonly ILogger<DashboardController> _logger;
-		private readonly IOptions<UrlSettings> _appSettings;
+    public class DashboardController : BaseController
+    {
+        private readonly ILogger<DashboardController> _logger;
+        private readonly IOptions<UrlSettings> _appSettings;
 
 
-		public DashboardController(ILogger<DashboardController> logger, IOptions<UrlSettings> appSettings)
-		{
-			_logger = logger;
-			_appSettings = appSettings;
-			ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
-		}
+        public DashboardController(ILogger<DashboardController> logger, IOptions<UrlSettings> appSettings)
+        {
+            _logger = logger;
+            _appSettings = appSettings;
+            ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
+        }
 
-		public async Task<IActionResult> Index(IFormCollection collection)
-		{
-			var searchFilter = new DashboardDto
-			{
-					FomentoId = collection["ddlFomento"].ToString(),
-					Estado = collection["ddlEstado"].ToString(),
-					MunicipioId = collection["ddlMunicipio"].ToString(),
-					LocalidadeId = collection["ddlLocalidade"].ToString(),
-                    DeficienciaId = collection["ddlDeficiencia"].ToString(),
-                    Etnia = collection["ddlEtnia"].ToString()
-			};
+        public async Task<IActionResult> Index(IFormCollection collection)
+        {
+            var searchFilter = new DashboardDto
+            {
+                FomentoId = collection["ddlFomento"].ToString(),
+                Estado = collection["ddlEstado"].ToString(),
+                MunicipioId = collection["ddlMunicipio"].ToString(),
+                LocalidadeId = collection["ddlLocalidade"].ToString(),
+                DeficienciaId = collection["ddlDeficiencia"].ToString(),
+                Etnia = collection["ddlEtnia"].ToString()
+            };
 
             var dashboard = new DashboardDto();
 
-			var fomentos = new SelectList(ApiClientFactory.Instance.GetFomentoAll(), "Id", "Nome", dashboard.FomentoId);
-			var deficiencias = new SelectList(ApiClientFactory.Instance.GetDeficienciaAll(), "Id", "Nome", dashboard.DeficienciaId);
-			var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", dashboard.Estado);
+            var fomentos = new SelectList(ApiClientFactory.Instance.GetFomentoAll(), "Id", "Nome", dashboard.FomentoId);
+            var deficiencias = new SelectList(ApiClientFactory.Instance.GetDeficienciaAll(), "Id", "Nome", dashboard.DeficienciaId);
+            var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", dashboard.Estado);
 
             List<SelectListDto> list = new List<SelectListDto>
             {
@@ -63,39 +63,39 @@ namespace WebApp.Controllers
             {
                 localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeByMunicipio(dashboard.MunicipioId), "Id", "Nome", dashboard.LocalidadeId);
             }
-            
+
             var model = new DashboardModel
-			{
-				ListFomentos = fomentos,
-				ListEstados = estados,
-				Dashboard = dashboard,
-				ListDeficiencias = deficiencias,
-				ListMunicipios = municipios!,
+            {
+                ListFomentos = fomentos,
+                ListEstados = estados,
+                Dashboard = dashboard,
+                ListDeficiencias = deficiencias,
+                ListMunicipios = municipios!,
                 ListEtnias = etnias,
-				ListLocalidades = localidades!
+                ListLocalidades = localidades!
             };
 
             model.Dashboard.StatusLaudos = new StatusLaudosDto();
 
 
             return View(model);
-		}
+        }
 
-		public Task<JsonResult> GetMunicipioByUf(string uf)
-		{
-			try
-			{
-				if (string.IsNullOrEmpty(uf)) throw new Exception("Estado não informado.");
-				var resultLocal = ApiClientFactory.Instance.GetMunicipiosByUf(uf);
+        public Task<JsonResult> GetMunicipioByUf(string uf)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(uf)) throw new Exception("Estado não informado.");
+                var resultLocal = ApiClientFactory.Instance.GetMunicipiosByUf(uf);
 
-				return Task.FromResult(Json(new SelectList(resultLocal, "Id", "Nome")));
+                return Task.FromResult(Json(new SelectList(resultLocal, "Id", "Nome")));
 
-			}
-			catch (Exception ex)
-			{
-				return Task.FromResult(Json(ex.Message));
-			}
-		}
+            }
+            catch (Exception ex)
+            {
+                return Task.FromResult(Json(ex.Message));
+            }
+        }
 
         public async Task<JsonResult> GetPesquisaDashboardByFilter([FromBody] DashboardDto search)
         {
@@ -103,12 +103,56 @@ namespace WebApp.Controllers
             {
                 var dashboard = ApiClientFactory.Instance.GetDashboardByFilter(search);
 
-				var model = new DashboardModel
+                List<string> listPercTalentoCategorias = new List<string>();
+
+                var listPercTalento = new List<DataTalento>();
+
+                foreach (var item in dashboard.ListTotalizadorTalento.PercTalento)
+                {
+                    listPercTalento.Add(new DataTalento()
+                    {
+                        name = item.Key,
+                        y = item.Value,
+                        z = 50
+                    });
+
+                    listPercTalentoCategorias.Add(new string(item.Key));
+                }
+
+                var listValorTalentoMasc = new List<DataTalento>();
+
+                foreach (var item in dashboard.ListTotalizadorTalento.ValorTotalizadorTalentoMasculino!)
+                {
+                    listValorTalentoMasc.Add(new DataTalento()
+                    {
+                        name = item.Key,
+                        y = item.Value,
+                        z = 50
+                    });
+
+                }
+                var listValorTalentoFem = new List<DataTalento>();
+
+                foreach (var item in dashboard.ListTotalizadorTalento.ValorTotalizadorTalentoFeminino!)
+                {
+                    listValorTalentoFem.Add(new DataTalento()
+                    {
+                        name = item.Key,
+                        y = item.Value,
+                        z = 50
+                    });
+
+                }
+
+                dashboard.ListPercTalento = listPercTalento;
+                dashboard.ListPercTalentoCategorias = listPercTalentoCategorias;
+                dashboard.ListValorTalentoMasc = listValorTalentoMasc;
+                dashboard.ListValorTalentoFem = listValorTalentoFem;
+
+                var model = new DashboardModel
                 {
                     Dashboard = dashboard,
-                   
-                    ListFaltasAnual = dashboard.ListFaltasAnual,
-                    ListPresencasAnual = dashboard.ListPresencasAnual,
+
                 };
 
                 return await Task.FromResult(Json(model));
