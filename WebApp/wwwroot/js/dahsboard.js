@@ -1543,10 +1543,10 @@ var vm = new Vue({
 
             });
         },
-        SetGraficoTotalizadorQualidade: function (result) {
+        SetGraficoTotalizadorConsumo: function (result) {
             $(function () {
 
-                Highcharts.chart('containerQualidade', {
+                Highcharts.chart('containerConsumo', {
                     chart: {
                         type: 'bar'
                     },

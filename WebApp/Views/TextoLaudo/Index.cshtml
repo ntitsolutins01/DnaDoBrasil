@@ -119,7 +119,7 @@
                             </div>
                             <label class="col-sm-2 control-label text-sm-right pt-2">Sexo</label>
                             <div class="col-sm-3">
-                                <input type="text" name="sexo" class="form-control"
+                                <input type="text" id="sexo" name="sexo" class="form-control"
                                        title="Por favor informe o sexo." required :value="editDto.Sexo" readonly />
                             </div>
                         </div>
@@ -140,12 +140,12 @@
                         <div class="form-group row">
                             <label class="col-sm-3 control-label text-sm-right pt-2">Ponto Inicial <span class="required">*</span></label>
                             <div class="col-sm-3">
-                                <input type="text" id="pontoInicial" name="pontoInicial" class="form-control"
+                                <input type="text" id="pontoInicial" name="pontoInicial" class="form-control" maxlength="5"
                                        title="Por favor informe o ponto inicial." required :value="editDto.PontoInicial" />
                             </div>
                             <label class="col-sm-2 control-label text-sm-right pt-2">Ponto Final <span class="required">*</span></label>
                             <div class="col-sm-3">
-                                <input type="text" id="pontoFinal" name="pontoFinal" class="form-control" :value="editDto.PontoFinal"
+                                <input type="text" id="pontoFinal" name="pontoFinal" class="form-control" :value="editDto.PontoFinal" maxlength="5"
                                        title="Por favor informe o ponto final." required />
                             </div>
                         </div>
@@ -176,7 +176,6 @@
     <script src="~/assets/vendor/select2/js/select2.js"></script>
     <script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
     <script src="~/assets/vendor/jquery-mask/jquery.mask.js"></script>
-    <script src="~/assets/vendor/ios7-switch/ios7-switch.js"></script>
     <script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
     <script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
     <script src="~/js/formatTable.js"></script>

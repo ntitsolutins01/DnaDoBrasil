@@ -2,33 +2,25 @@ var vm = new Vue({
     el: "#vTextoLaudo",
     data: {
         loading: false,
-        editDto: { Id: "", Classificacao: "", PontoInicial: "", PontoFinal: "", Aviso: "", Txto: "", NomeTipoLaudo:"", Idade:"" }
+        editDto: { Id: "", Classificacao: "", PontoInicial: "", PontoFinal: "", Aviso: "", Txto: "", NomeTipoLaudo:"", Idade:"", Sexo: "" }
     },
     mounted: function () {
         var self = this;
         (function ($) {
             'use strict';
 
-            if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
-
-                $(function () {
-                    $('[data-plugin-ios-switch]').each(function () {
-                        var $this = $(this);
-
-                        $this.themePluginIOS7Switch();
-                    });
-                });
-            }
 
             var formid = $('form').attr('id');
 
             if (formid === "formEditTextoLaudo") {
 
+
                 //mascara dos inputs
-                var valorInicial = $("pontoInicial");
-                valorInicial.mask('00.00', { reverse: false });
-                var valorFinal = $("#pontoFinal");
-                valorFinal.mask('00.00', { reverse: false });
+                var $pontoInicial = $("#pontoInicial");
+                $pontoInicial.mask('00.00', { reverse: true });
+
+                var $pontoFinal = $("#pontoFinal");
+                $pontoFinal.mask('00.00', { reverse: true });
 
                 $("#formEditTextoLaudo").validate({
                     highlight: function (label) {
@@ -74,6 +66,13 @@ var vm = new Vue({
                 $select.on('change', function () {
                     $(this).trigger('blur');
                 });
+
+                //mascara dos inputs
+                var $pontoInicial = $("#pontoInicial");
+                $pontoInicial.mask('00.00', { reverse: true });
+
+                var $pontoFinal = $("#pontoFinal");
+                $pontoFinal.mask('00.00', { reverse: true });
 
                 $("#formTextoLaudo").validate({
                     highlight: function (label) {
@@ -132,7 +131,8 @@ var vm = new Vue({
                 self.editDto.Aviso = result.data.aviso;
                 self.editDto.Texto = result.data.texto;
                 self.editDto.NomeTipoLaudo = result.data.nomeTipoLaudo;
-                self.editDto.Idade = result.data.Idade;
+                self.editDto.Idade = result.data.idade;
+                self.editDto.Sexo = result.data.sexo;
 
             }).catch(error => {
                 Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);

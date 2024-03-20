@@ -57,7 +57,7 @@ namespace WebApp.Controllers
 				var command = new TextoLaudoModel.CreateUpdateTextoLaudoCommand
 				{
 					TipoLaudoId = Convert.ToInt32(collection["ddlTipoLaudo"].ToString()),
-					Sexo = Convert.ToInt32(collection["ddlSexo"].ToString()),
+					Sexo = collection["ddlSexo"].ToString(),
 					Idade = Convert.ToInt32(collection["idade"].ToString()),
 					Classificacao = collection["classificacao"].ToString(),
 					PontoInicial = Convert.ToDecimal(collection["pontoInicial"].ToString()),
