@@ -18,10 +18,10 @@ namespace WebApp.Models
         public string DeficienciaId { get; set; }
         public SelectList ListEtnias { get; set; }
         public string EtniaId { get; set; }
-        public DataTalento DataTalento { get; set; }
+        public DataGrafico DataGrafico { get; set; }
     }
 
-    public class DataTalento
+    public class DataGrafico    
     {
         public string name { get; set; }
         public decimal y { get; set; }

@@ -105,11 +105,11 @@ namespace WebApp.Controllers
 
                 List<string> listPercTalentoCategorias = new List<string>();
 
-                var listPercTalento = new List<DataTalento>();
+                var listPercTalento = new List<DataGrafico>();
 
                 foreach (var item in dashboard.ListTotalizadorTalento.PercTalento)
                 {
-                    listPercTalento.Add(new DataTalento()
+                    listPercTalento.Add(new DataGrafico()
                     {
                         name = item.Key,
                         y = item.Value,
@@ -119,11 +119,11 @@ namespace WebApp.Controllers
                     listPercTalentoCategorias.Add(new string(item.Key));
                 }
 
-                var listValorTalentoMasc = new List<DataTalento>();
+                var listValorTalentoMasc = new List<DataGrafico>();
 
                 foreach (var item in dashboard.ListTotalizadorTalento.ValorTotalizadorTalentoMasculino!)
                 {
-                    listValorTalentoMasc.Add(new DataTalento()
+                    listValorTalentoMasc.Add(new DataGrafico()
                     {
                         name = item.Key,
                         y = item.Value,
@@ -131,11 +131,11 @@ namespace WebApp.Controllers
                     });
 
                 }
-                var listValorTalentoFem = new List<DataTalento>();
+                var listValorTalentoFem = new List<DataGrafico>();
 
                 foreach (var item in dashboard.ListTotalizadorTalento.ValorTotalizadorTalentoFeminino!)
                 {
-                    listValorTalentoFem.Add(new DataTalento()
+                    listValorTalentoFem.Add(new DataGrafico()
                     {
                         name = item.Key,
                         y = item.Value,
@@ -148,6 +148,53 @@ namespace WebApp.Controllers
                 dashboard.ListPercTalentoCategorias = listPercTalentoCategorias;
                 dashboard.ListValorTalentoMasc = listValorTalentoMasc;
                 dashboard.ListValorTalentoFem = listValorTalentoFem;
+
+                List<string> listPercDeficienciaCategorias = new List<string>();
+
+                var listPercDeficiencia = new List<DataGrafico>();
+
+                foreach (var item in dashboard.ListTotalizadorDeficiencia.PercDeficiencia)
+                {
+                    listPercDeficiencia.Add(new DataGrafico()
+                    {
+                        name = item.Key,
+                        y = item.Value,
+                        z = 50
+                    });
+
+                    listPercDeficienciaCategorias.Add(new string(item.Key));
+                }
+
+                var listValorDeficienciaMasc = new List<DataGrafico>();
+
+                foreach (var item in dashboard.ListTotalizadorDeficiencia.ValorTotalizadorDeficienciaMasculino!)
+                {
+                    listValorDeficienciaMasc.Add(new DataGrafico()
+                    {
+                        name = item.Key,
+                        y = item.Value,
+                        z = 50
+                    });
+
+                }
+                var listValorDeficienciaFem = new List<DataGrafico>();
+
+                foreach (var item in dashboard.ListTotalizadorDeficiencia.ValorTotalizadorDeficienciaFeminino!)
+                {
+                    listValorDeficienciaFem.Add(new DataGrafico()
+                    {
+                        name = item.Key,
+                        y = item.Value,
+                        z = 50
+                    });
+
+                }
+
+                dashboard.ListPercDeficiencia = listPercDeficiencia;
+                dashboard.ListPercDeficienciaCategorias = listPercDeficienciaCategorias;
+                dashboard.ListValorDeficienciaMasc = listValorDeficienciaMasc;
+                dashboard.ListValorDeficienciaFem = listValorDeficienciaFem;
+
 
                 var model = new DashboardModel
                 {

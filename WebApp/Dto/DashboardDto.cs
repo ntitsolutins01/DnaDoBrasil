@@ -21,10 +21,22 @@ namespace WebApp.Dto
 		public Dictionary<string, decimal>? PercentualSaude { get; set; }
         public TotalizadorSexoSaudeDto? ListTotalizadorSaudeSexo { get; set; }
         public TotalizadorTalentoDto? ListTotalizadorTalento { get; set; }
-        public List<DataTalento> ListPercTalento { get; set; }
+        public List<DataGrafico> ListPercTalento { get; set; }
         public List<string>? ListPercTalentoCategorias { get; set; }
-        public List<DataTalento>? ListValorTalentoMasc { get; set; }
-        public List<DataTalento>? ListValorTalentoFem { get; set; }
+        public List<DataGrafico>? ListValorTalentoMasc { get; set; }
+        public List<DataGrafico>? ListValorTalentoFem { get; set; }
+        public TotalizadorDesempenhoDto? ListTotalizadorDesempenho { get; set; }
+        public TotalizadorDeficienciaDto? ListTotalizadorDeficiencia { get; set; }
+        public List<DataGrafico> ListPercDeficiencia { get; set; }
+        public List<string>? ListPercDeficienciaCategorias { get; set; }
+        public List<DataGrafico>? ListValorDeficienciaMasc { get; set; }
+        public List<DataGrafico>? ListValorDeficienciaFem { get; set; }
+
+        public TotalizadorEtniaDto? ListTotalizadorEtnia { get; set; }
+        public List<DataGrafico> ListPercEtnia { get; set; }
+        public List<string>? ListPercEtniaCategorias { get; set; }
+        public List<DataGrafico>? ListValorEtniaMasc { get; set; }
+        public List<DataGrafico>? ListValorEtniaFem { get; set; }
 
         #region SearchFilter
         public string Sexo { get; set; }

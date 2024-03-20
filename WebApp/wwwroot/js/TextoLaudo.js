@@ -2,7 +2,7 @@ var vm = new Vue({
     el: "#vTextoLaudo",
     data: {
         loading: false,
-        editDto: { Id: "", Classificacao: "", PontoInicial: "", PontoFinal: "", Aviso: "", Txto: "", NomeTipoLaudo:"" }
+        editDto: { Id: "", Classificacao: "", PontoInicial: "", PontoFinal: "", Aviso: "", Txto: "", NomeTipoLaudo:"", Idade:"" }
     },
     mounted: function () {
         var self = this;
@@ -23,6 +23,12 @@ var vm = new Vue({
             var formid = $('form').attr('id');
 
             if (formid === "formEditTextoLaudo") {
+
+                //mascara dos inputs
+                var valorInicial = $("pontoInicial");
+                valorInicial.mask('00.00', { reverse: false });
+                var valorFinal = $("#pontoFinal");
+                valorFinal.mask('00.00', { reverse: false });
 
                 $("#formEditTextoLaudo").validate({
                     highlight: function (label) {
@@ -126,6 +132,7 @@ var vm = new Vue({
                 self.editDto.Aviso = result.data.aviso;
                 self.editDto.Texto = result.data.texto;
                 self.editDto.NomeTipoLaudo = result.data.nomeTipoLaudo;
+                self.editDto.Idade = result.data.Idade;
 
             }).catch(error => {
                 Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);

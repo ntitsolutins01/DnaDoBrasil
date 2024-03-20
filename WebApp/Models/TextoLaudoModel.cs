@@ -20,6 +20,8 @@ namespace WebApp.Models
             public decimal PontoFinal { get; init; }
             public string? Aviso { get; init; }
             public string? Texto { get; init; }
+            public int? Sexo { get; set; }
+            public int? Idade { get; set; }
         }
     }
 
