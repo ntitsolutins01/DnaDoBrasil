@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Options;
 using WebApp.Areas.Identity.Models;
 using WebApp.Configuration;
@@ -15,6 +17,7 @@ using WebApp.Enumerators;
 using WebApp.Factory;
 using WebApp.Models;
 using WebApp.Utility;
+using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
 namespace WebApp.Areas.Identity.Pages.Account
 {
@@ -28,12 +31,16 @@ namespace WebApp.Areas.Identity.Pages.Account
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly ApplicationDbContext _db;
         private readonly IOptions<UrlSettings> _appSettings;
+        private readonly IHostingEnvironment _host;
 
         public RegisterModel(IOptions<UrlSettings> app,
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender, RoleManager<IdentityRole> roleManager, ApplicationDbContext db)
+            IEmailSender emailSender, 
+            RoleManager<IdentityRole> roleManager, 
+            ApplicationDbContext db,
+            IHostingEnvironment host)
         {
             _appSettings = app;
             _userManager = userManager;
@@ -42,6 +49,7 @@ namespace WebApp.Areas.Identity.Pages.Account
             _emailSender = emailSender;
             _roleManager = roleManager;
             _db = db;
+            _host = host;
             ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
         }
 
@@ -123,11 +131,7 @@ namespace WebApp.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(IFormCollection collection)
         {
-            string returnUrl = null;
-            returnUrl ??= Url.Content("~/");
-
-
-            var command = new AlunoModel.CreateUpdateDadosAlunoCommand()
+            var commandAluno = new AlunoModel.CreateUpdateDadosAlunoCommand()
             {
                 MunicipioId = collection["ddlMunicipio"] == "" ? null : Convert.ToInt32(collection["ddlMunicipio"].ToString()),
                 LocalidadeId = collection["ddlLocalidade"] == "" ? null : Convert.ToInt32(collection["ddlLocalidade"].ToString()),
@@ -146,16 +150,26 @@ namespace WebApp.Areas.Identity.Pages.Account
                 Status = true
             };
 
+            var alunoId = await ApiClientFactory.Instance.CreateDados(commandAluno);
 
-            if (!ModelState.IsValid) return Page();
-            var user = new IdentityUser { UserName = command.Email, Email = command.Email, EmailConfirmed = true, PhoneNumberConfirmed = true};
-            var result = await _userManager.CreateAsync(user, "12345678");
-            StringBuilder msg = new StringBuilder();
-            if (!result.Succeeded)
+            var result = ApiClientFactory.Instance.GetAlunoById((int)alunoId);
+
+            var command = new UsuarioModel.CreateUpdateUsuarioCommand
             {
-	            foreach (var error in result.Errors)
-	            {
-		            ModelState.AddModelError(string.Empty, error.Description);
+                Email = collection["email"].ToString(),
+                Nome = collection["nome"].ToString(),
+                CpfCnpj = collection["cpf"].ToString()
+            };
+
+            var newUser = new IdentityUser { UserName = command.Email, Email = command.Email };
+            var aspNetUser = await _userManager.CreateAsync(newUser, "12345678");
+
+            StringBuilder msg = new StringBuilder();
+            if (!aspNetUser.Succeeded)
+            {
+                foreach (var error in aspNetUser.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
                     msg.AppendLine(error.Description);
                 }
 
@@ -164,76 +178,64 @@ namespace WebApp.Areas.Identity.Pages.Account
                 return RedirectToPage("Register", new { notify = (int)EnumNotify.Error, message = msg });
             }
 
-            _logger.LogInformation($"O usuário {user.UserName} criou uma nova conta com senha.");
+            var perfil = ApiClientFactory.Instance.GetPerfilById((int)EnumPerfil.Aluno);
 
-            //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            //code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-            //var callbackUrl = Url.Page(
-            //    "/Account/ConfirmEmail",
-            //    pageHandler: null,
-            //    values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
-            //    protocol: Request.Scheme);
+            var includedUserId = _userManager.Users.FirstOrDefault(x => x.Email == newUser.Email).Id;
 
-            //await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-            //    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+            command.AspNetUserId = includedUserId;
+            command.AspNetRoleId = perfil.AspNetRoleId;
+            command.PerfilId = perfil.Id;
 
-            //if (_userManager.Options.SignIn.RequireConfirmedAccount)
-            //{
-            //    return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
-            //}
-            //else
-            //{
-            //    await _signInManager.SignInAsync(user, isPersistent: false);
-            //    return LocalRedirect(returnUrl);
-            //}
+            var usu = await ApiClientFactory.Instance.CreateUsuario(command);
 
-            // Setup database roles
-            //var userCount = _db.Users.Count();
-            //var roleCount = _db.Roles.Count();
+            if (usu != 0)
+            {
+                var res = await ApiClientFactory.Instance.UpdateDados(result.Id,
+                    new AlunoModel.CreateUpdateDadosAlunoCommand()
+                    { AspNetUserId = command.AspNetUserId, Habilitado = true, Id = result.Id, Nome = result.Nome, Cpf = result.Cpf, Email = result.Email });
+            }
 
-            // NOTE: This is not necessarily best practice at all.
-            // First registered user will add the default roles, rather than doing this in a migration.
-            // First registered user will be given all roles.
-            //if (roleCount == 0)
-            //{
-	           // await _roleManager.CreateAsync(new IdentityRole { Name = UserRoles.Aluno });
-
-	           // // set this registering user as admin/everything
-	           // await _userManager.AddToRolesAsync(user,
-		          //  new[] { UserRoles.Aluno });
-            //}
-
-            await _roleManager.CreateAsync(new IdentityRole { Name = UserRoles.Aluno });
-
-            // set this registering user as admin/everything
-            await _userManager.AddToRolesAsync(user,
-                new[] { UserRoles.Aluno });
-
-            await _userManager.AddToRoleAsync(user, UserRoles.Aluno);
-
-            await _signInManager.SignInAsync(user, isPersistent: false);
-
-            var idAluno = await ApiClientFactory.Instance.CreateDados(command);
+            SendNewUserEmail(newUser, command.Email, command.Nome);
 
             var autorizado = Convert.ToBoolean(collection["autorizado"].ToString());
             var utilizacaoImagem = Convert.ToBoolean(collection["utilizacaoImagem"].ToString());
             var participacao = Convert.ToBoolean(collection["participacao"].ToString());
             var copiaDoc = collection["copiaDoc"].ToString() != "";
 
-            var commandDependencia = new DependenciaModel.CreateUpdateDependenciaCommand()
-            {
-                AlunoId = (int?)idAluno,
-                AutorizacaoSaida = autorizado,
-                AutorizacaoUsoImagemAudio = utilizacaoImagem,
-                AutorizacaoUsoIndicadores = participacao,
-                TermoCompromisso = true
+            //var commandDependencia = new DependenciaModel.CreateUpdateDependenciaCommand()
+            //{
+            //    AlunoId = (int?)alunoId,
+            //    AutorizacaoSaida = autorizado,
+            //    AutorizacaoUsoImagemAudio = utilizacaoImagem,
+            //    AutorizacaoUsoIndicadores = participacao,
+            //    TermoCompromisso = true
+            //};
 
+            //await ApiClientFactory.Instance.CreateDependencia(commandDependencia);
 
-            };
-
-            await ApiClientFactory.Instance.CreateDependencia(commandDependencia);
+            string returnUrl = null;
+            returnUrl ??= Url.Content("~/");
 
             return RedirectToPage("RegisterConfirmation", new { email = command.Email, returnUrl = returnUrl });
+        }
+
+        private async Task SendNewUserEmail(IdentityUser user, string email, string nome)
+        {
+            string returnUrl = null;
+            returnUrl ??= Url.Content("~/");
+
+            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
+            var callbackUrl = Url.ActionLink("ResetPassword",
+                "Identity/Account", new { code, email });
+
+            var message =
+                System.IO.File.ReadAllText(Path.Combine(_host.WebRootPath, "emailtemplates/ConfirmEmail.html"));
+            message = message.Replace("%NAME%", nome);
+            message = message.Replace("%CALLBACK%", HtmlEncoder.Default.Encode(callbackUrl.Replace("%2FAccount", "/Account")));
+
+            await _emailSender.SendEmailAsync(user.Email, "Primeiro acesso sistema Dna do Brasil",
+                message);
         }
     }
 }

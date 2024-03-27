@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using System.Security.Claims;
+using WebApp.Areas.Identity.Models;
 
 namespace WebApp.Areas.Identity.Pages.Account
 {
@@ -88,7 +90,7 @@ namespace WebApp.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string? returnUrl = null)
         {
-			returnUrl = Url.Content("~/Dashboard");
+			returnUrl = Url.Content("~/BemVindo");
 
             if (!ModelState.IsValid) return Page();
             var result =
@@ -127,6 +129,13 @@ namespace WebApp.Areas.Identity.Pages.Account
                 }
                 case true:
                     _logger.LogInformation("User logged in.");
+                    //var userRole = ((ClaimsIdentity)user.Identity).FindFirst(ClaimTypes.Role).Value;
+                    //if (userRole == UserRoles.Administrador)
+                    //{
+
+                    //    return LocalRedirect("~/Dashboard");
+                    //}
+
                     return LocalRedirect(returnUrl);
                 default:
                     // If we got this far, something failed, redisplay form

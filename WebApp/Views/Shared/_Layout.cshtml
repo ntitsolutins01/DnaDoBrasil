@@ -1,3 +1,10 @@
+@using WebApp.Areas.Identity.Models
+@using NuGet.Configuration
+@using System.Security.Claims
+@using Microsoft.AspNetCore.Authorization
+@using WebApp.Identity
+@using WebApp.Services
+@inject IAuthorizationService AuthorizationService
 <!doctype html>
 <html class="sidebar-light sidebar-left-big-icons">
 <head>
@@ -60,33 +67,9 @@
 
             <!-- start: search & user box -->
             <div class="header-right">
-
-
-                <div id="userbox" class="userbox">
-                    <a href="#" data-toggle="dropdown">
-                        <figure class="profile-picture">
-                            <img src="~/assets/images/!logged-user.jpg" alt="Joseph Doe" class="img-circle" data-lock-picture="~/assets/images/!logged-user.jpg" />
-                        </figure>
-                        <div class="profile-info" data-lock-name="Fabio Muniz" data-lock-email="ntitsolutions01@gmail.com">
-                            <span class="name">Fabio Muniz</span>
-                            <span class="role">Administrator</span>
-                        </div>
-
-                        <i class="fa custom-caret"></i>
-                    </a>
-
-                    <div class="dropdown-menu">
-                        <ul class="list-unstyled">
-                            <li class="divider"></li>
-                            <li>
-                                <a role="menuitem" tabindex="-1" href="pages-user-profile.html"><i class="fa fa-user"></i> Meu Perfil</a>
-                            </li>
-                            <li>
-                                <a role="menuitem" tabindex="-1" href="pages-signin.html"><i class="fa fa-power-off"></i> Sair</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+                @{
+                    Html.RenderPartial("_UserBox");
+                }
             </div>
             <!-- end: search & user box -->
         </header>
@@ -104,157 +87,196 @@
                         <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
                     </div>
                 </div>
+                @{
+                    var userRole = ((ClaimsIdentity)User.Identity).FindFirst(ClaimTypes.Role).Value;
 
+                    var requirement = new UserInRoleRequirement(userRole);
+                }
                 <div class="nano">
                     <div class="nano-content">
                         <nav id="menu" class="nav-main" role="navigation">
 
                             <ul class="nav nav-main">
-                                <li>
-                                    <a href="@Url.Action("Index", "Dashboard")">
-                                        <i class="fa fa-home" aria-hidden="true"></i>
-                                        <span>Dashboard</span>
-                                    </a>
-                                </li>
-                                <li class="nav-parent">
-                                    <a href="#">
-                                        <i class="fa fa-cogs" aria-hidden="true"></i>
-                                        <span>Configuração Sistema</span>
-                                    </a>
-                                    <ul class="nav nav-children">
-                                        <li>
-                                            <a href="@Url.Action("Index", "TiposLaudo")">
-                                                Tipos Laudo
-                                            </a>
-                                        </li>
-	                                    <li>
-		                                    <a href="@Url.Action("Index", "Modalidade")">
-			                                    Modalidade
-		                                    </a>
-	                                    </li>
-                                        <li>
-                                            <a href="@Url.Action("Index", "Deficiencia")">
-                                                Deficiencia
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="@Url.Action("Index", "Fomento")">
-	                                            Fomento
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="@Url.Action("Index", "Localidade")">
-                                                Localidade
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="@Url.Action("Index", "TipoParceria")">
-                                                Tipo Parceria
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="@Url.Action("Index", "Questionario")">
-                                                Questionário
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="@Url.Action("Index", "Resposta")">
-                                                Resposta
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="@Url.Action("Index", "TextoLaudo")">
-                                                Texto Laudo
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="@Url.Action("Index", "MetricaImc")">
-                                                Métrica Imc
-                                            </a>
-                                        </li>
-	                                    <li>
-		                                    <a href="@Url.Action("Index", "Serie")">
-			                                    Série
-		                                    </a>
-	                                    </li>
-	                                    <li>
-                                            <a href="@Url.Action("Index", "Modulo")">
-                                                Módulo
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="nav-parent nav-expanded">
-                                    <a href="@Url.Action("Index", "Aluno")">
-                                        <i class="fa fa-graduation-cap" aria-hidden="true"></i>
-                                        <span></>Alunos</span>
-                                    </a>
-                                </li>
-                                <li class="nav-parent nav-expanded">
-                                    <a href="@Url.Action("Index", "ControlePresenca")">
-                                        <i class="fa fa-user-plus" aria-hidden="true"></i>
-                                        <span></>Controle Presença</span>
-                                    </a>
-                                </li>
-                                <li class="nav-parent nav-expanded">
-                                    <a href="@Url.Action("Index", "Profissional")">
-                                        <i class="fa fa-suitcase" aria-hidden="true"></i>
-                                        <span></>Profissionais</span>
-                                    </a>
-                                </li>
-                                <li class="nav-parent">
-                                    <a href="#">
-                                        <i class="fa fa-retweet" aria-hidden="true"></i>
-                                        <span>Sistema<br />Socioeconomico</span>
-                                    </a>
-                                    <ul class="nav nav-children">
-                                        <li>
-                                            <a href="@Url.Action("Parceiro", "SistemaSocioeconomico")">
-                                                Parceiros
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="@Url.Action("Estudantes", "SistemaSocioeconomico")">
-                                                Estudantes
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="@Url.Action("SolicitacaoContato", "SistemaSocioeconomico")">
-                                                Solicitações de contato
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="nav-parent nav-expanded">
-                                    <a href="@Url.Action("Index", "Laudo")">
-                                        <i class="fa fa-file-text-o" aria-hidden="true"></i>
-                                        <span></>Laudos</span>
-                                    </a>
-                                </li>
-                                @* <li class="nav-parent nav-expanded">
-                                    <a href="@Url.Action("Index", "Transacao")">
-                                        <i class="fa fa-exchange" aria-hidden="true"></i>
-                                        <span>Transações</span>
-                                    </a>
-                                </li> *@
-                                <li class="nav-parent nav-expanded">
-                                    <a href="@Url.Action("Index", "PlanoAula")">
-                                        <i class="fa fa-book" aria-hidden="true"></i>
-                                        <span>Planos de aula</span>
-                                    </a>
-                                </li>
-                                <li class="nav-parent nav-expanded">
-                                    <a href="@Url.Action("Index", "Usuario")">
-                                        <i class="fa fa-users" aria-hidden="true"></i>
-                                        <span>Usuarios</span>
-                                    </a>
-                                </li>
-                                <li class="nav-parent nav-expanded">
-                                    <a href="@Url.Action("Index", "Perfil")">
-                                        <i class="fa fa-shield" aria-hidden="true"></i>
-                                        <span>Perfil</span>
-                                    </a>
-                                </li>
+                                @* @if ((await AuthorizationService.AuthorizeAsync(User, "Dashboard")).Succeeded)
+                                {
+                                    <p>This paragraph is displayed because you fulfilled PolicyName.</p>
+                                } *@
+                                @if ((await AuthorizationService.AuthorizeAsync(User, "Dashboard")).Succeeded)
+                                {
+                                    <li>
+                                        <a href="@Url.Action("Index", "Dashboard")">
+                                            <i class="fa fa-home" aria-hidden="true"></i>
+                                            <span>Dashboard</span>
+                                        </a>
+                                    </li>
+                                }
+                                @if ((await AuthorizationService.AuthorizeAsync(User, "Dashboard")).Succeeded)
+                                {
+                                    <li class="nav-parent">
+                                        <a href="#">
+                                            <i class="fa fa-cogs" aria-hidden="true"></i>
+                                            <span>Configuração Sistema</span>
+                                        </a>
+                                        <ul class="nav nav-children">
+                                            <li>
+                                                <a href="@Url.Action("Index", "TiposLaudo")">
+                                                    Tipos Laudo
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("Index", "Modalidade")">
+                                                    Modalidade
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("Index", "Deficiencia")">
+                                                    Deficiencia
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("Index", "Fomento")">
+                                                    Fomento
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("Index", "Localidade")">
+                                                    Localidade
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("Index", "TipoParceria")">
+                                                    Tipo Parceria
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("Index", "Questionario")">
+                                                    Questionário
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("Index", "Resposta")">
+                                                    Resposta
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("Index", "TextoLaudo")">
+                                                    Texto Laudo
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("Index", "MetricaImc")">
+                                                    Métrica Imc
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("Index", "Serie")">
+                                                    Série
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("Index", "Modulo")">
+                                                    Módulo
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("Index", "Funcionalidade")">
+                                                    Módulo
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                }
+                                @if ((await AuthorizationService.AuthorizeAsync(User, "Dashboard")).Succeeded)
+                                {
+                                    <li class="nav-parent nav-expanded">
+                                        <a href="@Url.Action("Index", "Aluno")">
+                                            <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                                            <span>Alunos</span>
+                                        </a>
+                                    </li>
+                                }
+
+                                @if ((await AuthorizationService.AuthorizeAsync(User, ModuloAccess.Dashboard)).Succeeded)
+                                {
+                                    <li class="nav-parent nav-expanded">
+                                        <a href="@Url.Action("Index", "ControlePresenca")">
+                                            <i class="fa fa-user-plus" aria-hidden="true"></i>
+                                            <span>Controle Presença</span>
+                                        </a>
+                                    </li>
+                                }
+
+                                @if ((await AuthorizationService.AuthorizeAsync(User, new string[] { UserRoles.Aluno, UserRoles.Profissional }, requirement)).Succeeded)
+                                {
+                                    <li class="nav-parent nav-expanded">
+                                        <a href="@Url.Action("Index", "Profissional")">
+                                            <i class="fa fa-suitcase" aria-hidden="true"></i>
+                                            <span>Profissionais</span>
+                                        </a>
+                                    </li>
+                                }
+
+                                @if ((await AuthorizationService.AuthorizeAsync(User, new string[] { UserRoles.Administrador, UserRoles.Parceiro }, requirement)).Succeeded)
+                                {
+                                    <li class="nav-parent">
+                                        <a href="#">
+                                            <i class="fa fa-retweet" aria-hidden="true"></i>
+                                            <span>Sistema<br/>Socioeconomico</span>
+                                        </a>
+                                        <ul class="nav nav-children">
+                                            <li>
+                                                <a href="@Url.Action("Parceiro", "SistemaSocioeconomico")">
+                                                    Parceiros
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("Estudantes", "SistemaSocioeconomico")">
+                                                    Estudantes
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("SolicitacaoContato", "SistemaSocioeconomico")">
+                                                    Solicitações de contato
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                }
+
+                                @if ((await AuthorizationService.AuthorizeAsync(User, new string[] { UserRoles.Administrador, UserRoles.Parceiro, UserRoles.Profissional }, requirement)).Succeeded)
+                                {
+                                    <li class="nav-parent nav-expanded">
+                                        <a href="@Url.Action("Index", "Laudo")">
+                                            <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                                            <span>Laudos</span>
+                                        </a>
+                                    </li>
+                                }
+
+                                @if ((await AuthorizationService.AuthorizeAsync(User, new string[] { UserRoles.Administrador, UserRoles.Profissional, UserRoles.Parceiro }, requirement)).Succeeded)
+                                {
+                                    <li class="nav-parent nav-expanded">
+                                        <a href="@Url.Action("Index", "PlanoAula")">
+                                            <i class="fa fa-book" aria-hidden="true"></i>
+                                            <span>Planos de aula</span>
+                                        </a>
+                                    </li>
+                                }
+                                @if ((await AuthorizationService.AuthorizeAsync(User, new string[] { UserRoles.Administrador }, requirement)).Succeeded)
+                                {
+                                    <li class="nav-parent nav-expanded">
+                                        <a href="@Url.Action("Index", "Usuario")">
+                                            <i class="fa fa-users" aria-hidden="true"></i>
+                                            <span>Usuarios</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-parent nav-expanded">
+                                        <a href="@Url.Action("Index", "Perfil")">
+                                            <i class="fa fa-shield" aria-hidden="true"></i>
+                                            <span>Perfil</span>
+                                        </a>
+                                    </li>
+                                }
                             </ul>
                         </nav>
                     </div>
@@ -316,7 +338,7 @@
     <script src="~/assets/vendor/pnotify/pnotify.custom.js"></script>
 
     <!-- Theme Base, Components and Settings -->
-    <script src="~/assets/javascripts/theme.js"></script> 
+    <script src="~/assets/javascripts/theme.js"></script>
 
     <!-- Theme Custom -->
     <script src="~/assets/javascripts/theme.custom.js"></script>

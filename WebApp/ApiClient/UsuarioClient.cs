@@ -40,7 +40,7 @@ namespace WebApp.ApiClient
         public UsuarioDto GetUsuarioById(string id)
 		{
 			var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-				$"{ResourceUsuario}/{id}"));
+				$"{ResourceUsuario}/Usuario/{id}"));
 			return Get<UsuarioDto>(requestUrl);
 		}
 		

@@ -2,8 +2,9 @@
 {
     public class VocacionalDto
     {
-        public required int ProfissionalId { get; set; }
-        public required int QuestionarioId { get; set; }
-        public required string Resposta { get; set; }
+        public int Id { get; set; }
+        public ProfissionalDto Profissional { get; set; }
+        public QuestionarioDto Questionario { get; set; }
+        public string Resposta { get; set; }
     }
 }

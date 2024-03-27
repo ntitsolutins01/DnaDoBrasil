@@ -131,9 +131,10 @@ namespace WebApp.Controllers
                 ParceiroModel model = new ParceiroModel();
                 {
                     var parceiro = ApiClientFactory.Instance.GetParceiroById(id);
-                    var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
+                    var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", parceiro.Uf);
+                    var municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(parceiro.Uf), "Id", "Nome", parceiro.MunicipioId);
 
-                    return View(new ParceiroModel() { ListEstados = estados, Parceiro = parceiro });
+                    return View(new ParceiroModel() { ListEstados = estados, Parceiro = parceiro, ListMunicipios = municipios});
                 }
 
             }
@@ -146,7 +147,7 @@ namespace WebApp.Controllers
         }
         //[ClaimsAuthorize("Usuario", "Alterar")]
         [HttpPost]
-        public async Task<ActionResult> Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> EditParceiro(int id, IFormCollection collection)
         {
             try
             {
@@ -168,13 +169,12 @@ namespace WebApp.Controllers
                     MunicipioId = Convert.ToInt32(collection["ddlMunicipio"].ToString()),
                     Habilitado = habilitado != "",
                     Status = status != "",
-                    Email = collection["email"].ToString(),
-                    TipoParceriaId = Convert.ToInt32(collection["TipoParceria"].ToString()),
+                    Email = collection["email"].ToString()
                 };
 
                 await ApiClientFactory.Instance.UpdateParceiro(command.Id, command);
 
-                return RedirectToAction(nameof(EditParceiro), new { crud = (int)EnumCrud.Updated });
+                return RedirectToAction(nameof(Parceiro), new { crud = (int)EnumCrud.Updated });
             }
             catch (Exception e)
             {
@@ -232,13 +232,23 @@ namespace WebApp.Controllers
 
                 var result = ApiClientFactory.Instance.GetParceiroById(Convert.ToInt32(parceiroId));
 
-                if (result.Email != null && result.Email.Equals(collection["email"].ToString().Trim()))
+                //if (!result.Email.Trim().Equals(collection["email"].ToString().Trim()))
+                //{
+                //    return RedirectToAction(nameof(Parceiro),
+                //        new
+                //        {
+                //            notify = (int)EnumNotify.Error,
+                //            message = "O email informado é diferente do email cadastrado para este parceiro."
+                //        });
+                //}
+
+                if (result.Habilitado)
                 {
                     return RedirectToAction(nameof(Parceiro),
                         new
                         {
                             notify = (int)EnumNotify.Error,
-                            message = "Já existe um parceiro cadastrado com esse email."
+                            message = "Já existe parceiro/usuário habilitado com o E-mail cadastrado na base de dados!"
                         });
                 }
 
@@ -246,32 +256,40 @@ namespace WebApp.Controllers
 
                 if (result2 != null)
                 {
-                    return RedirectToAction(nameof(Create),
+                    return RedirectToAction(nameof(Parceiro),
                         new
                         {
                             notify = (int)EnumNotify.Error,
-                            message = "Já existe parceiro com o E-mail cadastrado na base de dados!"
+                            message = "Já existe parceiro/usuário habilitado com o E-mail cadastrado na base de dados!"
                         });
                 }
 
                 var command = new UsuarioModel.CreateUpdateUsuarioCommand
                 {
                     Email = collection["email"].ToString(),
-                    Nome = collection["nome"].ToString()
+                    Nome = collection["nome"].ToString(),
+                    CpfCnpj = collection["cpfCnpj"].ToString()
                 };
 
                 var newUser = new IdentityUser { UserName = command.Email, Email = command.Email };
-                await _userManager.CreateAsync(newUser, "12345678");
+                var aspNetUser = await _userManager.CreateAsync(newUser, "12345678");
 
-                command.PerfilId = result2.PerfilId;
-                var perfil = ApiClientFactory.Instance.GetPerfilById(command.PerfilId);
+                var perfil = ApiClientFactory.Instance.GetPerfilById((int)EnumPerfil.Parceiro);
 
                 var includedUserId = _userManager.Users.FirstOrDefault(x => x.Email == newUser.Email).Id;
 
                 command.AspNetUserId = includedUserId;
                 command.AspNetRoleId = perfil.AspNetRoleId;
+                command.PerfilId = perfil.Id;
 
-                ApiClientFactory.Instance.CreateUsuario(command);
+                var usu = await ApiClientFactory.Instance.CreateUsuario(command);
+
+                if (usu != 0)
+                {
+                    var res = await ApiClientFactory.Instance.UpdateParceiro(result.Id,
+                        new ParceiroModel.CreateUpdateParceiroCommand()
+                            { AspNetUserId = command.AspNetUserId, Habilitado = true, Id = result.Id, Nome = result.Nome, CpfCnpj = result.CpfCnpj, Email = result.Email});
+                }
 
                 SendNewUserEmail(newUser, command.Email, command.Nome);
 
@@ -283,14 +301,15 @@ namespace WebApp.Controllers
                     new
                     {
                         notify = (int)EnumNotify.Error,
-                        message = "Erro ao criar usuário. Favor entrar em contato com o administrador do sistema."
+                        message = "Erro ao habilitar usuário. Favor entrar em contato com o administrador do sistema."
                     });
             }
         }
 
+
         private async Task SendNewUserEmail(IdentityUser user, string email, string nome)
         {
-            var code = await _userManager.GeneratePasswordResetTokenAsync(new IdentityUser(user.Email));
+            var code = await _userManager.GeneratePasswordResetTokenAsync(user);
 
             var callbackUrl = Url.ActionLink("ResetPassword",
                 "Identity/Account", new { code, email });
@@ -300,7 +319,7 @@ namespace WebApp.Controllers
             message = message.Replace("%NAME%", nome);
             message = message.Replace("%CALLBACK%", HtmlEncoder.Default.Encode(callbackUrl.Replace("%2FAccount", "/Account")));
 
-            await _emailSender.SendEmailAsync(user.Email, "Primeiro acesso sistema Dna Brasil",
+            await _emailSender.SendEmailAsync(user.Email, "Primeiro acesso sistema Dna do Brasil",
                 message);
         }
 

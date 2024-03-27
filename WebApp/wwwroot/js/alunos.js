@@ -2,7 +2,7 @@
     el: "#vPesquisarAluno",
     data: {
         loading: false,
-        editDto: { Id: "", Nome: "", Status: true, Email: "", Sexo: "", DtNascimento: "", MunicipioEstado: "", NomeLocalidade: "" }
+        editDto: { Id: "", Nome: "", Status: true, Email: "", Sexo: "", DtNascimento: "", MunicipioEstado: "", NomeLocalidade: "", Cpf:"" }
     },
     mounted: function () {
         var self = this;
@@ -117,11 +117,12 @@
                 self.editDto.NomeLocalidade = result.data.nomeLocalidade;
                 self.editDto.Controle = result.data.controle;
                 self.editDto.Url = result.data.url;
+                self.editDto.Cpf = result.data.cpf;
 
                 $('#qr').ClassyQR({
                     create: true,// signals the library to create the image tag inside the container div.
                     type: 'text',// text/url/sms/email/call/locatithe text to encode in the QR. on/wifi/contact, default is TEXT
-                    text: self.editDto.Id // the text to encode in the QR.
+                    text: 'http://front.hml.dnadobrasil.org.br/Identity/Account/ControlePresenca/' //+ self.editDto.Id // the text to encode in the QR.
                 });
 
             }).catch(error => {

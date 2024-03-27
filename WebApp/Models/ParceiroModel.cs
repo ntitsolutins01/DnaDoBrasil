@@ -19,7 +19,7 @@ namespace WebApp.Models
         public class CreateUpdateParceiroCommand
         {
             public int Id { get; set; }
-            public int? AspNetUserId { get; set; }
+            public string? AspNetUserId { get; set; }
             public int? MunicipioId { get; set; }
             public  string? Nome { get; set; }
             public  string? Email { get; set; }

@@ -8,22 +8,52 @@ namespace WebApp.ApiClient
     {
 	    private const string ResourceDashboard = "Dashboards";
 
-		#region Main Methods
+        #region Main Methods
 
 
-		public DashboardDto GetDashboardByFilter(DashboardDto searchFilter)
+        public Task<DashboardDto?> GetGraficosPizzaBarraByFilter(DashboardDto searchFilter)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceDashboard}/GraficosPizzaBarra"));
+            return GetFiltro(requestUrl, searchFilter);
+        }
+        public Task<DashboardDto?> GetIndicadoresAlunosByFilter(DashboardDto searchFilter)
 		{
 			var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-				$"{ResourceDashboard}"));
+				$"{ResourceDashboard}/Indicadores"));
+			return GetFiltro(requestUrl, searchFilter);
+		}
+        public Task<DashboardDto?> GetControlePresencaByFilter(DashboardDto searchFilter)
+		{
+			var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+				$"{ResourceDashboard}/ControlePresenca"));
+			return GetFiltro(requestUrl, searchFilter);
+		}
+        public Task<DashboardDto?> GetLaudosPeriodoByFilter(DashboardDto searchFilter)
+		{
+			var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+				$"{ResourceDashboard}/LaudosPeriodo"));
+			return GetFiltro(requestUrl, searchFilter);
+		}
+        public Task<DashboardDto?> GetStatusLaudosByFilter(DashboardDto searchFilter)
+		{
+			var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+				$"{ResourceDashboard}/StatusLaudos"));
+			return GetFiltro(requestUrl, searchFilter);
+		}
+        public Task<DashboardDto?> GetEvolutivoByFilter(DashboardDto searchFilter)
+		{
+			var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+				$"{ResourceDashboard}/Evolutivo"));
 			return GetFiltro(requestUrl, searchFilter);
 		}
 
-        public DashboardDto GraficoControlePresencasByFilter(DashboardDto searchFilter)
-        {
-            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceDashboard}/GraficoControlePresencas"));
-            return GetFiltro(requestUrl, searchFilter);
-        }
+        //public DashboardDto GraficoControlePresencasByFilter(DashboardDto searchFilter)
+        //{
+        //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+        //        $"{ResourceDashboard}/GraficoControlePresencas"));
+        //    return GetFiltro(requestUrl, searchFilter);
+        //}
         #endregion
 
         #region Methods

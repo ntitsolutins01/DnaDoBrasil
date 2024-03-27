@@ -1,15 +1,19 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
 using NuGet.Protocol.Core.Types;
 using WebApp.Configuration;
 using WebApp.Dto;
 using WebApp.Factory;
+using WebApp.Identity;
 using WebApp.Models;
 using WebApp.Utility;
 
 namespace WebApp.Controllers
 {
+    [Authorize(Policy = ModuloAccess.Dashboard)]
     public class DashboardController : BaseController
     {
         private readonly ILogger<DashboardController> _logger;
@@ -22,9 +26,13 @@ namespace WebApp.Controllers
             _appSettings = appSettings;
             ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
         }
-
         public async Task<IActionResult> Index(IFormCollection collection)
         {
+            //var usu = User?.Identity.Name;
+            //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            //userName = User.FindFirstValue(ClaimTypes.Name); // will give the user's userName
+            //email = User.FindFirstValue(ClaimTypes.Email);
+
             var searchFilter = new DashboardDto
             {
                 FomentoId = collection["ddlFomento"].ToString(),
@@ -80,7 +88,6 @@ namespace WebApp.Controllers
 
             return View(model);
         }
-
         public Task<JsonResult> GetMunicipioByUf(string uf)
         {
             try
@@ -96,12 +103,112 @@ namespace WebApp.Controllers
                 return Task.FromResult(Json(ex.Message));
             }
         }
-
-        public async Task<JsonResult> GetPesquisaDashboardByFilter([FromBody] DashboardDto search)
+        public async Task<JsonResult> GetIndicadoresAlunosByFilter([FromBody] DashboardDto search)
         {
             try
             {
-                var dashboard = ApiClientFactory.Instance.GetDashboardByFilter(search);
+                var dashboard = await ApiClientFactory.Instance.GetIndicadoresAlunosByFilter(search);
+
+                var model = new DashboardModel
+                {
+                    Dashboard = dashboard,
+
+                };
+
+                return await Task.FromResult(Json(model));
+
+            }
+            catch (Exception ex)
+            {
+                return await Task.FromResult(Json(ex));
+            }
+        }
+        public async Task<JsonResult> GetControlePresencaByFilter([FromBody] DashboardDto search)
+        {
+            try
+            {
+                var dashboard = await ApiClientFactory.Instance.GetControlePresencaByFilter(search);
+
+                var model = new DashboardModel
+                {
+                    Dashboard = dashboard,
+
+                };
+
+                return await Task.FromResult(Json(model));
+
+            }
+            catch (Exception ex)
+            {
+                return await Task.FromResult(Json(ex));
+            }
+        }
+        public async Task<JsonResult> GetLaudosPeriodoByFilter([FromBody] DashboardDto search)
+        {
+            try
+            {
+                var dashboard = await ApiClientFactory.Instance.GetLaudosPeriodoByFilter(search);
+
+                var model = new DashboardModel
+                {
+                    Dashboard = dashboard,
+
+                };
+
+                return await Task.FromResult(Json(model));
+
+            }
+            catch (Exception ex)
+            {
+                return await Task.FromResult(Json(ex));
+            }
+        }
+        public async Task<JsonResult> GetStatusLaudosByFilter([FromBody] DashboardDto search)
+        {
+            try
+            {
+                var dashboard = await ApiClientFactory.Instance.GetStatusLaudosByFilter(search);
+
+                var model = new DashboardModel
+                {
+                    Dashboard = dashboard,
+
+                };
+
+                return await Task.FromResult(Json(model));
+
+            }
+            catch (Exception ex)
+            {
+                return await Task.FromResult(Json(ex));
+            }
+        }
+        public async Task<JsonResult> GetEvolutivoByFilter([FromBody] DashboardDto search)
+        {
+            try
+            {
+                //var dashboard = await ApiClientFactory.Instance.GetEvolutivoByFilter(search);
+
+                var model = new DashboardModel
+                {
+                    //Dashboard = dashboard,
+                    Dashboard = search,
+
+                };
+
+                return await Task.FromResult(Json(model));
+
+            }
+            catch (Exception ex)
+            {
+                return await Task.FromResult(Json(ex));
+            }
+        }
+        public async Task<JsonResult> GetGraficosPizzaBarraByFilter([FromBody] DashboardDto search)
+        {
+            try
+            {
+                var dashboard = await ApiClientFactory.Instance.GetGraficosPizzaBarraByFilter(search);
 
                 List<string> listPercTalentoCategorias = new List<string>();
 

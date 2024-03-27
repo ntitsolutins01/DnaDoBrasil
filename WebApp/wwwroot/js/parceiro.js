@@ -7,9 +7,9 @@ var vm = new Vue({
         },
         loading: false,
         editDto: {
-            Id: "", Nome: "", DtNascimento: "", Email: "", AspNetUserId: "", Sexo: "", Cpf: "",
+            Id: "", Nome: "", DtNascimento: "", Email: "", AspNetUserId: "", Sexo: "", CpfCnpj: "",
             Telefone: "", Celular: "", Endereco: "", Numero: "", Cep: "",
-            Bairro: "", Municipio: "", Habilitado: true, Status: true
+            Bairro: "", Municipio: "", Habilitado: true, Status: true, Pf: true
         }
     },
     mounted: function () {
@@ -17,8 +17,6 @@ var vm = new Vue({
         (function ($) {
 
             'use strict';
-
-            
 
             var formid = $('form').attr('id');
 
@@ -460,18 +458,20 @@ var vm = new Vue({
 
                 $("#formEditParceiro").validate({
                     rules: {
-                        "EndEmail": {
+                        "email": {
                             required: true,
                             email: true
                         },
-                        cpf: { cpf: true, required: true }
+                        cpf: { cpf: true, required: true },
+                        cnpj: { cnpj: true, required: true }
                     },
                     messages: {
-                        "EndEmail": {
+                        "email": {
                             required: "Por favor informe o endereço eletrônico válido do usuário.",
                             email: "Formato de e-mail inválido."
                         },
-                        cpf: { cpf: 'Formato de CPF inválido', required: "Por favor informe o número do CPF do parceiro." }
+                        cpf: { cpf: 'Formato de CPF inválido', required: "Por favor informe o número do CPF do parceiro." },
+                        cnpj: { cnpj: 'Formato de CNPJ inválido', required: "Por favor informe o número do CNPJ do parceiro." }
                     },
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
@@ -581,7 +581,8 @@ var vm = new Vue({
                     ],
                     select: {
                         style: 'os',
-                        selector: 'td:first-child'
+                        selector: 'td:first-child',
+                        style: 'multi'
                     },
                     order: [[1, 'asc']],
                     "paging": true,
@@ -673,7 +674,7 @@ var vm = new Vue({
         EditParceiro: function (id) {
             var self = this;
 
-            axios.get("Parceiro/GetParceiroById/?id=" + id).then(result => {
+            axios.get("GetParceiroById/?id=" + id).then(result => {
 
                 self.editDto.Id = result.data.id;
                 self.editDto.Nome = result.data.nome;
@@ -682,7 +683,7 @@ var vm = new Vue({
                 self.editDto.Email = result.data.email;
                 self.editDto.AspNetUserId = result.data.aspnetuserid;
                 self.editDto.Sexo = result.data.sexo;
-                self.editDto.Cpf = result.data.cpf;
+                self.editDto.CpfCnpj = result.data.cpfCnpj;
                 self.editDto.Telefone = result.data.telefone;
                 self.editDto.Celular = result.data.celular;
                 self.editDto.Endereco = result.data.endereco;
@@ -692,6 +693,11 @@ var vm = new Vue({
                 self.editDto.Municipio = result.data.municipio;
                 self.editDto.Ambientes = result.data.ambientes;
                 self.editDto.Contratos = result.data.contratos;
+                if (result.data.tipoPessoa == "pf") {
+                    self.editDto.Pf = true;
+                } else {
+                    self.editDto.Pf = false;
+                }
 
             }).catch(error => {
                 Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
@@ -713,6 +719,7 @@ var crud = {
     HabilitarModal: function (id) {
         $('input[name="habilitarParceiroId"]').attr('value', id);
         $('#mdHabilitarParceiro').modal('show');
+        vm.EditParceiro(id);
     },
     PendentesModal: function (id) {
         $('#mdPendentes').modal('show');

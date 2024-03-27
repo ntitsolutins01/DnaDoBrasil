@@ -144,99 +144,237 @@
                 <input type="hidden" name="carteirinhaAlunoId" :value="editDto.Id" />
 
                 <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-4 col-lg-3">
-                            <section class="panel">
-                                <div class="panel-body">
-                                    <div class="thumb-info mb-md">
+                    <div class="row" style="margin: 10px">
+                        <div class="tabs">
+                            <ul class="nav nav-tabs">
+                                <li class="active">
+                                    <a href="#frente" data-toggle="tab">Frente</a>
+                                </li>
+                                <li>
+                                    <a href="#verso" data-toggle="tab">Verso</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div id="frente" class="tab-pane active">
+                                    <div class="row">
+                                        <div class="col-md-8 form-group">
+                                            <img src="~/assets/images/logo.png" style="width: 25%;float:right;" />
+                                        </div>
 
-                                        <img src="~/assets/images/logo.png" width="150" height="70" style="margin-left: 15px" />
-                                        <div class="qrcode" id="qr" style="margin-left: -28px">
+                                        <div class="col-md-3 form-group pull-right">
+                                            <img src="~/assets/images/img_8519.png" style="width:100%" />
                                         </div>
                                     </div>
+                                    <div class="row">
+
+                                        <div class="col-md-4 form-group">
+                                            <img src="~/assets/images/!logged-user.jpg" style="width: 85%;margin-left: 15px;" />
+                                        </div>
+                                        <div class="col-md-4 form-group">
+                                            <label class="control-label">Nome</label>
+
+                                            <input type="text" readonly="readonly" :value="editDto.Nome" class="form-control" class="form-control">
+                                        </div>
+                                        <div class="col-md-4 form-group">
+                                            <label class="control-label">Sexo</label>
+
+                                            <input type="text" readonly="readonly" :value="editDto.Sexo" class="form-control" class="form-control">
+                                        </div>
+                                        <div class="col-md-4 form-group">
+                                            <label class="control-label">Matrícula</label>
+
+                                            <input type="text" readonly="readonly" :value="editDto.Id" class="form-control" class="form-control">
+                                        </div>
+                                        <div class="col-md-4 form-group">
+                                            <label class="control-label">Data Nascimento</label>
+
+                                            <input type="text" readonly="readonly" :value="editDto.DtNascimento" class="form-control" class="form-control">
+                                        </div>
+                                        <div class="col-md-4 form-group">
+                                            <label class="control-label">Email</label>
+
+                                            <input type="text" readonly="readonly" :value="editDto.Email" class="form-control" class="form-control">
+                                        </div>
+                                        <div class="col-md-4 form-group">
+                                            <label class="control-label">Cpf</label>
+
+                                            <input type="text" readonly="readonly" :value="editDto.Cpf" class="form-control" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    @*<div class="row">
+
+
+                                    <div class="col-md-4 form-group">
+                                    <input type="text" placeholder=".col-md-4" class="form-control">
+                                    </div>
+
+                                    <div class="col-md-4 form-group">
+                                    <input type="text" placeholder=".col-md-4" class="form-control">
+                                    </div> *@
+                                    @*
+                                    <div class="col-md-4 form-group">
+                                    <input type="text" placeholder=".col-md-4" class="form-control">
+                                    </div> *@
+                                    @*
+
+                                    <div class="col-md-3 form-group">
+                                    <input type="text" placeholder=".col-md-3" class="form-control">
+                                    </div>
+
+                                    <div class="col-md-3 form-group">
+                                    <input type="text" placeholder=".col-md-3" class="form-control">
+                                    </div>
+
+                                    <div class="col-md-3 form-group">
+                                    <input type="text" placeholder=".col-md-3" class="form-control">
+                                    </div>
+
+                                    <div class="col-md-3 form-group">
+                                    <input type="text" placeholder=".col-md-3" class="form-control">
+                                    </div>
+
+
+                                    <div class="col-md-2 form-group">
+                                    <input type="text" placeholder=".col-md-2" class="form-control">
+                                    </div>
+
+                                    <div class="col-md-2 form-group">
+                                    <input type="text" placeholder=".col-md-2" class="form-control">
+                                    </div>
+
+                                    <div class="col-md-2 form-group">
+                                    <input type="text" placeholder=".col-md-2" class="form-control">
+                                    </div>
+
+                                    <div class="col-md-2 form-group">
+                                    <input type="text" placeholder=".col-md-2" class="form-control">
+                                    </div>
+
+                                    <div class="col-md-2 form-group">
+                                    <input type="text" placeholder=".col-md-2" class="form-control">
+                                    </div>
+
+                                    <div class="col-md-2 form-group">
+                                    <input type="text" placeholder=".col-md-2" class="form-control">
+                                    </div>
+
+
+                                    <div class="col-md-1 form-group">
+                                    <input type="text" placeholder=".col-md-1" class="form-control">
+                                    </div>
+
+                                    <div class="col-md-1 form-group">
+                                    <input type="text" placeholder=".col-md-1" class="form-control">
+                                    </div>
+
+                                    <div class="col-md-1 form-group">
+                                    <input type="text" placeholder=".col-md-1" class="form-control">
+                                    </div>
+
+                                    <div class="col-md-1 form-group">
+                                    <input type="text" placeholder=".col-md-1" class="form-control">
+                                    </div>
+
+                                    <div class="col-md-1 form-group">
+                                    <input type="text" placeholder=".col-md-1" class="form-control">
+                                    </div>
+
+                                    <div class="col-md-1 form-group">
+                                    <input type="text" placeholder=".col-md-1" class="form-control">
+                                    </div>
+
+                                    <div class="col-md-1 form-group">
+                                    <input type="text" placeholder=".col-md-1" class="form-control">
+                                    </div>
+
+                                    <div class="col-md-1 form-group">
+                                    <input type="text" placeholder=".col-md-1" class="form-control">
+                                    </div>
+
+                                    <div class="col-md-1 form-group">
+                                    <input type="text" placeholder=".col-md-1" class="form-control">
+                                    </div>
+
+                                    <div class="col-md-1 form-group">
+                                    <input type="text" placeholder=".col-md-1" class="form-control">
+                                    </div>
+
+                                    <div class="col-md-1 form-group">
+                                    <input type="text" placeholder=".col-md-1" class="form-control">
+                                    </div>
+
+                                    <div class="col-md-1 form-group">
+                                    <input type="text" placeholder=".col-md-1" class="form-control">
+                                    </div> *@
                                 </div>
-                            </section>
-                        </div>
-                        <div class="col-md-8 col-lg-9">
-                            <div class="tabs">
-                                <ul class="nav nav-tabs">
-                                    <li class="active">
-                                        <a href="#frente" data-toggle="tab">Frente</a>
-                                    </li>
-                                    <li>
-                                        <a href="#verso" data-toggle="tab">Verso</a>
-                                    </li>
-                                </ul>
-                                <div class="tab-content">
-                                    <div id="frente" class="tab-pane active">
 
-                                        <div class="form-group">
-                                            <div class="widget-profile-info">
-                                                <div class="profile-picture">
-                                                    <img :src="editDto.Url" style="margin-left: 15px;">
-                                                </div>
-                                                <div class="profile-info">
-                                                    <h4 class="name text-weight-semibold">{{editDto.Nome}}</h4>
-                                                    <h5 class="role">Aluno</h5>
-                                                    <div class="profile-footer">
-                                                        <a href="#">(edit profile)</a>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                <div id="verso" class="tab-pane">
+                                    <div class="row">
+                                        <div class="col-md-4 form-group">
                                         </div>
-                                        <div class="form-group">
-                                            <label class="col-md-3 control-label">Email</label>
-                                            <div class="col-md-8">
-                                                <input type="text" readonly="readonly" :value="editDto.Email" class="form-control">
-                                            </div>
+
+                                        <div class="col-md-2 form-group">
                                         </div>
-                                        <div class="form-group">
-                                            <label class="col-md-3 control-label">Sexo</label>
-                                            <div class="col-md-8">
-                                                <input type="text" readonly="readonly" :value="editDto.Sexo" class="form-control">
-                                            </div>
+
+                                        <div class="col-md-2 form-group">
+                                            <img src="~/assets/images/logo_slogan_270224.png" style="width:50%" />
                                         </div>
-                                        <div class="form-group">
-                                            <label class="col-md-3 control-label">Data Nascimento</label>
-                                            <div class="col-md-8">
-                                                <input type="text" readonly="readonly" :value="editDto.DtNascimento" class="form-control">
-                                            </div>
+
+                                        <div class="col-md-2 form-group">
+                                            <img src="~/assets/images/logo_idecace.png" style="width:70%" />
+                                        </div>
+
+                                        <div class="col-md-2 form-group">
+                                            <img src="~/assets/images/logo-sejus-horizontal.png" style="width:100%" />
                                         </div>
                                     </div>
-                                    <div id="verso" class="tab-pane">
-                                        <div class="form-group">
-                                            <label class="col-md-3 control-label">Município / Estado</label>
-                                            <div class="col-md-8">
-                                                <input type="text" readonly="readonly" :value="editDto.MunicipioEstado" class="form-control">
-                                            </div>
+                                    <div class="row">
+
+                                        <div class="col-md-4 form-group">
+                                            <div class="qrcode" id="qr" style="width:95%"></div>
+                                            @* <img src="~/assets/images/!logged-user.jpg" style="width: 85%;margin-left: 15px;"/> *@
                                         </div>
-                                        <div class="form-group">
-                                            <label class="col-md-3 control-label">Sexo</label>
-                                            <div class="col-md-8">
-                                                <input type="text" readonly="readonly" :value="editDto.Sexo" class="form-control">
-                                            </div>
+                                        <div class="col-md-4 form-group">
+                                            <label class="control-label">Município / Estado</label>
+
+                                            <input type="text" readonly="readonly" :value="editDto.MunicipioEstado" class="form-control" class="form-control">
                                         </div>
-                                        <div class="form-group">
-                                            <label class="col-md-3 control-label">Unidade Escolar</label>
-                                            <div class="col-md-8">
-                                                <input type="text" readonly="readonly" :value="editDto.NomeLocalidade" class="form-control">
-                                            </div>
+                                        <div class="col-md-4 form-group">
+                                            <label class="control-label">Modalidade Esportiva</label>
+
+                                            <input type="text" readonly="readonly" :value="editDto.Modalidade" class="form-control" class="form-control">
                                         </div>
-                                        <div class="form-group">
-                                            <label class="col-md-3 control-label">Controle</label>
-                                            <div class="col-md-8">
-                                                <input type="text" readonly="readonly" :value="editDto.Controle" class="form-control">
-                                            </div>
+                                        <div class="col-md-4 form-group">
+                                            <label class="control-label">Unidade Escolar</label>
+
+                                            <input type="text" readonly="readonly" :value="editDto.Id" class="form-control" class="form-control">
                                         </div>
+                                        <div class="col-md-4 form-group">
+                                            <label class="control-label">Controle</label>
+
+                                            <input type="text" readonly="readonly" :value="editDto.Controle" class="form-control" class="form-control">
+                                        </div>
+                                        <div class="col-md-4 form-group">
+                                            <img src="~/assets/images/pagameia.jpg" style="width: 37%;float: right;" />
+                                        </div>
+                                        <div class="col-md-4 form-group">
+                                            <img src="~/assets/images/android-app-store-logos.png" style="width: 50%;" />
+                                        </div>
+                                        <p class="text-warning" style="margin-left: 25px;margin-right: 25px;float: left;">
+                                            <code>
+                                                Documento padronizado nacionalmente conforme a Lei 12.933/2013. Válido para todo o território nacional até março do ano seguinte.
+                                            </code>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="reset" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
+                    <button type="reset" class="btn btn-primary pull-right" style="margin-left: 5px;"><i class="fa fa-print"></i> &nbsp;&nbsp;Imprimir</button>
                 </div>
             </div>
         </div>

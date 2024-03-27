@@ -15023,12 +15023,12 @@ ul.widget-todo-list li:last-child {
 
 .widget-profile-info .profile-picture img {
 	display: block;
-	width: 100px;
-	height: 100px;
+	width: 200px;
+	height: 200px;
 	margin-right: 15px;
 	border: 4px solid #fff;
 	-webkit-border-radius: 50px;
-	border-radius: 50px;
+	border-radius: 100px;
 }
 
 .widget-profile-info .profile-info {

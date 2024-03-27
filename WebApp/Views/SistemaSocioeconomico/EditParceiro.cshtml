@@ -7,7 +7,7 @@
 <div id="vParceiro">
     <div class="row">
         <div class="col-md-12">
-            @using (@Html.BeginForm("Edit", "SistemaSocioeconomico", FormMethod.Post, new { id = "formEditParceiro", @class = "form-horizontal" }))
+            @using (@Html.BeginForm("EditParceiro", "SistemaSocioeconomico", FormMethod.Post, new { id = "formEditParceiro", @class = "form-horizontal" }))
             {
                 <section class="panel">
                     <header class="panel-heading">
@@ -32,8 +32,7 @@
                                         <i class="fa fa-envelope"></i>
                                     </span>
                                     <input type="text" id="email" name="email"
-                                           v-model="params.email"
-                                           v-on:blur="ExisteEmail"
+                                           @* v-on:blur="ExisteEmail" *@
                                            class="form-control"
                                            maxlength="40"
                                            value="@Model.Parceiro.Email"
@@ -44,20 +43,31 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Tipo Parceria</label>
                             <div class="col-sm-4">
-                                <input type="text" id="nome" name="nome" class="form-control" readonly
-                                       value="@Model.Parceiro.TipoParceriaNome" />
+                                <input type="text" id="tipoParceria" name="tipoParceria" class="form-control" readonly
+                                       value="@Model.Parceiro.TipoParceria.Nome" />
                             </div>
-                            <label v-if="params.visible" class="col-sm-1 control-label">CPF </label>
-                            <label v-else="!params.visible" class="col-sm-1 control-label">CNPJ </label>
-                            <div class="col-sm-4">
-                                <div class="input-group">
-                                    <span class="input-group-addon">
-                                        <i class="fa fa-envelope"></i>
-                                    </span>
-                                    <input type="text" id="nome" name="nome" class="form-control" readonly
-                                           value="@Model.Parceiro.TipoParceriaNome" />
+                            @if (Model.Parceiro.TipoPessoa.Equals("pf"))
+                            {
+                                <label class="col-sm-1 control-label">CPF </label>
+                                <div class="col-sm-4">
+                                    <input id="cpf" name="cpf"
+                                           type="text" class="form-control"
+                                           value="@Model.Parceiro.CpfCnpj"
+                                           title="Por favor informe o cpf do parceiro."
+                                           maxlength="14" />
                                 </div>
-                            </div>
+                            }
+                            else
+                            {
+                                <label class="col-sm-1 control-label">CNPJ </label>
+                                <div class="col-sm-4">
+                                    <input id="cnpj" name="cnpj"
+                                           type="text" class="form-control"
+                                           value="@Model.Parceiro.CpfCnpj"
+                                           title="Por favor informe o cnpj do parceiro."
+                                           maxlength="19" />
+                                </div>
+                            }
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Telefone </label>
@@ -105,18 +115,18 @@
 
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Estado:</label>
+                            <label class="col-sm-2 control-label">Estado<span class="required">*</span></label>
                             <div class="col-md-3 form-group">
                                 <select class="form-control populate select2" name="ddlEstado" id="ddlEstado"
-                                        title="Por favor informe o estado."
+                                        title="Por favor informe o estado." required
                                         asp-for="EstadoId" asp-items="Model.ListEstados">
                                     <option value="">Selecionar Estado</option>
                                 </select>
                             </div>
-                            <label class="col-sm-1 control-label">Município:</label>
+                            <label class="col-sm-1 control-label">Município<span class="required">*</span></label>
                             <div class="col-md-3 form-group">
                                 <select class="form-control populate select2" name="ddlMunicipio" id="ddlMunicipio"
-                                        title="Por favor informe o município."
+                                        title="Por favor informe o município." required
                                         asp-for="MunicipioId" asp-items="Model.ListMunicipios">
                                     <option value="">Selecionar Município</option>
                                 </select>
@@ -125,31 +135,46 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label pull-left">Cadastro ativo?</label>
                             <div class="col-sm-1">
-                                <div class="switch switch-sm switch-primary">
-                                    <input type="checkbox" id="status" name="status" data-plugin-ios-switch checked="checked" />
+                                <div class="switch switch-sm switch-success">
+                                    @if (Model.Parceiro.Status)
+                                    {
+                                        <input type="checkbox" id="status" name="status" data-plugin-ios-switch checked="checked" />
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" id="status" name="status" data-plugin-ios-switch />
+
+                                    }
                                 </div>
                             </div>
-                            <label class="col-sm-2 control-label">Cadastro habilitado?</label>
+
+                            @* <label class="col-sm-2 control-label">Cadastro habilitado?</label>
                             <div class="col-sm-1">
-                                <div class="switch switch-sm switch-primary">
-                                    <input type="checkbox" id="habilitado" name="habilitado" data-plugin-ios-switch checked="checked" />
+                                <div class="switch switch-sm switch-success">
+                                    @if (Model.Parceiro.Habilitado)
+                                    {
+                                        <input type="checkbox" id="habilitado" name="habilitado" data-plugin-ios-switch checked="checked"/>
+                                    }else{
+                                        <input type="checkbox" id="habilitado" name="habilitado" data-plugin-ios-switch/>
+                                    }
                                 </div>
-                            </div>
+                            </div> *@
                         </div>
                         <div class="form-group">
                             <label class="col-sm-1 control-label pull-left">&nbsp;&nbsp;</label>
                             <div class="col-sm-10">
-                                <div class="checkbox-custom chekbox-primary">
-                                    <input id="for-project" value="project" type="checkbox" name="for[]" required title="Campo obrigatorio" />
+                                <div class="checkbox-custom chekbox-success">
+                                    <input id="for-project" value="project" type="checkbox" id="comprometimento" name="comprometimento" required title="Campo obrigatorio" />
                                     <label for="for-project">Me comprometo que todas as informações prestadas são verdadeiras.</label>
                                 </div>
+                                <label class="error" for="comprometimento"></label>
                             </div>
                         </div>
                     </div>
                     <footer class="panel-footer">
                         <div class="row">
                             <div class="col-md-9 col-md-offset-3">
-                                <button type="submit" class="btn btn-dark pull-right" style="margin-left: 5px;margin-right: 5px;"><i class="fa fa-reply"></i> &nbsp;&nbsp;Voltar</button>
+                                <a href="@Url.Action("Parceiro", "SistemaSocioeconomico")" class="btn btn-dark pull-right" style="margin-left: 5px;margin-right: 5px;"><i class="fa fa-reply"></i> &nbsp;&nbsp;Voltar</a>
                                 <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
                                 <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
                             </div>
@@ -176,22 +201,52 @@
     <script src="~/js/parceiro.js"></script>
     <script>
 
-
-        // iosSwitcher
         (function ($) {
 
             'use strict';
+            var crud = @ViewBag.CrudMessage;
 
-            if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
-
-                $(function () {
-                    $('[data-plugin-ios-switch]').each(function () {
-                        var $this = $(this);
-
-                        $this.themePluginIOS7Switch();
-                    });
+            if (crud === 1) {
+                new PNotify({
+                    title: 'Parceiro',
+                    text: 'Cadastro realizado com sucesso!',
+                    type: 'success'
                 });
+            } else if (crud === 2) {
+                new PNotify({
+                    title: 'Parceiro',
+                    text: 'Dados alterados com sucesso.',
+                    type: 'warning'
+                });
+            } else if (crud === 3) {
+                new PNotify({
+                    title: 'Parceiro',
+                    text: 'Registro excluído com sucesso.',
+                    type: 'error'
+                });
+            }
 
+            var notify = @ViewBag.NotifyMessage;
+            var messagem = '@ViewBag.Notify';
+
+            if (notify === 0) {
+                new PNotify({
+                    title: 'Parceiro',
+                    text: messagem,
+                    type: 'success'
+                });
+            } else if (notify === 1) {
+                new PNotify({
+                    title: 'Parceiro',
+                    text: messagem,
+                    type: 'warning'
+                });
+            } else if (notify === 2) {
+                new PNotify({
+                    title: 'Parceiro',
+                    text: messagem,
+                    type: 'error'
+                });
             }
 
         }).apply(this, [jQuery]);

@@ -28,7 +28,8 @@
         public string? NomeLocalidade { get; set; }
         public string? MunicipioEstado { get; set; }
         public SaudeDto Saude { get; set; }
-        public TalentoEsportivoDto TalentoEsportivo { get; set; }
+        //public TalentoEsportivoDto TalentoEsportivo { get; set; }
+        //public VocacionalDto Vocaiconal { get; set; }
 
         #region SearchFilter
         public string Sexo { get; set; }

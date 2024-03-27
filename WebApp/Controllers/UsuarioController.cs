@@ -13,6 +13,7 @@ using WebApp.Models;
 using WebApp.Utility;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 using System.Security.Claims;
+using System.Text;
 using System.Text.RegularExpressions;
 using WebApp.Configuration;
 
@@ -68,7 +69,7 @@ namespace WebApp.Controllers
             {
                 var cpf = collection["cpf"].ToString();
 
-                var result = ApiClientFactory.Instance.GetUsuarioByCpf(Regex.Replace(cpf, "[^0-9a-zA-Z]+", ""));
+                var result = ApiClientFactory.Instance.GetUsuarioByCpf(cpf); //Regex.Replace(cpf, "[^0-9a-zA-Z]+", "")
 
                 if (result != null)
                 {
@@ -96,21 +97,32 @@ namespace WebApp.Controllers
                 {
                     Email = collection["email"].ToString(),
                     Nome = collection["nome"].ToString(),
-                    Cpf = collection["cpf"].ToString()
+                    CpfCnpj = collection["cpf"].ToString(),
+                    TipoPessoa = collection["tipoPessoa"].ToString()
                 };
 
-                var newUser = new IdentityUser { UserName = command.Email, Email = command.Email };
-                await _userManager.CreateAsync(newUser, "12345678");
 
                 command.PerfilId = int.Parse(collection["ddlPerfil"].ToString());
                 var perfil = ApiClientFactory.Instance.GetPerfilById(command.PerfilId);
 
-                var includedUserId = _userManager.Users.FirstOrDefault(x => x.Email == newUser.Email).Id;
+                var newUser = new IdentityUser { UserName = command.Email, Email = command.Email };
+                var userCreated = await _userManager.CreateAsync(newUser, "12345678");
 
-                command.AspNetUserId = includedUserId;
-                command.AspNetRoleId = perfil.AspNetRoleId;
+                if (userCreated.Succeeded)
+                {
+                    var userRole = _roleManager.Roles.FirstOrDefault(x => x.Id == perfil.AspNetRoleId).Name;
 
-                ApiClientFactory.Instance.CreateUsuario(command);
+                    command.AspNetUserId = newUser.Id;
+                    command.AspNetRoleId = perfil.AspNetRoleId;
+                    command.PerfilId = perfil.Id;
+
+                    var usuarioId = await ApiClientFactory.Instance.CreateUsuario(command);
+
+                    if (usuarioId != 0)
+                    {
+                        await _userManager.AddToRoleAsync(newUser, userRole);
+                    }
+                }
 
                 SendNewUserEmail(newUser, command.Email, command.Nome);
 
@@ -129,7 +141,7 @@ namespace WebApp.Controllers
 
         private async Task SendNewUserEmail(IdentityUser user, string email, string nome)
         {
-            var code = await _userManager.GeneratePasswordResetTokenAsync(new IdentityUser(user.Email));
+            var code = await _userManager.GeneratePasswordResetTokenAsync(user);
 
             var callbackUrl = Url.ActionLink("ResetPassword",
                 "Identity/Account", new { code, email });
@@ -139,31 +151,39 @@ namespace WebApp.Controllers
             message = message.Replace("%NAME%", nome);
             message = message.Replace("%CALLBACK%", HtmlEncoder.Default.Encode(callbackUrl.Replace("%2FAccount", "/Account")));
 
-            await _emailSender.SendEmailAsync(user.Email, "Primeiro acesso sistema Dna Brasil",
+            await _emailSender.SendEmailAsync(user.Email, "Primeiro acesso sistema Dna do Brasil",
                 message);
         }
 
         //[ClaimsAuthorize("Usuario", "Alterar")]
         public ActionResult Edit(string id)
         {
-            UsuarioModel model = new UsuarioModel();
-
-            var obj = ApiClientFactory.Instance.GetUsuarioById(id);
-
-            if (obj != null)
+            try
             {
+
+                UsuarioModel model = new UsuarioModel();
+
+                var obj = ApiClientFactory.Instance.GetUsuarioById(id) ?? throw new ArgumentNullException("Usuário não encontrado.");
+
                 var resultPerfil = ApiClientFactory.Instance.GetPerfilAll();
 
                 model = new UsuarioModel
                 {
-                    ListPerfis = new SelectList(resultPerfil, "PerfilId", "Nome", obj.PerfilId),
+                    ListPerfis = new SelectList(resultPerfil, "Id", "Nome", obj.Perfil.Id),
                     Usuario = obj
                 };
 
                 return View(model);
             }
-
-            return View(model);
+            catch (Exception ex)
+            {
+                return RedirectToAction(nameof(Index),
+                    new
+                    {
+                        notify = (int)EnumNotify.Error,
+                        message = $"Erro ao alterar usuário. Favor entrar em contato com o administrador do sistema. {ex.Message}"
+                    });
+            }
         }
 
         //[ClaimsAuthorize("Usuario", "Alterar")]
@@ -173,82 +193,124 @@ namespace WebApp.Controllers
             try
             {
                 var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                var perfilId = int.Parse(collection["ddlPerfil"].ToString());
-                var aspNetRoleId = _roleManager.FindByNameAsync(collection["ddlPerfil"].ToString()).Result?.Id;
+                var perfil = ApiClientFactory.Instance.GetPerfilById(Convert.ToInt32(collection["ddlPerfil"].ToString()));
+
+                var includedUserId = ""; //_userManager.Users.FirstOrDefault(x => x.Email == newUser.Email).Id;
+
 
                 var command = new UsuarioModel.CreateUpdateUsuarioCommand
                 {
-
-                    Email = collection["EndEmail"].ToString(),
-                    Nome = collection["NomUsuario"].ToString(),
-                    Cpf = collection["cpf"].ToString(),
-                    PerfilId = perfilId,
+                    Email = collection["email"].ToString(),
+                    Nome = collection["nome"].ToString(),
+                    TipoPessoa = collection["tipoPessoa"].ToString(),
+                    CpfCnpj = collection["cpf"].ToString() == "" ? collection["cnpj"].ToString() : collection["cpf"].ToString(),
+                    PerfilId = perfil.Id,
                     AspNetUserId = userId,
-                    AspNetRoleId = aspNetRoleId
+                    AspNetRoleId = perfil.AspNetRoleId
                 };
 
-                var result = await ApiClientFactory.Instance.UpdateUsuario(id, command);
+                await ApiClientFactory.Instance.UpdateUsuario(id, command);
 
-                if (false)
-                {
-                    return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
-                }
-                else
-                {
-                    return RedirectToAction(nameof(Index),
-                        new
-                        {
-                            notify = (int)EnumNotify.Error,
-                            message = "Erro ao criar usuário. Favor entrar em contato com o administrador do sistema."
-                        });
-                }
-
+                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                return RedirectToAction(nameof(Index),
+                    new
+                    {
+                        notify = (int)EnumNotify.Error,
+                        message = $"Erro ao alterar usuário. Favor entrar em contato com o administrador do sistema. {ex.Message}"
+                    });
             }
         }
 
         //[ClaimsAuthorize("Usuario", "Excluir")]
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
             try
             {
-                ApiClientFactory.Instance.DeleteUsuario(id);
-                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
+                var usuario = ApiClientFactory.Instance.GetUsuarioById(id.ToString()) ?? throw new ArgumentNullException("Usuário não encontrado.");
+
+                var user = _userManager.Users.FirstOrDefault(x => x.Email == usuario.Email);
+
+                var result = await _userManager.DeleteAsync(user);
+
+                if (result.Succeeded)
+                {
+                    await _userManager.RemoveFromRoleAsync(user, _roleManager.Roles.FirstOrDefault(x => x.Id == usuario.AspNetRoleId).Name);
+
+                    ApiClientFactory.Instance.DeleteUsuario(id);
+
+                    return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
+                }
+
+                StringBuilder str = new StringBuilder();
+
+                // Handle failure
+                foreach (var error in result.Errors)
+                {
+                    str.AppendLine(error.Description);
+                }
+
+                return RedirectToAction(nameof(Index),
+                    new
+                    {
+                        notify = (int)EnumNotify.Error,
+                        message = $"Erro ao criar usuário. Favor entrar em contato com o administrador do sistema. {str}"
+                    });
             }
-            catch
+            catch (Exception ex)
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index),
+                    new
+                    {
+                        notify = (int)EnumNotify.Error,
+                        message = $"Erro ao excluir usuário. Favor entrar em contato com o administrador do sistema. {ex.Message}"
+                    });
             }
         }
 
         //[ClaimsAuthorize("Usuario", "Consultar")]
-        public Task<bool> GetUsuarioByEmail(string email)
+        public Task<JsonResult> GetUsuarioByEmail(string email)
         {
-            if (string.IsNullOrEmpty(email)) throw new Exception("Email não informado.");
-            var result = ApiClientFactory.Instance.GetUsuarioByEmail(email);
-
-            if (result == null)
+            try
             {
-                return Task.FromResult(true);
+                if (string.IsNullOrEmpty(email)) throw new Exception("Email não informado.");
+                var result = ApiClientFactory.Instance.GetUsuarioByEmail(email);
+
+                if (result == null)
+                {
+                    return Task.FromResult(Json(true));
+                }
+
+                return Task.FromResult(Json(false));
+
+            }
+            catch (Exception ex)
+            {
+                return Task.FromResult(Json(ex.Message));
             }
 
-            return Task.FromResult(false);
         }
 
-        public Task<bool> GetUsuarioByCpf(string cpf)
+        public Task<JsonResult> GetUsuarioByCpf(string cpf)
         {
-            if (string.IsNullOrEmpty(cpf)) throw new Exception("Cpf não informado.");
-            var result = ApiClientFactory.Instance.GetUsuarioByCpf(Regex.Replace(cpf, "[^0-9a-zA-Z]+", ""));
-
-            if (result == null)
+            try
             {
-                return Task.FromResult(true);
-            }
+                if (string.IsNullOrEmpty(cpf)) throw new Exception("Cpf não informado.");
+                var result = ApiClientFactory.Instance.GetUsuarioByCpf(Regex.Replace(cpf, "[^0-9a-zA-Z]+", ""));
 
-            return Task.FromResult(false);
+                if (result == null)
+                {
+                    return Task.FromResult(Json(true));
+                }
+
+                return Task.FromResult(Json(false));
+            }
+            catch (Exception ex)
+            {
+                return Task.FromResult(Json(ex.Message));
+            }
         }
     }
 }

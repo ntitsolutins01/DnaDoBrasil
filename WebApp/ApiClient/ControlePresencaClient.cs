@@ -51,7 +51,7 @@ namespace WebApp.ApiClient
                 $"{ResourceControlesPresencas}"));
             return Get<List<ControlePresencaDto>>(requestUrl);
         }
-        public ControlesPresencasFilterDto GetControlesPresencasByFilter(ControlesPresencasFilterDto searchFilter)
+        public Task<ControlesPresencasFilterDto?> GetControlesPresencasByFilter(ControlesPresencasFilterDto searchFilter)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 $"{ResourceControlesPresencas}/Filter"));

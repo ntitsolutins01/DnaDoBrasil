@@ -52,6 +52,15 @@ var Site = {
                     stack: stack_bottomright
                 };
                 break;
+            case 2:
+                opts = {
+                    title: title,
+                    text: text,
+                    type: style,
+                    //addclass: 'stack-bottomright',
+                    //stack: stack_bottomright
+                };
+                break;
             default:
                 opts = {
                     title: title,

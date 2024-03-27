@@ -162,32 +162,32 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label pull-left">Cadastro ativo?</label>
                             <div class="col-sm-1">
-                                <div class="switch switch-sm switch-primary">
+                                <div class="switch switch-sm switch-success">
                                     <input type="checkbox" id="status" name="status" data-plugin-ios-switch checked="checked" />
                                 </div>
                             </div>
                             <label class="col-sm-2 control-label">Cadastro habilitado?</label>
                             <div class="col-sm-1">
-                                <div class="switch switch-sm switch-primary">
-                                    <input type="checkbox" id="habilitado" name="habilitado" data-plugin-ios-switch checked="checked" />
+                                <div class="switch switch-sm switch-success">
+                                    <input type="checkbox" id="habilitado" name="habilitado" data-plugin-ios-switch />
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-1 control-label pull-left">&nbsp;&nbsp;</label>
                             <div class="col-sm-10">
-                                <div class="checkbox-custom chekbox-primary">
-                                    <input id="compromisso" value="compromisso" type="checkbox" name="compromisso" required title="Campo obrigatório" />
-                                    <label for="compromisso">Me comprometo que todas as informações prestadas são verdadeiras.</label>
-                                    <label class="error" for="compromisso"></label>
+                                <div class="checkbox-custom chekbox-success">
+                                    <input id="for-project" value="project" type="checkbox" id="comprometimento" name="comprometimento" required title="Campo obrigatorio" />
+                                    <label for="for-project">Me comprometo que todas as informações prestadas são verdadeiras.</label>
                                 </div>
+                                <label class="error" for="comprometimento"></label>
                             </div>
                         </div>
                     </div>
                     <footer class="panel-footer">
                         <div class="row">
                             <div class="col-md-9 col-md-offset-3">
-                                <button type="submit" class="btn btn-dark pull-right" style="margin-left: 5px;margin-right: 5px;"><i class="fa fa-reply"></i> &nbsp;&nbsp;Voltar</button>
+                                <a href="@Url.Action("Parceiro", "SistemaSocioeconomico")" class="btn btn-dark pull-right" style="margin-left: 5px;margin-right: 5px;"><i class="fa fa-reply"></i> &nbsp;&nbsp;Voltar</a>
                                 <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
                                 <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
                             </div>

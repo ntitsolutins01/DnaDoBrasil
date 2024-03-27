@@ -27,7 +27,7 @@ namespace WebApp.Controllers
             _host = host;
         }
 
-        public ActionResult Index(int? crud, int? notify, IFormCollection collection, string message = null)
+        public async Task<ActionResult> Index(int? crud, int? notify, IFormCollection collection, string message = null)
         {
             try
             {
@@ -44,7 +44,7 @@ namespace WebApp.Controllers
                     Etnia = collection["ddlEtnia"].ToString()
                 };
 
-                var result = ApiClientFactory.Instance.GetAlunosByFilter(searchFilter);
+                var result = await ApiClientFactory.Instance.GetAlunosByFilter(searchFilter);
 
                 var fomentos = new SelectList(ApiClientFactory.Instance.GetFomentoAll(), "Id", "Nome", searchFilter.FomentoId);
                 var deficiencias = new SelectList(ApiClientFactory.Instance.GetDeficienciaAll(), "Id", "Nome", searchFilter.DeficienciaId);

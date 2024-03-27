@@ -83,7 +83,7 @@
 
                 <h2 class="panel-title">Indicadores</h2>
             </header>
-            <div class="panel-body">
+            <div class="panel-body" id="pIndicadores">
 
                 <div class="col-md-4 col-xl-12">
                     <section class="panel">
@@ -268,7 +268,7 @@
 
                 <h2 class="panel-title">Controle de Presença</h2>
             </header>
-            <div class="panel-body">
+            <div class="panel-body" id="pControlePresenca">
                 <div id="containerPresenca"></div>
             </div>
         </section>
@@ -285,11 +285,12 @@
 
                 <h2 class="panel-title">Laudos</h2>
             </header>
-            <div class="panel-body">
+            <div class="panel-body" id="pLaudosPeriodo">
                 <div id="containerLaudos"></div>
             </div>
         </section>
     </div>
+
     <div class="col-lg-7 col-md-12">
         <section class="panel">
             <header class="panel-heading">
@@ -298,7 +299,7 @@
                 </div>
                 <h2 class="panel-title">Status dos Laudos</h2>
             </header>
-            <div class="panel-body">
+            <div class="panel-body" id="pStatusLaudos">
                 <div class="table-responsive">
                     <table class="table table-striped mb-none">
                         <thead>
@@ -447,7 +448,7 @@
 
                 <h2 class="panel-title">Evolutivo - Desempenho Físico-Motor</h2>
             </header>
-            <div class="panel-body">
+            <div class="panel-body" id="pEvolutivo">
                 <div id="containerEvolutivo"></div>
             </div>
         </section>
@@ -491,6 +492,41 @@
     </div>
 </div>
 
+<div class="row">
+    <div class="col-lg-5 col-md-12">
+        <section class="panel">
+            <header class="panel-heading">
+                <div class="panel-actions">
+                    <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
+                </div>
+
+                <h2 class="panel-title">Saúde Bucal (%)</h2>
+                <p class="panel-subtitle">Percentual grafico de saúde bucal dos alunos </p>
+            </header>
+            <div class="panel-body">
+                <div id="containerBucalPercentual"></div>
+            </div>
+        </section>
+    </div>
+    <div class="col-lg-7 col-md-12">
+        <section class="panel">
+            <header class="panel-heading">
+                <div class="panel-actions">
+                    <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
+                </div>
+
+                <h2 class="panel-title">Saúde Bucal</h2>
+                <p class="panel-subtitle">Totalizador de alunos por saúde bucal</p>
+            </header>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <div id="containerBucal"></div>
+
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
 <div class="row">
     <div class="col-lg-5 col-md-12">
         <section class="panel">
@@ -741,6 +777,7 @@
     </div>
 </div>
 
+
 @section CssSpecificVendor {
     <link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css" />
     <link rel="stylesheet" href="~/assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
@@ -755,156 +792,12 @@
 
         
         
-        Highcharts.chart('containerVocacionalPercentual', {
-            chart: {
-                type: 'variablepie'
-            },
-            title: {
-                text: undefined
-            },
-            tooltip: {
-                headerFormat: '',
-                pointFormat: '<span style="color:{point.color}">\u25CF</span> <b> {point.name}</b><br/>' +
-                    '<b>{point.y} %</b> dos Alunos',
-                style: {
-                    fontSize: '12px'
-                }
-            },
-            legend: {
-                itemStyle: {
-                    fontSize: '2px'
-                }
-            },
-            plotOptions: {
-                variablepie: {
-                    dataLabels: {
-                        enabled: true,
-                        style: {
-                            fontSize: '12px',
-                            fontWeight: '400'
-                        }
-                    }
-                }
-            },
-            series: [{
-                minPointSize: 10,
-                innerSize: '20%',
-                zMin: 0,
-                name: 'Percentual de talento vocacional dos alunos',
-                borderRadius: 5,
-                data: [{
-                    name: 'Tecnologias Aplicadas',
-                    y: 5,
-                    z: 50
-                }, {
-                    name: 'Ciências Exatas e Naturais',
-                    y: 20,
-                    z: 50
-                }, {
-                    name: 'Artístico',
-                    y: 20,
-                    z: 50
-                }, {
-                    name: 'Ciências Humanas',
-                    y: 30,
-                    z: 50
-                }, {
-                    name: 'Empreendedorismo',
-                    y: 10,
-                    z: 50
-                } , {
-                    name: 'Ciências Contabeis e Administrativas',
-                    y: 15,
-                    z: 50
-                }],
-                colors: [
-                    '#EF5350',
-                    '#EC407A',
-                    '#AB47BC',
-                    '#7E57C2',
-                    '#5C6BC0'
-                ]
-            }]
-        });
-        Highcharts.chart('containerTalentoVocacional', {
-            chart: {
-                type: 'bar'
-            },
-            title: {
-                text: undefined
-            },
-            xAxis: {
-                categories: ['Tecnologias Aplicadas', 'Ciências Exatas e Naturais', 'Artístico', 'Ciências Humanas', 'Empreendedorismo', 'Ciências Contabeis e Administrativas']
-            },
-            yAxis: {
-                min: 0,
-                title: {
-                    text: 'Total'
-                }
-            },
-            legend: {
-                reversed: true
-            },
-            plotOptions: {
-                series: {
-                    stacking: 'normal',
-                    dataLabels: {
-                        enabled: true
-                    }
-                }
-            },
-            series: [{
-                name: 'Feminino',
-                color: '#EC407A',
-                data: [1, 0, 3, 0, 1, 2]
-            }, {
-                name: 'Masculino',
-                data: [1, 1, 0, 2, 2, 4]
-            }]
-        });
+        
+        
 
 
 
 
-        Highcharts.chart('containerEvolutivo', {
-            xAxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-            },
-            title: {
-                text: undefined
-            },
-
-            yAxis: {
-                title: {
-                    text: undefined
-                }
-            },
-
-            series: [{
-                name: 'Velocidade',
-                data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
-                color: '#DAF7A6'
-            }, {
-                name: 'Flexibilidade muscular',
-                data: [24916, 37941, 29742, 29851, 32490, 30282,
-                    38121, 36885, 33726, 34243, 31050],
-                color: '#FFC300'
-            }, {
-                name: 'Forca de membro superiores',
-                data: [11744, 30000, 16005, 19771, 20185, 24377,
-                    32147, 30912, 29243, 29213, 25663],
-                color: '#FF5733'
-            }, {
-                name: 'Agilidade',
-                data: [null, null, null, null, null, null, null,
-                    null, 11164, 11218, 10077],
-                color: '#900C3F'
-            }, {
-                name: 'Resistencia abdominal',
-                data: [21908, 5548, 8105, 11248, 8989, 11816, 18274,
-                    17300, 13053, 11906, 10073],
-                color: '#581845'
-            }]
-        });
+        
     </script>
 }
