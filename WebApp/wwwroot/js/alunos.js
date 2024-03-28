@@ -119,10 +119,12 @@
                 self.editDto.Url = result.data.url;
                 self.editDto.Cpf = result.data.cpf;
 
+                var text = 'http://front.hml.dnadobrasil.org.br/Identity/Account/ControlePresenca?alunoId=' + self.editDto.Id;
+
                 $('#qr').ClassyQR({
                     create: true,// signals the library to create the image tag inside the container div.
                     type: 'text',// text/url/sms/email/call/locatithe text to encode in the QR. on/wifi/contact, default is TEXT
-                    text: 'http://front.hml.dnadobrasil.org.br/Identity/Account/ControlePresenca/' //+ self.editDto.Id // the text to encode in the QR.
+                    text:  text// the text to encode in the QR.
                 });
 
             }).catch(error => {

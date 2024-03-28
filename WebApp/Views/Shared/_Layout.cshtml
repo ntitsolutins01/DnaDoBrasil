@@ -101,7 +101,7 @@
                                 {
                                     <p>This paragraph is displayed because you fulfilled PolicyName.</p>
                                 } *@
-                                @if ((await AuthorizationService.AuthorizeAsync(User, "Dashboard")).Succeeded)
+                                @if ((await AuthorizationService.AuthorizeAsync(User, ModuloAccess.Dashboard)).Succeeded)
                                 {
                                     <li>
                                         <a href="@Url.Action("Index", "Dashboard")">
@@ -110,7 +110,7 @@
                                         </a>
                                     </li>
                                 }
-                                @if ((await AuthorizationService.AuthorizeAsync(User, "Dashboard")).Succeeded)
+                                @if ((await AuthorizationService.AuthorizeAsync(User, ModuloAccess.ConfiguracaoSistema)).Succeeded)
                                 {
                                     <li class="nav-parent">
                                         <a href="#">
@@ -186,7 +186,7 @@
                                         </ul>
                                     </li>
                                 }
-                                @if ((await AuthorizationService.AuthorizeAsync(User, "Dashboard")).Succeeded)
+                                @if ((await AuthorizationService.AuthorizeAsync(User, UserRoles.Aluno)).Succeeded)
                                 {
                                     <li class="nav-parent nav-expanded">
                                         <a href="@Url.Action("Index", "Aluno")">
@@ -196,7 +196,7 @@
                                     </li>
                                 }
 
-                                @if ((await AuthorizationService.AuthorizeAsync(User, ModuloAccess.Dashboard)).Succeeded)
+                                @if ((await AuthorizationService.AuthorizeAsync(User, ModuloAccess.ControlePresenca)).Succeeded)
                                 {
                                     <li class="nav-parent nav-expanded">
                                         <a href="@Url.Action("Index", "ControlePresenca")">
@@ -206,7 +206,7 @@
                                     </li>
                                 }
 
-                                @if ((await AuthorizationService.AuthorizeAsync(User, new string[] { UserRoles.Aluno, UserRoles.Profissional }, requirement)).Succeeded)
+                                @if ((await AuthorizationService.AuthorizeAsync(User, ModuloAccess.Profissional)).Succeeded)
                                 {
                                     <li class="nav-parent nav-expanded">
                                         <a href="@Url.Action("Index", "Profissional")">
@@ -216,7 +216,7 @@
                                     </li>
                                 }
 
-                                @if ((await AuthorizationService.AuthorizeAsync(User, new string[] { UserRoles.Administrador, UserRoles.Parceiro }, requirement)).Succeeded)
+                                @if ((await AuthorizationService.AuthorizeAsync(User, ModuloAccess.SistemaSocioeconomico)).Succeeded)
                                 {
                                     <li class="nav-parent">
                                         <a href="#">
@@ -243,7 +243,7 @@
                                     </li>
                                 }
 
-                                @if ((await AuthorizationService.AuthorizeAsync(User, new string[] { UserRoles.Administrador, UserRoles.Parceiro, UserRoles.Profissional }, requirement)).Succeeded)
+                                @if ((await AuthorizationService.AuthorizeAsync(User, ModuloAccess.Laudo)).Succeeded)
                                 {
                                     <li class="nav-parent nav-expanded">
                                         <a href="@Url.Action("Index", "Laudo")">
@@ -253,7 +253,7 @@
                                     </li>
                                 }
 
-                                @if ((await AuthorizationService.AuthorizeAsync(User, new string[] { UserRoles.Administrador, UserRoles.Profissional, UserRoles.Parceiro }, requirement)).Succeeded)
+                                @if ((await AuthorizationService.AuthorizeAsync(User, ModuloAccess.PlanoAula)).Succeeded)
                                 {
                                     <li class="nav-parent nav-expanded">
                                         <a href="@Url.Action("Index", "PlanoAula")">
@@ -262,7 +262,8 @@
                                         </a>
                                     </li>
                                 }
-                                @if ((await AuthorizationService.AuthorizeAsync(User, new string[] { UserRoles.Administrador }, requirement)).Succeeded)
+
+                                @if ((await AuthorizationService.AuthorizeAsync(User, ModuloAccess.ControleAcesso)).Succeeded)
                                 {
                                     <li class="nav-parent nav-expanded">
                                         <a href="@Url.Action("Index", "Usuario")">

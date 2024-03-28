@@ -9,6 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\assets\vendor\NewFolder\**" />
+    <Content Remove="wwwroot\assets\vendor\NewFolder\**" />
+    <EmbeddedResource Remove="wwwroot\assets\vendor\NewFolder\**" />
+    <None Remove="wwwroot\assets\vendor\NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MailKit" Version="4.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="7.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.17" />
