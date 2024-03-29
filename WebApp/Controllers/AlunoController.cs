@@ -56,22 +56,20 @@ namespace WebApp.Controllers
                 };
                 var result = await ApiClientFactory.Instance.GetAlunosByFilter(searchFilter);
 
-                var filtroVazio = (searchFilter != null) ?
-                    ((searchFilter.MunicipioId != null) ?
-                        ((searchFilter.FomentoId != null) ?
-                            ((searchFilter.LocalidadeId != null) ?
-                            ((searchFilter.Sexo != null) ?
-                            ((searchFilter.DeficienciaId != null) ?
-                            ((searchFilter.Estado != null) ?
-                                searchFilter.Etnia : null)
-                            : null)
-                            : null)
-                            : null)
-                            : null)
-                        : null)
-                    : null;
+                bool filtroVazio = string.IsNullOrEmpty(searchFilter.MunicipioId) ?
+                        string.IsNullOrEmpty(searchFilter.FomentoId) ?
+                            string.IsNullOrEmpty(searchFilter.LocalidadeId) ?
+                                string.IsNullOrEmpty(searchFilter.Sexo) ?
+                                    string.IsNullOrEmpty(searchFilter.DeficienciaId) ?
+                                        string.IsNullOrEmpty(searchFilter.Estado) ?
+                                            string.IsNullOrEmpty(searchFilter.Etnia) : false
+                                        : false
+                                    : false
+                                : false
+                            : false
+                        : false;
 
-                if (string.IsNullOrEmpty(filtroVazio))
+                if (filtroVazio)
                 {
                     result.Alunos = (List<AlunoIndexDto>?)result.Alunos.ToList()
                         .Where(x => x.MunicipioId == usuario.MunicipioId.ToString()).ToList();

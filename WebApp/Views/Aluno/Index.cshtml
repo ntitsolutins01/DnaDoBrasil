@@ -95,10 +95,18 @@
         <div class="panel-body" id="pResult">
             <div class="form-group row">
                 @{
-                    var filtroVazio = Model.SearchFilter.GetType().GetProperties()
-                    .Where(pi => pi.PropertyType == typeof(string))
-                    .Select(pi => (string)pi.GetValue(Model.SearchFilter))
-                    .Any(value => string.IsNullOrEmpty(value));
+                    bool filtroVazio = string.IsNullOrEmpty(Model.SearchFilter.MunicipioId) ?
+                        string.IsNullOrEmpty(Model.SearchFilter.FomentoId) ?
+                            string.IsNullOrEmpty(Model.SearchFilter.LocalidadeId) ?
+                                string.IsNullOrEmpty(Model.SearchFilter.Sexo) ?
+                                    string.IsNullOrEmpty(Model.SearchFilter.DeficienciaId) ?
+                                        string.IsNullOrEmpty(Model.SearchFilter.Estado) ?
+                                            string.IsNullOrEmpty(Model.SearchFilter.Etnia) : false
+                                        : false
+                                    : false
+                                : false
+                            : false
+                        : false;
 
                     if (filtroVazio)
                     {
