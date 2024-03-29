@@ -8,7 +8,7 @@
 <div id="vProfissional">
     <div class="row">
         <div class="col-md-12">
-            @using (@Html.BeginForm("Create", "Profissional", FormMethod.Post, new { id = "formProfissional", @class = "form-horizontal" }))
+            @using (@Html.BeginForm("Create", "Profissional", FormMethod.Post, new { id = "formInclusaoProfissional", @class = "form-horizontal" }))
             {
                 <section class="panel">
                     <header class="panel-heading">
@@ -141,16 +141,16 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label pull-left">Cadastro ativo para login?</label>
+                            <label class="col-sm-2 control-label pull-left">Cadastro ativo?</label>
                             <div class="col-sm-1">
                                 <div class="switch switch-sm switch-success">
                                     <input type="checkbox" id="status" name="status" data-plugin-ios-switch checked="checked" />
                                 </div>
                             </div>
-                            <label class="col-sm-2 control-label">Cadastro habilitado a operar?</label>
+                            <label class="col-sm-2 control-label">Cadastro habilitado?</label>
                             <div class="col-sm-1">
                                 <div class="switch switch-sm switch-success">
-                                    <input type="checkbox" id="habilitado" name="habilitado" data-plugin-ios-switch checked="checked" />
+                                    <input type="checkbox" id="habilitado" name="habilitado" data-plugin-ios-switch />
                                 </div>
                             </div>
                         </div>
@@ -281,10 +281,10 @@
     <link href="~/assets/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.css" rel="stylesheet" />
 }
 @section Scripts {
-    <script src="~/assets/vendor/ios7-switch/ios7-switch.js"></script>
     <script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
     <script src="~/assets/vendor/select2/js/select2.js"></script>
     <script src="~/assets/vendor/jquery-mask/jquery.mask.js"></script>
+    <script src="~/assets/vendor/ios7-switch/ios7-switch.js"></script>
     <script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
     <script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
     <script src="~/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
@@ -292,6 +292,26 @@
     <script src="~/js/formatTable.js"></script>
     <script src="~/js/profissional.js"></script>
     <script>
+
+        // iosSwitcher
+        (function ($) {
+
+            'use strict';
+
+            if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
+
+                $(function () {
+                    $('[data-plugin-ios-switch]').each(function () {
+                        var $this = $(this);
+
+                        $this.themePluginIOS7Switch();
+                    });
+                });
+
+            }
+
+        }).apply(this, [jQuery]);
+
         (function ($) {
 
             'use strict';

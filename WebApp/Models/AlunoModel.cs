@@ -10,7 +10,7 @@ namespace WebApp.Models
     public class AlunoModel
     {
         public AlunoDto Aluno { get; set; }
-        public List<AlunoDto>? Alunos { get; set; }
+        public List<AlunoIndexDto>? Alunos { get; set; }
         public string AlunoId { get; set; }
         public SelectList ListAlunos { get; set; }
         public SelectList ListDeficiencias { get; set; }
@@ -34,6 +34,7 @@ namespace WebApp.Models
         public MatriculaDto Matricula { get; set; }
         public SelectList ListEtnias { get; set; }
         public string EtniaId { get; set; }
+        public string? NomePerfil { get; set; }
 
 
         public class CreateUpdateDadosAlunoCommand

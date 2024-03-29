@@ -15,13 +15,11 @@
 
             'use strict';
 
-
-
             var formid = $('form').attr('id');
-            //Inclusao
-            if (formid === "formProfissional") {
 
-                //skin checkbox
+            //Inclusao
+            if (formid === "formInclusaoProfissional") {
+
                 if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
 
                     $(function () {
@@ -32,6 +30,7 @@
                         });
                     });
                 }
+
                 //skin select
                 var $select = $(".select2").select2({
                     allowClear: true
@@ -181,7 +180,7 @@
 
                 }, "Informe um CPF válido");
 
-                $("#formProfissional").validate({
+                $("#formInclusaoProfissional").validate({
                     rules: {
                         cpf: { cpf: true, required: true }
                     },
@@ -209,7 +208,6 @@
             //Ediçao
             if (formid === "formEditProfissional") {
 
-                //skin checkbox
                 if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
 
                     $(function () {
@@ -220,6 +218,7 @@
                         });
                     });
                 }
+
                 //skin select
                 var $select = $(".select2").select2({
                     allowClear: true

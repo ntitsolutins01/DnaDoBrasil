@@ -98,7 +98,10 @@ namespace WebApp.Areas.Identity.Pages.Account
 
             var user = await _userManager.FindByEmailAsync(Login.Email);
 
-            if (user == null)
+            var roles = await _userManager.GetRolesAsync(user);
+
+
+			if (user == null)
             {
                 ModelState.AddModelError(string.Empty, "Usuário não cadastrado.");
                 return Page();
@@ -129,12 +132,13 @@ namespace WebApp.Areas.Identity.Pages.Account
                 }
                 case true:
                     _logger.LogInformation("User logged in.");
+                    var userRole = roles.First();
                     //var userRole = ((ClaimsIdentity)user.Identity).FindFirst(ClaimTypes.Role).Value;
-                    //if (userRole == UserRoles.Administrador)
-                    //{
+                    if (userRole == UserRoles.Administrador)
+                    {
 
-                    //    return LocalRedirect("~/Dashboard");
-                    //}
+                        return LocalRedirect("~/Dashboard");
+                    }
 
                     return LocalRedirect(returnUrl);
                 default:

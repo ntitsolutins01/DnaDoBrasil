@@ -1,5 +1,5 @@
 var vm = new Vue({
-    el: "#formDashboard",
+    el: "#vDashboard",
     data: {
         loading: false
     },
@@ -7,7 +7,7 @@ var vm = new Vue({
         var self = this;
         (function ($) {
             'use strict';
-            var formid = $('form').attr('id');
+            var formid = $('form')[1].id;
 
             if (formid === "formDashboard") {
 
@@ -38,7 +38,6 @@ var vm = new Vue({
                     $(this).trigger('blur');
                 });
 
-
                 $("#formDashboard").validate({
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
@@ -59,6 +58,9 @@ var vm = new Vue({
                 });
 
                 $("#ddlEstado").change(function () {
+
+                    self.ShowLoad(true, "pFiltro");
+
                     var sigla = $("#ddlEstado").val();
 
                     var url = "DivisaoAdministrativa/GetMunicipioByUf?uf=" + sigla;
@@ -85,12 +87,14 @@ var vm = new Vue({
                                 });
                             }
                         });
+
+                    self.ShowLoad(false, "pFiltro");
                 });
 
-
-
-                //clique de escolha do select
                 $("#ddlMunicipio").change(function () {
+
+                    self.ShowLoad(true, "pFiltro");
+
                     var id = $("#ddlMunicipio").val();
 
                     var url = "../Localidade/GetLocalidadeByMunicipio?id=" + id;
@@ -117,16 +121,10 @@ var vm = new Vue({
                                 });
                             }
                         });
+
+                    self.ShowLoad(false, "pFiltro");
                 });
-
-
-
             }
-
-
-
-
-
         }).apply(this, [jQuery]);
     },
     methods: {

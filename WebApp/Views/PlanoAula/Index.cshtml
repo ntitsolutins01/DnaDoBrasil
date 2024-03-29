@@ -27,6 +27,7 @@
                                 <th class="text-center">Plano Aula</th>
                                 <th class="text-center">Tipo Escolaridade</th>
                                 <th class="text-center">Modalidade</th>
+                                <th class="text-center">Nome Arquivo</th>
                                 <th class="text-center">Ações</th>
                             </tr>
                         </thead>
@@ -38,6 +39,7 @@
                                     <td class="text-center">@Html.DisplayFor(modelItem => item.Nome)</td>
                                     <td class="text-center">@Html.DisplayFor(modelItem => item.TipoEscolaridade)</td>
                                     <td class="text-center">@Html.DisplayFor(modelItem => item.Modalidade)</td>
+                                    <td class="text-center">@Html.DisplayFor(modelItem => item.NomeArquivo)</td>
                                     <td class="actions">
                                         @if (!string.IsNullOrEmpty(item.Url)){
                                             <a data-toggle="tooltip" data-placement="top" title="Download @item.NomeArquivo"

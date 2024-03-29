@@ -57,13 +57,13 @@ namespace WebApp.Controllers
 		{
 			try
 			{
-
 				string filePath = null;
+				string fileName = null;
 
 				foreach (var file in collection.Files)
 				{
 					if (file.Length <= 0) continue;
-					var fileName = Path.GetFileName(collection.Files[0].FileName);
+					fileName = Path.GetFileName(collection.Files[0].FileName);
 					filePath = Path.Combine(_host.WebRootPath, $"PlanosAulas/{fileName}");
 
 					if (!Directory.Exists(Path.Combine(_host.WebRootPath, $"PlanosAulas")))
@@ -78,7 +78,8 @@ namespace WebApp.Controllers
 					Nome = collection["ddlPlanoAula"].ToString(),
 					TipoEscolaridade = collection["ddlTipoEscolaridade"].ToString(),
 					Modalidade = collection["ddlModalidade"].ToString(),
-					Url = filePath
+					NomeArquivo = fileName,
+                    Url = filePath
 				};
 
 				await ApiClientFactory.Instance.CreatePlanoAula(command);
@@ -159,12 +160,15 @@ namespace WebApp.Controllers
 		public ActionResult Download(int id)
 		{
 			var file = ApiClientFactory.Instance.GetPlanoAulaById(id);
-			if (!System.IO.File.Exists(file.Url))
+
+            var filePath = Path.Combine(_host.WebRootPath, $"PlanosAulas/{file.NomeArquivo}");
+
+            if (!System.IO.File.Exists(filePath))
 			{
 				return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Warning, message = "Arquivo não encontrado." });
 			}
 
-			var fileBytes = System.IO.File.ReadAllBytes(file.Url);
+			var fileBytes = System.IO.File.ReadAllBytes(filePath);
 			var response = new FileContentResult(fileBytes, "application/octet-stream")
 			{
 				FileDownloadName = file.NomeArquivo

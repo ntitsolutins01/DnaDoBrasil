@@ -14,6 +14,6 @@
 
         #endregion
 
-        public List<AlunoDto>? Alunos { get; set; }
+        public List<AlunoIndexDto>? Alunos { get; set; }
     }
 }
