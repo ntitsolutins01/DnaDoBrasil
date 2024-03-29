@@ -19,6 +19,34 @@
                 <div class="panel-body">
                     <div id="pUsuario">
                         <div class="form-group row">
+                            <label class="col-sm-3 control-label text-sm-right pt-2">Estado <span class="required">*</span></label>
+                            <div class="col-md-4">
+                                <select class="form-control populate select2" name="ddlEstado" id="ddlEstado"
+                                        title="Por favor informe o estado." required
+                                        asp-for="EstadoId" asp-items="Model.ListEstados">
+                                    <option value="">Selecionar Estado</option>
+                                </select>
+                            </div>
+                            <label class="col-sm-1 control-label text-sm-right pt-2">Municipio <span class="required">*</span></label>
+                            <div class="col-md-4">
+                                <select class="form-control populate select2" name="ddlMunicipio" id="ddlMunicipio"
+                                        title="Por favor informe o municipio." required
+                                        asp-for="MunicipioId" asp-items="Model.ListMunicipios">
+                                    <option value="">Selecionar Municipio</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 control-label text-sm-right pt-2">Localidade <span class="required">*</span></label>
+                            <div class="col-md-4">
+                                <select class="form-control populate select2" name="ddlLocalidade" id="ddlLocalidade"
+                                        title="Por favor informe o localidade." required
+                                        asp-for="LocalidadeId" asp-items="Model.ListLocalidades">
+                                    <option value="">Selecionar Localidade</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label class="col-sm-3 control-label text-sm-right pt-2">Nome <span class="required">*</span></label>
                             <div class="col-sm-9">
                                 <input type="text" name="nome" class="form-control"

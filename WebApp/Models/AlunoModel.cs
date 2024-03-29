@@ -34,7 +34,10 @@ namespace WebApp.Models
         public MatriculaDto Matricula { get; set; }
         public SelectList ListEtnias { get; set; }
         public string EtniaId { get; set; }
+        public SelectList ListSexos { get; set; }
+        public string SexoId { get; set; }
         public string? NomePerfil { get; set; }
+        public AlunosFilterDto SearchFilter { get; set; }
 
 
         public class CreateUpdateDadosAlunoCommand

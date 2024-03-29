@@ -9,12 +9,12 @@ using WebApp.Utility;
 
 namespace WebApp.Controllers
 {
-    public class BemVindo : Controller
+    public class BemVindoController : Controller
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IOptions<UrlSettings> _appSettings;
 
-        public BemVindo(UserManager<IdentityUser> userManager, IOptions<UrlSettings> appSettings)
+        public BemVindoController(UserManager<IdentityUser> userManager, IOptions<UrlSettings> appSettings)
         {
             _userManager = userManager;
             _appSettings = appSettings;

@@ -13,7 +13,6 @@ var vm = new Vue({
 
                 self.GetPesquisaDashboard();
 
-
                 var $select = $(".select2").select2({
                     allowClear: true
                 });

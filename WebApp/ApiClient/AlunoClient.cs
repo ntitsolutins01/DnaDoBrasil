@@ -53,11 +53,17 @@ namespace WebApp.ApiClient
                 $"{ResourceAlunos}/Aluno/Email/{email}"));
             return Get<AlunoDto>(requestUrl);
         }
-        public List<AlunoDto> GetAlunosByLocalidade(int id)
+        public AlunoDto GetAlunoByAspNetUser(string aspNetUserId)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceAlunos}/AspNetUserId/{aspNetUserId}"));
+            return Get<AlunoDto>(requestUrl);
+        }
+        public List<AlunoIndexDto> GetAlunosByLocalidade(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 $"{ResourceAlunos}/Localidade/{id}"));
-            return Get<List<AlunoDto>>(requestUrl);
+            return Get<List<AlunoIndexDto>>(requestUrl);
         }
         public List<SelectListDto> GetNomeAlunosAll(string id)
         {

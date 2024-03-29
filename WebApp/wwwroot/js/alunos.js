@@ -2,19 +2,50 @@
     el: "#vPesquisarAluno",
     data: {
         loading: false,
-        editDto: { Id: "", Nome: "", Status: true, Email: "", Sexo: "", DtNascimento: "", MunicipioEstado: "", NomeLocalidade: "", Cpf:"" }
+        editDto: { Id: "", Nome: "", Status: true, Email: "", Sexo: "", DtNascimento: "", MunicipioEstado: "", NomeLocalidade: "", Cpf: "" }
     },
     mounted: function () {
         var self = this;
         (function ($) {
             'use strict';
 
-            var formid = $('form').attr('id');
+            var formid = $('form')[1].id;
 
             if (formid === "formPesquisarAluno") {
 
+                var $select = $(".select2").select2({
+                    allowClear: true
+                });
+
+                $(".select2").each(function () {
+                    var $this = $(this),
+                        opts = {};
+
+                    var pluginOptions = $this.data('plugin-options');
+                    if (pluginOptions)
+                        opts = pluginOptions;
+
+                    $this.themePluginSelect2(opts);
+                });
+
+                /*
+                 * When you change the value the select via select2, it triggers
+                 * a 'change' event, but the jquery validation plugin
+                 * only re-validates on 'blur'*/
+
+                $select.on('change', function () {
+                    $(this).trigger('blur');
+                });
+
+                if ($.isFunction($.fn['tooltip'])) {
+                    $('[data-toggle=tooltip],[rel=tooltip]').tooltip({ container: 'body' });
+                }
+
                 //clique de escolha do select
                 $("#ddlEstado").change(function () {
+
+                    self.ShowLoad(true, "pFiltro");
+
                     var sigla = $("#ddlEstado").val();
 
                     var url = "../../DivisaoAdministrativa/GetMunicipioByUf?uf=" + sigla;
@@ -41,10 +72,15 @@
                                 });
                             }
                         });
+
+                    self.ShowLoad(false, "pFiltro");
                 });
 
                 //clique de escolha do select
                 $("#ddlMunicipio").change(function () {
+
+                    self.ShowLoad(true, "pFiltro");
+
                     var id = $("#ddlMunicipio").val();
 
                     var url = "../../Localidade/GetLocalidadeByMunicipio?id=" + id;
@@ -71,8 +107,13 @@
                                 });
                             }
                         });
+
+                    self.ShowLoad(false, "pFiltro");
                 });
             }
+
+            //self.GetPesquisaAluno();
+
         }).apply(this, [jQuery]);
     },
     methods: {
@@ -102,7 +143,7 @@
         CarteirinhaAluno: function (id) {
             var self = this;
 
-            
+
 
 
             axios.get("Aluno/GetAlunoById/?id=" + id).then(result => {
@@ -124,12 +165,41 @@
                 $('#qr').ClassyQR({
                     create: true,// signals the library to create the image tag inside the container div.
                     type: 'text',// text/url/sms/email/call/locatithe text to encode in the QR. on/wifi/contact, default is TEXT
-                    text:  text// the text to encode in the QR.
+                    text: text// the text to encode in the QR.
                 });
 
             }).catch(error => {
                 Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
             });
+        },
+        GetPesquisaAluno: function () {
+
+            var self = this;
+            self.ShowLoad(true, "pResult");
+
+            var obj = {
+                FomentoId: $("#ddlFomento").val(),
+                Estado: $("#ddlEstado").val(),
+                MunicipioId: $("#ddlMunicipio").val(),
+                LocalidadeId: $("#ddlLocalidade").val(),
+                DeficienciaId: $("#ddlDeficiencia").val(),
+                Etnia: $("#ddlEtnia").val()
+            }
+
+            let axiosConfig = {
+                headers: {
+                    'Content-Type': 'application/json;charset=UTF-8',
+                    "Access-Control-Allow-Origin": "*",
+                }
+            };
+
+            axios.post("Aluno/GetAlunosByFilter", obj, axiosConfig).then(result => {
+
+
+                self.ShowLoad(false, "pResult");
+            });
+
+            self.ShowLoad(false, "pResult");
         }
     }
 });

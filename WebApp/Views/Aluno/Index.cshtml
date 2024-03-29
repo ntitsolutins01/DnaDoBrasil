@@ -17,7 +17,7 @@
                         </div>
                         <h2 class="panel-title">Filtro de pesquisa</h2>
                     </header>
-                    <div class="panel-body">
+                    <div class="panel-body" id="pFiltro">
                         <label class="col-sm-2 control-label">Fomento:</label>
                         <div class="col-md-4 form-group">
                             <select class="form-control populate select2" name="ddlFomento" id="ddlFomento" style="width:100%"
@@ -61,10 +61,19 @@
                                 <option value="">Selecionar Etnia</option>
                             </select>
                         </div>
+                        <label class="col-sm-2 control-label">Sexo</label>
+                        <div class="col-sm-4 form-group">
+                            <select class="form-control populate select2" name="ddlSexo" id="ddlSexo"
+                                    title="Por favor selecione um sexo."
+                                    asp-for="SexoId" asp-items="Model.ListSexos">
+                                <option value="">Selecionar Sexo</option>
+                            </select>
+                        </div>
                     </div>
                     <footer class="panel-footer">
                         <div class="row">
                             <div class="col-md-9 col-md-offset-3">
+
                                 <button type="submit" class="btn btn-primary pull-right" style="margin-left: 5px;margin-right: 5px;"><i class="fa fa-search"></i> &nbsp;&nbsp;Pesquisar</button>
                             </div>
                         </div>
@@ -83,8 +92,23 @@
             <h2 class="panel-title">Listagem de Alunos</h2>
 
         </header>
-        <div class="panel-body">
+        <div class="panel-body" id="pResult">
             <div class="form-group row">
+                @{
+                    var filtroVazio = Model.SearchFilter.GetType().GetProperties()
+                    .Where(pi => pi.PropertyType == typeof(string))
+                    .Select(pi => (string)pi.GetValue(Model.SearchFilter))
+                    .Any(value => string.IsNullOrEmpty(value));
+
+                    if (filtroVazio)
+                    {
+                        <div class="col-sm-10 pull-left">
+                            <div class="alert alert-warning" style="padding-bottom: 6px;padding-top: 6px; !important">
+                                <strong>Atenção!</strong> Os alunos listados são referentes ao seu <a href="" class="alert-link">Estado/Município</a> de cadastro.
+                            </div>
+                        </div>
+                    }
+                }
                 <div class="col-sm-2 pull-right">
                     <a href="@Url.Action("Create", "Aluno")" id="addToTable" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Novo Aluno </a>
                 </div>
@@ -95,8 +119,6 @@
                         <th>Id</th>
                         <th>Nome</th>
                         <th>Email</th>
-                        @* <th>Pesquisas</th>
-                        <th>Laudos</th> *@
                         <th>Data de Nascimento</th>
                         <th>Status</th>
                         <th>Ações</th>
@@ -201,112 +223,6 @@
                                             <input type="text" readonly="readonly" :value="editDto.Cpf" class="form-control" class="form-control">
                                         </div>
                                     </div>
-
-                                    @*<div class="row">
-
-
-                                    <div class="col-md-4 form-group">
-                                    <input type="text" placeholder=".col-md-4" class="form-control">
-                                    </div>
-
-                                    <div class="col-md-4 form-group">
-                                    <input type="text" placeholder=".col-md-4" class="form-control">
-                                    </div> *@
-                                    @*
-                                    <div class="col-md-4 form-group">
-                                    <input type="text" placeholder=".col-md-4" class="form-control">
-                                    </div> *@
-                                    @*
-
-                                    <div class="col-md-3 form-group">
-                                    <input type="text" placeholder=".col-md-3" class="form-control">
-                                    </div>
-
-                                    <div class="col-md-3 form-group">
-                                    <input type="text" placeholder=".col-md-3" class="form-control">
-                                    </div>
-
-                                    <div class="col-md-3 form-group">
-                                    <input type="text" placeholder=".col-md-3" class="form-control">
-                                    </div>
-
-                                    <div class="col-md-3 form-group">
-                                    <input type="text" placeholder=".col-md-3" class="form-control">
-                                    </div>
-
-
-                                    <div class="col-md-2 form-group">
-                                    <input type="text" placeholder=".col-md-2" class="form-control">
-                                    </div>
-
-                                    <div class="col-md-2 form-group">
-                                    <input type="text" placeholder=".col-md-2" class="form-control">
-                                    </div>
-
-                                    <div class="col-md-2 form-group">
-                                    <input type="text" placeholder=".col-md-2" class="form-control">
-                                    </div>
-
-                                    <div class="col-md-2 form-group">
-                                    <input type="text" placeholder=".col-md-2" class="form-control">
-                                    </div>
-
-                                    <div class="col-md-2 form-group">
-                                    <input type="text" placeholder=".col-md-2" class="form-control">
-                                    </div>
-
-                                    <div class="col-md-2 form-group">
-                                    <input type="text" placeholder=".col-md-2" class="form-control">
-                                    </div>
-
-
-                                    <div class="col-md-1 form-group">
-                                    <input type="text" placeholder=".col-md-1" class="form-control">
-                                    </div>
-
-                                    <div class="col-md-1 form-group">
-                                    <input type="text" placeholder=".col-md-1" class="form-control">
-                                    </div>
-
-                                    <div class="col-md-1 form-group">
-                                    <input type="text" placeholder=".col-md-1" class="form-control">
-                                    </div>
-
-                                    <div class="col-md-1 form-group">
-                                    <input type="text" placeholder=".col-md-1" class="form-control">
-                                    </div>
-
-                                    <div class="col-md-1 form-group">
-                                    <input type="text" placeholder=".col-md-1" class="form-control">
-                                    </div>
-
-                                    <div class="col-md-1 form-group">
-                                    <input type="text" placeholder=".col-md-1" class="form-control">
-                                    </div>
-
-                                    <div class="col-md-1 form-group">
-                                    <input type="text" placeholder=".col-md-1" class="form-control">
-                                    </div>
-
-                                    <div class="col-md-1 form-group">
-                                    <input type="text" placeholder=".col-md-1" class="form-control">
-                                    </div>
-
-                                    <div class="col-md-1 form-group">
-                                    <input type="text" placeholder=".col-md-1" class="form-control">
-                                    </div>
-
-                                    <div class="col-md-1 form-group">
-                                    <input type="text" placeholder=".col-md-1" class="form-control">
-                                    </div>
-
-                                    <div class="col-md-1 form-group">
-                                    <input type="text" placeholder=".col-md-1" class="form-control">
-                                    </div>
-
-                                    <div class="col-md-1 form-group">
-                                    <input type="text" placeholder=".col-md-1" class="form-control">
-                                    </div> *@
                                 </div>
 
                                 <div id="verso" class="tab-pane">
@@ -402,40 +318,6 @@
         (function ($) {
 
             'use strict';
-            if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
-
-                $(function () {
-                    $('[data-plugin-ios-switch]').each(function () {
-                        var $this = $(this);
-
-                        $this.themePluginIOS7Switch();
-                    });
-                });
-            }
-
-            var $select = $(".select2").select2({
-                allowClear: true
-            });
-
-            $(".select2").each(function () {
-                var $this = $(this),
-                    opts = {};
-
-                var pluginOptions = $this.data('plugin-options');
-                if (pluginOptions)
-                    opts = pluginOptions;
-
-                $this.themePluginSelect2(opts);
-            });
-
-            /*
-             * When you change the value the select via select2, it triggers
-             * a 'change' event, but the jquery validation plugin
-             * only re-validates on 'blur'*/
-
-            $select.on('change', function () {
-                $(this).trigger('blur');
-            });
 
             var crub = @ViewBag.CrudMessage;
 
@@ -459,9 +341,6 @@
                     type: 'error',
                     icon: 'fa fa-trash-o'
                 });
-            }
-            if ($.isFunction($.fn['tooltip'])) {
-                $('[data-toggle=tooltip],[rel=tooltip]').tooltip({ container: 'body' });
             }
 
         }).apply(this, [jQuery]);

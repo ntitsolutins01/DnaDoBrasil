@@ -15,7 +15,7 @@
 
             'use strict';
 
-            var formid = $('form').attr('id');
+            var formid = $('form')[1].id;
 
             //Inclusao
             if (formid === "formInclusaoProfissional") {
