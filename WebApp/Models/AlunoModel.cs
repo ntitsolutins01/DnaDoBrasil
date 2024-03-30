@@ -78,6 +78,7 @@ namespace WebApp.Models
             public string? AreasDesejadas { get; set; }
             public string? NomeResponsavel { get; set; }
             public byte[]? ByteImage { get; set; }
+            public byte[]? QrCode { get; set; }
         }
     }
 

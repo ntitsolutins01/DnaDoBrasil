@@ -164,22 +164,23 @@
                 } else {
                     self.editDto.Image = 'data:image/jpeg;base64,' + result.data.image;
                 }
-                if (result.data.cpf === "0") {
+                if (result.data.cpf === "0" || result.data.cpf === "" || result.data.cpf === null) {
                     self.editDto.Cpf = "Não informado";
                 }
                 else {
                     self.editDto.Cpf = result.data.cpf;
                 }
+                self.editDto.QRCode = 'data:image/jpeg;base64,' + result.data.qrCode;
                 
 
 
-                var text = 'http://front.hml.dnadobrasil.org.br/Identity/Account/ControlePresenca?alunoId=' + self.editDto.Id;
+                //var text = 'http://front.hml.dnadobrasil.org.br/Identity/Account/ControlePresenca?alunoId=' + self.editDto.Id;
 
-                $('#qr').ClassyQR({
-                    create: true,// signals the library to create the image tag inside the container div.
-                    type: 'text',// text/url/sms/email/call/locatithe text to encode in the QR. on/wifi/contact, default is TEXT
-                    text: text// the text to encode in the QR.
-                });
+                //$('#qr').ClassyQR({
+                //    create: true,// signals the library to create the image tag inside the container div.
+                //    type: 'text',// text/url/sms/email/call/locatithe text to encode in the QR. on/wifi/contact, default is TEXT
+                //    text: text// the text to encode in the QR.
+                //});
 
             }).catch(error => {
                 Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);

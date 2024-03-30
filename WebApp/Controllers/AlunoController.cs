@@ -18,6 +18,12 @@ using WebApp.Identity;
 using WebApp.Models;
 using WebApp.Utility;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
+using Microsoft.AspNetCore.Mvc;
+using QRCoder;
+using System;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 
 namespace WebApp.Controllers
 {
@@ -520,19 +526,6 @@ namespace WebApp.Controllers
             {
                 string filePath = null;
 
-                foreach (var file in collection.Files)
-                {
-                    if (file.Length <= 0) continue;
-                    var fileName = Path.GetFileName(collection.Files[0].FileName);
-                    filePath = Path.Combine(_host.WebRootPath, $"FotoAlunos/{fileName}");
-
-                    if (!Directory.Exists(Path.Combine(_host.WebRootPath, $"FotoAlunos")))
-                        Directory.CreateDirectory(Path.Combine(_host.WebRootPath, $"FotoAlunos"));
-
-                    using Stream fileStream = new FileStream(filePath, FileMode.Create);
-                    await file.CopyToAsync(fileStream);
-                }
-
                 var status = collection["status"].ToString();
                 var habilitado = collection["habilitado"].ToString();
 
@@ -562,8 +555,36 @@ namespace WebApp.Controllers
 
                 };
 
+                foreach (var file in collection.Files)
+                {
+                    if (file.Length <= 0) continue;
+
+                    command.NomeFoto = Path.GetFileName(collection.Files[0].FileName);
+
+                    using (var ms = new MemoryStream())
+                    {
+                        file.CopyToAsync(ms);
+                        var byteIMage = ms.ToArray();
+                        command.ByteImage = byteIMage;
+                    }
+                }
+
                 var alunoId = await ApiClientFactory.Instance.CreateDados(command);
 
+                var updateCommand = command;
+
+                var text = $"http://front.hml.dnadobrasil.org.br/Identity/Account/ControlePresenca?alunoId={alunoId}";
+
+                QRCodeGenerator QrGenerator = new QRCodeGenerator();
+                QRCodeData QrCodeInfo = QrGenerator.CreateQrCode(text, QRCodeGenerator.ECCLevel.Q);
+                QRCode QrCode = new QRCode(QrCodeInfo);
+                Bitmap QrBitmap = QrCode.GetGraphic(60);
+
+                command.QrCode = BitmapToBytes(QrBitmap);
+                updateCommand.Id = (int)alunoId;
+
+                await ApiClientFactory.Instance.UpdateDados((int)alunoId, updateCommand);
+                
                 return RedirectToAction(nameof(Edit), new { id = alunoId, crud = (int)EnumCrud.Created });
             }
             catch (Exception e)
@@ -572,7 +593,14 @@ namespace WebApp.Controllers
                 return RedirectToAction(nameof(Create), new { notify = (int)EnumNotify.Error, message = e.Message });
             }
         }
-
+        private static Byte[] BitmapToBytes(Bitmap img)
+        {
+            using (MemoryStream stream = new MemoryStream())
+            {
+                img.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+                return stream.ToArray();
+            }
+        }
 
 
         //[ClaimsAuthorize("Usuario", "Alterar")]

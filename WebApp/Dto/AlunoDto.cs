@@ -31,6 +31,8 @@
         public SaudeDto Saude { get; set; }
         //public TalentoEsportivoDto TalentoEsportivo { get; set; }
         //public VocacionalDto Vocaiconal { get; set; }
+        public byte[]? Image { get; set; }
+        public byte[]? QrCode { get; set; }
 
         #region SearchFilter
         public string Sexo { get; set; }
@@ -41,7 +43,6 @@
         public string DeficienciaId { get; set; }
         public string Etnia { get; set; }
         public string ProfissionalId { get; set; }
-        public byte[] Image { get; set; }
 
         #endregion
     }
