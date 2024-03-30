@@ -2,7 +2,7 @@
     el: "#vPesquisarAluno",
     data: {
         loading: false,
-        editDto: { Id: "", Nome: "", Status: true, Email: "", Sexo: "", DtNascimento: "", MunicipioEstado: "", NomeLocalidade: "", Cpf: "" }
+        editDto: { Id: "", Nome: "", Status: true, Email: "", Sexo: "", DtNascimento: "", MunicipioEstado: "", NomeLocalidade: "", Cpf: "", Image: "" }
     },
     mounted: function () {
         var self = this;
@@ -157,8 +157,21 @@
                 self.editDto.MunicipioEstado = result.data.municipioEstado;
                 self.editDto.NomeLocalidade = result.data.nomeLocalidade;
                 self.editDto.Controle = result.data.controle;
-                self.editDto.Url = result.data.url;
-                self.editDto.Cpf = result.data.cpf;
+                if (result.data.image == null && result.data.sexo == "Feminino") {
+                    self.editDto.Image = 'assets/images/menina.jpg';
+                } else if (result.data.image == null && result.data.sexo == "Masculino") {
+                    self.editDto.Image = 'assets/images/menino.jpg';
+                } else {
+                    self.editDto.Image = 'data:image/jpeg;base64,' + result.data.image;
+                }
+                if (result.data.cpf === "0") {
+                    self.editDto.Cpf = "Não informado";
+                }
+                else {
+                    self.editDto.Cpf = result.data.cpf;
+                }
+                
+
 
                 var text = 'http://front.hml.dnadobrasil.org.br/Identity/Account/ControlePresenca?alunoId=' + self.editDto.Id;
 

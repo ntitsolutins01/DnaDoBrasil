@@ -17,7 +17,8 @@
         public string Numero { get; set; }
         public string Bairro { get; set; }
         public string RedeSocial { get; set; }
-        public string Url { get; set; }
+        public string? NomeFoto { get; set; }
+        public byte[]? ByteImage { get; set; }
         public bool Status { get; set; }
         public bool Habilitado { get; set; }
         public int Idade { get; set; }
@@ -40,6 +41,7 @@
         public string DeficienciaId { get; set; }
         public string Etnia { get; set; }
         public string ProfissionalId { get; set; }
+        public byte[] Image { get; set; }
 
         #endregion
     }

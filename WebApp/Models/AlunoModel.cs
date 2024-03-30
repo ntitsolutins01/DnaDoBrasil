@@ -59,7 +59,7 @@ namespace WebApp.Models
             public string? Numero { get; set; }
             public string? Bairro { get; set; }
             public string? RedeSocial { get; set; }
-            public string? Url { get; set; }
+            public string? NomeFoto { get; set; }
             public bool Status { get; set; }
             public bool Habilitado { get; set; }
             public int? DeficienciasId { get; set; } = new();
@@ -77,6 +77,7 @@ namespace WebApp.Models
             public int? LocalidadeId { get; set; }
             public string? AreasDesejadas { get; set; }
             public string? NomeResponsavel { get; set; }
+            public byte[]? ByteImage { get; set; }
         }
     }
 

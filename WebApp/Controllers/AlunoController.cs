@@ -1,8 +1,10 @@
+using System.Drawing;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using NuGet.Protocol.Core.Types;
 using System.Security.Claims;
@@ -556,7 +558,7 @@ namespace WebApp.Controllers
                     DeficienciasIds = collection["arrDeficiencias"] == "" ? null : collection["arrDeficiencias"].ToString(),
                     Habilitado = habilitado != "",
                     Status = status != "",
-                    Url = filePath
+                    NomeFoto = filePath
 
                 };
 
@@ -580,19 +582,6 @@ namespace WebApp.Controllers
             try
             {
                 string filePath = null;
-
-                foreach (var file in collection.Files)
-                {
-                    if (file.Length <= 0) continue;
-                    var fileName = Path.GetFileName(collection.Files[0].FileName);
-                    filePath = Path.Combine(_host.WebRootPath, $"PlanosAulas/{fileName}");
-
-                    if (!Directory.Exists(Path.Combine(_host.WebRootPath, $"PlanosAulas")))
-                        Directory.CreateDirectory(Path.Combine(_host.WebRootPath, $"PlanosAulas"));
-
-                    using Stream fileStream = new FileStream(filePath, FileMode.Create);
-                    await file.CopyToAsync(fileStream);
-                }
 
                 var status = collection["status"].ToString();
                 var habilitado = collection["habilitado"].ToString();
@@ -620,10 +609,23 @@ namespace WebApp.Controllers
                     Bairro = collection["bairro"] == "" ? null : collection["bairro"].ToString(),
                     DeficienciasIds = collection["arrDeficiencias"] == "" ? null : collection["arrDeficiencias"].ToString(),
                     Habilitado = habilitado != "",
-                    Status = status != "",
-                    Url = filePath
+                    Status = status != ""
 
                 };
+
+                foreach (var file in collection.Files)
+                {
+                    if (file.Length <= 0) continue;
+
+                    command.NomeFoto = Path.GetFileName(collection.Files[0].FileName);
+
+                    using (var ms = new MemoryStream())
+                    {
+                        file.CopyToAsync(ms);
+                        var byteIMage = ms.ToArray();
+                        command.ByteImage = byteIMage;
+                    }
+                }
 
                 await ApiClientFactory.Instance.UpdateDados(id, command);
 
@@ -779,7 +781,10 @@ namespace WebApp.Controllers
             {
                 if (string.IsNullOrEmpty(id)) throw new Exception("Id do Aluno não informado.");
                 var result = ApiClientFactory.Instance.GetAlunoById(Convert.ToInt32(id));
-
+                if (result.ByteImage != null)
+                {
+                    result.Image = GetImage(Convert.ToBase64String(result.ByteImage!));
+                }
                 return Task.FromResult(Json(result));
 
             }
@@ -788,6 +793,18 @@ namespace WebApp.Controllers
                 return Task.FromResult(Json(ex));
             }
         }
+
+        public byte[] GetImage(string sBase64String)
+        {
+            byte[] bytes = null;
+            if (!string.IsNullOrEmpty(sBase64String))
+            {
+                bytes = Convert.FromBase64String(sBase64String);
+            }
+
+            return bytes;
+        }
+
 
         public async Task<ActionResult> CreateDependencia(IFormCollection collection)
         {
