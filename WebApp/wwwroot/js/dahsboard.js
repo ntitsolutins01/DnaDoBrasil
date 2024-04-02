@@ -153,6 +153,21 @@ var vm = new Vue({
         GetPesquisaDashboard: function () {
 
             var self = this;
+            self.ShowLoad(true, "pIndicadores");
+            self.ShowLoad(true, "pControlePresenca");
+            self.ShowLoad(true, "pLaudosPeriodo");
+            self.ShowLoad(true, "pStatusLaudos");
+            self.ShowLoad(true, "pEvolutivo");
+            self.ShowLoad(true, "pSaudePerc");
+            self.ShowLoad(true, "pSaudeTot");
+            self.ShowLoad(true, "pEtniaPerc");
+            self.ShowLoad(true, "pEtniaTot");
+            self.ShowLoad(true, "pDeficienciaPerc");
+            self.ShowLoad(true, "pDeficienciaTot");
+            self.ShowLoad(true, "pSaudeBucalPerc");
+            self.ShowLoad(true, "pSaudeBucalTot");
+            self.ShowLoad(true, "pTalentoPerc");
+            self.ShowLoad(true, "pTalentoTot");
 
             var obj = {
                 FomentoId: $("#ddlFomento").val(),
@@ -165,8 +180,8 @@ var vm = new Vue({
 
             let axiosConfig = {
                 headers: {
-                    'Content-Type': 'application/json;charset=UTF-8',
-                    "Access-Control-Allow-Origin": "*",
+                    "Content-Type": 'application/json;charset=UTF-8',
+                    "Access-Control-Allow-Origin": "*"
                 }
             };
 
@@ -284,24 +299,110 @@ var vm = new Vue({
 
                 self.ShowLoad(false, "pEvolutivo");
             });
-            axios.post("Dashboard/GetGraficosPizzaBarraByFilter", obj, axiosConfig).then(result => {
+
+            axios.post("Dashboard/GetGraficosSaudeByFilter", obj, axiosConfig).then(result => {
+                var self = this;
+
+                self.ShowLoad(true, "pSaudePerc");
+                self.ShowLoad(true, "pSaudeTot");
 
                 self.SetGraficoSaudePercentual(result);
                 self.SetGraficoTotalizadorSaudeSexo(result);
-                self.SetGraficoTalentoPercentual(result);
-                self.SetGraficoTotalizadorTalento(result);
-                self.SetGraficoPercDesempenhoFisicoMotor(result);
-                self.SetGraficoTotDesempenhoFisicoMotor(result);
-                self.SetGraficoDeficienciaPercentual(result);
-                self.SetGraficoTotalizadorDeficiencia(result);
+
+                self.ShowLoad(false, "pSaudePerc");
+                self.ShowLoad(false, "pSaudeTot");
+
+            }).catch(error => {
+                Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
+                self.ShowLoad(false, "pSaudePerc");
+                self.ShowLoad(false, "pSaudeTot");
+            });
+
+            axios.post("Dashboard/GetGraficosEtniaByFilter", obj, axiosConfig).then(result => {
+                var self = this;
+
+                self.ShowLoad(true, "pEtniaPerc");
+                self.ShowLoad(true, "pEtniaTot");
+
                 self.SetGraficoEtniaPercentual(result);
                 self.SetGraficoTotalizadorEtnia(result);
+
+                self.ShowLoad(false, "pEtniaPerc");
+                self.ShowLoad(false, "pEtniaTot");
+
+            }).catch(error => {
+                Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
+                self.ShowLoad(false, "pEtniaPerc");
+                self.ShowLoad(false, "pEtniaTot");
+            });
+
+            axios.post("Dashboard/GetGraficosDeficienciasByFilter", obj, axiosConfig).then(result => {
+                var self = this;
+
+                self.ShowLoad(true, "pDeficienciaPerc");
+                self.ShowLoad(true, "pDeficienciaTot");
+
+                self.SetGraficoDeficienciaPercentual(result);
+                self.SetGraficoTotalizadorDeficiencia(result);
+
+                self.ShowLoad(false, "pDeficienciaPerc");
+                self.ShowLoad(false, "pDeficienciaTot");
+
+            }).catch(error => {
+                Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
+                self.ShowLoad(false, "pDeficienciaPerc");
+                self.ShowLoad(false, "pDeficienciaTot");
+            });
+
+            axios.post("Dashboard/GetGraficosSaudeBucalByFilter", obj, axiosConfig).then(result => {
+                var self = this;
+
+                self.ShowLoad(true, "pSaudeBucalPerc");
+                self.ShowLoad(true, "pSaudeBucalTot");
+
+                self.SetGraficoSaudePercentual(result);
+                self.SetGraficoTotalizadorSaudeSexo(result);
+
+                self.ShowLoad(false, "pSaudeBucalPerc");
+                self.ShowLoad(false, "pSaudeBucalTot");
+
+            }).catch(error => {
+                Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
+                self.ShowLoad(false, "pSaudeBucalPerc");
+                self.ShowLoad(false, "pSaudeBucalTot");
+            });
+
+            axios.post("Dashboard/GetGraficosTalentoByFilter", obj, axiosConfig).then(result => {
+                var self = this;
+
+                self.ShowLoad(true, "pTalentoPerc");
+                self.ShowLoad(true, "pTalentoTot");
+
+                self.SetGraficoTalentoPercentual(result);
+                self.SetGraficoTotalizadorTalento(result);
+
+                self.ShowLoad(false, "pTalentoPerc");
+                self.ShowLoad(false, "pTalentoTot");
+
+            }).catch(error => {
+                Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
+                self.ShowLoad(false, "pTalentoPerc");
+                self.ShowLoad(false, "pTalentoTot");
+            });
+            axios.post("Dashboard/GetGraficosTalentoByFilter", obj, axiosConfig).then(result => {
+
+                self.SetGraficoPercDesempenhoFisicoMotor(result);
+                self.SetGraficoTotDesempenhoFisicoMotor(result);
+
                 self.SetGraficoQualidadePercentual(result);
                 self.SetGraficoTotalizadorQualidade(result);
+
                 self.SetGraficoConsumoPercentual(result);
                 self.SetGraficoTotalizadorConsumo(result);
+
                 self.SetGraficoBuscalPercentual(result);
                 self.SetGraficoTotalizadorBucal(result);
+
                 self.SetGraficoVocacionalPercentual(result);
                 self.SetGraficoTotalizadorVocacional(result);
 

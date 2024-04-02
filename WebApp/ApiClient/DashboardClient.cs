@@ -11,10 +11,34 @@ namespace WebApp.ApiClient
         #region Main Methods
 
 
-        public Task<DashboardDto?> GetGraficosPizzaBarraByFilter(DashboardDto searchFilter)
+        public Task<DashboardDto?> GetGraficosTalentoByFilter(DashboardDto searchFilter)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceDashboard}/GraficosPizzaBarra"));
+                $"{ResourceDashboard}/GraficosTalento"));
+            return GetFiltro(requestUrl, searchFilter);
+        }
+        public Task<DashboardDto?> GetGraficosSaudeByFilter(DashboardDto searchFilter)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceDashboard}/GraficosSaude"));
+            return GetFiltro(requestUrl, searchFilter);
+        }
+        public Task<DashboardDto?> GetGraficosSaudeBucalByFilter(DashboardDto searchFilter)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceDashboard}/GraficosSaudeBucal"));
+            return GetFiltro(requestUrl, searchFilter);
+        }
+        public Task<DashboardDto?> GetGraficosEtniaByFilter(DashboardDto searchFilter)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceDashboard}/GraficosEtnia"));
+            return GetFiltro(requestUrl, searchFilter);
+        }
+        public Task<DashboardDto?> GetGraficosDeficienciasByFilter(DashboardDto searchFilter)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceDashboard}/GraficosDeficiencia"));
             return GetFiltro(requestUrl, searchFilter);
         }
         public Task<DashboardDto?> GetIndicadoresAlunosByFilter(DashboardDto searchFilter)

@@ -573,15 +573,8 @@ namespace WebApp.Controllers
 
                 var updateCommand = command;
 
-                var text = $"http://front.hml.dnadobrasil.org.br/Identity/Account/ControlePresenca?alunoId={alunoId}";
-
-                QRCodeGenerator QrGenerator = new QRCodeGenerator();
-                QRCodeData QrCodeInfo = QrGenerator.CreateQrCode(text, QRCodeGenerator.ECCLevel.Q);
-                QRCode QrCode = new QRCode(QrCodeInfo);
-                Bitmap QrBitmap = QrCode.GetGraphic(60);
-
-                command.QrCode = BitmapToBytes(QrBitmap);
                 updateCommand.Id = (int)alunoId;
+                command.QrCode = GeraQrCode(alunoId);
 
                 await ApiClientFactory.Instance.UpdateDados((int)alunoId, updateCommand);
                 
@@ -593,6 +586,20 @@ namespace WebApp.Controllers
                 return RedirectToAction(nameof(Create), new { notify = (int)EnumNotify.Error, message = e.Message });
             }
         }
+
+        private static byte[]? GeraQrCode(long alunoId)
+        {
+            AlunoModel.CreateUpdateDadosAlunoCommand command;
+            var text = $"http://front.hml.dnadobrasil.org.br/Identity/Account/ControlePresenca?alunoId={alunoId}";
+
+            QRCodeGenerator QrGenerator = new QRCodeGenerator();
+            QRCodeData QrCodeInfo = QrGenerator.CreateQrCode(text, QRCodeGenerator.ECCLevel.Q);
+            QRCode QrCode = new QRCode(QrCodeInfo);
+            Bitmap QrBitmap = QrCode.GetGraphic(60);
+
+            return BitmapToBytes(QrBitmap);
+        }
+
         private static Byte[] BitmapToBytes(Bitmap img)
         {
             using (MemoryStream stream = new MemoryStream())
@@ -803,22 +810,33 @@ namespace WebApp.Controllers
             }
         }
 
-        public Task<JsonResult> GetAlunoById(string id)
+        public async Task<JsonResult> GetAlunoById(string id)
         {
             try
             {
                 if (string.IsNullOrEmpty(id)) throw new Exception("Id do Aluno não informado.");
                 var result = ApiClientFactory.Instance.GetAlunoById(Convert.ToInt32(id));
+                
                 if (result.ByteImage != null)
                 {
                     result.Image = GetImage(Convert.ToBase64String(result.ByteImage!));
                 }
-                return Task.FromResult(Json(result));
+
+                if (result.QrCode == null)
+                {
+                    result.QrCode = GeraQrCode(result.Id);
+                    await ApiClientFactory.Instance.UpdateDados(result.Id, new AlunoModel.CreateUpdateDadosAlunoCommand()
+                    {
+                        Id = result.Id,
+                        QrCode = result.QrCode
+                    });
+                }
+                return Json(result);
 
             }
             catch (Exception ex)
             {
-                return Task.FromResult(Json(ex));
+                return Json(ex);
             }
         }
 

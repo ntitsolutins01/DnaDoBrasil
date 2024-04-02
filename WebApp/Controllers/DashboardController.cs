@@ -204,57 +204,71 @@ namespace WebApp.Controllers
                 return await Task.FromResult(Json(ex));
             }
         }
-        public async Task<JsonResult> GetGraficosPizzaBarraByFilter([FromBody] DashboardDto search)
+        public async Task<JsonResult> GetGraficosSaudeByFilter([FromBody] DashboardDto search)
         {
             try
             {
-                var dashboard = await ApiClientFactory.Instance.GetGraficosPizzaBarraByFilter(search);
+                var dashboard = await ApiClientFactory.Instance.GetGraficosSaudeByFilter(search);
 
-                List<string> listPercTalentoCategorias = new List<string>();
-
-                var listPercTalento = new List<DataGrafico>();
-
-                foreach (var item in dashboard.ListTotalizadorTalento.PercTalento)
+                var model = new DashboardModel
                 {
-                    listPercTalento.Add(new DataGrafico()
-                    {
-                        name = item.Key,
-                        y = item.Value,
-                        z = 50
-                    });
+                    Dashboard = dashboard,
 
-                    listPercTalentoCategorias.Add(new string(item.Key));
-                }
+                };
 
-                var listValorTalentoMasc = new List<DataGrafico>();
+                return await Task.FromResult(Json(model));
 
-                foreach (var item in dashboard.ListTotalizadorTalento.ValorTotalizadorTalentoMasculino!)
+            }
+            catch (Exception ex)
+            {
+                return await Task.FromResult(Json(ex));
+            }
+        }
+        public async Task<JsonResult> GetGraficosSaudeBucalByFilter([FromBody] DashboardDto search)
+        {
+            try
+            {
+                var dashboard = new DashboardDto();// await ApiClientFactory.Instance.GetGraficosSaudeBucalByFilter(search);
+
+                var model = new DashboardModel
                 {
-                    listValorTalentoMasc.Add(new DataGrafico()
-                    {
-                        name = item.Key,
-                        y = item.Value,
-                        z = 50
-                    });
+                    Dashboard = dashboard,
 
-                }
-                var listValorTalentoFem = new List<DataGrafico>();
+                };
 
-                foreach (var item in dashboard.ListTotalizadorTalento.ValorTotalizadorTalentoFeminino!)
+                return await Task.FromResult(Json(model));
+
+            }
+            catch (Exception ex)
+            {
+                return await Task.FromResult(Json(ex));
+            }
+        }
+        public async Task<JsonResult> GetGraficosEtniaByFilter([FromBody] DashboardDto search)
+        {
+            try
+            {
+                var dashboard = await ApiClientFactory.Instance.GetGraficosEtniaByFilter(search);
+
+                var model = new DashboardModel
                 {
-                    listValorTalentoFem.Add(new DataGrafico()
-                    {
-                        name = item.Key,
-                        y = item.Value,
-                        z = 50
-                    });
+                    Dashboard = dashboard,
 
-                }
+                };
 
-                dashboard.ListPercTalento = listPercTalento;
-                dashboard.ListPercTalentoCategorias = listPercTalentoCategorias;
-                dashboard.ListValorTalentoMasc = listValorTalentoMasc;
-                dashboard.ListValorTalentoFem = listValorTalentoFem;
+                return await Task.FromResult(Json(model));
+
+            }
+            catch (Exception ex)
+            {
+                return await Task.FromResult(Json(ex));
+            }
+        }
+        public async Task<JsonResult> GetGraficosDeficienciasByFilter([FromBody] DashboardDto search)
+        {
+            try
+            {
+                var dashboard = await ApiClientFactory.Instance.GetGraficosDeficienciasByFilter(search);
 
                 List<string> listPercDeficienciaCategorias = new List<string>();
 
@@ -302,6 +316,71 @@ namespace WebApp.Controllers
                 dashboard.ListValorDeficienciaMasc = listValorDeficienciaMasc;
                 dashboard.ListValorDeficienciaFem = listValorDeficienciaFem;
 
+                var model = new DashboardModel
+                {
+                    Dashboard = dashboard,
+
+                };
+
+                return await Task.FromResult(Json(model));
+
+            }
+            catch (Exception ex)
+            {
+                return await Task.FromResult(Json(ex));
+            }
+        }
+        public async Task<JsonResult> GetGraficosTalentoByFilter([FromBody] DashboardDto search)
+        {
+            try
+            {
+                var dashboard = await ApiClientFactory.Instance.GetGraficosTalentoByFilter(search);
+
+                List<string> listPercTalentoCategorias = new List<string>();
+
+                var listPercTalento = new List<DataGrafico>();
+
+                foreach (var item in dashboard.ListTotalizadorTalento.PercTalento)
+                {
+                    listPercTalento.Add(new DataGrafico()
+                    {
+                        name = item.Key,
+                        y = item.Value,
+                        z = 50
+                    });
+
+                    listPercTalentoCategorias.Add(new string(item.Key));
+                }
+
+                var listValorTalentoMasc = new List<DataGrafico>();
+
+                foreach (var item in dashboard.ListTotalizadorTalento.ValorTotalizadorTalentoMasculino!)
+                {
+                    listValorTalentoMasc.Add(new DataGrafico()
+                    {
+                        name = item.Key,
+                        y = item.Value,
+                        z = 50
+                    });
+
+                }
+                var listValorTalentoFem = new List<DataGrafico>();
+
+                foreach (var item in dashboard.ListTotalizadorTalento.ValorTotalizadorTalentoFeminino!)
+                {
+                    listValorTalentoFem.Add(new DataGrafico()
+                    {
+                        name = item.Key,
+                        y = item.Value,
+                        z = 50
+                    });
+
+                }
+
+                dashboard.ListPercTalento = listPercTalento;
+                dashboard.ListPercTalentoCategorias = listPercTalentoCategorias;
+                dashboard.ListValorTalentoMasc = listValorTalentoMasc;
+                dashboard.ListValorTalentoFem = listValorTalentoFem;
 
                 var model = new DashboardModel
                 {

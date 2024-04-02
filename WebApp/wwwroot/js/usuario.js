@@ -14,7 +14,7 @@ var vm = new Vue({
         (function ($) {
 
             'use strict';
-            var formid = $('form').attr('id');
+            var formid = $('form')[1].id;
 
             if (formid === "formUsuario") {
                 if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {

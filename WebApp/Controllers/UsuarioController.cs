@@ -45,7 +45,9 @@ namespace WebApp.Controllers
             var response = ApiClientFactory.Instance.GetUsuarioAll(); var localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeAll(), "Id", "Nome");
             var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
 
-            return View(new UsuarioModel() { Usuarios = response,
+            return View(new UsuarioModel()
+            {
+                Usuarios = response,
                 ListLocalidades = localidades,
                 ListEstados = estados
             });
@@ -57,9 +59,11 @@ namespace WebApp.Controllers
             SetNotifyMessage(notify, message);
             SetCrudMessage(crud);
             var resultPerfil = ApiClientFactory.Instance.GetPerfilAll();
+            var estados = ApiClientFactory.Instance.GetEstadosAll();
 
             var model = new UsuarioModel
             {
+                ListEstados = new SelectList(estados, "Sigla", "Nome"),
                 ListPerfis = new SelectList(resultPerfil, "Id", "Nome")
             };
             return View(model);
@@ -128,11 +132,19 @@ namespace WebApp.Controllers
                     {
                         await _userManager.AddToRoleAsync(newUser, userRole);
                     }
+
+                    SendNewUserEmail(newUser, command.Email, command.Nome);
+
+                    return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
                 }
 
-                SendNewUserEmail(newUser, command.Email, command.Nome);
+                return RedirectToAction(nameof(Index),
+                    new
+                    {
+                        notify = (int)EnumNotify.Error,
+                        message = $"Erro ao criar usuário. Favor entrar em contato com o administrador do sistema."
+                    });
 
-                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
             }
             catch (Exception e)
             {
