@@ -73,9 +73,9 @@
 						<th class="text-center">Id</th>
                         <th class="text-center">Instituiçao</th>
                         <th class="text-center">Email</th>
-                        <th class="text-center">Solicitação Pendente?</th>
-                        <th class="text-center">Status</th>
-	                    <th class="text-center">Habilitado</th>
+                        <th class="text-center" style="width: 10%;">Solicitação Pendente?</th>
+                        <th class="text-center" style="width: 10%;">Status</th>
+                        <th class="text-center" style="width: 10%;">Habilitado</th>
                         <th class="text-center">Ações</th>
                     </tr>
                 </thead>
@@ -88,27 +88,27 @@
                             <td class="text-center">@Html.DisplayFor(modelItem => item.Email)</td>
                             @if (item.Alunos!.Any())
                             {
-                                <td class="text-center"><span class="label label-danger">SIM</span></td>
+                                <td class="text-center"><span class="label label-danger" style="display: block;">SIM</span></td>
                             }
                             else
                             {
-                                <td class="text-center"><span class="label label-success">NÃO</span></td>
+                                <td class="text-center"><span class="label label-success" style="display: block;">NÃO</span></td>
                             }
                             @if (item.Status)
                             {
-                                <td class="text-center"><span class="label label-success">ATIVO</span></td>
+                                <td class="text-center"><span class="label label-success" style="display: block;">ATIVO</span></td>
                             }
                             else
                             {
-                                <td class="text-center"><span class="label label-danger">INATIVO</span></td>
+                                <td class="text-center"><span class="label label-danger" style="display: block;">INATIVO</span></td>
                             }
                             @if (item.Habilitado)
                             {
-                                <td class="text-center"><span class="label label-success">HABILITADO</span></td>
+                                <td class="text-center"><span class="label label-success" style="display: block;">HABILITADO</span></td>
                             }
                             else
                             {
-                                <td class="text-center"><span class="label label-danger">INABILITADO</span></td>
+                                <td class="text-center"><span class="label label-danger" style="display: block;">INABILITADO</span></td>
                             }
                             <td class="actions text-center">
                                 <a data-toggle="tooltip" data-placement="top" title="Editar" asp-action="EditParceiro" asp-controller="SistemaSocioeconomico"

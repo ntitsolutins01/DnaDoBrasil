@@ -63,8 +63,8 @@
                     </div>
                     <footer class="panel-footer">
                         <div class="row">
-                            <div class="col-md-9 col-md-offset-3">
-                                <button type="submit" class="btn btn-primary pull-right" style="margin-left: 5px;margin-right: 5px;"><i class="fa fa-search"></i> &nbsp;&nbsp;Pesquisar</button>
+                            <div class="col-sm-2 pull-right">
+                                <button type="button" class="btn btn-block btn-primary pull-right"><i class="fa fa-search"></i> &nbsp;&nbsp;Pesquisar</button>
                             </div>
                         </div>
                     </footer>
@@ -83,8 +83,8 @@
                 </header>
                 <div class="panel-body">
                     <div class="form-group row">
-                        <div class="col-sm-12 pull-right">
-                            <a href="@Url.Action("Create", "ControlePresenca")" id="addToTable" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Novo Controle de Presença </a>
+                        <div class="col-sm-2 pull-right">
+                            <a href="@Url.Action("Create", "ControlePresenca")" id="addToTable" class="btn btn-block btn-primary pull-right"><i class="fa fa-plus"></i> &nbsp;&nbsp;Novo Controle</a>
                         </div>
                     </div>
                     <table class="table table-bordered table-striped mb-0" id="datatable-default">
@@ -92,7 +92,7 @@
                         <tr>
                             <th class="text-center">Id</th>
                             <th class="text-center">Aluno</th>
-                            <th class="text-center">Controle</th>
+                                <th class="text-center" style="width: 10%;">Controle</th>
                             <th class="text-center">Data</th>
                             <th class="text-center">Justificativa</th>
                             <th class="text-center">Ações</th>
@@ -106,22 +106,22 @@
                                 <td class="text-center">@Html.DisplayFor(modelItem => item.NomeAluno)</td>
                                 @if (item.Controle == "P")
                                 {
-                                    <td class="text-center"><span class="label label-success">Presente</span></td>
+                                        <td class="text-center"><span class="label label-success" style="display: block;">Presente</span></td>
                                 }
                                 else
                                 {
-                                    <td class="text-center"><span class="label label-danger">Falta</span></td>
+                                        <td class="text-center"><span class="label label-danger" style="display: block;">Falta</span></td>
                                 }
                                 <td class="text-center">@Html.DisplayFor(modelItem => item.Data)</td>
                                 <td class="text-center">@Html.DisplayFor(modelItem => item.Justificativa)</td>
                                 <td class="actions text-center">
                                     <a data-toggle="tooltip" data-placement="top" title="Editar"
                                        href='javascript:(crud.EditModal(@item.Id))'
-                                       class="on-default edit-row" style='color: #FF9800'>
+                                           class="on-default edit-row" style='color: #FF9800' style="display: block;">
                                         <i class="fa fa-pencil"></i>
                                     </a>
                                     <a data-toggle="tooltip" data-placement="top" title="Excluir" href='javascript:(crud.DeleteModal(@item.Id))'
-                                       class="on-default remove-row" style="cursor: pointer;color: #F44336"><i class="fa fa-trash"></i></a>
+                                           class="on-default remove-row" style=" cursor: pointer;color: #F44336"><i class="fa fa-trash"></i></a>
                                 </td>
                             </tr>
                         }

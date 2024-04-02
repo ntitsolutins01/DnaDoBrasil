@@ -61,7 +61,7 @@
                                 <option value="">Selecionar Etnia</option>
                             </select>
                         </div>
-                        <label class="col-sm-2 control-label">Sexo</label>
+                        <label class="col-sm-2 control-label">Sexo:</label>
                         <div class="col-sm-4 form-group">
                             <select class="form-control populate select2" name="ddlSexo" id="ddlSexo"
                                     title="Por favor selecione um sexo."
@@ -72,9 +72,8 @@
                     </div>
                     <footer class="panel-footer">
                         <div class="row">
-                            <div class="col-md-9 col-md-offset-3">
-
-                                <button type="submit" class="btn btn-primary pull-right" style="margin-left: 5px;margin-right: 5px;"><i class="fa fa-search"></i> &nbsp;&nbsp;Pesquisar</button>
+                            <div class="col-sm-2 pull-right">
+                                <button type="submit" class="btn btn-block btn-primary pull-right"><i class="fa fa-search"></i> &nbsp;&nbsp;Pesquisar</button>
                             </div>
                         </div>
                     </footer>
@@ -118,10 +117,10 @@
                     }
                 }
                 <div class="col-sm-2 pull-right">
-                    <a href="@Url.Action("Create", "Aluno")" id="addToTable" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Novo Aluno </a>
+                    <a href="@Url.Action("Create", "Aluno")" id="addToTable" class="btn btn-block btn-primary pull-right"><i class="fa fa-plus"></i>  &nbsp;&nbsp;Novo Aluno </a>
                 </div>
                 <div class="col-sm-2 pull-right">
-                    <a href="@Url.Action("Create", "Aluno")" id="addToTable" class="btn btn-info pull-right"><i class="fa fa-print"></i> Impressão em Lote </a>
+                    <a href="@Url.Action("Create", "Aluno")" id="addToTable" class="btn btn-block btn-info pull-right"><i class="fa fa-print"></i>  &nbsp;&nbsp;Impressão em Lote </a>
                 </div>
             </div>
             <table class="table table-bordered table-striped mb-0" id="datatable-default">
@@ -142,16 +141,16 @@
                             <td>@Html.DisplayFor(modelItem => item.Id)</td>
                             <td>@Html.DisplayFor(modelItem => item.Nome)</td>
                             <td>@Html.DisplayFor(modelItem => item.Email)</td>
-                            <td>@Html.DisplayFor(modelItem => item.DtNascimento)</td>
+                            <td class="text-center">@Html.DisplayFor(modelItem => item.DtNascimento)</td>
                             @if (item.Status)
                             {
-                                <td class="text-center"><span class="label label-success">ATIVO</span></td>
+                                <td class="text-center"><span class="label label-success" style="display: block;">ATIVO</span></td>
                             }
                             else
                             {
-                                <td class="text-center"><span class="label label-danger">INATIVO</span></td>
+                                <td class="text-center"><span class="label label-danger" style="display: block;">INATIVO</span></td>
                             }
-                            <td class="actions">
+                            <td class="actions text-center">
                                 <a data-toggle="tooltip" data-placement="top" title="Editar" asp-action="Edit" asp-controller="Aluno" asp-route-Id="@item.Id" class="on-default edit-row" style='color: #FF9800'><i class="fa fa-pencil"></i></a>
                                 <a data-toggle="tooltip" data-placement="top" title="Carteirinha"
                                    href='javascript:(crud.CarterinhaModal(@item.Id))'

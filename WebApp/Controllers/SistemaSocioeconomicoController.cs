@@ -340,6 +340,8 @@ namespace WebApp.Controllers
 
         public IActionResult Estudantes()
         {
+            var response = ApiClientFactory.Instance.GetLaudoAll();
+
             return View();
         }
         public IActionResult SolicitacaoContato()
