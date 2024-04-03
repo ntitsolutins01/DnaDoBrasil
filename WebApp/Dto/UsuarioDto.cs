@@ -14,6 +14,5 @@ namespace WebApp.Dto
         public PerfilDto Perfil { get; set; }
         public string? Uf { get; set; }
         public int? MunicipioId { get; set; }
-        public int? LocalidadeId { get; set; }
     }
 }

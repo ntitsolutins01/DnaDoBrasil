@@ -12,6 +12,7 @@ using WebApp.Factory;
 using WebApp.Models;
 using WebApp.Utility;
 using WebApp.Views;
+using System.Security.Claims;
 
 namespace WebApp.Controllers
 {
@@ -124,13 +125,13 @@ namespace WebApp.Controllers
             }
         }
         //[ClaimsAuthorize("Usuario", "Alterar")]
-        public ActionResult EditParceiro(int id)
+        public async Task<ActionResult> EditParceiro(int id)
         {
             try
             {
                 ParceiroModel model = new ParceiroModel();
                 {
-                    var parceiro = ApiClientFactory.Instance.GetParceiroById(id);
+                    var parceiro = await ApiClientFactory.Instance.GetParceiroById(id);
                     var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", parceiro.Uf);
                     var municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(parceiro.Uf), "Id", "Nome", parceiro.MunicipioId);
 
@@ -198,15 +199,15 @@ namespace WebApp.Controllers
             }
         }
 
-        public Task<ParceiroDto> GetParceiroById(int id)
+        public async Task<ParceiroDto> GetParceiroById(int id)
         {
-            var result = ApiClientFactory.Instance.GetParceiroById(id);
+            var result = await ApiClientFactory.Instance.GetParceiroById(id);
 
-            return Task.FromResult(result);
+            return result;
         }
 
 
-        public Task<JsonResult> GetTiposParceriasByParceria(string id)
+        public async Task<JsonResult> GetTiposParceriasByParceria(string id)
         {
             try
             {
@@ -214,12 +215,11 @@ namespace WebApp.Controllers
                 var resultLocal = ApiClientFactory.Instance.GetTipoParceriaAll()
                     .Where(x => x.Parceria == Convert.ToInt32(id) && x.Status == true);
 
-                return Task.FromResult(Json(new SelectList(resultLocal, "Id", "Nome")));
-
+                return Json(new SelectList(resultLocal, "Id", "Nome"));
             }
             catch (Exception ex)
             {
-                return Task.FromResult(Json(ex));
+                return Json(ex);
             }
         }
 
@@ -230,17 +230,7 @@ namespace WebApp.Controllers
             {
                 var parceiroId = collection["habilitarParceiroId"].ToString();
 
-                var result = ApiClientFactory.Instance.GetParceiroById(Convert.ToInt32(parceiroId));
-
-                //if (!result.Email.Trim().Equals(collection["email"].ToString().Trim()))
-                //{
-                //    return RedirectToAction(nameof(Parceiro),
-                //        new
-                //        {
-                //            notify = (int)EnumNotify.Error,
-                //            message = "O email informado é diferente do email cadastrado para este parceiro."
-                //        });
-                //}
+                var result = await ApiClientFactory.Instance.GetParceiroById(Convert.ToInt32(parceiroId));
 
                 if (result.Habilitado)
                 {
@@ -274,26 +264,42 @@ namespace WebApp.Controllers
                 var newUser = new IdentityUser { UserName = command.Email, Email = command.Email };
                 var aspNetUser = await _userManager.CreateAsync(newUser, "12345678");
 
-                var perfil = ApiClientFactory.Instance.GetPerfilById((int)EnumPerfil.Parceiro);
-
-                var includedUserId = _userManager.Users.FirstOrDefault(x => x.Email == newUser.Email).Id;
-
-                command.AspNetUserId = includedUserId;
-                command.AspNetRoleId = perfil.AspNetRoleId;
-                command.PerfilId = perfil.Id;
-
-                var usu = await ApiClientFactory.Instance.CreateUsuario(command);
-
-                if (usu != 0)
+                if (aspNetUser.Succeeded)
                 {
-                    var res = await ApiClientFactory.Instance.UpdateParceiro(result.Id,
-                        new ParceiroModel.CreateUpdateParceiroCommand()
-                            { AspNetUserId = command.AspNetUserId, Habilitado = true, Id = result.Id, Nome = result.Nome, CpfCnpj = result.CpfCnpj, Email = result.Email});
+                    var perfil = ApiClientFactory.Instance.GetPerfilById((int)EnumPerfil.Parceiro);
+
+                    var includedUserId = _userManager.Users.FirstOrDefault(x => x.Email == newUser.Email).Id;
+
+                    command.AspNetUserId = includedUserId;
+                    command.AspNetRoleId = perfil.AspNetRoleId;
+                    command.PerfilId = perfil.Id;
+                    command.Status = true;
+                    command.MunicipioId = (int)result.MunicipioId;
+                    command.TipoPessoa = result.TipoPessoa;
+                    command.CpfCnpj = result.CpfCnpj;
+
+                    var usu = await ApiClientFactory.Instance.CreateUsuario(command);
+
+                    if (usu != 0)
+                    {
+                        var res = await ApiClientFactory.Instance.UpdateParceiro(result.Id,
+                            new ParceiroModel.CreateUpdateParceiroCommand()
+                                { AspNetUserId = command.AspNetUserId, Habilitado = true, Id = result.Id, Nome = result.Nome, CpfCnpj = result.CpfCnpj, Email = result.Email });
+                    }
+
+                    SendNewUserEmail(newUser, command.Email, command.Nome);
+
+                    return RedirectToAction(nameof(Parceiro), new { crud = (int)EnumCrud.Created });
                 }
-
-                SendNewUserEmail(newUser, command.Email, command.Nome);
-
-                return RedirectToAction(nameof(Parceiro), new { crud = (int)EnumCrud.Created });
+                else
+                {
+                    return RedirectToAction(nameof(Parceiro),
+                        new
+                        {
+                            notify = (int)EnumNotify.Error,
+                            message = "Erro ao habilitar usuário. Favor entrar em contato com o administrador do sistema."
+                        });
+                }
             }
             catch (Exception e)
             {
@@ -344,9 +350,25 @@ namespace WebApp.Controllers
 
             return View();
         }
-        public IActionResult SolicitacaoContato()
+        public async Task<IActionResult> SolicitacaoContato()
         {
-            return View();
+            try
+            {
+                var municipioId = ApiClientFactory.Instance.GetParceiroByAspNetUserId(User.FindFirstValue(ClaimTypes.NameIdentifier)).MunicipioId;
+
+                var alunos = await ApiClientFactory.Instance.GetAlunosByFilter(new AlunosFilterDto()
+                    { MunicipioId = municipioId.ToString() });
+
+                var model = new ParceiroModel() { Alunos = alunos!.Alunos! };
+
+                return View(model);
+            }
+            catch (Exception e)
+            {
+                Console.Write(e.StackTrace);
+                return RedirectToAction(nameof(Parceiro), new { notify = (int)EnumNotify.Error, message = e.Message });
+
+            }
         }
         public IActionResult Details()
         {

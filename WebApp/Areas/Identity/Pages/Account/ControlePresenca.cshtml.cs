@@ -82,24 +82,37 @@ namespace WebApp.Areas.Identity.Pages.Account
 			returnUrl ??= Url.Content("~/");
 
 			if (!ModelState.IsValid) return Page();
-			var result = await _signInManager.PasswordSignInAsync(collection["email"], collection["senha"], true, false);
 
-			var aluno = ApiClientFactory.Instance.GetAlunoById(Convert.ToInt32(collection["alunoId"]));
+            if (collection["alunoId"] == "0")
+            {
+                return RedirectToPage("ControlePresenca", new { notify = (int)EnumNotify.Error, message = "Erro ao executar esta ação. Leia o QRCode novamente, caso o erro persista, favor entrar em contato com o administrador do sistema. " });
+            }
 
-			if (result.Succeeded)
-			{
-				var command = new WebApp.Models.ControlePresencaModel.CreateUpdateControlePresencaCommand()
-				{
-					MunicipioId = aluno.MunicipioId,
-					LocalidadeId = Convert.ToInt32(aluno.LocalidadeId),
-					Controle = Convert.ToBoolean((collection["justificativa"] == "").ToString())?"P":"F",
-					Justificativa = collection["justificativa"].ToString(),
-					AlunoId = collection["alunoId"].ToString(),
-				};
+            var usuario = ApiClientFactory.Instance.GetUsuarioByEmail(collection["email"].ToString().Trim());
 
-				await ApiClientFactory.Instance.CreateControlePresenca(command);
-			}
-            return RedirectToPage("ControlePresenca", new { notify = (int)EnumNotify.Success, message = "Controle de presença realizado com sucesso" });
+            if (usuario.Perfil.Nome == UserRoles.Administrador || usuario.Perfil.Nome == UserRoles.Profissional)
+            {
+                var result = await _signInManager.PasswordSignInAsync(collection["email"], collection["senha"], true, false);
+
+                var aluno = ApiClientFactory.Instance.GetAlunoById(Convert.ToInt32(collection["alunoId"]));
+
+                if (result.Succeeded)
+                {
+                    var command = new WebApp.Models.ControlePresencaModel.CreateUpdateControlePresencaCommand()
+                    {
+                        MunicipioId = aluno.MunicipioId,
+                        LocalidadeId = Convert.ToInt32(aluno.LocalidadeId),
+                        Controle = Convert.ToBoolean((collection["justificativa"] == "").ToString()) ? "P" : "F",
+                        Justificativa = collection["justificativa"].ToString(),
+                        AlunoId = collection["alunoId"].ToString(),
+                    };
+
+                    await ApiClientFactory.Instance.CreateControlePresenca(command);
+                }
+                return RedirectToPage("ControlePresenca", new { notify = (int)EnumNotify.Success, message = "Controle de presença realizado com sucesso" });
+            }
+            
+            return RedirectToPage("ControlePresenca", new { notify = (int)EnumNotify.Error, message = "Erro ao executar esta ação. Perfil de login informado é inválido." });
         }
 	}
 }

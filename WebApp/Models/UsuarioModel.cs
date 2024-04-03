@@ -9,8 +9,6 @@ namespace WebApp.Models
         public SelectList ListPerfis { get; set; }
         public UsuarioDto Usuario { get; set; }
         public List<UsuarioDto> Usuarios { get; set; }
-        public string LocalidadeId { get; set; }
-        public SelectList ListLocalidades { get; set; }
         public string EstadoId { get; set; }
         public SelectList ListEstados { get; set; }
         public string MunicipioId { get; set; }
@@ -27,7 +25,7 @@ namespace WebApp.Models
 			public string Id { get; set; }
             public string TipoPessoa { get; set; }
             public int MunicipioId { get; set; }
-            public int LocalidadeId { get; set; }
+            public bool Status { get; set; }
         }
 	}
 }

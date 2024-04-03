@@ -15,6 +15,7 @@ namespace WebApp.Models
         public SelectList ListMunicipios { get; set; }
         public SelectList ListTiposParcerias { get; set; }
         public int TipoParceriaId { get; set; }
+        public List<AlunoIndexDto> Alunos { get; set; }
 
         public class CreateUpdateParceiroCommand
         {

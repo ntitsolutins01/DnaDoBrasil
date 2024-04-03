@@ -34,19 +34,19 @@
                             {
                                 <section class="panel">
                                     <div class="panel-body">
-                                        @{
-                                            var base64 = Convert.ToBase64String(Model.Aluno.ByteImage);
+                                       @*  @{
+                                            var base64 = Convert.ToBase64String(Model.Aluno.ByteImage!);
                                             var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-                                        }
+                                        } *@
                                         <div class="form-group">
                                         </div>
 
                                         <div class="form-group">
-                                            <div class="col-sm-3">
-                                                <img src="@imgSrc" style="width: 85%;margin-left: 15px;" />
-                                            </div>
-                                            <label class="col-sm-1 control-label" style="margin-top: 16%;">Foto</label>
-                                            <div class="col-sm-4" style="margin-top: 16%;">
+                                            @* <div class="col-sm-3">
+                                                <img src="@imgSrc" style="width: 85%;margin-left: 15px;" /> style="margin-top: 16%;"
+                                            </div> *@
+                                            <label class="col-sm-1 control-label">Foto</label>
+                                            <div class="col-sm-4">
                                                 <div class="fileupload fileupload-new" data-provides="fileupload">
                                                     <div class="input-append">
                                                         <div class="uneditable-input">
@@ -62,8 +62,8 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <label class="col-sm-1 control-label" style="margin-top: 16%;">CPF </label>
-                                            <div class="col-sm-3" style="margin-top: 16%;">
+                                            <label class="col-sm-1 control-label">CPF </label>
+                                            <div class="col-sm-3">
                                                 <input id="cpf" name="cpf"
                                                        v-model="params.cpf" value="@Model.Aluno.Cpf"
                                                        type="text" value="" class="form-control"
