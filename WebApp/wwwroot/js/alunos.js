@@ -2,7 +2,7 @@
     el: "#vPesquisarAluno",
     data: {
         loading: false,
-        editDto: { Id: "", Nome: "", Status: true, Email: "", Sexo: "", DtNascimento: "", MunicipioEstado: "", NomeLocalidade: "", Cpf: "", Image: "" }
+        editDto: { Id: "", Nome: "", Status: true, Email: "", Sexo: "", DtNascimento: "", MunicipioEstado: "", NomeLocalidade: "", Cpf: "", Image: "", ModalidadeLinhaAcao: "" }
     },
     mounted: function () {
         var self = this;
@@ -10,6 +10,15 @@
             'use strict';
 
             var formid = $('form')[1].id;
+
+            //triggered when modal is about to be shown
+            $('#mdUpload').on('show.bs.modal', function (e) {
+
+                //get data-id attribute of the clicked element
+                var id = $(e.relatedTarget).data('id');
+
+                $("input[name='alunoId']").val(id);
+            });
 
             if (formid === "formPesquisarAluno") {
 
@@ -169,6 +178,12 @@
                 }
                 else {
                     self.editDto.Cpf = result.data.cpf;
+                }
+                if (result.data.modalidadeLinhaAcao === "0" || result.data.modalidadeLinhaAcao === "" || result.data.modalidadeLinhaAcao === null) {
+                    self.editDto.ModalidadeLinhaAcao = "Modalidade / Linha de Ação (não informado)";
+                }
+                else {
+                    self.editDto.ModalidadeLinhaAcao = result.data.modalidadeLinhaAcao;
                 }
                 self.editDto.QRCode = 'data:image/jpeg;base64,' + result.data.qrCode;
                 

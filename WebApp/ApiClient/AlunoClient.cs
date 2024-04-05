@@ -23,6 +23,13 @@ namespace WebApp.ApiClient
             return Put(requestUrl, command);
         }
 
+        public Task<bool> UpdateAlunoFoto(int id, AlunoModel.CreateUpdateDadosAlunoCommand command)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceAlunos}/UploadFoto/{id}"));
+            return Put(requestUrl, command);
+        }
+
         public Task<bool> DeleteDados(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,

@@ -16,8 +16,8 @@
                 </header>
                 <div class="panel-body">
                     <div class="form-group row">
-                        <div class="col-sm-12 pull-right">
-                            <a href="@Url.Action("Create", "Modalidade")" id="addToTable" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Novo Modalidade </a>
+                        <div class="col-sm-2 pull-right">
+                            <a href="@Url.Action("Create", "Modalidade")" id="addToTable" class="btn btn-block btn-primary pull-right"><i class="fa fa-plus"></i>  &nbsp;&nbsp;Nova Modalidade </a>
                         </div>
                     </div>
                     <table class="table table-bordered table-striped mb-0" id="datatable-default">
@@ -25,6 +25,7 @@
                             <tr>
                                 <th class="text-center">Id</th>
                                 <th class="text-center">Nome do Modalidade</th>
+                                <th class="text-center">Linha de Ação</th>
                                 <th class="text-center">Status</th>
                                 <th class="text-center">Ações</th>
                             </tr>
@@ -35,15 +36,16 @@
                                 <tr>
                                     <td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Id)</td>
                                     <td class="text-center">@Html.DisplayFor(modelItem => item.Nome)</td>
+                                    <td class="text-center">@Html.DisplayFor(modelItem => item.LinhaAcao.Nome)</td>
                                     @if (item.Status)
                                     {
-                                        <td class="text-center"><span class="label label-success">ATIVO</span></td>
+                                        <td class="text-center" style="width:10%;"><span class="label label-success" style="display: block;">ATIVO</span></td>
                                     }
                                     else
                                     {
-                                        <td class="text-center"><span class="label label-danger">INATIVO</span></td>
+                                        <td class="text-center" style="width:10%;"><span class="label label-danger" style="display: block;">INATIVO</span></td>
                                     }
-                                    <td class="actions">
+                                    <td class="actions text-center">
                                         <a data-toggle="tooltip" data-placement="top" title="Editar"
                                            href='javascript:(crud.EditModal(@item.Id))'
                                            class="on-default edit-row" style='color: #FF9800'>
@@ -99,7 +101,13 @@
                 @using (@Html.BeginForm("Edit", "Modalidade", FormMethod.Post, new { id = "formEditModalidade", @class = "form-horizontal" }))
                 {
                     <input type="hidden" name="editModalidadeId" :value="editDto.Id" />
-
+                    <div class="form-group row">
+                        <label class="col-sm-3 control-label text-sm-right pt-2">Linha de Ação</label>
+                        <div class="col-sm-7">
+                            <input type="text" name="linhaAcao" class="form-control"
+                                   maxlength="150" :value="editDto.LinhaAcao" readonly />
+                        </div>
+                    </div>
                     <div class="modal-body">
                         <div class="form-group row">
                             <label class="col-sm-3 control-label text-sm-right pt-2">Modalidade <span class="required">*</span></label>

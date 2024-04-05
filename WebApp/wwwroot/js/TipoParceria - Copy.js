@@ -1,8 +1,8 @@
 var vm = new Vue({
-    el: "#vModalidade",
+    el: "#formTipoParceria",
     data: {
         loading: false,
-        editDto: { Id: "", LinhaAcao: "", Nome: "", Vo2MaxIni: "", Vo2MaxFim: "", VinteMetrosIni: "", VinteMetrosFim: "", ShutlleRunIni: "", ShutlleRunFim: "", FlexibilidadeIni: "", FlexibilidadeFim: "", PreensaoManualIni: "", PreensaoManualFim: "", AbdominalPranchaIni: "", AbdominalPranchaFim: "", ImpulsaoIni: "", ImpulsaoFim: "", EnvergaduraIni: "", EnvergaduraFim: "", PesoIni: "", PesoFim: "", AlturaIni: "", AlturaFim: "", Status: true }
+        editDto: { Id: "", Nome: "", Status: true }
     },
     mounted: function () {
         var self = this;
@@ -20,39 +20,11 @@ var vm = new Vue({
                 });
             }
 
-            var formid = $('form')[1].id;
+            var formid = $('form').attr('id');
 
-            if (formid === "formEditModalidade") {
+            if (formid === "formEditTipoParceria") {
 
-                var $select = $(".select2").select2({
-                    allowClear: true
-                });
-
-                $(".select2").each(function () {
-                    var $this = $(this),
-                        opts = {};
-
-                    var pluginOptions = $this.data('plugin-options');
-                    if (pluginOptions)
-                        opts = pluginOptions;
-
-                    $this.themePluginSelect2(opts);
-                });
-
-                /*
-                 * When you change the value the select via select2, it triggers
-                 * a 'change' event, but the jquery validation plugin
-                 * only re-validates on 'blur'*/
-
-                $select.on('change', function () {
-                    $(this).trigger('blur');
-                });
-
-                if ($.isFunction($.fn['tooltip'])) {
-                    $('[data-toggle=tooltip],[rel=tooltip]').tooltip({ container: 'body' });
-                }
-
-                $("#formEditModalidade").validate({
+                $("#formEditTipoParceria").validate({
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
                     },
@@ -72,7 +44,7 @@ var vm = new Vue({
                 });
             } 
 
-            if (formid === "formModalidade") {
+            if (formid === "formTipoParceria") {
 
                 var $select = $(".select2").select2({
                     allowClear: true
@@ -98,11 +70,7 @@ var vm = new Vue({
                     $(this).trigger('blur');
                 });
 
-                if ($.isFunction($.fn['tooltip'])) {
-                    $('[data-toggle=tooltip],[rel=tooltip]').tooltip({ container: 'body' });
-                }
-
-                $("#formModalidade").validate({
+                $("#formTipoParceria").validate({
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
                     },
@@ -143,43 +111,31 @@ var vm = new Vue({
                 self.loading = flag;
             }
         },
-        DeleteModalidade: function (id) {
-            var url = "Modalidade/Delete/" + id;
-            $("#deleteModalidadeHref").prop("href", url);
+        DeleteTipoParceria: function (id) {
+            var url = "TipoParceria/Delete/" + id;
+            $("#deleteTipoParceriaHref").prop("href", url);
         },
-        EditModalidade: function (id) {
+        EditTipoParceria: function (id) {
             var self = this;
 
-            axios.get("Modalidade/GetModalidadeById/?id=" + id).then(result => {
+            axios.get("TipoParceria/GetTipoParceriaById/?id=" + id).then(result => {
 
                 self.editDto.Id = result.data.id;
-                if (result.data.linhaAcao === null) {
-                    self.editDto.LinhaAcao = "";
-                } else { 
-                    self.editDto.LinhaAcao = result.data.linhaAcao.nome;
-                }
                 self.editDto.Nome = result.data.nome;
+                ;
                 self.editDto.Status = result.data.status;
-                self.editDto.Vo2MaxIni = result.data.vo2MaxIni;
-                self.editDto.Vo2MaxFim = result.data.vo2MaxFim;
-                self.editDto.VinteMetrosIni = result.data.vinteMetrosIni;
-                self.editDto.VinteMetrosFim = result.data.vinteMetrosFim;
-                self.editDto.ShutlleRunIni = result.data.shutlleRunIni;
-                self.editDto.ShutlleRunFim = result.data.shutlleRunFim;
-                self.editDto.FlexibilidadeIni = result.data.flexibilidadeIni;
-                self.editDto.FlexibilidadeFim = result.data.flexibilidadeFim;
-                self.editDto.PreensaoManualIni = result.data.preensaoManualIni;
-                self.editDto.PreensaoManualFim = result.data.preensaoManualFim;
-                self.editDto.AbdominalPranchaIni = result.data.abdominalPranchaIni;
-                self.editDto.AbdominalPranchaFim = result.data.abdominalPranchaFim;
-                self.editDto.ImpulsaoIni = result.data.impulsaoIni;
-                self.editDto.ImpulsaoFim = result.data.impulsaoFim;
-                self.editDto.EnvergaduraIni = result.data.envergaduraIni;
-                self.editDto.EnvergaduraFim = result.data.envergaduraFim;
-                self.editDto.PesoIni = result.data.pesoIni;
-                self.editDto.PesoFim = result.data.pesoFim;
-                self.editDto.AlturaIni = result.data.alturaIni;
-                self.editDto.AlturaFim = result.data.alturaFim  ;
+
+                switch (result.data.parceria) {
+                    case 1:
+                        self.editDto.Parceria = 'Empresas parceiras';
+                    break
+                    case 2:
+                        self.editDto.Parceria = 'Clubes e Federações';
+                    break
+                    case 3:
+                        self.editDto.Parceria = 'Assistência Social';
+                    break
+                }
 
             }).catch(error => {
                 Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
@@ -190,13 +146,13 @@ var vm = new Vue({
 
 var crud = {
     DeleteModal: function (id) {
-        $('input[name="ModalidadeId"]').attr('value', id);
-        $('#mdDeleteModalidade').modal('show');
-        vm.DeleteModalidade(id)
+        $('input[name="TipoParceriaId"]').attr('value', id);
+        $('#mdDeleteTipoParceria').modal('show');
+        vm.DeleteTipoParceria(id)
     },
     EditModal: function (id) {
-        $('input[name="ModalidadeId"]').attr('value', id);
-        $('#mdEditModalidade').modal('show');
-        vm.EditModalidade(id)
+        $('input[name="TipoParceriaId"]').attr('value', id);
+        $('#mdEditTipoParceria').modal('show');
+        vm.EditTipoParceria(id)
     }
 };

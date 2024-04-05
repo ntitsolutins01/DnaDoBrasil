@@ -8,7 +8,7 @@
         (function ($) {
             'use strict';
 
-            var formid = $('form').attr('id');
+            var formid = $('form')[1].id;
 
 
             //triggered when modal is about to be shown

@@ -99,8 +99,16 @@
                                                 <select class="form-control populate select2" name="ddlSexo" id="ddlSexo"
                                                         title="Por favor selecione um sexo." required>
                                                     <option value="">Selecionar Sexo</option>
-                                                    <option value="M">MASCULINO</option>
-                                                    <option value="F">FEMININO</option>
+                                                    @if (Model.Aluno.Sexo == "M")
+                                                    {
+                                                        <option value="M" selected>MASCULINO</option>
+                                                        <option value="F">FEMININO</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="M">MASCULINO</option>
+                                                        <option value="F" selected>FEMININO</option>
+                                                    }
                                                 </select>
                                             </div>
                                             <label class="col-sm-2 control-label">Data Nascimento <span class="required">*</span></label>

@@ -95,17 +95,17 @@
             <div class="form-group row">
                 @{
                     bool filtroVazio = string.IsNullOrEmpty(Model.SearchFilter.MunicipioId) ?
-                        string.IsNullOrEmpty(Model.SearchFilter.FomentoId) ?
-                            string.IsNullOrEmpty(Model.SearchFilter.LocalidadeId) ?
-                                string.IsNullOrEmpty(Model.SearchFilter.Sexo) ?
-                                    string.IsNullOrEmpty(Model.SearchFilter.DeficienciaId) ?
-                                        string.IsNullOrEmpty(Model.SearchFilter.Estado) ?
-                                            string.IsNullOrEmpty(Model.SearchFilter.Etnia) : false
-                                        : false
-                                    : false
-                                : false
-                            : false
-                        : false;
+                    string.IsNullOrEmpty(Model.SearchFilter.FomentoId) ?
+                    string.IsNullOrEmpty(Model.SearchFilter.LocalidadeId) ?
+                    string.IsNullOrEmpty(Model.SearchFilter.Sexo) ?
+                    string.IsNullOrEmpty(Model.SearchFilter.DeficienciaId) ?
+                    string.IsNullOrEmpty(Model.SearchFilter.Estado) ?
+                    string.IsNullOrEmpty(Model.SearchFilter.Etnia) : false
+                    : false
+                    : false
+                    : false
+                    : false
+                    : false;
 
                     if (filtroVazio)
                     {
@@ -157,6 +157,9 @@
                                    class="on-default edit-row" style='color: #8E24AA'>
                                     <i class="fa fa-address-card-o"></i>
                                 </a>
+
+                                <a href="#" data-id="@item.Id" data-toggle="modal" data-target="#mdUpload"
+                                   class="on-default edit-row" style='color: #303F9F'><i class="fa fa-upload"></i></a>
                             </td>
                         </tr>
                     }
@@ -190,108 +193,83 @@
                                 <div id="frente" class="tab-pane active">
                                     <div class="row">
                                         <div class="col-md-8 form-group">
-                                            <img src="~/assets/images/logo.png" style="width: 25%;float:right;"/>
+                                            <img src="/assets/images/logo.png" style="width: 25%;margin-left: 40px;">
+                                            <img src="/assets/images/img_8519.png" style="width: 38%;float: left;">
                                         </div>
 
-                                        <div class="col-md-3 form-group pull-right">
-                                            <img src="~/assets/images/img_8519.png" style="width:100%"/>
+                                        <div class="col-md-2 form-group pull-right">
+                                            <img :src="editDto.QRCode" style="width:100%" />
                                         </div>
                                     </div>
                                     <div class="row">
 
                                         <div class="col-md-4 form-group">
-                                            <img :src="editDto.Image" style="width: 85%;margin-left: 15px;"/>
+                                            <img :src="editDto.Image" style="width: 85%;margin-left: 15px;" />
                                         </div>
-                                        <div class="col-md-4 form-group">
-                                            <label class="control-label">Nome</label>
-
-                                            <input type="text" readonly="readonly" :value="editDto.Nome" class="form-control" class="form-control">
+                                        <div class="col-md-8 form-group" style="margin-bottom: 0px;">
+                                            <h1 style="margin: 0">
+                                                <label class="control-label text-primary"><b>{{editDto.Nome}}</b></label>
+                                            </h1>
                                         </div>
-                                        <div class="col-md-4 form-group">
-                                            <label class="control-label">Sexo</label>
-
-                                            <input type="text" readonly="readonly" :value="editDto.Sexo" class="form-control" class="form-control">
+                                        <div class="col-md-8 form-group">
+                                            <h3 style="margin: 0"><label class="control-label text-primary"><b>Aluno</b> </label></h3>
                                         </div>
-                                        <div class="col-md-4 form-group">
-                                            <label class="control-label">Matrícula</label>
-
-                                            <input type="text" readonly="readonly" :value="editDto.Id" class="form-control" class="form-control">
+                                        <div class="col-md-8 form-group" style="margin-bottom: 0px;">
+                                            <h3 style="margin: 0;"><label class="control-label text-primary"><b>CPF: </b>{{editDto.Cpf}}</label></h3>
                                         </div>
-                                        <div class="col-md-4 form-group">
-                                            <label class="control-label">Data Nascimento</label>
-
-                                            <input type="text" readonly="readonly" :value="editDto.DtNascimento" class="form-control" class="form-control">
+                                        <div class="col-md-8 form-group" style="margin-bottom: 0px;">
+                                            <h3 style="margin: 0;"><label class="control-label text-primary">{{editDto.ModalidadeLinhaAcao}}</label></h3>
                                         </div>
-                                        <div class="col-md-4 form-group">
-                                            <label class="control-label">Email</label>
-
-                                            <input type="text" readonly="readonly" :value="editDto.Email" class="form-control" class="form-control">
+                                        <div class="col-md-8 form-group" style="margin-bottom: 0px;">
+                                            <h3 style="margin: 0;"><label class="control-label text-primary"><b>Data de Nascimento: </b> {{editDto.DtNascimento}}</label></h3>
                                         </div>
-                                        <div class="col-md-4 form-group">
-                                            <label class="control-label">Cpf</label>
-
-                                            <input type="text" readonly="readonly" :value="editDto.Cpf" class="form-control" class="form-control">
+                                        <div class="col-md-8 form-group" style="margin-bottom: 0px;">
+                                            <h3 style="margin: 0;"><label class="control-label text-primary"><b>Matrícula: </b>{{editDto.Id}}</label></h3>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div id="verso" class="tab-pane">
                                     <div class="row">
+
+                                        <div class="col-md-2 form-group">
+                                            <img src="~/assets/images/logo_slogan_270224.png" style="width: 60%;margin-left: 30px;" />
+                                        </div>
+
+                                        <div class="col-md-2 form-group">
+                                            <img src="~/assets/images/logo_idecace.png" style="width:100%" />
+                                        </div>
+
+                                        <div class="col-md-2 form-group">
+                                            <img src="~/assets/images/logo-sejus-horizontal.png" style="width:190%" />
+                                        </div>
                                         <div class="col-md-4 form-group">
                                         </div>
 
                                         <div class="col-md-2 form-group">
-                                        </div>
-
-                                        <div class="col-md-2 form-group">
-                                            <img src="~/assets/images/logo_slogan_270224.png" style="width:50%"/>
-                                        </div>
-
-                                        <div class="col-md-2 form-group">
-                                            <img src="~/assets/images/logo_idecace.png" style="width:70%"/>
-                                        </div>
-
-                                        <div class="col-md-2 form-group">
-                                            <img src="~/assets/images/logo-sejus-horizontal.png" style="width:100%"/>
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    <div class="row" style="    margin-top: 20px;">
 
-                                        <div class="col-md-4 form-group">
-                                            <img :src="editDto.QRCode" style="width:95%"/>
-                                            @* <img src="~/assets/images/!logged-user.jpg" style="width: 85%;margin-left: 15px;"/> *@
+                                        <div class="col-md-6 form-group" style="margin-top: 15px;padding-left: 100px;">
+                                            <h3 style="margin: 0;"><label class="control-label text-primary"><b>Município / Estado</b></label></h3><h3 style="margin: 0;"><label class="control-label text-primary">{{editDto.MunicipioEstado}}</label></h3>
+                                            <h3 style="margin: 0;"><label class="control-label text-primary"><b>Unidade Escolar</b></label></h3>
+                                            <h3 style="margin: 0;"><label class="control-label text-primary">{{editDto.NomeLocalidade}}</label></h3>
                                         </div>
-                                        <div class="col-md-4 form-group">
-                                            <label class="control-label">Município / Estado</label>
 
-                                            <input type="text" readonly="readonly" :value="editDto.MunicipioEstado" class="form-control" class="form-control">
+                                        <div class="col-md-6 form-group">
+                                            <img src="~/assets/images/logo_app_meia_DNA.png" style="width: 37%;margin-right: 40px;" />
+                                            <img src="~/assets/images/android-app-store-logos.png" style="width: 30%;" />
                                         </div>
-                                        <div class="col-md-4 form-group">
-                                            <label class="control-label">Modalidade Esportiva</label>
 
-                                            <input type="text" readonly="readonly" :value="editDto.Modalidade" class="form-control" class="form-control">
+                                        <div class="col-md-1 form-group" style="margin-left: 25px;">
+                                            <img src="/assets/images/selo2024_carteirinha.png" style="width: 230%;">
                                         </div>
-                                        <div class="col-md-4 form-group">
-                                            <label class="control-label">Unidade Escolar</label>
-
-                                            <input type="text" readonly="readonly" :value="editDto.Id" class="form-control" class="form-control">
-                                        </div>
-                                        <div class="col-md-4 form-group">
-                                            <label class="control-label">Controle</label>
-
-                                            <input type="text" readonly="readonly" :value="editDto.Controle" class="form-control" class="form-control">
-                                        </div>
-                                        <div class="col-md-4 form-group">
-                                            <img src="~/assets/images/logo_app_meia_DNA.png" style="width: 37%;float: right;" />
-                                        </div>
-                                        <div class="col-md-4 form-group">
-                                            <img src="~/assets/images/android-app-store-logos.png" style="width: 50%;"/>
-                                        </div>
-                                        <p class="text-warning" style="margin-left: 25px;margin-right: 25px;float: left;">
+                                        <div class="col-md-9 form-group" style="margin-left: 30px;">
                                             <code>
                                                 Documento padronizado nacionalmente conforme a Lei 12.933/2013. Válido para todo o território nacional até março do ano seguinte.
                                             </code>
-                                        </p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -305,15 +283,57 @@
             </div>
         </div>
     </div>
-
+    <!-- Modal -->
+    <div class="modal fade" id="mdUpload" tabindex="-1" role="dialog" aria-labelledby="mdUploadLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mdUploadLabel">
+                        <i class="fa fa-upload"></i> &nbsp;&nbsp;<strong>Upload Foto</strong>
+                    </h5>
+                </div>
+                @using (@Html.BeginForm("Upload", "Aluno", FormMethod.Post, new { id = "formUploadFoto", @class = "form-horizontal", @enctype = "multipart/form-data" }))
+                {
+                    <div class="modal-body">
+                        <input type="hidden" id="alunoId" name="alunoId" />
+                        <div class="form-group mb-lg">
+                            <label class="col-sm-2 control-label">Foto</label>
+                            <div class="col-sm-10">
+                                <div class="fileupload fileupload-new" data-provides="fileupload">
+                                    <div class="input-append">
+                                        <div class="uneditable-input">
+                                            <i class="fa fa-file fileupload-exists"></i>
+                                            <span class="fileupload-preview"></span>
+                                        </div>
+                                        <span class="btn btn-default btn-file">
+                                            <span class="fileupload-exists">Alterar</span>
+                                            <span class="fileupload-new">Selecionar Arquivo</span>
+                                            <input type="file" id="arquivo" name="arquivo" />
+                                        </span>
+                                        <a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">Remover</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="reset" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-remove"></i> &nbsp;&nbsp;Fechar</button>
+                        <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
 </div>
 
 @section CssSpecificVendor {
+    <link rel="stylesheet" href="~/assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.css" />
     <link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css" />
     <link rel="stylesheet" href="~/assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
     <link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />
 }
 @section Scripts {
+    <script src="~/assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.js"></script>
     <script src="~/assets/vendor/classy-qr/jquery.classyqr.js"></script>
     <script src="~/assets/vendor/select2/js/select2.js"></script>
     <script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>

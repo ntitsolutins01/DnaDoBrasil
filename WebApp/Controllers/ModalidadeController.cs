@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
+using System.Collections.Generic;
 using WebApp.Configuration;
 using WebApp.Dto;
 using WebApp.Enumerators;
@@ -33,8 +35,9 @@ namespace WebApp.Controllers
         {
             SetNotifyMessage(notify, message);
             SetCrudMessage(crud);
+            var linhasAcoes = new SelectList(ApiClientFactory.Instance.GetLinhasAcoesAll(), "Id", "Nome");
 
-            return View();
+            return View(new ModalidadeModel{ListLinhasAcoes = linhasAcoes});
         }
 
         //[ClaimsAuthorize("Usuario", "Incluir")]
@@ -46,6 +49,7 @@ namespace WebApp.Controllers
                 var command = new ModalidadeModel.CreateUpdateModalidadeCommand
                 {
                     Nome = collection["nome"].ToString(),
+                    LinhaAcaoId = Convert.ToInt32(collection["ddlLinhaAcao"].ToString()),
                     Vo2MaxIni = Convert.ToInt32(collection["vo2MaxIni"].ToString()),
                     Vo2MaxFim = Convert.ToInt32(collection["vo2MaxFim"].ToString()),
                     VinteMetrosIni = Convert.ToInt32(collection["vinteMetrosIni"].ToString()),

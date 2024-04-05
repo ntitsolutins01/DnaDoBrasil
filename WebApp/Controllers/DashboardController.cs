@@ -115,12 +115,12 @@ namespace WebApp.Controllers
 
                 };
 
-                return await Task.FromResult(Json(model));
+                return Json(model);
 
             }
             catch (Exception ex)
             {
-                return await Task.FromResult(Json(ex));
+                return Json(ex);
             }
         }
         public async Task<JsonResult> GetControlePresencaByFilter([FromBody] DashboardDto search)
