@@ -57,6 +57,17 @@
                                 <option value="">Selecionar Etnia</option>
                             </select>
                         </div>
+                        <label class="col-sm-2 control-label text-right">Período:</label>
+                        <div class="col-md-4 form-group">
+                            <div class="input-daterange input-group" data-plugin-datepicker>
+                                <span class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </span>
+                                <input type="text" class="form-control" name="start">
+                                <span class="input-group-addon">até</span>
+                                <input type="text" class="form-control" name="end">
+                            </div>
+                        </div>
                     </div>
                     <footer class="panel-footer">
                         <div class="row">
@@ -768,8 +779,10 @@
 @section CssSpecificVendor {
     <link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css" />
     <link rel="stylesheet" href="~/assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
+    <link rel="stylesheet" href="~/assets/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.css" />
 }
 @section Scripts {
+    <script src="~/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/variable-pie.js"></script>
     <script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>

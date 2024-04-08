@@ -7,5 +7,6 @@
         public const string Parceiro = "Parceiro";
         public const string Profissional = "Profissional";
         public const string CoordenadorCeuRecantoEmas = "Coordenador CEU Recanto das Emas";
+        public const string Gestor = "Gestor";
     }
 }

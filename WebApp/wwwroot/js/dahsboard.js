@@ -13,6 +13,23 @@ var vm = new Vue({
 
                 self.GetPesquisaDashboard();
 
+                if ($.isFunction($.fn['datepicker'])) {
+
+                    $(function () {
+                        $('[data-plugin-datepicker]').each(function () {
+                            var $this = $(this),
+                                opts = {};
+
+                            var pluginOptions = $this.data('plugin-options');
+                            if (pluginOptions)
+                                opts = pluginOptions;
+
+                            $this.themePluginDatePicker(opts);
+                        });
+                    });
+
+                }
+
                 var $select = $(".select2").select2({
                     allowClear: true
                 });

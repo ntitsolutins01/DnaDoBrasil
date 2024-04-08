@@ -90,7 +90,7 @@ namespace WebApp.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string? returnUrl = null)
         {
-			returnUrl = Url.Content("~/BemVindo");
+			returnUrl = Url.Content("~/Dashboard");
 
             if (!ModelState.IsValid) return Page();
             var result =
@@ -134,10 +134,10 @@ namespace WebApp.Areas.Identity.Pages.Account
                     _logger.LogInformation("User logged in.");
                     var userRole = roles.First();
                     //var userRole = ((ClaimsIdentity)user.Identity).FindFirst(ClaimTypes.Role).Value;
-                    if (userRole == UserRoles.Administrador)
+                    if (userRole == UserRoles.Aluno)
                     {
 
-                        return LocalRedirect("~/Dashboard");
+                        return LocalRedirect("~/BemVindo");
                     }
 
                     return LocalRedirect(returnUrl);

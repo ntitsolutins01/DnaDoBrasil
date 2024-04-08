@@ -19,6 +19,8 @@ namespace WebApp.Models
         public List<ModalidadeDto> Modalidades { get; set; }
         public string LocalidadeId { get; set; }
         public SelectList ListLocalidades { get; set; }
+        public int PerfilId { get; set; }
+        public SelectList ListPerfis { get; set; }
 
         public class CreateUpdateProfissionalCommand
         {

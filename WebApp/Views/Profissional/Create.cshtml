@@ -21,12 +21,25 @@
                     <div class="panel-body">
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Nome <span class="required">*</span></label>
-                            <div class="col-sm-4">
+                            <div class="col-sm-6">
                                 <input type="text" name="nome" id="nome"
                                        maxlength="200" class="form-control" required title="Por favor informe o nome." />
                             </div>
-                            <label class="col-sm-1 control-label">Email <span class="required">*</span></label>
-                            <div class="col-sm-5">
+                            
+                            <label class="col-lg-1 control-label text-sm-right pt-2">Perfil<span class="required">*</span></label>
+
+                            <div class="col-lg-3">
+                                <select class="form-control populate select2" name="ddlPerfil" id="ddlPerfil"
+                                        title="Por favor selecione um perfil." required
+                                        asp-for="PerfilId" asp-items="Model.ListPerfis">
+                                    <option value="">Selecionar Perfil</option>
+                                </select>
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Email <span class="required">*</span></label>
+                            <div class="col-sm-6">
                                 <div class="input-group">
                                     <span class="input-group-addon">
                                         <i class="fa fa-envelope"></i>
@@ -36,7 +49,6 @@
                                            maxlength="100" class="form-control" required />
                                 </div>
                             </div>
-
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Cpf <span class="required">*</span></label>
@@ -63,10 +75,10 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label text-sm-right pt-2">Localidade <span class="required">*</span></label>
+                            <label class="col-sm-2 control-label text-sm-right pt-2">Localidade </label>
                             <div class="col-md-3">
                                 <select class="form-control populate select2" name="ddlLocalidade" id="ddlLocalidade"
-                                        title="Por favor informe a localidade." required
+                                        title="Por favor informe a localidade." 
                                         asp-for="LocalidadeId" asp-items="Model.ListLocalidades">
                                     <option value="">Selecionar Localidade</option>
                                 </select>
@@ -176,15 +188,15 @@
                                     <i class="fa fa-plus"></i>
                                 </a>
                             </div>
-                            <div class="col-sm-5 pull-right">
-                                <a data-toggle="modal" data-target="#mdModalidade" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Novo Modalidade </a>
+                            <div class="col-sm-2 pull-right">
+                                <a data-toggle="modal" data-target="#mdModalidade" class="btn btn-block btn-primary pull-right" style="margin-left: 0.5em;"><i class="fa fa-plus"></i> &nbsp;&nbsp;Novo Modalidade</a>
                             </div>
                         </div>
                         <div class="form-group">
                             <input type="hidden" name="arrModalidadeProfissional" />
                             <label class="col-sm-2 control-label">Adicionados</label>
-                            <div class="col-sm-10">
-                                <table class="adicionados table table-bordered table-striped mb-0" id="modalidadeDataTable">
+                            <div class="col-sm-10" style="padding: 0;">
+                                <table class="adicionados table table-bordered table-striped mb-0" id="modalidadeDataTable" style="padding: 0px;">
                                     <thead>
                                         <tr>
                                             <th>Id</th>

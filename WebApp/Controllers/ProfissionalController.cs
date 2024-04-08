@@ -1,4 +1,5 @@
-﻿using System.Text.Encodings.Web;
+﻿using System.Text;
+using System.Text.Encodings.Web;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -45,9 +46,12 @@ namespace WebApp.Controllers
 				SetCrudMessage(crud); var response = ApiClientFactory.Instance.GetProfissionalAll();
 				var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
 
-				return View(new ProfissionalModel() { Profissionais = response, ListEstados = estados });
+                return View(new ProfissionalModel()
+                {
+                    Profissionais = response, ListEstados = estados,
+                });
 
-			}
+            }
 			catch (Exception e)
 			{
 				Console.Write(e.StackTrace);
@@ -66,8 +70,14 @@ namespace WebApp.Controllers
 
 				var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
 				var modalidades = new SelectList(ApiClientFactory.Instance.GetModalidadeAll(), "Id", "Nome");
+                var resultPerfil = ApiClientFactory.Instance.GetPerfilAll();
 
-				return View(new ProfissionalModel() { ListEstados = estados, ListModalidades = modalidades });
+
+                return View(new ProfissionalModel()
+                {
+                    ListEstados = estados, ListModalidades = modalidades,
+                    ListPerfis = new SelectList(resultPerfil, "Id", "Nome")
+                });
 
 			}
 			catch (Exception e)
@@ -110,9 +120,45 @@ namespace WebApp.Controllers
 
 				};
 
-				await ApiClientFactory.Instance.CreateProfissional(command);
+                var newUser = new IdentityUser { UserName = command.Email, Email = command.Email };
+                var aspNetUser = await _userManager.CreateAsync(newUser, "12345678");
 
-				return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
+                StringBuilder msg = new StringBuilder();
+                if (!aspNetUser.Succeeded)
+                {
+                    foreach (var error in aspNetUser.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                        msg.AppendLine(error.Description);
+                    }
+
+                    // Se chegamos até aqui, algo falhou, exiba novamente o formulário
+                    //return Page();
+                    return RedirectToPage("Index", new { notify = (int)EnumNotify.Error, message = msg });
+                }
+
+                var commandUsuario = new UsuarioModel.CreateUpdateUsuarioCommand
+                {
+                    Email = collection["email"].ToString(),
+                    Nome = collection["nome"].ToString(),
+                    CpfCnpj = collection["cpf"].ToString(),
+                    TipoPessoa = "pf",
+                    MunicipioId = collection["ddlMunicipio"] == "" ? 0 : Convert.ToInt32(collection["ddlMunicipio"].ToString()),
+                };
+
+                var perfil = ApiClientFactory.Instance.GetPerfilById(Convert.ToInt32(collection["ddlPerfil"].ToString()));
+
+                var includedUserId = _userManager.Users.FirstOrDefault(x => x.Email == newUser.Email).Id;
+
+                commandUsuario.AspNetUserId = includedUserId;
+                commandUsuario.AspNetRoleId = perfil.AspNetRoleId;
+                commandUsuario.PerfilId = perfil.Id;
+
+                var usu = await ApiClientFactory.Instance.CreateUsuario(commandUsuario);
+
+                await SendNewUserEmail(newUser, commandUsuario.Email, commandUsuario.Nome);
+
+                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
 			}
 			catch (Exception e)
 			{
@@ -134,10 +180,14 @@ namespace WebApp.Controllers
 				var municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(profissional.Uf!), "Id", "Nome", profissional.MunicipioId);
 				var localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeByMunicipio(profissional.MunicipioId.ToString()), "Id", "Nome", profissional.LocalidadeId);
 				var listModalidades = new SelectList(ApiClientFactory.Instance.GetModalidadeAll(), "Id", "Nome");
+                var resultPerfil = ApiClientFactory.Instance.GetPerfilAll();
 
-				return View(new ProfissionalModel()
+                var usu = ApiClientFactory.Instance.GetUsuarioByEmail(profissional.Email);
+
+                return View(new ProfissionalModel()
 				{
-					ListEstados = estados, 
+                    ListPerfis = new SelectList(resultPerfil, "Id", "Nome", usu.Perfil.Id),
+                    ListEstados = estados, 
 					ListModalidades = listModalidades, 
 					Profissional = profissional,
 					ListMunicipios = municipios, 
@@ -189,7 +239,19 @@ namespace WebApp.Controllers
 
 				await ApiClientFactory.Instance.UpdateProfissional(command.Id, command);
 
-				return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+               // var profissional = ApiClientFactory.Instance.GetProfissionalById(id);
+
+     //           if (profissional.Email.Trim()!=command.Email.Trim())
+     //           {
+     //               //atualiza email na aspnetuser e o username
+
+					////atualiza o email na tabela usuários
+     //               var usuario = ApiClientFactory.Instance.GetUsuarioByEmail(profissional.Email);
+
+					//usuario.Email = command.Email
+     //           }
+
+                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
 			}
 			catch (Exception e)
 			{
