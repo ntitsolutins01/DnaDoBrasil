@@ -51,14 +51,14 @@
                     </div>
                     <div class="form-group mb-lg">
                         <label>Áreas desejadas</label><br/>
-                        <select class="form-control populate" multiple="multiple" data-plugin-multiselect data-plugin-options='{ "maxHeight": 200 }' id="ddlAreaDesejada" name="ddlAreaDesejada" style="width:100%"  asp-for="AreaId" asp-items="Model.ListAreas" required
+                        @* <select class="form-control populate" multiple="multiple" data-plugin-multiselect data-plugin-options='{ "maxHeight": 200 }' id="ddlAreaDesejada" name="ddlAreaDesejada" style="width:100%"  asp-for="AreaId" asp-items="Model.ListAreas" required
                               title="Por favor selecione ao menos uma área desejada.">
-                        </select>
-                        @* <select multiple data-plugin-selectTwo class="form-control populate" name="ddlAreaDesejada" id="ddlAreaDesejada" style="width:100%"
+                        </select> *@
+                        <select multiple data-plugin-selectTwo class="form-control populate" name="ddlAreaDesejada" id="ddlAreaDesejada" style="width:100%"
                                 title="Por favor selecione as área desejada."
                                 asp-for="AreaId" asp-items="Model.ListAreas">
                             <option value="">Selecionar Áreda Desejada</option>
-                        </select> *@
+                        </select>
                     </div>
                     <div class="form-group mb-lg">
                         <label>Nome completo do Aluno</label>

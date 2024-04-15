@@ -228,7 +228,7 @@ namespace WebApp.Controllers
         {
             try
             {
-                var dashboard = new DashboardDto();// await ApiClientFactory.Instance.GetGraficosSaudeBucalByFilter(search);
+                var dashboard = await ApiClientFactory.Instance.GetGraficosSaudeBucalByFilter(search);
 
                 var model = new DashboardModel
                 {

@@ -8,9 +8,6 @@
         (function ($) {
             'use strict';
 
-            var formid = $('form')[1].id;
-
-
             //triggered when modal is about to be shown
             $('#mdTermo').on('show.bs.modal', function (e) {
 
@@ -24,46 +21,44 @@
                 }
             });
 
-            if (formid === "formControlePresenca") {
-                $("#formControlePresenca").validate({
-                    rules: {
-                        "email": {
-                            required: true,
-                            email: true
-                        },
-                        "senha": {
-                            required: true,
-                            minlength: 8
-                        }
+            $("#formControlePresenca").validate({
+                rules: {
+                    "email": {
+                        required: true,
+                        email: true
                     },
-                    messages: {
-                        "email": {
-                            required: "Por favor informe o endereço eletrônico válido do profissional.",
-                            email: "Formato de e-mail inválido."
-                        },
-                        "senha": {
-                            required: "Por favor informe sua senha.",
-                            minlength: jQuery.validator.format("Formato de senha inválido, a senha deve conter no mínimo 8 digitos.")
-                        }
-                    },
-                    highlight: function (label) {
-                        $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
-                    },
-                    success: function (label) {
-                        $(label).closest('.form-group').removeClass('has-error');
-                        label.remove();
-                    },
-                    errorPlacement: function (error, element) {
-                        var placement = element.closest('.input-group');
-                        if (!placement.get(0)) {
-                            placement = element;
-                        }
-                        if (error.text() !== '') {
-                            placement.after(error);
-                        }
+                    "senha": {
+                        required: true,
+                        minlength: 8
                     }
-                });
-            }
+                },
+                messages: {
+                    "email": {
+                        required: "Por favor informe o endereço eletrônico válido do profissional.",
+                        email: "Formato de e-mail inválido."
+                    },
+                    "senha": {
+                        required: "Por favor informe sua senha.",
+                        minlength: jQuery.validator.format("Formato de senha inválido, a senha deve conter no mínimo 8 digitos.")
+                    }
+                },
+                highlight: function (label) {
+                    $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
+                },
+                success: function (label) {
+                    $(label).closest('.form-group').removeClass('has-error');
+                    label.remove();
+                },
+                errorPlacement: function (error, element) {
+                    var placement = element.closest('.input-group');
+                    if (!placement.get(0)) {
+                        placement = element;
+                    }
+                    if (error.text() !== '') {
+                        placement.after(error);
+                    }
+                }
+            });
         }).apply(this, [jQuery]);
     },
     methods: {

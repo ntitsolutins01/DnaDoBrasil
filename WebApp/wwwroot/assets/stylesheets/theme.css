@@ -15679,6 +15679,7 @@ html.dark .table .actions-hover a {
 /* Common Fixes */
 .dataTables_wrapper {
 	position: relative;
+	padding: 0px;
 }
 
 .dataTables_wrapper .DTTT.btn-group {

@@ -12,8 +12,19 @@ namespace WebApp.Controllers
 	{
 		public IActionResult Index()
         {
+            //return Redirect("/Identity/Account/Login");
+            //return RedirectToPage("/Identity/Account/Login");
+            return View();
+        }
+		public IActionResult EmpresaParceira()
+        {
+            return View();
+        }
+		public IActionResult Index2()
+        {
             return Redirect("/Identity/Account/Login");
             //return RedirectToPage("/Identity/Account/Login");
+            //return View();
         }
 		public IActionResult Privacy()
 		{

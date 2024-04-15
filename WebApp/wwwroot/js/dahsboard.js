@@ -13,23 +13,6 @@ var vm = new Vue({
 
                 self.GetPesquisaDashboard();
 
-                if ($.isFunction($.fn['datepicker'])) {
-
-                    $(function () {
-                        $('[data-plugin-datepicker]').each(function () {
-                            var $this = $(this),
-                                opts = {};
-
-                            var pluginOptions = $this.data('plugin-options');
-                            if (pluginOptions)
-                                opts = pluginOptions;
-
-                            $this.themePluginDatePicker(opts);
-                        });
-                    });
-
-                }
-
                 var $select = $(".select2").select2({
                     allowClear: true
                 });
@@ -222,6 +205,7 @@ var vm = new Vue({
 
                 self.ShowLoad(false, "pIndicadores");
             });
+
             axios.post("Dashboard/GetControlePresencaByFilter", obj, axiosConfig).then(result => {
                 var self = this;
                 self.ShowLoad(true, "pControlePresenca");
@@ -235,6 +219,7 @@ var vm = new Vue({
 
                 self.ShowLoad(false, "pControlePresenca");
             });
+
             axios.post("Dashboard/GetLaudosPeriodoByFilter", obj, axiosConfig).then(result => {
                 var self = this;
                 self.ShowLoad(true, "pLaudosPeriodo");
@@ -248,6 +233,7 @@ var vm = new Vue({
 
                 self.ShowLoad(false, "pLaudosPeriodo");
             });
+
             axios.post("Dashboard/GetStatusLaudosByFilter", obj, axiosConfig).then(result => {
                 var self = this;
                 self.ShowLoad(true, "pStatusLaudos");
@@ -377,8 +363,8 @@ var vm = new Vue({
                 self.ShowLoad(true, "pSaudeBucalPerc");
                 self.ShowLoad(true, "pSaudeBucalTot");
 
-                self.SetGraficoSaudePercentual(result);
-                self.SetGraficoTotalizadorSaudeSexo(result);
+                self.SetGraficoBuscalPercentual(result);
+                self.SetGraficoTotalizadorBucal(result);
 
                 self.ShowLoad(false, "pSaudeBucalPerc");
                 self.ShowLoad(false, "pSaudeBucalTot");
@@ -406,6 +392,7 @@ var vm = new Vue({
                 self.ShowLoad(false, "pTalentoPerc");
                 self.ShowLoad(false, "pTalentoTot");
             });
+
             axios.post("Dashboard/GetGraficosTalentoByFilter", obj, axiosConfig).then(result => {
 
                 self.SetGraficoPercDesempenhoFisicoMotor(result);
@@ -417,8 +404,6 @@ var vm = new Vue({
                 self.SetGraficoConsumoPercentual(result);
                 self.SetGraficoTotalizadorConsumo(result);
 
-                self.SetGraficoBuscalPercentual(result);
-                self.SetGraficoTotalizadorBucal(result);
 
                 self.SetGraficoVocacionalPercentual(result);
                 self.SetGraficoTotalizadorVocacional(result);
@@ -1229,7 +1214,7 @@ var vm = new Vue({
                             z: 50
                         }, {
                             name: 'INDÍGENA',
-                            y: result.data.dashboard.listTotalizadorEtnia.percTotalizadorEtniaMasculino.INDÍGENA,
+                            y: result.data.dashboard.listTotalizadorEtnia.percTotalizadorEtniaMasculino.INDIGENA,
                             z: 50
                         }, {
                             name: 'AMARELO',
@@ -1306,7 +1291,7 @@ var vm = new Vue({
                             result.data.dashboard.listTotalizadorEtnia.valorTotalizadorEtniaFeminino.PARDO,
                             result.data.dashboard.listTotalizadorEtnia.valorTotalizadorEtniaFeminino.BRANCO,
                             result.data.dashboard.listTotalizadorEtnia.valorTotalizadorEtniaFeminino.PRETO,
-                            result.data.dashboard.listTotalizadorEtnia.valorTotalizadorEtniaFeminino.INDÍGENA,
+                            result.data.dashboard.listTotalizadorEtnia.valorTotalizadorEtniaFeminino.INDIGENA,
                             result.data.dashboard.listTotalizadorEtnia.valorTotalizadorEtniaFeminino.AMARELO,
                         ]
                     }, {
@@ -1316,7 +1301,7 @@ var vm = new Vue({
                             result.data.dashboard.listTotalizadorEtnia.valorTotalizadorEtniaMasculino.PARDO,
                             result.data.dashboard.listTotalizadorEtnia.valorTotalizadorEtniaMasculino.BRANCO,
                             result.data.dashboard.listTotalizadorEtnia.valorTotalizadorEtniaMasculino.PRETO,
-                            result.data.dashboard.listTotalizadorEtnia.valorTotalizadorEtniaMasculino.INDÍGENA,
+                            result.data.dashboard.listTotalizadorEtnia.valorTotalizadorEtniaMasculino.INDIGENA,
                             result.data.dashboard.listTotalizadorEtnia.valorTotalizadorEtniaMasculino.AMARELO,
                         ]
                     }]
@@ -2039,10 +2024,10 @@ var vm = new Vue({
                     series: [{
                         name: 'Feminino',
                         color: '#EC407A',
-                        data: [1, 0, 2, 0]
+                        data: [1, 0, 2]
                     }, {
                         name: 'Masculino',
-                        data: [1, 0, 0, 2]
+                        data: [1, 0, 0]
                     }]
                 });
 

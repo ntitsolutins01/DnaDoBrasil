@@ -83,6 +83,12 @@
                                     <option value="">Selecionar Localidade</option>
                                 </select>
                             </div>
+                            <label class="col-sm-2 control-label text-sm-right pt-2">Modalidades </label>
+                            <div class="col-md-5">
+                                <select class="form-control populate" multiple="multiple" data-plugin-multiselect data-plugin-options='{ "maxHeight": 200 }' id="ddlModalidades" name="ddlModalidades" style="width:100%" asp-for="ModalidadeId" asp-items="Model.ListModalidades" required
+                                        title="Por favor selecione ao menos uma modalidade.">
+                                </select>
+                            </div>
                         </div>
 
                         <div class="form-group">
@@ -170,44 +176,87 @@
                             <label class="col-sm-1 control-label">&nbsp;&nbsp; </label>
                             <div class="col-sm-12">
                                 <blockquote class="info">
-                                    <strong>Gerenciamento de modalidades</strong>
+                                    <strong>Gerenciamento de Grade Horária</strong>
                                 </blockquote>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Modalidade</label>
-                            <div class="col-sm-4">
-                                <select class="form-control populate select2" name="ddlModalidade" id="ddlModalidade"
-                                        style="width: 100%" title="Por favor selecione o turno."
-                                        asp-for="ModalidadeId" asp-items="Model.ListModalidades">
-                                    <option value="0">Selecionar Modalidade</option>
+                            <label class="col-sm-2 control-label">Aula(s)</label>
+                            <div class="col-sm-3">
+                                <select class=" populate select2" name="ddlAula" id="ddlAula"
+                                        style="width: 100%" title="Por favor selecione a aula.">
+                                    @* asp-for="ModalidadeId" asp-items="Model.ListModalidades" *@
+                                    <option value="0">Selecionar Aula</option>
+                                    <option value="0">Futebol</option>
+                                    <option value="0">Capoeira</option>
+                                    <option value="0">Reforço Matemática</option>
                                 </select>
                             </div>
-                            <div class="col-sm-1">
-                                <a type="button" class="ml-xs btn btn-success" href='javascript:(crud.AddModalidade())'>
-                                    <i class="fa fa-plus"></i>
-                                </a>
+                            <label class="col-sm-1 control-label">Turno</label>
+                            <div class="col-sm-2">
+                                <select class=" populate select2" name="ddlTurno" id="ddlTurno"
+                                        style="width: 100%" title="Por favor selecione o turno.">
+                                    @* asp-for="ModalidadeId" asp-items="Model.ListModalidades" *@
+                                    <option value="0">Selecionar Turno</option>
+                                    <option value="MATUTINO">MATUTINO</option>
+                                    <option value="MATUTINO">VESPERTINO</option>
+                                </select>
                             </div>
-                            <div class="col-sm-2 pull-right">
+                            @* <div class="col-sm-2 pull-right">
                                 <a data-toggle="modal" data-target="#mdModalidade" class="btn btn-block btn-primary pull-right" style="margin-left: 0.5em;"><i class="fa fa-plus"></i> &nbsp;&nbsp;Novo Modalidade</a>
+                            </div> *@
+                        </div>
+                    <div class="form-group">
+                        
+                        <label class="col-sm-2 control-label">Dia da semana</label>
+                        <div class="col-sm-2">
+                            <select class=" populate select2" name="ddlTurno" id="ddlTurno"
+                                    style="width: 100%" title="Por favor selecione o turno.">
+                                @* asp-for="ModalidadeId" asp-items="Model.ListModalidades" *@
+                                <option value="0">Selecionar o dia da semana</option>
+                                <option value="MATUTINO">SEG</option>
+                                <option value="MATUTINO">TERC</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-1 control-label">Horário</label>
+                        <div class="col-sm-3">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-clock-o"></i>
+                                </span>
+                                <input id="htIni" name="htIni"
+                                       title="Por favor informe a hora início"
+                                       style="z-index: auto;"
+                                       data-plugin-timepicker data-plugin-options='{"showMeridian": false, "language": "pt-BR"}'
+                                       placeholder="__:__" class="form-control">
+                                <span class="input-group-addon">até</span>
+                                <input id="hrFim" name="hrFim"
+                                       title="Por favor informe a hora fim."
+                                       data-plugin-timepicker data-plugin-options='{"showMeridian": false, "language": "pt-BR"}'
+                                       placeholder="__:__" class="form-control">
                             </div>
                         </div>
-                        <div class="form-group">
+                        </div>
+                        <table class="adicionados table table-bordered table-striped mb-0" id="modalidadeDataTable">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Nome Modalidade</th>
+                                    <th>Aula</th>
+                                    <th>Hora Início</th>
+                                    <th>Hora Fim</th>
+                                    <th>Turno</th>
+                                    <th>Ação</th>
+                                </tr>
+                            </thead>
+                        </table>
+                        @* <div class="form-group">
                             <input type="hidden" name="arrModalidadeProfissional" />
                             <label class="col-sm-2 control-label">Adicionados</label>
-                            <div class="col-sm-10" style="padding: 0;">
-                                <table class="adicionados table table-bordered table-striped mb-0" id="modalidadeDataTable" style="padding: 0px;">
-                                    <thead>
-                                        <tr>
-                                            <th>Id</th>
-                                            <th>Nome Modalidade</th>
-                                            <th>Ação</th>
-                                        </tr>
-                                    </thead>
-                                </table>
+                            <div class="col-sm-10">
 
                             </div>
-                        </div>
+                        </div> *@
                     </div>
                     <footer class="panel-footer">
                         <div class="row">
@@ -289,8 +338,10 @@
 @section CssSpecificVendor {
     <link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css" />
     <link rel="stylesheet" href="~/assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
+    <link rel="stylesheet" href="~/assets/vendor/bootstrap-multiselect/bootstrap-multiselect.css" />
     <link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />
     <link href="~/assets/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/assets/vendor/bootstrap-timepicker/css/bootstrap-timepicker.css" />
 }
 @section Scripts {
     <script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
@@ -299,8 +350,9 @@
     <script src="~/assets/vendor/ios7-switch/ios7-switch.js"></script>
     <script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
     <script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
-    <script src="~/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    @* <script src="~/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script> *@
     <script src="~/assets/vendor/bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+    <script src="~/assets/vendor/bootstrap-timepicker/bootstrap-timepicker.js"></script>
     <script src="~/js/formatTable.js"></script>
     <script src="~/js/profissional.js"></script>
     <script>

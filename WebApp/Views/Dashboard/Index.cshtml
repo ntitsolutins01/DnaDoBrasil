@@ -59,13 +59,23 @@
                         </div>
                         <label class="col-sm-2 control-label text-right">Período:</label>
                         <div class="col-md-4 form-group">
-                            <div class="input-daterange input-group" data-plugin-datepicker>
+                            <div class="input-group">
                                 <span class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </span>
-                                <input type="text" class="form-control" name="start">
+                                <input id="dtIni" name="dtIni"
+                                       title="Por favor informe a data de nascimento."
+                                       style="z-index: auto;"
+                                       data-plugin-datepicker data-date-format="dd/mm/yyyy" data-plugin-options='{"language": "pt-BR"}'
+                                       placeholder="__/__/____" class="form-control startdate"
+                                       class="form-control">
                                 <span class="input-group-addon">até</span>
-                                <input type="text" class="form-control" name="end">
+                                <input id="dtFim" name="dtFim"
+                                       title="Por favor informe a data de nascimento."
+                                       style="z-index: auto;"
+                                       data-plugin-datepicker data-date-format="dd/mm/yyyy" data-plugin-options='{"language": "pt-BR"}'
+                                       placeholder="__/__/____" class="form-control startdate"
+                                       class="form-control">
                             </div>
                         </div>
                     </div>
@@ -779,14 +789,15 @@
 @section CssSpecificVendor {
     <link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css" />
     <link rel="stylesheet" href="~/assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
-    <link rel="stylesheet" href="~/assets/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.css" />
+    <link href="~/assets/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.css" rel="stylesheet" />
 }
 @section Scripts {
-    <script src="~/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/variable-pie.js"></script>
     <script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
     <script src="~/assets/vendor/select2/js/select2.js"></script>
+    <script src="~/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    <script src="~/assets/vendor/bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR.min.js"></script>
     <script src="~/js/dahsboard.js"></script>
     <script>
 

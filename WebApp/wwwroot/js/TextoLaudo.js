@@ -10,7 +10,7 @@ var vm = new Vue({
             'use strict';
 
 
-            var formid = $('form').attr('id');
+            var formid = $('form')[1].id;
 
             if (formid === "formEditTextoLaudo") {
 

@@ -21,9 +21,9 @@
                 <li>
                     <a href="#modalidades" data-toggle="tab">Modalidades</a>
                 </li>
-                <li>
+                @* <li>
                     <a href="#vouchers" data-toggle="tab">Vouchers</a>
-                </li>
+                </li> *@
             </ul>
             <div class="tab-content">
                 <div id="dados" class="tab-pane active">
@@ -632,7 +632,7 @@
                         </div>
                     </div>
                 </div>
-                <div id="vouchers" class="tab-pane">
+                @* <div id="vouchers" class="tab-pane">
                     <div class="row">
                         <div class="col-md-12">
                             @using (@Html.BeginForm("CreateVoucher", "Aluno", FormMethod.Post, new { id = "formVoucherAluno", @class = "form-horizontal" }))
@@ -671,7 +671,7 @@
                             }
                         </div>
                     </div>
-                </div>
+                </div> *@
             </div>
         </div>
     </div>

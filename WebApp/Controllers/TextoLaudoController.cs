@@ -57,11 +57,11 @@ namespace WebApp.Controllers
 				var command = new TextoLaudoModel.CreateUpdateTextoLaudoCommand
 				{
 					TipoLaudoId = Convert.ToInt32(collection["ddlTipoLaudo"].ToString()),
-					Sexo = collection["ddlSexo"].ToString(),
-					Idade = Convert.ToInt32(collection["idade"].ToString()),
+					Sexo = collection["ddlSexo"] == ""? null : collection["ddlSexo"].ToString(),
+					Idade = collection["idade"]==""?null: Convert.ToInt32(collection["idade"].ToString()),
 					Classificacao = collection["classificacao"].ToString(),
-					PontoInicial = Convert.ToDecimal(collection["pontoInicial"].ToString()),
-					PontoFinal = Convert.ToDecimal(collection["pontoFinal"].ToString()),
+					PontoInicial = collection["pontoInicial"] == "" ? null : Convert.ToDecimal(collection["pontoInicial"].ToString()),
+					PontoFinal = collection["pontoFinal"] == "" ? null : Convert.ToDecimal(collection["pontoFinal"].ToString()),
 					Aviso = collection["aviso"].ToString(),
 					Texto = collection["texto"].ToString(),
 				};

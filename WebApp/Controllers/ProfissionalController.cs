@@ -14,6 +14,7 @@ using WebApp.Factory;
 using WebApp.Models;
 using WebApp.Utility;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using WebApp.Areas.Identity.Models;
 
 namespace WebApp.Controllers
 {
@@ -134,8 +135,10 @@ namespace WebApp.Controllers
 
                     // Se chegamos até aqui, algo falhou, exiba novamente o formulário
                     //return Page();
-                    return RedirectToPage("Index", new { notify = (int)EnumNotify.Error, message = msg });
+                    return RedirectToAction("Index", new { notify = (int)EnumNotify.Error, message = msg });
                 }
+
+
 
                 var commandUsuario = new UsuarioModel.CreateUpdateUsuarioCommand
                 {
@@ -154,7 +157,14 @@ namespace WebApp.Controllers
                 commandUsuario.AspNetRoleId = perfil.AspNetRoleId;
                 commandUsuario.PerfilId = perfil.Id;
 
-                var usu = await ApiClientFactory.Instance.CreateUsuario(commandUsuario);
+                var usuarioId = await ApiClientFactory.Instance.CreateUsuario(commandUsuario);
+
+                if (usuarioId != 0)
+                {
+                    var userRole = _roleManager.Roles.FirstOrDefault(x => x.Id == perfil.AspNetRoleId).Name;
+                    await _userManager.AddToRoleAsync(newUser, userRole);
+                    await ApiClientFactory.Instance.CreateProfissional(command);
+                }
 
                 await SendNewUserEmail(newUser, commandUsuario.Email, commandUsuario.Nome);
 

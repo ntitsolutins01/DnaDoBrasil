@@ -200,8 +200,8 @@ namespace WebApp.Controllers
                 var aluno = ApiClientFactory.Instance.GetAlunoById(id);
                 var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", aluno.Estado);
                 var municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(aluno.Estado), "Id", "Nome", aluno.MunicipioId);
-                var localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeByMunicipio(aluno.MunicipioId), "Id", "Nome", aluno.LocalidadeId);
-                var profissionais = new SelectList(ApiClientFactory.Instance.GetProfissionaisByLocalidade(Convert.ToInt32(aluno.LocalidadeId)), "Id", "Nome", aluno.ProfissionalId);
+                var localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeByMunicipio(aluno.MunicipioId), "LocalidadeId", "Nome", aluno.LocalidadeId);
+                var profissionais = new SelectList(ApiClientFactory.Instance.GetProfissionaisByLocalidade(Convert.ToInt32(aluno.LocalidadeId)), "ProfissionalId", "Nome", aluno.ProfissionalId);
 
                 List<SelectListDto> list = new List<SelectListDto>
                 {
@@ -570,8 +570,7 @@ namespace WebApp.Controllers
         #region Private Methods
         private static byte[]? GeraQrCode(long alunoId)
         {
-            AlunoModel.CreateUpdateDadosAlunoCommand command;
-            var text = $"http://front.hml.dnadobrasil.org.br/Identity/Account/ControlePresenca?alunoId={alunoId}";
+            var text = $"http://dnadobrasil.org.br/Identity/Account/ControlePresenca?alunoId={alunoId}";
 
             QRCodeGenerator QrGenerator = new QRCodeGenerator();
             QRCodeData QrCodeInfo = QrGenerator.CreateQrCode(text, QRCodeGenerator.ECCLevel.Q);

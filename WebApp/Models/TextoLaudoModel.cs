@@ -16,8 +16,8 @@ namespace WebApp.Models
             public int Id { get; set; }
             public int? TipoLaudoId { get; init; }
             public string? Classificacao { get; init; }
-            public decimal PontoInicial { get; init; }
-            public decimal PontoFinal { get; init; }
+            public decimal? PontoInicial { get; init; }
+            public decimal? PontoFinal { get; init; }
             public string? Aviso { get; init; }
             public string? Texto { get; init; }
             public string? Sexo { get; set; }
