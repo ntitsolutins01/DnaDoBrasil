@@ -1,5 +1,4 @@
-﻿using Infraero.Relprev.CrossCutting.Enumerators;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
 using WebApp.Configuration;
@@ -7,9 +6,14 @@ using WebApp.Enumerators;
 using WebApp.Factory;
 using WebApp.Models;
 using WebApp.Utility;
+using WebApp.Authorization;
+using Claim = WebApp.Identity.Claim;
+using WebApp.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApp.Controllers
 {
+    [Authorize(Policy = ModuloAccess.Laudo)]
     public class LaudoController : BaseController
     {
         private readonly IOptions<UrlSettings> _appSettings;
@@ -19,6 +23,8 @@ namespace WebApp.Controllers
             _appSettings = appSettings;
             ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
         }
+
+        [ClaimsAuthorize(ClaimType.Laudo, Claim.Consultar)]
         public IActionResult Index(int? crud, int? notify, string message = null)
         {
             try
@@ -42,16 +48,20 @@ namespace WebApp.Controllers
             }
         }
 
+        [ClaimsAuthorize(ClaimType.Laudo, Claim.Detalhar)]
         public ActionResult Details(int id)
         {
             var aluno = ApiClientFactory.Instance.GetAlunoById(id);
+            var laudo = ApiClientFactory.Instance.GetLaudoById(id);
             var model = new AlunoModel()
             {
-                Aluno = aluno
+                Aluno = aluno,
+                Laudo = laudo
             };
             return View(model);
         }
 
+        [ClaimsAuthorize(ClaimType.Laudo, Claim.Incluir)]
         public ActionResult Create(int? crud, int? notify, string message = null)
         {
             try
@@ -89,8 +99,8 @@ namespace WebApp.Controllers
             }
         }
 
-        //[ClaimsAuthorize("Usuario", "Incluir")]
         [HttpPost]
+        [ClaimsAuthorize(ClaimType.Laudo, Claim.Incluir)]
         public async Task<ActionResult> Create(IFormCollection collection)
         {
             try
@@ -202,8 +212,9 @@ namespace WebApp.Controllers
                 return RedirectToAction(nameof(Index));
             }
         }
-        //[ClaimsAuthorize("Usuario", "Alterar")]
+        
         [HttpPost]
+        [ClaimsAuthorize(ClaimType.Laudo, Claim.Alterar)]
         public async Task<ActionResult> Edit(int id, IFormCollection collection)
         {
             try
@@ -276,6 +287,7 @@ namespace WebApp.Controllers
             }
         }
 
+        [ClaimsAuthorize(ClaimType.Laudo, Claim.Alterar)]
         public ActionResult Edit(int id, int? crud, int? notify, string message = null)
         {
             try

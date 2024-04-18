@@ -17,6 +17,12 @@ namespace WebApp.ApiClient
                 $"{ResourceDashboard}/GraficosTalento"));
             return GetFiltro(requestUrl, searchFilter);
         }
+        public Task<DashboardDto?> GetGraficoPercDesempenhoFisicoMotorByFilter(DashboardDto searchFilter)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceDashboard}/GraficoPercDesempenhoFisicoMotor"));
+            return GetFiltro(requestUrl, searchFilter);
+        }
         public Task<DashboardDto?> GetGraficosSaudeByFilter(DashboardDto searchFilter)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,

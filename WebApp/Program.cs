@@ -18,7 +18,13 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
                        throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseSqlServer(connectionString,
+        serverDbContextOptionsBuilder =>
+        {
+            var minutes = (int)TimeSpan.FromMinutes(3).TotalSeconds;
+            serverDbContextOptionsBuilder.CommandTimeout(minutes);
+            serverDbContextOptionsBuilder.EnableRetryOnFailure();
+        }));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>()

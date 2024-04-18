@@ -69,6 +69,10 @@
                                     <option value="">Selecionar Localidade</option>
                                 </select>
                             </div>
+                            <label class="col-sm-1 control-label text-sm-right pt-2">Perfil</label>
+                            <div class="col-md-3">
+                                <input id="perfil" name="perfil" type="text" class="form-control" value="@Model.Profissional.Perfil" readonly />
+                            </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Data Nascimento </label>
@@ -161,57 +165,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-1 control-label">&nbsp;&nbsp; </label>
-                            <div class="col-sm-12">
-                                <blockquote class="info">
-                                    <strong>Gerenciamento de interesses de modalidades</strong>
-                                </blockquote>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Modalidade</label>
-                            <div class="col-sm-4">
-                                <select class="form-control populate select2" name="ddlModalidade" id="ddlModalidade"
-                                        style="width: 100%" title="Por favor selecione o turno."
-                                        asp-for="ModalidadeId" asp-items="Model.ListModalidades">
-                                    <option value="">Selecionar Modalidade</option>
-                                </select>
-                            </div>
-                            <div class="col-sm-1">
-                                <a type="button" class="ml-xs btn btn-warning" href='javascript:(crud.AddModalidade())'>
-                                    <i class="fa fa-plus"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <input type="hidden" name="arrModalidades"/>
-                            <label class="col-sm-2 control-label">Adicionados</label>
-                            <div class="col-sm-10">
-                                <table class="table table-bordered table-striped mb-0" id="modalidadeDataTable">
-                                    <thead>
-                                    <tr>
-                                        <th>Id</th>
-                                        <th>Nome Modalidade</th>
-                                        <th>Ação</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach (var item in Model.Modalidades)
-                                    {
-                                        <tr>
-                                            <td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Id)</td>
-                                            <td class="text-center">@Html.DisplayFor(modelItem => item.Nome)</td>
-                                            <td class="actions text-center">
-                                                <a data-toggle="tooltip" data-placement="top" title="Excluir" href='javascript:(crud.DeleteModal(@item.Id))'
-                                                   class="on-default remove-row" style="cursor: pointer;color: #F44336"><i class="fa fa-trash"></i></a>
-                                            </td>
-                                        </tr>
-                                    }
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+
                     </div>
                     <footer class="panel-footer">
                         <div class="row">

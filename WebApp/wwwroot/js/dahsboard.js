@@ -168,8 +168,11 @@ var vm = new Vue({
             self.ShowLoad(true, "pSaudeBucalTot");
             self.ShowLoad(true, "pTalentoPerc");
             self.ShowLoad(true, "pTalentoTot");
+            self.ShowLoad(true, "pDesempenhoPerc");
+            self.ShowLoad(true, "pDesempenhoTot");
 
-            var obj = {
+
+            const obj = {
                 FomentoId: $("#ddlFomento").val(),
                 Estado: $("#ddlEstado").val(),
                 MunicipioId: $("#ddlMunicipio").val(),
@@ -196,7 +199,7 @@ var vm = new Vue({
                 $("#cadastrosFemininos").text(result.data.dashboard.cadastrosFemininos);
                 $("#alunosCadastrados").text(result.data.dashboard.alunosCadastrados);
                 $("#laudosMasculinos").text(result.data.dashboard.laudosMasculinos);
-                $("#laudosMasculinos").text(result.data.dashboard.laudosMasculinos);
+                $("#laudosFemininos").text(result.data.dashboard.laudosFemininos);
 
                 self.ShowLoad(false, "pIndicadores");
 
@@ -366,6 +369,17 @@ var vm = new Vue({
                 self.SetGraficoBuscalPercentual(result);
                 self.SetGraficoTotalizadorBucal(result);
 
+
+                self.SetGraficoQualidadePercentual(result);
+                self.SetGraficoTotalizadorQualidade(result);
+
+                self.SetGraficoConsumoPercentual(result);
+                self.SetGraficoTotalizadorConsumo(result);
+
+
+                self.SetGraficoVocacionalPercentual(result);
+                self.SetGraficoTotalizadorVocacional(result);
+
                 self.ShowLoad(false, "pSaudeBucalPerc");
                 self.ShowLoad(false, "pSaudeBucalTot");
 
@@ -373,6 +387,25 @@ var vm = new Vue({
                 Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
                 self.ShowLoad(false, "pSaudeBucalPerc");
                 self.ShowLoad(false, "pSaudeBucalTot");
+            });
+
+            axios.post("Dashboard/GetGraficoPercDesempenhoFisicoMotorByFilter", obj, axiosConfig).then(result => {
+                var self = this;
+
+                self.ShowLoad(true, "pDesempenhoPerc");
+                self.ShowLoad(true, "pDesempenhoTot");
+
+                self.SetGraficoPercDesempenhoFisicoMotor(result);
+                self.SetGraficoTotDesempenhoFisicoMotor(result);
+
+                self.ShowLoad(false, "pDesempenhoPerc");
+                self.ShowLoad(false, "pDesempenhoTot");
+
+            }).catch(error => {
+                Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
+
+                self.ShowLoad(false, "pDesempenhoPerc");
+                self.ShowLoad(false, "pDesempenhoTot");
             });
 
             axios.post("Dashboard/GetGraficosTalentoByFilter", obj, axiosConfig).then(result => {
@@ -393,24 +426,6 @@ var vm = new Vue({
                 self.ShowLoad(false, "pTalentoTot");
             });
 
-            axios.post("Dashboard/GetGraficosTalentoByFilter", obj, axiosConfig).then(result => {
-
-                self.SetGraficoPercDesempenhoFisicoMotor(result);
-                self.SetGraficoTotDesempenhoFisicoMotor(result);
-
-                self.SetGraficoQualidadePercentual(result);
-                self.SetGraficoTotalizadorQualidade(result);
-
-                self.SetGraficoConsumoPercentual(result);
-                self.SetGraficoTotalizadorConsumo(result);
-
-
-                self.SetGraficoVocacionalPercentual(result);
-                self.SetGraficoTotalizadorVocacional(result);
-
-            }).catch(error => {
-                Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
-            });
         },
         SetGraficoControlePresenca: function (result) {
 
@@ -906,7 +921,7 @@ var vm = new Vue({
                         minPointSize: 10,
                         innerSize: '20%',
                         zMin: 0,
-                        name: 'Percentual de Saúde dos Alunos',
+                        name: 'Percentual de Desempenho Fisico Motor dos Alunos',
                         borderRadius: 5,
                         data: [{
                             name: 'Velocidade',

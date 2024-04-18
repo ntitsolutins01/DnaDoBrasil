@@ -1,16 +1,21 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
 using WebApp.Configuration;
 using WebApp.Dto;
 using WebApp.Enumerators;
 using WebApp.Factory;
+using WebApp.Identity;
 using WebApp.Models;
 using WebApp.Utility;
+using Claim = WebApp.Identity.Claim;
+using WebApp.Authorization;
 
 namespace WebApp.Controllers
 {
-	public class ControlePresencaController : BaseController
+    [Authorize(Policy = ModuloAccess.ControlePresenca)]
+    public class ControlePresencaController : BaseController
 	{
 		private readonly IOptions<UrlSettings> _appSettings;
 
@@ -20,6 +25,7 @@ namespace WebApp.Controllers
 			ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
 		}
 
+        [ClaimsAuthorize(ClaimType.ControlePresenca, Claim.Consultar)]
         public async Task<ActionResult> Index(int? crud, int? notify, IFormCollection collection, string message = null)
         {
             try
@@ -88,8 +94,9 @@ namespace WebApp.Controllers
             }
         }
 
-		//[ClaimsAuthorize("ConfiguracaoSistema", "Incluir")]
-		public ActionResult Create(int? crud, int? notify, string message = null)
+
+        [ClaimsAuthorize(ClaimType.ControlePresenca, Claim.Incluir)]
+        public ActionResult Create(int? crud, int? notify, string message = null)
 		{
 			try
 			{
@@ -112,8 +119,8 @@ namespace WebApp.Controllers
 			}
 		}
 
-		//[ClaimsAuthorize("Usuario", "Incluir")]
-		[HttpPost]
+        [HttpPost]
+        [ClaimsAuthorize(ClaimType.ControlePresenca, Claim.Incluir)]
 		public async Task<ActionResult> Create(IFormCollection collection)
 		{
 			try
@@ -137,8 +144,8 @@ namespace WebApp.Controllers
 			}
 		}
 
-		//[ClaimsAuthorize("Usuario", "Alterar")]
-		public async Task<ActionResult> Edit(IFormCollection collection)
+        [ClaimsAuthorize(ClaimType.ControlePresenca, Claim.Alterar)]
+        public async Task<ActionResult> Edit(IFormCollection collection)
 		{
 			try
 			{
@@ -159,8 +166,8 @@ namespace WebApp.Controllers
 			}
 		}
 
-		//[ClaimsAuthorize("Usuario", "Excluir")]
-		public ActionResult Delete(int id)
+        [ClaimsAuthorize(ClaimType.ControlePresenca, Claim.Excluir)]
+        public ActionResult Delete(int id)
 		{
 			try
 			{
@@ -173,7 +180,8 @@ namespace WebApp.Controllers
 			}
 		}
 
-		public Task<ControlePresencaDto> GetControlePresencaById(int id)
+        [ClaimsAuthorize(ClaimType.ControlePresenca, Claim.Consultar)]
+        public Task<ControlePresencaDto> GetControlePresencaById(int id)
 		{
 			var result = ApiClientFactory.Instance.GetControlePresencaById(id);
 

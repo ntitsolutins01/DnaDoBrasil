@@ -2,7 +2,7 @@ var vm = new Vue({
     el: "#vTextoLaudo",
     data: {
         loading: false,
-        editDto: { Id: "", Classificacao: "", PontoInicial: "", PontoFinal: "", Aviso: "", Txto: "", NomeTipoLaudo:"", Idade:"", Sexo: "" }
+        editDto: { Id: "", Classificacao: "", PontoInicial: "", PontoFinal: "", Aviso: "", Txto: "", NomeTipoLaudo:"", Idade:"", Sexo: "", TipoLaudoId: "" }
     },
     mounted: function () {
         var self = this;
@@ -125,6 +125,7 @@ var vm = new Vue({
             axios.get("TextoLaudo/GetTextoLaudoById/?id=" + id).then(result => {
 
                 self.editDto.Id = result.data.id;
+                self.editDto.TipoLaudoId = result.data.tipoLaudoId;
                 self.editDto.Classificacao = result.data.classificacao;
                 self.editDto.PontoInicial = result.data.pontoInicial;
                 self.editDto.PontoFinal = result.data.pontoFinal;

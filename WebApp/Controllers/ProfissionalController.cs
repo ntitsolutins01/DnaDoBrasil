@@ -13,12 +13,14 @@ using WebApp.Enumerators;
 using WebApp.Factory;
 using WebApp.Models;
 using WebApp.Utility;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
-using WebApp.Areas.Identity.Models;
+using WebApp.Authorization;
+using WebApp.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApp.Controllers
 {
-	public class ProfissionalController : BaseController
+    [Authorize(Policy = ModuloAccess.Profissional)]
+    public class ProfissionalController : BaseController
 	{
 		private readonly IOptions<UrlSettings> _appSettings;
 		private readonly IEmailSender _emailSender;
@@ -38,7 +40,8 @@ namespace WebApp.Controllers
 			ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
 		}
 
-		public IActionResult Index(int? crud, int? notify, string message = null)
+        [ClaimsAuthorize(ClaimType.Profissional, Claim.Consultar)]
+        public IActionResult Index(int? crud, int? notify, string message = null)
 		{
 
 			try
@@ -61,8 +64,9 @@ namespace WebApp.Controllers
 			}
 		}
 
-		//[ClaimsAuthorize("ConfiguracaoSistema", "Incluir")]
-		public ActionResult Create(int? crud, int? notify, string message = null)
+
+        [ClaimsAuthorize(ClaimType.Profissional, Claim.Incluir)]
+        public ActionResult Create(int? crud, int? notify, string message = null)
 		{
 			try
 			{
@@ -89,9 +93,9 @@ namespace WebApp.Controllers
 			}
 		}
 
-		//[ClaimsAuthorize("Profissional", "Incluir")]
 		[HttpPost]
-		public async Task<ActionResult> Create(IFormCollection collection)
+        [ClaimsAuthorize(ClaimType.Profissional, Claim.Incluir)]
+        public async Task<ActionResult> Create(IFormCollection collection)
 		{
 			try
 			{
@@ -109,7 +113,7 @@ namespace WebApp.Controllers
 					Cep = collection["cep"] == "" ? null : collection["cep"].ToString(),
 					Celular = collection["numCelular"] == "" ? null : collection["numCelular"].ToString(),
 					Cpf = collection["cpf"] == "" ? null : collection["cpf"].ToString(),
-					//AspNetUserId = collection["aspnetuserId"].ToString(),
+                    PerfilId = Convert.ToInt32(collection["ddlPerfil"].ToString()),
 					Numero = collection["numero"] == "" ? null : Convert.ToInt32(collection["numero"].ToString()),
 					Bairro = collection["bairro"] == "" ? null : collection["bairro"].ToString(),
 					Endereco = collection["endereco"] == "" ? null : collection["endereco"].ToString(),
@@ -178,7 +182,9 @@ namespace WebApp.Controllers
 			}
 		}
 
-		public ActionResult Edit(int id, int? crud, int? notify, string message = null)
+
+        [ClaimsAuthorize(ClaimType.Profissional, Claim.Alterar)]
+        public ActionResult Edit(int id, int? crud, int? notify, string message = null)
 		{
 			try
 			{
@@ -215,9 +221,9 @@ namespace WebApp.Controllers
 			}
 		}
 
-		//[ClaimsAuthorize("Profissional", "Alterar")]
 		[HttpPost]
-		public async Task<ActionResult> Edit(int id, IFormCollection collection)
+        [ClaimsAuthorize(ClaimType.Profissional, Claim.Alterar)]
+        public async Task<ActionResult> Edit(int id, IFormCollection collection)
 		{
 			try
 			{
@@ -271,9 +277,9 @@ namespace WebApp.Controllers
 			}
 		}
 
-		//[ClaimsAuthorize("Profissional", "Alterar")]
 		[HttpPost]
-		public async Task<ActionResult> CreateModalidade(IFormCollection collection)
+        [ClaimsAuthorize(ClaimType.Profissional, Claim.Incluir)]
+        public async Task<ActionResult> CreateModalidade(IFormCollection collection)
 		{
 			try
 			{
@@ -296,8 +302,8 @@ namespace WebApp.Controllers
 			}
 		}
 
-		//[ClaimsAuthorize("Profissional", "Excluir")]
-		public ActionResult Delete(int id)
+		[ClaimsAuthorize(ClaimType.Profissional, Claim.Excluir)]
+        public ActionResult Delete(int id)
 		{
 			try
 			{
@@ -310,14 +316,16 @@ namespace WebApp.Controllers
 			}
 		}
 
-		public Task<ProfissionalDto> GetProfissionalById(int id)
+        [ClaimsAuthorize(ClaimType.Profissional, Claim.Consultar)]
+        public Task<ProfissionalDto> GetProfissionalById(int id)
 		{
 			var result = ApiClientFactory.Instance.GetProfissionalById(id);
 
 			return Task.FromResult(result);
 		}
-		//[ClaimsAuthorize("Profissional", "Consultar")]
-		public Task<bool> GetProfissionalByEmail(string email)
+
+		[ClaimsAuthorize(ClaimType.Profissional, Claim.Consultar)]
+        public Task<bool> GetProfissionalByEmail(string email)
 		{
 			if (string.IsNullOrEmpty(email)) throw new Exception("Email não informado.");
 			var result = ApiClientFactory.Instance.GetProfissionalByEmail(email);
@@ -330,7 +338,8 @@ namespace WebApp.Controllers
 			return Task.FromResult(false);
 		}
 
-		public Task<bool> GetProfissionalByCpf(string cpf)
+        [ClaimsAuthorize(ClaimType.Profissional, Claim.Consultar)]
+        public Task<bool> GetProfissionalByCpf(string cpf)
 		{
 			if (string.IsNullOrEmpty(cpf)) throw new Exception("Cpf não informado.");
 			var result = ApiClientFactory.Instance.GetProfissionalByCpf(Regex.Replace(cpf, "[^0-9a-zA-Z]+", ""));
@@ -342,8 +351,10 @@ namespace WebApp.Controllers
 
 			return Task.FromResult(false);
 		}
+
 		[HttpPost]
-		public async Task<ActionResult> Habilitar(IFormCollection collection)
+        [ClaimsAuthorize(ClaimType.Profissional, Claim.Habilitar)]
+        public async Task<ActionResult> Habilitar(IFormCollection collection)
 		{
 			try
 			{
@@ -407,6 +418,22 @@ namespace WebApp.Controllers
 			}
 		}
 
+        [ClaimsAuthorize(ClaimType.Profissional, Claim.Consultar)]
+        public Task<JsonResult> GetProfissionaisByLocalidade(string id)
+		{
+            try
+            {
+                if (string.IsNullOrEmpty(id)) throw new Exception("Localidadee não informada.");
+                var resultLocal = ApiClientFactory.Instance.GetProfissionaisByLocalidade(Convert.ToInt32(id));
+
+                return Task.FromResult(Json(new SelectList(resultLocal, "Id", "Nome")));
+
+            }
+            catch (Exception ex)
+            {
+                return Task.FromResult(Json(ex));
+            }
+        }
 		private async Task SendNewUserEmail(IdentityUser user, string email, string nome)
 		{
 			var code = await _userManager.GeneratePasswordResetTokenAsync(new IdentityUser(user.Email));
@@ -422,22 +449,6 @@ namespace WebApp.Controllers
 			await _emailSender.SendEmailAsync(user.Email, "Primeiro acesso sistema Dna Brasil",
 				message);
 		}
-
-		public Task<JsonResult> GetProfissionaisByLocalidade(string id)
-		{
-            try
-            {
-                if (string.IsNullOrEmpty(id)) throw new Exception("Localidadee não informada.");
-                var resultLocal = ApiClientFactory.Instance.GetProfissionaisByLocalidade(Convert.ToInt32(id));
-
-                return Task.FromResult(Json(new SelectList(resultLocal, "Id", "Nome")));
-
-            }
-            catch (Exception ex)
-            {
-                return Task.FromResult(Json(ex));
-            }
-        }
 	}
 
 }

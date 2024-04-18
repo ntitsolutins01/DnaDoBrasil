@@ -42,6 +42,7 @@ namespace WebApp.Models
             public int? LocalidadeId { get; set; }
             public bool Habilitado { get; set; }
             public string? ModalidadesIds { get; set; }
+            public int? PerfilId { get; set; }
         }
     }
 

@@ -38,6 +38,7 @@ namespace WebApp.Models
         public string SexoId { get; set; }
         public string? NomePerfil { get; set; }
         public AlunosFilterDto SearchFilter { get; set; }
+        public LaudoDto Laudo { get; set; }
 
 
         public class CreateUpdateDadosAlunoCommand

@@ -396,5 +396,25 @@ namespace WebApp.Controllers
                 return await Task.FromResult(Json(ex));
             }
         }
+        public async Task<JsonResult> GetGraficoPercDesempenhoFisicoMotorByFilter([FromBody] DashboardDto search)
+        {
+            try
+            {
+                var dashboard = await ApiClientFactory.Instance.GetGraficoPercDesempenhoFisicoMotorByFilter(search);
+
+                var model = new DashboardModel
+                {
+                    Dashboard = dashboard,
+
+                };
+
+                return await Task.FromResult(Json(model));
+
+            }
+            catch (Exception ex)
+            {
+                return await Task.FromResult(Json(ex));
+            }
+        }
     }
 }

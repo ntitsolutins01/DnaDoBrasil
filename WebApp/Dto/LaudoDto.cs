@@ -21,5 +21,9 @@
         public string? Localidade { get; set; }
         public string? Encaminhamento { get; set; }
         public string? StatusLaudo { get; set; }
+        public TalentoEsportivoDto? TalentoEsportivo { get; set; }
+        public string? Sexo { get; set; }
+        public DateTime DtNascimento { get; set; }
+        public SaudeDto? Saude { get; set; }
     }
 }

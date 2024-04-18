@@ -364,11 +364,23 @@
 
                                 @if ((await AuthorizationService.AuthorizeAsync(User, ModuloAccess.ControlePresenca)).Succeeded)
                                 {
-                                    <li class="nav-parent nav-expanded">
-                                        <a href="@Url.Action("Index", "ControlePresenca")">
+                                    <li class="nav-parent">
+                                        <a href="#">
                                             <i class="fa fa-user-plus" aria-hidden="true"></i>
                                             <span>Controle Presença</span>
                                         </a>
+                                        <ul class="nav nav-children">
+                                            <li>
+                                                <a href="@Url.Action("Index", "ControlePresenca")">
+                                                    Presença
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    Notas
+                                                </a>
+                                            </li>
+                                        </ul>
                                     </li>
                                 }
 
@@ -509,7 +521,8 @@
     <!-- Theme Initialization Files -->
     <script src="~/assets/javascripts/theme.init.js"></script>
     <script src="~/assets/vendor/vue/vue.js"></script>
-    <script src="~/assets/vendor/axios/axios.min.js"></script>
+    @* <script src="~/assets/vendor/axios/axios.min.js"></script> *@
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="~/js/main.js"></script>
 
     @await RenderSectionAsync("Scripts", required: false)

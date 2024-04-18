@@ -11,14 +11,19 @@ using WebApp.Enumerators;
 using WebApp.Factory;
 using WebApp.Models;
 using WebApp.Utility;
-using WebApp.Views;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using WebApp.Identity;
+using WebApp.Authorization;
+using Claim = WebApp.Identity.Claim;
+using WebApp.Authorization;
 
 namespace WebApp.Controllers
 {
-
+    [Authorize(Policy = ModuloAccess.SistemaSocioeconomico)]
     public class SistemaSocioeconomicoController : BaseController
     {
+        #region Constructor
         private readonly IEmailSender _emailSender;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -37,7 +42,11 @@ namespace WebApp.Controllers
             _roleManager = roleManager;
             ApplicationSettings.WebApiUrl = appSettings.Value.WebApiBaseUrl;
         }
+        #endregion
 
+        #region Crud Methods
+
+        [ClaimsAuthorize(ClaimType.SistemaSocioeconomico, Claim.Consultar)]
         public IActionResult Parceiro(int? crud, int? notify, string message = null)
         {
             try
@@ -60,7 +69,7 @@ namespace WebApp.Controllers
 
         }
 
-        //[ClaimsAuthorize("ConfiguracaoSistema", "Incluir")]
+        [ClaimsAuthorize(ClaimType.SistemaSocioeconomico, Claim.Incluir)]
         public ActionResult CreateParceiro(int? crud, int? notify, string message = null)
         {
             try
@@ -84,8 +93,9 @@ namespace WebApp.Controllers
 
             }
         }
-        //[ClaimsAuthorize("Usuario", "Incluir")]
+
         [HttpPost]
+        [ClaimsAuthorize(ClaimType.SistemaSocioeconomico, Claim.Incluir)]
         public async Task<ActionResult> Create(IFormCollection collection)
         {
             try
@@ -124,7 +134,8 @@ namespace WebApp.Controllers
 
             }
         }
-        //[ClaimsAuthorize("Usuario", "Alterar")]
+
+        [ClaimsAuthorize(ClaimType.SistemaSocioeconomico, Claim.Alterar)]
         public async Task<ActionResult> EditParceiro(int id)
         {
             try
@@ -146,8 +157,9 @@ namespace WebApp.Controllers
 
             }
         }
-        //[ClaimsAuthorize("Usuario", "Alterar")]
+
         [HttpPost]
+        [ClaimsAuthorize(ClaimType.SistemaSocioeconomico, Claim.Alterar)]
         public async Task<ActionResult> EditParceiro(int id, IFormCollection collection)
         {
             try
@@ -185,7 +197,7 @@ namespace WebApp.Controllers
             }
         }
 
-        //[ClaimsAuthorize("Usuario", "Excluir")]
+        [ClaimsAuthorize(ClaimType.SistemaSocioeconomico, Claim.Excluir)]
         public ActionResult DeleteParceiro(int id)
         {
             try
@@ -199,31 +211,8 @@ namespace WebApp.Controllers
             }
         }
 
-        public async Task<ParceiroDto> GetParceiroById(int id)
-        {
-            var result = await ApiClientFactory.Instance.GetParceiroById(id);
-
-            return result;
-        }
-
-
-        public async Task<JsonResult> GetTiposParceriasByParceria(string id)
-        {
-            try
-            {
-                if (string.IsNullOrEmpty(id)) throw new Exception("Parceria não informado.");
-                var resultLocal = ApiClientFactory.Instance.GetTipoParceriaAll()
-                    .Where(x => x.Parceria == Convert.ToInt32(id) && x.Status == true);
-
-                return Json(new SelectList(resultLocal, "Id", "Nome"));
-            }
-            catch (Exception ex)
-            {
-                return Json(ex);
-            }
-        }
-
         [HttpPost]
+        [ClaimsAuthorize(ClaimType.SistemaSocioeconomico, Claim.Habilitar)]
         public async Task<ActionResult> Habilitar(IFormCollection collection)
         {
             try
@@ -284,7 +273,7 @@ namespace WebApp.Controllers
                     {
                         var res = await ApiClientFactory.Instance.UpdateParceiro(result.Id,
                             new ParceiroModel.CreateUpdateParceiroCommand()
-                                { AspNetUserId = command.AspNetUserId, Habilitado = true, Id = result.Id, Nome = result.Nome, CpfCnpj = result.CpfCnpj, Email = result.Email });
+                            { AspNetUserId = command.AspNetUserId, Habilitado = true, Id = result.Id, Nome = result.Nome, CpfCnpj = result.CpfCnpj, Email = result.Email });
                     }
 
                     SendNewUserEmail(newUser, command.Email, command.Nome);
@@ -311,7 +300,38 @@ namespace WebApp.Controllers
                     });
             }
         }
+        #endregion
 
+        #region Get Methods
+
+        [ClaimsAuthorize(ClaimType.SistemaSocioeconomico, Claim.Consultar)]
+        public async Task<ParceiroDto> GetParceiroById(int id)
+        {
+            var result = await ApiClientFactory.Instance.GetParceiroById(id);
+
+            return result;
+        }
+
+        [ClaimsAuthorize(ClaimType.SistemaSocioeconomico, Claim.Consultar)]
+        public async Task<JsonResult> GetTiposParceriasByParceria(string id)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(id)) throw new Exception("Parceria não informado.");
+                var resultLocal = ApiClientFactory.Instance.GetTipoParceriaAll()
+                    .Where(x => x.Parceria == Convert.ToInt32(id) && x.Status == true);
+
+                return Json(new SelectList(resultLocal, "Id", "Nome"));
+            }
+            catch (Exception ex)
+            {
+                return Json(ex);
+            }
+        }
+
+        #endregion
+
+        #region Private Methods
 
         private async Task SendNewUserEmail(IdentityUser user, string email, string nome)
         {
@@ -328,6 +348,8 @@ namespace WebApp.Controllers
             await _emailSender.SendEmailAsync(user.Email, "Primeiro acesso sistema Dna do Brasil",
                 message);
         }
+
+        #endregion
 
 
 
