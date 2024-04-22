@@ -45,7 +45,7 @@ namespace WebApp.Controllers
 
             var dashboard = new DashboardDto();
 
-            var fomentos = new SelectList(ApiClientFactory.Instance.GetFomentoAll(), "Id", "Nome", dashboard.FomentoId);
+            var fomentos = new SelectList(ApiClientFactory.Instance.GetFomentoAll(), "IdIdMunicipio", "Nome", dashboard.FomentoId);
             var deficiencias = new SelectList(ApiClientFactory.Instance.GetDeficienciaAll(), "Id", "Nome", dashboard.DeficienciaId);
             var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", dashboard.Estado);
 
@@ -54,7 +54,7 @@ namespace WebApp.Controllers
                 new() { IdNome = "PARDO", Nome = "PARDO" },
                 new() { IdNome = "BRANCO", Nome = "BRANCO" },
                 new() { IdNome = "PRETO", Nome = "PRETO" },
-                new() { IdNome = "INDÍGENA", Nome = "INDÍGENA" },
+                new() { IdNome = "INDIGENA", Nome = "INDIGENA" },
                 new() { IdNome = "AMARELO", Nome = "AMARELO" }
             };
 

@@ -165,13 +165,13 @@
                 self.editDto.DtNascimento = result.data.dtNascimento;
                 self.editDto.MunicipioEstado = result.data.municipioEstado;
                 self.editDto.NomeLocalidade = result.data.nomeLocalidade;
-                self.editDto.Telefone = result.data.telefone;
+                self.editDto.Telefone = result.data.celular;
 
-                if (result.data.telefone === "0" || result.data.telefone === "" || result.data.telefone === null) {
+                if (result.data.celular === "0" || result.data.celular === "" || result.data.celular === null) {
                     self.editDto.Telefone = "Não informado";
                 }
                 else {
-                    self.editDto.Telefone = result.data.telefone;
+                    self.editDto.Telefone = result.data.celular;
                 }
                 if (result.data.image == null && result.data.sexo == "Feminino") {
                     self.editDto.Image = 'assets/images/menina.jpg';

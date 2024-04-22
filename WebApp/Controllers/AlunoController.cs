@@ -107,7 +107,7 @@ namespace WebApp.Controllers
                     new() { IdNome = "PARDO", Nome = "PARDO" },
                     new() { IdNome = "BRANCO", Nome = "BRANCO" },
                     new() { IdNome = "PRETO", Nome = "PRETO" },
-                    new() { IdNome = "INDÍGENA", Nome = "INDÍGENA" },
+                    new() { IdNome = "INDIGENA", Nome = "INDIGENA" },
                     new() { IdNome = "AMARELO", Nome = "AMARELO" }
                 };
 
@@ -168,7 +168,7 @@ namespace WebApp.Controllers
                 new() { IdNome = "PARDO", Nome = "PARDO" },
                 new() { IdNome = "BRANCO", Nome = "BRANCO" },
                 new() { IdNome = "PRETO", Nome = "PRETO" },
-                new() { IdNome = "INDÍGENA", Nome = "INDÍGENA" },
+                new() { IdNome = "INDIGENA", Nome = "INDIGENA" },
                 new() { IdNome = "AMARELO", Nome = "AMARELO" }
             };
 
@@ -208,7 +208,7 @@ namespace WebApp.Controllers
                     new() { IdNome = "PARDO", Nome = "PARDO" },
                     new() { IdNome = "BRANCO", Nome = "BRANCO" },
                     new() { IdNome = "PRETO", Nome = "PRETO" },
-                    new() { IdNome = "INDÍGENA", Nome = "INDÍGENA" },
+                    new() { IdNome = "INDIGENA", Nome = "INDIGENA" },
                     new() { IdNome = "AMARELO", Nome = "AMARELO" }
                 };
 

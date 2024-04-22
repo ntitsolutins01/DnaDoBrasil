@@ -20,7 +20,7 @@
                 });
             }
 
-            var formid = $('form').attr('id');
+            var formid = $('form')[1].id;
 
             if (formid === "formFomento") {
                 var $select = $(".select2").select2({

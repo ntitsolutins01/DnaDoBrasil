@@ -56,11 +56,51 @@ var vm = new Vue({
                     }
                 });
 
+                $("#ddlFomento").change(function () {
+
+                    self.ShowLoad(true, "pFiltro");
+
+                    var id = $("#ddlFomento").val().split("-")[0];
+
+                    var url = "../DivisaoAdministrativa/GetMunicipioByFomento?id=" + id;
+
+
+                    $.getJSON(url,
+                        function (data) {
+                            if (data.length > 0) {
+                                $("#ddlEstado").val(data[1]).trigger("change");
+                                //var items = '<option value="">Selecionar Município</option>';
+                                //$("#ddlMunicipio").empty;
+                                //$.each(data,
+                                //    function (i, row) {
+                                //        if (row.selected === true) {
+                                //            items += "<option selected value='" + row.value + "'>" + row.text + "</option>";
+                                //            $("#ddlMunicipio").val(row.value).trigger("change")
+                                //        } else {
+                                //            items += "<option value='" + row.value + "'>" + row.text + "</option>";
+
+                                //        }
+                                //    });
+                                //$("#ddlMunicipio").html(items);
+                            }
+                            else {
+                                new PNotify({
+                                    title: 'Municipios',
+                                    text: 'Municipios não encontradas.',
+                                    type: 'warning'
+                                });
+                            }
+                        });
+
+                    self.ShowLoad(false, "pFiltro");
+                });
+
                 $("#ddlEstado").change(function () {
 
                     self.ShowLoad(true, "pFiltro");
 
                     var sigla = $("#ddlEstado").val();
+                    var municipioId = $("#ddlFomento").val().split("-")[1];
 
                     var url = "DivisaoAdministrativa/GetMunicipioByUf?uf=" + sigla;
 
@@ -77,6 +117,7 @@ var vm = new Vue({
                                         items += "<option value='" + row.value + "'>" + row.text + "</option>";
                                     });
                                 $("#ddlMunicipio").html(items);
+                                $("#ddlMunicipio").val(municipioId).trigger("change");
                             }
                             else {
                                 new PNotify({
@@ -980,7 +1021,7 @@ var vm = new Vue({
                         text: undefined
                     },
                     xAxis: {
-                        categories: ['Velocidade', 'Flexibilidade Muscular', 'Força de Membros Superiores', 'Força Explosiva de Membros Inferiores', 'Aptidão Cardiorrespiratória', 'Agilidade', 'Agilidade ou Shuttle run', 'Resistência Abdominal', 'Prancha (ABD)', 'Vo2 Max'],
+                        categories: ['Velocidade', 'Flexibilidade Muscular', 'Força de Membros Superiores', 'Força Explosiva de Membros Inferiores', 'Aptidão Cardiorrespiratória',  'Agilidade ou Shuttle run',  'Prancha (ABD)', 'Vo2 Max'],
 
                         labels: {
                             style: {
@@ -1035,9 +1076,9 @@ var vm = new Vue({
                             result.data.dashboard.listTotalizadorDesempenho.valorTotalizadorDesempenhoFeminino.forcaMembrosSup,
                             result.data.dashboard.listTotalizadorDesempenho.valorTotalizadorDesempenhoFeminino.forcaExplosiva,
                             result.data.dashboard.listTotalizadorDesempenho.valorTotalizadorDesempenhoFeminino.aptidaoCardio,
-                            result.data.dashboard.listTotalizadorDesempenho.valorTotalizadorDesempenhoFeminino.agilidade,
+                            //result.data.dashboard.listTotalizadorDesempenho.valorTotalizadorDesempenhoFeminino.agilidade,
                             result.data.dashboard.listTotalizadorDesempenho.valorTotalizadorDesempenhoFeminino.shutlleRun,
-                            result.data.dashboard.listTotalizadorDesempenho.valorTotalizadorDesempenhoFeminino.resAbdominal,
+                            //result.data.dashboard.listTotalizadorDesempenho.valorTotalizadorDesempenhoFeminino.resAbdominal,
                             result.data.dashboard.listTotalizadorDesempenho.valorTotalizadorDesempenhoFeminino.prancha,
                             result.data.dashboard.listTotalizadorDesempenho.valorTotalizadorDesempenhoFeminino.vo2Max
                         ]
@@ -1049,9 +1090,9 @@ var vm = new Vue({
                             result.data.dashboard.listTotalizadorDesempenho.valorTotalizadorDesempenhoMasculino.forcaMembrosSup,
                             result.data.dashboard.listTotalizadorDesempenho.valorTotalizadorDesempenhoMasculino.forcaExplosiva,
                             result.data.dashboard.listTotalizadorDesempenho.valorTotalizadorDesempenhoMasculino.aptidaoCardio,
-                            result.data.dashboard.listTotalizadorDesempenho.valorTotalizadorDesempenhoMasculino.agilidade,
+                            //result.data.dashboard.listTotalizadorDesempenho.valorTotalizadorDesempenhoMasculino.agilidade,
                             result.data.dashboard.listTotalizadorDesempenho.valorTotalizadorDesempenhoMasculino.shutlleRun,
-                            result.data.dashboard.listTotalizadorDesempenho.valorTotalizadorDesempenhoMasculino.resAbdominal,
+                            //result.data.dashboard.listTotalizadorDesempenho.valorTotalizadorDesempenhoMasculino.resAbdominal,
                             result.data.dashboard.listTotalizadorDesempenho.valorTotalizadorDesempenhoMasculino.prancha,
                             result.data.dashboard.listTotalizadorDesempenho.valorTotalizadorDesempenhoMasculino.vo2Max
                         ]
@@ -1228,7 +1269,7 @@ var vm = new Vue({
                             y: result.data.dashboard.listTotalizadorEtnia.percTotalizadorEtniaMasculino.PRETO,
                             z: 50
                         }, {
-                            name: 'INDÍGENA',
+                            name: 'INDIGENA',
                             y: result.data.dashboard.listTotalizadorEtnia.percTotalizadorEtniaMasculino.INDIGENA,
                             z: 50
                         }, {
@@ -1253,7 +1294,7 @@ var vm = new Vue({
                     },
                     xAxis: {
                         categories: ['PARDO', 'BRANCO', 'PRETO',
-                            'INDÍGENA', 'AMARELO'],
+                            'INDIGENA', 'AMARELO'],
 
                         labels: {
                             style: {
@@ -1450,8 +1491,8 @@ var vm = new Vue({
                 //            y: result.data.dashboard.listTotalizadorEtnia.percTotalizadorEtniaMasculino.PRETO,
                 //            z: 50
                 //        }, {
-                //            name: 'INDÍGENA',
-                //            y: result.data.dashboard.listTotalizadorEtnia.percTotalizadorEtniaMasculino.INDÍGENA,
+                //            name: 'INDIGENA',
+                //            y: result.data.dashboard.listTotalizadorEtnia.percTotalizadorEtniaMasculino.INDIGENA,
                 //            z: 50
                 //        }, {
                 //            name: 'AMARELO',
@@ -1519,7 +1560,7 @@ var vm = new Vue({
                 //    },
                 //    xAxis: {
                 //        categories: ['PARDO', 'BRANCO', 'PRETO',
-                //            'INDÍGENA', 'AMARELO'],
+                //            'INDIGENA', 'AMARELO'],
 
                 //        labels: {
                 //            style: {
@@ -1700,8 +1741,8 @@ var vm = new Vue({
                 //            y: result.data.dashboard.listTotalizadorEtnia.percTotalizadorEtniaMasculino.PRETO,
                 //            z: 50
                 //        }, {
-                //            name: 'INDÍGENA',
-                //            y: result.data.dashboard.listTotalizadorEtnia.percTotalizadorEtniaMasculino.INDÍGENA,
+                //            name: 'INDIGENA',
+                //            y: result.data.dashboard.listTotalizadorEtnia.percTotalizadorEtniaMasculino.INDIGENA,
                 //            z: 50
                 //        }, {
                 //            name: 'AMARELO',
@@ -1789,7 +1830,7 @@ var vm = new Vue({
                 //    },
                 //    xAxis: {
                 //        categories: ['PARDO', 'BRANCO', 'PRETO',
-                //            'INDÍGENA', 'AMARELO'],
+                //            'INDIGENA', 'AMARELO'],
 
                 //        labels: {
                 //            style: {
@@ -1966,8 +2007,8 @@ var vm = new Vue({
                 //            y: result.data.dashboard.listTotalizadorEtnia.percTotalizadorEtniaMasculino.PRETO,
                 //            z: 50
                 //        }, {
-                //            name: 'INDÍGENA',
-                //            y: result.data.dashboard.listTotalizadorEtnia.percTotalizadorEtniaMasculino.INDÍGENA,
+                //            name: 'INDIGENA',
+                //            y: result.data.dashboard.listTotalizadorEtnia.percTotalizadorEtniaMasculino.INDIGENA,
                 //            z: 50
                 //        }, {
                 //            name: 'AMARELO',
@@ -2055,7 +2096,7 @@ var vm = new Vue({
                 //    },
                 //    xAxis: {
                 //        categories: ['PARDO', 'BRANCO', 'PRETO',
-                //            'INDÍGENA', 'AMARELO'],
+                //            'INDIGENA', 'AMARELO'],
 
                 //        labels: {
                 //            style: {
@@ -2252,8 +2293,8 @@ var vm = new Vue({
                 //            y: result.data.dashboard.listTotalizadorEtnia.percTotalizadorEtniaMasculino.PRETO,
                 //            z: 50
                 //        }, {
-                //            name: 'INDÍGENA',
-                //            y: result.data.dashboard.listTotalizadorEtnia.percTotalizadorEtniaMasculino.INDÍGENA,
+                //            name: 'INDIGENA',
+                //            y: result.data.dashboard.listTotalizadorEtnia.percTotalizadorEtniaMasculino.INDIGENA,
                 //            z: 50
                 //        }, {
                 //            name: 'AMARELO',
@@ -2320,7 +2361,7 @@ var vm = new Vue({
                 //    },
                 //    xAxis: {
                 //        categories: ['PARDO', 'BRANCO', 'PRETO',
-                //            'INDÍGENA', 'AMARELO'],
+                //            'INDIGENA', 'AMARELO'],
 
                 //        labels: {
                 //            style: {

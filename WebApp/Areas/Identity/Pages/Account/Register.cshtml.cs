@@ -103,7 +103,7 @@ namespace WebApp.Areas.Identity.Pages.Account
                 new() { IdNome = "PARDOS", Nome = "PARDOS" },
                 new() { IdNome = "BRANCOS", Nome = "BRANCOS" },
                 new() { IdNome = "NEGROS", Nome = "NEGROS" },
-                new() { IdNome = "INDÍGENAS", Nome = "INDÍGENAS" },
+                new() { IdNome = "INDIGENAS", Nome = "INDIGENAS" },
                 new() { IdNome = "AMARELOS", Nome = "AMARELOS" }
             };
 
