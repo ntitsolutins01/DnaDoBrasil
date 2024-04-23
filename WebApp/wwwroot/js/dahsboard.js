@@ -985,10 +985,6 @@ var vm = new Vue({
                             y: result.data.dashboard.listTotalizadorDesempenho.percDesempenho.aptidaoCardio,
                             z: 50
                         }, {
-                            name: 'Agilidade',
-                            y: result.data.dashboard.listTotalizadorDesempenho.percDesempenho.agilidade,
-                            z: 50
-                        }, {
                             name: 'Agilidade ou Shuttle run',
                             y: result.data.dashboard.listTotalizadorDesempenho.percDesempenho.shutlleRun,
                             z: 50

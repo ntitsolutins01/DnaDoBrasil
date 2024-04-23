@@ -180,6 +180,12 @@
                 <input type="hidden" name="carteirinhaAlunoId" :value="editDto.Id" />
 
                 <div class="modal-body">
+                    <button onclick="window.print()">Print Page</button>
+
+
+                    <div class="wholebody">
+
+                    </div>
                     <div class="row" style="margin: 10px">
                         <div class="tabs">
                             <ul class="nav nav-tabs">
@@ -199,13 +205,13 @@
                                         </div>
 
                                         <div class="col-md-2 form-group pull-right">
-                                            <img :src="editDto.QRCode" style="width:100%" />
+                                            <img :src="editDto.QRCode" style="width:100%"/>
                                         </div>
                                     </div>
                                     <div class="row">
 
                                         <div class="col-md-4 form-group">
-                                            <img :src="editDto.Image" style="width: 85%;margin-left: 15px;" />
+                                            <img :src="editDto.Image" style="width: 85%;margin-left: 15px;"/>
                                         </div>
                                         <div class="col-md-8 form-group" style="margin-bottom: 0px;">
                                             <h1 style="margin: 0">
@@ -217,13 +223,13 @@
                                         </div>
                                         <div class="col-md-8 form-group" style="margin-bottom: 0px;">
                                             <h3 style="margin: 0;"><label class="control-label text-primary"><b>CPF: </b>{{editDto.Cpf}}</label></h3>
-                                        
+
                                             <h3 style="margin: 0;"><label class="control-label text-primary">{{editDto.ModalidadeLinhaAcao}}</label></h3>
-                                        
+
                                             <h3 style="margin: 0;"><label class="control-label text-primary"><b>Data de Nascimento: </b> {{editDto.DtNascimento}}</label></h3>
-                                        
+
                                             <h3 style="margin: 0;"><label class="control-label text-primary"><b>Telefone: </b>{{editDto.Telefone}}</label></h3>
-                                        
+
                                             <h3 style="margin: 0;"><label class="control-label text-primary"><b>Matrícula: </b>{{editDto.Id}}</label></h3>
                                         </div>
                                     </div>
@@ -233,15 +239,15 @@
                                     <div class="row">
 
                                         <div class="col-md-2 form-group">
-                                            <img src="~/assets/images/logo_slogan_270224.png" style="width: 60%;margin-left: 30px;" />
+                                            <img src="~/assets/images/logo_slogan_270224.png" style="width: 60%;margin-left: 30px;"/>
                                         </div>
 
                                         <div class="col-md-2 form-group">
-                                            <img src="~/assets/images/logo_idecace.png" style="width:100%" />
+                                            <img src="~/assets/images/logo_idecace.png" style="width:100%"/>
                                         </div>
 
                                         <div class="col-md-2 form-group">
-                                            <img src="~/assets/images/logo-sejus-horizontal.png" style="width:190%" />
+                                            <img src="~/assets/images/logo-sejus-horizontal.png" style="width:190%"/>
                                         </div>
                                         <div class="col-md-4 form-group">
                                         </div>
@@ -252,14 +258,15 @@
                                     <div class="row" style="    margin-top: 20px;">
 
                                         <div class="col-md-6 form-group" style="margin-top: 15px;padding-left: 100px;">
-                                            <h3 style="margin: 0;"><label class="control-label text-primary"><b>Município / Estado</b></label></h3><h3 style="margin: 0;"><label class="control-label text-primary">{{editDto.MunicipioEstado}}</label></h3>
+                                            <h3 style="margin: 0;"><label class="control-label text-primary"><b>Município / Estado</b></label></h3>
+                                            <h3 style="margin: 0;"><label class="control-label text-primary">{{editDto.MunicipioEstado}}</label></h3>
                                             <h3 style="margin: 0;"><label class="control-label text-primary"><b>Unidade Escolar</b></label></h3>
                                             <h3 style="margin: 0;"><label class="control-label text-primary">{{editDto.NomeLocalidade}}</label></h3>
                                         </div>
 
                                         <div class="col-md-6 form-group">
-                                            <img src="~/assets/images/logo_app_meia_DNA.png" style="width: 37%;margin-right: 40px;" />
-                                            <img src="~/assets/images/android-app-store-logos.png" style="width: 30%;" />
+                                            <img src="~/assets/images/logo_app_meia_DNA.png" style="width: 37%;margin-right: 40px;"/>
+                                            <img src="~/assets/images/android-app-store-logos.png" style="width: 30%;"/>
                                         </div>
 
                                         <div class="col-md-1 form-group" style="margin-left: 25px;">
@@ -331,6 +338,13 @@
     <link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css" />
     <link rel="stylesheet" href="~/assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
     <link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />
+    <style>
+        .wholebody {
+            height: 289px;
+            width: 489px;
+            border: 2px solid #00001a;
+        }
+    </style>
 }
 @section Scripts {
     <script src="~/assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.js"></script>

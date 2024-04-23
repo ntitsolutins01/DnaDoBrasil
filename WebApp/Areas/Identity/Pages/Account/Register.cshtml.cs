@@ -122,7 +122,7 @@ namespace WebApp.Areas.Identity.Pages.Account
             var areas = new SelectList(listArea, "Id", "Nome");
             ListAreas = areas;
 
-            var deficiencias = new SelectList(ApiClientFactory.Instance.GetDeficienciaAll(), "Id", "Nome");
+            var deficiencias = new SelectList(ApiClientFactory.Instance.GetDeficienciaAll().Where(x => x.Status), "Id", "Nome");
             ListDeficiencia = deficiencias;
 
         }
