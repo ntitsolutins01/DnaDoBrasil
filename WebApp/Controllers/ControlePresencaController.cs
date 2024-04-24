@@ -125,6 +125,7 @@ namespace WebApp.Controllers
 		{
 			try
 			{
+                
 				var command = new ControlePresencaModel.CreateUpdateControlePresencaCommand
 				{
 					MunicipioId = collection["ddlMunicipio"] == "" ? null : Convert.ToInt32(collection["ddlMunicipio"].ToString()).ToString(),
@@ -134,7 +135,13 @@ namespace WebApp.Controllers
 					AlunoId = collection["ddlAluno"] == "" ? null : Convert.ToInt32(collection["ddlAluno"].ToString()).ToString(),
 				};
 
-				await ApiClientFactory.Instance.CreateControlePresenca(command);
+                var possuiPrecensa = ApiClientFactory.Instance.GetControlePresencaByAlunoId(Convert.ToInt32(command.AlunoId)).Where(x=>x.Data == DateTime.Now.ToString("dd/MM/yyyy"));
+
+                if (possuiPrecensa.Any())
+                {
+                    return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Warning, message = "Já existe presença cadastrada para este aluno do dia de hoje." });
+                }
+                await ApiClientFactory.Instance.CreateControlePresenca(command);
 
 				return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
 			}

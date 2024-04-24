@@ -989,10 +989,6 @@ var vm = new Vue({
                             y: result.data.dashboard.listTotalizadorDesempenho.percDesempenho.shutlleRun,
                             z: 50
                         }, {
-                            name: 'Resistência Abdominal',
-                            y: result.data.dashboard.listTotalizadorDesempenho.percDesempenho.resAbdominal,
-                            z: 50
-                        }, {
                             name: 'Prancha (ABD)',
                             y: result.data.dashboard.listTotalizadorDesempenho.percDesempenho.prancha,
                             z: 50
@@ -1072,9 +1068,7 @@ var vm = new Vue({
                             result.data.dashboard.listTotalizadorDesempenho.valorTotalizadorDesempenhoFeminino.forcaMembrosSup,
                             result.data.dashboard.listTotalizadorDesempenho.valorTotalizadorDesempenhoFeminino.forcaExplosiva,
                             result.data.dashboard.listTotalizadorDesempenho.valorTotalizadorDesempenhoFeminino.aptidaoCardio,
-                            //result.data.dashboard.listTotalizadorDesempenho.valorTotalizadorDesempenhoFeminino.agilidade,
                             result.data.dashboard.listTotalizadorDesempenho.valorTotalizadorDesempenhoFeminino.shutlleRun,
-                            //result.data.dashboard.listTotalizadorDesempenho.valorTotalizadorDesempenhoFeminino.resAbdominal,
                             result.data.dashboard.listTotalizadorDesempenho.valorTotalizadorDesempenhoFeminino.prancha,
                             result.data.dashboard.listTotalizadorDesempenho.valorTotalizadorDesempenhoFeminino.vo2Max
                         ]
@@ -1086,9 +1080,7 @@ var vm = new Vue({
                             result.data.dashboard.listTotalizadorDesempenho.valorTotalizadorDesempenhoMasculino.forcaMembrosSup,
                             result.data.dashboard.listTotalizadorDesempenho.valorTotalizadorDesempenhoMasculino.forcaExplosiva,
                             result.data.dashboard.listTotalizadorDesempenho.valorTotalizadorDesempenhoMasculino.aptidaoCardio,
-                            //result.data.dashboard.listTotalizadorDesempenho.valorTotalizadorDesempenhoMasculino.agilidade,
                             result.data.dashboard.listTotalizadorDesempenho.valorTotalizadorDesempenhoMasculino.shutlleRun,
-                            //result.data.dashboard.listTotalizadorDesempenho.valorTotalizadorDesempenhoMasculino.resAbdominal,
                             result.data.dashboard.listTotalizadorDesempenho.valorTotalizadorDesempenhoMasculino.prancha,
                             result.data.dashboard.listTotalizadorDesempenho.valorTotalizadorDesempenhoMasculino.vo2Max
                         ]

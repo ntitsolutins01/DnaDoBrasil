@@ -39,11 +39,11 @@ namespace WebApp.ApiClient
                 $"{ResourceControlesPresencas}/ControlePresenca/{id}"));
             return Get<ControlePresencaDto>(requestUrl);
         }
-        public ControlePresencaDto GetControlePresencaByAlunoId(int alunoId)
+        public List<ControlePresencaDto> GetControlePresencaByAlunoId(int alunoId)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 $"{ResourceControlesPresencas}/ControlePresenca/Aluno/{alunoId}"));
-            return Get<ControlePresencaDto>(requestUrl);
+            return Get<List<ControlePresencaDto>>(requestUrl);
         }
         public List<ControlePresencaDto> GetControlesPresencasAll()
         {

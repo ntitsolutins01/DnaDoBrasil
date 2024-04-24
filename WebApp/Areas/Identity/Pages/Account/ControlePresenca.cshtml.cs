@@ -98,6 +98,7 @@ namespace WebApp.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
+
                     var command = new WebApp.Models.ControlePresencaModel.CreateUpdateControlePresencaCommand()
                     {
                         MunicipioId = aluno.MunicipioId,
@@ -106,6 +107,13 @@ namespace WebApp.Areas.Identity.Pages.Account
                         Justificativa = collection["justificativa"].ToString(),
                         AlunoId = collection["alunoId"].ToString(),
                     };
+
+                    var possuiPrecensa = ApiClientFactory.Instance.GetControlePresencaByAlunoId(Convert.ToInt32(command.AlunoId)).Where(x => x.Data == DateTime.Now.ToString("dd/MM/yyyy"));
+
+                    if (possuiPrecensa.Any())
+                    {
+                        return RedirectToPage("ControlePresenca", new { notify = (int)EnumNotify.Warning, message = "Já existe presença cadastrada para este aluno do dia de hoje." });
+                    }
 
                     await ApiClientFactory.Instance.CreateControlePresenca(command);
                 }
