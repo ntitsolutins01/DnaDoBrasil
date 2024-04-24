@@ -64,7 +64,7 @@
                     <footer class="panel-footer">
                         <div class="row">
                             <div class="col-sm-2 pull-right">
-                                <button type="button" class="btn btn-block btn-primary pull-right"><i class="fa fa-search"></i> &nbsp;&nbsp;Pesquisar</button>
+                                <button type="submit" class="btn btn-block btn-primary pull-right"><i class="fa fa-search"></i> &nbsp;&nbsp;Pesquisar</button>
                             </div>
                         </div>
                     </footer>
@@ -92,6 +92,7 @@
                         <tr>
                             <th class="text-center">Id</th>
                             <th class="text-center">Aluno</th>
+                            <th class="text-center">Localidade</th>
                                 <th class="text-center" style="width: 10%;">Controle</th>
                             <th class="text-center">Data</th>
                             <th class="text-center">Justificativa</th>
@@ -104,6 +105,7 @@
                             <tr>
                                 <td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Id)</td>
                                 <td class="text-center">@Html.DisplayFor(modelItem => item.NomeAluno)</td>
+                                <td class="text-center">@Html.DisplayFor(modelItem => item.NomeLocalidade)</td>
                                 @if (item.Controle == "P")
                                 {
                                         <td class="text-center"><span class="label label-success" style="display: block;">Presente</span></td>

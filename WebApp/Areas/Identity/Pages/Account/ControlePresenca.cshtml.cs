@@ -112,7 +112,7 @@ namespace WebApp.Areas.Identity.Pages.Account
 
                     if (possuiPrecensa.Any())
                     {
-                        return RedirectToPage("ControlePresenca", new { notify = (int)EnumNotify.Warning, message = "Já existe presença cadastrada para este aluno do dia de hoje." });
+                        return RedirectToPage("ControlePresenca", new { notify = (int)EnumNotify.Warning, message = "Já existe presença cadastrada para este aluno no dia de hoje." });
                     }
 
                     await ApiClientFactory.Instance.CreateControlePresenca(command);

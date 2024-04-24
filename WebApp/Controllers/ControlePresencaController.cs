@@ -139,7 +139,7 @@ namespace WebApp.Controllers
 
                 if (possuiPrecensa.Any())
                 {
-                    return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Warning, message = "Já existe presença cadastrada para este aluno do dia de hoje." });
+                    return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Warning, message = "Já existe presença cadastrada para este aluno no dia de hoje." });
                 }
                 await ApiClientFactory.Instance.CreateControlePresenca(command);
 
