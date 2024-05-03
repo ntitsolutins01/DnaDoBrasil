@@ -101,140 +101,143 @@
                 @using (@Html.BeginForm("Edit", "Modalidade", FormMethod.Post, new { id = "formEditModalidade", @class = "form-horizontal" }))
                 {
                     <input type="hidden" name="editModalidadeId" :value="editDto.Id" />
-                    <div class="form-group row">
-                        <label class="col-sm-3 control-label text-sm-right pt-2">Linha de Ação</label>
-                        <div class="col-sm-7">
-                            <input type="text" name="linhaAcao" class="form-control"
-                                   maxlength="150" :value="editDto.LinhaAcao" readonly />
-                        </div>
-                    </div>
                     <div class="modal-body">
+                        <div class="form-group row">
+                            <label class="col-sm-3 control-label text-sm-right pt-2">Linha de Ação <span class="required">*</span></label>
+                            <div class="col-sm-8">
+                                <select class="form-control populate select2" name="ddlLinhaAcao" id="ddlLinhaAcao" style="width:100%"
+                                        required title="Por favor selecione a linha de ação"
+                                        asp-for="LinhaAcaoId" asp-items="Model.ListLinhasAcoes">
+                                    <option value="">Selecionar Linha de Ação</option>
+                                </select>
+                            </div>
+                        </div>
                         <div class="form-group row">
                             <label class="col-sm-3 control-label text-sm-right pt-2">Modalidade <span class="required">*</span></label>
                             <div class="col-sm-8">
                                 <input type="text" name="nome" class="form-control"
                                        maxlength="80" :value="editDto.Nome"
-                                       title="Por favor informe o Modalidade." required />
+                                       title="Por favor informe o Modalidade." required/>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-3 control-label text-sm-right pt-2">Vo2 Max Inicial <span class="required">*</span></label>
                             <div class="col-sm-3">
                                 <input type="number" name="vo2MaxIni" class="form-control" maxlength="2" :value="editDto.Vo2MaxIni"
-                                       title="Por favor informe o Vo2 Max Inicial." required />
+                                       title="Por favor informe o Vo2 Max Inicial." required/>
                             </div>
                             <label class="col-sm-2 control-label text-sm-right pt-2">Vo2 Max Final <span class="required">*</span></label>
                             <div class="col-sm-3">
                                 <input type="number" name="vo2MaxFim" class="form-control" maxlength="2" :value="editDto.Vo2MaxFim"
-                                       title="Por favor informe o Vo2 Max Final." required />
+                                       title="Por favor informe o Vo2 Max Final." required/>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-3 control-label text-sm-right pt-2">Vinte Metros Inicial <span class="required">*</span></label>
                             <div class="col-sm-3">
                                 <input type="number" name="vinteMetrosIni" class="form-control" maxlength="2" :value="editDto.VinteMetrosIni"
-                                       title="Por favor informe o Vinte Metros Inicial." required />
+                                       title="Por favor informe o Vinte Metros Inicial." required/>
                             </div>
                             <label class="col-sm-2 control-label text-sm-right pt-2">Vinte Metros Final <span class="required">*</span></label>
                             <div class="col-sm-3">
                                 <input type="number" name="vinteMetrosFim" class="form-control" maxlength="2" :value="editDto.VinteMetrosFim"
-                                       title="Por favor informe o Vinte Metros Final." required />
+                                       title="Por favor informe o Vinte Metros Final." required/>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-3 control-label text-sm-right pt-2">Shutlle Run Inicial <span class="required">*</span></label>
                             <div class="col-sm-3">
                                 <input type="number" name="shutlleRunIni" class="form-control" maxlength="2" :value="editDto.ShutlleRunIni"
-                                       title="Por favor informe o Shutlle Run Inicial." required />
+                                       title="Por favor informe o Shutlle Run Inicial." required/>
                             </div>
                             <label class="col-sm-2 control-label text-sm-right pt-2">Shutlle Run Final <span class="required">*</span></label>
                             <div class="col-sm-3">
                                 <input type="number" name="shutlleRunFim" class="form-control" maxlength="2" :value="editDto.ShutlleRunFim"
-                                       title="Por favor informe o Shutlle Run Final." required />
+                                       title="Por favor informe o Shutlle Run Final." required/>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-3 control-label text-sm-right pt-2">Flexibilidade Inicial <span class="required">*</span></label>
                             <div class="col-sm-3">
                                 <input type="number" name="flexibilidadeIni" class="form-control" maxlength="2" :value="editDto.FlexibilidadeIni"
-                                       title="Por favor informe o Flexibilidade Inicial." required />
+                                       title="Por favor informe o Flexibilidade Inicial." required/>
                             </div>
                             <label class="col-sm-2 control-label text-sm-right pt-2">Flexibilidade Final <span class="required">*</span></label>
                             <div class="col-sm-3">
                                 <input type="number" name="flexibilidadeFim" class="form-control" maxlength="2" :value="editDto.FlexibilidadeFim"
-                                       title="Por favor informe o Flexibilidade Final." required />
+                                       title="Por favor informe o Flexibilidade Final." required/>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-3 control-label text-sm-right pt-2">Preensao Manual Inicial <span class="required">*</span></label>
                             <div class="col-sm-3">
                                 <input type="number" name="preensaoManualIni" class="form-control" maxlength="2" :value="editDto.PreensaoManualIni"
-                                       title="Por favor informe o Preensao Manual Inicial." required />
+                                       title="Por favor informe o Preensao Manual Inicial." required/>
                             </div>
                             <label class="col-sm-2 control-label text-sm-right pt-2">Preensao Manual Final <span class="required">*</span></label>
                             <div class="col-sm-3">
                                 <input type="number" name="preensaoManualFim" class="form-control" maxlength="2" :value="editDto.PreensaoManualFim"
-                                       title="Por favor informe o Preensao Manual Final." required />
+                                       title="Por favor informe o Preensao Manual Final." required/>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-3 control-label text-sm-right pt-2">Abdominal Prancha Inicial <span class="required">*</span></label>
                             <div class="col-sm-3">
                                 <input type="number" name="abdominalPranchaIni" class="form-control" maxlength="2" :value="editDto.AbdominalPranchaIni"
-                                       title="Por favor informe o Abdominal Prancha Inicial." required />
+                                       title="Por favor informe o Abdominal Prancha Inicial." required/>
                             </div>
                             <label class="col-sm-2 control-label text-sm-right pt-2">Abdominal Prancha Final <span class="required">*</span></label>
                             <div class="col-sm-3">
                                 <input type="number" name="abdominalPranchaFim" class="form-control" maxlength="2" :value="editDto.AbdominalPranchaFim"
-                                       title="Por favor informe o Abdominal Prancha Final." required />
+                                       title="Por favor informe o Abdominal Prancha Final." required/>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-3 control-label text-sm-right pt-2">Impulsao Inicial <span class="required">*</span></label>
                             <div class="col-sm-3">
                                 <input type="number" name="impulsaoIni" class="form-control" maxlength="2" :value="editDto.ImpulsaoIni"
-                                       title="Por favor informe o Impulsao Inicial." required />
+                                       title="Por favor informe o Impulsao Inicial." required/>
                             </div>
                             <label class="col-sm-2 control-label text-sm-right pt-2">Impulsao Final <span class="required">*</span></label>
                             <div class="col-sm-3">
                                 <input type="number" name="impulsaoFim" class="form-control" maxlength="2" :value="editDto.ImpulsaoFim"
-                                       title="Por favor informe o Impulsao Final." required />
+                                       title="Por favor informe o Impulsao Final." required/>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-3 control-label text-sm-right pt-2">Envergadura Inicial <span class="required">*</span></label>
                             <div class="col-sm-3">
                                 <input type="number" name="envergaduraIni" class="form-control" maxlength="2" :value="editDto.EnvergaduraIni"
-                                       title="Por favor informe o Envergadura Inicial." required />
+                                       title="Por favor informe o Envergadura Inicial." required/>
                             </div>
                             <label class="col-sm-2 control-label text-sm-right pt-2">Envergadura Final <span class="required">*</span></label>
                             <div class="col-sm-3">
                                 <input type="number" name="envergaduraFim" class="form-control" maxlength="2" :value="editDto.EnvergaduraFim"
-                                       title="Por favor informe o Envergadura Final." required />
+                                       title="Por favor informe o Envergadura Final." required/>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-3 control-label text-sm-right pt-2">Peso Inicial <span class="required">*</span></label>
                             <div class="col-sm-3">
                                 <input type="number" name="pesoIni" class="form-control" maxlength="2" :value="editDto.PesoIni"
-                                       title="Por favor informe o Peso Inicial." required />
+                                       title="Por favor informe o Peso Inicial." required/>
                             </div>
                             <label class="col-sm-2 control-label text-sm-right pt-2">Peso Final <span class="required">*</span></label>
                             <div class="col-sm-3">
                                 <input type="number" name="pesoFim" class="form-control" maxlength="2" :value="editDto.PesoFim"
-                                       title="Por favor informe o Peso Final." required />
+                                       title="Por favor informe o Peso Final." required/>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-3 control-label text-sm-right pt-2">Altura Inicial <span class="required">*</span></label>
                             <div class="col-sm-3">
                                 <input type="number" name="alturaIni" class="form-control" maxlength="2" :value="editDto.AlturaIni"
-                                       title="Por favor informe o Altura Inicial." required />
+                                       title="Por favor informe o Altura Inicial." required/>
                             </div>
                             <label class="col-sm-2 control-label text-sm-right pt-2">Altura Final <span class="required">*</span></label>
                             <div class="col-sm-3">
                                 <input type="number" name="alturaFim" class="form-control" maxlength="2" :value="editDto.AlturaFim"
-                                       title="Por favor informe o Altura Final." required />
+                                       title="Por favor informe o Altura Final." required/>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -242,10 +245,10 @@
                             <div class="col-md-3">
                                 <div class="switch switch-sm switch-primary">
                                     <div v-show="editDto.Status">
-                                        <input type="checkbox" id="editStatus" name="editStatus" data-plugin-ios-switch checked="checked" />
+                                        <input type="checkbox" id="editStatus" name="editStatus" data-plugin-ios-switch checked="checked"/>
                                     </div>
                                     <div v-show="!editDto.Status">
-                                        <input type="checkbox" id="editStatus" name="editStatus" data-plugin-ios-switch />
+                                        <input type="checkbox" id="editStatus" name="editStatus" data-plugin-ios-switch/>
                                     </div>
                                 </div>
                             </div>
@@ -262,10 +265,14 @@
 </div>
 
 @section CssSpecificVendor {
+    <link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css" />
+    <link rel="stylesheet" href="~/assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
     <link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />
 }
 @section Scripts {
     <script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
+    <script src="~/assets/vendor/select2/js/select2.js"></script>
+    <script src="~/assets/vendor/jquery-mask/jquery.mask.js"></script>
     <script src="~/assets/vendor/ios7-switch/ios7-switch.js"></script>
     <script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
     <script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>

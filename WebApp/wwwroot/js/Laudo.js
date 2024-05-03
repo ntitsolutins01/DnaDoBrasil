@@ -122,7 +122,7 @@
 
             }).apply(this, [jQuery]);
 
-            var formid = $('form').attr('id');
+            var formid = $('form')[1].id;
 
             if (formid === "formEditLaudo") {
 

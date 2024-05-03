@@ -126,23 +126,23 @@
             <table class="table table-bordered table-striped mb-0" id="datatable-default">
                 <thead>
                     <tr>
-                        <th></th>
-                        <th>Id</th>
-                        <th>Nome</th>
-                        <th>Email</th>
-                        <th>Data de Nascimento</th>
-                        <th>Status</th>
-                        <th>Ações</th>
+                        <th class="text-center"></th>
+                        <th class="text-center">Id</th>
+                        <th class="text-center">Nome</th>
+                        <th class="text-center">Email</th>
+                        <th class="text-center">Data de Nascimento</th>
+                        <th class="text-center">Status</th>
+                        <th class="text-center">Ações</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var item in Model.Alunos)
                     {
                         <tr>
-                            <td></td>
-                            <td>@Html.DisplayFor(modelItem => item.Id)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Nome)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                            <td class="text-center"></td>
+                            <td class="text-center">@Html.DisplayFor(modelItem => item.Id)</td>
+                            <td class="text-center">@Html.DisplayFor(modelItem => item.Nome)</td>
+                            <td class="text-center">@Html.DisplayFor(modelItem => item.Email)</td>
                             <td class="text-center">@Html.DisplayFor(modelItem => item.DtNascimento)</td>
                             @if (item.Status)
                             {
@@ -163,6 +163,9 @@
                                 <a href="#" data-id="@item.Id" data-toggle="modal" data-target="#mdUpload"
                                    data-toggle="tooltip" data-placement="top" title="Upload Foto"
                                    class="on-default edit-row" style='color: #303F9F'><i class="fa fa-upload"></i></a>
+                                
+                                <a data-toggle="tooltip" data-placement="top" title="Excluir" href='javascript:(crud.DeleteModal(@item.Id))'
+                                   class="on-default remove-row" style="cursor: pointer;color: #F44336"><i class="fa fa-trash"></i></a>
                             </td>
                         </tr>
                     }
@@ -330,6 +333,33 @@
                         <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
                     </div>
                 }
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="mdDeleteAluno" tabindex="-1" role="dialog" aria-labelledby="mdDeleteAlunoLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mdDeleteAlunoLabel">
+                        <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Exclusão de Aluno</strong>
+                    </h5>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-icon">
+                        <i class="fa fa-question-circle"></i>
+                    </div>
+                    <div class="modal-text">
+                        <input type="hidden" id="deleteAlunoId" />
+                        <p class="mb-0">Tem certeza que deseja <b>excluir</b> esse registro?</p>
+                    </div>
+                    <div class="modal-wrapper">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-thumbs-o-down"></i> &nbsp;&nbsp;Não</button>
+                    <a id="deleteAlunoHref" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</a>
+                </div>
             </div>
         </div>
     </div>

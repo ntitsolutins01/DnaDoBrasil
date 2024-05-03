@@ -6,6 +6,7 @@ namespace WebApp.Models
     public class UsuarioModel
     {
         public int PerfilId { get; set; }
+        public string PerfilEditId { get; set; }
         public SelectList ListPerfis { get; set; }
         public UsuarioDto Usuario { get; set; }
         public List<UsuarioDto> Usuarios { get; set; }

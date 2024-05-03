@@ -71,6 +71,8 @@ namespace WebApp.Areas.Identity.Pages.Account
         public SelectList ListEficiencia { get; set; }
         public int NotifyMessage { get; set; }
         public string Notify { get; set; }
+        public string FomentoId { get; set; }
+        public SelectList ListFomentos { get; set; }
 
         public async Task OnGetAsync(int? notify, string message = null, string returnUrl = null)
         {
@@ -97,6 +99,7 @@ namespace WebApp.Areas.Identity.Pages.Account
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             ListEstados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
+            ListFomentos = new SelectList(ApiClientFactory.Instance.GetFomentoAll(), "Id", "Nome");
 
             List<SelectListDto> list = new List<SelectListDto>
             {
@@ -134,7 +137,10 @@ namespace WebApp.Areas.Identity.Pages.Account
             var commandAluno = new AlunoModel.CreateUpdateDadosAlunoCommand()
             {
                 MunicipioId = collection["ddlMunicipio"] == "" ? null : Convert.ToInt32(collection["ddlMunicipio"].ToString()),
+                FomentoId = collection["ddlFomento"] == "" ? null : Convert.ToInt32(collection["ddlFomento"].ToString()),
                 LocalidadeId = collection["ddlLocalidade"] == "" ? null : Convert.ToInt32(collection["ddlLocalidade"].ToString()),
+                LinhaAcaoId = collection["ddlAreaDesejada"] == "" ? null : Convert.ToInt32(collection["ddlAreaDesejada"].ToString()),
+                DeficienciaId = collection["ddlDeficiencia"] == "" ? null : Convert.ToInt32(collection["ddlDeficiencia"].ToString()),
                 Endereco = collection["endereco"] == "" ? null : collection["endereco"].ToString(),
                 AreasDesejadas = collection["ddlAreaDesejada"] == "" ? null : collection["ddlAreaDesejada"].ToString(),
                 Nome = collection["nome"] == "" ? null : collection["nome"].ToString(),
@@ -147,7 +153,12 @@ namespace WebApp.Areas.Identity.Pages.Account
                 NomeResponsavel = collection["nomeResp"] == "" ? null : collection["nomeResp"].ToString(),
                 DeficienciasIds = collection["ddlDeficiencia"] == "" ? null : collection["ddlDeficiencia"].ToString(),
                 Habilitado = true,
-                Status = true
+                Status = true,
+                AutorizacaoSaida = Convert.ToBoolean(collection["autorizado"].ToString()),
+                UtilizacaoImagem = Convert.ToBoolean(collection["utilizacaoImagem"].ToString()),
+                ParticipacaoProgramaCompartilhamentoDados = Convert.ToBoolean(collection["participacao"].ToString()),
+                CopiaDocAlunoResponsavel = Convert.ToBoolean(collection["copiaDoc"].ToString()),
+                AutorizacaoConsentimentoAssentimento = collection["agreeterms"].ToString() != ""
             };
 
             var alunoId = await ApiClientFactory.Instance.CreateDados(commandAluno);
@@ -196,11 +207,6 @@ namespace WebApp.Areas.Identity.Pages.Account
             }
 
             SendNewUserEmail(newUser, command.Email, command.Nome);
-
-            var autorizado = Convert.ToBoolean(collection["autorizado"].ToString());
-            var utilizacaoImagem = Convert.ToBoolean(collection["utilizacaoImagem"].ToString());
-            var participacao = Convert.ToBoolean(collection["participacao"].ToString());
-            var copiaDoc = collection["copiaDoc"].ToString() != "";
 
             //var commandDependencia = new DependenciaModel.CreateUpdateDependenciaCommand()
             //{

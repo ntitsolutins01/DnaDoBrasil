@@ -86,6 +86,5 @@ namespace WebApp.ApiClient
         }
 
         #endregion
-
     }
 }

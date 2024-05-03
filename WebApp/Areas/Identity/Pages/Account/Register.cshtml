@@ -21,6 +21,14 @@
                         <div asp-validation-summary="All" class="alert alert-mini alert-danger margin-bottom-30"></div>
                     }
                     <div class="form-group mb-lg">
+                        <label>Fomento</label>
+                        <select class="form-control populate select2" name="ddlFomento" id="ddlFomento"
+                                title="Por favor informe um Fomento." required
+                                asp-for="FomentoId" asp-items="Model.ListFomentos">
+                            <option value="">Selecionar Fomento</option>
+                        </select>
+                    </div>
+                    <div class="form-group mb-lg">
                         <label>Estado</label>
                         <select class="form-control populate select2" name="ddlEstado" id="ddlEstado"
                                 title="Por favor informe um Estado." required
@@ -51,11 +59,8 @@
                     </div>
                     <div class="form-group mb-lg">
                         <label>Áreas desejadas</label><br/>
-                        @* <select class="form-control populate" multiple="multiple" data-plugin-multiselect data-plugin-options='{ "maxHeight": 200 }' id="ddlAreaDesejada" name="ddlAreaDesejada" style="width:100%"  asp-for="AreaId" asp-items="Model.ListAreas" required
-                              title="Por favor selecione ao menos uma área desejada.">
-                        </select> *@
-                        <select multiple data-plugin-selectTwo class="form-control populate" name="ddlAreaDesejada" id="ddlAreaDesejada" style="width:100%"
-                                title="Por favor selecione as área desejada."
+                        <select class="form-control populate select2" name="ddlAreaDesejada" id="ddlAreaDesejada" style="width:100%"
+                                title="Por favor selecione a área desejada."
                                 asp-for="AreaId" asp-items="Model.ListAreas">
                             <option value="">Selecionar Áreda Desejada</option>
                         </select>
@@ -110,9 +115,9 @@
                     </div>
                     <div class="form-group mb-lg">
                         <label>Deficiência</label>
-                        <select class="form-control populate" multiple="multiple" data-plugin-multiselect data-plugin-options='{ "maxHeight": 200 }' id="ddlDeficiencia" name="ddlDeficiencia" style="width:100%" required
-                                title="Por favor selecione uma deficiência."
+                        <select class="form-control populate select2" name="ddlDeficiencia" id="ddlDeficiencia" style="width:100%"
                                 asp-for="DeficienciaId" asp-items="Model.ListDeficiencia">
+                            <option value="">Selecionar Deficiência</option>
                         </select>
                     </div>
                     <div class="form-group mb-lg">
@@ -201,9 +206,6 @@
                             <button type="submit" class="btn btn-primary btn-block btn-lg visible-xs mt-lg">Registrar</button>
                         </div>
                     </div>
-
-                    @* <p class="text-center">Já possui uma conta? <a class="nav-link text-dark" asp-page="/Account/Login">Entrar!</a></p> *@
-
                 </form>
             </div>
         </div>

@@ -11,10 +11,8 @@ namespace WebApp.Models
     {
         public AlunoDto Aluno { get; set; }
         public List<AlunoIndexDto>? Alunos { get; set; }
-        public string AlunoId { get; set; }
-        public SelectList ListAlunos { get; set; }
         public SelectList ListDeficiencias { get; set; }
-        public int DeficienciaId { get; set; }
+        public string DeficienciaId { get; set; }
         public string EstadoId { get; set; }
         public SelectList ListEstados { get; set; }
         public string MunicipioId { get; set; }
@@ -39,6 +37,8 @@ namespace WebApp.Models
         public string? NomePerfil { get; set; }
         public AlunosFilterDto SearchFilter { get; set; }
         public LaudoDto Laudo { get; set; }
+        public string LinhaAcaoId { get; set; }
+        public SelectList ListLinhasAcoes { get; set; }
 
 
         public class CreateUpdateDadosAlunoCommand
@@ -63,8 +63,7 @@ namespace WebApp.Models
             public string? NomeFoto { get; set; }
             public bool Status { get; set; }
             public bool Habilitado { get; set; }
-            public int? DeficienciasId { get; set; } = new();
-            public int? ModalidadesId { get; set; } = new();
+            public int? DeficienciaId { get; set; } = new();
             public int? ProfissionalId { get; set; } = new();
             public int? ParceiroId { get; set; }
             public string? Etnia { get; set; }
@@ -76,10 +75,17 @@ namespace WebApp.Models
             public string? ModalidadesIds { get; set; }
             public string? DeficienciasIds { get; set; }
             public int? LocalidadeId { get; set; }
+            public int? LinhaAcaoId { get; set; }
             public string? AreasDesejadas { get; set; }
             public string? NomeResponsavel { get; set; }
             public byte[]? ByteImage { get; set; }
             public byte[]? QrCode { get; set; }
+            public bool? AutorizacaoSaida { get; set; } = false;
+            public bool? AutorizacaoConsentimentoAssentimento { get; set; } = false;
+            public bool? ParticipacaoProgramaCompartilhamentoDados { get; set; } = false;
+            public bool? UtilizacaoImagem { get; set; } = false;
+            public bool? CopiaDocAlunoResponsavel { get; set; } = false;
+            public int? FomentoId { get; set; }
         }
     }
 

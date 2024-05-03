@@ -155,9 +155,11 @@ var vm = new Vue({
                 self.editDto.Id = result.data.id;
                 if (result.data.linhaAcao === null) {
                     self.editDto.LinhaAcao = "";
+
                 } else { 
-                    self.editDto.LinhaAcao = result.data.linhaAcao.nome;
+                    self.editDto.LinhaAcao = result.data.linhaAcao.id;
                 }
+                $("#ddlLinhaAcao").val(self.editDto.LinhaAcao).trigger("change");
                 self.editDto.Nome = result.data.nome;
                 self.editDto.Status = result.data.status;
                 self.editDto.Vo2MaxIni = result.data.vo2MaxIni;

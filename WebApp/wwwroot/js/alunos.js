@@ -236,10 +236,19 @@
             });
 
             self.ShowLoad(false, "pResult");
+        },
+        DeleteAluno: function (id) {
+            var url = "Aluno/Delete/" + id;
+            $("#deleteAlunoHref").prop("href", url);
         }
     }
 });
 var crud = {
+    DeleteModal: function (id) {
+        $('input[name="deleteAlunoId"]').attr('value', id);
+        $('#mdDeleteAluno').modal('show');
+        vm.DeleteAluno(id)
+    },
     CarterinhaModal: function (id) {
         $('input[name="carteirinhaAlunoId"]').attr('value', id);
         $('#mdCarteirinhaAluno').modal('show');
