@@ -21,7 +21,7 @@ namespace WebApp.Models
         public int ModalidadeId { get; set; }
         public string FomentoId { get; set; }
         public SelectList ListFomentos { get; set; }
-        public int LocalidadeId { get; set; }
+        public string? LocalidadeId { get; set; }
         public SelectList ListLocalidades { get; set; }
         public string SerieId { get; set; }
         public SelectList ListSeries { get; set; }

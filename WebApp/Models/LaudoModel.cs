@@ -7,6 +7,7 @@ namespace WebApp.Models
 	public class LaudoModel
 	{
 		public LaudoDto Laudo { get; set; }
+		public AlunoDto Aluno { get; set; }
 		public List<LaudoDto> Laudos { get; set; }
 		public List<QuestionarioDto> QuestionarioVocacional { get; set; }
 		public List<QuestionarioDto> QuestionarioConsumoAlimentar { get; set; }

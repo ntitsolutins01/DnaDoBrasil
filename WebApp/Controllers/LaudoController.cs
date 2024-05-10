@@ -51,11 +51,9 @@ namespace WebApp.Controllers
         [ClaimsAuthorize(ClaimType.Laudo, Claim.Detalhar)]
         public ActionResult Details(int id)
         {
-            var aluno = ApiClientFactory.Instance.GetAlunoById(id);
             var laudo = ApiClientFactory.Instance.GetLaudoById(id);
-            var model = new AlunoModel()
+            var model = new LaudoModel()
             {
-                Aluno = aluno,
                 Laudo = laudo
             };
             return View(model);

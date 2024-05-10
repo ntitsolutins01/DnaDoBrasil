@@ -208,6 +208,9 @@ namespace WebApp.Controllers
                 var municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(aluno.Estado!), "Id", "Nome", aluno.MunicipioId);
                 var localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeByMunicipio(aluno.MunicipioId.ToString()), "Id", "Nome", aluno.LocalidadeId);
                 var profissionais = new SelectList(ApiClientFactory.Instance.GetProfissionaisByLocalidade(Convert.ToInt32(aluno.LocalidadeId)), "Id", "Nome", aluno.ProfissionalId);
+                var fomentos = new SelectList(ApiClientFactory.Instance.GetFomentoAll(), "Id", "Nome", aluno.FomentoId);
+                var deficiencias = new SelectList(ApiClientFactory.Instance.GetDeficienciaAll(), "Id", "Nome", aluno.DeficienciaId);
+                var linhasAcoes = new SelectList(ApiClientFactory.Instance.GetLinhasAcoesAll(), "Id", "Nome", aluno.LinhaAcaoId);
 
                 List<SelectListDto> list = new List<SelectListDto>
                 {
@@ -219,25 +222,20 @@ namespace WebApp.Controllers
                 };
 
                 var etnias = new SelectList(list, "IdNome", "Nome", aluno.Etnia);
-                var modalidades = ApiClientFactory.Instance.GetModalidadeAll();
-                var dependencia = aluno.DependenciaId == null
-                    ? null
-                    : ApiClientFactory.Instance.GetDependenciaById((int)aluno.DependenciaId);
-                var matricula = aluno.MatriculaId == null
-                    ? null
-                    : ApiClientFactory.Instance.GetMatriculaById((int)aluno.MatriculaId);
+                
 
                 return View(new AlunoModel()
                 {
                     ListEstados = estados,
                     Modalidades = aluno.Modalidades,
                     Aluno = aluno,
-                    Dependecia = dependencia!,
-                    Matricula = matricula!,
                     ListMunicipios = municipios,
                     ListLocalidades = localidades,
                     ListProfissionais = profissionais,
                     ListEtnias = etnias,
+                    ListFomentos = fomentos,
+                    ListDeficiencias = deficiencias,
+                    ListLinhasAcoes = linhasAcoes
 
                 });
 
@@ -356,7 +354,10 @@ namespace WebApp.Controllers
                     Etnia = collection["ddlEtnia"] == "" ? null : collection["ddlEtnia"].ToString(),
                     MunicipioId = collection["ddlMunicipio"] == "" ? null : Convert.ToInt32(collection["ddlMunicipio"].ToString()),
                     ProfissionalId = collection["ddlProfissionalAluno"] == "" ? null : Convert.ToInt32(collection["ddlProfissionalAluno"].ToString()),
+                    FomentoId = collection["ddlFomento"] == "" ? null : Convert.ToInt32(collection["ddlFomento"].ToString()),
+                    DeficienciaId = collection["ddlDeficiencia"] == "" ? null : Convert.ToInt32(collection["ddlDeficiencia"].ToString()),
                     LocalidadeId = collection["ddlLocalidade"] == "" ? null : Convert.ToInt32(collection["ddlLocalidade"].ToString()),
+                    LinhaAcaoId = collection["ddlLinhaAcao"] == "" ? null : Convert.ToInt32(collection["ddlLinhaAcao"].ToString()),
                     Nome = collection["nome"] == "" ? null : collection["nome"].ToString(),
                     DtNascimento = collection["DtNascimento"] == "" ? null : collection["DtNascimento"].ToString(),
                     Email = collection["email"] == "" ? null : collection["email"].ToString(),
@@ -372,7 +373,8 @@ namespace WebApp.Controllers
                     Bairro = collection["bairro"] == "" ? null : collection["bairro"].ToString(),
                     DeficienciasIds = collection["arrDeficiencias"] == "" ? null : collection["arrDeficiencias"].ToString(),
                     Habilitado = habilitado != "",
-                    Status = status != ""
+                    Status = status != "",
+                    NomeFoto = filePath,
 
                 };
 

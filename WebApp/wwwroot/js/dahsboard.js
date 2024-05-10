@@ -285,7 +285,7 @@ var vm = new Vue({
                 $("#totSaudeFinalizado").text(result.data.dashboard.statusLaudos.totSaudeFinalizado);
                 $("#totSaudeAndamento").text(result.data.dashboard.statusLaudos.totSaudeAndamento);
                 var percentSaude = result.data.dashboard.statusLaudos.progressoSaude + '%'
-                $('#progressoSaude').css('width', percentSaude);
+                $('#progressoSaude').css('width', percentSaude); 
                 $('#vlProgressoSaude').text(result.data.dashboard.statusLaudos.progressoSaude + ' %');
 
                 $("#totTalentoEsportivoFinalizado").text(result.data.dashboard.statusLaudos.totTalentoEsportivoFinalizado);
@@ -298,19 +298,13 @@ var vm = new Vue({
                 $("#totConsumoAlimentarAndamento").text(result.data.dashboard.statusLaudos.totConsumoAlimentarAndamento);
                 var percentConsumoAlimentar = result.data.dashboard.statusLaudos.progressoConsumoAlimentar + '%'
                 $('#progressoConsumoAlimentar').css('width', percentConsumoAlimentar);
-                $('#vlProgressoConsumoAlimentar').text(result.data.dashboard.statusLaudos.vlProgressoConsumoAlimentar + ' %');
+                $('#vlProgressoConsumoAlimentar').text(result.data.dashboard.statusLaudos.progressoConsumoAlimentar + ' %');
 
                 $("#totSaudeBucalFinalizado").text(result.data.dashboard.statusLaudos.totSaudeBucalFinalizado);
                 $("#totSaudeBucalAndamento").text(result.data.dashboard.statusLaudos.totSaudeBucalAndamento);
                 var percentSaudeBucal = result.data.dashboard.statusLaudos.progressoSaudeBucal + '%'
                 $('#progressoSaudeBucal').css('width', percentSaudeBucal);
-                $('#vlProgressoSaudeBucal').text(result.data.dashboard.statusLaudos.vlProgressoSaudeBucal + ' %');
-
-                $("#totSaudeBucalFinalizado").text(result.data.dashboard.statusLaudos.totSaudeBucalFinalizado);
-                $("#totSaudeBucalAndamento").text(result.data.dashboard.statusLaudos.totSaudeBucalAndamento);
-                var percentSaudeBucal = result.data.dashboard.statusLaudos.progressoSaudeBucal + '%'
-                $('#progressoSaudeBucal').css('width', percentSaudeBucal);
-                $('#vlProgressoSaudeBucal').text(result.data.dashboard.statusLaudos.vlProgressoSaudeBucal + ' %');
+                $('#vlProgressoSaudeBucal').text(result.data.dashboard.statusLaudos.progressoSaudeBucal + ' %');
 
                 $("#totQualidadeDeVidaFinalizado").text(result.data.dashboard.statusLaudos.totQualidadeDeVidaFinalizado);
                 $("#totQualidadeDeVidaAndamento").text(result.data.dashboard.statusLaudos.totQualidadeDeVidaAndamento);
@@ -346,6 +340,7 @@ var vm = new Vue({
 
                 self.ShowLoad(false, "pEvolutivo");
             });
+
 
             axios.post("Dashboard/GetGraficosSaudeByFilter", obj, axiosConfig).then(result => {
                 var self = this;
@@ -401,6 +396,26 @@ var vm = new Vue({
                 self.ShowLoad(false, "pDeficienciaTot");
             });
 
+            axios.post("Dashboard/GetGraficoPercDesempenhoFisicoMotorByFilter", obj, axiosConfig).then(result => {
+                var self = this;
+
+                self.ShowLoad(true, "pDesempenhoPerc");
+                self.ShowLoad(true, "pDesempenhoTot");
+
+                self.SetGraficoPercDesempenhoFisicoMotor(result);
+                self.SetGraficoTotDesempenhoFisicoMotor(result);
+
+                self.ShowLoad(false, "pDesempenhoPerc");
+                self.ShowLoad(false, "pDesempenhoTot");
+
+            }).catch(error => {
+                Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
+
+                self.ShowLoad(false, "pDesempenhoPerc");
+                self.ShowLoad(false, "pDesempenhoTot");
+            });
+
+
             axios.post("Dashboard/GetGraficosSaudeBucalByFilter", obj, axiosConfig).then(result => {
                 var self = this;
 
@@ -428,25 +443,6 @@ var vm = new Vue({
                 Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
                 self.ShowLoad(false, "pSaudeBucalPerc");
                 self.ShowLoad(false, "pSaudeBucalTot");
-            });
-
-            axios.post("Dashboard/GetGraficoPercDesempenhoFisicoMotorByFilter", obj, axiosConfig).then(result => {
-                var self = this;
-
-                self.ShowLoad(true, "pDesempenhoPerc");
-                self.ShowLoad(true, "pDesempenhoTot");
-
-                self.SetGraficoPercDesempenhoFisicoMotor(result);
-                self.SetGraficoTotDesempenhoFisicoMotor(result);
-
-                self.ShowLoad(false, "pDesempenhoPerc");
-                self.ShowLoad(false, "pDesempenhoTot");
-
-            }).catch(error => {
-                Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
-
-                self.ShowLoad(false, "pDesempenhoPerc");
-                self.ShowLoad(false, "pDesempenhoTot");
             });
 
             axios.post("Dashboard/GetGraficosTalentoByFilter", obj, axiosConfig).then(result => {

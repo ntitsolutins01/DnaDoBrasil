@@ -44,7 +44,7 @@
         public string Etnia { get; set; }
         public string ProfissionalId { get; set; }
         public string ModalidadeLinhaAcao { get; set; }
-
+        public string LinhaAcaoId { get; set; }
         #endregion
     }
 }
