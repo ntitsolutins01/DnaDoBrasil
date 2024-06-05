@@ -22,6 +22,7 @@ namespace WebApp.Models
             public string? Texto { get; init; }
             public string? Sexo { get; set; }
             public int? Idade { get; set; }
+            public int? Quadrante { get; set; }
         }
     }
 

@@ -8,7 +8,11 @@
         var self = this;
         (function ($) {
             'use strict';
-            var formid = $('form').attr('id');
+            var formid = $('form')[1].id;
+
+            //mascara dos inputs
+            var valorPeso = $("#valorPeso");
+            valorPeso.mask('00.00', { reverse: true });
 
             if (formid === "formResposta") {
                 var $select = $(".select2").select2({

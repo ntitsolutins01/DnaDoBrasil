@@ -211,6 +211,12 @@ var vm = new Vue({
             self.ShowLoad(true, "pTalentoTot");
             self.ShowLoad(true, "pDesempenhoPerc");
             self.ShowLoad(true, "pDesempenhoTot");
+            self.ShowLoad(true, "pQualidadeVidaPerc");
+            self.ShowLoad(true, "pQualidadeVidaTot");
+            self.ShowLoad(true, "pConsumoAlimentarPerc");
+            self.ShowLoad(true, "pConsumoAlimentarTot");
+            self.ShowLoad(true, "pVocacionalPerc");
+            self.ShowLoad(true, "pVocacionalTot");
 
 
             const obj = {
@@ -285,7 +291,7 @@ var vm = new Vue({
                 $("#totSaudeFinalizado").text(result.data.dashboard.statusLaudos.totSaudeFinalizado);
                 $("#totSaudeAndamento").text(result.data.dashboard.statusLaudos.totSaudeAndamento);
                 var percentSaude = result.data.dashboard.statusLaudos.progressoSaude + '%'
-                $('#progressoSaude').css('width', percentSaude); 
+                $('#progressoSaude').css('width', percentSaude);
                 $('#vlProgressoSaude').text(result.data.dashboard.statusLaudos.progressoSaude + ' %');
 
                 $("#totTalentoEsportivoFinalizado").text(result.data.dashboard.statusLaudos.totTalentoEsportivoFinalizado);
@@ -416,6 +422,64 @@ var vm = new Vue({
             });
 
 
+            axios.post("Dashboard/GetGraficosQualidadeVidaByFilter", obj, axiosConfig).then(result => {
+                var self = this;
+
+                self.ShowLoad(true, "pQualidadeVidaPerc");
+                self.ShowLoad(true, "pQualidadeVidaTot");
+
+                self.SetGraficoQualidadePercentual(result);
+                self.SetGraficoTotalizadorQualidade(result);
+
+                self.ShowLoad(false, "pQualidadeVidaPerc");
+                self.ShowLoad(false, "pQualidadeVidaTot");
+
+            }).catch(error => {
+                Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
+
+                self.ShowLoad(false, "pQualidadeVidaPerc");
+                self.ShowLoad(false, "pQualidadeVidaTot");
+            });
+
+            axios.post("Dashboard/GetGraficosVocacionalByFilter", obj, axiosConfig).then(result => {
+                var self = this;
+
+                self.ShowLoad(true, "pVocacionalPerc");
+                self.ShowLoad(true, "pVocacionalTot");
+
+                self.SetGraficoVocacionalPercentual(result);
+                self.SetGraficoTotalizadorVocacional(result);
+
+                self.ShowLoad(false, "pVocacionalPerc");
+                self.ShowLoad(false, "pVocacionalTot");
+
+            }).catch(error => {
+                Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
+
+                self.ShowLoad(false, "pVocacionalPerc");
+                self.ShowLoad(false, "pVocacionalTot");
+            });
+
+
+            axios.post("Dashboard/GetGraficosConsumoAlimentarByFilter", obj, axiosConfig).then(result => {
+                var self = this;
+
+                self.ShowLoad(true, "pConsumoAlimentarPerc");
+                self.ShowLoad(true, "pConsumoAlimentarTot");
+
+                self.SetGraficoConsumoPercentual(result);
+                self.SetGraficoTotalizadorConsumo(result);
+
+                self.ShowLoad(false, "pConsumoAlimentarPerc");
+                self.ShowLoad(false, "pConsumoAlimentarTot");
+
+            }).catch(error => {
+                Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
+
+                self.ShowLoad(false, "pConsumoAlimentarPerc");
+                self.ShowLoad(false, "pConsumoAlimentarTot");
+            });
+
             axios.post("Dashboard/GetGraficosSaudeBucalByFilter", obj, axiosConfig).then(result => {
                 var self = this;
 
@@ -424,17 +488,6 @@ var vm = new Vue({
 
                 self.SetGraficoBuscalPercentual(result);
                 self.SetGraficoTotalizadorBucal(result);
-
-
-                self.SetGraficoQualidadePercentual(result);
-                self.SetGraficoTotalizadorQualidade(result);
-
-                self.SetGraficoConsumoPercentual(result);
-                self.SetGraficoTotalizadorConsumo(result);
-
-
-                self.SetGraficoVocacionalPercentual(result);
-                self.SetGraficoTotalizadorVocacional(result);
 
                 self.ShowLoad(false, "pSaudeBucalPerc");
                 self.ShowLoad(false, "pSaudeBucalTot");
@@ -478,7 +531,7 @@ var vm = new Vue({
                         text: undefined
                     },
                     xAxis: {
-                        categories: ['Jav', 'Fev', 'Mar',
+                        categories: ['Jan', 'Fev', 'Mar',
                             'Abr', 'Mai', 'Jun',
                             'Jul', 'Ago', 'Set',
                             'Out', 'Nov', 'Dez'],
@@ -728,7 +781,7 @@ var vm = new Vue({
                         text: undefined
                     },
                     xAxis: {
-                        categories: ['Baixo Peso', 'Acima do Peso', 'Risco de Colesterol Alto e Diabetes',
+                        categories: ['Risco de Colesterol Alto e Diabetes',
                             'Risco de Hipertensão Arterial e Transtornos Cardíacos', 'Pré – disposição a resistência a insulina',
                             'Pré – disposição a desequilíbrios musculares', 'Índice positivo de saúde'],
 
@@ -780,8 +833,6 @@ var vm = new Vue({
                         name: 'Feminino',
                         color: '#EC407A',
                         data: [
-                            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeFeminino.baixoPeso,
-                            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeFeminino.acimaPeso,
                             result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeFeminino.riscoColesterolAlto,
                             result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeFeminino.riscoHipertensao,
                             result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeFeminino.resistenciaInsulina,
@@ -791,9 +842,6 @@ var vm = new Vue({
                     }, {
                         name: 'Masculino',
                         data: [
-
-                            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeMasculino.baixoPeso,
-                            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeMasculino.acimaPeso,
                             result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeMasculino.riscoColesterolAlto,
                             result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeMasculino.riscoHipertensao,
                             result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeMasculino.resistenciaInsulina,
@@ -1009,7 +1057,7 @@ var vm = new Vue({
                         text: undefined
                     },
                     xAxis: {
-                        categories: ['Velocidade', 'Flexibilidade Muscular', 'Força de Membros Superiores', 'Força Explosiva de Membros Inferiores', 'Aptidão Cardiorrespiratória',  'Agilidade ou Shuttle run',  'Prancha (ABD)', 'Vo2 Max'],
+                        categories: ['Velocidade', 'Flexibilidade Muscular', 'Força de Membros Superiores', 'Força Explosiva de Membros Inferiores', 'Aptidão Cardiorrespiratória', 'Agilidade ou Shuttle run', 'Prancha (ABD)', 'Vo2 Max'],
 
                         labels: {
                             style: {
@@ -1391,107 +1439,39 @@ var vm = new Vue({
                         borderRadius: 5,
                         data: [{
                             name: 'Bem estar físico',
-                            y: 5,
+                            y: result.data.dashboard.listTotalizadorQualidadeVida.percentualQualidade.BemEstarFisico,
                             z: 50
                         }, {
                             name: 'Mal estar físico',
-                            y: 20,
+                            y: result.data.dashboard.listTotalizadorQualidadeVida.percentualQualidade.MalEstarFisico,
                             z: 50
                         }, {
                             name: 'Autoestima e estabilidade emocional',
-                            y: 20,
+                            y: result.data.dashboard.listTotalizadorQualidadeVida.percentualQualidade.AutoEstima,
                             z: 50
                         }, {
                             name: 'Baixa autoestima e dificuldades emocionais',
-                            y: 30,
+                            y: result.data.dashboard.listTotalizadorQualidadeVida.percentualQualidade.BaixaAutoEstima,
                             z: 50
                         }, {
                             name: 'Funcionamento harmônico familiar',
-                            y: 10,
+                            y: result.data.dashboard.listTotalizadorQualidadeVida.percentualQualidade.FuncionamentoHarmonico,
                             z: 50
                         }, {
                             name: 'Conflitos no contexto familiar',
-                            y: 15,
+                            y: result.data.dashboard.listTotalizadorQualidadeVida.percentualQualidade.Conflitos,
                             z: 50
                         }, {
                             name: 'Contextos favorecedores do desenvolvimento ',
-                            y: 15,
+                            y: result.data.dashboard.listTotalizadorQualidadeVida.percentualQualidade.ContextosFavorecedores,
                             z: 50
                         }, {
                             name: 'Contextos não favorecedores do desenvolvimento ',
-                            y: 15,
+                            y: result.data.dashboard.listTotalizadorQualidadeVida.percentualQualidade.ContextosNaoFavorecedores,
                             z: 50
                         }]
                     }]
                 });
-
-                //Highcharts.chart('containerEtniaPercentual', {
-                //    chart: {
-                //        type: 'variablepie'
-                //    },
-                //    title: {
-                //        text: undefined
-                //    },
-                //    tooltip: {
-                //        headerFormat: '',
-                //        pointFormat: '<span style="color:{point.color}">\u25CF</span> <b> {point.name}</b><br/>' +
-                //            '<b>{point.y} %</b> dos Alunos',
-                //        style: {
-                //            fontSize: '12px'
-                //        }
-                //    },
-                //    legend: {
-                //        itemStyle: {
-                //            fontSize: '2px'
-                //        }
-                //    },
-                //    plotOptions: {
-                //        variablepie: {
-                //            dataLabels: {
-                //                enabled: true,
-                //                style: {
-                //                    fontSize: '12px',
-                //                    fontWeight: '400'
-                //                }
-                //            }
-                //        }
-                //    },
-                //    series: [{
-                //        minPointSize: 10,
-                //        innerSize: '20%',
-                //        zMin: 0,
-                //        name: 'Percentual de Etnia dos Alunos',
-                //        borderRadius: 5,
-                //        data: [{
-                //            name: 'PARDO',
-                //            y: result.data.dashboard.listTotalizadorEtnia.percTotalizadorEtniaMasculino.PARDO,
-                //            z: 50
-                //        }, {
-                //            name: 'BRANCO',
-                //            y: result.data.dashboard.listTotalizadorEtnia.percTotalizadorEtniaMasculino.BRANCO,
-                //            z: 50
-                //        }, {
-                //            name: 'PRETO',
-                //            y: result.data.dashboard.listTotalizadorEtnia.percTotalizadorEtniaMasculino.PRETO,
-                //            z: 50
-                //        }, {
-                //            name: 'INDIGENA',
-                //            y: result.data.dashboard.listTotalizadorEtnia.percTotalizadorEtniaMasculino.INDIGENA,
-                //            z: 50
-                //        }, {
-                //            name: 'AMARELO',
-                //            y: result.data.dashboard.listTotalizadorEtnia.percTotalizadorEtniaMasculino.AMARELO,
-                //            z: 50
-                //        }],
-                //        colors: [
-                //            '#EF5350',
-                //            '#EC407A',
-                //            '#AB47BC',
-                //            '#7E57C2'
-                //        ]
-                //    }]
-                //});
-
             });
         },
         SetGraficoTotalizadorQualidade: function (result) {
@@ -1506,113 +1486,65 @@ var vm = new Vue({
                     },
                     xAxis: {
                         categories: ['Bem estar físico', 'Mal estar físico', 'Autoestima e estabilidade emocional', 'Baixa autoestima e dificuldades emocionais', 'Funcionamento harmônico familiar',
-                            'Conflitos no contexto familiar', 'Contextos favorecedores do desenvolvimento ', 'Contextos não favorecedores do desenvolvimento ']
+                            'Conflitos no contexto familiar', 'Contextos favorecedores do desenvolvimento ', 'Contextos não favorecedores do desenvolvimento '],
+
+                        labels: {
+                            style: {
+                                fontSize: '12px'
+                            }
+                        }
                     },
                     yAxis: {
                         min: 0,
                         title: {
-                            text: 'Total'
+                            text: 'Total',
+                            style: {
+                                fontSize: '12px'
+                            }
                         }
                     },
                     legend: {
-                        reversed: true
+                        reversed: true,
+                        itemStyle: {
+                            fontSize: '12px'
+                        }
+                    },
+                    tooltip: {
+                        style: {
+                            fontSize: '12px'
+                        }
                     },
                     plotOptions: {
                         series: {
                             stacking: 'normal',
                             dataLabels: {
-                                enabled: true
+                                enabled: true,
+                                style: {
+                                    fontSize: '12px',
+                                    fontWeight: '400'
+                                }
                             }
                         }
                     },
                     series: [{
                         name: 'Feminino',
                         color: '#EC407A',
-                        data: [1, 0, 3, 0, 1, 2, 6, 3]
+                        data: [
+                            result.data.dashboard.listTotalizadorQualidadeVida.valorTotalizadorQualidadeVidaFeminino.BemEstarFisico,
+                            result.data.dashboard.listTotalizadorQualidadeVida.valorTotalizadorQualidadeVidaFeminino.MalEstarFisico,
+                            result.data.dashboard.listTotalizadorQualidadeVida.valorTotalizadorQualidadeVidaFeminino.AutoEstima,
+                            result.data.dashboard.listTotalizadorQualidadeVida.valorTotalizadorQualidadeVidaFeminino.BaixaAutoEstima, result.data.dashboard.listTotalizadorQualidadeVida.valorTotalizadorQualidadeVidaFeminino.FuncionamentoHarmonico, result.data.dashboard.listTotalizadorQualidadeVida.valorTotalizadorQualidadeVidaFeminino.Conflitos, result.data.dashboard.listTotalizadorQualidadeVida.valorTotalizadorQualidadeVidaFeminino.ContextosFavorecedores, result.data.dashboard.listTotalizadorQualidadeVida.valorTotalizadorQualidadeVidaFeminino.ContextosNaoFavorecedores
+                        ]
                     }, {
                         name: 'Masculino',
-                        data: [1, 1, 0, 2, 2, 4, 3, 6]
+                        data: [
+                            result.data.dashboard.listTotalizadorQualidadeVida.valorTotalizadorQualidadeVidaMasculino.BemEstarFisico,
+                            result.data.dashboard.listTotalizadorQualidadeVida.valorTotalizadorQualidadeVidaMasculino.MalEstarFisico,
+                            result.data.dashboard.listTotalizadorQualidadeVida.valorTotalizadorQualidadeVidaMasculino.AutoEstima,
+                            result.data.dashboard.listTotalizadorQualidadeVida.valorTotalizadorQualidadeVidaMasculino.BaixaAutoEstima, result.data.dashboard.listTotalizadorQualidadeVida.valorTotalizadorQualidadeVidaMasculino.FuncionamentoHarmonico, result.data.dashboard.listTotalizadorQualidadeVida.valorTotalizadorQualidadeVidaMasculino.Conflitos, result.data.dashboard.listTotalizadorQualidadeVida.valorTotalizadorQualidadeVidaMasculino.ContextosFavorecedores, result.data.dashboard.listTotalizadorQualidadeVida.valorTotalizadorQualidadeVidaMasculino.ContextosNaoFavorecedores
+                        ]
                     }]
                 });
-
-                //Highcharts.chart('containerEtnia', {
-                //    chart: {
-                //        type: 'bar'
-                //    },
-                //    title: {
-                //        text: undefined
-                //    },
-                //    xAxis: {
-                //        categories: ['PARDO', 'BRANCO', 'PRETO',
-                //            'INDIGENA', 'AMARELO'],
-
-                //        labels: {
-                //            style: {
-                //                fontSize: '12px'
-                //            }
-                //        }
-                //    },
-                //    yAxis: {
-                //        min: 0,
-                //        title: {
-                //            text: 'Total',
-                //            style: {
-                //                fontSize: '12px'
-                //            }
-                //        },
-
-                //        labels: {
-                //            style: {
-                //                fontSize: '12px'
-                //            }
-                //        }
-                //    },
-                //    legend: {
-                //        reversed: true,
-                //        itemStyle: {
-                //            fontSize: '12px'
-                //        }
-                //    },
-                //    tooltip: {
-                //        style: {
-                //            fontSize: '12px'
-                //        }
-                //    },
-                //    plotOptions: {
-                //        series: {
-                //            stacking: 'normal',
-                //            dataLabels: {
-                //                enabled: true,
-                //                style: {
-                //                    fontSize: '12px',
-                //                    fontWeight: '400'
-                //                }
-                //            }
-                //        }
-                //    },
-                //    series: [{
-                //        name: 'Feminino',
-                //        color: '#EC407A',
-                //        data: [
-                //            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeFeminino.baixoPeso,
-                //            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeFeminino.acimaPeso,
-                //            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeFeminino.riscoColesterolAlto,
-                //            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeFeminino.riscoHipertensao,
-                //            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeFeminino.resistenciaInsulina,
-                //        ]
-                //    }, {
-                //        name: 'Masculino',
-                //        data: [
-
-                //            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeMasculino.baixoPeso,
-                //            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeMasculino.acimaPeso,
-                //            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeMasculino.riscoColesterolAlto,
-                //            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeMasculino.riscoHipertensao,
-                //            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeMasculino.resistenciaInsulina,
-                //        ]
-                //    }]
-                //});
-
             });
         },
         SetGraficoConsumoPercentual: function (result) {
@@ -1657,91 +1589,23 @@ var vm = new Vue({
                         borderRadius: 5,
                         data: [{
                             name: 'Hábitos não saudáveis',
-                            y: 30,
+                            y: result.data.dashboard.listTotalizadorConsumoAlimentar.percentualConsumoAlimentar.HabitosSaudaveis,
                             z: 50
                         }, {
                             name: 'Hábitos satisfatórios',
-                            y: 20,
+                            y: result.data.dashboard.listTotalizadorConsumoAlimentar.percentualConsumoAlimentar.HabitosNaoSaudaveis,
                             z: 50
                         }, {
                             name: 'Bons Hábitos alimentares',
-                            y: 50,
+                            y: result.data.dashboard.listTotalizadorConsumoAlimentar.percentualConsumoAlimentar.HabitosSatisfatorios,
                             z: 50
                         }, {
                             name: 'Hábitos Saudáveis',
-                            y: 50,
+                            y: result.data.dashboard.listTotalizadorConsumoAlimentar.percentualConsumoAlimentar.BonsHabitosAlimentares,
                             z: 50
                         }]
                     }]
                 });
-
-                //Highcharts.chart('containerEtniaPercentual', {
-                //    chart: {
-                //        type: 'variablepie'
-                //    },
-                //    title: {
-                //        text: undefined
-                //    },
-                //    tooltip: {
-                //        headerFormat: '',
-                //        pointFormat: '<span style="color:{point.color}">\u25CF</span> <b> {point.name}</b><br/>' +
-                //            '<b>{point.y} %</b> dos Alunos',
-                //        style: {
-                //            fontSize: '12px'
-                //        }
-                //    },
-                //    legend: {
-                //        itemStyle: {
-                //            fontSize: '2px'
-                //        }
-                //    },
-                //    plotOptions: {
-                //        variablepie: {
-                //            dataLabels: {
-                //                enabled: true,
-                //                style: {
-                //                    fontSize: '12px',
-                //                    fontWeight: '400'
-                //                }
-                //            }
-                //        }
-                //    },
-                //    series: [{
-                //        minPointSize: 10,
-                //        innerSize: '20%',
-                //        zMin: 0,
-                //        name: 'Percentual de Etnia dos Alunos',
-                //        borderRadius: 5,
-                //        data: [{
-                //            name: 'PARDO',
-                //            y: result.data.dashboard.listTotalizadorEtnia.percTotalizadorEtniaMasculino.PARDO,
-                //            z: 50
-                //        }, {
-                //            name: 'BRANCO',
-                //            y: result.data.dashboard.listTotalizadorEtnia.percTotalizadorEtniaMasculino.BRANCO,
-                //            z: 50
-                //        }, {
-                //            name: 'PRETO',
-                //            y: result.data.dashboard.listTotalizadorEtnia.percTotalizadorEtniaMasculino.PRETO,
-                //            z: 50
-                //        }, {
-                //            name: 'INDIGENA',
-                //            y: result.data.dashboard.listTotalizadorEtnia.percTotalizadorEtniaMasculino.INDIGENA,
-                //            z: 50
-                //        }, {
-                //            name: 'AMARELO',
-                //            y: result.data.dashboard.listTotalizadorEtnia.percTotalizadorEtniaMasculino.AMARELO,
-                //            z: 50
-                //        }],
-                //        colors: [
-                //            '#EF5350',
-                //            '#EC407A',
-                //            '#AB47BC',
-                //            '#7E57C2'
-                //        ]
-                //    }]
-                //});
-
             });
         },
         SetGraficoTotalizadorConsumo: function (result) {
@@ -1798,90 +1662,14 @@ var vm = new Vue({
                     series: [{
                         name: 'Feminino',
                         color: '#EC407A',
-                        data: [1, 0, 3, 0]
+                        data: [
+                            result.data.dashboard.listTotalizadorConsumoAlimentar.valorTotalizadorConsumoAlimentarFeminino.HabitosSaudaveis, result.data.dashboard.listTotalizadorConsumoAlimentar.valorTotalizadorConsumoAlimentarFeminino.HabitosNaoSaudaveis, result.data.dashboard.listTotalizadorConsumoAlimentar.valorTotalizadorConsumoAlimentarFeminino.HabitosSatisfatorios, result.data.dashboard.listTotalizadorConsumoAlimentar.valorTotalizadorConsumoAlimentarFeminino.BonsHabitosAlimentares
+                        ]
                     }, {
                         name: 'Masculino',
-                        data: [1, 1, 0, 2]
+                        data: [result.data.dashboard.listTotalizadorConsumoAlimentar.valorTotalizadorConsumoAlimentarMasculino.HabitosSaudaveis, result.data.dashboard.listTotalizadorConsumoAlimentar.valorTotalizadorConsumoAlimentarMasculino.HabitosNaoSaudaveis, result.data.dashboard.listTotalizadorConsumoAlimentar.valorTotalizadorConsumoAlimentarMasculino.HabitosSatisfatorios, result.data.dashboard.listTotalizadorConsumoAlimentar.valorTotalizadorConsumoAlimentarMasculino.BonsHabitosAlimentares]
                     }]
                 });
-
-                //Highcharts.chart('containerEtnia', {
-                //    chart: {
-                //        type: 'bar'
-                //    },
-                //    title: {
-                //        text: undefined
-                //    },
-                //    xAxis: {
-                //        categories: ['PARDO', 'BRANCO', 'PRETO',
-                //            'INDIGENA', 'AMARELO'],
-
-                //        labels: {
-                //            style: {
-                //                fontSize: '12px'
-                //            }
-                //        }
-                //    },
-                //    yAxis: {
-                //        min: 0,
-                //        title: {
-                //            text: 'Total',
-                //            style: {
-                //                fontSize: '12px'
-                //            }
-                //        },
-
-                //        labels: {
-                //            style: {
-                //                fontSize: '12px'
-                //            }
-                //        }
-                //    },
-                //    legend: {
-                //        reversed: true,
-                //        itemStyle: {
-                //            fontSize: '12px'
-                //        }
-                //    },
-                //    tooltip: {
-                //        style: {
-                //            fontSize: '12px'
-                //        }
-                //    },
-                //    plotOptions: {
-                //        series: {
-                //            stacking: 'normal',
-                //            dataLabels: {
-                //                enabled: true,
-                //                style: {
-                //                    fontSize: '12px',
-                //                    fontWeight: '400'
-                //                }
-                //            }
-                //        }
-                //    },
-                //    series: [{
-                //        name: 'Feminino',
-                //        color: '#EC407A',
-                //        data: [
-                //            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeFeminino.baixoPeso,
-                //            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeFeminino.acimaPeso,
-                //            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeFeminino.riscoColesterolAlto,
-                //            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeFeminino.riscoHipertensao,
-                //            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeFeminino.resistenciaInsulina,
-                //        ]
-                //    }, {
-                //        name: 'Masculino',
-                //        data: [
-
-                //            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeMasculino.baixoPeso,
-                //            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeMasculino.acimaPeso,
-                //            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeMasculino.riscoColesterolAlto,
-                //            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeMasculino.riscoHipertensao,
-                //            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeMasculino.resistenciaInsulina,
-                //        ]
-                //    }]
-                //});
 
             });
         },
@@ -1927,87 +1715,19 @@ var vm = new Vue({
                         borderRadius: 5,
                         data: [{
                             name: 'CUIDADO',
-                            y: 75,
+                            y: result.data.dashboard.listTotalizadorSaudeBucal.percentualSaudeBucal.CUIDADO,
                             z: 50
                         }, {
                             name: 'ATENÇÃO',
-                            y: 0,
+                            y: result.data.dashboard.listTotalizadorSaudeBucal.percentualSaudeBucal.ATENCAO,
                             z: 50
                         }, {
                             name: 'MUITO BOM',
-                            y: 25,
+                            y: result.data.dashboard.listTotalizadorSaudeBucal.percentualSaudeBucal.MUITOBOM,
                             z: 50
                         }]
                     }]
                 });
-
-                //Highcharts.chart('containerEtniaPercentual', {
-                //    chart: {
-                //        type: 'variablepie'
-                //    },
-                //    title: {
-                //        text: undefined
-                //    },
-                //    tooltip: {
-                //        headerFormat: '',
-                //        pointFormat: '<span style="color:{point.color}">\u25CF</span> <b> {point.name}</b><br/>' +
-                //            '<b>{point.y} %</b> dos Alunos',
-                //        style: {
-                //            fontSize: '12px'
-                //        }
-                //    },
-                //    legend: {
-                //        itemStyle: {
-                //            fontSize: '2px'
-                //        }
-                //    },
-                //    plotOptions: {
-                //        variablepie: {
-                //            dataLabels: {
-                //                enabled: true,
-                //                style: {
-                //                    fontSize: '12px',
-                //                    fontWeight: '400'
-                //                }
-                //            }
-                //        }
-                //    },
-                //    series: [{
-                //        minPointSize: 10,
-                //        innerSize: '20%',
-                //        zMin: 0,
-                //        name: 'Percentual de Etnia dos Alunos',
-                //        borderRadius: 5,
-                //        data: [{
-                //            name: 'PARDO',
-                //            y: result.data.dashboard.listTotalizadorEtnia.percTotalizadorEtniaMasculino.PARDO,
-                //            z: 50
-                //        }, {
-                //            name: 'BRANCO',
-                //            y: result.data.dashboard.listTotalizadorEtnia.percTotalizadorEtniaMasculino.BRANCO,
-                //            z: 50
-                //        }, {
-                //            name: 'PRETO',
-                //            y: result.data.dashboard.listTotalizadorEtnia.percTotalizadorEtniaMasculino.PRETO,
-                //            z: 50
-                //        }, {
-                //            name: 'INDIGENA',
-                //            y: result.data.dashboard.listTotalizadorEtnia.percTotalizadorEtniaMasculino.INDIGENA,
-                //            z: 50
-                //        }, {
-                //            name: 'AMARELO',
-                //            y: result.data.dashboard.listTotalizadorEtnia.percTotalizadorEtniaMasculino.AMARELO,
-                //            z: 50
-                //        }],
-                //        colors: [
-                //            '#EF5350',
-                //            '#EC407A',
-                //            '#AB47BC',
-                //            '#7E57C2'
-                //        ]
-                //    }]
-                //});
-
             });
         },
         SetGraficoTotalizadorBucal: function (result) {
@@ -2064,91 +1784,12 @@ var vm = new Vue({
                     series: [{
                         name: 'Feminino',
                         color: '#EC407A',
-                        data: [1, 0, 2]
+                        data: [result.data.dashboard.listTotalizadorSaudeBucal.valorTotalizadorSaudeBucalFeminino.CUIDADO, result.data.dashboard.listTotalizadorSaudeBucal.valorTotalizadorSaudeBucalFeminino.ATENCAO, result.data.dashboard.listTotalizadorSaudeBucal.valorTotalizadorSaudeBucalFeminino.MUITOBOM]
                     }, {
                         name: 'Masculino',
-                        data: [1, 0, 0]
+                        data: [result.data.dashboard.listTotalizadorSaudeBucal.valorTotalizadorSaudeBucalMasculino.CUIDADO, result.data.dashboard.listTotalizadorSaudeBucal.valorTotalizadorSaudeBucalMasculino.ATENCAO, result.data.dashboard.listTotalizadorSaudeBucal.valorTotalizadorSaudeBucalMasculino.MUITOBOM]
                     }]
                 });
-
-                //Highcharts.chart('containerEtnia', {
-                //    chart: {
-                //        type: 'bar'
-                //    },
-                //    title: {
-                //        text: undefined
-                //    },
-                //    xAxis: {
-                //        categories: ['PARDO', 'BRANCO', 'PRETO',
-                //            'INDIGENA', 'AMARELO'],
-
-                //        labels: {
-                //            style: {
-                //                fontSize: '12px'
-                //            }
-                //        }
-                //    },
-                //    yAxis: {
-                //        min: 0,
-                //        title: {
-                //            text: 'Total',
-                //            style: {
-                //                fontSize: '12px'
-                //            }
-                //        },
-
-                //        labels: {
-                //            style: {
-                //                fontSize: '12px'
-                //            }
-                //        }
-                //    },
-                //    legend: {
-                //        reversed: true,
-                //        itemStyle: {
-                //            fontSize: '12px'
-                //        }
-                //    },
-                //    tooltip: {
-                //        style: {
-                //            fontSize: '12px'
-                //        }
-                //    },
-                //    plotOptions: {
-                //        series: {
-                //            stacking: 'normal',
-                //            dataLabels: {
-                //                enabled: true,
-                //                style: {
-                //                    fontSize: '12px',
-                //                    fontWeight: '400'
-                //                }
-                //            }
-                //        }
-                //    },
-                //    series: [{
-                //        name: 'Feminino',
-                //        color: '#EC407A',
-                //        data: [
-                //            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeFeminino.baixoPeso,
-                //            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeFeminino.acimaPeso,
-                //            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeFeminino.riscoColesterolAlto,
-                //            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeFeminino.riscoHipertensao,
-                //            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeFeminino.resistenciaInsulina,
-                //        ]
-                //    }, {
-                //        name: 'Masculino',
-                //        data: [
-
-                //            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeMasculino.baixoPeso,
-                //            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeMasculino.acimaPeso,
-                //            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeMasculino.riscoColesterolAlto,
-                //            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeMasculino.riscoHipertensao,
-                //            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeMasculino.resistenciaInsulina,
-                //        ]
-                //    }]
-                //});
-
             });
         },
         SetGraficoVocacionalPercentual: function (result) {
@@ -2193,27 +1834,27 @@ var vm = new Vue({
                         borderRadius: 5,
                         data: [{
                             name: 'Tecnologias Aplicadas',
-                            y: 5,
+                            y: result.data.dashboard.listTotalizadorVocacional.percentualVocacional.TecnologiasAplicadas,
                             z: 50
                         }, {
                             name: 'Ciências Exatas e Naturais',
-                            y: 20,
+                            y: result.data.dashboard.listTotalizadorVocacional.percentualVocacional.CienciasExatasNaturais,
                             z: 50
                         }, {
                             name: 'Artístico',
-                            y: 20,
+                            y: result.data.dashboard.listTotalizadorVocacional.percentualVocacional.Artistico,
                             z: 50
                         }, {
                             name: 'Ciências Humanas',
-                            y: 30,
+                            y: result.data.dashboard.listTotalizadorVocacional.percentualVocacional.CienciasHumanas,
                             z: 50
                         }, {
                             name: 'Empreendedorismo',
-                            y: 10,
+                            y: result.data.dashboard.listTotalizadorVocacional.percentualVocacional.Empreendedorismo,
                             z: 50
                         }, {
                             name: 'Ciências Contabeis e Administrativas',
-                            y: 15,
+                            y: result.data.dashboard.listTotalizadorVocacional.percentualVocacional.CienciasContabeisAdministrativas,
                             z: 50
                         }],
                         colors: [
@@ -2225,75 +1866,6 @@ var vm = new Vue({
                         ]
                     }]
                 });
-
-
-                //Highcharts.chart('containerEtniaPercentual', {
-                //    chart: {
-                //        type: 'variablepie'
-                //    },
-                //    title: {
-                //        text: undefined
-                //    },
-                //    tooltip: {
-                //        headerFormat: '',
-                //        pointFormat: '<span style="color:{point.color}">\u25CF</span> <b> {point.name}</b><br/>' +
-                //            '<b>{point.y} %</b> dos Alunos',
-                //        style: {
-                //            fontSize: '12px'
-                //        }
-                //    },
-                //    legend: {
-                //        itemStyle: {
-                //            fontSize: '2px'
-                //        }
-                //    },
-                //    plotOptions: {
-                //        variablepie: {
-                //            dataLabels: {
-                //                enabled: true,
-                //                style: {
-                //                    fontSize: '12px',
-                //                    fontWeight: '400'
-                //                }
-                //            }
-                //        }
-                //    },
-                //    series: [{
-                //        minPointSize: 10,
-                //        innerSize: '20%',
-                //        zMin: 0,
-                //        name: 'Percentual de Etnia dos Alunos',
-                //        borderRadius: 5,
-                //        data: [{
-                //            name: 'PARDO',
-                //            y: result.data.dashboard.listTotalizadorEtnia.percTotalizadorEtniaMasculino.PARDO,
-                //            z: 50
-                //        }, {
-                //            name: 'BRANCO',
-                //            y: result.data.dashboard.listTotalizadorEtnia.percTotalizadorEtniaMasculino.BRANCO,
-                //            z: 50
-                //        }, {
-                //            name: 'PRETO',
-                //            y: result.data.dashboard.listTotalizadorEtnia.percTotalizadorEtniaMasculino.PRETO,
-                //            z: 50
-                //        }, {
-                //            name: 'INDIGENA',
-                //            y: result.data.dashboard.listTotalizadorEtnia.percTotalizadorEtniaMasculino.INDIGENA,
-                //            z: 50
-                //        }, {
-                //            name: 'AMARELO',
-                //            y: result.data.dashboard.listTotalizadorEtnia.percTotalizadorEtniaMasculino.AMARELO,
-                //            z: 50
-                //        }],
-                //        colors: [
-                //            '#EF5350',
-                //            '#EC407A',
-                //            '#AB47BC',
-                //            '#7E57C2'
-                //        ]
-                //    }]
-                //});
-
             });
         },
         SetGraficoTotalizadorVocacional: function (result) {
@@ -2329,91 +1901,16 @@ var vm = new Vue({
                     series: [{
                         name: 'Feminino',
                         color: '#EC407A',
-                        data: [1, 0, 3, 0, 1, 2]
+                        data: [
+                            result.data.dashboard.listTotalizadorVocacional.valorTotalizadorVocacionalFeminino.TecnologiasAplicadas, result.data.dashboard.listTotalizadorVocacional.valorTotalizadorVocacionalFeminino.CienciasExatasNaturais, result.data.dashboard.listTotalizadorVocacional.valorTotalizadorVocacionalFeminino.Artistico, result.data.dashboard.listTotalizadorVocacional.valorTotalizadorVocacionalFeminino.CienciasHumanas, result.data.dashboard.listTotalizadorVocacional.valorTotalizadorVocacionalFeminino.Empreendedorismo, result.data.dashboard.listTotalizadorVocacional.valorTotalizadorVocacionalFeminino.CienciasContabeisAdministrativas
+                        ]
                     }, {
                         name: 'Masculino',
-                        data: [1, 1, 0, 2, 2, 4]
+                        data: [
+                            result.data.dashboard.listTotalizadorVocacional.valorTotalizadorVocacionalMasculino.TecnologiasAplicadas, result.data.dashboard.listTotalizadorVocacional.valorTotalizadorVocacionalMasculino.CienciasExatasNaturais, result.data.dashboard.listTotalizadorVocacional.valorTotalizadorVocacionalMasculino.Artistico, result.data.dashboard.listTotalizadorVocacional.valorTotalizadorVocacionalMasculino.CienciasHumanas, result.data.dashboard.listTotalizadorVocacional.valorTotalizadorVocacionalMasculino.Empreendedorismo, result.data.dashboard.listTotalizadorVocacional.valorTotalizadorVocacionalMasculino.CienciasContabeisAdministrativas
+                        ]
                     }]
                 });
-
-                //Highcharts.chart('containerEtnia', {
-                //    chart: {
-                //        type: 'bar'
-                //    },
-                //    title: {
-                //        text: undefined
-                //    },
-                //    xAxis: {
-                //        categories: ['PARDO', 'BRANCO', 'PRETO',
-                //            'INDIGENA', 'AMARELO'],
-
-                //        labels: {
-                //            style: {
-                //                fontSize: '12px'
-                //            }
-                //        }
-                //    },
-                //    yAxis: {
-                //        min: 0,
-                //        title: {
-                //            text: 'Total',
-                //            style: {
-                //                fontSize: '12px'
-                //            }
-                //        },
-
-                //        labels: {
-                //            style: {
-                //                fontSize: '12px'
-                //            }
-                //        }
-                //    },
-                //    legend: {
-                //        reversed: true,
-                //        itemStyle: {
-                //            fontSize: '12px'
-                //        }
-                //    },
-                //    tooltip: {
-                //        style: {
-                //            fontSize: '12px'
-                //        }
-                //    },
-                //    plotOptions: {
-                //        series: {
-                //            stacking: 'normal',
-                //            dataLabels: {
-                //                enabled: true,
-                //                style: {
-                //                    fontSize: '12px',
-                //                    fontWeight: '400'
-                //                }
-                //            }
-                //        }
-                //    },
-                //    series: [{
-                //        name: 'Feminino',
-                //        color: '#EC407A',
-                //        data: [
-                //            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeFeminino.baixoPeso,
-                //            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeFeminino.acimaPeso,
-                //            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeFeminino.riscoColesterolAlto,
-                //            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeFeminino.riscoHipertensao,
-                //            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeFeminino.resistenciaInsulina,
-                //        ]
-                //    }, {
-                //        name: 'Masculino',
-                //        data: [
-
-                //            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeMasculino.baixoPeso,
-                //            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeMasculino.acimaPeso,
-                //            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeMasculino.riscoColesterolAlto,
-                //            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeMasculino.riscoHipertensao,
-                //            result.data.dashboard.listTotalizadorSaudeSexo.valorTotalizadorSaudeMasculino.resistenciaInsulina,
-                //        ]
-                //    }]
-                //});
-
             });
         },
     }

@@ -19,17 +19,6 @@
 						<h2 class="panel-title">Cadastro de TextoLaudo</h2>
 					</header>
 					<div class="panel-body">
-
-                        @* <div class="form-group row">
-                            <label class="col-sm-3 control-label text-sm-right pt-2">Tipo Laudo <span class="required">*</span></label>
-                            <div class="col-sm-4 form-group">
-								<select class="form-control populate select2" name="ddlTipoLaudo" id="ddlTipoLaudo" style="width:100%"
-                                        required title="Por favor selecione o tipo de laudo"
-										asp-for="TiposLaudoId" asp-items="Model.ListTiposLaudos">
-                                    <option value="">Selecionar Tipo Laudo</option>
-                                </select>
-                            </div>
-                        </div> *@
                         <div class="form-group row">
                             <label class="col-sm-3 control-label text-sm-right pt-2">Tipo Laudo <span class="required">*</span></label>
                             <div class="col-sm-4">
@@ -41,55 +30,61 @@
                             </div>
                         </div>
 
-
 						<div class="form-group row">
-							<label class="col-sm-3 control-label text-sm-right pt-2">Idade </label>
+							<label class="col-sm-3 control-label text-sm-right pt-2">Idade <span class="required">*</span> </label>
 							<div class="col-sm-3">
-								<input type="number" name="idade" class="form-control"
+								<input type="number" name="idade" class="form-control" required
 									   title="Por favor informe a idade." />
 							</div>
-							<label class="col-sm-2 control-label text-sm-right pt-2">Sexo</label>
+							<label class="col-sm-2 control-label text-sm-right pt-2">Sexo <span class="required">*</span></label>
 							<div class="col-sm-3">
-								<select class="form-control populate select2" name="ddlSexo" id="ddlSexo"
+								<select class="form-control populate select2" name="ddlSexo" id="ddlSexo" required
 										title="Por favor selecione um sexo.">
 									<option value="">Selecionar Sexo</option>
+									<option value="G">GERAL</option>
 									<option value="M">MASCULINO</option>
 									<option value="F">FEMININO</option>
 								</select>
 							</div>
 						</div>
-
-
 						<div class="form-group row">
 							<label class="col-sm-3 control-label text-sm-right pt-2">Classificação <span class="required">*</span></label>
-                            <div class="col-sm-4">
+                            <div class="col-sm-8">
                                 <input type="text" name="classificacao" class="form-control"
                                        maxlength="100"
                                        title="Por favor informe a classificação." required />
                             </div>
-							
-                            <label class="col-sm-1 control-label text-sm-right pt-2">Aviso <span class="required">*</span></label>
-                            <div class="col-sm-3">
+						</div>
+
+						<div class="form-group row">
+                            <label class="col-sm-3 control-label text-sm-right pt-2">Aviso <span class="required">*</span></label>
+                            <div class="col-sm-8">
                                 <input type="text" name="aviso" class="form-control" maxlength="100"
                                        title="Por favor informe o aviso." required />
                             </div>
 						</div>
 						<div class="form-group row">
-							<label class="col-sm-3 control-label text-sm-right pt-2">Ponto Inicial </label>
-							<div class="col-sm-3">
-								<input type="text" id="pontoInicial" name="pontoInicial" class="form-control"  maxlength="5"
+							<label class="col-sm-3 control-label text-sm-right pt-2">Ponto Inicial <span class="required">*</span> </label>
+							<div class="col-sm-2">
+								<input type="text" id="pontoInicial" name="pontoInicial" class="form-control"  maxlength="5" required
 									   title="Por favor informe o ponto inicial." />
 							</div>
-							<label class="col-sm-2 control-label text-sm-right pt-2">Ponto Final </label>
-							<div class="col-sm-3">
-								<input type="text" id="pontoFinal" name="pontoFinal" class="form-control"  maxlength="5"
+							<label class="col-sm-1 control-label text-sm-right pt-2">Ponto Final <span class="required">*</span> </label>
+							<div class="col-sm-2">
+                                <input type="text" id="pontoFinal" name="pontoFinal" class="form-control" maxlength="5" required
 									   title="Por favor informe o ponto final." />
+							</div>
+
+							<label class="col-sm-1 control-label text-sm-right pt-2">Quadrante <span class="required">*</span></label>
+							<div class="col-sm-2">
+                                <input type="number" id="quadrante" name="quadrante" class="form-control" maxlength="2" required
+									   title="Por favor informe o Quadrante." />
 							</div>
 						</div>
 						<div class="form-group row">
 							<label class="col-sm-3 control-label text-sm-right pt-2">Texto <span class="required">*</span></label>
 							<div class="col-sm-8">
-								<textarea class="form-control" rows="5"  name="texto" required></textarea>
+								<textarea class="form-control" rows="5" name="texto" title="Por favor informe o texto." required></textarea>
 							</div>
 						</div>
 					</div>

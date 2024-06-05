@@ -1,14 +1,41 @@
-﻿var vm = new Vue({
-    el: "#formQuestionario",
+var vm = new Vue({
+    el: "#vCurso ",
     data: {
         loading: false,
-        editDto: { Id: "",TipoLaudo: "", Pergunta: "", Quadrabte:"", Questao:"" }
+        editDto: { Id: "", NomeCurso: "", Status: true }
     },
     mounted: function () {
         var self = this;
         (function ($) {
             'use strict';
 
+
+
+            var $select = $(".select2").select2({
+                allowClear: true
+            });
+
+            $(".select2").each(function () {
+                var $this = $(this),
+                    opts = {};
+
+                var pluginOptions = $this.data('plugin-options');
+                if (pluginOptions)
+                    opts = pluginOptions;
+
+                $this.themePluginSelect2(opts);
+            });
+
+            /*
+             * When you change the value the select via select2, it triggers
+             * a 'change' event, but the jquery validation plugin
+             * only re-validates on 'blur'*/
+
+            $select.on('change', function () {
+                $(this).trigger('blur');
+            });
+
+            //skin checkbox
             if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
 
                 $(function () {
@@ -22,10 +49,9 @@
 
             var formid = $('form')[1].id;
 
-            if (formid === "formEditQuestionario") {
+            if (formid === "formEditCurso") {
 
-
-                $("#formEditQuestionario").validate({
+                $("#formEditCurso ").validate({
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
                     },
@@ -45,33 +71,10 @@
                 });
             }
 
-            if (formid === "formQuestionario") {
+            if (formid === "formCurso") {
 
-                var $select = $(".select2").select2({
-                    allowClear: true
-                });
 
-                $(".select2").each(function () {
-                    var $this = $(this),
-                        opts = {};
-
-                    var pluginOptions = $this.data('plugin-options');
-                    if (pluginOptions)
-                        opts = pluginOptions;
-
-                    $this.themePluginSelect2(opts);
-                });
-
-                /*
-                 * When you change the value the select via select2, it triggers
-                 * a 'change' event, but the jquery validation plugin
-                 * only re-validates on 'blur'*/
-
-                $select.on('change', function () {
-                    $(this).trigger('blur');
-                });
-
-                $("#formQuestionario").validate({
+                $("#formCurso").validate({
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
                     },
@@ -90,7 +93,6 @@
                     }
                 });
             }
-
         }).apply(this, [jQuery]);
     },
     methods: {
@@ -113,21 +115,19 @@
                 self.loading = flag;
             }
         },
-        DeleteQuestionario: function (id) {
-            var url = "Questionario/Delete/" + id;
-            $("#deleteQuestionarioHref").prop("href", url);
+        DeleteCurso: function (id) {
+            var url = "Curso/Delete/" + id;
+            $("#deleteCursoHref").prop("href", url);
         },
-        EditQuestionario: function (id) {
+        EditCurso: function (id) {
             var self = this;
 
-            axios.get("Questionario/GetQuestionarioById/?id=" + id).then(result => {
+            axios.get("Curso/GetCursoById/?id=" + id).then(result => {
 
                 self.editDto.Id = result.data.id;
-                self.editDto.TipoLaudo = result.data.tipoLaudo.nome;
-                self.editDto.Pergunta = result.data.pergunta;
-                self.editDto.Quadrante = result.data.quadrante;
-                self.editDto.Questao = result.data.questao;
-               
+                self.editDto.NomeCurso = result.data.nomeCurso;
+                self.editDto.Status = result.data.status;
+
             }).catch(error => {
                 Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
             });
@@ -137,13 +137,13 @@
 
 var crud = {
     DeleteModal: function (id) {
-        $('input[name="QuestionarioId"]').attr('value', id);
-        $('#mdDeleteQuestionario').modal('show');
-        vm.DeleteQuestionario(id)
+        $('input[name="deleteCursoId"]').attr('value', id);
+        $('#mdDeleteCurso').modal('show');
+        vm.DeleteCurso(id)
     },
     EditModal: function (id) {
-        $('input[name="QuestionarioId"]').attr('value', id);
-        $('#mdEditQuestionario').modal('show');
-        vm.EditQuestionario(id)
+        $('input[name="editCursoId"]').attr('value', id);
+        $('#mdEditCurso').modal('show');
+        vm.EditCurso(id)
     }
 };

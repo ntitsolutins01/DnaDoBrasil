@@ -11,5 +11,6 @@
         public string Aviso { get; set; }
         public string Texto { get; set; }
         public string Sexo { get; set; }
+        public string Quadrante { get; set; }
     }
 }

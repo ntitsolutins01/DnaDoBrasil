@@ -106,12 +106,45 @@
                         });
                 });
 
+                //clique de escolha do select
+                $("#ddlLocalidade").change(function () {
+                    var id = $("#ddlLocalidade").val();
+
+                    var url = "../../Localidade/GetProfissionaisByLocalidade/?id=" + id;
+
+                    var ddlSource = "#ddlProfissional";
+
+                    $.getJSON(url,
+                        { id: $(ddlSource).val() },
+                        function (data) {
+                            if (data.length > 0) {
+                                var items = '<option value="">Selecionar Profissional</option>';
+                                $("#ddlProfissional").empty;
+                                $.each(data,
+                                    function (i, row) {
+                                        items += "<option value='" + row.value + "'>" + row.text + "</option>";
+                                    });
+                                $("#ddlProfissional").html(items);
+                            }
+                            else {
+                                new PNotify({
+                                    title: 'Profissional',
+                                    text: 'Profissionais não encontrados.',
+                                    type: 'warning'
+                                });
+                            }
+                        });
+                });
+
                 //mascara dos inputs
                 var $numCpf = $("#cpf");
                 $numCpf.mask('000.000.000-00', { reverse: false });
-                //mascara dos inputs
+
                 var $numDtNasc = $("#dtNasc");
                 $numDtNasc.mask('00/00/0000', { reverse: false });
+
+                var $numTel = $("#numCelular");
+                $numTel.mask('(00) 00000-0000');
 
                 jQuery.validator.addMethod("cpf", function (cpf, element) {
                     var regex = /^\d{3}\.\d{3}\.\d{3}\-\d{2}$/;

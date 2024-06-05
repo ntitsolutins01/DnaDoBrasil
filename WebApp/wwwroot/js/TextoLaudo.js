@@ -22,6 +22,12 @@ var vm = new Vue({
                 var $pontoFinal = $("#pontoFinal");
                 $pontoFinal.mask('00.00', { reverse: true });
 
+                var quadrante = $("#quadrante");
+                quadrante.mask('00', { reverse: true });
+
+                var idade = $("#idade");
+                idade.mask('00', { reverse: true });
+
                 $("#formEditTextoLaudo").validate({
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
@@ -134,6 +140,7 @@ var vm = new Vue({
                 self.editDto.NomeTipoLaudo = result.data.nomeTipoLaudo;
                 self.editDto.Idade = result.data.idade;
                 self.editDto.Sexo = result.data.sexo;
+                self.editDto.Quadrante = result.data.quadrante;
 
             }).catch(error => {
                 Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);

@@ -132,5 +132,21 @@ namespace WebApp.Controllers
                 return Task.FromResult(Json(ex));
             }
         }
-	}
+
+        public Task<JsonResult> GetProfissionaisByLocalidade(string id)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(id)) throw new Exception("Localidadee não informada.");
+                var resultLocal = ApiClientFactory.Instance.GetProfissionaisByLocalidade(Convert.ToInt32(id));
+
+                return Task.FromResult(Json(new SelectList(resultLocal, "Id", "Nome")));
+
+            }
+            catch (Exception ex)
+            {
+                return Task.FromResult(Json(ex));
+            }
+        }
+    }
 }

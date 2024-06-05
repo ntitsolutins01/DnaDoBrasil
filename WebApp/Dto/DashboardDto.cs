@@ -25,6 +25,10 @@ namespace WebApp.Dto
         public List<string>? ListPercTalentoCategorias { get; set; }
         public List<DataGrafico>? ListValorTalentoMasc { get; set; }
         public List<DataGrafico>? ListValorTalentoFem { get; set; }
+        public TotalizadorQualidadeVidaDto? ListTotalizadorQualidadeVida { get; set; }
+        public TotalizadorConsumoAlimentarDto? ListTotalizadorConsumoAlimentar { get; set; }
+        public TotalizadorSaudeBucalDto? ListTotalizadorSaudeBucal { get; set; }
+        public TotalizadorVocacionalDto? ListTotalizadorVocacional { get; set; }
         public TotalizadorDesempenhoDto? ListTotalizadorDesempenho { get; set; }
         public TotalizadorDeficienciaDto? ListTotalizadorDeficiencia { get; set; }
         public List<DataGrafico> ListPercDeficiencia { get; set; }

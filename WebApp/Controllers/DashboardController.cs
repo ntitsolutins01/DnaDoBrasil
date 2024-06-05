@@ -1,9 +1,7 @@
-﻿using System.Security.Claims;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
-using NuGet.Protocol.Core.Types;
 using WebApp.Configuration;
 using WebApp.Dto;
 using WebApp.Factory;
@@ -401,6 +399,66 @@ namespace WebApp.Controllers
             try
             {
                 var dashboard = await ApiClientFactory.Instance.GetGraficoPercDesempenhoFisicoMotorByFilter(search);
+
+                var model = new DashboardModel
+                {
+                    Dashboard = dashboard,
+
+                };
+
+                return await Task.FromResult(Json(model));
+
+            }
+            catch (Exception ex)
+            {
+                return await Task.FromResult(Json(ex));
+            }
+        }
+        public async Task<JsonResult> GetGraficosQualidadeVidaByFilter([FromBody] DashboardDto search)
+        {
+            try
+            {
+                var dashboard = await ApiClientFactory.Instance.GetGraficosQualidadeVidaByFilter(search);
+
+                var model = new DashboardModel
+                {
+                    Dashboard = dashboard,
+
+                };
+
+                return await Task.FromResult(Json(model));
+
+            }
+            catch (Exception ex)
+            {
+                return await Task.FromResult(Json(ex));
+            }
+        }
+        public async Task<JsonResult> GetGraficosConsumoAlimentarByFilter([FromBody] DashboardDto search)
+        {
+            try
+            {
+                var dashboard = await ApiClientFactory.Instance.GetGraficosConsumoAlimentarByFilter(search);
+
+                var model = new DashboardModel
+                {
+                    Dashboard = dashboard,
+
+                };
+
+                return await Task.FromResult(Json(model));
+
+            }
+            catch (Exception ex)
+            {
+                return await Task.FromResult(Json(ex));
+            }
+        }
+        public async Task<JsonResult> GetGraficosVocacionalByFilter([FromBody] DashboardDto search)
+        {
+            try
+            {
+                var dashboard = await ApiClientFactory.Instance.GetGraficosVocacionalByFilter(search);
 
                 var model = new DashboardModel
                 {

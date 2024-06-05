@@ -53,6 +53,14 @@
                         </select>
                     </div>
                     <div class="form-group mb-lg">
+                        <label>Localidade</label>
+                        <select class="form-control populate select2" name="ddlProfissional" id="ddlProfissional"
+                                title="Por favor informe o profissional." required 
+                                asp-for="ProfissionalId" asp-items="Model.ListProfissionais">
+                            <option value="">Selecionar Profissional</option>
+                        </select>
+                    </div>
+                    <div class="form-group mb-lg">
                         <label>Endereço</label>
                         <input name="endereco" id="endereco" type="text" class="form-control" required
                                title="Por favor informe o endereço." />
@@ -67,7 +75,7 @@
                     </div>
                     <div class="form-group mb-lg">
                         <label>Nome completo do Aluno</label>
-                        <input name="nomeA" id="nomeA" type="text" class="form-control" required
+                        <input name="nome" id="nome" type="text" class="form-control" required
                                title="Por favor informe o nome completo." />
                         <p>
                             <code>Sem abreviações</code>
@@ -104,6 +112,16 @@
                         <label>E-mail</label>
                         <input name="email" id="email" type="email" class="form-control" required
                                title="Por favor informe o email." />
+                    </div>
+                    <div class="form-group mb-lg">
+                        <label>Celular</label>
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-phone"></i>
+                            </span>
+                            <input id="numCelular" name="numCelular" class="form-control"
+                                   maxlength="15" required title="Por favor informe o celular.">
+                        </div>
                     </div>
                     <div class="form-group mb-lg">
                         <label>Etnia</label>

@@ -59,6 +59,7 @@ namespace WebApp.Areas.Identity.Pages.Account
         public int EstadoId { get; set; }
         public int MunicipioId { get; set; }
         public int LocalidadeId { get; set; }
+        public int ProfissionalId { get; set; }
         public int EtniaId { get; set; }
         public int AreaId { get; set; }
         public int DeficienciaId { get; set; }
@@ -68,7 +69,7 @@ namespace WebApp.Areas.Identity.Pages.Account
         public SelectList ListEtnias { get; set; }
         public SelectList ListAreas { get; set; }
         public SelectList ListDeficiencia { get; set; }
-        public SelectList ListEficiencia { get; set; }
+        public SelectList ListProfissionais { get; set; }
         public int NotifyMessage { get; set; }
         public string Notify { get; set; }
         public string FomentoId { get; set; }
@@ -103,34 +104,23 @@ namespace WebApp.Areas.Identity.Pages.Account
 
             List<SelectListDto> list = new List<SelectListDto>
             {
-                new() { IdNome = "PARDOS", Nome = "PARDOS" },
-                new() { IdNome = "BRANCOS", Nome = "BRANCOS" },
-                new() { IdNome = "NEGROS", Nome = "NEGROS" },
-                new() { IdNome = "INDIGENAS", Nome = "INDIGENAS" },
-                new() { IdNome = "AMARELOS", Nome = "AMARELOS" }
+                new() { IdNome = "PARDO", Nome = "PARDO" },
+                new() { IdNome = "BRANCO", Nome = "BRANCO" },
+                new() { IdNome = "PRETO", Nome = "PRETO" },
+                new() { IdNome = "INDIGENA", Nome = "INDIGENA" },
+                new() { IdNome = "AMARELO", Nome = "AMARELO" }
             };
 
             var etnias = new SelectList(list, "IdNome", "Nome");
             ListEtnias = etnias;
 
-            List<SelectListDto> listArea = new List<SelectListDto>
-            {
-                new() { Id = 1, Nome = "Atividades Esportivas e Detecção de Talentos" },
-                new() { Id = 2, Nome = "Preparatório para Vestibular e Aula de Reforço" },
-                new() { Id = 3, Nome = "Temática com os Direitos Humanos" },
-                new() { Id = 4, Nome = "Oficinas Profissionalizantes" },
-                new() { Id = 5, Nome = "Atividade de Arte e Cultura" }
-            };
-
-            var areas = new SelectList(listArea, "Id", "Nome");
-            ListAreas = areas;
+            var linhasAcoes = new SelectList(ApiClientFactory.Instance.GetLinhasAcoesAll(), "Id", "Nome");
+            ListAreas = linhasAcoes;
 
             var deficiencias = new SelectList(ApiClientFactory.Instance.GetDeficienciaAll().Where(x => x.Status), "Id", "Nome");
             ListDeficiencia = deficiencias;
 
         }
-
-
 
         public async Task<IActionResult> OnPostAsync(IFormCollection collection)
         {
@@ -148,6 +138,7 @@ namespace WebApp.Areas.Identity.Pages.Account
                 Sexo = collection["ddlSexo"] == "" ? null : collection["ddlSexo"].ToString(),
                 DtNascimento = collection["dtNasc"] == "" ? null : collection["dtNasc"].ToString(),
                 Email = collection["email"] == "" ? null : collection["email"].ToString(),
+                Celular = collection["numCelular"] == "" ? null : collection["numCelular"].ToString(),
                 Etnia = collection["ddlEtnia"] == "" ? null : collection["ddlEtnia"].ToString(),
                 NomeMae = collection["nomeMae"] == "" ? null : collection["nomeMae"].ToString(),
                 NomeResponsavel = collection["nomeResp"] == "" ? null : collection["nomeResp"].ToString(),
@@ -158,21 +149,11 @@ namespace WebApp.Areas.Identity.Pages.Account
                 UtilizacaoImagem = Convert.ToBoolean(collection["utilizacaoImagem"].ToString()),
                 ParticipacaoProgramaCompartilhamentoDados = Convert.ToBoolean(collection["participacao"].ToString()),
                 CopiaDocAlunoResponsavel = Convert.ToBoolean(collection["copiaDoc"].ToString()),
-                AutorizacaoConsentimentoAssentimento = collection["agreeterms"].ToString() != ""
+                AutorizacaoConsentimentoAssentimento = collection["agreeterms"].ToString() != "",
+                ProfissionalId = collection["ddlProfissional"] == "" ? null : Convert.ToInt32(collection["ddlProfissional"].ToString())
             };
 
-            var alunoId = await ApiClientFactory.Instance.CreateDados(commandAluno);
-
-            var result = ApiClientFactory.Instance.GetAlunoById((int)alunoId);
-
-            var command = new UsuarioModel.CreateUpdateUsuarioCommand
-            {
-                Email = collection["email"].ToString(),
-                Nome = collection["nome"].ToString(),
-                CpfCnpj = collection["cpf"].ToString()
-            };
-
-            var newUser = new IdentityUser { UserName = command.Email, Email = command.Email };
+            var newUser = new IdentityUser { UserName = commandAluno.Email, Email = commandAluno.Email };
             var aspNetUser = await _userManager.CreateAsync(newUser, "12345678");
 
             StringBuilder msg = new StringBuilder();
@@ -188,6 +169,17 @@ namespace WebApp.Areas.Identity.Pages.Account
                 //return Page();
                 return RedirectToPage("Register", new { notify = (int)EnumNotify.Error, message = msg });
             }
+
+            var alunoId = await ApiClientFactory.Instance.CreateDados(commandAluno);
+
+            var result = ApiClientFactory.Instance.GetAlunoById((int)alunoId);
+
+            var command = new UsuarioModel.CreateUpdateUsuarioCommand
+            {
+                Email = collection["email"].ToString(),
+                Nome = collection["nome"].ToString(),
+                CpfCnpj = collection["cpf"].ToString()
+            };
 
             var perfil = ApiClientFactory.Instance.GetPerfilById((int)EnumPerfil.Aluno);
 
@@ -208,21 +200,10 @@ namespace WebApp.Areas.Identity.Pages.Account
 
             SendNewUserEmail(newUser, command.Email, command.Nome);
 
-            //var commandDependencia = new DependenciaModel.CreateUpdateDependenciaCommand()
-            //{
-            //    AlunoId = (int?)alunoId,
-            //    AutorizacaoSaida = autorizado,
-            //    AutorizacaoUsoImagemAudio = utilizacaoImagem,
-            //    AutorizacaoUsoIndicadores = participacao,
-            //    TermoCompromisso = true
-            //};
-
-            //await ApiClientFactory.Instance.CreateDependencia(commandDependencia);
-
             string returnUrl = null;
             returnUrl ??= Url.Content("~/");
 
-            return RedirectToPage("RegisterConfirmation", new { email = command.Email, returnUrl = returnUrl });
+            return RedirectToPage("Register", new { notify = (int)EnumNotify.Success, message = "Aluno cadastrado com sucesso!" });
         }
 
         private async Task SendNewUserEmail(IdentityUser user, string email, string nome)

@@ -1,4 +1,5 @@
-﻿using WebApp.Dto;
+﻿using NuGet.Protocol.Core.Types;
+using WebApp.Dto;
 using WebApp.Models;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
@@ -21,6 +22,24 @@ namespace WebApp.ApiClient
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 $"{ResourceDashboard}/GraficoPercDesempenhoFisicoMotor"));
+            return GetFiltro(requestUrl, searchFilter);
+        }
+        public Task<DashboardDto?> GetGraficosQualidadeVidaByFilter(DashboardDto searchFilter)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceDashboard}/GetGraficosQualidadeVida"));
+            return GetFiltro(requestUrl, searchFilter);
+        }
+        public Task<DashboardDto?> GetGraficosConsumoAlimentarByFilter(DashboardDto searchFilter)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceDashboard}/GetGraficosConsumoAlimentar"));
+            return GetFiltro(requestUrl, searchFilter);
+        }
+        public Task<DashboardDto?> GetGraficosVocacionalByFilter(DashboardDto searchFilter)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceDashboard}/GetGraficosVocacional"));
             return GetFiltro(requestUrl, searchFilter);
         }
         public Task<DashboardDto?> GetGraficosSaudeByFilter(DashboardDto searchFilter)
@@ -78,17 +97,13 @@ namespace WebApp.ApiClient
 			return GetFiltro(requestUrl, searchFilter);
 		}
 
-        //public DashboardDto GraficoControlePresencasByFilter(DashboardDto searchFilter)
-        //{
-        //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-        //        $"{ResourceDashboard}/GraficoControlePresencas"));
-        //    return GetFiltro(requestUrl, searchFilter);
-        //}
         #endregion
 
         #region Methods
 
 
         #endregion
+
+
     }
 }
