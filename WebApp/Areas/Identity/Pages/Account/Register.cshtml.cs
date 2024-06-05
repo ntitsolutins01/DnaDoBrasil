@@ -170,40 +170,38 @@ namespace WebApp.Areas.Identity.Pages.Account
                 return RedirectToPage("Register", new { notify = (int)EnumNotify.Error, message = msg });
             }
 
-            var alunoId = await ApiClientFactory.Instance.CreateDados(commandAluno);
+            var includedUserId = _userManager.Users.FirstOrDefault(x => x.Email == newUser.Email).Id;
 
-            var result = ApiClientFactory.Instance.GetAlunoById((int)alunoId);
+            var perfil = ApiClientFactory.Instance.GetPerfilById((int)EnumPerfil.Aluno);
 
             var command = new UsuarioModel.CreateUpdateUsuarioCommand
             {
                 Email = collection["email"].ToString(),
                 Nome = collection["nome"].ToString(),
-                CpfCnpj = collection["cpf"].ToString()
-            };
-
-            var perfil = ApiClientFactory.Instance.GetPerfilById((int)EnumPerfil.Aluno);
-
-            var includedUserId = _userManager.Users.FirstOrDefault(x => x.Email == newUser.Email).Id;
-
-            command.AspNetUserId = includedUserId;
-            command.AspNetRoleId = perfil.AspNetRoleId;
-            command.PerfilId = perfil.Id;
-
+                CpfCnpj = collection["cpf"].ToString(),
+                AspNetUserId = includedUserId,
+                AspNetRoleId = perfil.AspNetRoleId,
+                PerfilId = perfil.Id,
+                MunicipioId = (int)commandAluno.MunicipioId,
+                TipoPessoa = "pf"
+			};
+            
             var usu = await ApiClientFactory.Instance.CreateUsuario(command);
 
-            if (usu != 0)
-            {
-                var res = await ApiClientFactory.Instance.UpdateDados(result.Id,
-                    new AlunoModel.CreateUpdateDadosAlunoCommand()
-                    { AspNetUserId = command.AspNetUserId, Habilitado = true, Id = result.Id, Nome = result.Nome, Cpf = result.Cpf, Email = result.Email });
-            }
+            var userRole = _roleManager.Roles.FirstOrDefault(x => x.Id == perfil.AspNetRoleId).Name;
 
+            await _userManager.AddToRoleAsync(newUser, userRole);
+
+            commandAluno.AspNetUserId = command.AspNetUserId;
+
+			var alunoId = await ApiClientFactory.Instance.CreateDados(commandAluno);
+            
             SendNewUserEmail(newUser, command.Email, command.Nome);
 
             string returnUrl = null;
             returnUrl ??= Url.Content("~/");
 
-            return RedirectToPage("Register", new { notify = (int)EnumNotify.Success, message = "Aluno cadastrado com sucesso!" });
+            return RedirectToPage("Register", new { notify = (int)EnumNotify.Success, message = $"Aluno cadastrado com sucesso. Matrícula: {alunoId}" });
         }
 
         private async Task SendNewUserEmail(IdentityUser user, string email, string nome)
