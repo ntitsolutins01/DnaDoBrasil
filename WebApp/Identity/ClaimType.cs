@@ -1,0 +1,12 @@
+﻿namespace WebApp.Identity
+{
+    public static class ClaimType
+    {
+        public const string Aluno = "Aluno";
+        public const string ControlePresenca = "ControlePresenca";
+        public const string Profissional = "Profissional";
+        public const string Laudo = "Laudo";
+        public const string PlanoAula = "PlanoAula";
+        public const string SistemaSocioeconomico = "SistemaSocioeconomico";
+    }
+}

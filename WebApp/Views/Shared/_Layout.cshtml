@@ -1,4 +1,11 @@
-﻿<!doctype html>
+@using WebApp.Areas.Identity.Models
+@using NuGet.Configuration
+@using System.Security.Claims
+@using Microsoft.AspNetCore.Authorization
+@using WebApp.Identity
+@using WebApp.Services
+@inject IAuthorizationService AuthorizationService
+<!doctype html>
 <html class="sidebar-light sidebar-left-big-icons">
 <head>
 
@@ -20,13 +27,11 @@
     <link rel="stylesheet" href="~/assets/vendor/bootstrap/css/bootstrap.css" />
 
     <link rel="stylesheet" href="~/assets/vendor/font-awesome/css/font-awesome.css" />
-    <link rel="stylesheet" href="~/assets/vendor/magnific-popup/magnific-popup.css" />
     <link rel="stylesheet" href="~/assets/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.css" />
 
     <!-- Specific Page Vendor CSS -->
     <link rel="stylesheet" href="~/assets/vendor/jquery-ui/jquery-ui.css" />
     <link rel="stylesheet" href="~/assets/vendor/jquery-ui/jquery-ui.theme.css" />
-    <link rel="stylesheet" href="~/assets/vendor/bootstrap-multiselect/bootstrap-multiselect.css" />
     <link rel="stylesheet" href="~/assets/vendor/morris.js/morris.css" />
     <link rel="stylesheet" href="~/assets/vendor/pnotify/pnotify.custom.css" />
 
@@ -52,7 +57,7 @@
         <header class="header">
             <div class="logo-container">
                 <a href="../1.7.0" class="logo">
-                    <img src="~/assets/images/logo.png" width="75" height="35" alt="Porto Admin" />
+                    <img src="~/assets/images/logo.png" width="75" height="35" alt="Dna do Brasil" />
                 </a>
                 <div class="visible-xs toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-opened">
                     <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
@@ -61,33 +66,171 @@
 
             <!-- start: search & user box -->
             <div class="header-right">
+                <ul class="notifications">
+                    @* <li>
+                        <a href="#" class="dropdown-toggle notification-icon" data-toggle="dropdown">
+                            <i class="fa fa-tasks"></i>
+                            <span class="badge">3</span>
+                        </a>
 
+                        <div class="dropdown-menu notification-menu large">
+                            <div class="notification-title">
+                                <span class="pull-right label label-default">3</span>
+                                Tasks
+                            </div>
 
-                <div id="userbox" class="userbox">
-                    <a href="#" data-toggle="dropdown">
-                        <figure class="profile-picture">
-                            <img src="~/assets/images/!logged-user.jpg" alt="Joseph Doe" class="img-circle" data-lock-picture="~/assets/images/!logged-user.jpg" />
-                        </figure>
-                        <div class="profile-info" data-lock-name="Fabio Muniz" data-lock-email="ntitsolutions01@gmail.com">
-                            <span class="name">Fabio Muniz</span>
-                            <span class="role">Administrator</span>
+                            <div class="content">
+                                <ul>
+                                    <li>
+                                        <p class="clearfix mb-xs">
+                                            <span class="message pull-left">Generating Sales Report</span>
+                                            <span class="message pull-right text-dark">60%</span>
+                                        </p>
+                                        <div class="progress progress-xs light">
+                                            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <p class="clearfix mb-xs">
+                                            <span class="message pull-left">Importing Contacts</span>
+                                            <span class="message pull-right text-dark">98%</span>
+                                        </p>
+                                        <div class="progress progress-xs light">
+                                            <div class="progress-bar" role="progressbar" aria-valuenow="98" aria-valuemin="0" aria-valuemax="100" style="width: 98%;"></div>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <p class="clearfix mb-xs">
+                                            <span class="message pull-left">Uploading something big</span>
+                                            <span class="message pull-right text-dark">33%</span>
+                                        </p>
+                                        <div class="progress progress-xs light mb-xs">
+                                            <div class="progress-bar" role="progressbar" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100" style="width: 33%;"></div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
+                    </li>
+                    <li>
+                        <a href="#" class="dropdown-toggle notification-icon" data-toggle="dropdown">
+                            <i class="fa fa-envelope"></i>
+                            <span class="badge">4</span>
+                        </a>
 
-                        <i class="fa custom-caret"></i>
-                    </a>
+                        <div class="dropdown-menu notification-menu">
+                            <div class="notification-title">
+                                <span class="pull-right label label-default">230</span>
+                                Messages
+                            </div>
 
-                    <div class="dropdown-menu">
-                        <ul class="list-unstyled">
-                            <li class="divider"></li>
-                            <li>
-                                <a role="menuitem" tabindex="-1" href="pages-user-profile.html"><i class="fa fa-user"></i> Meu Perfil</a>
-                            </li>
-                            <li>
-                                <a role="menuitem" tabindex="-1" href="pages-signin.html"><i class="fa fa-power-off"></i> Sair</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+                            <div class="content">
+                                <ul>
+                                    <li>
+                                        <a href="#" class="clearfix">
+                                            <figure class="image">
+                                                <img src="assets/images/!sample-user.jpg" alt="Joseph Doe Junior" class="img-circle" />
+                                            </figure>
+                                            <span class="title">Joseph Doe</span>
+                                            <span class="message">Lorem ipsum dolor sit.</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="clearfix">
+                                            <figure class="image">
+                                                <img src="assets/images/!sample-user.jpg" alt="Joseph Junior" class="img-circle" />
+                                            </figure>
+                                            <span class="title">Joseph Junior</span>
+                                            <span class="message truncate">Truncated message. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sit amet lacinia orci. Proin vestibulum eget risus non luctus. Nunc cursus lacinia lacinia. Nulla molestie malesuada est ac tincidunt. Quisque eget convallis diam, nec venenatis risus. Vestibulum blandit faucibus est et malesuada. Sed interdum cursus dui nec venenatis. Pellentesque non nisi lobortis, rutrum eros ut, convallis nisi. Sed tellus turpis, dignissim sit amet tristique quis, pretium id est. Sed aliquam diam diam, sit amet faucibus tellus ultricies eu. Aliquam lacinia nibh a metus bibendum, eu commodo eros commodo. Sed commodo molestie elit, a molestie lacus porttitor id. Donec facilisis varius sapien, ac fringilla velit porttitor et. Nam tincidunt gravida dui, sed pharetra odio pharetra nec. Duis consectetur venenatis pharetra. Vestibulum egestas nisi quis elementum elementum.</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="clearfix">
+                                            <figure class="image">
+                                                <img src="assets/images/!sample-user.jpg" alt="Joe Junior" class="img-circle" />
+                                            </figure>
+                                            <span class="title">Joe Junior</span>
+                                            <span class="message">Lorem ipsum dolor sit.</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="clearfix">
+                                            <figure class="image">
+                                                <img src="assets/images/!sample-user.jpg" alt="Joseph Junior" class="img-circle" />
+                                            </figure>
+                                            <span class="title">Joseph Junior</span>
+                                            <span class="message">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sit amet lacinia orci. Proin vestibulum eget risus non luctus. Nunc cursus lacinia lacinia. Nulla molestie malesuada est ac tincidunt. Quisque eget convallis diam.</span>
+                                        </a>
+                                    </li>
+                                </ul>
+
+                                <hr />
+
+                                <div class="text-right">
+                                    <a href="#" class="view-more">View All</a>
+                                </div> 
+                            </div>
+                        </div>
+                    </li> *@
+                    <li>
+                        <a href="#" class="dropdown-toggle notification-icon" data-toggle="dropdown">
+                            <i class="fa fa-bell"></i>
+                            <span class="badge">3</span>
+                        </a>
+
+                        <div class="dropdown-menu notification-menu">
+                            <div class="notification-title">
+                                <span class="pull-right label label-default">3</span>
+                                Alertas
+                            </div>
+
+                            <div class="content">
+                                <ul>
+                                    <li>
+                                        <a href="#" class="clearfix">
+                                            <div class="image">
+                                                <i class="fa fa-bullhorn bg-danger"></i>
+                                            </div>
+                                            <span class="title">Solicitações</span>
+                                            <span class="message">50 solicitações pendentes</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="clearfix">
+                                            <div class="image">
+                                                <i class="fa fa-graduation-cap bg-warning"></i>
+                                            </div>
+                                            <span class="title">Cadastro Aluno</span>
+                                            <span class="message">15 alunos cadasttrados</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="clearfix">
+                                            <div class="image">
+                                                <i class="fa fa-file-text-o bg-success"></i>
+                                            </div>
+                                            <span class="title">Laudos</span>
+                                            <span class="message">3 laudos Finalizados</span>
+                                        </a>
+                                    </li>
+                                </ul>
+
+                                @* <hr />
+
+                                <div class="text-right">
+                                    <a href="#" class="view-more">View All</a>
+                                </div> *@
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+                <span class="separator"></span>
+                @{
+                    Html.RenderPartial("_UserBox");
+                }
             </div>
             <!-- end: search & user box -->
         </header>
@@ -105,131 +248,217 @@
                         <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
                     </div>
                 </div>
+                @{
+                    var userRole = ((ClaimsIdentity)User.Identity).FindFirst(ClaimTypes.Role).Value;
 
+                    var requirement = new UserInRoleRequirement(userRole);
+                }
                 <div class="nano">
                     <div class="nano-content">
                         <nav id="menu" class="nav-main" role="navigation">
 
                             <ul class="nav nav-main">
-                                <li>
-                                    <a href="@Url.Action("Index", "Dashboard")">
-                                        <i class="fa fa-home" aria-hidden="true"></i>
-                                        <span>Dashboard</span>
-                                    </a>
-                                </li>
-                                <li class="nav-parent">
-                                    <a href="#">
-                                        <i class="fa fa-cogs" aria-hidden="true"></i>
-                                        <span>Configuração Sistema</span>
-                                    </a>
-                                    <ul class="nav nav-children">
-                                        <li>
-                                            <a href="@Url.Action("Index", "TiposLaudo")">
-                                                Tipos Laudo
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="@Url.Action("Index", "Ambiente")">
-                                                Ambiente
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="@Url.Action("Index", "Deficiencia")">
-                                                Deficiencia
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="@Url.Action("Index", "Fomento")">
-	                                            Fomento
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="@Url.Action("Index", "Localidade")">
-                                                Localidade
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="@Url.Action("Index", "Contrato")">
-                                                Contratos
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="@Url.Action("Index", "Escolaridade")">
-                                                Tipo Escolaridade
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="@Url.Action("Index", "Serie")">
-                                                Série
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
+                                @* @if ((await AuthorizationService.AuthorizeAsync(User, "Dashboard")).Succeeded)
+                                {
+                                <p>This paragraph is displayed because you fulfilled PolicyName.</p>
+                                } *@
+                                @if ((await AuthorizationService.AuthorizeAsync(User, ModuloAccess.Dashboard)).Succeeded)
+                                {
+                                    <li>
+                                        <a href="@Url.Action("Index", "Dashboard")">
+                                            <i class="fa fa-home" aria-hidden="true"></i>
+                                            <span>Dashboard</span>
+                                        </a>
+                                    </li>
+                                }
+                                @if ((await AuthorizationService.AuthorizeAsync(User, ModuloAccess.ConfiguracaoSistema)).Succeeded)
+                                {
+                                    <li class="nav-parent">
+                                        <a href="#">
+                                            <i class="fa fa-cogs" aria-hidden="true"></i>
+                                            <span>Configuração Sistema</span>
+                                        </a>
+                                        <ul class="nav nav-children">
+                                            <li>
+                                                <a href="@Url.Action("Index", "TiposLaudo")">
+                                                    Tipos Laudo
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("Index", "LinhaAcao")">
+                                                    Linha de Ação
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("Index", "Modalidade")">
+                                                    Modalidade
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("Index", "Deficiencia")">
+                                                    Deficiencia
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("Index", "Fomento")">
+                                                    Fomento
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("Index", "Localidade")">
+                                                    Localidade
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("Index", "TipoParceria")">
+                                                    Tipo Parceria
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("Index", "Questionario")">
+                                                    Questionário
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("Index", "Resposta")">
+                                                    Resposta
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("Index", "TextoLaudo")">
+                                                    Texto Laudo
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("Index", "MetricaImc")">
+                                                    Métrica Imc
+                                                </a>
+                                            </li>
+                                            @* <li>
+                                        <a href="@Url.Action("Index", "Serie")">
+                                        Série
+                                        </a>
+                                        </li> *@
+                                            <li>
+                                                <a href="@Url.Action("Index", "Modulo")">
+                                                    Módulo
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("Index", "Funcionalidade")">
+                                                    Funcionalidade
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                }
+                                @if ((await AuthorizationService.AuthorizeAsync(User, UserRoles.Aluno)).Succeeded)
+                                {
+                                    <li class="nav-parent nav-expanded">
+                                        <a href="@Url.Action("Index", "Aluno")">
+                                            <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                                            <span>Alunos</span>
+                                        </a>
+                                    </li>
+                                }
+
+                                @if ((await AuthorizationService.AuthorizeAsync(User, ModuloAccess.ControlePresenca)).Succeeded)
+                                {
+                                    <li class="nav-parent">
+                                        <a href="#">
+                                            <i class="fa fa-user-plus" aria-hidden="true"></i>
+                                            <span>Controle Presença</span>
+                                        </a>
+                                        <ul class="nav nav-children">
+                                            <li>
+                                                <a href="@Url.Action("Index", "ControlePresenca")">
+                                                    Presença
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    Notas
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                }
+
+                                @if ((await AuthorizationService.AuthorizeAsync(User, ModuloAccess.Profissional)).Succeeded)
+                                {
+                                    <li class="nav-parent nav-expanded">
+                                        <a href="@Url.Action("Index", "Profissional")">
+                                            <i class="fa fa-suitcase" aria-hidden="true"></i>
+                                            <span>Profissionais</span>
+                                        </a>
+                                    </li>
+                                }
+
+                                @if ((await AuthorizationService.AuthorizeAsync(User, ModuloAccess.SistemaSocioeconomico)).Succeeded)
+                                {
+                                    <li class="nav-parent">
+                                        <a href="#">
+                                            <i class="fa fa-retweet" aria-hidden="true"></i>
+                                            <span>Sistema<br />Socioeconomico</span>
+                                        </a>
+                                        <ul class="nav nav-children">
+                                            <li>
+                                                <a href="@Url.Action("Parceiro", "SistemaSocioeconomico")">
+                                                    Parceiros
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("SolicitacaoContato", "SistemaSocioeconomico")">
+                                                    Solicitações de contato
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                }
+
+                                @if ((await AuthorizationService.AuthorizeAsync(User, ModuloAccess.Laudo)).Succeeded)
+                                {
+                                    <li class="nav-parent nav-expanded">
+                                        <a href="@Url.Action("Index", "Laudo")">
+                                            <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                                            <span>Laudos</span>
+                                        </a>
+                                    </li>
+                                }
+
+                                @if ((await AuthorizationService.AuthorizeAsync(User, ModuloAccess.PlanoAula)).Succeeded)
+                                {
+                                    <li class="nav-parent nav-expanded">
+                                        <a href="@Url.Action("Index", "PlanoAula")">
+                                            <i class="fa fa-book" aria-hidden="true"></i>
+                                            <span>Planos de aula</span>
+                                        </a>
+                                    </li>
+                                }
+
+                                @if ((await AuthorizationService.AuthorizeAsync(User, ModuloAccess.ControleAcesso)).Succeeded)
+                                {
+                                    <li class="nav-parent nav-expanded">
+                                        <a href="@Url.Action("Index", "Usuario")">
+                                            <i class="fa fa-users" aria-hidden="true"></i>
+                                            <span>Usuarios</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-parent nav-expanded">
+                                        <a href="@Url.Action("Index", "Perfil")">
+                                            <i class="fa fa-shield" aria-hidden="true"></i>
+                                            <span>Perfil</span>
+                                        </a>
+                                    </li>
+                                }
+
                                 <li class="nav-parent nav-expanded">
-                                    <a href="@Url.Action("Index", "Aluno")">
-                                        <i class="fa fa-graduation-cap" aria-hidden="true"></i>
-                                        <span></>Alunos</span>
+                                    <a href="@Url.Action("Index", "Curso")">
+                                        <i class="fa fa-files-o" aria-hidden="true"></i>
+                                        <span>Cursos</span>
                                     </a>
                                 </li>
-                                <li class="nav-parent nav-expanded">
-                                    <a href="@Url.Action("Index", "Profissional")">
-                                        <i class="fa fa-suitcase" aria-hidden="true"></i>
-                                        <span></>Profissionais</span>
-                                    </a>
-                                </li>
-                                <li class="nav-parent">
-                                    <a href="#">
-                                        <i class="fa fa-retweet" aria-hidden="true"></i>
-                                        <span>Sistema<br />Socioeconomico</span>
-                                    </a>
-                                    <ul class="nav nav-children">
-                                        <li>
-                                            <a href="@Url.Action("Parceiro", "SistemaSocioeconomico")">
-                                                Parceiros
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="@Url.Action("Estudantes", "SistemaSocioeconomico")">
-                                                Estudantes
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="@Url.Action("SolicitacaoContato", "SistemaSocioeconomico")">
-                                                Solicitações de contato
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="nav-parent nav-expanded">
-                                    <a href="@Url.Action("Index", "Laudo")">
-                                        <i class="fa fa-file-text-o" aria-hidden="true"></i>
-                                        <span></>Laudos</span>
-                                    </a>
-                                </li>
-                                <li class="nav-parent nav-expanded">
-                                    <a href="@Url.Action("Index", "Transacao")">
-                                        <i class="fa fa-exchange" aria-hidden="true"></i>
-                                        <span>Transações</span>
-                                    </a>
-                                </li>
-                                <li class="nav-parent nav-expanded">
-                                    <a href="@Url.Action("Index", "PlanoAula")">
-                                        <i class="fa fa-book" aria-hidden="true"></i>
-                                        <span>Planos de aula</span>
-                                    </a>
-                                </li>
-                                <li class="nav-parent nav-expanded">
-                                    <a href="@Url.Action("Index", "Usuario")">
-                                        <i class="fa fa-users" aria-hidden="true"></i>
-                                        <span>Usuarios</span>
-                                    </a>
-                                </li>
-                                <li class="nav-parent nav-expanded">
-                                    <a href="@Url.Action("Index", "Perfil")">
-                                        <i class="fa fa-shield" aria-hidden="true"></i>
-                                        <span>Perfil</span>
-                                    </a>
-                                </li>
+                               
                             </ul>
                         </nav>
                     </div>
@@ -270,14 +499,13 @@
     <script src="~/assets/vendor/bootstrap/js/bootstrap.js"></script>
     <script src="~/assets/vendor/nanoscroller/nanoscroller.js"></script>
     <script src="~/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-    <script src="~/assets/vendor/magnific-popup/jquery.magnific-popup.js"></script>
-    <script src="~/assets/vendor/jquery-placeholder/jquery-placeholder.js"></script>
+    <script src="~/assets/vendor/bootstrap-multiselect/bootstrap-multiselect.js"></script>
+
 
     <!-- Specific Page Vendor -->
     <script src="~/assets/vendor/jquery-ui/jquery-ui.js"></script>
     <script src="~/assets/vendor/jqueryui-touch-punch/jqueryui-touch-punch.js"></script>
     <script src="~/assets/vendor/jquery-appear/jquery-appear.js"></script>
-    <script src="~/assets/vendor/bootstrap-multiselect/bootstrap-multiselect.js"></script>
     <script src="~/assets/vendor/jquery.easy-pie-chart/jquery.easy-pie-chart.js"></script>
     <script src="~/assets/vendor/flot/jquery.flot.js"></script>
     <script src="~/assets/vendor/flot.tooltip/flot.tooltip.js"></script>
@@ -290,19 +518,10 @@
     <script src="~/assets/vendor/gauge/gauge.js"></script>
     <script src="~/assets/vendor/snap.svg/snap.svg.js"></script>
     <script src="~/assets/vendor/liquid-meter/liquid.meter.js"></script>
-    <script src="~/assets/vendor/jqvmap/jquery.vmap.js"></script>
-    <script src="~/assets/vendor/jqvmap/data/jquery.vmap.sampledata.js"></script>
-    <script src="~/assets/vendor/jqvmap/maps/jquery.vmap.world.js"></script>
-    <script src="~/assets/vendor/jqvmap/maps/continents/jquery.vmap.africa.js"></script>
-    <script src="~/assets/vendor/jqvmap/maps/continents/jquery.vmap.asia.js"></script>
-    <script src="~/assets/vendor/jqvmap/maps/continents/jquery.vmap.australia.js"></script>
-    <script src="~/assets/vendor/jqvmap/maps/continents/jquery.vmap.europe.js"></script>
-    <script src="~/assets/vendor/jqvmap/maps/continents/jquery.vmap.north-america.js"></script>
-    <script src="~/assets/vendor/jqvmap/maps/continents/jquery.vmap.south-america.js"></script>
     <script src="~/assets/vendor/pnotify/pnotify.custom.js"></script>
 
     <!-- Theme Base, Components and Settings -->
-    <script src="~/assets/javascripts/theme.js"></script> 30285888000117 18
+    <script src="~/assets/javascripts/theme.js"></script>
 
     <!-- Theme Custom -->
     <script src="~/assets/javascripts/theme.custom.js"></script>
@@ -310,11 +529,9 @@
     <!-- Theme Initialization Files -->
     <script src="~/assets/javascripts/theme.init.js"></script>
     <script src="~/assets/vendor/vue/vue.js"></script>
-    <script src="~/assets/vendor/axios/axios.min.js"></script>
+    @* <script src="~/assets/vendor/axios/axios.min.js"></script> *@
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="~/js/main.js"></script>
-
-    <!-- Examples -->
-    <script src="~/assets/javascripts/dashboard/examples.dashboard.js"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

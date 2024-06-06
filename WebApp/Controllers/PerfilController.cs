@@ -50,7 +50,7 @@ namespace WebApp.Controllers
         //[ClaimsAuthorize("Perfil", "Incluir")]
         public ActionResult Create()
         {
-            var responseModulos = ApiClientFactory.Instance.GetModuloAll();
+            var responseModulos = ApiClientFactory.Instance.GetModulosAll();
 
             var model = new PerfilModel { Modulos = responseModulos };
             return View(model);
@@ -63,7 +63,7 @@ namespace WebApp.Controllers
             try
             {
                 ListDictionary list = new ListDictionary();
-                var responseModulos = ApiClientFactory.Instance.GetModuloAll();
+                var responseModulos = ApiClientFactory.Instance.GetModulosAll();
 
                 foreach (var modulo in responseModulos)
                 {
@@ -107,20 +107,29 @@ namespace WebApp.Controllers
         public ActionResult Edit(int id)
         {
             var perfil = ApiClientFactory.Instance.GetPerfilById(id);
-            if (id == null)
-                return RedirectToActionResult();
-            var obj = GetPerfilByAspNetRoleId(perfil.AspNetRoleId);
-            var responseModulos = ApiClientFactory.Instance.GetModuloAll();
 
-            var listClaim = new List<Claim>();
-
-            foreach (DictionaryEntry item in obj.Claims)
+            if (id != null)
             {
-                listClaim.Add(new Claim(item.Key.ToString(), item.Value.ToString()));
+                var obj = GetPerfilByAspNetRoleId(perfil.AspNetRoleId);
+                var responseModulos = ApiClientFactory.Instance.GetModulosAll();
+
+                var listClaim = new List<Claim>();
+
+                foreach (DictionaryEntry item in obj.Claims)
+                {
+                    listClaim.Add(new Claim(item.Key.ToString(), item.Value.ToString()));
+                }
+
+                var model = new PerfilModel { Perfil = perfil, Modulos = responseModulos, Claims = listClaim };
+                return View(model);
             }
 
-            var model = new PerfilModel { Perfil = perfil, Modulos = responseModulos, Claims = listClaim };
-            return View(model);
+            return RedirectToAction(nameof(Index),
+                new
+                {
+                    notify = 2,
+                    message = "Erro ao alterar o perfil. Favor entrar em contato com o administrador do sistema."
+                });
         }
 
         //[ClaimsAuthorize("Perfil", "Alterar")]
@@ -130,7 +139,7 @@ namespace WebApp.Controllers
             try
             {
                 ListDictionary list = new ListDictionary();
-                var responseModulos = ApiClientFactory.Instance.GetModuloAll();
+                var responseModulos = ApiClientFactory.Instance.GetModulosAll();
                 var perfil = ApiClientFactory.Instance.GetPerfilById(id);
 
                 foreach (var modulo in responseModulos)
@@ -171,20 +180,18 @@ namespace WebApp.Controllers
                         var res = await _roleManager.AddClaimAsync(adminRole, addClaim);
                     }
 
-                    var result = await ApiClientFactory.Instance.UpdatePerfil(id, command);
+                    await ApiClientFactory.Instance.UpdatePerfil(id, command);
 
-                    if (result)
-                    {
-                        return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
-                    }
-                    else
-                    {
-                        return RedirectToActionResult();
-                    }
+                    return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
                 }
                 else
                 {
-                    return RedirectToActionResult();
+                    return RedirectToAction(nameof(Index),
+                        new
+                        {
+                            notify = 2,
+                            message = "Erro ao alterar o perfil. Favor entrar em contato com o administrador do sistema."
+                        });
                 }
             }
             catch
@@ -233,15 +240,6 @@ namespace WebApp.Controllers
             entity.Claims = list;
 
             return entity;
-        }
-        private RedirectToActionResult RedirectToActionResult()
-        {
-            return RedirectToAction(nameof(Index),
-                new
-                {
-                    notify = 2,
-                    message = "Erro ao alterar o perfil. Favor entrar em contato com o administrador do sistema."
-                });
         }
     }
 }

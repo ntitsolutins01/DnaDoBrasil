@@ -95,11 +95,11 @@ namespace WebApp.Controllers
 			}
 		}
 
-		public async Task<SerieDto> GetSerieById(int id)
+		public Task<SerieDto> GetSerieById(int id)
 		{
 			var result = ApiClientFactory.Instance.GetSerieById(id);
 
-			return result;
+			return Task.FromResult(result);
 		}
 	}
 }

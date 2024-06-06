@@ -79,7 +79,7 @@ namespace WebApp.Areas.Identity.Pages.Account
             var message =
                 System.IO.File.ReadAllText(Path.Combine(_host.WebRootPath, "EmailTemplates/ForgotPassword.html"));
             message = message.Replace("%NAME%", nome);
-            message = message.Replace("%SITE%", "http://front.dnadobrasil.org.br/");
+            message = message.Replace("%SITE%", "Dna do Brasil");
             message = message.Replace("%TEMPOTOKEN%", _parameters.Value.TokenTime.ToString());
             message = message.Replace("%HORA%", DateTime.Now.ToString("hh:mm"));
             message = message.Replace("%DATA%", DateTime.Now.ToString("dd/MM/yyyy"));

@@ -1,5 +1,6 @@
 using System.Text;
 using Newtonsoft.Json;
+using WebApp.Dto;
 using WebApp.Models;
 
 namespace WebApp.ApiClient
@@ -20,8 +21,18 @@ namespace WebApp.ApiClient
             addHeaders();
             var response = _httpClient.GetAsync(requestUrl, HttpCompletionOption.ResponseHeadersRead);
             var data = response.Result.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<T>(data.Result);
+            return JsonConvert.DeserializeObject<T>(data.Result)!;
         }
+        public Task<T?> GetFiltro<T>(Uri requestUrl, T content)
+        {
+            addHeaders();
+            var response = _httpClient.PostAsync(requestUrl, CreateHttpContent<T>(content));
+            var data = response.Result.Content.ReadAsStringAsync();
+            return Task.FromResult(JsonConvert.DeserializeObject<T>(data.Result));
+
+
+        }
+
 
         /// <summary>
         /// Common method for making POST calls
@@ -33,6 +44,7 @@ namespace WebApp.ApiClient
             var data = response.Result.Content.ReadAsStringAsync();
             return Task.FromResult(JsonConvert.DeserializeObject<long>(data.Result));
         }
+
 
         /// <summary>
         /// Common method for making PUT calls

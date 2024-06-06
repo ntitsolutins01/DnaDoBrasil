@@ -35,10 +35,10 @@ namespace WebApp.ApiClient
 
         #region Methods
 
-        public PlanoAulaDto GetPlanoAulaById(string id)
+        public PlanoAulaDto GetPlanoAulaById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourcePlanoAula}/{id}"));
+                $"{ResourcePlanoAula}/PlanoAula/{id}"));
             return Get<PlanoAulaDto>(requestUrl);
         }
         public List<PlanoAulaDto> GetPlanosAulasAll()

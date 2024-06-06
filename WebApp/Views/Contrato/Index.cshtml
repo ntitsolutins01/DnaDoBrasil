@@ -29,6 +29,7 @@
 								<th class="text-center">Data Inicío</th>
 								<th class="text-center">Data fim</th>
 								<th class="text-center">Anexo</th>
+								<th class="text-center">Status</th>
 								<th class="text-center">Ações</th>
 							</tr>
 						</thead>
@@ -42,6 +43,14 @@
 									<td class="text-center">@Html.DisplayFor(modelItem => item.DtIni)</td>
 									<td class="text-center">@Html.DisplayFor(modelItem => item.DtFim)</td>
 									<td class="text-center">@Html.DisplayFor(modelItem => item.Anexo)</td>
+									@if (item.Status)
+									{
+										<td class="text-center"><span class="label label-success">ATIVO</span></td>
+									}
+									else
+									{
+										<td class="text-center"><span class="label label-danger">INATIVO</span></td>
+									}
 									<td class="actions">
 										<a data-toggle="tooltip" data-placement="top" title="Editar"
 										   href='javascript:(crud.EditModal(@item.Id))'
@@ -153,7 +162,12 @@
 							<label class="col-sm-3 control-label text-sm-right pt-2">Status</label>
 							<div class="col-md-3">
 								<div class="switch switch-sm switch-primary">
-									<input type="checkbox" id="editStatus" name="editStatus" data-plugin-ios-switch checked="checked" />
+									<div v-show="editDto.Status">
+										<input type="checkbox" id="editStatus" name="editStatus" data-plugin-ios-switch checked="checked" />
+									</div>
+									<div v-show="!editDto.Status">
+										<input type="checkbox" id="editStatus" name="editStatus" data-plugin-ios-switch />
+									</div>
 								</div>
 							</div>
 						</div>
@@ -174,6 +188,7 @@
 @section Scripts {
 	<script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
 	<script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
+	<script src="~/assets/vendor/ios7-switch/ios7-switch.js"></script>
 	<script src="~/js/formatTable.js"></script>
 	<script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
 	<script src="~/assets/vendor/jquery-mask/jquery.mask.js"></script>

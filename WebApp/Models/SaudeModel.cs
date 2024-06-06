@@ -13,10 +13,12 @@ namespace WebApp.Models
         public class CreateUpdateSaudeCommand
         {
 	        public int Id { get; set; }
-            public required int ProfissionalId { get; set; }
-            public int? Altura { get; set; }
-            public int Massa { get; set; }
-            public int? Envergadura { get; set; }
+            public int? ProfissionalId { get; set; }
+            public int? AlunoId { get; set; }
+            public int? EnvergaduraSaude { get; set; }
+            public int? MassaCorporalSaude { get; set; }
+            public int? AlturaSaude { get; set; }
+            public string StatusSaude { get; set; }
         }
     }
 

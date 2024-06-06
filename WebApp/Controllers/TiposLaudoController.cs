@@ -92,11 +92,11 @@ namespace WebApp.Controllers
             }
         }
 
-        public async Task<TiposLaudoDto> GetTiposLaudoById(int id)
+        public Task<TiposLaudoDto> GetTiposLaudoById(int id)
         {
             var result = ApiClientFactory.Instance.GetTiposLaudoById(id);
 
-            return result;
+            return Task.FromResult(result);
         }
     }
 }

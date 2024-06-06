@@ -1,27 +1,27 @@
 ﻿var vm = new Vue({
-    el: "#formAluno",
+    el: "#vPesquisarAluno",
     data: {
-        loading: false
+        loading: false,
+        editDto: { Id: "", Nome: "", Status: true, Email: "", Sexo: "", DtNascimento: "", MunicipioEstado: "", NomeLocalidade: "", Cpf: "", Image: "", ModalidadeLinhaAcao: "" }
     },
     mounted: function () {
         var self = this;
         (function ($) {
             'use strict';
 
-            if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
+            var formid = $('form')[1].id;
 
-                $(function () {
-                    $('[data-plugin-ios-switch]').each(function () {
-                        var $this = $(this);
+            //triggered when modal is about to be shown
+            $('#mdUpload').on('show.bs.modal', function (e) {
 
-                        $this.themePluginIOS7Switch();
-                    });
-                });
-            }
+                //get data-id attribute of the clicked element
+                var id = $(e.relatedTarget).data('id');
 
-            var formid = $('form').attr('id');
+                $("input[name='alunoId']").val(id);
+            });
 
-            if (formid === "formAluno") {
+            if (formid === "formPesquisarAluno") {
+
                 var $select = $(".select2").select2({
                     allowClear: true
                 });
@@ -46,28 +46,83 @@
                     $(this).trigger('blur');
                 });
 
+                if ($.isFunction($.fn['tooltip'])) {
+                    $('[data-toggle=tooltip],[rel=tooltip]').tooltip({ container: 'body' });
+                }
 
-                $("#formAluno").validate({
-                    highlight: function (label) {
-                        $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
-                    },
-                    success: function (label) {
-                        $(label).closest('.form-group').removeClass('has-error');
-                        label.remove();
-                    },
-                    errorPlacement: function (error, element) {
-                        var placement = element.closest('.input-group');
-                        if (!placement.get(0)) {
-                            placement = element;
-                        }
-                        if (error.text() !== '') {
-                            placement.after(error);
-                        }
-                    }
+                //clique de escolha do select
+                $("#ddlEstado").change(function () {
+
+                    self.ShowLoad(true, "pFiltro");
+
+                    var sigla = $("#ddlEstado").val();
+
+                    var url = "../../DivisaoAdministrativa/GetMunicipioByUf?uf=" + sigla;
+
+                    var ddlSource = "#ddlMunicipio";
+
+                    $.getJSON(url,
+                        { id: $(ddlSource).val() },
+                        function (data) {
+                            if (data.length > 0) {
+                                var items = '<option value="">Selecionar Municipio</option>';
+                                $("#ddlMunicipio").empty;
+                                $.each(data,
+                                    function (i, row) {
+                                        items += "<option value='" + row.value + "'>" + row.text + "</option>";
+                                    });
+                                $("#ddlMunicipio").html(items);
+                            }
+                            else {
+                                new PNotify({
+                                    title: 'Usuario',
+                                    text: data,
+                                    type: 'warning'
+                                });
+                            }
+                        });
+
+                    self.ShowLoad(false, "pFiltro");
                 });
 
+                //clique de escolha do select
+                $("#ddlMunicipio").change(function () {
 
+                    self.ShowLoad(true, "pFiltro");
+
+                    var id = $("#ddlMunicipio").val();
+
+                    var url = "../../Localidade/GetLocalidadeByMunicipio?id=" + id;
+
+                    var ddlSource = "#ddlLocalidade";
+
+                    $.getJSON(url,
+                        { id: $(ddlSource).val() },
+                        function (data) {
+                            if (data.length > 0) {
+                                var items = '<option value="">Selecionar Localidade</option>';
+                                $("#ddlLocalidade").empty;
+                                $.each(data,
+                                    function (i, row) {
+                                        items += "<option value='" + row.value + "'>" + row.text + "</option>";
+                                    });
+                                $("#ddlLocalidade").html(items);
+                            }
+                            else {
+                                new PNotify({
+                                    title: 'Localidades',
+                                    text: 'Localidades não encontradas.',
+                                    type: 'warning'
+                                });
+                            }
+                        });
+
+                    self.ShowLoad(false, "pFiltro");
+                });
             }
+
+            //self.GetPesquisaAluno();
+
         }).apply(this, [jQuery]);
     },
     methods: {
@@ -89,6 +144,114 @@
                 $("#" + el).addClass("loading-overlay-showing");
                 self.loading = flag;
             }
+        },
+        DeleteAluno: function (id) {
+            var url = "Aluno/Delete/" + id;
+            $("#deleteAlunoHref").prop("href", url);
+        },
+        CarteirinhaAluno: function (id) {
+            var self = this;
+
+
+
+
+            axios.get("Aluno/GetAlunoById/?id=" + id).then(result => {
+
+                self.editDto.Id = result.data.id;
+                self.editDto.Nome = result.data.nome;
+                self.editDto.Status = result.data.status;
+                self.editDto.Email = result.data.email;
+                self.editDto.Sexo = result.data.sexo;
+                self.editDto.DtNascimento = result.data.dtNascimento;
+                self.editDto.MunicipioEstado = result.data.municipioEstado;
+                self.editDto.NomeLocalidade = result.data.nomeLocalidade;
+                self.editDto.Telefone = result.data.celular;
+
+                if (result.data.celular === "0" || result.data.celular === "" || result.data.celular === null) {
+                    self.editDto.Telefone = "Não informado";
+                }
+                else {
+                    self.editDto.Telefone = result.data.celular;
+                }
+                if (result.data.image == null && result.data.sexo == "Feminino") {
+                    self.editDto.Image = 'assets/images/menina.jpg';
+                } else if (result.data.image == null && result.data.sexo == "Masculino") {
+                    self.editDto.Image = 'assets/images/menino.jpg';
+                } else {
+                    self.editDto.Image = 'data:image/jpeg;base64,' + result.data.image;
+                }
+                if (result.data.cpf === "0" || result.data.cpf === "" || result.data.cpf === null) {
+                    self.editDto.Cpf = "Não informado";
+                }
+                else {
+                    self.editDto.Cpf = result.data.cpf;
+                }
+                if (result.data.modalidadeLinhaAcao === "0" || result.data.modalidadeLinhaAcao === "" || result.data.modalidadeLinhaAcao === null) {
+                    self.editDto.ModalidadeLinhaAcao = "Modalidade / Linha de Ação (não informado)";
+                }
+                else {
+                    self.editDto.ModalidadeLinhaAcao = result.data.modalidadeLinhaAcao;
+                }
+                self.editDto.QRCode = 'data:image/jpeg;base64,' + result.data.qrCode;
+                
+
+
+                //var text = 'http://front.hml.dnadobrasil.org.br/Identity/Account/ControlePresenca?alunoId=' + self.editDto.Id;
+
+                //$('#qr').ClassyQR({
+                //    create: true,// signals the library to create the image tag inside the container div.
+                //    type: 'text',// text/url/sms/email/call/locatithe text to encode in the QR. on/wifi/contact, default is TEXT
+                //    text: text// the text to encode in the QR.
+                //});
+
+            }).catch(error => {
+                Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
+            });
+        },
+        GetPesquisaAluno: function () {
+
+            var self = this;
+            self.ShowLoad(true, "pResult");
+
+            var obj = {
+                FomentoId: $("#ddlFomento").val(),
+                Estado: $("#ddlEstado").val(),
+                MunicipioId: $("#ddlMunicipio").val(),
+                LocalidadeId: $("#ddlLocalidade").val(),
+                DeficienciaId: $("#ddlDeficiencia").val(),
+                Etnia: $("#ddlEtnia").val()
+            }
+
+            let axiosConfig = {
+                headers: {
+                    'Content-Type': 'application/json;charset=UTF-8',
+                    "Access-Control-Allow-Origin": "*",
+                }
+            };
+
+            axios.post("Aluno/GetAlunosByFilter", obj, axiosConfig).then(result => {
+
+
+                self.ShowLoad(false, "pResult");
+            });
+
+            self.ShowLoad(false, "pResult");
+        },
+        DeleteAluno: function (id) {
+            var url = "Aluno/Delete/" + id;
+            $("#deleteAlunoHref").prop("href", url);
         }
     }
 });
+var crud = {
+    DeleteModal: function (id) {
+        $('input[name="deleteAlunoId"]').attr('value', id);
+        $('#mdDeleteAluno').modal('show');
+        vm.DeleteAluno(id)
+    },
+    CarterinhaModal: function (id) {
+        $('input[name="carteirinhaAlunoId"]').attr('value', id);
+        $('#mdCarteirinhaAluno').modal('show');
+        vm.CarteirinhaAluno(id);
+    }
+};

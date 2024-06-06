@@ -1,9 +1,341 @@
+@model AlunoModel
+
 @{
-    ViewData["Title"] = "Novo Aluno";
+    ViewData["Title"] = "Inclusão de Aluno";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row">
+<div id="vAluno">
+    <div class="row">
+        <div class="col-md-12">
+            @using (@Html.BeginForm("CreateDados", "Aluno", FormMethod.Post, new { id = "formDadosAluno", @class = "form-horizontal", @enctype = "multipart/form-data" }))
+
+            {
+                <section class="panel">
+                    <header class="panel-heading">
+                        <div class="panel-actions">
+                            <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
+                        </div>
+
+                        <h2 class="panel-title">Cadastro de Aluno</h2>
+                    </header>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label class="col-sm-1 control-label">Foto</label>
+                            <div class="col-sm-4">
+                                <div class="fileupload fileupload-new" data-provides="fileupload">
+                                    <div class="input-append">
+                                        <div class="uneditable-input">
+                                            <i class="fa fa-file fileupload-exists"></i>
+                                            <span class="fileupload-preview"></span>
+                                        </div>
+                                        <span class="btn btn-default btn-file">
+                                            <span class="fileupload-exists">Alterar</span>
+                                            <span class="fileupload-new">Selecionar Arquivo</span>
+                                            <input type="file" id="arquivo" name="arquivo" />
+                                        </span>
+                                        <a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">Remover</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <label class="col-sm-1 control-label">CPF </label>
+                            <div class="col-sm-3">
+                                <input id="cpf" name="cpf"
+                                       v-model="params.cpf"
+                                       type="text" value="" class="form-control"
+                                       maxlength="14" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-1 control-label">Nome <span class="required">*</span></label>
+                            <div class="col-sm-5">
+                                <input type="text" name="nome" id="nome" maxlength="200" class="form-control" required title="Por favor informe um nome." />
+                            </div>
+                            <label class="col-sm-1 control-label">Email <span class="required">*</span></label>
+                            <div class="col-sm-5">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-envelope"></i>
+                                    </span>
+                                    <input type="text" name="email" maxlength="100" class="form-control" required title="Por favor informe o email." />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-1 control-label">Etnia <span class="required">*</span></label>
+                            <div class="col-sm-2">
+                                <select class="form-control populate select2" name="ddlEtnia" id="ddlEtnia" style="width:100%"
+                                        title="Por favor selecione um etnia." required
+                                        asp-for="EtniaId" asp-items="Model.ListEtnias">
+                                    <option value="">Selecionar Etnia</option>
+                                </select>
+                            </div>
+                            <label class="col-sm-1 control-label">Sexo <span class="required">*</span></label>
+                            <div class="col-sm-2">
+                                <select class="form-control populate select2" name="ddlSexo" id="ddlSexo"
+                                        title="Por favor selecione um sexo." required style="width:100%">
+                                    <option value="">Selecionar Sexo</option>
+                                    <option value="M">MASCULINO</option>
+                                    <option value="F">FEMININO</option>
+                                </select>
+                            </div>
+                            <label class="col-sm-2 control-label">Data Nascimento <span class="required">*</span></label>
+                            <div class="col-sm-4">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </span>
+                                    <input id="DtNascimento" name="DtNascimento"
+                                           required
+                                           title="Por favor informe a data de nascimento."
+                                           style="z-index: auto;"
+                                           data-plugin-datepicker data-date-format="dd/mm/yyyy" data-plugin-options='{"language": "pt-BR"}'
+                                           placeholder="__/__/____" class="form-control startdate"
+                                           class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-1 control-label text-sm-right pt-2">Estado <span class="required">*</span></label>
+                            <div class="col-md-2">
+                                <select class="form-control populate select2" name="ddlEstado" id="ddlEstado"
+                                        title="Por favor informe um Estado." required style="width:100%"
+                                        asp-for="EstadoId" asp-items="Model.ListEstados">
+                                    <option value="">Selecionar Estado</option>
+                                </select>
+                            </div>
+                            <label class="col-sm-1 control-label text-sm-right pt-2">Município <span class="required">*</span></label>
+                            <div class="col-md-3">
+                                <select class="form-control populate select2" name="ddlMunicipio" id="ddlMunicipio"
+                                        title="Por favor informe um Municipio." required style="width:100%"
+                                        asp-for="MunicipioId" asp-items="Model.ListMunicipios">
+                                    <option value="">Selecionar Município</option>
+                                </select>
+                            </div>
+                            <label class="col-sm-2 control-label text-sm-right pt-2">Localidade <span class="required">*</span></label>
+                            <div class="col-md-3">
+                                <select class="form-control populate select2" name="ddlLocalidade" id="ddlLocalidade"
+                                        title="Por favor informe o localidade." required style="width:100%"
+                                        asp-for="LocalidadeId" asp-items="Model.ListLocalidades">
+                                    <option value="">Selecionar Localidade</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-1 control-label text-sm-right pt-2">Fomento: <span class="required">*</span></label>
+                            <div class="col-md-4">
+                                <select class="form-control populate select2" name="ddlFomento" id="ddlFomento" style="width:100%"
+                                        asp-for="FomentoId" asp-items="Model.ListFomentos">
+                                    <option value="">Selecionar Fomento</option>
+                                </select>
+                            </div>
+                            <label class="col-sm-1 control-label text-sm-right pt-2">Profissional <span class="required">*</span></label>
+                            <div class="col-md-3">
+                                <select class="form-control populate select2" name="ddlProfissionalAluno" id="ddlProfissionalAluno"
+                                        title="Por favor informe o profissional." required style="width:100%"
+                                        asp-for="ProfissionalId" asp-items="Model.ListProfissionais">
+                                    <option value="">Selecionar Profissional</option>
+                                </select>
+                            </div>
+                            <label class="col-sm-1 control-label">Celular <span class="required">*</span></label>
+                            <div class="col-sm-2">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-phone"></i>
+                                    </span>
+                                    <input id="numCelular" name="numCelular" class="form-control"
+                                           maxlength="15" required title="Por favor informe o celular.">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-1 control-label text-sm-right pt-2">Deficiência: <span class="required">*</span></label>
+                            <div class="col-md-4">
+                                <select class="form-control populate select2" name="ddlDeficiencia" id="ddlDeficiencia" style="width:100%"
+                                        asp-for="DeficienciaId" asp-items="Model.ListDeficiencias">
+                                    <option value="">Selecionar Deficiência</option>
+                                </select>
+                            </div>
+                            <label class="col-sm-2 control-label text-sm-right pt-2">Linha de Ação <span class="required">*</span></label>
+                            <div class="col-md-4">
+                                <select class="form-control populate select2" name="ddlLinhaAcao" id="ddlLinhaAcao"
+                                        title="Por favor informe a linha de ação." required style="width:100%"
+                                        asp-for="LinhaAcaoId" asp-items="Model.ListLinhasAcoes">
+                                    <option value="">Selecionar Linha de Ação</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-1 control-label">Nome Mãe</label>
+                            <div class="col-sm-5">
+                                <input type="text" name="nomeMae" maxlength="150" class="form-control" />
+                            </div>
+                            <label class="col-sm-1 control-label">Nome Pai</label>
+                            <div class="col-sm-5">
+                                <input type="text" name="nomePai" maxlength="150" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-1 control-label">Endereço</label>
+                            <div class="col-sm-6">
+                                <input type="text" id="endereco" name="endereco" maxlength="200" class="form-control" />
+                            </div>
+                            <label class="col-sm-1 control-label">Número</label>
+                            <div class="col-sm-1">
+                                <input type="number" id="numero" name="numero" maxlength="4" class="form-control" />
+                            </div>
+                            <label class="col-sm-1 control-label">Cep</label>
+                            <div class="col-sm-2">
+                                <input type="text" id="cep" name="cep" maxlength="9" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-1 control-label">Bairro </label>
+                            <div class="col-sm-3">
+                                <input type="bairro" name="bairro" maxlength="50" class="form-control" />
+                            </div>
+                            <label class="col-lg-1 control-label text-lg-right pt-2">Telefone</label>
+                            <div class="col-lg-3">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-phone"></i>
+                                    </span>
+                                    <input id="numTelefone" name="numTelefone" class="form-control"
+                                           maxlength="14">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label pull-left">Cadastro ativo para login?</label>
+                            <div class="col-sm-1">
+                                <div class="switch switch-sm switch-success">
+                                    <input type="checkbox" id="status" name="status" data-plugin-ios-switch checked="checked" />
+                                </div>
+                            </div>
+                            <label class="col-sm-3 control-label">Cadastro habilitado a operar?</label>
+                            <div class="col-sm-1">
+                                <div class="switch switch-sm switch-success">
+                                    <input type="checkbox" id="habilitado" name="habilitado" data-plugin-ios-switch checked="checked" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-5">
+                                <label>Aluno está autorizado a sair sozinho?</label><br />
+                                <div class="radio-custom radio-success">
+                                    <input type="radio" id="autorizadoSim" name="autorizado" value="true" required title="Por favor selecione uma opção">
+                                    <label>Sim</label>
+                                </div>
+                                <div class="radio-custom radio-danger">
+                                    <input type="radio" id="autorizadoNao" name="autorizado" value="false" required title="Por favor selecione uma opção">
+                                    <label>Não</label>
+                                </div>
+                                <label class="error" for="autorizado"></label>
+                                <p>
+                                    <code>O estudante pode deixar o local desacompanhado do responsável.</code>
+                                </p>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Participação no programa DNA DO BRASIL TALENTOS e compartilhamento dos dados pessoais do estudante.</label><br />
+                                <div class="radio-custom radio-success">
+                                    <input type="radio" id="participacaoSim" name="participacao" value="true" required title="Por favor selecione uma opção">
+                                    <label>Sim</label>
+                                </div>
+                                <div class="radio-custom radio-danger">
+                                    <input type="radio" id="participacaoNao" name="participacao" value="false" required title="Por favor selecione uma opção">
+                                    <label>Não</label>
+                                </div>
+                                <label class="error" for="participacao"></label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-5">
+                                <label>Utilização da imagem</label><br />
+                                <div class="radio-custom radio-success">
+                                    <input type="radio" id="utilizacaoImagemSim" name="utilizacaoImagem" value="true" required title="Por favor selecione uma opção">
+                                    <label>Sim</label>
+                                </div>
+                                <div class="radio-custom radio-danger">
+                                    <input type="radio" id="utilizacaoImagemNao" name="utilizacaoImagem" value="false" required title="Por favor selecione uma opção">
+                                    <label>Não</label>
+                                </div>
+                                <label class="error" for="utilizacaoImagem"></label>
+                                <p>
+                                    <code>O Idecace, a título gratuito e não oneroso, para fins de divulgação/publicação em qualquer material de foto, vídeo, documentos em geral, relatórios bem como em todo e qualquer veículo de comunicação</code>
+                                </p>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Todos os alunos que estiver apto a participar das atividades no Ceu das Artes, Documentação exigida no primeiro dia de aula.</label><br />
+                                <div class="radio-custom radio-success">
+                                    <input type="radio" id="copiaDocImagemSim" name="copiaDoc" value="true" required title="Por favor selecione uma opção">
+                                    <label>Sim</label>
+                                </div>
+                                <div class="radio-custom radio-danger">
+                                    <input type="radio" id="copiaDocImagemNao" name="copiaDoc" value="false" required title="Por favor selecione uma opção">
+                                    <label>Não</label>
+                                </div>
+                                <label class="error" for="copiaDoc"></label>
+                                <p>
+                                    <code>Cópia do documento de indentidade do aluno. Cópia do documento de identidade do responsável legal.</code>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-1"></div>
+                            <div class="col-sm-8">
+                                <div class="checkbox-custom checkbox-default">
+                                    <input id="AgreeTerms" id="agreeterms" name="agreeterms" type="checkbox" required title="Por favor leia com atenção para aceitar ao termo." />
+                                    <label for="AgreeTerms">Eu concordo com os <a href="#" data-toggle="modal" data-target="#mdTermo">termos</a></label>
+                                </div>
+                                <label class="error" for="agreeterms"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <footer class="panel-footer">
+                        <div class="row">
+                            <div class="col-md-9 col-md-offset-3">
+                                <a href="@Url.Action("Index", "Aluno")" class="btn btn-dark pull-right" style="margin-left: 5px;margin-right: 5px;"><i class="fa fa-reply"></i> &nbsp;&nbsp;Voltar</a>
+                                <button type="reset" class="btn btn-danger pull-right" style="margin-left: 5px;"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
+                                <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
+                            </div>
+                        </div>
+                    </footer>
+                </section>
+            }
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="mdTermo" tabindex="-1" role="dialog" aria-labelledby="mdTermoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mdTermoLabel">
+                    <i class="fa fa-file"></i> &nbsp;&nbsp;<strong>TERMO DE AUTORIZAÇÃO E CONSENTIMENTO / ASSENTIMENTO</strong>
+                </h5>
+            </div>
+
+            <div class="modal-body">
+                <ul class="list-unstyled search-results-list">
+                    <li>
+                        <div class="result-data">
+                            <p class="text-justify">
+                                O Programa DNA DO BRASIL-TALENTOS objetiva a integração do desenvolvimento acadêmico e esportivo dos estudantes, com domínio nas áreas de oportunização, promoção e desenvolvimento no esporte, na saúde, no desenvolvimento psicossocial e na vocação profissionalizante. O Programa utiliza, com exclusividade, uma metodologia para análise psicossocial e vocacional, as quais permitem nortear o talento esportivo ou a carreira e potencializar a construção do Plano de Desenvolvimento Pessoal e Profissional de cada indivíduo avaliado. Para participação no Programa, faz-se necessária a autorização dos pais e/ou responsáveis, bem como o consentimento para a aplicação do protocolo avaliativo, em 3 períodos distintos, o qual direcionará o estudante conforme o seu talento profissional ou esportivo. A participação é voluntária, podendo ser interrompida sem que nenhuma implicação recaia sobre o avaliado. O Programa trabalha com 5 dimensões centrais do desenvolvimento humano (físico-motor, saúde, qualidade de vida, vocacional e educacional) e, também, levanta dados e trabalha com recursos sobre a violência contra crianças e adolescentes, sobre a saúde bucal, sobre a educação alimentar e sobre indicadores educacionais. Os dados serão inseridos em uma plataforma própria e os pais e/ou responsáveis terão acesso a esses dados por meio do aplicativo do estudante/famílias. Serão gerados automaticamente laudos e relatórios indicando fragilidades e potencialidades em cada uma das variáveis. DECLARO que: 1. Estou ciente que o tratamento de dados pessoais coletados é condição para a participação do estudantes no Programa DNA DO BRASIL TALENTOS e que posso requerer, como titular dos dados, a qualquer momento e mediante requisição, os direitos elencados no Art. 18, da Lei 13.709, de 14 de agosto de 2018 - LGPD. 2 - O(a) estudante não possui qualquer enfermidade que o/a impeça da prática esportiva e não passou por qualquer procedimento cirúrgico nos últi prática; 3. Tenho conhecimento de que a bateria de testes poderá consistir na realização de testes físico motores,índices de saúde, inventários psicossociais,e teste de aptidão e interesses profissionais. - Para crianças e adolescentes (maiores que 6 anos e menores de 18 anos de idade) e para legalmente incapaz. O Instituto para o Desenvolvimento da Criança e do Adolescente pela Cultura e Esporte (IDECACE) convida você a participar do estudo Extração e Modelagem de Features do Programa DNA do Brasil - Talentos: desenvolvimento físico-motor, saúde e qualidade de vida de crianças e adolescentes. Informamos que seu pai/mãe ou responsável legal permitiu a sua participação. Analisamos a aplicação de protocolo avaliativo com estudantes para a prática de diferentes modalidades esportivas nos estados e municípios brasileiros, empregando dados do Programa DNA do Brasil – Talentos. Gostaríamos muito de contar com a sua participação, porém, você não é obrigado a participar e não tem problema em desistir. Outras crianças e/ou adolescentes participantes desta pesquisa tem de 6 a 17 anos de idade. A pesquisa será feita no ambiente onde os participantes (crianças/adolescente) realizarão os testes físico-motores e responderão os questionários psicossocial, vocacional, nutricional e odontológico. A sua participação é importante, pois através dos testes serão gerados automaticamente laudos e relatórios indicando fragilidades e potencialidades individuais. As suas informações ficarão sob sigilo, ninguém saberá que você está participando da pesquisa. Não compartilharemos com outras pessoas as suas informações. Os resultados da pesquisa serão utilizados para produção de material cientifico sem identificar (dados pessoais, vídeos, imagens e áudios de gravações) os participantes (crianças/adolescentes). Aceito participar da pesquisa Extração e Modelagem de Features do Programa DNA do Brasil - Talentos: desenvolvimento físico-motor, saúde e qualidade de vida de crianças e adolescentes. Entendi as coisas ruins e as coisas boas que podem acontecer. Entendi que posso dizer “sim” e participar, mas que, a qualquer momento, posso dizer “não” e desistir e que ninguém vai ficar com raiva/chateado comigo. Os pesquisadores esclareceram minhas dúvidas e conversaram com os meus familiares/responsável legal. Recebi uma cópia deste termo de assentimento, li e quero/concordo em participar da pesquisa/estudo.
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="reset" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-remove"></i> &nbsp;&nbsp;Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* <div class="row">
     <div class="col-md-12">
         <div class="tabs">
             <ul class="nav nav-tabs">
@@ -17,280 +349,24 @@
                     <a href="#matriculas" data-toggle="tab">Matrículas</a>
                 </li>
                 <li>
-                    <a href="#ambientes" data-toggle="tab">Ambientes</a>
-                </li>
-                <li>
-                    <a href="#vouchers" data-toggle="tab">Vouchers</a>
+                    <a href="#modalidades" data-toggle="tab">Modalidades</a>
                 </li>
             </ul>
             <div class="tab-content">
                 <div id="dados" class="tab-pane active">
                     <div class="row">
                         <div class="col-md-12">
-                            <form id="formDados" action="forms-validation.html" class="form-horizontal">
+                            @using (@Html.BeginForm("CreateDados", "Aluno", FormMethod.Post, new { id = "formDadosAluno", @class = "form-horizontal", @enctype = "multipart/form-data" }))
+                            {
                                 <section class="panel">
                                     <div class="panel-body">
-                                        <div class="form-group">
-                                            <label class="col-sm-1 control-label">Foto</label>
-                                            <div class="col-sm-4">
-                                                <div class="fileupload fileupload-new" data-provides="fileupload">
-                                                    <div class="input-append">
-                                                        <div class="uneditable-input">
-                                                            <i class="fa fa-file fileupload-exists"></i>
-                                                            <span class="fileupload-preview"></span>
-                                                        </div>
-                                                        <span class="btn btn-default btn-file">
-                                                            <span class="fileupload-exists">Change</span>
-                                                            <span class="fileupload-new">Select file</span>
-                                                            <input type="file" />
-                                                        </span>
-                                                        <a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">Remove</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <label class="col-sm-1 control-label">Nome <span class="required">*</span></label>
-                                            <div class="col-sm-3">
-                                                <input type="text" name="nome" id="nome" placeholder="eg.: Nome completo do aluno" maxlength="200" class="form-control" required />
-                                            </div>
-                                            <label class="col-sm-1 control-label">Sexo <span class="required">*</span></label>
-                                            <div class="col-sm-2">
-                                                <select class="form-control populate select2" name="ddlSexo" id="ddlSexo"
-                                                        title="Por favor selecione um sexo." required>
-                                                    <option value="">Selecionar Sexo</option>
-                                                    <option value="M">MASCULINO</option>
-                                                    <option value="F">FEMININO</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-1 control-label">Etnia <span class="required">*</span></label>
-                                            <div class="col-sm-2">
-                                                <select class="form-control populate select2" name="ddlEtnia" id="ddlEtnia"
-                                                        title="Por favor selecione um etnia." readonly
-                                                @* asp-for="CodEtnia" asp-items="Model.ListEtnia" *@>
-                                                    <option value="">Selecionar Etnia</option>
-                                                </select>
-                                            </div>
-                                            <label class="col-sm-2 control-label">Data Nascimento <span class="required">*</span></label>
-                                            <div class="col-sm-2">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon">
-                                                        <i class="fa fa-calendar"></i>
-                                                    </span>
-                                                    <input id="DtNascimento" name="DtNascimento"
-                                                           required
-                                                           title="Por favor informe a data de nascimento."
-                                                           style="z-index: auto;"
-                                                           data-plugin-datepicker data-date-format="dd/mm/yyyy" data-plugin-options='{"language": "pt-BR"}'
-                                                           placeholder="__/__/____" class="form-control startdate"
-                                                           class="form-control">
-                                                </div>
-                                            </div>
-                                            <label class="col-sm-1 control-label">Email <span class="required">*</span></label>
-                                            <div class="col-sm-4">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon">
-                                                        <i class="fa fa-envelope"></i>
-                                                    </span>
-                                                    <input type="text" name="email" maxlength="100" class="form-control"
-                                                           placeholder="eg.: Endereço eletrônico válido do aluno" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">Estado/Profissional</label>
-                                            <div class="col-sm-4">
-                                                <select class="form-control populate select2" name="ddlEstado" id="ddlEstado"
-                                                        title="Por favor selecione um estado." required
-                                                @* asp-for="CodEstado" asp-items="Model.ListEstado" *@>
-                                                    <option value="">Selecionar Estado</option>
-                                                </select>
-                                            </div>
 
-                                            <label class="col-sm-2 control-label">Profissional </label>
-                                            <div class="col-sm-4">
-                                                <select class="form-control populate select2" name="ddlProfissional" id="ddlProfissional"
-                                                        title="Por favor selecione um profissional." required
-                                                @* asp-for="CodProfissional" asp-items="Model.ListProfissional" *@>
-                                                    <option value="">Selecionar Profissional</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-1 control-label">Nome Mãe</label>
-                                            <div class="col-sm-5">
-                                                <input type="text" name="nomeMae" maxlength="150" placeholder="eg.: Nome da mãe" class="form-control" />
-                                            </div>
-                                            <label class="col-sm-1 control-label">Nome Pai</label>
-                                            <div class="col-sm-5">
-                                                <input type="text" name="nomePai" maxlength="150" placeholder="eg.: Nome do pai" class="form-control" />
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-1 control-label">Cpf </label>
-                                            <div class="col-sm-3">
-                                                <input id="cpf" name="cpf"
-                                                       v-model="params.cpf"
-                                                       type="text" value="" class="form-control" placeholder="eg.: Número do CPF do aluno"
-                                                       maxlength="14" />
-                                            </div>
-                                            <label class="col-lg-1 control-label text-lg-right pt-2">Telefone<span class="required">*</span></label>
-                                            <div class="col-lg-3">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon">
-                                                        <i class="fa fa-phone"></i>
-                                                    </span>
-                                                    <input id="numTelefone" name="numTelefone" placeholder="eg.: (00) 0000-0000" class="form-control"
-                                                           maxlength="14"
-                                                           title="Por favor informe o telefone " required>
-                                                </div>
-                                            </div>
-                                            <label class="col-sm-1 control-label">Celular </label>
-                                            <div class="col-sm-3">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon">
-                                                        <i class="fa fa-phone"></i>
-                                                    </span>
-                                                    <input id="numCelular" name="numCelular" placeholder="eg.: (00) 00000-0000" class="form-control"
-                                                           maxlength="14"
-                                                           title="Por favor informe o celular">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-1 control-label">Endereço</label>
-                                            <div class="col-sm-6">
-                                                <input type="text" id="endereco" name="endereco" maxlength="200" class="form-control" placeholder="eg.: Endereço do aluno" />
-                                            </div>  
-                                            <label class="col-sm-1 control-label">Número</label>
-                                            <div class="col-sm-1">
-                                                <input type="number" id="numero" name="numero" maxlength="4" class="form-control" placeholder="eg.: 0000" />
-                                            </div>
-                                            <label class="col-sm-1 control-label">Cep</label>
-                                            <div class="col-sm-2">
-                                                <input type="text" id="cep" name="cep" maxlength="9" class="form-control" placeholder="eg.: 00000-000" />
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-1 control-label">Bairro </label>
-                                            <div class="col-sm-3">
-                                                <input type="bairro" name="bairro" maxlength="50" class="form-control" placeholder="eg.: Nome do bairro" />
-                                            </div>
-                                            <label class="col-sm-1 control-label">Estado </label>
-                                            <div class="col-sm-3">
-                                                <select class="form-control populate select2" name="ddlEstado" id="ddlEstado"
-                                                        title="Por favor selecione um estado." required
-                                                @* asp-for="CodEstado" asp-items="Model.ListEstado" *@>
-                                                    <option value="">Selecionar Estado</option>
-                                                </select>
-                                            </div>
-                                            <label class="col-sm-1 control-label">Municipio </label>
-                                            <div class="col-sm-3">
-                                                <select class="form-control populate select2" name="ddlEstado" id="ddlEstado"
-                                                        title="Por favor selecione um estado." required
-                                                @* asp-for="CodMunicipio" asp-items="Model.ListMunicipio" *@>
-                                                    <option value="">Selecionar Estado</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        @* <div class="form-group">
-                                        <label class="col-sm-1 control-label">Facebook</label>
-                                        <div class="col-sm-5">
-                                        <div class="input-group">
-                                        <span class="input-group-addon">
-                                        <i class="fa fa-facebook"></i>
-                                        </span>
-                                        <input type="facebook" name="facebook" maxlength="100" class="form-control" required />
-                                        </div>
-                                        </div>
-                                        <label class="col-sm-1 control-label">Twitter</label>
-                                        <div class="col-sm-5">
-                                        <div class="input-group">
-                                        <span class="input-group-addon">
-                                        <i class="fa fa-twitter"></i>
-                                        </span>
-                                        <input type="email" name="email" class="form-control" required />
-                                        </div>
-                                        </div>
-                                        </div> *@
-
-                                        <div class="form-group">
-                                            <label class="col-sm-3 control-label pull-left">Cadastro ativo para login?</label>
-                                            <div class="col-sm-1">
-                                                <div class="switch switch-sm switch-success">
-                                                    <input type="checkbox" id="ativo" name="ativo" data-plugin-ios-switch checked="checked" />
-                                                </div>
-                                            </div>
-                                            <label class="col-sm-2 control-label">Cadastro habilitado a operar?</label>
-                                            <div class="col-sm-1">
-                                                <div class="switch switch-sm switch-success">
-                                                    <input type="checkbox" id="habilitado" name="habilitado" data-plugin-ios-switch checked="checked" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <blockquote class="danger">
-                                            <p>Deficiências</p>
-                                            <small>Caso possuir alguma deficiências todos os campos devem ser obrigatórios </small>
-                                        </blockquote>
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">Possui deficiência?</label>
-                                            <div class="col-sm-10">
-                                                <div class="radio-custom radio-success">
-                                                    <input type="radio" id="sim" name="rdbDeficiencia" value="sim">
-                                                    <label for="radioExample1">Sim</label>
-                                                </div>
-
-                                                <div class="radio-custom radio-danger">
-                                                    <input type="radio" id="nao" name="rdbDeficiencia" value="nao" checked>
-                                                    <label for="radioExample2">Não</label>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                        <div id="divDeficiencia" name="divDeficiencia">
-                                            <div class="form-group">
-                                                <label class="col-sm-2 control-label">Deficiência</label>
-                                                <div class="col-sm-4">
-                                                    <select class="form-control populate select2" name="ddlDeficiencia" id="ddlDeficiencia"
-                                                            title="Por favor selecione uma deficiência.">
-                                                        <option value="">Selecionar Deficiência</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-sm-1">
-                                                    <button type="button" class="ml-xs btn btn-default"
-                                                            data-toggle="modal" data-target="#mdDeficiencia">
-                                                        <i class="fa fa-plus"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="col-sm-2 control-label">Adicionados</label>
-                                                <div class="col-sm-10">
-                                                    <table class="table table-bordered table-striped mb-0" id="datatable-default">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Deficiência</th>
-                                                                <th>Ações</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>Deficiência Visual</td>
-                                                                <td class="actions">
-                                                                    <a data-toggle="tooltip" data-placement="top" title="Excluir" @* asp-action="Delete" *@ asp-controller="Perfil" asp-route-id="1" class="on-default remove-row" style='color:#F44336'><i class="fa fa-trash-o"></i></a>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
 
                                     </div>
                                     <footer class="panel-footer">
                                         <div class="row">
                                             <div class="col-md-9 col-md-offset-3">
-                                                <button type="submit" class="btn btn-dark pull-right" style="margin-left: 5px;margin-right: 5px;"><i class="fa fa-reply"></i> &nbsp;&nbsp;Voltar</button>
+                                                <a href="@Url.Action("Index", "Aluno")" class="btn btn-dark pull-right" style="margin-left: 5px;margin-right: 5px;"><i class="fa fa-reply"></i> &nbsp;&nbsp;Voltar</a>
                                                 <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
                                                 <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
 
@@ -298,21 +374,22 @@
                                         </div>
                                     </footer>
                                 </section>
-                            </form>
+                            }
                         </div>
                     </div>
                 </div>
                 <div id="dependencias" class="tab-pane">
                     <div class="row">
                         <div class="col-md-12">
-                            <form id="formDependencia" action="forms-validation.html" class="form-horizontal">
+                            @using (@Html.BeginForm("CreateDependencia", "Aluno", FormMethod.Post, new { id = "formDependenciaAluno", @class = "form-horizontal" }))
+                            {
                                 <section class="panel">
                                     <div class="panel-body">
                                         <div class="form-group">
                                             <div class="col-sm-9">
                                                 <div class="radio-custom radio-success">
-                                                    <input type="radio" id="sim" name="rdbAutorizacao" value="sim">
-                                                    <label for="radioExample1">
+                                                    <input type="radio" id="rdbAutorizacaoSim" name="rdbAutorizacao" value="true">
+                                                    <label for="rdbAutorizacaoSim">
                                                         Autorizo o mesmo a se ausentar das dependências do
                                                         Centro Olímpico e Paralímpico sem a presença de um responsável após o
                                                         término de suas atividades.
@@ -320,8 +397,8 @@
                                                 </div>
 
                                                 <div class="radio-custom radio-danger">
-                                                    <input type="radio" id="nao" name="rdbAutorizacao" value="nao">
-                                                    <label for="radioExample2">
+                                                    <input type="radio" id="rdbAutorizacaoNao" name="rdbAutorizacao" value="false">
+                                                    <label for="rdbAutorizacaoNao">
                                                         Não autorizo o mesmo a se ausentar das dependências do
                                                         Centro Olímpico e Paralímpico sem a presença de um responsável após o término
                                                         de suas atividades.
@@ -333,8 +410,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-1 control-label">Doenças</label>
                                             <div class="col-sm-11">
-                                                <textarea class="form-control" rows="3"
-                                                          placeholder="eg.: Preencha com quais doenças e/ou motivos pelos quais necessite de atendimento especial."
+                                                <textarea class="form-control" rows="3" id="Doenca" name="Doenca"
                                                           data-plugin-maxlength maxlength="400"></textarea>
                                                 <p>
                                                     <code>limite</code> 400.
@@ -345,12 +421,12 @@
                                             <label class="col-sm-1 control-label">Nacionalidade</label>
                                             <div class="col-sm-5">
 
-                                                <input type="text" id="nacionalidade" name="nacionalidade" class="form-control" placeholder="eg.: Nacionalidade" />
+                                                <input type="text" id="nacionalidade" name="nacionalidade" class="form-control" />
                                             </div>
                                             <label class="col-sm-1 control-label">Naturalidade</label>
                                             <div class="col-sm-5">
 
-                                                <input type="text" id="naturalidade" name="naturalidade" class="form-control" placeholder="eg.: Naturalidade" />
+                                                <input type="text" id="naturalidade" name="naturalidade" class="form-control" />
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -361,7 +437,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">Nome Escola</label>
                                             <div class="col-sm-4">
-                                                <input type="text" id="escola" name="escola" class="form-control" placeholder="eg.: Nome da escola" />
+                                                <input type="text" id="escola" name="escola" class="form-control" />
                                             </div>
 
                                             <label class="col-sm-2 control-label">Tipo Escola</label>
@@ -369,8 +445,8 @@
                                                 <select class="form-control populate select2" name="ddlTipoEscola" id="ddlTipoEscola"
                                                         style="width: 100%" title="Por favor selecione o tipo da escola.">
                                                     <option value="">Selecionar Tipo Escola</option>
-                                                    <option value="">PRIVADA</option>
-                                                    <option value="">PÚBLICA</option>
+                                                    <option value="PRIVADA">PRIVADA</option>
+                                                    <option value="PÚBLICA">PÚBLICA</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -379,7 +455,10 @@
                                             <div class="col-sm-4">
                                                 <select class="form-control populate select2" name="ddlTipoEscolaridade" id="ddlTipoEscolaridade"
                                                         style="width: 100%" title="Por favor selecione o tipo escolaridade.">
-                                                    <option value="">Selecionar Tipo Escolaridade</option>
+	                                                <option value="">Selecionar Tipo Escolaridade</option>
+	                                                <option value="ENSINO MEDIO">ENSINO MEDIO</option>
+	                                                <option value="ENSINO FUNDAMENTAL">ENSINO FUNDAMENTAL</option>
+	                                                <option value="EJA">EJA</option>
                                                 </select>
                                             </div>
                                             <div class="col-sm-1">
@@ -402,26 +481,26 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">Série</label>
                                             <div class="col-sm-3">
-                                                <input type="text" id="serie" name="serie" class="form-control" placeholder="eg.: Série do aluno" />
+                                                <input type="text" id="serie" name="serie" class="form-control" />
                                             </div>
                                             <label class="col-sm-1 control-label">Ano </label>
                                             <div class="col-sm-2">
-                                                <input type="text" id="ano" name="ano" class="form-control" placeholder="eg.: Ano escolar" />
+                                                <input type="text" id="ano" name="ano" class="form-control" />
                                             </div>
                                             <label class="col-sm-1 control-label">Turma</label>
                                             <div class="col-sm-3">
-                                                <input type="text" id="turma" name="turma" class="form-control" placeholder="eg.: Turma do aluno" />
+                                                <input type="text" id="turma" name="turma" class="form-control" />
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">Termo de compromisso</label>
                                             <div class="col-sm-1">
                                                 <div class="radio-custom radio-primary">
-                                                    <input id="termoSim" name="rdbTermo" type="radio" value="sim" required />
+                                                    <input id="termoSim" name="rdbTermo" type="radio" value="true" required />
                                                     <label for="termoSim">Sim</label>
                                                 </div>
                                                 <div class="radio-custom radio-primary">
-                                                    <input id="termoNao" name="rdbTermo" type="radio" value="nao" />
+                                                    <input id="termoNao" name="rdbTermo" type="radio" value="false" />
                                                     <label for="termoNao">Não</label>
                                                 </div>
                                                 <label class="error" for="porto_is"></label>
@@ -430,12 +509,12 @@
                                             <label class="col-sm-3 control-label">Autorização de uso de imagem e áudio</label>
                                             <div class="col-sm-1">
                                                 <div class="radio-custom radio-primary">
-                                                    <input id="awesome" name="porto_is" type="radio" value="awesome" required />
-                                                    <label for="awesome">Sim</label>
+                                                    <input id="rdbautorizacaoimagemSim" name="rdbautorizacaoimagem" type="radio" value="true" required />
+                                                    <label for="rdbautorizacaoimagemSim">Sim</label>
                                                 </div>
                                                 <div class="radio-custom radio-primary">
-                                                    <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
-                                                    <label for="very-awesome">Não</label>
+                                                    <input id="rdbautorizacaoimagemNao" name="rdbautorizacaoimagem" type="radio" value="false" />
+                                                    <label for="rdbautorizacaoimagemNao">Não</label>
                                                 </div>
                                                 <label class="error" for="porto_is"></label>
                                             </div>
@@ -443,12 +522,12 @@
                                             <label class="col-sm-4 control-label">Autorização de captação e uso de indicadores de desenvolvimento e saúde</label>
                                             <div class="col-sm-1">
                                                 <div class="radio-custom radio-primary">
-                                                    <input id="awesome" name="porto_is" type="radio" value="awesome" required />
-                                                    <label for="awesome">Sim</label>
+                                                    <input id="rdbautorizacaoindicadoresSim" name="rdbautorizacaoindicadores" type="radio" value="true" required />
+                                                    <label for="rdbautorizacaoindicadoresSim">Sim</label>
                                                 </div>
                                                 <div class="radio-custom radio-primary">
-                                                    <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
-                                                    <label for="very-awesome">Não</label>
+                                                    <input id="rdbautorizacaoindicadoresNao" name="rdbautorizacaoindicadores" type="radio" value="false" />
+                                                    <label for="rdbautorizacaoindicadoresNao">Não</label>
                                                 </div>
                                                 <label class="error" for="porto_is"></label>
                                             </div>
@@ -456,39 +535,27 @@
                                     </div>
                                     <footer class="panel-footer">
                                         <div class="row">
+                                            <a href="@Url.Action("Index", "Aluno")" class="btn btn-dark pull-right" style="margin-left: 5px;margin-right: 5px;"><i class="fa fa-reply"></i> &nbsp;&nbsp;Voltar</a>
+                                            &nbsp;&nbsp;
                                             <div class="col-md-9 col-md-offset-3">
+                                                <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
                                                 <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
 
                                             </div>
                                         </div>
                                     </footer>
                                 </section>
-                            </form>
+                            }
                         </div>
                     </div>
                 </div>
                 <div id="matriculas" class="tab-pane">
                     <div class="row">
                         <div class="col-md-12">
-                            <form id="form" action="forms-validation.html" class="form-horizontal">
+                            @using (@Html.BeginForm("CreateMatricula", "Aluno", FormMethod.Post, new { id = "formMatriculaAluno", @class = "form-horizontal" }))
+                            {
                                 <section class="panel">
                                     <div class="panel-body">
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">Localidade</label>
-                                            <div class="col-sm-4">
-                                                <select class="form-control populate select2" name="ddlLocalidadeMatricula" id="ddlLocalidadeMatricula"
-                                                        style="width: 100%" title="Por favor selecione a localidade."
-                                                        @* asp-for="CodLocal" asp-items="Model.ListLocal" *@>
-                                                    <option value="">Selecionar Localidade</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-sm-1">
-                                                <button type="button" class="ml-xs btn btn-primary"
-                                                        data-toggle="modal" data-target="#mdLocalidade">
-                                                    <i class="fa fa-plus"></i>
-                                                </button>
-                                            </div>
-                                        </div>
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">Data de vencimento PAR-Q</label>
                                             <div class="col-sm-4">
@@ -526,21 +593,23 @@
                                             <label class="col-sm-2 control-label">Nome do responsável 1</label>
                                             <div class="col-sm-4">
 
-                                                <input type="text" name="nomeResponsavel1" name="nomeResponsavel1" 
-                                                       maxlength="150" placeholder="eg.: Nome do responsável 1" class="form-control" required />
+                                                <input type="text" id="nomeResponsavel1" name="nomeResponsavel1"
+                                                       maxlength="150"class="form-control" required />
+
                                             </div>
                                             <label class="col-sm-1 control-label">Parentesco</label>
                                             <div class="col-sm-2">
 
-                                                <input type="text" name="parentesco1" name="parentesco1"
-                                                       maxlength="150" placeholder="eg.: Parentesco do responsável 1" class="form-control" required />
+                                                <input type="text" id="parentesco1" name="parentesco1"
+                                                       maxlength="150"class="form-control" required />
+
                                             </div>
                                             <label class="col-sm-1 control-label">Cpf</label>
                                             <div class="col-sm-2">
                                                 <input id="cpf1" name="cpf1"
-                                                v-model="params.cpf1"
-                                                type="text" value="" class="form-control" placeholder="eg.: Número do CPF do responsável 1"
-                                                maxlength="14" />
+                                                       v-model="params.cpf1"
+                                                       type="text" value="" class="form-control"
+                                                       maxlength="14" />
                                             </div>
                                         </div>
 
@@ -548,21 +617,23 @@
                                             <label class="col-sm-2 control-label">Nome do responsável 2</label>
                                             <div class="col-sm-4">
 
-                                                <input type="text" name="nomeResponsavel2" name="nomeResponsavel2" 
-                                                       maxlength="150" placeholder="eg.: Nome do responsável 2" class="form-control" />
+                                                <input type="text" id="nomeResponsavel2" name="nomeResponsavel2"
+                                                       maxlength="150"class="form-control" />
+
                                             </div>
                                             <label class="col-sm-1 control-label">Parentesco</label>
                                             <div class="col-sm-2">
 
-                                                <input type="text" name="parentesco2" name="parentesco2"
-                                                       maxlength="150" placeholder="eg.: Parentesco do responsável 2" class="form-control" />
+                                                <input type="text" id="parentesco2" name="parentesco2"
+                                                       maxlength="150"class="form-control" />
+
                                             </div>
                                             <label class="col-sm-1 control-label">Cpf</label>
                                             <div class="col-sm-2">
-                                                
+
                                                 <input id="cpf2" name="cpf2"
                                                        v-model="params.cpf2"
-                                                       type="text" value="" class="form-control" placeholder="eg.: Número do CPF do responsável 2"
+                                                       type="text" value="" class="form-control"
                                                        maxlength="14" />
                                             </div>
                                         </div>
@@ -571,21 +642,23 @@
                                             <label class="col-sm-2 control-label">Nome do responsável 3</label>
                                             <div class="col-sm-4">
 
-                                                <input type="text" name="nomeResponsavel3" name="nomeResponsavel3"
-                                                       maxlength="150" placeholder="eg.: Nome do responsável 3" class="form-control" />
+                                                <input type="text" id="nomeResponsavel3" name="nomeResponsavel3"
+                                                       maxlength="150"class="form-control" />
+
                                             </div>
                                             <label class="col-sm-1 control-label">Parentesco</label>
                                             <div class="col-sm-2">
 
-                                                <input type="text" name="parentesco3" name="parentesco3"
-                                                       maxlength="150" placeholder="eg.: Parentesco do responsável 3" class="form-control" />
+                                                <input type="text" id="parentesco3" name="parentesco3"
+                                                       maxlength="150"class="form-control" />
+
                                             </div>
                                             <label class="col-sm-1 control-label">Cpf</label>
                                             <div class="col-sm-2">
-                                                
+
                                                 <input id="cpf3" name="cpf3"
                                                        v-model="params.cpf3"
-                                                       type="text" value="" class="form-control" placeholder="eg.: Número do CPF do responsável 1"
+                                                       type="text" value="" class="form-control"
                                                        maxlength="14" />
                                             </div>
                                         </div>
@@ -593,76 +666,53 @@
                                     <footer class="panel-footer">
                                         <div class="row">
                                             <div class="col-md-9 col-md-offset-3">
-                                                <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
-
+	                                            <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
+	                                            <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
                                             </div>
                                         </div>
                                     </footer>
                                 </section>
-                            </form>
+                            }
                         </div>
                     </div>
                 </div>
-                <div id="ambientes" class="tab-pane">
+                <div id="modalidades" class="tab-pane">
                     <div class="row">
                         <div class="col-md-12">
-                            <form id="form" action="forms-validation.html" class="form-horizontal">
+                            @using (@Html.BeginForm("CreateModalidadesAluno", "Aluno", FormMethod.Post, new { id = "vModalidadeAluno", @class = "form-horizontal" }))
+                            {
                                 <section class="panel">
                                     <div class="panel-body">
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label">Ambiente</label>
+                                            <label class="col-sm-2 control-label">Modalidade</label>
                                             <div class="col-sm-4">
-                                                <select class="form-control populate select2" name="ddlAmbiente" id="ddlAmbiente"
-                                                        style="width: 100%" title="Por favor selecione o turno."
-                                                        @* asp-for="CodAmbiente" asp-items="Model.ListAmbiente" *@>
-                                                    <option value="">Selecionar Ambiente</option>
+                                                <select class="form-control populate select2" name="ddlModalidadeAluno" id="ddlModalidadeAluno"
+                                                        style="width: 100%" title="Por favor selecione o Modalidade do aluno."
+                                                        asp-for="ModalidadeId" asp-items="Model.ListModalidades">
+                                                    <option value="0">Selecionar Modalidade</option>
                                                 </select>
                                             </div>
                                             <div class="col-sm-1">
-                                                <button type="button" class="ml-xs btn btn-primary"
-                                                        data-toggle="modal" data-target="#mdAmbiente">
+                                                <a type="button" class="ml-xs btn btn-success" href='javascript:(crud.AddModalidadeAluno())'>
                                                     <i class="fa fa-plus"></i>
-                                                </button>
+                                                </a>
+                                            </div>
+                                            <div class="col-sm-5 pull-right">
+                                                <a data-toggle="modal" data-target="#mdModalidade" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Novo Modalidade </a>
                                             </div>
                                         </div>
                                         <div class="form-group">
+                                            <input type="hidden" name="arrModalidadeAlunos" />
                                             <label class="col-sm-2 control-label">Adicionados</label>
                                             <div class="col-sm-10">
-                                                <table class="table table-bordered table-striped mb-0" id="datatable-default1">
+                                                <table class="adicionados table table-bordered table-striped mb-0" id="modalidadeAlunoDataTable">
                                                     <thead>
                                                         <tr>
-                                                            <th>Esporte</th>
-                                                            <th>Ações</th>
+                                                            <th>Id</th>
+                                                            <th>Nome Modalidade</th>
+                                                            <th>Ação</th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>Natação</td>
-                                                            <td class="actions">
-                                                                <a data-toggle="tooltip" data-placement="top" title="Excluir" @* asp-action="Delete" *@ asp-controller="Perfil" asp-route-id="1" class="on-default remove-row" style='color:#F44336'><i class="fa fa-trash"></i></a>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Futsal</td>
-                                                            <td class="actions">
-                                                                <a data-toggle="tooltip" data-placement="top" title="Excluir" @* asp-action="Delete" *@ asp-controller="Perfil" asp-route-id="1" class="on-default remove-row" style='color:#F44336'><i class="fa fa-trash"></i></a>
-                                                            </td>
-                                                        </tr>
-                                                        @* @foreach (var item in Model.aaData)
-                                                        {
-                                                        <tr>
-                                                        <td>@Html.DisplayFor(modelItem => item.NomUsuario)</td>
-                                                        <td>@Html.DisplayFor(modelItem => item.NumCpf)</td>
-                                                        <td>@Html.DisplayFor(modelItem => item.Email)</td>
-                                                        <td>@Html.DisplayFor(modelItem => item.NomPerfil)</td>
-                                                        <td class="actions">
-                                                        <a data-toggle="tooltip" data-placement="top" title="Editar" asp-action="Edit" asp-controller="Usuario" asp-route-id="@item.CodUsuarioLogin" class="on-default edit-row" style='color: #eea236'><i class="fa fa-pencil"></i></a>
-                                                        <a data-toggle="tooltip" data-placement="top" title="Excluir" asp-action="Delete" asp-controller="Usuario" asp-route-id="@item.CodUsuarioLogin" class="on-default remove-row" style='color: #d43f3a'><i class="fa fa-trash-o"></i></a>
-                                                        <a data-toggle="tooltip" data-placement="top" title="Excluir" asp-action="Delete" asp-controller="Usuario" asp-route-id="@item.CodUsuarioLogin" class="on-default remove-row" style='color: #d43f3a'><i class="fa fa-trash-o"></i></a>
-                                                        </td>
-                                                        </tr>
-                                                        } *@
-                                                    </tbody>
                                                 </table>
 
                                             </div>
@@ -671,201 +721,22 @@
                                     <footer class="panel-footer">
                                         <div class="row">
                                             <div class="col-md-9 col-md-offset-3">
+                                                <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
                                                 <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
-
                                             </div>
                                         </div>
                                     </footer>
                                 </section>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div id="vouchers" class="tab-pane">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <form id="form" action="forms-validation.html" class="form-horizontal">
-                                <section class="panel">
-                                    <div class="panel-body">
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">Voucher</label>
-                                            <div class="col-sm-4">
-                                                <input type="text" name="voucher" name="voucher"
-                                                       maxlength="100" placeholder="eg.: Descrição do voucher" class="form-control" />
-                                            </div>
-                                            <label class="col-sm-1 control-label">Localidade</label>
-                                            <div class="col-sm-4">
-                                                <select class="form-control populate select2" name="ddlLocalidadeVoucher" id="ddlLocalidadeVoucher"
-                                                        style="width: 100%" title="Por favor selecione a localidade."
-                                                        @* asp-for="CodLocal" asp-items="Model.ListLocal" *@>
-                                                    <option value="">Selecionar Local</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-sm-1">
-                                                <button type="button" class="ml-xs btn btn-primary"
-                                                        data-toggle="modal" data-target="#mdLocalidade">
-                                                    <i class="fa fa-plus"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">Turma</label>
-                                            <div class="col-sm-4">
-                                                <input type="text" name="turma" name="turma"
-                                                       maxlength="150" placeholder="eg.: Nome da turma" class="form-control" />
-                                            </div>
-                                            <label class="col-sm-1 control-label">Série</label>
-                                            <div class="col-sm-4">
-                                                <select class="form-control populate select2" name="ddlSerie" id="ddlSerie"
-                                                        style="width: 100%" title="Por favor selecione a série."
-                                                @* asp-for="CodSerie" asp-items="Model.ListSerie" *@>
-                                                    <option value="">Selecionar Série</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-sm-1">
-                                                <button type="button" class="ml-xs btn btn-primary"
-                                                        data-toggle="modal" data-target="#mdSerie">
-                                                    <i class="fa fa-plus"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <footer class="panel-footer">
-                                        <div class="row">
-                                            <div class="col-md-9 col-md-offset-3">
-                                                <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
-
-                                            </div>
-                                        </div>
-                                    </footer>
-                                </section>
-                            </form>
+                            }
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="mdAmbiente" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title"><i class="fa fa-plus"></i> &nbsp;&nbsp;<strong>Novo Ambiente</strong></h5>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">Nome Ambiente<span class="required">*</span></label>
-                    <div class="col-sm-9">
-
-                        <input type="email" name="email" class="form-control" required />
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
-                <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
-            </div>
-        </div>
-    </div>
-</div>
+</div> *@
 
 
-<!-- Modal -->
-<div class="modal fade" id="mdDeficiencia" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title"><i class="fa fa-plus"></i> &nbsp;&nbsp;<strong>Nova Deficiência</strong></h5>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">Nome Deficiência<span class="required">*</span></label>
-                    <div class="col-sm-9">
-
-                        <input type="text" id="novaDeficiencia" name="novaDeficiencia" class="form-control" required placeholder="eg.: Nome da deficiência" />
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
-                <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Modal -->
-<div class="modal fade" id="mdTipoEscolaridade" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title"><i class="fa fa-plus"></i> &nbsp;&nbsp;<strong>Novo Tipo Escolaridade</strong></h5>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">Tipo<span class="required">*</span></label>
-                    <div class="col-sm-9">
-
-                        <input type="text" id="tipoEscolaridade" name="tipoEscolaridade" class="form-control" required placeholder="eg.: Tipo de escolaridade" />
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
-                <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Modal -->
-<div class="modal fade" id="mdLocalidade" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title"><i class="fa fa-plus"></i> &nbsp;&nbsp;<strong>Nova Localidade</strong></h5>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">Localidade<span class="required">*</span></label>
-                    <div class="col-sm-9">
-
-                        <input type="text" id="localidade" name="localidade" class="form-control" required placeholder="eg.: Localidade" />
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
-                <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Modal -->
-<div class="modal fade" id="mdSerie" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title"><i class="fa fa-plus"></i> &nbsp;&nbsp;<strong>Nova Série</strong></h5>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">Série<span class="required">*</span></label>
-                    <div class="col-sm-9">
-
-                        <input type="text" id="serie" name="serie" maxlength="15" class="form-control" required placeholder="eg.: Série do aluno" />
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
-                <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 @section CssSpecificVendor {
     <link rel="stylesheet" href="~/assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.css" />
@@ -873,41 +744,21 @@
     <link rel="stylesheet" href="~/assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
     <link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />
     <link href="~/assets/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.css" rel="stylesheet" />
-	}
+}
 @section Scripts {
+    <script src="~/assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.js"></script>
     <script src="~/assets/vendor/ios7-switch/ios7-switch.js"></script>
     <script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
     <script src="~/assets/vendor/select2/js/select2.js"></script>
     <script src="~/assets/vendor/jquery-mask/jquery.mask.js"></script>
-    <script src="~/assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.js"></script>
-    <script src="~/assets/vendor/bootstrap-maxlength/bootstrap-maxlength.js"></script>
     <script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
     <script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
     <script src="~/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
     <script src="~/assets/vendor/bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR.min.js"></script>
     <script src="~/js/formatTable.js"></script>
-    <script src="~/js/alunos.js"></script>
+    <script src="~/js/DadosAluno.js"></script>
     <script>
 
-        // iosSwitcher
-        (function ($) {
-
-            'use strict';
-
-            if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
-
-                $(function () {
-                    $('[data-plugin-ios-switch]').each(function () {
-                        var $this = $(this);
-
-                        $this.themePluginIOS7Switch();
-                    });
-                });
-
-            }
-
-        }).apply(this, [jQuery]);
-        
         (function ($) {
 
             'use strict';
@@ -958,4 +809,4 @@
 
         }).apply(this, [jQuery]);
     </script>
-	}
+}

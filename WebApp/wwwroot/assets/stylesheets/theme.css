@@ -10643,9 +10643,9 @@ body .ui-pnotify.icon-nb .notification .ui-pnotify-icon > span {
 	margin-right: 4px;
 }
 
-.panel-group .panel-accordion .panel-body {
-	border-radius: 0 0 5px 5px;
-}
+	.panel-group .panel-accordion .panel-body {
+		border-radius: 15px 15px 15px 15px;
+	}
 
 .panel-group .panel-accordion.panel-accordion-first {
 	border-radius: 0 0 5px 5px;
@@ -10887,7 +10887,7 @@ html.dark .panel-group .panel-accordion .form-control {
 	position: relative;
 	max-height: 200px;
 	max-width: 200px;
-	margin: 0 auto;
+	/*margin: 0 auto;*/
 	width: 100%;
 	padding-bottom: 50%;
 }
@@ -10912,7 +10912,7 @@ html.dark .panel-group .panel-accordion .form-control {
 
 .liquid-meter-wrapper.liquid-meter-sm .liquid-meter {
 	max-height: 150px;
-	max-width: 150px;
+	max-width: 90px;
 }
 
 .liquid-meter-wrapper.liquid-meter-md .liquid-meter {
@@ -15023,12 +15023,12 @@ ul.widget-todo-list li:last-child {
 
 .widget-profile-info .profile-picture img {
 	display: block;
-	width: 100px;
-	height: 100px;
+	width: 200px;
+	height: 200px;
 	margin-right: 15px;
 	border: 4px solid #fff;
 	-webkit-border-radius: 50px;
-	border-radius: 50px;
+	border-radius: 100px;
 }
 
 .widget-profile-info .profile-info {
@@ -15679,6 +15679,7 @@ html.dark .table .actions-hover a {
 /* Common Fixes */
 .dataTables_wrapper {
 	position: relative;
+	padding: 0px;
 }
 
 .dataTables_wrapper .DTTT.btn-group {

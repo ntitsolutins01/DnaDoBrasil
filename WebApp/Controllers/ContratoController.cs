@@ -51,20 +51,22 @@ namespace WebApp.Controllers
 				{
 					Nome = collection["nome"].ToString().ToUpper(),
 					Descricao = collection["descricao"].ToString(),
-					DtIni = Convert.ToDateTime(collection["dtini"].ToString()),
-					DtFim = Convert.ToDateTime(collection["dtfim"].ToString()),
+					DtIni = collection["dtini"].ToString(),
+					DtFim = collection["dtfim"].ToString(),
 					Anexo = collection["anexo"].ToString()
 				};
 
 				await ApiClientFactory.Instance.CreateContrato(command);
 
 				return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
-			}
-			catch (Exception e)
-			{
-				return RedirectToAction(nameof(Index));
-			}
-		}
+            }
+            catch (Exception e)
+            {
+                Console.Write(e.StackTrace);
+                return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = e.Message });
+
+            }
+        }
 
 		//[ClaimsAuthorize("Usuario", "Alterar")]
 		public async Task<ActionResult> Edit(IFormCollection collection)
@@ -74,8 +76,9 @@ namespace WebApp.Controllers
 				Id = Convert.ToInt32(collection["editContratoId"]),
 				Nome = collection["nome"].ToString().ToUpper(),
 				Descricao = collection["descricao"].ToString(),
-				DtIni = Convert.ToDateTime(collection["dtini"].ToString()),
-				DtFim = Convert.ToDateTime(collection["dtfim"].ToString()),
+				DtIni = collection["dtini"].ToString(),
+				DtFim = collection["dtfim"].ToString(),
+				Status = collection["editStatus"].ToString() == "" ? false : true,
 				Anexo = collection["anexo"].ToString()
 			};
 
@@ -98,11 +101,11 @@ namespace WebApp.Controllers
 			}
 		}
 
-		public async Task<ContratoDto> GetContratoById(int id)
+		public Task<ContratoDto> GetContratoById(int id)
 		{
 			var result = ApiClientFactory.Instance.GetContratoById(id);
 
-			return result;
+			return Task.FromResult(result);
 		}
 	}
 }

@@ -8,7 +8,17 @@ var vm = new Vue({
         var self = this;
         (function ($) {
             'use strict';
-            var formid = $('form').attr('id');
+            if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
+
+                $(function () {
+                    $('[data-plugin-ios-switch]').each(function () {
+                        var $this = $(this);
+
+                        $this.themePluginIOS7Switch();
+                    });
+                });
+            }
+            var formid = $('form')[1].id;
 
             if (formid === "formLocalidade") {
                 var $select = $(".select2").select2({
@@ -82,7 +92,7 @@ var vm = new Vue({
                             }
                         });
                 });
-            } else if (formid === "formEditLocalidade") {
+            }  if (formid === "formEditLocalidade") {
 
                 $("#formEditLocalidade").validate({
                     highlight: function (label) {
@@ -138,6 +148,11 @@ var vm = new Vue({
                 self.editDto.Id = result.data.id;
                 self.editDto.Nome = result.data.nome;
                 self.editDto.Descricao = result.data.descricao;
+                self.editDto.MunicipioId = result.data.municipioId;
+                self.editDto.EstadoId = result.data.estadoId;
+                self.editDto.Municipio = result.data.nomeMunicipio;
+                self.editDto.Estado = result.data.nomeEstado;
+                self.editDto.Status = result.data.status;
 
             }).catch(error => {
                 Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);

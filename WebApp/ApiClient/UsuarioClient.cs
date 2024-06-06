@@ -40,15 +40,10 @@ namespace WebApp.ApiClient
         public UsuarioDto GetUsuarioById(string id)
 		{
 			var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-				$"{ResourceUsuario}/{id}"));
+				$"{ResourceUsuario}/Usuario/{id}"));
 			return Get<UsuarioDto>(requestUrl);
 		}
-		public List<ModuloDto> GetModuloAll()
-		{
-			var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-				$"{ResourceUsuario}/Modulos"));
-			return Get<List<ModuloDto>>(requestUrl);
-		}
+		
         public UsuarioDto GetUsuarioByCpf(string cpf)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,

@@ -22,19 +22,44 @@ namespace WebApp.Controllers
 			ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
 		}
 		
-        public async Task<JsonResult> GetMunicipioByUf(string uf)
+        public Task<JsonResult> GetMunicipioByUf(string uf)
         {
             try
             {
                 if (string.IsNullOrEmpty(uf)) throw new Exception("Estado não informado.");
                 var resultLocal = ApiClientFactory.Instance.GetMunicipiosByUf(uf);
 
-                return Json(new SelectList(resultLocal, "Id", "Nome"));
+                return Task.FromResult(Json(new SelectList(resultLocal, "Id", "Nome")));
 
             }
             catch (Exception ex)
             {
-                return Json(ex.Message);
+                return Task.FromResult(Json(ex));
+            }
+        }
+
+
+
+        public Task<JsonResult> GetMunicipioByFomento(string id)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(id)) throw new Exception("Fomento não informado.");
+
+                var fomento = ApiClientFactory.Instance.GetFomentoById(Convert.ToInt32(id));
+
+                var result = new List<string>
+                {
+                    fomento.MunicipioId.ToString(),
+                    fomento.MunicipioEstado.Split("/")[1].Trim()
+                };
+
+                return Task.FromResult(Json(result));
+
+            }
+            catch (Exception ex)
+            {
+                return Task.FromResult(Json(ex));
             }
         }
     }

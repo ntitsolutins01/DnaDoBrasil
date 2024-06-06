@@ -1,173 +1,179 @@
-﻿
+﻿@model EstudanteModel
+
+
 @{
-    ViewData["Title"] = "Listagem de Estudantes";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewData["Title"] = "Listagem de Estudantes";
+	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
-<div class="row">
-    <div class="col-md-12">
-        <form id="form" action="forms-validation.html" class="form-horizontal">
-            <section class="panel">
-                <header class="panel-heading">
-                    <div class="panel-actions">
-                        <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
-                    </div>
+@* <div class="row">
+	<div class="col-md-12">
+		<form id="form" action="forms-validation.html" class="form-horizontal">
+			<section class="panel">
+				<header class="panel-heading">
+					<div class="panel-actions">
+						<a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
+					</div>
 
-                    <h2 class="panel-title">Filtro de pesquisa</h2>
-                </header>
-                <div class="panel-body">
+					<h2 class="panel-title">Filtro de pesquisa</h2>
+				</header>
+				<div class="panel-body">
 					<label class="col-sm-1 control-label">Categoria </label>
 					<div class="col-md-3 form-group">
 						<select class="form-control populate select2" name="ddlPerfil" id="ddlPerfil"
 								title="Por favor selecione um perfil." required
-						@* asp-for="CodPerfil" asp-items="Model.ListPerfil" *@>
+						asp-for="CategoriaId" asp-items="Model.ListCategorias">
 							<option value="">Selecionar Categoria</option>
 						</select>
 					</div>
 					<label class="col-sm-1 control-label">Deficiências </label>
 					<div class="col-md-3 form-group">
-						<select class="form-control populate select2" name="ddlPerfil" id="ddlPerfil"
+						<select class="form-control populate select2" name="ddlDeficiencias" id="ddlDeficiencias"
 								title="Por favor selecione um perfil." required
-						@* asp-for="CodPerfil" asp-items="Model.ListPerfil" *@>
-                            <option value="">Selecionar Deficiência</option>
+								asp-for="DeficienciaId" asp-items="Model.ListDeficiencias ">
+							<option value="">Selecionar Deficiência</option>
 						</select>
 					</div>
 					<label class="col-sm-1 control-label">Contatos </label>
 					<div class="col-md-3 form-group">
-						<select class="form-control populate select2" name="ddlPerfil" id="ddlPerfil"
+						<select class="form-control populate select2" name="ddlContatos" id="ddlContatos"
 								title="Por favor selecione um perfil." required
-						@* asp-for="CodPerfil" asp-items="Model.ListPerfil" *@>
-                            <option value="">Selecionar Contato</option>
+						asp-for="ContratoId" asp-items="Model.ListContratos">
+							<option value="">Selecionar Contato</option>
 						</select>
 					</div>
-					<label class="col-sm-1 control-label">Sexo </label>
-					<div class="col-md-3 form-group">
-						<select class="form-control populate select2" name="ddlPerfil" id="ddlPerfil"
-								title="Por favor selecione um perfil." required
-						@* asp-for="CodPerfil" asp-items="Model.ListPerfil" *@>
-                            <option value="">Selecionar Sexo</option>
+					<label class="col-sm-1 control-label">Sexo <span class="required">*</span></label>
+					<div class="col-sm-2">
+						<select class="form-control populate select2" name="ddlSexo" id="ddlSexo"
+								title="Por favor selecione um sexo." required>
+							<option value="">Selecionar Sexo</option>
+							<option value="M">MASCULINO</option>
+							<option value="F">FEMININO</option>
 						</select>
 					</div>
-                    <label class="col-sm-1 control-label">Estado </label>
-                    <div class="col-md-3 form-group">
-                        <select class="form-control populate select2" name="ddlPerfil" id="ddlPerfil"
-                                title="Por favor selecione um perfil." required
-                        @* asp-for="CodPerfil" asp-items="Model.ListPerfil" *@>
-                            <option value="">Selecionar Estado</option>
-                        </select>
-                    </div>
-                    <label class="col-sm-1 control-label">Município</label>
-                    <div class="col-md-3 form-group">
-                        <select class="form-control populate select2" name="ddlPerfil" id="ddlPerfil"
-                                title="Por favor selecione um perfil." required
-                        @* asp-for="CodPerfil" asp-items="Model.ListPerfil" *@>
-                            <option value="">Selecionar Município</option>
-                        </select>
-                    </div>
-                    <label class="col-sm-1 control-label">Data Nascimento </label>
-                    <div class="col-sm-3">
-                        <div class="input-group">
-                            <span class="input-group-addon">
-                                <i class="fa fa-calendar"></i>
-                            </span>
-                            <input id="DtOcorrencia" name="DtOcorrencia"
-                                   data-plugin-masked-input data-input-mask="99/99/9999"
-                                   class="form-control"
-                            @* value="@Model.Relato.DatOcorrencia.ToShortDateString()" *@>
-                        </div>
-                    </div>
-                </div>
-                <footer class="panel-footer">
-                    <div class="row">
-                        <div class="col-md-9 col-md-offset-3">
-                            <button type="submit" class="btn btn-primary pull-right" style="margin-left: 5px;margin-right: 5px;"><i class="fa fa-search"></i> &nbsp;&nbsp;Pesquisar</button>
-                        </div>
-                    </div>
-                </footer>
-            </section>
-        </form>
-    </div>
-</div>
+					<label class="col-sm-1 control-label text-sm-right pt-2">Estado <span class="required">*</span></label>
+					<div class="col-md-3">
+						<select class="form-control populate select2" name="ddlEstado" id="ddlEstado"
+								title="Por favor informe um Estado." required
+								asp-for="EstadoId" asp-items="Model.ListEstados">
+							<option value="">Selecionar Estado</option>
+						</select>
+					</div>
+					<label class="col-sm-2 control-label text-sm-right pt-2">Município <span class="required">*</span></label>
+					<div class="col-md-3">
+						<select class="form-control populate select2" name="ddlMunicipio" id="ddlMunicipio"
+								title="Por favor informe um Municipio." required
+								asp-for="MunicipioId" asp-items="Model.ListMunicipios">
+							<option value="">Selecionar Município</option>
+						</select>
+					</div>
+					<label class="col-sm-2 control-label">Data Nascimento <span class="required">*</span></label>
+					<div class="col-sm-2">
+						<div class="input-group">
+							<span class="input-group-addon">
+								<i class="fa fa-calendar"></i>
+							</span>
+							<input id="DtNascimento" name="DtNascimento"
+								   required
+								   title="Por favor informe a data de nascimento."
+								   style="z-index: auto;"
+								   data-plugin-datepicker data-date-format="dd/mm/yyyy" data-plugin-options='{"language": "pt-BR"}'
+								   placeholder="__/__/____" class="form-control startdate"
+								   class="form-control">
+						</div>
+					</div>
+					<footer class="panel-footer">
+						<div class="row">
+							<div class="col-md-9 col-md-offset-3">
+								<button type="submit" class="btn btn-primary pull-right" style="margin-left: 5px;margin-right: 5px;"><i class="fa fa-search"></i> &nbsp;&nbsp;Pesquisar</button>
+							</div>
+						</div>
+					</footer>
+				</div>
+			</section>
+		</form>
+	</div>
+</div> *@
 
 <section class="panel">
-    <header class="panel-heading">
-        <div class="panel-actions">
-            <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
-        </div>
-        <h2 class="panel-title">Listagem de Estudantes</h2>
-    </header>
-    <div class="panel-body">
-        <table class="table table-bordered table-striped mb-0" id="datatable-default">
-            <thead>
-                <tr>
-                    <th>Estudante</th>
-                    <th>Idade</th>
-                    <th>Sexo</th>
-                    <th>Talento</th>
-                    <th>Estado</th>
-                    <th>Municipio</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
+	<header class="panel-heading">
+		<div class="panel-actions">
+			<a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
+		</div>
+		<h2 class="panel-title">Listagem de Estudantes</h2>
+	</header>
+	<div class="panel-body">
+		<table class="table table-bordered table-striped mb-0" id="datatable-default">
+			<thead>
+				<tr>
+					<th>Estudante</th>
+					<th>Idade</th>
+					<th>Sexo</th>
+					<th>Talento</th>
+					<th>Municipio/Estado</th>
+					<th>Status</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
 					<td>Fábio de Souza Muniz</td>
 					<td>39</td>
 					<td>Masculino</td>
 					<td>Natação</td>
 					<td>Df</td>
 					<td>Brasilia</td>
-                    <td><span class="label label-primary">Ativo</span></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+					<td><span class="label label-primary">Ativo</span></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </section>
 
 
 
 @section CssSpecificVendor {
-    <link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />
+	<link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />
     }
 @section Scripts {
-    <script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
-    <script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
-    <script src="~/js/formatTable.js"></script>
+	<script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
+	<script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
+	<script src="~/js/formatTable.js"></script>
+	<script src="~/js/DadosEstudante.js"></script>
 
-    <script>
+	<script>
 
-        (function ($) {
+		(function ($) {
 
-            'use strict';
-            var crub = @ViewBag.CrudMessage;
+			'use strict';
+			var crub = @ViewBag.CrudMessage;
 
-            if (crub === 1) {
-                new PNotify({
-                    title: 'Laudo',
-                    text: 'Cadastro realizado com sucesso!',
-                    type: 'success'
-                });
-            } else if (crub === 2) {
-                new PNotify({
-                    title: 'Laudo',
-                    text: 'Dados alterados com sucesso.',
-                    type: 'warning',
-                    icon: 'fa fa-pencil'
-                });
-            } else if (crub === 3) {
-                new PNotify({
-                    title: 'Laudo',
-                    text: 'Registro excluído com sucesso.',
-                    type: 'error',
-                    icon: 'fa fa-trash-o'
-                });
-            }
-            if ($.isFunction($.fn['tooltip'])) {
-                $('[data-toggle=tooltip],[rel=tooltip]').tooltip({ container: 'body' });
-            }
+			if (crub === 1) {
+				new PNotify({
+					title: 'Estudante',
+					text: 'Cadastro realizado com sucesso!',
+					type: 'success'
+				});
+			} else if (crub === 2) {
+				new PNotify({
+					title: 'Estudante',
+					text: 'Dados alterados com sucesso.',
+					type: 'warning',
+					icon: 'fa fa-pencil'
+				});
+			} else if (crub === 3) {
+				new PNotify({
+					title: 'Estudante',
+					text: 'Registro excluído com sucesso.',
+					type: 'error',
+					icon: 'fa fa-trash-o'
+				});
+			}
+			if ($.isFunction($.fn['tooltip'])) {
+				$('[data-toggle=tooltip],[rel=tooltip]').tooltip({ container: 'body' });
+			}
 
-        }).apply(this, [jQuery]);
-    </script>
+		}).apply(this, [jQuery]);
+	</script>
 }
 

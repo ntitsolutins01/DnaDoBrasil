@@ -5,67 +5,85 @@ namespace WebApp.ApiClient
 {
     public partial class DnaApiClient
     {
-        protected DnaApiClient()
-        {
-            throw new NotImplementedException();
-        }
-
-        private const string ResourceAluno = "Alunos";
+        private const string ResourceAlunos = "Alunos";
 
         #region Main Methods
 
-        public Task<long> CreateAluno(AlunoModel.CreateUpdateAlunoCommand command)
+        public Task<long> CreateDados(AlunoModel.CreateUpdateDadosAlunoCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceAluno}"));
+                $"{ResourceAlunos}"));
             return Post(requestUrl, command);
         }
-        public Task<bool> UpdateAluno(AlunoModel.CreateUpdateAlunoCommand command)
+
+        public Task<bool> UpdateDados(int id, AlunoModel.CreateUpdateDadosAlunoCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceAluno}"));
+                $"{ResourceAlunos}/{id}"));
             return Put(requestUrl, command);
         }
-        public List<AlunoDto> GetAlunosAll()
+
+        public Task<bool> UpdateAlunoFoto(int id, AlunoModel.CreateUpdateDadosAlunoCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceAluno}"));
-            return Get<List<AlunoDto>>(requestUrl);
+                $"{ResourceAlunos}/UploadFoto/{id}"));
+            return Put(requestUrl, command);
+        }
+
+        public Task<bool> DeleteDados(int id)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceAlunos}/{id}"));
+            return Delete<bool>(requestUrl);
         }
 
         #endregion
 
         #region Methods
 
-        public AlunoDto GetAlunoById(string id)
+
+        public List<AlunoDto> GetAlunosAll()
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceAluno}/{id}"));
+                $"{ResourceAlunos}"));
+            return Get<List<AlunoDto>>(requestUrl);
+        }
+        public AlunoDto GetAlunoById(int id)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceAlunos}/Aluno/{id}"));
             return Get<AlunoDto>(requestUrl);
         }
-        //public List<DeficienciaDto> GetDeficienciasByAlunoId()
-        //{
-        //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-        //        $"{ResourceAluno}/Deficiencias"));
-        //    return Get<List<DeficienciaDto>>(requestUrl);
-        //}
-        //public List<DeficienciaDto> GetDeficienciasAll()
-        //{
-        //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-        //        $"{ResourceAluno}/Deficiencias"));
-        //    return Get<List<DeficienciaDto>>(requestUrl);
-        //}
-        //public List<DeficienciaDto> GetDeficienciasByAlunoId()
-        //{
-        //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-        //        $"{ResourceAluno}/Deficiencias"));
-        //} 
-        //public List<DeficienciaDto> GetTipoEscolaridadeAll()
-        //{
-        //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-        //        $"{ResourceAluno}/Deficiencias"));
-        //    return Get<List<DeficienciaDto>>(requestUrl);
-        //}
+        public AlunoDto GetAlunoByEmail(string email)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceAlunos}/Aluno/Email/{email}"));
+            return Get<AlunoDto>(requestUrl);
+        }
+        public AlunoDto GetAlunoByAspNetUser(string aspNetUserId)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceAlunos}/AspNetUserId/{aspNetUserId}"));
+            return Get<AlunoDto>(requestUrl);
+        }
+        public List<AlunoIndexDto> GetAlunosByLocalidade(int id)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceAlunos}/Localidade/{id}"));
+            return Get<List<AlunoIndexDto>>(requestUrl);
+        }
+        public List<SelectListDto> GetNomeAlunosAll(string id)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceAlunos}/NomeAlunos/{id}"));
+            return Get<List<SelectListDto>>(requestUrl);
+        }
+        public Task<AlunosFilterDto?> GetAlunosByFilter(AlunosFilterDto searchFilter)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceAlunos}/Filter"));
+            return GetFiltro(requestUrl, searchFilter);
+        }
 
         #endregion
     }

@@ -3,16 +3,28 @@
     data: {
         loading: false,
         editDto: { Id: "", Nome: "", DtIni: "", DtFim: "", Anexo: "", Descricao: "", Status: true }
-},
+    },
     mounted: function () {
         var self = this;
         (function ($) {
-
             'use strict';
+
+            if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
+
+                $(function () {
+                    $('[data-plugin-ios-switch]').each(function () {
+                        var $this = $(this);
+
+                        $this.themePluginIOS7Switch();
+                    });
+                });
+            }
+
             var formid = $('form').attr('id');
 
-            if (formid === "formContrato") {
-                $("#formContrato").validate({
+            if (formid === "formEditContrato") {
+
+                $("#formEditContrato").validate({
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
                     },
@@ -30,8 +42,11 @@
                         }
                     }
                 });
-            } else if (formid === "formEditContrato") {
-                $("#formEditContrato").validate({
+            }
+
+            if (formid === "formContrato") {
+
+                $("#formContrato").validate({
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
                     },
@@ -72,7 +87,7 @@
                 self.loading = flag;
             }
         },
-         DeleteContrato: function (id) {
+        DeleteContrato: function (id) {
             var url = "Contrato/Delete/" + id;
             $("#deleteContratoHref").prop("href", url);
         },
