@@ -40,7 +40,9 @@
     <_ContentIncludedByDefault Remove="Views\Aluno\Dados.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Aluno\Saude.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Aluno\SaudeBucal.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Certificado\Create.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Escolaridade\Create.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Ranking\Create.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Usuario\Create.cshtml" />
     <_ContentIncludedByDefault Remove="wwwroot\assets\vendor\datatables\media\js\dataTables.select.min.js" />
   </ItemGroup>
@@ -160,6 +162,14 @@
 
   <ItemGroup>
     <Folder Include="Views\BemVindo\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Ranking\Create.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Certificado\Create.cshtml" />
   </ItemGroup>
 
 </Project>
