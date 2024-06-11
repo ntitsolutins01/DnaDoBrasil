@@ -9,10 +9,11 @@ using WebApp.Factory;
 using WebApp.Identity;
 using WebApp.Models;
 using WebApp.Utility;
+using Claim = System.Security.Claims.Claim;
 
 namespace WebApp.Controllers;
 
-public class CursoController : BaseController
+public class CertificadoController : BaseController
 {
     #region Constructor
     private readonly IOptions<UrlSettings> _appSettings;
@@ -22,7 +23,7 @@ public class CursoController : BaseController
     /// </summary>
     /// <param name="app">configurações de urls do sistema</param>
     /// <param name="host">informações da aplicação em execução</param>
-    public CursoController(IOptions<UrlSettings> appSettings)
+    public CertificadoController(IOptions<UrlSettings> appSettings)
     {
         _appSettings = appSettings;
         ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
@@ -31,20 +32,20 @@ public class CursoController : BaseController
 
     #region Crud Methods
     /// <summary>
-    /// Listagem de Curso
+    /// Listagem de Certificado
     /// </summary>
     /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
     /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
     /// <param name="collection">lista de filtros selecionados para pesquisa de alunos</param>
     /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
-    [ClaimsAuthorize(ClaimType.Curso, Identity.Claim.Consultar)]
+    [ClaimsAuthorize(ClaimType.Certificado, Identity.Claim.Consultar)]
     public IActionResult Index(int? crud, int? notify, string message = null)
     {
         SetNotifyMessage(notify, message);
         SetCrudMessage(crud);
-        //var response = ApiClientFactory.Instance.GetCursosAll();
+        //var response = ApiClientFactory.Instance.GetCertificadosAll();
 
-        return View();//new CursoModel() { Cursos = response }
+        return View();//new CertificadoModel() { Certificados = response }
     }
 
     /// <summary>
@@ -53,27 +54,26 @@ public class CursoController : BaseController
     /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
     /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
     /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
-    [ClaimsAuthorize(ClaimType.Curso, Identity.Claim.Incluir)]
+    [ClaimsAuthorize(ClaimType.Certificado, Identity.Claim.Incluir)]
 
     public ActionResult Create(int? crud, int? notify, string message = null)
     {
         try
         {
             SetNotifyMessage(notify, message);
-            SetCrudMessage(crud);
-            //var Curso = new SelectList(ApiClientFactory.Instance.GetCursosAll(), "Id", "Nome");
+           SetCrudMessage(crud);
+            //var metricas = new SelectList(ApiClientFactory.Instance.GetCertificadosAll(), "Id", "Nome");
 
-            return View(); //(new CursoModel() { ListCursos = Curso });
+            return View(); //(new CertificadoModel() { ListCertificados = metricas });
         }
         catch (Exception e)
         {
-            Console.Write(e.StackTrace);
-            return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = e.Message });
+         Console.Write(e.StackTrace);
+           return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = e.Message });
 
         }
     }
     #endregion
-
 
     ////[ClaimsAuthorize("Usuario", "Incluir")]
     //[HttpPost]
@@ -81,7 +81,7 @@ public class CursoController : BaseController
     //{
     //    try
     //    {
-    //        var command = new CursoModel.CreateUpdateCursoCommand
+    //        var command = new CertificadoModel.CreateUpdateCertificadoCommand
     //        {
     //            Classificacao = collection["classificacao"].ToString(),
     //            Idade = Convert.ToInt32(collection["idade"].ToString()),
@@ -90,7 +90,7 @@ public class CursoController : BaseController
     //            Sexo = collection["ddlSexo"].ToString()
     //        };
 
-    //        await ApiClientFactory.Instance.CreateCurso(command);
+    //        await ApiClientFactory.Instance.CreateCertificado(command);
 
     //        return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
     //    }
@@ -105,9 +105,9 @@ public class CursoController : BaseController
     //{
     //    try
     //    {
-    //        var command = new CursoModel.CreateUpdateCursoCommand
+    //        var command = new CertificadoModel.CreateUpdateCertificadoCommand
     //        {
-    //            Id = Convert.ToInt32(collection["editCursoId"]),
+    //            Id = Convert.ToInt32(collection["editCertificadoId"]),
     //            Classificacao = collection["classificacao"].ToString(),
     //            Idade = Convert.ToInt32(collection["idade"].ToString()),
     //            ValorInicial = Convert.ToDecimal(collection["valorInicial"].ToString()),
@@ -115,7 +115,7 @@ public class CursoController : BaseController
     //            Status = collection["editStatus"].ToString() == "" ? false : true
     //        };
 
-    //        await ApiClientFactory.Instance.UpdateCurso(command.Id, command);
+    //        await ApiClientFactory.Instance.UpdateCertificado(command.Id, command);
 
     //        return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
     //    }
@@ -130,7 +130,7 @@ public class CursoController : BaseController
     //{
     //    try
     //    {
-    //        ApiClientFactory.Instance.DeleteCurso(id);
+    //        ApiClientFactory.Instance.DeleteCertificado(id);
     //        return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
     //    }
     //    catch
@@ -139,9 +139,9 @@ public class CursoController : BaseController
     //    }
     //}
 
-    //public Task<CursoDto> GetCursoById(int id)
+    //public Task<CertificadoDto> GetCertificadoById(int id)
     //{
-    //    var result = ApiClientFactory.Instance.GetCursoById(id);
+    //    var result = ApiClientFactory.Instance.GetCertificadoById(id);
 
     //    return Task.FromResult(result);
     //}

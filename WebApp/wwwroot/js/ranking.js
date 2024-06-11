@@ -1,27 +1,57 @@
 var vm = new Vue({
-    el: "#vFuncionalidade",
+    el: "#vRanking ",
     data: {
         loading: false,
-        editDto: { Id: "", Nome: "", NomeModulo: "" }
+        editDto: { Id: "", NomeRanking: "", Status: true }
     },
     mounted: function () {
         var self = this;
         (function ($) {
             'use strict';
 
+
+
+            var $select = $(".select2").select2({
+                allowClear: true
+            });
+
+            $(".select2").each(function () {
+                var $this = $(this),
+                    opts = {};
+
+                var pluginOptions = $this.data('plugin-options');
+                if (pluginOptions)
+                    opts = pluginOptions;
+
+                $this.themePluginSelect2(opts);
+            });
+
+            /*
+             * When you change the value the select via select2, it triggers
+             * a 'change' event, but the jquery validation plugin
+             * only re-validates on 'blur'*/
+
+            $select.on('change', function () {
+                $(this).trigger('blur');
+            });
+
+            //skin checkbox
+            if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
+
+                $(function () {
+                    $('[data-plugin-ios-switch]').each(function () {
+                        var $this = $(this);
+
+                        $this.themePluginIOS7Switch();
+                    });
+                });
+            }
+
             var formid = $('form')[1].id;
 
-            if (formid === "formEditFuncionalidade") {
+            if (formid === "formEditRanking") {
 
-
-                //mascara dos inputs
-                var $pontoInicial = $("#pontoInicial");
-                $pontoInicial.mask('00.00', { reverse: true });
-
-                var $pontoFinal = $("#pontoFinal");
-                $pontoFinal.mask('00.00', { reverse: true });
-
-                $("#formEditFuncionalidade").validate({
+                $("#formEditRanking ").validate({
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
                     },
@@ -39,34 +69,12 @@ var vm = new Vue({
                         }
                     }
                 });
-            } 
+            }
 
-            if (formid === "formFuncionalidade") {
-                var $select = $(".select2").select2({
-                    allowClear: true
-                });
+            if (formid === "formRanking") {
 
-                $(".select2").each(function () {
-                    var $this = $(this),
-                        opts = {};
 
-                    var pluginOptions = $this.data('plugin-options');
-                    if (pluginOptions)
-                        opts = pluginOptions;
-
-                    $this.themePluginSelect2(opts);
-                });
-
-                /*
-                 * When you change the value the select via select2, it triggers
-                 * a 'change' event, but the jquery validation plugin
-                 * only re-validates on 'blur'*/
-
-                $select.on('change', function () {
-                    $(this).trigger('blur');
-                });
-
-                $("#formFuncionalidade").validate({
+                $("#formRanking").validate({
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
                     },
@@ -84,7 +92,7 @@ var vm = new Vue({
                         }
                     }
                 });
-            } 
+            }
         }).apply(this, [jQuery]);
     },
     methods: {
@@ -107,18 +115,18 @@ var vm = new Vue({
                 self.loading = flag;
             }
         },
-        DeleteFuncionalidade: function (id) {
-            var url = "Funcionalidade/Delete/" + id;
-            $("#deleteFuncionalidadeHref").prop("href", url);
+        DeleteRanking: function (id) {
+            var url = "Ranking/Delete/" + id;
+            $("#deleteRankingHref").prop("href", url);
         },
-        EditFuncionalidade: function (id) {
+        EditRanking: function (id) {
             var self = this;
 
-            axios.get("Funcionalidade/GetFuncionalidadeById/?id=" + id).then(result => {
+            axios.get("Ranking/GetRankingById/?id=" + id).then(result => {
 
                 self.editDto.Id = result.data.id;
-                self.editDto.Nome = result.data.nome;
-                self.editDto.NomeModulo = result.data.nomeModulo;
+                self.editDto.NomeRanking = result.data.nomeRanking;
+                self.editDto.Status = result.data.status;
 
             }).catch(error => {
                 Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
@@ -129,13 +137,13 @@ var vm = new Vue({
 
 var crud = {
     DeleteModal: function (id) {
-        $('input[name="deleteFuncionalidadeId"]').attr('value', id);
-        $('#mdDeleteFuncionalidade').modal('show');
-        vm.DeleteFuncionalidade(id)
+        $('input[name="deleteRankingId"]').attr('value', id);
+        $('#mdDeleteRanking').modal('show');
+        vm.DeleteRanking(id)
     },
     EditModal: function (id) {
-        $('input[name="editFuncionalidadeId"]').attr('value', id);
-        $('#mdEditFuncionalidade').modal('show');
-        vm.EditFuncionalidade(id)
+        $('input[name="editRankingId"]').attr('value', id);
+        $('#mdEditRanking').modal('show');
+        vm.EditRanking(id)
     }
 };
