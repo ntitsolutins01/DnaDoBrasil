@@ -12,5 +12,7 @@
         public const string Certificado = "Certificado";
         public const string Curso = "Curso";
         public const string Comunidade = "Comunidade";
-    }
+        public const string TipoCurso = "TipoCurso";
+
+	}
 }
