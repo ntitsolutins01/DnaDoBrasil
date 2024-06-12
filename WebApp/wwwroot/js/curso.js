@@ -2,15 +2,18 @@ var vm = new Vue({
     el: "#vCurso ",
     data: {
         loading: false,
-        editDto: { Id: "", NomeCurso: "", Status: true }
+        editDto: { Id: "", Nome: "", Status: true }
     },
     mounted: function () {
         var self = this;
         (function ($) {
             'use strict';
 
+            //mascara dos inputs
+            var cargahoraria = $("#cargahoraria");
+            cargahoraria.mask('00.00', { reverse: false });
 
-
+            //skin select2 combo
             var $select = $(".select2").select2({
                 allowClear: true
             });
@@ -125,7 +128,7 @@ var vm = new Vue({
             axios.get("Curso/GetCursoById/?id=" + id).then(result => {
 
                 self.editDto.Id = result.data.id;
-                self.editDto.NomeCurso = result.data.nomeCurso;
+                self.editDto.Nome = result.data.Curso;
                 self.editDto.Status = result.data.status;
 
             }).catch(error => {
