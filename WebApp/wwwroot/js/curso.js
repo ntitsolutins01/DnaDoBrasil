@@ -10,8 +10,8 @@ var vm = new Vue({
             'use strict';
 
             //mascara dos inputs
-            var cargahoraria = $("#cargahoraria");
-            cargahoraria.mask('00.00', { reverse: false });
+            var cargaHoraria = $("#cargaHoraria");
+            cargaHoraria.mask('000', { reverse: false });
 
             //skin select2 combo
             var $select = $(".select2").select2({

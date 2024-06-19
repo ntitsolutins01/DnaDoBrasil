@@ -1036,10 +1036,6 @@ var vm = new Vue({
                             name: 'Prancha (ABD)',
                             y: result.data.dashboard.listTotalizadorDesempenho.percDesempenho.prancha,
                             z: 50
-                        }, {
-                            name: 'Vo2 Max',
-                            y: result.data.dashboard.listTotalizadorDesempenho.percDesempenho.vo2Max,
-                            z: 50
                         }]
                     }]
                 });
@@ -1057,7 +1053,7 @@ var vm = new Vue({
                         text: undefined
                     },
                     xAxis: {
-                        categories: ['Velocidade', 'Flexibilidade Muscular', 'Força de Membros Superiores', 'Força Explosiva de Membros Inferiores', 'Aptidão Cardiorrespiratória', 'Agilidade ou Shuttle run', 'Prancha (ABD)', 'Vo2 Max'],
+                        categories: ['Velocidade', 'Flexibilidade Muscular', 'Força de Membros Superiores', 'Força Explosiva de Membros Inferiores', 'Aptidão Cardiorrespiratória', 'Agilidade ou Shuttle run', 'Prancha (ABD)'],
 
                         labels: {
                             style: {
@@ -1113,8 +1109,7 @@ var vm = new Vue({
                             result.data.dashboard.listTotalizadorDesempenho.valorTotalizadorDesempenhoFeminino.forcaExplosiva,
                             result.data.dashboard.listTotalizadorDesempenho.valorTotalizadorDesempenhoFeminino.aptidaoCardio,
                             result.data.dashboard.listTotalizadorDesempenho.valorTotalizadorDesempenhoFeminino.shutlleRun,
-                            result.data.dashboard.listTotalizadorDesempenho.valorTotalizadorDesempenhoFeminino.prancha,
-                            result.data.dashboard.listTotalizadorDesempenho.valorTotalizadorDesempenhoFeminino.vo2Max
+                            result.data.dashboard.listTotalizadorDesempenho.valorTotalizadorDesempenhoFeminino.prancha
                         ]
                     }, {
                         name: 'Masculino',
@@ -1125,8 +1120,7 @@ var vm = new Vue({
                             result.data.dashboard.listTotalizadorDesempenho.valorTotalizadorDesempenhoMasculino.forcaExplosiva,
                             result.data.dashboard.listTotalizadorDesempenho.valorTotalizadorDesempenhoMasculino.aptidaoCardio,
                             result.data.dashboard.listTotalizadorDesempenho.valorTotalizadorDesempenhoMasculino.shutlleRun,
-                            result.data.dashboard.listTotalizadorDesempenho.valorTotalizadorDesempenhoMasculino.prancha,
-                            result.data.dashboard.listTotalizadorDesempenho.valorTotalizadorDesempenhoMasculino.vo2Max
+                            result.data.dashboard.listTotalizadorDesempenho.valorTotalizadorDesempenhoMasculino.prancha
                         ]
                     }]
                 });
@@ -1501,6 +1495,12 @@ var vm = new Vue({
                             style: {
                                 fontSize: '12px'
                             }
+                        },
+
+                        labels: {
+                            style: {
+                                fontSize: '12px'
+                            }
                         }
                     },
                     legend: {
@@ -1634,6 +1634,12 @@ var vm = new Vue({
                             style: {
                                 fontSize: '12px'
                             }
+                        },
+
+                        labels: {
+                            style: {
+                                fontSize: '12px'
+                            }
                         }
                     },
                     legend: {
@@ -1753,6 +1759,12 @@ var vm = new Vue({
                         min: 0,
                         title: {
                             text: 'Total',
+                            style: {
+                                fontSize: '12px'
+                            }
+                        },
+
+                        labels: {
                             style: {
                                 fontSize: '12px'
                             }
@@ -1879,22 +1891,49 @@ var vm = new Vue({
                         text: undefined
                     },
                     xAxis: {
-                        categories: ['Tecnologias Aplicadas', 'Ciências Exatas e Naturais', 'Artístico', 'Ciências Humanas', 'Empreendedorismo', 'Ciências Contabeis e Administrativas']
+                        categories: ['Tecnologias Aplicadas', 'Ciências Exatas e Naturais', 'Artístico', 'Ciências Humanas', 'Empreendedorismo', 'Ciências Contabeis e Administrativas'],
+
+                        labels: {
+                            style: {
+                                fontSize: '12px'
+                            }
+                        }
                     },
                     yAxis: {
                         min: 0,
                         title: {
-                            text: 'Total'
+                            text: 'Total',
+                            style: {
+                                fontSize: '12px'
+                            }
+                        },
+
+                        labels: {
+                            style: {
+                                fontSize: '12px'
+                            }
                         }
                     },
                     legend: {
-                        reversed: true
+                        reversed: true,
+                        itemStyle: {
+                            fontSize: '12px'
+                        }
+                    },
+                    tooltip: {
+                        style: {
+                            fontSize: '12px'
+                        }
                     },
                     plotOptions: {
                         series: {
                             stacking: 'normal',
                             dataLabels: {
-                                enabled: true
+                                enabled: true,
+                                style: {
+                                    fontSize: '12px',
+                                    fontWeight: '400'
+                                }
                             }
                         }
                     },
