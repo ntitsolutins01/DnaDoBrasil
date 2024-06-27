@@ -14,6 +14,7 @@
         public const string Comunidade = "Comunidade";
         public const string TipoCurso = "TipoCurso";
         public const string Nota = "Nota";
-
-	}
+        public const string Aula = "Aula";
+        public const string ControleAcessoAula = "ControleAcessoAula";
+    }
 }
