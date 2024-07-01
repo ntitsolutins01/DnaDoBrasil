@@ -1,4 +1,5 @@
-﻿@{
+﻿@model CursoModel
+@{
     ViewData["Title"] = "Inclusão de Curso";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -18,6 +19,69 @@
                         <h2 class="panel-title">Cadastro de Curso</h2>
                     </header>
                     <div class="panel-body">
+	                    <div class="form-group row">
+                            <label class="col-sm-3 control-label text-sm-right pt-2">Nome de Curso  <span class="required">*</span></label>
+		                    <div class="col-sm-9">
+			                    <input type="text" name="nome" class="form-control"
+			                           maxlength="150"
+			                           title="Por favor informe o nome do curso." required/>
+		                    </div>
+	                    </div>
+	                    <div class="form-group row">
+		                    <label class="col-sm-3 control-label text-sm-right pt-2">Tipo de Curso <span class="required">*</span></label>
+		                    <div class="col-sm-4">	
+			                    <select class="form-control populate select2" name="ddlTipoCurso" id="ddlTipoCurso" style="width:100%"
+			                            required title="Por favor selecione o tipo do curso"
+			                            asp-for="TipoCursoId" asp-items="Model.ListTiposCursos">
+                                    <option value="">Selecionar Tipo de Curso</option>
+			                    </select>
+		                    </div>
+	                    </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 control-label text-sm-right pt-2">Coordenador <span class="required">*</span></label>
+                            <div class="col-sm-4">
+                                <select class="form-control populate select2" name="ddlCoordenador" id="ddlCoordenador" style="width:100%"
+                                        required title="Por favor selecione o coordenador"
+                                        asp-for="CoordenadorId" asp-items="Model.ListCoordenadores">
+                                    <option value="">Selecionar Coordenador</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group mb-lg" id="divDescricao">
+                            <label class="col-sm-3 control-label text-sm-right pt-2">Descrição </label>
+                            <div class="input-group input-group-icon col-sm-9">
+                                <textarea id="descricao" name="descricao" rows="4" class="form-control form-control-lg"></textarea>
+                                <span class="input-group-addon">
+                                    <span class="icon icon-lg">
+                                        <i class="fa fa-file-text-o"></i>
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+	                    <div class="form-group">
+		                    <label class="col-sm-1 control-label">Imagem</label>
+                            <div class="col-sm-4">
+                                <div class="fileupload fileupload-new" data-provides="fileupload">
+                                    <div class="input-append">
+                                        <div class="uneditable-input">
+                                            <i class="fa fa-file fileupload-exists"></i>
+                                            <span class="fileupload-preview"></span>
+                                        </div>
+                                        <span class="btn btn-default btn-file">
+                                            <span class="fileupload-exists">Alterar</span>
+                                            <span class="fileupload-new">Selecionar Arquivo</span>
+                                            <input type="file" id="arquivo" name="arquivo" />
+                                        </span>
+                                        <a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">Remover</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <label class="col-sm-3 control-label text-sm-right pt-2">Carga Horária<span class="required">*</span></label>
+                            <div class="col-sm-2">
+                                <input type="text" id="cargaHoraria" name="cargaHoraria" class="form-control" maxlength="6"
+                                       title="Por favor informe o valor final." required/>
+                            </div>
+	                    </div>
                     </div>
                     <footer class="panel-footer">
                         <div class="row">

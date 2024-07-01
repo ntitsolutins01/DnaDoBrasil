@@ -201,7 +201,7 @@ namespace WebApp.Areas.Identity.Pages.Account
             string returnUrl = null;
             returnUrl ??= Url.Content("~/");
 
-            return RedirectToPage("Register", new { notify = (int)EnumNotify.Success, message = $"Aluno cadastrado com sucesso. Matrícula: {alunoId}" });
+            return RedirectToPage("Register", new { notify = (int)EnumNotify.Success, message = $"Aluno cadastrado com sucesso. Matrícula: {alunoId}. Para efetivação da matrícula, compareça à unidade com os seguintes documentos: cópia do RG e CPF do aluno e do responsável e laudo médico para Pessoas com Deficiência." });
         }
 
         private async Task SendNewUserEmail(IdentityUser user, string email, string nome)

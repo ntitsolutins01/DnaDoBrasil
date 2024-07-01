@@ -20,7 +20,7 @@ var vm = new Vue({
                 });
             }
 
-            var formid = $('form').attr('id');
+            var formid = $('form')[1].id;
 
             if (formid === "formEditTiposLaudo") {
 

@@ -17,7 +17,7 @@
                 <div class="panel-body">
                     <div class="form-group row">
                         <div class="col-sm-12 pull-right">
-                            <a href="@Url.Action("Create", "Resposta")" id="addToTable" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Nova Resposta </a>
+                            <a href="@Url.Action("Create", "Resposta")" id="addToTable" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> &nbsp;&nbsp;Nova Resposta </a>
                         </div>
                     </div>
                     <table class="table table-bordered table-striped mb-0" id="datatable-default">
@@ -25,6 +25,7 @@
                             <tr>
                                 <th class="text-center">Id</th>
                                 <th class="text-center">Tipo Laudo</th>
+                                <th class="text-center">Questionário Id</th>
                                 <th class="text-center">Questionário</th>
                                 <th class="text-center">Resposta</th>
                                 <th class="text-center">Valor/Peso Resposta</th>
@@ -38,7 +39,8 @@
                                 <tr>
                                     <td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Id)</td>
                                     <td class="text-center" style="width:150px;">@Html.DisplayFor(modelItem => item.NomeTipoLaudo)</td>
-                                    <td class="text-center">@Html.DisplayFor(modelItem => item.QuestionarioId) - @Html.DisplayFor(modelItem => item.Pergunta)</td>
+                                    <td class="text-center">@Html.DisplayFor(modelItem => item.QuestionarioId)</td>
+                                    <td class="text-center">@Html.DisplayFor(modelItem => item.Pergunta)</td>
                                     <td class="text-center">@Html.DisplayFor(modelItem => item.RespostaQuestionario)</td>
                                     <td class="text-center">@Html.DisplayFor(modelItem => item.ValorPesoResposta)</td>
                                     <td class="actions text-center">

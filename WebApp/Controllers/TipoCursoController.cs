@@ -54,7 +54,6 @@ public class TipoCursoController : BaseController
     /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
     /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
     [ClaimsAuthorize(ClaimType.TipoCurso, Identity.Claim.Incluir)]
-
     public ActionResult Create(int? crud, int? notify, string message = null)
     {
         try
@@ -73,7 +72,12 @@ public class TipoCursoController : BaseController
         }
     }
 
-	[ClaimsAuthorize(ClaimType.TipoCurso, Identity.Claim.Incluir)]
+    /// <summary>
+    /// Ação de inclusao do TipoCurso
+    /// </summary>
+    /// <param name="collection">coleção de dados para inclusao de TipoCurso</param>
+    /// <returns>retorna mensagem de inclusao através do parametro crud</returns>
+    [ClaimsAuthorize(ClaimType.TipoCurso, Identity.Claim.Incluir)]
 	[HttpPost]
     public async Task<ActionResult> Create(IFormCollection collection)
     {
@@ -94,7 +98,13 @@ public class TipoCursoController : BaseController
         }
     }
 
-	[ClaimsAuthorize(ClaimType.TipoCurso, Identity.Claim.Alterar)]
+    /// <summary>
+    /// Ação de alteração do TipoCurso
+    /// </summary>
+    /// <param name="id">identificador do TipoCurso</param>
+    /// <param name="collection">coleção de dados para alteração de TipoCurso</param>
+    /// <returns>retorna mensagem de alteração através do parametro crud</returns>
+    [ClaimsAuthorize(ClaimType.TipoCurso, Identity.Claim.Alterar)]
 	public async Task<ActionResult> Edit(IFormCollection collection)
     {
         try
@@ -116,6 +126,12 @@ public class TipoCursoController : BaseController
         }
     }
 
+    /// <summary>
+    /// Ação de exclusão do TipoCurso
+    /// </summary>
+    /// <param name="id">identificador do TipoCurso</param>
+    /// <param name="collection">coleção de dados para exclusão de TipoCurso</param>
+    /// <returns>retorna mensagem de exclusão através do parametro crud</returns>
 	[ClaimsAuthorize(ClaimType.TipoCurso, Identity.Claim.Excluir)]
 	public ActionResult Delete(int id)
     {

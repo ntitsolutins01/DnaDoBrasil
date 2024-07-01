@@ -281,7 +281,7 @@
                                         <ul class="nav nav-children">
                                             <li>
                                                 <a href="@Url.Action("Index", "TiposLaudo")">
-                                                    Tipos Laudo
+                                                    Tipos de Laudo
                                                 </a>
                                             </li>
                                             <li>
@@ -387,6 +387,15 @@
                                 @if ((await AuthorizationService.AuthorizeAsync(User, ModuloAccess.Profissional)).Succeeded)
                                 {
                                     <li class="nav-parent nav-expanded">
+                                        <a href="@Url.Action("Index", "Evento")">
+                                            <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+                                            <span>Eventos</span>
+                                        </a>
+                                    </li>
+                                }
+                                @if ((await AuthorizationService.AuthorizeAsync(User, ModuloAccess.Profissional)).Succeeded)
+                                {
+                                    <li class="nav-parent nav-expanded">
                                         <a href="@Url.Action("Index", "Profissional")">
                                             <i class="fa fa-suitcase" aria-hidden="true"></i>
                                             <span>Profissionais</span>
@@ -460,13 +469,28 @@
                                         </a>
                                         <ul class="nav nav-children">
                                             <li>
+                                                <a href="@Url.Action("Index", "Disciplina")">
+                                                    Disciplinas
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("Index", "Nota")">
+                                                    Notas
+                                                </a>
+                                            </li>
+                                            <li>
                                                 <a href="@Url.Action("Index", "TipoCurso")">
-                                                    Tipo Curso
+                                                    Tipos de Curso
                                                 </a>
                                             </li>
                                             <li>
                                                 <a href="@Url.Action("Index", "Curso")">
-                                                    Curso
+                                                    Cursos
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("Index", "Aula")">
+                                                    Aulas 
                                                 </a>
                                             </li>
                                             
