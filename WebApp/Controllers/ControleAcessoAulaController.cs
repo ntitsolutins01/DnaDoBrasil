@@ -60,13 +60,11 @@ public class ControleAcessoAulaController : BaseController
         {
             SetNotifyMessage(notify, message);
             SetCrudMessage(crud);
-            var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
 
 
 
             return View(new ControleAcessoAulaModel()
             {
-                ListEstados = estados
             });
         }
         catch (Exception e)
@@ -90,7 +88,11 @@ public class ControleAcessoAulaController : BaseController
         {
             var command = new ControleAcessoAulaModel.CreateUpdateControleAcessoAulaCommand
             {
-               
+                AulaId = 0,
+                TempoPermanecia = null,
+                LiberacaoAula = null,
+                DataLiberacao = null,
+                DataEncerramento = null
             };
 
             await ApiClientFactory.Instance.CreateControleAcessoAula(command);
@@ -119,10 +121,6 @@ public class ControleAcessoAulaController : BaseController
             SetCrudMessage(crud);
 
             var ControleAcessoAula = ApiClientFactory.Instance.GetControleAcessoAulaById(id);
-            var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", ControleAcessoAula.Aluno.MunicipioEstado);
-            var municipio = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", ControleAcessoAula.Aluno.MunicipioId);
-            var localidade = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", ControleAcessoAula.Aluno.LocalidadeId);
-            var disciplina = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", ControleAcessoAula.Aluno.DeficienciaId);
 
 
             return View(new ControleAcessoAulaModel()
@@ -156,8 +154,17 @@ public class ControleAcessoAulaController : BaseController
             var command = new ControleAcessoAulaModel.CreateUpdateControleAcessoAulaCommand
             {
                 Id = Convert.ToInt32(collection["editControleAcessoAulaId"]),
-               
-                Status = collection["editStatus"].ToString() == "" ? false : true
+
+                Status = collection["editStatus"]
+                             .ToString() ==
+                         ""
+                    ? false
+                    : true,
+                AulaId = 0,
+                TempoPermanecia = null,
+                LiberacaoAula = null,
+                DataLiberacao = null,
+                DataEncerramento = null
             };
 
             await ApiClientFactory.Instance.UpdateControleAcessoAula(command.Id, command);

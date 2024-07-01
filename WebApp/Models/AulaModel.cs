@@ -1,4 +1,5 @@
-﻿using WebApp.Dto;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using WebApp.Dto;
 
 namespace WebApp.Models
 {
@@ -6,6 +7,8 @@ namespace WebApp.Models
 	{
         public AulaDto Aula { get; set; }
         public List<AulaDto> Aulas { get; set; }
+        public int ProfessorId { get; set; }
+        public SelectList Professores { get; set; }
 
         public class CreateUpdateAulaCommand
 		{
