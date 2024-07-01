@@ -17,5 +17,6 @@ namespace WebApp.Identity
         public const string Disciplina = "Disciplina";
         public const string Aula = "Aula";
         public const string ControleAcessoAula = "ControleAcessoAula";
+        public const string Evento = "Evento";
     }
 }
