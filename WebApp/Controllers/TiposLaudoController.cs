@@ -70,8 +70,9 @@ namespace WebApp.Controllers
             {
                 Id = Convert.ToInt32(collection["editTiposLaudoId"]),
                 Nome = collection["nome"].ToString(),
-                Descricao = collection["descricao"].ToString()
-            };
+                Descricao = collection["descricao"].ToString(),
+                Status = collection["editStatus"].ToString() == "" ? false : true
+			};
 
             await ApiClientFactory.Instance.UpdateTiposLaudo(command.Id, command);
 

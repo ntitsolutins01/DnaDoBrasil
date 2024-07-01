@@ -5,13 +5,13 @@ namespace WebApp.ApiClient
 {
     public partial class DnaApiClient
     {
-        private const string ResourceDisciplina = "Disciplina";
+        private const string ResourceDisciplina = "Disciplinas";
         #region Main Methods
 
         public Task<long> CreateDisciplina(DisciplinaModel.CreateUpdateDisciplinaCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceDisciplina}/Disciplina"));
+                $"{ResourceDisciplina}"));
             return Post(requestUrl, command);
         }
         public Task<bool> UpdateDisciplina(int id, DisciplinaModel.CreateUpdateDisciplinaCommand command)
@@ -34,7 +34,7 @@ namespace WebApp.ApiClient
         public List<DisciplinaDto> GetDisciplinasAll()
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceDisciplina}/Disciplinas"));
+                $"{ResourceDisciplina}"));
             return Get<List<DisciplinaDto>>(requestUrl);
         }
         public DisciplinaDto GetDisciplinaById(int id)

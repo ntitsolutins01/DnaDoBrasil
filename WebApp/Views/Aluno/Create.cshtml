@@ -152,6 +152,7 @@
                             <label class="col-sm-1 control-label text-sm-right pt-2">Deficiência: <span class="required">*</span></label>
                             <div class="col-md-4">
                                 <select class="form-control populate select2" name="ddlDeficiencia" id="ddlDeficiencia" style="width:100%"
+                                        title="Por favor selecione uma deficiência." required
                                         asp-for="DeficienciaId" asp-items="Model.ListDeficiencias">
                                     <option value="">Selecionar Deficiência</option>
                                 </select>

@@ -53,7 +53,7 @@
                         </select>
                     </div>
                     <div class="form-group mb-lg">
-                        <label>Localidade</label>
+                        <label>Profissional</label>
                         <select class="form-control populate select2" name="ddlProfissional" id="ddlProfissional"
                                 title="Por favor informe o profissional." required 
                                 asp-for="ProfissionalId" asp-items="Model.ListProfissionais">
@@ -134,6 +134,7 @@
                     <div class="form-group mb-lg">
                         <label>Deficiência</label>
                         <select class="form-control populate select2" name="ddlDeficiencia" id="ddlDeficiencia" style="width:100%"
+                                title="Por favor selecione uma deficiência." required
                                 asp-for="DeficienciaId" asp-items="Model.ListDeficiencia">
                             <option value="">Selecionar Deficiência</option>
                         </select>

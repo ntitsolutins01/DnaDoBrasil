@@ -1,25 +1,44 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using WebApp.Authorization;
 using WebApp.Configuration;
 using WebApp.Dto;
 using WebApp.Enumerators;
 using WebApp.Factory;
+using WebApp.Identity;
 using WebApp.Models;
 using WebApp.Utility;
 
 namespace WebApp.Controllers
 {
 	public class DisciplinaController : BaseController
-	{
-		private readonly IOptions<UrlSettings> _appSettings;
+    {
+        #region Constructor
+        private readonly IOptions<UrlSettings> _appSettings;
 
-		public DisciplinaController(IOptions<UrlSettings> appSettings)
+
+        /// <summary>
+        /// Construtor da página
+        /// </summary>
+        /// <param name="app">configurações de urls do sistema</param>
+        /// <param name="host">informações da aplicação em execução</param>
+        public DisciplinaController(IOptions<UrlSettings> appSettings)
 		{
 			_appSettings = appSettings;
 			ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
-		}
+        }
+        #endregion
 
-		public IActionResult Index(int? crud, int? notify, string message = null)
+        #region Crud Methods
+        /// <summary>
+        /// Listagem de Disciplina
+        /// </summary>
+        /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
+        /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
+        /// <param name="collection">lista de filtros selecionados para pesquisa de alunos</param>
+        /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
+        [ClaimsAuthorize(ClaimType.Disciplina, Identity.Claim.Consultar)]
+        public IActionResult Index(int? crud, int? notify, string message = null)
 		{
 			SetNotifyMessage(notify, message);
 			SetCrudMessage(crud);
@@ -28,7 +47,7 @@ namespace WebApp.Controllers
 			return View(new DisciplinaModel() { Disciplinas = response });
 		}
 
-		//[ClaimsAuthorize("Disciplina", "Incluir")]
+
 		public ActionResult Create(int? crud, int? notify, string message = null)
 		{
 			SetNotifyMessage(notify, message);
@@ -86,7 +105,9 @@ namespace WebApp.Controllers
 			}
 		}
 
-		public Task<DisciplinaDto> GetDisciplinaById(int id)
+        #endregion
+
+        public Task<DisciplinaDto> GetDisciplinaById(int id)
 		{
 			var result = ApiClientFactory.Instance.GetDisciplinaById(id);
 
