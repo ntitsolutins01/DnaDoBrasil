@@ -3,7 +3,7 @@
     public class AlunoDto
     {
         public int Id { get; set; }
-        public  int AspNetUserId { get; set; }
+        public  string? AspNetUserId { get; set; }
         public  string Nome { get; set; }
         public  string Email { get; set; }
         public  string DtNascimento { get; set; }

@@ -2,7 +2,7 @@ var vm = new Vue({
     el: "#vNota",
     data: {
         loading: false,
-        editDto: { Id: "", Nota: "", }
+        editDto: { Id: "", NotaPrimeiroBimestre: "", NotaSegundoBimestre: "", NotaTerceiroBimestre: "", notaQuartoBimestre: "", Status: true }
     },
     mounted: function () {
         var self = this;
@@ -11,106 +11,31 @@ var vm = new Vue({
 
             //mascara dos inputs
             var notaPrimeiroBimestre = $("#notaPrimeiroBimestre");
-            notaPrimeiroBimestre.mask('00.00', { reverse: false });
+            notaPrimeiroBimestre.mask('00,00', { reverse: false });
 
             var notaSegundoBimestre = $("#notaSegundoBimestre");
-            notaSegundoBimestre.mask('00.00', { reverse: false });
+            notaSegundoBimestre.mask('00,00', { reverse: false });
 
             var notaTerceiroBimestre = $("#notaTerceiroBimestre");
-            notaTerceiroBimestre.mask('00.00', { reverse: false });
+            notaTerceiroBimestre.mask('00,00', { reverse: false });
 
             var notaQuartoBimestre = $("#notaQuartoBimestre");
-            notaQuartoBimestre.mask('00.00', { reverse: false });
+            notaQuartoBimestre.mask('00,00', { reverse: false });
+
+            //skin checkbox
+            if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
+
+                $(function () {
+                    $('[data-plugin-ios-switch]').each(function () {
+                        var $this = $(this);
+
+                        $this.themePluginIOS7Switch();
+                    });
+                });
+            }
 
             var formid = $('form')[1].id;
 
-           {
-
-                var $select = $(".select2").select2({
-                    allowClear: true
-                });
-
-                $(".select2").each(function () {
-                    var $this = $(this),
-                        opts = {};
-
-                    var pluginOptions = $this.data('plugin-options');
-                    if (pluginOptions)
-                        opts = pluginOptions;
-
-                    $this.themePluginSelect2(opts);
-                });
-
-                /*
-                 * When you change the value the select via select2, it triggers
-                 * a 'change' event, but the jquery validation plugin
-                 * only re-validates on 'blur'*/
-
-                $select.on('change', function () {
-                    $(this).trigger('blur');
-                });
-
-
-                //clique de escolha do select
-                $("#ddlEstado").change(function () {
-                    var sigla = $("#ddlEstado").val();
-
-                    var url = "../../DivisaoAdministrativa/GetMunicipioByUf?uf=" + sigla;
-
-                    var ddlSource = "#ddlMunicipio";
-
-                    $.getJSON(url,
-                        { id: $(ddlSource).val() },
-                        function (data) {
-                            if (data.length > 0) {
-                                var items = '<option value="">Selecionar Municipio</option>';
-                                $("#ddlMunicipio").empty;
-                                $.each(data,
-                                    function (i, row) {
-                                        items += "<option value='" + row.value + "'>" + row.text + "</option>";
-                                    });
-                                $("#ddlMunicipio").html(items);
-                            }
-                            else {
-                                new PNotify({
-                                    title: 'Usuario',
-                                    text: data,
-                                    type: 'warning'
-                                });
-                            }
-                        });
-                });
-
-                //clique de escolha do select
-                $("#ddlMunicipio").change(function () {
-                    var id = $("#ddlMunicipio").val();
-
-                    var url = "../../Localidade/GetLocalidadeByMunicipio?id=" + id;
-
-                    var ddlSource = "#ddlLocalidade";
-
-                    $.getJSON(url,
-                        { id: $(ddlSource).val() },
-                        function (data) {
-                            if (data.length > 0) {
-                                var items = '<option value="">Selecionar Localidade</option>';
-                                $("#ddlLocalidade").empty;
-                                $.each(data,
-                                    function (i, row) {
-                                        items += "<option value='" + row.value + "'>" + row.text + "</option>";
-                                    });
-                                $("#ddlLocalidade").html(items);
-                            }
-                            else {
-                                new PNotify({
-                                    title: 'Localidades',
-                                    text: 'Localidades não encontradas.',
-                                    type: 'warning'
-                                });
-                            }
-                        });
-                });
-            }
             if (formid === "formEditNota") {
 
                 $("#formEditNota").validate({
@@ -187,7 +112,6 @@ var vm = new Vue({
                             }
                         });
                 });
-
                 //clique de escolha do select
                 $("#ddlMunicipio").change(function () {
                     var id = $("#ddlMunicipio").val();
@@ -217,7 +141,6 @@ var vm = new Vue({
                             }
                         });
                 });
-
                 //clique de escolha do select
                 $("#ddlLocalidade").change(function () {
                     var id = $("#ddlLocalidade").val();
@@ -299,7 +222,11 @@ var vm = new Vue({
             axios.get("Nota/GetNotaById/?id=" + id).then(result => {
 
                 self.editDto.Id = result.data.id;
-                self.editDto.Nota = result.data.nota;
+                self.editDto.NotaPrimeiroBimestre = result.data.primeiroBimestre;
+                self.editDto.NotaSegundoBimestre = result.data.segundoBimestre;
+                self.editDto.NotaTerceiroBimestre = result.data.terceiroBimestre;
+                self.editDto.NotaQuartoBimestre = result.data.quartoBimestre;
+                self.editDto.Status = result.data.status;
                 
 
             }).catch(error => {
