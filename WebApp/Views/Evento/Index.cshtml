@@ -36,26 +36,28 @@
 							{
 								<tr>
 									<td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Id)</td>
-									<td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Titulo)</td>
-									<td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Localidade)</td>
-									<td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.DataEvento)</td>
+									<td class="text-center">@Html.DisplayFor(modelItem => item.Titulo)</td>
+									<td class="text-center">@Html.DisplayFor(modelItem => item.Localidade)</td>
+									<td class="text-center">@Html.DisplayFor(modelItem => item.DataEvento)</td>
 									@if (item.Status)
 									{
-										<td class="text-center"><span class="label label-success">ATIVO</span></td>
+										<td class="text-center"><span class="label label-success" style="display: block;">ATIVO</span></td>
 									}
 									else
 									{
-										<td class="text-center"><span class="label label-danger">INATIVO</span></td>
+										<td class="text-center"><span class="label label-danger" style="display: block;">INATIVO</span></td>
 									}
-									<td class="actions text-center">
-										<a data-toggle="tooltip" data-placement="top" title="Editar"
-										   href='javascript:(crud.EditModal(@item.Id))'
-										   class="on-default edit-row" style='color: #FF9800'>
-											<i class="fa fa-pencil"></i>
-										</a>
-										<a data-toggle="tooltip" data-placement="top" title="Excluir" href='javascript:(crud.DeleteModal(@item.Id))'
-										   class="on-default remove-row" style="Eventor: pointer;color: #F44336"><i class="fa fa-trash"></i></a>
-									</td>
+                                    <td class="actions text-center">
+                                        <a data-toggle="tooltip" data-placement="top" title="Controle de Presença" asp-action="IndexControlePresenca" asp-controller="Evento"
+										   asp-route-eventoId="@item.Id" style='color: #795548'><i class="fa fa-user-plus"></i></a>
+                                        <a data-toggle="tooltip" data-placement="top" title="Editar"
+                                           href='javascript:(crud.EditModal(@item.Id))'
+                                           class="on-default edit-row" style='color: #FF9800'>
+                                            <i class="fa fa-pencil"></i>
+                                        </a>
+                                        <a data-toggle="tooltip" data-placement="top" title="Excluir" href='javascript:(crud.DeleteModal(@item.Id))'
+                                           class="on-default remove-row" style="Eventor: pointer;color: #F44336"><i class="fa fa-trash"></i></a>
+                                    </td>
 								</tr>
 							}
 						</tbody>
@@ -211,14 +213,14 @@
 
 			if (crub === 1) {
 				new PNotify({
-					title: 'Métrica',
+					title: 'Evento',
 					text: 'Cadastro realizado com sucesso!',
 					type: 'success'
 				});
 				crub = 0;
 			} else if (crub === 2) {
 				new PNotify({
-					title: 'Métrica',
+					title: 'Evento',
 					text: 'Dados alterados com sucesso.',
 					type: 'warning',
 					icon: 'fa fa-pencil'
@@ -226,7 +228,7 @@
 				crub = 0;
 			} else if (crub === 3) {
 				new PNotify({
-					title: 'Métrica',
+					title: 'Evento',
 					text: 'Registro excluído com sucesso.',
 					type: 'error',
 					icon: 'fa fa-trash-o'
@@ -240,21 +242,21 @@
 
 			if (notify === 0) {
 				new PNotify({
-					title: 'Métrica',
+					title: 'Evento',
 					text: messagem,
 					type: 'success'
 				});
 				crub = 0;
 			} else if (notify === 1) {
 				new PNotify({
-					title: 'Métrica',
+					title: 'Evento',
 					text: messagem,
 					type: 'warning'
 				});
 				crub = 0;
 			} else if (notify === 2) {
 				new PNotify({
-					title: 'Métrica',
+					title: 'Evento',
 					text: messagem,
 					type: 'error'
 				});
