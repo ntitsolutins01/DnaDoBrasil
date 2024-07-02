@@ -51,6 +51,12 @@ namespace WebApp.ApiClient
                 $"{ResourceControlesPresencas}"));
             return Get<List<ControlePresencaDto>>(requestUrl);
         }
+        public List<ControlePresencaDto> GetControlesPresencasByEventoId(int eventoId)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceControlesPresencas}/ControlePresenca/Evento/{eventoId}"));
+            return Get<List<ControlePresencaDto>>(requestUrl);
+        }
         public Task<ControlesPresencasFilterDto?> GetControlesPresencasByFilter(ControlesPresencasFilterDto searchFilter)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
@@ -59,5 +65,7 @@ namespace WebApp.ApiClient
         }
 
         #endregion
+
+        
     }
 }

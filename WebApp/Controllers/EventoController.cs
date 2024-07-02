@@ -30,12 +30,12 @@ public class EventoController : BaseController
     #endregion
 
     #region Crud Methods
+
     /// <summary>
     /// Listagem de Evento
     /// </summary>
     /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
     /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
-    /// <param name="collection">lista de filtros selecionados para pesquisa de alunos</param>
     /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
     [ClaimsAuthorize(ClaimType.Evento, Identity.Claim.Consultar)]
     public IActionResult Index(int? crud, int? notify, string message = null)
@@ -106,11 +106,10 @@ public class EventoController : BaseController
         }
     }
 
-    
+
     /// <summary>
     /// Ação de alteração do Evento
     /// </summary>
-    /// <param name="id">identificador do Evento</param>
     /// <param name="collection">coleção de dados para alteração de Evento</param>
     /// <returns>retorna mensagem de alteração através do parametro crud</returns>
     [ClaimsAuthorize(ClaimType.Evento, Identity.Claim.Alterar)]
@@ -142,7 +141,6 @@ public class EventoController : BaseController
     /// Ação de exclusão do Evento
     /// </summary>
     /// <param name="id">identificador do Evento</param>
-    /// <param name="collection">coleção de dados para exclusão de Evento</param>
     /// <returns>retorna mensagem de exclusão através do parametro crud</returns>
     [ClaimsAuthorize(ClaimType.Evento, Identity.Claim.Excluir)]
     public ActionResult Delete(int id)
@@ -155,6 +153,55 @@ public class EventoController : BaseController
         catch
         {
             return RedirectToAction(nameof(Index));
+        }
+    }
+    #endregion
+
+    #region Crud Controle Presenca Evento Methods
+
+    /// <summary>
+    /// Listagem de Controle de Presença de Evento
+    /// </summary>
+    /// <param name="eventoId">Id do Evento</param>
+    /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
+    /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
+    /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
+    [ClaimsAuthorize(ClaimType.Evento, Identity.Claim.Consultar)]
+    public IActionResult IndexControlePresenca(int eventoId, int? crud, int? notify, string message = null)
+    {
+        SetNotifyMessage(notify, message);
+        SetCrudMessage(crud);
+        var response = ApiClientFactory.Instance.GetControlesPresencasByEventoId(eventoId);
+
+        return View(new EventoModel() { ControlesPresencas = response });
+    }
+
+    /// <summary>
+    /// Tela para inclusão de Controle de Presença do Evento
+    /// </summary>
+    /// <param name="eventoId">Id do Evento </param>
+    /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
+    /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
+    /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
+    [ClaimsAuthorize(ClaimType.Evento, Identity.Claim.Incluir)]
+    public ActionResult CreateControlePresenca(int eventoId, int? crud, int? notify, string message = null)
+    {
+        try
+        {
+            SetNotifyMessage(notify, message);
+            SetCrudMessage(crud);
+            var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
+
+            return View(new EventoModel()
+            {
+                ListEstados = estados
+            });
+        }
+        catch (Exception e)
+        {
+            Console.Write(e.StackTrace);
+            return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = e.Message });
+
         }
     }
     #endregion

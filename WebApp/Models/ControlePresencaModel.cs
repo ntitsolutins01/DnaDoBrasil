@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Extensions.Primitives;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using WebApp.Dto;
 
 namespace WebApp.Models
@@ -37,6 +35,7 @@ namespace WebApp.Models
 			public int? LocalidadeId { get; set; }
 			public string? MunicipioId { get; set; }
 			public string? AlunoId { get; set; }
+			public int? EventoId { get; set; }
 		}
     }
 

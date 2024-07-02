@@ -15,6 +15,7 @@ namespace WebApp.Models
         public SelectList ListLocalidades { get; set; }
         public EventoDto Evento { get; set; }
         public List<EventoDto> Eventos { get; set; }
+        public List<ControlePresencaDto> ControlesPresencas { get; set; }
 
 
         public class CreateUpdateEventoCommand

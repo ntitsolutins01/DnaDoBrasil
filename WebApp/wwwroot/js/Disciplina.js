@@ -2,7 +2,7 @@
     el: "#formDisciplina",
     data: {
         loading: false,
-        editDto: { Id: "", Nome: ""}
+        editDto: { Id: "", Nome: "", Status: true }
     },
     mounted: function () {
         var self = this;
