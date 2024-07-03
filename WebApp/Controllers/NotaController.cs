@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Globalization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
 using WebApp.Authorization;
@@ -61,12 +62,14 @@ public class NotaController : BaseController
             SetNotifyMessage(notify, message);
             SetCrudMessage(crud);
             var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
+            var disciplinas = new SelectList(ApiClientFactory.Instance.GetDisciplinasAll(), "Id", "Nome");
 
 
 
             return View(new NotaModel()
             {
-                ListEstados = estados
+                ListEstados = estados,
+                ListDisciplinas = disciplinas
             });
         }
         catch (Exception e)
@@ -92,10 +95,10 @@ public class NotaController : BaseController
             {
                 AlunoId = collection["ddlAluno"] == "" ? null : Convert.ToInt32(collection["ddlAluno"].ToString()).ToString(),
                 DisciplinaId = collection["ddlDisciplina"] == "" ? null : Convert.ToInt32(collection["ddlDisciplina"].ToString()).ToString(),
-                PrimeiroBimestre = collection["notaPrimeiroBimestre"].ToString() == "" ? null : Convert.ToDecimal(collection["notaPrimeiroBimestre"].ToString()),
-                SegundoBimestre = collection["notaSegundoBimestre"].ToString() == "" ? null : Convert.ToDecimal(collection["notaSegundoBimestre"].ToString()),
-                TerceiroBimestre = collection["notaTerceiroBimestre"].ToString() == "" ? null : Convert.ToDecimal(collection["notaTerceiroBimestre"].ToString()),
-                QuartoBimestre = collection["notaQuartoBimestre"].ToString() == "" ? null : Convert.ToDecimal(collection["notaQuartoBimestre"].ToString())
+                PrimeiroBimestre = collection["notaPrimeiroBimestre"].ToString() == "" ? null : Convert.ToDecimal(collection["notaPrimeiroBimestre"].ToString(), new CultureInfo("pt-BR", true)),
+                SegundoBimestre = collection["notaSegundoBimestre"].ToString() == "" ? null : Convert.ToDecimal(collection["notaSegundoBimestre"].ToString(), new CultureInfo("pt-BR", true)),
+                TerceiroBimestre = collection["notaTerceiroBimestre"].ToString() == "" ? null : Convert.ToDecimal(collection["notaTerceiroBimestre"].ToString(), new CultureInfo("pt-BR", true)),
+                QuartoBimestre = collection["notaQuartoBimestre"].ToString() == "" ? null : Convert.ToDecimal(collection["notaQuartoBimestre"].ToString(), new CultureInfo("pt-BR", true))
             };
 
             await ApiClientFactory.Instance.CreateNota(command);
@@ -105,49 +108,6 @@ public class NotaController : BaseController
         catch (Exception e)
         {
             return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = "Erro ao executar esta ação. Favor entrar em contato com o administrador do sistema." });
-        }
-    }
-
-    /// <summary>
-    /// Tela Alteração de Nota
-    /// </summary>
-    /// <param name="id">Id de alteração do Nota</param>
-    /// <returns>retorna mensagem de alteração através do parametro crud</returns>
-    /// <exception cref="ArgumentNullException">Mensagem de erro ao alterar o Nota</exception>
-    [ClaimsAuthorize(ClaimType.Nota, Claim.Alterar)]
-    public ActionResult Edit(int id, int? crud, int? notify, string message = null)
-    {
-        try
-        {
-
-            SetNotifyMessage(notify, message);
-            SetCrudMessage(crud);
-
-            var nota = ApiClientFactory.Instance.GetNotaById(id);
-            var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", nota.Aluno.MunicipioEstado);
-            var municipio = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", nota.Aluno.MunicipioId);
-            var localidade = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", nota.Aluno.LocalidadeId);
-            var disciplina = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", nota.Aluno.DeficienciaId);
-
-
-            return View(new NotaModel()
-            {
-                
-                Nota = nota,
-                ListEstados = estados,
-                ListMunicipios = municipio,
-                ListLocalidades = localidade,
-                ListDisciplinas = disciplina,
-            });
-        }
-        catch (Exception ex)
-        {
-            return RedirectToAction(nameof(Index),
-                new
-                {
-                    notify = (int)EnumNotify.Error,
-                    message = $"Erro ao alterar usuário. Favor entrar em contato com o administrador do sistema. {ex.Message}"
-                });
         }
     }
 
@@ -165,8 +125,6 @@ public class NotaController : BaseController
             var command = new NotaModel.CreateUpdateNotaCommand
             {
                 Id = Convert.ToInt32(collection["editNotaId"]),
-                AlunoId = collection["ddlAluno"] == "" ? null : Convert.ToInt32(collection["ddlAluno"].ToString()).ToString(),
-                DisciplinaId = collection["ddlDisciplina"] == "" ? null : Convert.ToInt32(collection["ddlDisciplina"].ToString()).ToString(),
                 PrimeiroBimestre = collection["notaPrimeiroBimestre"].ToString() == "" ? null : Convert.ToDecimal(collection["notaPrimeiroBimestre"].ToString()),
                 SegundoBimestre = collection["notaSegundoBimestre"].ToString() == "" ? null : Convert.ToDecimal(collection["notaSegundoBimestre"].ToString()),
                 TerceiroBimestre = collection["notaTerceiroBimestre"].ToString() == "" ? null : Convert.ToDecimal(collection["notaTerceiroBimestre"].ToString()),

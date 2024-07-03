@@ -11,5 +11,6 @@
         public const string Profissional = "Profissional";
         public const string PlanoAula = "PlanoAula";
         public const string ControleAcesso = "ControleAcesso";
+        public const string Nota = "Nota";
     }
 }

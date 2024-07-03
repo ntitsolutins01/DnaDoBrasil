@@ -1,26 +1,21 @@
 var vm = new Vue({
-    el: "#vNota",
+    el: "#vEvento",
     data: {
         loading: false,
-        editDto: { Id: "", NotaPrimeiroBimestre: "", NotaSegundoBimestre: "", NotaTerceiroBimestre: "", notaQuartoBimestre: "", Status: true }
+        editDto: { Id: "", Titulo: "", Decricao: "", DtEvento: "", sigla: "", MunicipioId: "", Localidade: "", Status: true, Convidado:"" },
+        editControlePresencaEventoDto: { Id: "", Convidado: "", Controle: "", EventoId: "" },
+        params: {
+            visible: true
+        }
     },
     mounted: function () {
         var self = this;
         (function ($) {
             'use strict';
 
-            //mascara dos inputs
-            var notaPrimeiroBimestre = $("#notaPrimeiroBimestre");
-            notaPrimeiroBimestre.mask('00,00', { reverse: false });
+            var formid = $('form')[1].id;
 
-            var notaSegundoBimestre = $("#notaSegundoBimestre");
-            notaSegundoBimestre.mask('00,00', { reverse: false });
-
-            var notaTerceiroBimestre = $("#notaTerceiroBimestre");
-            notaTerceiroBimestre.mask('00,00', { reverse: false });
-
-            var notaQuartoBimestre = $("#notaQuartoBimestre");
-            notaQuartoBimestre.mask('00,00', { reverse: false });
+            
 
             //skin checkbox
             if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
@@ -34,44 +29,113 @@ var vm = new Vue({
                 });
             }
 
-            var formid = $('form')[1].id;
+            if (formid === "formControlePresencaEvento") {
 
-            if (formid === "formEditNota") {
+                //skin select
+                var $select = $(".select2").select2({
+                    allowClear: true
+                });
 
-                $("#formEditNota").validate({
-                    rules:
-                    {
-                        notaPrimeiroBimestre:
-                        {
-                            range: [0.00, 10.00]
-                        },
-                        notaSegundoBimestre:
-                        {
-                            range: [0.00, 10.00]
-                        },
-                        notaTerceiroBimestre:
-                        {
-                            range: [0.00, 10.00]
-                        },
-                        notaQuartoBimestre:
-                        {
-                            range: [0.00, 10.00]
-                        }
+                $(".select2").each(function () {
+                    var $this = $(this),
+                        opts = {};
+
+                    var pluginOptions = $this.data('plugin-options');
+                    if (pluginOptions)
+                        opts = pluginOptions;
+
+                    $this.themePluginSelect2(opts);
+                });
+
+                /*
+                 * When you change the value the select via select2, it triggers
+                 * a 'change' event, but the jquery validation plugin
+                 * only re-validates on 'blur'*/
+
+                $select.on('change', function () {
+                    $(this).trigger('blur');
+                });
+
+                var alunoConvidadoEvento = $("input:radio[name=alunoConvidadoEvento]");
+                alunoConvidadoEvento.on("change", function () {
+                    //skin select
+                    var $select = $(".select2").select2({
+                        allowClear: true
+                    });
+
+                    $(".select2").each(function () {
+                        var $this = $(this),
+                            opts = {};
+
+                        var pluginOptions = $this.data('plugin-options');
+                        if (pluginOptions)
+                            opts = pluginOptions;
+
+                        $this.themePluginSelect2(opts);
+                    });
+
+                    /*
+                     * When you change the value the select via select2, it triggers
+                     * a 'change' event, but the jquery validation plugin
+                     * only re-validates on 'blur'*/
+
+                    $select.on('change', function () {
+                        $(this).trigger('blur');
+                    });
+
+                    if ($(this).val() == "A") {
+                        self.params.visible = true;
+                    } else if ($(this).val() == "C") {
+                        self.params.visible = false;
+                    }
+                });
+
+                $("#formControlePresencaEvento").validate({
+                    highlight: function (label) {
+                        $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
                     },
-                    messages: {
-                        "notaPrimeiroBimestre": {
-                            range: "Nota deve ser entre 00,00 à 10,00."
-                        },
-                        "notaSegundoBimestre": {
-                            range: "Nota deve ser entre 00,00 à 10,00."
-                        },
-                        "notaTerceiroBimestre": {
-                            range: "Nota deve ser entre 00,00 à 10,00."
-                        },
-                        "notaQuartoBimestre": {
-                            range: "Nota deve ser entre 00,00 à 10,00."
-                        }
+                    success: function (label) {
+                        $(label).closest('.form-group').removeClass('has-error');
+                        label.remove();
                     },
+                    errorPlacement: function (error, element) {
+                        var placement = element.closest('.input-group');
+                        if (!placement.get(0)) {
+                            placement = element;
+                        }
+                        if (error.text() !== '') {
+                            placement.after(error);
+                        }
+                    }
+                });
+            }
+            if (formid === "formEditControlePresencaEvento") {
+
+                $("#formEditControlePresencaEvento").validate({
+                    highlight: function (label) {
+                        $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
+                    },
+                    success: function (label) {
+                        $(label).closest('.form-group').removeClass('has-error');
+                        label.remove();
+                    },
+                    errorPlacement: function (error, element) {
+                        var placement = element.closest('.input-group');
+                        if (!placement.get(0)) {
+                            placement = element;
+                        }
+                        if (error.text() !== '') {
+                            placement.after(error);
+                        }
+                    }
+                });
+            }
+            if (formid === "formEditEvento") {
+
+                var $dtEvento = $("#dtEvento");
+                $dtEvento.mask('00/00/0000', { reverse: false });
+
+                $("#formEditEvento").validate({
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
                     },
@@ -91,7 +155,11 @@ var vm = new Vue({
                 });
             }
 
-            if (formid === "formNota") {
+            if (formid === "formEvento") {
+
+                var $dtEvento = $("#dtEvento");
+                $dtEvento.mask('00/00/0000', { reverse: false });
+
                 //skin select
                 var $select = $(".select2").select2({
                     allowClear: true
@@ -139,12 +207,13 @@ var vm = new Vue({
                             else {
                                 new PNotify({
                                     title: 'Fomento',
-                                    text: 'Municípios não encontrados.',
+                                    text: 'Munic�pios n�o encontrados.',
                                     type: 'warning'
                                 });
                             }
                         });
                 });
+
                 //clique de escolha do select
                 $("#ddlMunicipio").change(function () {
                     var id = $("#ddlMunicipio").val();
@@ -168,12 +237,13 @@ var vm = new Vue({
                             else {
                                 new PNotify({
                                     title: 'Localidades',
-                                    text: 'Localidades não encontradas.',
+                                    text: 'Localidades n�o encontradas.',
                                     type: 'warning'
                                 });
                             }
                         });
                 });
+
                 //clique de escolha do select
                 $("#ddlLocalidade").change(function () {
                     var id = $("#ddlLocalidade").val();
@@ -197,47 +267,14 @@ var vm = new Vue({
                             else {
                                 new PNotify({
                                     title: 'Alunos',
-                                    text: 'Alunos não encontrados.',
+                                    text: 'Alunos n�o encontrados.',
                                     type: 'warning'
                                 });
                             }
                         });
                 });
 
-                $("#formNota").validate({
-                    rules:
-                    {
-                        notaPrimeiroBimestre:
-                        {
-                            range: [0.00, 10.00]
-                        },
-                        notaSegundoBimestre:
-                        {
-                            range: [0.00, 10.00]
-                        },
-                        notaTerceiroBimestre:
-                        {
-                            range: [0.00, 10.00]
-                        },
-                        notaQuartoBimestre:
-                        {
-                            range: [0.00, 10.00]
-                        }
-                    },
-                    messages: {
-                        "notaPrimeiroBimestre": {
-                            range: "Nota deve ser entre 00,00 à 10,00."
-                        },
-                        "notaSegundoBimestre": {
-                            range: "Nota deve ser entre 00,00 à 10,00."
-                        },
-                        "notaTerceiroBimestre": {
-                            range: "Nota deve ser entre 00,00 à 10,00."
-                        },
-                        "notaQuartoBimestre": {
-                            range: "Nota deve ser entre 00,00 à 10,00."
-                        }
-                    },
+                $("#formEvento").validate({
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
                     },
@@ -278,23 +315,35 @@ var vm = new Vue({
                 self.loading = flag;
             }
         },
-        DeleteNota: function (id) {
-            var url = "Nota/Delete/" + id;
-            $("#deleteNotaHref").prop("href", url);
+        DeleteEvento: function (id) {
+            var url = "Evento/Delete/" + id;
+            $("#deleteEventoHref").prop("href", url);
         },
-        EditNota: function (id) {
+        EditEvento: function (id) {
             var self = this;
 
-            axios.get("Nota/GetNotaById/?id=" + id).then(result => {
-
+            axios.get("Evento/GetEventoById/?id=" + id).then(result => {
                 self.editDto.Id = result.data.id;
-                self.editDto.NotaPrimeiroBimestre = result.data.primeiroBimestre;
-                self.editDto.NotaSegundoBimestre = result.data.segundoBimestre;
-                self.editDto.NotaTerceiroBimestre = result.data.terceiroBimestre;
-                self.editDto.NotaQuartoBimestre = result.data.quartoBimestre;
+                self.editDto.Convidado = result.data.justificativa;
                 self.editDto.Status = result.data.status;
                 
 
+            }).catch(error => {
+                Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
+            });
+        },
+        DeleteControlePresencaEvento: function (id, eventoId) {
+            var url = "../Evento/DeleteControlePresenca?id=" + id+"&eventoId="+eventoId;
+            $("#deleteControlePresencaEventoHref").prop("href", url);
+        },
+        EditControlePresencaEvento: function (id, eventoId) {
+            var self = this;
+
+            axios.get("../ControlePresenca/GetControlePresencaById/?id=" + id).then(result => {
+                self.editControlePresencaEventoDto.Id = result.data.id;
+                self.editControlePresencaEventoDto.EventoId = eventoId;
+                self.editControlePresencaEventoDto.Convidado = result.data.justificativa;
+                self.editControlePresencaEventoDto.Controle = result.data.controle;
             }).catch(error => {
                 Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
             });
@@ -304,13 +353,23 @@ var vm = new Vue({
 
 var crud = {
     DeleteModal: function (id) {
-        $('input[name="deleteNotaId"]').attr('value', id);
-        $('#mdDeleteNota').modal('show');
-        vm.DeleteNota(id)
+        $('input[name="deleteEventoId"]').attr('value', id);
+        $('#mdDeleteEvento').modal('show');
+        vm.DeleteEvento(id)
     },
     EditModal: function (id) {
-        $('input[name="editNotaId"]').attr('value', id);
-        $('#mdEditNota').modal('show');
-        vm.EditNota(id)
+        $('input[name="editEventoId"]').attr('value', id);
+        $('#mdEditEvento').modal('show');
+        vm.EditEvento(id)
+    },
+    DeleteControlePresencaEventoModal: function (id, eventoId) {
+        $('input[name="deleteControlePresencaEventoId"]').attr('value', id);
+        $('#mdDeleteControlePresencaEvento').modal('show');
+        vm.DeleteControlePresencaEvento(id, eventoId)
+    },
+    EditControlePresencaEventoModal: function (id, eventoId) {
+        $('input[name="editControlePresencaEventoId"]').attr('value', id);
+        $('#mdEditControlePresencaEvento').modal('show');
+        vm.EditControlePresencaEvento(id, eventoId)
     }
 };

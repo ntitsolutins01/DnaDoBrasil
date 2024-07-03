@@ -1,19 +1,23 @@
-﻿using System.Collections;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Extensions.Primitives;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using WebApp.Dto;
 
 namespace WebApp.Models
 {
 	public class AulaModel
 	{
-		
-        
+        public AulaDto Aula { get; set; }
+        public List<AulaDto> Aulas { get; set; }
+        public int ProfessorId { get; set; }
+        public SelectList Professores { get; set; }
 
         public class CreateUpdateAulaCommand
 		{
-			public int Id { get; set; }
-           
+            public required int Id { get; set; }
+            public required int CargaHoraria { get; set; }
+            public required int ProfessorId { get; set; }
+            public required int MuduloEadId { get; set; }
+            public required string Titulo { get; set; }
+            public string? Descricao { get; set; }
             public bool Status { get; set; } = true;
            
         }

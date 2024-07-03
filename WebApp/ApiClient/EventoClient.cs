@@ -5,27 +5,27 @@ namespace WebApp.ApiClient
 {
     public partial class DnaApiClient
     {
-	    private const string ResourceAula = "Aulas";
+	    private const string ResourceEvento = "Eventos";
 
 		#region Main Methods
 
-		public Task<long> CreateAula (AulaModel.CreateUpdateAulaCommand command)
+		public Task<long> CreateEvento (EventoModel.CreateUpdateEventoCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceAula }"));
+                $"{ResourceEvento}"));
             return Post(requestUrl, command);
         }
-        public Task<bool> UpdateAula (int id, AulaModel.CreateUpdateAulaCommand command)
+        public Task<bool> UpdateEvento (int id, EventoModel.CreateUpdateEventoCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceAula }/{id}"));
+                $"{ResourceEvento}/{id}"));
             return Put(requestUrl, command);
         }
 
-        public Task<bool> DeleteAula (int id)
+        public Task<bool> DeleteEvento (int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceAula }/{id}"));
+                $"{ResourceEvento}/{id}"));
             return Delete<bool>(requestUrl);
         }
 
@@ -33,17 +33,17 @@ namespace WebApp.ApiClient
 
         #region Methods
 
-        public AulaDto GetAulaById(int id)
+        public EventoDto GetEventoById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceAula }/Aula/{id}"));
-            return Get<AulaDto>(requestUrl);
+                $"{ResourceEvento}/Evento/{id}"));
+            return Get<EventoDto>(requestUrl);
         }
-        public List<AulaDto> GetAulasAll()
+        public List<EventoDto> GetEventosAll()
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceAula }"));
-            return Get<List<AulaDto>>(requestUrl);
+                $"{ResourceEvento}"));
+            return Get<List<EventoDto>>(requestUrl);
         }
 
         #endregion

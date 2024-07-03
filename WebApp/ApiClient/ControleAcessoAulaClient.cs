@@ -5,27 +5,27 @@ namespace WebApp.ApiClient
 {
     public partial class DnaApiClient
     {
-	    private const string ResourceAula = "Aulas";
+	    private const string ResourceControleAcessoAula = "ControlesAcessosAulas";
 
 		#region Main Methods
 
-		public Task<long> CreateAula (AulaModel.CreateUpdateAulaCommand command)
+		public Task<long> CreateControleAcessoAula (ControleAcessoAulaModel.CreateUpdateControleAcessoAulaCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceAula }"));
+                $"{ResourceControleAcessoAula }"));
             return Post(requestUrl, command);
         }
-        public Task<bool> UpdateAula (int id, AulaModel.CreateUpdateAulaCommand command)
+        public Task<bool> UpdateControleAcessoAula (int id, ControleAcessoAulaModel.CreateUpdateControleAcessoAulaCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceAula }/{id}"));
+                $"{ResourceControleAcessoAula }/{id}"));
             return Put(requestUrl, command);
         }
 
-        public Task<bool> DeleteAula (int id)
+        public Task<bool> DeleteControleAcessoAula (int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceAula }/{id}"));
+                $"{ResourceControleAcessoAula }/{id}"));
             return Delete<bool>(requestUrl);
         }
 
@@ -33,17 +33,17 @@ namespace WebApp.ApiClient
 
         #region Methods
 
-        public AulaDto GetAulaById(int id)
+        public ControleAcessoAulaDto GetControleAcessoAulaById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceAula }/Aula/{id}"));
-            return Get<AulaDto>(requestUrl);
+                $"{ResourceControleAcessoAula }/ControleAcessoAula/{id}"));
+            return Get<ControleAcessoAulaDto>(requestUrl);
         }
-        public List<AulaDto> GetAulasAll()
+        public List<ControleAcessoAulaDto> GetControlesAcessosAulasAll()
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceAula }"));
-            return Get<List<AulaDto>>(requestUrl);
+                $"{ResourceControleAcessoAula }"));
+            return Get<List<ControleAcessoAulaDto>>(requestUrl);
         }
 
         #endregion
