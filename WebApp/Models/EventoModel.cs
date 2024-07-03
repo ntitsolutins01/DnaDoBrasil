@@ -13,6 +13,8 @@ namespace WebApp.Models
         public SelectList ListMunicipios { get; set; }
         public int LocalidadeId { get; set; }
         public SelectList ListLocalidades { get; set; }
+        public string AlunoId { get; set; }
+        public SelectList ListAlunos { get; set; }
         public EventoDto Evento { get; set; }
         public List<EventoDto> Eventos { get; set; }
         public List<ControlePresencaDto> ControlesPresencas { get; set; }

@@ -193,11 +193,14 @@ public class EventoController : BaseController
             var evento = ApiClientFactory.Instance.GetEventoById(eventoId);
             var convidado = ApiClientFactory.Instance.GetAlunosByFilter(new AlunosFilterDto()
                 { LocalidadeId = evento.LocalidadeId, Nome = "Convidado" });
+            var alunos = new SelectList(ApiClientFactory.Instance.GetAlunosByLocalidade(Convert.ToInt32(evento.LocalidadeId)), "Id", "Nome"); ;
+
 
             return View(new EventoModel()
             {
                 Evento = evento,
-                Convidado = convidado.Result?.Alunos!.FirstOrDefault()
+                Convidado = convidado.Result?.Alunos!.FirstOrDefault(),
+                ListAlunos = alunos
             });
         }
         catch (Exception e)
@@ -225,8 +228,8 @@ public class EventoController : BaseController
 				MunicipioId = collection["municipioId"] == "" ? null : Convert.ToInt32(collection["municipioId"].ToString()).ToString(),
 				LocalidadeId = collection["localidadeId"] == "" ? null : Convert.ToInt32(collection["localidadeId"].ToString()),
 				Controle = collection["controle"].ToString(),
-				Justificativa = collection["convidado"].ToString(),
-				AlunoId = collection["convidadoId"] == "" ? null : Convert.ToInt32(collection["convidadoId"].ToString()).ToString(),
+				Justificativa = collection["alunoConvidadoEvento"] == "A" ? "":collection["convidado"].ToString(),
+				AlunoId = collection["alunoConvidadoEvento"] == "A" ? collection["ddlAluno"].ToString() : collection["convidadoId"].ToString(),
 			};
 
 		    await ApiClientFactory.Instance.CreateControlePresenca(command);
