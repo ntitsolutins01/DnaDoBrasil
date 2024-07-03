@@ -15,15 +15,16 @@ namespace WebApp.Models
         public SelectList ListMunicipios { get; set; }
         public SelectList ListTiposParcerias { get; set; }
         public int TipoParceriaId { get; set; }
+        public List<AlunoIndexDto> Alunos { get; set; }
 
         public class CreateUpdateParceiroCommand
         {
             public int Id { get; set; }
-            public int? AspNetUserId { get; set; }
+            public string? AspNetUserId { get; set; }
             public int? MunicipioId { get; set; }
             public  string? Nome { get; set; }
             public  string? Email { get; set; }
-            public  int? TipoParceria { get; set; }
+            public  int? TipoParceriaId { get; set; }
             public string? TipoPessoa { get; set; }
             public string? CpfCnpj { get; set; }
             public string? Telefone { get; set; }

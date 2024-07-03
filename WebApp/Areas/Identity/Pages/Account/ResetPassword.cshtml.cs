@@ -48,6 +48,7 @@ namespace WebApp.Areas.Identity.Pages.Account
                 return Page();
             }
 
+            user.EmailConfirmed = true;
 
             var result = await _userManager.ResetPasswordAsync(user, Input.Code, Input.Password);
             if (result.Succeeded) return RedirectToPage("./ResetPasswordConfirmation");

@@ -16,19 +16,19 @@
 				</header>
 				<div class="panel-body">
 					<div class="form-group row">
-						<div class="col-sm-12 pull-right">
-							<a href="@Url.Action("Create", "Usuario")" id="addToTable" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Novo Usuário </a>
+						<div class="col-sm-2 pull-right">
+                            <a href="@Url.Action("Create", "Usuario")" id="addToTable" class="btn btn-block btn-primary pull-right"><i class="fa fa-plus"></i>  &nbsp;&nbsp;Novo Usuário </a>
 						</div>
 					</div>
 					<table class="table table-bordered table-striped mb-0" id="datatable-default">
 						<thead>
 							<tr>
-								<th>Id</th>
-								<th>Nome</th>
-								<th>CPF</th>
-								<th>E-mail</th>
-								<th>Perfil</th>
-								<th>Ações</th>
+								<th class="text-center">Id</th>
+                                <th class="text-center">Nome</th>
+                                <th class="text-center">CPF</th>
+                                <th class="text-center">E-mail</th>
+                                <th class="text-center">Perfil</th>
+                                <th class="text-center">Ações</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -37,7 +37,7 @@
                             <tr>
                                 <td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Id)</td>
                                 <td class="text-center">@Html.DisplayFor(modelItem => item.Nome)</td>
-                                <td class="text-center">@Html.DisplayFor(modelItem => item.Cpf)</td>
+                                <td class="text-center">@Html.DisplayFor(modelItem => item.CpfCnpj)</td>
                                 <td class="text-center">@Html.DisplayFor(modelItem => item.Email)</td>
                                 <td class="text-center">@Html.DisplayFor(modelItem => item.Perfil.Nome)</td>
                                 <td class="text-center">
@@ -95,33 +95,51 @@
 
 		(function ($) {
 
-			'use strict';
-			var crud = @ViewBag.CrudMessage;
+            'use strict';
+            var crud = @ViewBag.CrudMessage;
 
-			if (crud === 1) {
-				new PNotify({
-					title: 'Usuário',
-					text: 'Cadastro realizado com sucesso!',
-					type: 'success'
-				});
-			} else if (crud === 2) {
-				new PNotify({
-					title: 'Usuário',
-					text: 'Dados alterados com sucesso.',
-					type: 'warning',
-					icon: 'fa fa-pencil'
-				});
-			} else if (crud === 3) {
-				new PNotify({
-					title: 'Usuário',
-					text: 'Registro excluído com sucesso.',
-					type: 'error',
-					icon: 'fa fa-trash-o'
-				});
-			}
-			if ($.isFunction($.fn['tooltip'])) {
-				$('[data-toggle=tooltip],[rel=tooltip]').tooltip({ container: 'body' });
-			}
+            if (crud === 1) {
+                new PNotify({
+                    title: 'Usuário',
+                    text: 'Cadastro realizado com sucesso!',
+                    type: 'success'
+                });
+            } else if (crud === 2) {
+                new PNotify({
+                    title: 'Usuário',
+                    text: 'Dados alterados com sucesso.',
+                    type: 'warning'
+                });
+            } else if (crud === 3) {
+                new PNotify({
+                    title: 'Usuário',
+                    text: 'Registro excluído com sucesso.',
+                    type: 'error'
+                });
+            }
+
+            var notify = @ViewBag.NotifyMessage;
+            var messagem = '@ViewBag.Notify';
+
+            if (notify === 0) {
+                new PNotify({
+                    title: 'Usuário',
+                    text: messagem,
+                    type: 'success'
+                });
+            } else if (notify === 1) {
+                new PNotify({
+                    title: 'Usuário',
+                    text: messagem,
+                    type: 'warning'
+                });
+            } else if (notify === 2) {
+                new PNotify({
+                    title: 'Usuário',
+                    text: messagem,
+                    type: 'error'
+                });
+            }
 
 		}).apply(this, [jQuery]);
 	</script>

@@ -1,6 +1,6 @@
 ﻿@model WebApp.Models.TiposLaudoModel
 @{
-    ViewData["Title"] = "Listagem de Tipos Laudo";
+    ViewData["Title"] = "Listagem de Tipos de Laudo";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -13,20 +13,21 @@
                         <div class="panel-actions">
                             <a href="#" class="card-action card-action-toggle" data-card-toggle></a>
                         </div>
-                        <h2 class="panel-title">Listagem de Tipo de Laudos</h2>
+                        <h2 class="panel-title">Listagem de Tipos de Laudo</h2>
                     </header>
                     <div class="panel-body">
                         <div class="form-group row">
                             <div class="col-sm-12 pull-right">
-                                <a href="@Url.Action("Create", "TiposLaudo")" id="addToTable" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Novo Tipo de Laudo </a>
+                            <a href="@Url.Action("Create", "TiposLaudo")" id="addToTable" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> &nbsp;&nbsp;Novo Tipo de Laudo </a>
                             </div>
                         </div>
                         <table class="table table-bordered table-striped mb-0" id="datatable-default">
                             <thead>
                                 <tr>
                                     <th class="text-center">Id</th>
-                                    <th class="text-center">Nome Tipo de Laudo</th>
+                                    <th class="text-center">Nome do Tipo de Laudo</th>
                                     <th class="text-center">Descrição</th>
+                                    <th class="text-center">Status</th>
                                     <th class="text-center">Ações</th>
                                 </tr>
                             </thead>
@@ -37,6 +38,14 @@
                                         <td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Id)</td>
                                         <td class="text-center">@Html.DisplayFor(modelItem => item.Nome)</td>
                                         <td class="text-center">@Html.DisplayFor(modelItem => item.Descricao)</td>
+                                        @if (item.Status)
+                                        {
+                                        <td class="text-center"><span class="label label-success" style="display: block;">ATIVO</span></td>
+                                        }
+                                        else
+                                        {
+                                        <td class="text-center"><span class="label label-danger" style="display: block;">INATIVO</span></td>
+                                        }
                                     <td class="actions text-center">
                                             <a data-toggle="tooltip" data-placement="top" title="Editar"
                                                href='javascript:(crud.EditModal(@item.Id))'
@@ -83,7 +92,7 @@
     </div>
     <!-- Modal -->
     <div class="modal fade" id="mdEditTiposLaudo" tabindex="-1" role="dialog" aria-labelledby="mdEditTiposLaudoLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-md" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="mdEditTiposLaudoLabel">
@@ -96,24 +105,24 @@
 
                     <div class="modal-body">
                         <div class="form-group row">
-                            <label class="col-sm-4 control-label text-sm-right pt-2">TiposLaudo <span class="required">*</span></label>
+                            <label class="col-sm-3 control-label text-sm-right pt-2">Tipo de Laudo <span class="required">*</span></label>
                             <div class="col-sm-8">
                                 <input type="text" name="nome" class="form-control"
-                                       maxlength="80" :value="editDto.Nome"
+                                       maxlength="100" :value="editDto.Nome"
                                        title="Por favor informe o nome do tipo de laudo." required />
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-4 control-label text-sm-right pt-2">Descrição <span class="required">*</span></label>
+                            <label class="col-sm-3 control-label text-sm-right pt-2">Descrição</label>
                             <div class="col-sm-8">
-                                <input type="text" name="descricao" class="form-control"
-                                       maxlength="80" :value="editDto.Descricao"
-                                       title="Por favor informe a descrição." required />
+                                <textarea type="text" name="descricao" class="form-control"
+                                       maxlength="300" :value="editDto.Descricao" rows="5"
+                                       title="Por favor informe a descrição."></textarea>
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-sm-3 control-label text-sm-right pt-2">Status</label>
+                            <label class="col-sm-4 control-label text-sm-right pt-2">Status</label>
                             <div class="col-md-3">
                                 <div class="switch switch-sm switch-primary">
                                     <div v-show="editDto.Status">

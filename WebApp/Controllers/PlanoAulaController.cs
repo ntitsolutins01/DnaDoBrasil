@@ -1,25 +1,24 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
+using WebApp.Authorization;
 using WebApp.Configuration;
 using WebApp.Dto;
 using WebApp.Enumerators;
 using WebApp.Factory;
+using WebApp.Identity;
 using WebApp.Models;
 using WebApp.Utility;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Web;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
 namespace WebApp.Controllers
 {
-	public class PlanoAulaController : BaseController
+    [Authorize(Policy = ModuloAccess.PlanoAula)]
+    public class PlanoAulaController : BaseController
 	{
-
-		private readonly IOptions<UrlSettings> _appSettings;
+        #region Constructor
+        private readonly IOptions<UrlSettings> _appSettings;
 		private readonly IHostingEnvironment _host;
 
 		public PlanoAulaController(IOptions<UrlSettings> appSettings,
@@ -29,8 +28,12 @@ namespace WebApp.Controllers
 			ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
 			_host = host;
 		}
+        #endregion
 
-		public IActionResult Index(int? crud, int? notify, string message = null)
+        #region Crud Methods
+
+        [ClaimsAuthorize(ClaimType.PlanoAula, Claim.Consultar)]
+        public IActionResult Index(int? crud, int? notify, string message = null)
 		{
 			SetNotifyMessage(notify, message);
 			SetCrudMessage(crud);
@@ -40,8 +43,8 @@ namespace WebApp.Controllers
 			return View(new PlanoAulaModel() { PlanosAulas = response, ListModalidades = modalidades });
 		}
 
-		//[ClaimsAuthorize("ConfiguracaoSistema", "Incluir")]
-		public ActionResult Create(int? crud, int? notify, string message = null)
+        [ClaimsAuthorize(ClaimType.PlanoAula, Claim.Incluir)]
+        public ActionResult Create(int? crud, int? notify, string message = null)
 		{
 			SetNotifyMessage(notify, message);
 			SetCrudMessage(crud);
@@ -51,19 +54,19 @@ namespace WebApp.Controllers
 			return View(new PlanoAulaModel() { ListModalidades = modalidades });
 		}
 
-		//[ClaimsAuthorize("Usuario", "Incluir")]
-		[HttpPost]
+        [ClaimsAuthorize(ClaimType.PlanoAula, Claim.Incluir)]
+        [HttpPost]
 		public async Task<ActionResult> Create(IFormCollection collection)
 		{
 			try
 			{
-
 				string filePath = null;
+				string fileName = null;
 
 				foreach (var file in collection.Files)
 				{
 					if (file.Length <= 0) continue;
-					var fileName = Path.GetFileName(collection.Files[0].FileName);
+					fileName = Path.GetFileName(collection.Files[0].FileName);
 					filePath = Path.Combine(_host.WebRootPath, $"PlanosAulas/{fileName}");
 
 					if (!Directory.Exists(Path.Combine(_host.WebRootPath, $"PlanosAulas")))
@@ -78,7 +81,8 @@ namespace WebApp.Controllers
 					Nome = collection["ddlPlanoAula"].ToString(),
 					TipoEscolaridade = collection["ddlTipoEscolaridade"].ToString(),
 					Modalidade = collection["ddlModalidade"].ToString(),
-					Url = filePath
+					NomeArquivo = fileName,
+                    Url = filePath
 				};
 
 				await ApiClientFactory.Instance.CreatePlanoAula(command);
@@ -91,8 +95,8 @@ namespace WebApp.Controllers
 			}
 		}
 
-		//[ClaimsAuthorize("Usuario", "Alterar")]
-		public async Task<ActionResult> Edit(IFormCollection collection)
+        [ClaimsAuthorize(ClaimType.PlanoAula, Claim.Alterar)]
+        public async Task<ActionResult> Edit(IFormCollection collection)
 		{
 			try
 			{
@@ -128,8 +132,8 @@ namespace WebApp.Controllers
 			}
 		}
 
-		//[ClaimsAuthorize("Usuario", "Excluir")]
-		public ActionResult Delete(int id)
+        [ClaimsAuthorize(ClaimType.PlanoAula, Claim.Excluir)]
+        public ActionResult Delete(int id)
 		{
 			try
 			{
@@ -149,27 +153,39 @@ namespace WebApp.Controllers
 			}
 		}
 
-		public Task<PlanoAulaDto> GetPlanoAulaById(int id)
+        [ClaimsAuthorize(ClaimType.PlanoAula, Claim.Download)]
+        public ActionResult Download(int id)
+        {
+            var file = ApiClientFactory.Instance.GetPlanoAulaById(id);
+
+            var filePath = Path.Combine(_host.WebRootPath, $"PlanosAulas/{file.NomeArquivo}");
+
+            if (!System.IO.File.Exists(filePath))
+            {
+                return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Warning, message = "Arquivo não encontrado." });
+            }
+
+            var fileBytes = System.IO.File.ReadAllBytes(filePath);
+            var response = new FileContentResult(fileBytes, "application/octet-stream")
+            {
+                FileDownloadName = file.NomeArquivo
+            };
+            return response;
+        }
+
+        #endregion
+
+        #region Get Methods
+
+        [ClaimsAuthorize(ClaimType.PlanoAula, Claim.Consultar)]
+        public Task<PlanoAulaDto> GetPlanoAulaById(int id)
 		{
 			var result = ApiClientFactory.Instance.GetPlanoAulaById(id);
 
 			return Task.FromResult(result);
 		}
 
-		public ActionResult Download(int id)
-		{
-			var file = ApiClientFactory.Instance.GetPlanoAulaById(id);
-			if (!System.IO.File.Exists(file.Url))
-			{
-				return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Warning, message = "Arquivo não encontrado." });
-			}
+        #endregion
 
-			var fileBytes = System.IO.File.ReadAllBytes(file.Url);
-			var response = new FileContentResult(fileBytes, "application/octet-stream")
-			{
-				FileDownloadName = file.NomeArquivo
-			};
-			return response;
-		}
 	}
 }

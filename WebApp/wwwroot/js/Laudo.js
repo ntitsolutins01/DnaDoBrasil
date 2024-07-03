@@ -122,7 +122,7 @@
 
             }).apply(this, [jQuery]);
 
-            var formid = $('form').attr('id');
+            var formid = $('form')[1].id;
 
             if (formid === "formEditLaudo") {
 
@@ -260,6 +260,31 @@
                                 });
                             }
                         });
+
+                    var urlProfissional = "../../Profissional/GetProfissionaisByLocalidade/?id=" + id;
+
+                    var ddlSource = "#ddlProfissional";
+
+                    $.getJSON(urlProfissional,
+                        { id: $(ddlSource).val() },
+                        function (data) {
+                            if (data.length > 0) {
+                                var items = '<option value="">Selecionar Profissional</option>';
+                                $("#ddlProfissional").empty;
+                                $.each(data,
+                                    function (i, row) {
+                                        items += "<option value='" + row.value + "'>" + row.text + "</option>";
+                                    });
+                                $("#ddlProfissional").html(items);
+                            }
+                            else {
+                                new PNotify({
+                                    title: 'Profissional',
+                                    text: 'Profissional não encontrados.',
+                                    type: 'warning'
+                                });
+                            }
+                        });
                 });
 
                 //mascara dos inputs
@@ -281,6 +306,10 @@
                 $numMassaCorporalSaude.mask('000', { reverse: false });
                 var $numEnvergaduraSaude = $("#envergaduraSaude");
                 $numEnvergaduraSaude.mask('000', { reverse: false });
+                var $numTesteVelocidade = $("#testeVelocidade");
+                $numTesteVelocidade.mask('00:00', { reverse: false });
+                var $numAptidaoFisica = $("#aptidaoFisica");
+                $numAptidaoFisica.mask('00:00', { reverse: false });
 
                 $("#formLaudo").validate({
                     highlight: function (label) {

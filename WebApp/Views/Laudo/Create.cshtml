@@ -44,6 +44,16 @@
                                     <option value="">Selecionar Localidade</option>
                                 </select>
                             </div>
+                            <label class="col-sm-2 control-label text-sm-right pt-2">Profissional <span class="required">*</span></label>
+                            <div class="col-md-4">
+                                <select class="form-control populate select2" name="ddlProfissional" id="ddlProfissional"
+                                        title="Por favor informe o profissional." required
+                                        asp-for="ProfissionalId" asp-items="Model.ListProfissionais">
+                                    <option value="">Selecionar Profissional</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="col-sm-2 control-label text-sm-right pt-2">Aluno <span class="required">*</span></label>
                             <div class="col-md-4">
                                 <select class="form-control populate select2" name="ddlAluno" id="ddlAluno"
@@ -54,10 +64,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-12 form-group">
-                        &nbsp;
-                        &nbsp;
-                    </div>
+                    <br /><br />
                     <div class="col-md-12">
                         <div class="tabs tabs-vertical tabs-left">
                             <ul class="nav nav-tabs col-sm-2 col-xs-4">
@@ -194,26 +201,17 @@
                                     </div>
                                     <div class="row form-group">
                                         <div>
-                                            <label class="col-sm-2 control-label"><strong>Abdominal (qtd)</strong></label>
+                                            <label class="col-sm-2 control-label"><strong>Abdominal</strong></label>
                                             <div class="col-sm-3">
-                                                <div data-plugin-spinner data-plugin-options='{ "value":0, "step": 5, "min": 0, "max": 200 }'>
-                                                    <div class="input-group">
-                                                        <div class="spinner-buttons input-group-btn">
-                                                            <button type="button" class="btn btn-default spinner-up">
-                                                                <i class="fa fa-plus"></i>
-                                                            </button>
-                                                        </div>
-                                                        <input type="text" class="spinner-input form-control" maxlength="3" readonly id="abdominal" name="abdominal">
-                                                        <div class="spinner-buttons input-group-btn">
-                                                            <button type="button" class="btn btn-default spinner-down">
-                                                                <i class="fa fa-minus"></i>
-                                                            </button>
-                                                        </div>
-                                                    </div>
+                                                <div class="radio-custom radio-success">
+                                                    <input id="abdominalSim" name="rdbAbdominal" type="radio" value="true" required />
+                                                    <label for="abdominalSim">Sim</label>
                                                 </div>
-                                                <p>
-                                                    <code>contagem</code> de 5 em 5
-                                                </p>
+                                                <div class="radio-custom radio-danger">
+                                                    <input id="abdominalNao" name="rdbAbdominal" type="radio" value="false" />
+                                                    <label for="abdominalNao">Não</label>
+                                                </div>
+                                                <label class="error" for="porto_is"></label>
                                             </div>
                                         </div>
                                     </div>
@@ -225,7 +223,7 @@
                                         <div class="form-group">
                                             <div class="col-sm-12">
                                                 <label class="control-label">
-                                                    <strong>@index - @item.Pergunta</strong>
+                                                    <strong>@item.Questao - @item.Pergunta</strong>
                                                 </label>
                                                 <input type="hidden" id="perguntaVocacional_@item.Id" />
                                             </div>
@@ -233,7 +231,7 @@
                                                 @foreach (var resp in @item.Respostas)
                                                 {
                                                     <div class="radio-custom radio-default col-sm-3">
-                                                        <input id="respVocacional_@resp.Id" name="nomeRespVocacional_@index" type="radio" value="@resp.Id" />
+                                                        <input id="respVocacional_@resp.Id" name="nomeRespVocacional_@index" type="radio" value="@resp.Id-@resp.ValorPesoResposta" />
                                                         <label for="respVocacional_@resp.Id">@resp.RespostaQuestionario</label>
                                                     </div>
                                                 }
@@ -249,7 +247,7 @@
                                         <div class="form-group">
                                             <div class="col-sm-12">
                                                 <label class="control-label">
-                                                    <strong>@index - @item.Pergunta</strong>
+                                                    <strong>@item.Questao - @item.Pergunta</strong>
                                                 </label>
                                                 <input type="hidden" id="perguntaQualidadeVida_@item.Id" />
                                             </div>
@@ -272,7 +270,7 @@
                                         <div class="form-group">
                                             <div class="col-sm-12">
                                                 <label class="control-label">
-                                                    <strong>@index - @item.Pergunta</strong>
+                                                    <strong>@item.Questao - @item.Pergunta</strong>
                                                 </label>
                                                 <input type="hidden" id="perguntaConsumoAlimentar_@item.Id" />
                                             </div>
@@ -280,7 +278,7 @@
                                                 @foreach (var resp in @item.Respostas)
                                                 {
                                                     <div class="radio-custom radio-default col-sm-3">
-                                                        <input id="respConsumoAlimentar_@resp.Id" name="nomeRespConsumoAlimentar_@index" type="radio" value="@resp.Id" />
+                                                        <input id="respConsumoAlimentar_@resp.Id" name="nomeRespConsumoAlimentar_@index" type="radio" value="@resp.Id-@resp.ValorPesoResposta" />
                                                         <label for="respConsumoAlimentar_@resp.Id">@resp.RespostaQuestionario</label>
                                                     </div>
                                                 }
@@ -295,14 +293,14 @@
                                         <div class="form-group">
                                             <div class="col-sm-12">
                                                 <label class="control-label">
-                                                    <strong>@index - @item.Pergunta</strong>
+                                                    <strong>@item.Questao - @item.Pergunta</strong>
                                                 </label>
                                             </div>
                                             <div class="col-sm-12">
                                                 @foreach (var resp in @item.Respostas)
                                                 {
                                                     <div class="radio-custom radio-default col-sm-3">
-                                                        <input id="respSaudeBucal_@resp.Id" name="nomeRespSaudeBucal_@index" type="radio" value="@resp.Id" />
+                                                        <input id="respSaudeBucal_@resp.Id" name="nomeRespSaudeBucal_@index" type="radio" value="@resp.Id-@resp.ValorPesoResposta" />
                                                         <label for="respSaudeBucal_@resp.Id">@resp.RespostaQuestionario</label>
                                                     </div>
                                                 }
@@ -343,7 +341,6 @@
     <script src="~/assets/vendor/jquery-mask/jquery.mask.js"></script>
     <script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
     <script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
-    <script src="~/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
     <script src="~/assets/vendor/bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR.min.js"></script>
     <script src="~/assets/vendor/bootstrap-timepicker/bootstrap-timepicker.js"></script>
     <script src="~/assets/vendor/fuelux/js/spinner.js"></script>

@@ -2,13 +2,17 @@
     el: "#formResposta",
     data: {
         loading: false,
-        editDto: { Id: "", Questionario: "", Resposta: "", TipoLaudo: "", ValorPesoResposta: "" }
+        editDto: { Id: "", Questionario: "", Resposta: "", TipoLaudo: "", ValorPesoResposta: "", Vocacional:true }
     },
     mounted: function () {
         var self = this;
         (function ($) {
             'use strict';
-            var formid = $('form').attr('id');
+            var formid = $('form')[1].id;
+
+            //mascara dos inputs
+            var valorPeso = $("#valorPeso");
+            valorPeso.mask('00.00', { reverse: true });
 
             if (formid === "formResposta") {
                 var $select = $(".select2").select2({
@@ -87,6 +91,12 @@
 
             if (formid === "formEditResposta") {
 
+
+                //mascara dos inputs
+                var valorPesoDecimal = $("#valorPesoDecimal");
+                valorPesoDecimal.mask('0.00', { reverse: false });
+
+
                 $("#formEditResposta").validate({
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
@@ -107,7 +117,7 @@
                 });
             }
 
-
+            
 
         }).apply(this, [jQuery]);
     },
@@ -141,11 +151,16 @@
             axios.get("Resposta/GetRespostaById/?id=" + id).then(result => {
 
                 self.editDto.Id = result.data.id;
-                self.editDto.Questionario = result.data.questionario.nome;
-                self.editDto.TipoLaudo = result.data.questionario.tipoLaudo.nome;
+                self.editDto.Questionario = result.data.pergunta;
+                self.editDto.TipoLaudo = result.data.nomeTipoLaudo;
                 self.editDto.Resposta = result.data.respostaQuestionario;
                 self.editDto.ValorPesoResposta = result.data.valorPesoResposta;
-               
+                if (result.data.nomeTipoLaudo === 'Vocacional') {
+                    self.editDto.Vocacional = true;
+                } else {
+                    self.editDto.Vocacional = false;
+                }
+
             }).catch(error => {
                 Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
             });

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
 using WebApp.Configuration;
 using WebApp.Dto;
@@ -24,8 +25,9 @@ namespace WebApp.Controllers
             SetNotifyMessage(notify, message);
             SetCrudMessage(crud);
             var response = ApiClientFactory.Instance.GetModalidadeAll();
+            var linhasAcoes = new SelectList(ApiClientFactory.Instance.GetLinhasAcoesAll(), "Id", "Nome");
 
-            return View(new ModalidadeModel() { Modalidades = response });
+            return View(new ModalidadeModel() { Modalidades = response, ListLinhasAcoes = linhasAcoes});
         }
 
         //[ClaimsAuthorize("ConfiguracaoSistema", "Incluir")]
@@ -33,8 +35,9 @@ namespace WebApp.Controllers
         {
             SetNotifyMessage(notify, message);
             SetCrudMessage(crud);
+            var linhasAcoes = new SelectList(ApiClientFactory.Instance.GetLinhasAcoesAll(), "Id", "Nome");
 
-            return View();
+            return View(new ModalidadeModel{ListLinhasAcoes = linhasAcoes});
         }
 
         //[ClaimsAuthorize("Usuario", "Incluir")]
@@ -46,6 +49,7 @@ namespace WebApp.Controllers
                 var command = new ModalidadeModel.CreateUpdateModalidadeCommand
                 {
                     Nome = collection["nome"].ToString(),
+                    LinhaAcaoId = Convert.ToInt32(collection["ddlLinhaAcao"].ToString()),
                     Vo2MaxIni = Convert.ToInt32(collection["vo2MaxIni"].ToString()),
                     Vo2MaxFim = Convert.ToInt32(collection["vo2MaxFim"].ToString()),
                     VinteMetrosIni = Convert.ToInt32(collection["vinteMetrosIni"].ToString()),
@@ -87,6 +91,7 @@ namespace WebApp.Controllers
                 Id = Convert.ToInt32(collection["editModalidadeId"]),
                 Nome = collection["nome"].ToString(),
                 Vo2MaxIni = Convert.ToInt32(collection["vo2MaxIni"].ToString()),
+                LinhaAcaoId = Convert.ToInt32(collection["ddlLinhaAcao"].ToString()),
                 Vo2MaxFim = Convert.ToInt32(collection["vo2MaxFim"].ToString()),
                 VinteMetrosIni = Convert.ToInt32(collection["vinteMetrosIni"].ToString()),
                 VinteMetrosFim = Convert.ToInt32(collection["vinteMetrosFim"].ToString()),

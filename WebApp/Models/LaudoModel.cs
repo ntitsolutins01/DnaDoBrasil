@@ -7,6 +7,7 @@ namespace WebApp.Models
 	public class LaudoModel
 	{
 		public LaudoDto Laudo { get; set; }
+		public AlunoDto Aluno { get; set; }
 		public List<LaudoDto> Laudos { get; set; }
 		public List<QuestionarioDto> QuestionarioVocacional { get; set; }
 		public List<QuestionarioDto> QuestionarioConsumoAlimentar { get; set; }
@@ -24,31 +25,41 @@ namespace WebApp.Models
 		public SelectList ListMunicipios { get; set; }
         public string AlunoId { get; set; }
         public SelectList ListAlunos { get; set; }
+        public SelectList ListProfissionais { get; set; }
+        public string ProfissionalId { get; set; }
 
         public class CreateUpdateLaudoCommand
 		{
 			public int Id { get; set; }
+            public string? StatusQualidadeDeVida { get; set; }
+            public string[] listQualidadeDeVida { get; set; }
+
+
+
+
+
             public decimal? Flexibilidade { get; set; }
             public decimal? PreensaoManual { get; set; }
             public decimal? Velocidade { get; set; }
             public decimal? ImpulsaoHorizontal { get; set; }
             public decimal? AptidaoFisica { get; set; }
-            public decimal? Abdominal { get; set; }
+            public bool Abdominal { get; set; }
             public decimal? Imc { get; set; }
             public decimal? Quadrado { get; set; }
             public string? Encaminhamento { get; set; }
             public decimal? Altura { get; set; }
             public decimal? Peso { get; set; }
             public decimal? Agilidade { get; set; }
-            public int? AlunoId { get; set; }
-            public decimal? EnvergaduraSaude { get; set; }
-            public decimal? MassaCorporalSaude { get; set; }
-            public decimal? AlturaSaude { get; set; }
+
+
             public string[] ListVocacional { get; set; }
             public string[] listSaudeBucal { get; set; }
-            public string[] listQualidadeDeVida { get; set; }
             public string[] listConsumoAlimentar { get; set; }
-		}
+            
+            
+            public int SaudeId { get; set; }
+            public required int AlunoId { get; set; }
+        }
 	}
 
 }

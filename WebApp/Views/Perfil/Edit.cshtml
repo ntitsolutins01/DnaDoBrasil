@@ -37,38 +37,39 @@
                     <div class="form-group row">
                         @foreach (var modulo in Model.Modulos)
                         {
-                            <label class="col-lg-3 control-label text-lg-right pt-2 col-lg-3">Modulo @modulo.Nome</label>
-                            var list = modulo.Funcionalidades;
-                            string[] funcionalidades = list[0].Nome.Split(',');
-                            foreach (var funcionalidade in funcionalidades)
-                            {
-                                <div class="col-lg-2">
-                                    <label class="col-sm-6 control-label text-sm-right pt-2">@funcionalidade</label>
-                                    <div class="switch switch-sm switch-dark">
-                                        @{
-                                            var listFuncSaved = Model.Claims.ToList().Where(x => x.Type == modulo.Nome);
+                            
+                            <div class="row">
+                                <label class="col-lg-3 control-label text-lg-right pt-2 col-lg-3">Modulo @modulo.Nome</label>
+                                @{
+                                    var list = modulo.Funcionalidades;
+                                    string[] funcionalidades = list[0].Nome.Split(',');
+                                    foreach (var funcionalidade in funcionalidades)
+                                    {
+                                        <div class="col-lg-2">
+                                            <label class="col-sm-6 control-label text-sm-right pt-2">@funcionalidade</label>
+                                            <div class="switch switch-sm switch-dark">
+                                                @{
+                                                    var listFuncSaved = Model.Claims.ToList().Where(x => x.Type == modulo.Nome);
 
-                                            var fun = listFuncSaved.Select(s => s.Value).FirstOrDefault()?.Split(',').ToList().Find(
-                                                delegate (string bk)
-                                                {
-                                                    return bk == funcionalidade;
+                                                    var fun = listFuncSaved.Select(s => s.Value).FirstOrDefault()?.Split(',').ToList().Find(
+                                                        delegate(string bk) { return bk == funcionalidade; }
+                                                    );
+                                                    if (fun != null)
+                                                    {
+                                                        <input type="checkbox" id="@modulo.Nome@funcionalidade" name="@modulo.Nome@funcionalidade"
+                                                               data-plugin-ios-switch checked="checked"/>
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="checkbox" id="@modulo.Nome@funcionalidade" name="@modulo.Nome@funcionalidade"
+                                                               data-plugin-ios-switch/>
+                                                    }
                                                 }
-                                                );
-                                            if (fun != null)
-                                            {
-                                                <input type="checkbox" id="@modulo.Nome@funcionalidade" name="@modulo.Nome@funcionalidade" 
-                                                       data-plugin-ios-switch checked="checked" />
-                                            }
-                                            else
-                                            {
-                                                <input type="checkbox" id="@modulo.Nome@funcionalidade" name="@modulo.Nome@funcionalidade" 
-                                                       data-plugin-ios-switch />
-                                            }
-                                        }
-                                    </div>
-                                </div>
-                            }
-
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </div>
                         }
                     </div>
                 </div>

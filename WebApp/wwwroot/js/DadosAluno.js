@@ -14,58 +14,58 @@
         (function ($) {
             'use strict';
 
-            if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
-
-                $(function () {
-                    $('[data-plugin-ios-switch]').each(function () {
-                        var $this = $(this);
-
-                        $this.themePluginIOS7Switch();
-                    });
-                });
-            }
-
-            //skin checkbox
-            if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
-
-                $(function () {
-                    $('[data-plugin-ios-switch]').each(function () {
-                        var $this = $(this);
-
-                        $this.themePluginIOS7Switch();
-                    });
-                });
-            }
-            //skin select
-            var $select = $(".select2").select2({
-                allowClear: true
-            });
-
-            $(".select2").each(function () {
-                var $this = $(this),
-                    opts = {};
-
-                var pluginOptions = $this.data('plugin-options');
-                if (pluginOptions)
-                    opts = pluginOptions;
-
-                $this.themePluginSelect2(opts);
-            });
-
-            /*
-             * When you change the value the select via select2, it triggers
-             * a 'change' event, but the jquery validation plugin
-             * only re-validates on 'blur'*/
-
-            $select.on('change', function () {
-                $(this).trigger('blur');
-            });
-
-            var formid = $('form').attr('id');
+            var formid = $('form')[1].id;
 
             //inclusão
             if (formid === "formDadosAluno") {
-                
+
+
+                if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
+
+                    $(function () {
+                        $('[data-plugin-ios-switch]').each(function () {
+                            var $this = $(this);
+
+                            $this.themePluginIOS7Switch();
+                        });
+                    });
+                }
+
+                //skin checkbox
+                if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
+
+                    $(function () {
+                        $('[data-plugin-ios-switch]').each(function () {
+                            var $this = $(this);
+
+                            $this.themePluginIOS7Switch();
+                        });
+                    });
+                }
+                //skin select
+                var $select = $(".select2").select2({
+                    allowClear: true
+                });
+
+                $(".select2").each(function () {
+                    var $this = $(this),
+                        opts = {};
+
+                    var pluginOptions = $this.data('plugin-options');
+                    if (pluginOptions)
+                        opts = pluginOptions;
+
+                    $this.themePluginSelect2(opts);
+                });
+
+                /*
+                 * When you change the value the select via select2, it triggers
+                 * a 'change' event, but the jquery validation plugin
+                 * only re-validates on 'blur'*/
+
+                $select.on('change', function () {
+                    $(this).trigger('blur');
+                });
 
                 //clique de escolha do select
                 $("#ddlEstado").change(function () {
@@ -170,6 +170,9 @@
 
                 var $numCep = $("#cep");
                 $numCep.mask('00000-000');
+
+                var $numDtNasc = $("#DtNascimento");
+                $numDtNasc.mask('00/00/0000', { reverse: false });
 
                 jQuery.validator.addMethod("cpf", function (cpf, element) {
                     var regex = /^\d{3}\.\d{3}\.\d{3}\-\d{2}$/;

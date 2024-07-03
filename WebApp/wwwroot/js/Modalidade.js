@@ -2,7 +2,7 @@ var vm = new Vue({
     el: "#vModalidade",
     data: {
         loading: false,
-        editDto: { Id: "", Nome: "", Vo2MaxIni: "", Vo2MaxFim: "", VinteMetrosIni: "", VinteMetrosFim: "", ShutlleRunIni: "", ShutlleRunFim: "", FlexibilidadeIni: "", FlexibilidadeFim: "", PreensaoManualIni: "", PreensaoManualFim: "", AbdominalPranchaIni: "", AbdominalPranchaFim: "", ImpulsaoIni: "", ImpulsaoFim: "", EnvergaduraIni: "", EnvergaduraFim: "", PesoIni: "", PesoFim: "", AlturaIni: "", AlturaFim: "", Status: true }
+        editDto: { Id: "", LinhaAcao: "", Nome: "", Vo2MaxIni: "", Vo2MaxFim: "", VinteMetrosIni: "", VinteMetrosFim: "", ShutlleRunIni: "", ShutlleRunFim: "", FlexibilidadeIni: "", FlexibilidadeFim: "", PreensaoManualIni: "", PreensaoManualFim: "", AbdominalPranchaIni: "", AbdominalPranchaFim: "", ImpulsaoIni: "", ImpulsaoFim: "", EnvergaduraIni: "", EnvergaduraFim: "", PesoIni: "", PesoFim: "", AlturaIni: "", AlturaFim: "", Status: true }
     },
     mounted: function () {
         var self = this;
@@ -20,9 +20,37 @@ var vm = new Vue({
                 });
             }
 
-            var formid = $('form').attr('id');
+            var formid = $('form')[1].id;
 
             if (formid === "formEditModalidade") {
+
+                var $select = $(".select2").select2({
+                    allowClear: true
+                });
+
+                $(".select2").each(function () {
+                    var $this = $(this),
+                        opts = {};
+
+                    var pluginOptions = $this.data('plugin-options');
+                    if (pluginOptions)
+                        opts = pluginOptions;
+
+                    $this.themePluginSelect2(opts);
+                });
+
+                /*
+                 * When you change the value the select via select2, it triggers
+                 * a 'change' event, but the jquery validation plugin
+                 * only re-validates on 'blur'*/
+
+                $select.on('change', function () {
+                    $(this).trigger('blur');
+                });
+
+                if ($.isFunction($.fn['tooltip'])) {
+                    $('[data-toggle=tooltip],[rel=tooltip]').tooltip({ container: 'body' });
+                }
 
                 $("#formEditModalidade").validate({
                     highlight: function (label) {
@@ -45,6 +73,34 @@ var vm = new Vue({
             } 
 
             if (formid === "formModalidade") {
+
+                var $select = $(".select2").select2({
+                    allowClear: true
+                });
+
+                $(".select2").each(function () {
+                    var $this = $(this),
+                        opts = {};
+
+                    var pluginOptions = $this.data('plugin-options');
+                    if (pluginOptions)
+                        opts = pluginOptions;
+
+                    $this.themePluginSelect2(opts);
+                });
+
+                /*
+                 * When you change the value the select via select2, it triggers
+                 * a 'change' event, but the jquery validation plugin
+                 * only re-validates on 'blur'*/
+
+                $select.on('change', function () {
+                    $(this).trigger('blur');
+                });
+
+                if ($.isFunction($.fn['tooltip'])) {
+                    $('[data-toggle=tooltip],[rel=tooltip]').tooltip({ container: 'body' });
+                }
 
                 $("#formModalidade").validate({
                     highlight: function (label) {
@@ -97,6 +153,13 @@ var vm = new Vue({
             axios.get("Modalidade/GetModalidadeById/?id=" + id).then(result => {
 
                 self.editDto.Id = result.data.id;
+                if (result.data.linhaAcao === null) {
+                    self.editDto.LinhaAcao = "";
+
+                } else { 
+                    self.editDto.LinhaAcao = result.data.linhaAcao.id;
+                }
+                $("#ddlLinhaAcao").val(self.editDto.LinhaAcao).trigger("change");
                 self.editDto.Nome = result.data.nome;
                 self.editDto.Status = result.data.status;
                 self.editDto.Vo2MaxIni = result.data.vo2MaxIni;

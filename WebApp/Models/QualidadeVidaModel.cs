@@ -13,9 +13,11 @@ namespace WebApp.Models
         public class CreateUpdateQualidadeVidaCommand
         {
 	        public int Id { get; set; }
-            public required int ProfissionalId { get; set; }
-            public required int QuestionarioId { get; set; }
-            public required string Resposta { get; set; }
+            public int ProfissionalId { get; init; }
+            public required int AlunoId { get; init; }
+            public string[] ListQualidadeDeVida { get; set; }
+            public int QuestionarioId { get; set; }
+            public string Resposta { get; set; }
         }
     }
 

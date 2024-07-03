@@ -10,6 +10,8 @@ namespace WebApp.Models
         public List<ModalidadeDto> Modalidades { get; set; }
         public string ModalidadeId { get; set; }
         public SelectList ListModalidades { get; set; }
+        public string LinhaAcaoId { get; set; }
+        public SelectList ListLinhasAcoes { get; set; }
 
         public class CreateUpdateModalidadeCommand
         {
@@ -37,6 +39,7 @@ namespace WebApp.Models
             public int AlturaFim { get; init; }
             public bool Status { get; set; }
             public string? ModalidadesIds { get; set; }
+            public int LinhaAcaoId { get; set; }
         }
     }
 

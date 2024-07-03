@@ -11,13 +11,19 @@ using WebApp.Enumerators;
 using WebApp.Factory;
 using WebApp.Models;
 using WebApp.Utility;
-using WebApp.Views;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using WebApp.Identity;
+using WebApp.Authorization;
+using Claim = WebApp.Identity.Claim;
+using WebApp.Authorization;
 
 namespace WebApp.Controllers
 {
-
+    [Authorize(Policy = ModuloAccess.SistemaSocioeconomico)]
     public class SistemaSocioeconomicoController : BaseController
     {
+        #region Constructor
         private readonly IEmailSender _emailSender;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -36,7 +42,11 @@ namespace WebApp.Controllers
             _roleManager = roleManager;
             ApplicationSettings.WebApiUrl = appSettings.Value.WebApiBaseUrl;
         }
+        #endregion
 
+        #region Crud Methods
+
+        [ClaimsAuthorize(ClaimType.SistemaSocioeconomico, Claim.Consultar)]
         public IActionResult Parceiro(int? crud, int? notify, string message = null)
         {
             try
@@ -53,13 +63,13 @@ namespace WebApp.Controllers
             catch (Exception e)
             {
                 Console.Write(e.StackTrace);
-                return RedirectToAction(nameof(CreateParceiro), new { notify = (int)EnumNotify.Error, message = e.Message });
+                return RedirectToAction(nameof(Parceiro), new { notify = (int)EnumNotify.Error, message = $"Erro ao executar esta ação. Favor entrar em contato com o administrador do sistema. {e.Message}"  });
 
             }
 
         }
 
-        //[ClaimsAuthorize("ConfiguracaoSistema", "Incluir")]
+        [ClaimsAuthorize(ClaimType.SistemaSocioeconomico, Claim.Incluir)]
         public ActionResult CreateParceiro(int? crud, int? notify, string message = null)
         {
             try
@@ -79,12 +89,13 @@ namespace WebApp.Controllers
             catch (Exception e)
             {
                 Console.Write(e.StackTrace);
-                return RedirectToAction(nameof(Parceiro), new { notify = (int)EnumNotify.Error, message = e.Message });
+                return RedirectToAction(nameof(Parceiro), new { notify = (int)EnumNotify.Error, message = $"Erro ao executar esta ação. Favor entrar em contato com o administrador do sistema. {e.Message}" });
 
             }
         }
-        //[ClaimsAuthorize("Usuario", "Incluir")]
+
         [HttpPost]
+        [ClaimsAuthorize(ClaimType.SistemaSocioeconomico, Claim.Incluir)]
         public async Task<ActionResult> Create(IFormCollection collection)
         {
             try
@@ -97,18 +108,18 @@ namespace WebApp.Controllers
 
                     Nome =  collection["nome"].ToString(),
                     TipoPessoa =  collection["tipoPessoa"].ToString(),
-                    CpfCnpj = collection["tipoPessoa"] == "pf" ? collection["cpf"].ToString() : collection["cnpj"].ToString(),
-                    Telefone = collection["numTelefone"] == "" ? null : collection["numTelefone"].ToString(),
-                    Celular = collection["numCelular"] == "" ? null : collection["numCelular"].ToString(),
-                    Cep = collection["cep"] == "" ? null : collection["cep"].ToString(),
-                    Endereco = collection["endereco"] == "" ? null : collection["endereco"].ToString(),
-                    Numero = collection["numero"] == "" ? 0 : Convert.ToInt32(collection["numero"].ToString()),
-                    Bairro = collection["bairro"] == "" ? null : collection["bairro"].ToString(),
+                    CpfCnpj = collection["tipoPessoa"].ToString() == "pf" ? collection["cpf"].ToString() : collection["cnpj"].ToString(),
+                    Telefone = collection["numTelefone"].ToString() == "" ? null : collection["numTelefone"].ToString(),
+                    Celular = collection["numCelular"].ToString() == "" ? null : collection["numCelular"].ToString(),
+                    Cep = collection["cep"].ToString() == "" ? null : collection["cep"].ToString(),
+                    Endereco = collection["endereco"].ToString() == "" ? null : collection["endereco"].ToString(),
+                    Numero = collection["numero"].ToString() == "" ? 0 : Convert.ToInt32(collection["numero"].ToString()),
+                    Bairro = collection["bairro"].ToString() == "" ? null : collection["bairro"].ToString(),
                     MunicipioId = Convert.ToInt32(collection["ddlMunicipio"].ToString()),
                     Habilitado = habilitado != "",
                     Status = status != "",
                     Email = collection["email"].ToString(),
-                    TipoParceria = Convert.ToInt32(collection["TipoParceria"].ToString()),
+                    TipoParceriaId = Convert.ToInt32(collection["ddlTipoParceria"].ToString()),
 
                 };
 
@@ -119,34 +130,37 @@ namespace WebApp.Controllers
             catch (Exception e)
             {
                 Console.Write(e.StackTrace);
-                return RedirectToAction(nameof(Parceiro), new { notify = (int)EnumNotify.Error, message = e.Message });
+                return RedirectToAction(nameof(Parceiro), new { notify = (int)EnumNotify.Error, message = $"Erro ao executar esta ação. Favor entrar em contato com o administrador do sistema. {e.Message}" });
 
             }
         }
-        //[ClaimsAuthorize("Usuario", "Alterar")]
-        public ActionResult EditParceiro(int id)
+
+        [ClaimsAuthorize(ClaimType.SistemaSocioeconomico, Claim.Alterar)]
+        public async Task<ActionResult> EditParceiro(int id)
         {
             try
             {
                 ParceiroModel model = new ParceiroModel();
                 {
-                    var parceiro = ApiClientFactory.Instance.GetParceiroById(id);
-                    var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
+                    var parceiro = await ApiClientFactory.Instance.GetParceiroById(id);
+                    var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", parceiro.Uf);
+                    var municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(parceiro.Uf), "Id", "Nome", parceiro.MunicipioId);
 
-                    return View(new ParceiroModel() { ListEstados = estados, Parceiro = parceiro });
+                    return View(new ParceiroModel() { ListEstados = estados, Parceiro = parceiro, ListMunicipios = municipios});
                 }
 
             }
             catch (Exception e)
             {
                 Console.Write(e.StackTrace);
-                return RedirectToAction(nameof(Parceiro), new { notify = (int)EnumNotify.Error, message = e.Message });
+                return RedirectToAction(nameof(Parceiro), new { notify = (int)EnumNotify.Error, message = $"Erro ao executar esta ação. Favor entrar em contato com o administrador do sistema. {e.Message}" });
 
             }
         }
-        //[ClaimsAuthorize("Usuario", "Alterar")]
+
         [HttpPost]
-        public async Task<ActionResult> Edit(int id, IFormCollection collection)
+        [ClaimsAuthorize(ClaimType.SistemaSocioeconomico, Claim.Alterar)]
+        public async Task<ActionResult> EditParceiro(int id, IFormCollection collection)
         {
             try
             {
@@ -168,23 +182,22 @@ namespace WebApp.Controllers
                     MunicipioId = Convert.ToInt32(collection["ddlMunicipio"].ToString()),
                     Habilitado = habilitado != "",
                     Status = status != "",
-                    Email = collection["email"].ToString(),
-                    TipoParceria = Convert.ToInt32(collection["TipoParceria"].ToString()),
+                    Email = collection["email"].ToString()
                 };
 
                 await ApiClientFactory.Instance.UpdateParceiro(command.Id, command);
 
-                return RedirectToAction(nameof(EditParceiro), new { crud = (int)EnumCrud.Updated });
+                return RedirectToAction(nameof(Parceiro), new { crud = (int)EnumCrud.Updated });
             }
             catch (Exception e)
             {
                 Console.Write(e.StackTrace);
-                return RedirectToAction(nameof(Parceiro), new { notify = (int)EnumNotify.Error, message = e.Message });
+                return RedirectToAction(nameof(Parceiro), new { notify = (int)EnumNotify.Error, message = $"Erro ao executar esta ação. Favor entrar em contato com o administrador do sistema. {e.Message}" });
 
             }
         }
 
-        //[ClaimsAuthorize("Usuario", "Excluir")]
+        [ClaimsAuthorize(ClaimType.SistemaSocioeconomico, Claim.Excluir)]
         public ActionResult DeleteParceiro(int id)
         {
             try
@@ -198,47 +211,23 @@ namespace WebApp.Controllers
             }
         }
 
-        public Task<ParceiroDto> GetParceiroById(int id)
-        {
-            var result = ApiClientFactory.Instance.GetParceiroById(id);
-
-            return Task.FromResult(result);
-        }
-
-
-        public Task<JsonResult> GetTiposParceriasByParceria(string id)
-        {
-            try
-            {
-                if (string.IsNullOrEmpty(id)) throw new Exception("Parceria não informado.");
-                var resultLocal = ApiClientFactory.Instance.GetTipoParceriaAll()
-                    .Where(x => x.Parceria == Convert.ToInt32(id) && x.Status == true);
-
-                return Task.FromResult(Json(new SelectList(resultLocal, "Id", "Nome")));
-
-            }
-            catch (Exception ex)
-            {
-                return Task.FromResult(Json(ex));
-            }
-        }
-
         [HttpPost]
+        [ClaimsAuthorize(ClaimType.SistemaSocioeconomico, Claim.Habilitar)]
         public async Task<ActionResult> Habilitar(IFormCollection collection)
         {
             try
             {
                 var parceiroId = collection["habilitarParceiroId"].ToString();
 
-                var result = ApiClientFactory.Instance.GetParceiroById(Convert.ToInt32(parceiroId));
+                var result = await ApiClientFactory.Instance.GetParceiroById(Convert.ToInt32(parceiroId));
 
-                if (result.Email != null && result.Email.Equals(collection["email"].ToString().Trim()))
+                if (result.Habilitado)
                 {
                     return RedirectToAction(nameof(Parceiro),
                         new
                         {
                             notify = (int)EnumNotify.Error,
-                            message = "Já existe um parceiro cadastrado com esse email."
+                            message = "Já existe parceiro/usuário habilitado com o E-mail cadastrado na base de dados!"
                         });
                 }
 
@@ -246,36 +235,60 @@ namespace WebApp.Controllers
 
                 if (result2 != null)
                 {
-                    return RedirectToAction(nameof(Create),
+                    return RedirectToAction(nameof(Parceiro),
                         new
                         {
                             notify = (int)EnumNotify.Error,
-                            message = "Já existe parceiro com o E-mail cadastrado na base de dados!"
+                            message = "Já existe parceiro/usuário habilitado com o E-mail cadastrado na base de dados!"
                         });
                 }
 
                 var command = new UsuarioModel.CreateUpdateUsuarioCommand
                 {
                     Email = collection["email"].ToString(),
-                    Nome = collection["nome"].ToString()
+                    Nome = collection["nome"].ToString(),
+                    CpfCnpj = collection["cpfCnpj"].ToString()
                 };
 
                 var newUser = new IdentityUser { UserName = command.Email, Email = command.Email };
-                await _userManager.CreateAsync(newUser, "12345678");
+                var aspNetUser = await _userManager.CreateAsync(newUser, "12345678");
 
-                command.PerfilId = result2.PerfilId;
-                var perfil = ApiClientFactory.Instance.GetPerfilById(command.PerfilId);
+                if (aspNetUser.Succeeded)
+                {
+                    var perfil = ApiClientFactory.Instance.GetPerfilById((int)EnumPerfil.Parceiro);
 
-                var includedUserId = _userManager.Users.FirstOrDefault(x => x.Email == newUser.Email).Id;
+                    var includedUserId = _userManager.Users.FirstOrDefault(x => x.Email == newUser.Email).Id;
 
-                command.AspNetUserId = includedUserId;
-                command.AspNetRoleId = perfil.AspNetRoleId;
+                    command.AspNetUserId = includedUserId;
+                    command.AspNetRoleId = perfil.AspNetRoleId;
+                    command.PerfilId = perfil.Id;
+                    command.Status = true;
+                    command.MunicipioId = (int)result.MunicipioId;
+                    command.TipoPessoa = result.TipoPessoa;
+                    command.CpfCnpj = result.CpfCnpj;
 
-                ApiClientFactory.Instance.CreateUsuario(command);
+                    var usu = await ApiClientFactory.Instance.CreateUsuario(command);
 
-                SendNewUserEmail(newUser, command.Email, command.Nome);
+                    if (usu != 0)
+                    {
+                        var res = await ApiClientFactory.Instance.UpdateParceiro(result.Id,
+                            new ParceiroModel.CreateUpdateParceiroCommand()
+                            { AspNetUserId = command.AspNetUserId, Habilitado = true, Id = result.Id, Nome = result.Nome, CpfCnpj = result.CpfCnpj, Email = result.Email });
+                    }
 
-                return RedirectToAction(nameof(Parceiro), new { crud = (int)EnumCrud.Created });
+                    SendNewUserEmail(newUser, command.Email, command.Nome);
+
+                    return RedirectToAction(nameof(Parceiro), new { crud = (int)EnumCrud.Created });
+                }
+                else
+                {
+                    return RedirectToAction(nameof(Parceiro),
+                        new
+                        {
+                            notify = (int)EnumNotify.Error,
+                            message = "Erro ao habilitar usuário. Favor entrar em contato com o administrador do sistema."
+                        });
+                }
             }
             catch (Exception e)
             {
@@ -283,14 +296,46 @@ namespace WebApp.Controllers
                     new
                     {
                         notify = (int)EnumNotify.Error,
-                        message = "Erro ao criar usuário. Favor entrar em contato com o administrador do sistema."
+                        message = "Erro ao habilitar usuário. Favor entrar em contato com o administrador do sistema."
                     });
             }
         }
+        #endregion
+
+        #region Get Methods
+
+        [ClaimsAuthorize(ClaimType.SistemaSocioeconomico, Claim.Consultar)]
+        public async Task<ParceiroDto> GetParceiroById(int id)
+        {
+            var result = await ApiClientFactory.Instance.GetParceiroById(id);
+
+            return result;
+        }
+
+        [ClaimsAuthorize(ClaimType.SistemaSocioeconomico, Claim.Consultar)]
+        public async Task<JsonResult> GetTiposParceriasByParceria(string id)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(id)) throw new Exception("Parceria não informado.");
+                var resultLocal = ApiClientFactory.Instance.GetTipoParceriaAll()
+                    .Where(x => x.Parceria == Convert.ToInt32(id) && x.Status == true);
+
+                return Json(new SelectList(resultLocal, "Id", "Nome"));
+            }
+            catch (Exception ex)
+            {
+                return Json(ex);
+            }
+        }
+
+        #endregion
+
+        #region Private Methods
 
         private async Task SendNewUserEmail(IdentityUser user, string email, string nome)
         {
-            var code = await _userManager.GeneratePasswordResetTokenAsync(new IdentityUser(user.Email));
+            var code = await _userManager.GeneratePasswordResetTokenAsync(user);
 
             var callbackUrl = Url.ActionLink("ResetPassword",
                 "Identity/Account", new { code, email });
@@ -300,9 +345,11 @@ namespace WebApp.Controllers
             message = message.Replace("%NAME%", nome);
             message = message.Replace("%CALLBACK%", HtmlEncoder.Default.Encode(callbackUrl.Replace("%2FAccount", "/Account")));
 
-            await _emailSender.SendEmailAsync(user.Email, "Primeiro acesso sistema Dna Brasil",
+            await _emailSender.SendEmailAsync(user.Email, "Primeiro acesso sistema Dna do Brasil",
                 message);
         }
+
+        #endregion
 
 
 
@@ -321,11 +368,29 @@ namespace WebApp.Controllers
 
         public IActionResult Estudantes()
         {
+            var response = ApiClientFactory.Instance.GetLaudoAll();
+
             return View();
         }
-        public IActionResult SolicitacaoContato()
+        public async Task<IActionResult> SolicitacaoContato()
         {
-            return View();
+            try
+            {
+                var municipioId = ApiClientFactory.Instance.GetParceiroByAspNetUserId(User.FindFirstValue(ClaimTypes.NameIdentifier)).MunicipioId;
+
+                var alunos = await ApiClientFactory.Instance.GetAlunosByFilter(new AlunosFilterDto()
+                    { MunicipioId = municipioId.ToString() });
+
+                var model = new ParceiroModel() { Alunos = alunos!.Alunos! };
+
+                return View(model);
+            }
+            catch (Exception e)
+            {
+                Console.Write(e.StackTrace);
+                return RedirectToAction(nameof(Parceiro), new { notify = (int)EnumNotify.Error, message = e.Message });
+
+            }
         }
         public IActionResult Details()
         {

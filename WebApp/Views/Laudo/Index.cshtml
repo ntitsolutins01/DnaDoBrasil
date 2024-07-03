@@ -23,12 +23,12 @@
 					<table class="table table-bordered table-striped mb-0" id="datatable-default">
 						<thead>
 							<tr>
-                                <th class="text-center">AlunoId</th>
-                                <th class="text-center">ConsumoAlimentarId</th>
-                                <th class="text-center">QualidadeDeVidaId</th>
-                                <th class="text-center">SaudeBucalId</th>
-                                <th class="text-center">SaudeId</th>
-                                <th class="text-center">VocacionalId</th>
+                                <th class="text-center">Id</th>
+                                <th class="text-center">Nome Aluno</th>
+                                <th class="text-center">Município / Uf</th>
+                                <th class="text-center">Localidade</th>
+                                <th class="text-center">Encaminhamento</th>
+                                <th class="text-center">Status do Laudo</th>
 								<th class="text-center">Ações</th>
 							</tr>
 						</thead>
@@ -36,19 +36,33 @@
 							@foreach (var item in Model.Laudos)
 							{
 								<tr>
-									<td class="text-center">@Html.DisplayFor(modelItem => item.AlunoId)</td>
-									<td class="text-center">@Html.DisplayFor(modelItem => item.ConsumoAlimentarId)</td>
-									<td class="text-center">@Html.DisplayFor(modelItem => item.QualidadeDeVidaId)</td>
-									<td class="text-center">@Html.DisplayFor(modelItem => item.SaudeBucalId)</td>
-									<td class="text-center">@Html.DisplayFor(modelItem => item.SaudeId)</td>
-									<td class="text-center">@Html.DisplayFor(modelItem => item.VocacionalId)</td>
-									<td class="actions">
+									<td class="text-center">@Html.DisplayFor(modelItem => item.Id)</td>
+									<td class="text-center">@Html.DisplayFor(modelItem => item.NomeAluno)</td>
+									<td class="text-center">@Html.DisplayFor(modelItem => item.MunicipioEstado)</td>
+									<td class="text-center">@Html.DisplayFor(modelItem => item.Localidade)</td>
+									@if (string.IsNullOrEmpty(item.Encaminhamento))
+                                    {
+                                        <td class="text-center"><span class="label label-dark">EM DESENVOLVIMENTO</span></td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-center"><span class="label label-success">FINALIZADO</span></td>
+                                    }
+									@if (item.StatusLaudo == "F")
+                                    {
+                                        <td class="text-center"><span class="label label-success">FINALIZADO</span></td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-center"><span class="label label-warning">EM ANDAMENTO</span></td>
+                                    }
+									<td class="actions text-center">
 										<a data-toggle="tooltip" data-placement="top" title="Editar"
                                            href='javascript:(crud.EditModal(@item.AlunoId))'
 										   class="on-default edit-row" style='color: #FF9800'>
 											<i class="fa fa-pencil"></i>
 										</a>
-                                        <a data-toggle="tooltip" data-placement="top" title="Detalhar" asp-action="Details" asp-controller="Laudo" asp-route-id="@item.AlunoId" class="on-default edit-row" style='color: #eea236'><i class="fa fa-address-card"></i></a>
+                                        
                                         <a data-toggle="tooltip" data-placement="top" title="Avaliação Completa" asp-action="Details" asp-controller="Laudo" asp-route-id="@item.AlunoId" class="on-default edit-row" style='color: #d2322d'><i class="fa fa-bar-chart"></i></a>
                                         <a data-toggle="tooltip" data-placement="top" title="Relatório" asp-action="Details" asp-controller="Laudo" asp-route-id="@item.AlunoId" class="on-default edit-row" style='color: #47a447'><i class="fa fa-file-text"></i></a>
 									</td>

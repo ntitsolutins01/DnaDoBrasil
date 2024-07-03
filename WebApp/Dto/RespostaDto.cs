@@ -2,9 +2,12 @@
 {
     public class RespostaDto
     {
-        public int Id { get; set; }
-        public string RespostaQuestionario { get; set; }
-        public QuestionarioDto Questionario { get; set; }
-        public int ValorPesoResposta { get; set; }
+        public int Id { get; init; }
+        public int QuestionarioId { get; init; }
+        public required string Pergunta { get; set; }
+        public int TipoLaudoId { get; init; }
+        public required string NomeTipoLaudo { get; set; }
+        public required string RespostaQuestionario { get; set; }
+        public required decimal ValorPesoResposta { get; set; }
     }
 }

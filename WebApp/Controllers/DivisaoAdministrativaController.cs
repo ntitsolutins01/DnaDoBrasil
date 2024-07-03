@@ -37,5 +37,30 @@ namespace WebApp.Controllers
                 return Task.FromResult(Json(ex));
             }
         }
+
+
+
+        public Task<JsonResult> GetMunicipioByFomento(string id)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(id)) throw new Exception("Fomento não informado.");
+
+                var fomento = ApiClientFactory.Instance.GetFomentoById(Convert.ToInt32(id));
+
+                var result = new List<string>
+                {
+                    fomento.MunicipioId.ToString(),
+                    fomento.MunicipioEstado.Split("/")[1].Trim()
+                };
+
+                return Task.FromResult(Json(result));
+
+            }
+            catch (Exception ex)
+            {
+                return Task.FromResult(Json(ex));
+            }
+        }
     }
 }

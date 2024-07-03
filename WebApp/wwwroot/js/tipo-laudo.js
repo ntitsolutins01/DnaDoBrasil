@@ -2,7 +2,7 @@ var vm = new Vue({
     el: "#formTipoLaudo",
     data: {
         loading: false,
-        editDto: { Id: "", Nome: "", Descricao: "" }
+        editDto: { Id: "", Nome: "", Descricao: "", Status: true }
     },
     mounted: function () {
         var self = this;
@@ -20,7 +20,7 @@ var vm = new Vue({
                 });
             }
 
-            var formid = $('form').attr('id');
+            var formid = $('form')[1].id;
 
             if (formid === "formEditTiposLaudo") {
 

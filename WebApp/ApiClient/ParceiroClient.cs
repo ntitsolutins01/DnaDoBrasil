@@ -34,7 +34,7 @@ namespace WebApp.ApiClient
 
         #region Methods
 
-        public ParceiroDto GetParceiroById(int id)
+        public async Task<ParceiroDto> GetParceiroById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 $"{ResourceParceiro}/Parceiro/{id}"));
@@ -46,7 +46,14 @@ namespace WebApp.ApiClient
                 $"{ResourceParceiro}"));
             return Get<List<ParceiroDto>>(requestUrl);
         }
+        public ParceiroDto GetParceiroByAspNetUserId(string aspNetUserId)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceParceiro}/AspNetUser/{aspNetUserId}"));
+            return Get<ParceiroDto>(requestUrl);
+        }
 
         #endregion
+
     }
 }

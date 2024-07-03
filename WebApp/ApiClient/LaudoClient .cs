@@ -44,6 +44,12 @@ namespace WebApp.ApiClient
                 $"{ResourceLaudo}"));
             return Get<List<LaudoDto>>(requestUrl);
         }
+        //public List<LaudoDto> GetLaudosByEncaminhamentos()
+        //{
+        //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+        //        $"{ResourceLaudo}/Encaminhamento/{}"));
+        //    return Get<List<LaudoDto>>(requestUrl);
+        //}
 
         #endregion
     }

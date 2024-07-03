@@ -77,7 +77,7 @@ namespace WebApp.Controllers
 				{
 					RespostaQuestionario = collection["resposta"].ToString(),
 					QuestionarioId = Convert.ToInt32(collection["ddlQuestionario"].ToString()),
-					ValorPesoResposta = Convert.ToInt32(collection["valorPeso"].ToString()),
+					ValorPesoResposta = Convert.ToDecimal(collection["valorPeso"].ToString()),
 
 				};
 
@@ -96,12 +96,12 @@ namespace WebApp.Controllers
 		public async Task<ActionResult> Edit(IFormCollection collection)
 		{
 			try
-			{
-				var command = new RespostaModel.CreateUpdateRespostaCommand
-				{
-					Id = Convert.ToInt32(collection["editRespostaId"]),
-					RespostaQuestionario = collection["resposta"].ToString(),
-                    ValorPesoResposta = Convert.ToInt32(collection["valorPeso"].ToString()),
+            {
+                var command = new RespostaModel.CreateUpdateRespostaCommand
+                {
+                    Id = Convert.ToInt32(collection["editRespostaId"]),
+                    RespostaQuestionario = collection["resposta"].ToString(),
+                    ValorPesoResposta = Convert.ToDecimal(collection["valorPeso"].ToString())
                 };
 
 				await ApiClientFactory.Instance.UpdateResposta(command.Id, command);

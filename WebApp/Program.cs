@@ -4,10 +4,13 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.EntityFrameworkCore;
 using System.Configuration;
+using WebApp.Areas.Identity.Models;
 using WebApp.Data;
 using WebApp.Models;
 using WebApp.Services;
 using WebApp.Configuration;
+using WebApp.Identity;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +18,13 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
                        throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseSqlServer(connectionString,
+        serverDbContextOptionsBuilder =>
+        {
+            var minutes = (int)TimeSpan.FromMinutes(3).TotalSeconds;
+            serverDbContextOptionsBuilder.CommandTimeout(minutes);
+            serverDbContextOptionsBuilder.EnableRetryOnFailure();
+        }));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>()
@@ -51,7 +60,7 @@ builder.Services.ConfigureApplicationCookie(options =>
     // Cookie settings
     options.Cookie.Name = "DnaCookieLogin";
     options.Cookie.HttpOnly = true;
-    options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
 
     options.AccessDeniedPath = "/Identity/Account/AccessDenied";
     options.LoginPath = "/Identity/Account/Login";
@@ -73,16 +82,120 @@ builder.Services.Configure<SmtpClientSettings>(builder.Configuration.GetSection(
 
 var config = builder.Configuration.GetSection("DnaParameters").Get<ParametersModel>();
 
-//define a quantidade de tempo que um token gerado permanece válido. PS: O padrão é 1 dia.
+//define a quantidade de tempo que um token gerado permanece vï¿½lido. PS: O padrï¿½o ï¿½ 1 dia.
 builder.Services.Configure<DataProtectionTokenProviderOptions>(options =>
     options.TokenLifespan = TimeSpan.FromMinutes(config.TokenTime));
 
-// Registra o serviço de e-mail. Configurado em appsettings.json
+// Registra o serviï¿½o de e-mail. Configurado em appsettings.json
+
 builder.Services.AddTransient<IEmailSender, EmailService>();
+
+builder.Services.AddAuthorization(o =>
+{
+
+    o.AddPolicy(ModuloAccess.ConfiguracaoSistema, policy =>
+        policy.RequireAssertion(context =>
+            context.User.IsInRole(UserRoles.Administrador)));
+
+    o.AddPolicy(ModuloAccess.ControleAcesso, policy =>
+        policy.RequireAssertion(context =>
+            context.User.IsInRole(UserRoles.Administrador)));
+
+    o.AddPolicy(ModuloAccess.Dashboard, policy =>
+        policy.RequireAssertion(context =>
+            context.User.IsInRole(UserRoles.Profissional) ||
+            context.User.IsInRole(UserRoles.Parceiro) ||
+            context.User.IsInRole(UserRoles.Gestor) ||
+            context.User.IsInRole(UserRoles.Aluno) ||
+            context.User.IsInRole(UserRoles.Administrador)));
+
+    o.AddPolicy(ModuloAccess.ControlePresenca, policy =>
+        policy.RequireAssertion(context =>
+            context.User.IsInRole(UserRoles.Profissional) ||
+            context.User.IsInRole(UserRoles.Parceiro) ||
+            context.User.IsInRole(UserRoles.Gestor) ||
+            context.User.IsInRole(UserRoles.Aluno) ||
+            context.User.IsInRole(UserRoles.Administrador)));
+
+    o.AddPolicy(ModuloAccess.Nota, policy =>
+        policy.RequireAssertion(context =>
+            context.User.IsInRole(UserRoles.Profissional) ||
+            context.User.IsInRole(UserRoles.Parceiro) ||
+            context.User.IsInRole(UserRoles.Gestor) ||
+            context.User.IsInRole(UserRoles.Aluno) ||
+            context.User.IsInRole(UserRoles.Administrador)));
+
+    o.AddPolicy(ModuloAccess.Profissional, policy =>
+        policy.RequireAssertion(context =>
+            context.User.IsInRole(UserRoles.Profissional) ||
+            context.User.IsInRole(UserRoles.Parceiro) ||
+            context.User.IsInRole(UserRoles.Gestor) ||
+            context.User.IsInRole(UserRoles.Aluno) ||
+            context.User.IsInRole(UserRoles.Administrador)));
+
+    o.AddPolicy(ModuloAccess.SistemaSocioeconomico, policy =>
+        policy.RequireAssertion(context =>
+            context.User.IsInRole(UserRoles.Profissional) ||
+            context.User.IsInRole(UserRoles.Parceiro) ||
+            context.User.IsInRole(UserRoles.Gestor) ||
+            context.User.IsInRole(UserRoles.Aluno) ||
+            context.User.IsInRole(UserRoles.Administrador)));
+
+    o.AddPolicy(ModuloAccess.PlanoAula, policy =>
+        policy.RequireAssertion(context =>
+            context.User.IsInRole(UserRoles.Profissional) ||
+            context.User.IsInRole(UserRoles.Parceiro) ||
+            context.User.IsInRole(UserRoles.Gestor) ||
+            context.User.IsInRole(UserRoles.Aluno) ||
+            context.User.IsInRole(UserRoles.Administrador)));
+
+    o.AddPolicy(ModuloAccess.Aluno, policy =>
+        policy.RequireAssertion(context =>
+            context.User.IsInRole(UserRoles.Gestor) ||
+            context.User.IsInRole(UserRoles.Profissional) ||
+            context.User.IsInRole(UserRoles.Parceiro) ||
+            context.User.IsInRole(UserRoles.Administrador) ||
+            context.User.IsInRole(UserRoles.Aluno)));
+
+    o.AddPolicy(ModuloAccess.Laudo, policy =>
+        policy.RequireAssertion(context =>
+            context.User.IsInRole(UserRoles.Gestor) ||
+            context.User.IsInRole(UserRoles.Profissional) ||
+            context.User.IsInRole(UserRoles.Parceiro) ||
+            context.User.IsInRole(UserRoles.Aluno) ||
+            context.User.IsInRole(UserRoles.Administrador)));
+});
+
+//// Cria um grupo de polï¿½ticas de administradores para requisitos de seguranï¿½a de alto nï¿½vel
+//builder.Services.AddAuthorization(options =>
+//{
+//    options.AddPolicy(ModuloAccess.Dashboard, policy =>
+//        policy.RequireAssertion(context =>
+//            context.User.IsInRole(UserRoles.Administrador)
+//        || context.User.IsInRole(UserRoles.Aluno)));
+
+////options.AddPolicy(ModuloAccess.Relatos, policy =>
+////    policy.RequireAssertion(context =>
+////        context.User.IsInRole(UserRoles.Administrator)
+////        || context.User.IsInRole(UserRoles.UsuarioPublico)));
+
+////options.AddPolicy(ModuloAccess.AtribuirResponsavelRelato, policy =>
+////    policy.RequireAssertion(context =>
+////        context.User.IsInRole(UserRoles.Administrator)
+////        || context.User.IsInRole(UserRoles.GestorSgsoSite)
+////        || context.User.IsInRole(UserRoles.ResponsavelTecnico)
+////        || context.User.IsInRole(UserRoles.UsuarioPublico)));
+
+////options.AddPolicy(ModuloAccess.ConfigurarAmbiente, policy =>
+////    policy.RequireAssertion(context =>
+////        context.User.IsInRole(UserRoles.Administrator)
+////        || context.User.IsInRole(UserRoles.GestorSgsoSite)));
+
+//});
 
 var app = builder.Build();
 
-// Configuração the HTTP request pipeline.
+// Configuraï¿½ï¿½o the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
@@ -95,11 +208,14 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseCookiePolicy();
+
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
 app.MapRazorPages();
 
 app.Run();

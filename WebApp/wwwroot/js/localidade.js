@@ -18,7 +18,7 @@ var vm = new Vue({
                     });
                 });
             }
-            var formid = $('form').attr('id');
+            var formid = $('form')[1].id;
 
             if (formid === "formLocalidade") {
                 var $select = $(".select2").select2({

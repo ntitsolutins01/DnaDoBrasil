@@ -23,6 +23,13 @@ namespace WebApp.ApiClient
             return Put(requestUrl, command);
         }
 
+        public Task<bool> UpdateAlunoFoto(int id, AlunoModel.CreateUpdateDadosAlunoCommand command)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceAlunos}/UploadFoto/{id}"));
+            return Put(requestUrl, command);
+        }
+
         public Task<bool> DeleteDados(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
@@ -47,11 +54,23 @@ namespace WebApp.ApiClient
                 $"{ResourceAlunos}/Aluno/{id}"));
             return Get<AlunoDto>(requestUrl);
         }
-        public List<AlunoDto> GetAlunosByLocalidade(int id)
+        public AlunoDto GetAlunoByEmail(string email)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceAlunos}/Aluno/Email/{email}"));
+            return Get<AlunoDto>(requestUrl);
+        }
+        public AlunoDto GetAlunoByAspNetUser(string aspNetUserId)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceAlunos}/AspNetUserId/{aspNetUserId}"));
+            return Get<AlunoDto>(requestUrl);
+        }
+        public List<AlunoIndexDto> GetAlunosByLocalidade(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 $"{ResourceAlunos}/Localidade/{id}"));
-            return Get<List<AlunoDto>>(requestUrl);
+            return Get<List<AlunoIndexDto>>(requestUrl);
         }
         public List<SelectListDto> GetNomeAlunosAll(string id)
         {
@@ -59,7 +78,7 @@ namespace WebApp.ApiClient
                 $"{ResourceAlunos}/NomeAlunos/{id}"));
             return Get<List<SelectListDto>>(requestUrl);
         }
-        public AlunosFilterDto GetAlunosByFilter(AlunosFilterDto searchFilter)
+        public Task<AlunosFilterDto?> GetAlunosByFilter(AlunosFilterDto searchFilter)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 $"{ResourceAlunos}/Filter"));
@@ -67,6 +86,5 @@ namespace WebApp.ApiClient
         }
 
         #endregion
-
     }
 }

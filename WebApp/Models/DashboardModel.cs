@@ -13,11 +13,19 @@ namespace WebApp.Models
         public SelectList ListEstados { get; set; }
         public string MunicipioId { get; set; }
         public SelectList ListMunicipios { get; set; }
-        public DashboardIndicadoresDto Indicadores { get; set; }
+        public DashboardDto Dashboard { get; set; }
         public SelectList ListDeficiencias { get; set; }
         public string DeficienciaId { get; set; }
         public SelectList ListEtnias { get; set; }
         public string EtniaId { get; set; }
+        public DataGrafico DataGrafico { get; set; }
+    }
+
+    public class DataGrafico    
+    {
+        public string name { get; set; }
+        public decimal y { get; set; }
+        public int z { get; set; }
     }
 
 }

@@ -21,14 +21,16 @@ namespace WebApp.ApiClient
             addHeaders();
             var response = _httpClient.GetAsync(requestUrl, HttpCompletionOption.ResponseHeadersRead);
             var data = response.Result.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<T>(data.Result);
+            return JsonConvert.DeserializeObject<T>(data.Result)!;
         }
-        public T GetFiltro<T>(Uri requestUrl, T content)
+        public Task<T?> GetFiltro<T>(Uri requestUrl, T content)
         {
             addHeaders();
             var response = _httpClient.PostAsync(requestUrl, CreateHttpContent<T>(content));
             var data = response.Result.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<T>(data.Result);
+            return Task.FromResult(JsonConvert.DeserializeObject<T>(data.Result));
+
+
         }
 
 
