@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div id="vControlePresenca">
+<div id="vEvento">
     <div class="row">
         <div class="col-lg-12">
             <section class="panel">
@@ -49,11 +49,11 @@
                                     <td class="text-center">@Html.DisplayFor(modelItem => item.Data)</td>
                                     <td class="actions text-center">
                                         <a data-toggle="tooltip" data-placement="top" title="Editar"
-                                           href='javascript:(crud.EditModal(@item.Id))'
+                                           href='javascript:(crud.EditControlePresencaEventoModal(@item.Id,@Model.Evento.Id))'
                                            class="on-default edit-row" style='color: #FF9800' style="display: block;">
                                             <i class="fa fa-pencil"></i>
                                         </a>
-                                        <a data-toggle="tooltip" data-placement="top" title="Excluir" href='javascript:(crud.DeleteModal(@item.Id))'
+                                        <a data-toggle="tooltip" data-placement="top" title="Excluir" href='javascript:(crud.DeleteControlePresencaEventoModal(@item.Id,@Model.Evento.Id))'
                                            class="on-default remove-row" style=" cursor: pointer;color: #F44336"><i class="fa fa-trash"></i></a>
                                     </td>
                                 </tr>
@@ -65,12 +65,12 @@
         </div>
     </div>
     <!-- Modal -->
-    <div class="modal fade" id="mdDeleteControlePresenca" tabindex="-1" role="dialog" aria-labelledby="mdDeleteControlePresencaLabel" aria-hidden="true">
+    <div class="modal fade" id="mdDeleteControlePresencaEvento" tabindex="-1" role="dialog" aria-labelledby="mdDeleteControlePresencaEventoLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="mdDeleteControlePresencaLabel">
-                        <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Exclusão de ControlePresenca</strong>
+                    <h5 class="modal-title" id="mdDeleteControlePresencaEventoLabel">
+                        <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Exclusão de Controle de Presenca do Evento</strong>
                     </h5>
                 </div>
                 <div class="modal-body">
@@ -78,7 +78,7 @@
                         <i class="fa fa-question-circle"></i>
                     </div>
                     <div class="modal-text">
-                        <input type="hidden" id="deleteControlePresencaId" />
+                        <input type="hidden" id="deleteControlePresencaEventoId" />
                         <p class="mb-0">Tem certeza que deseja <b>excluir</b> esse registro?</p>
                     </div>
                     <div class="modal-wrapper">
@@ -86,54 +86,42 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-thumbs-o-down"></i> &nbsp;&nbsp;Não</button>
-                    <a id="deleteControlePresencaHref" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</a>
+                    <a id="deleteControlePresencaEventoHref" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</a>
                 </div>
             </div>
         </div>
     </div>
     <!-- Modal -->
-    <div class="modal fade" id="mdEditControlePresenca" tabindex="-1" role="dialog" aria-labelledby="mdEditControlePresencaLabel" aria-hidden="true">
+    <div class="modal fade" id="mdEditControlePresencaEvento" tabindex="-1" role="dialog" aria-labelledby="mdEditControlePresencaEventoLabel" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="mdEditControlePresencaLabel">
-                        <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Alterar ControlePresenca</strong>
+                    <h5 class="modal-title" id="mdEditControlePresencaEventoLabel">
+                        <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Alterar Controle de Presenca do Evento</strong>
                     </h5>
                 </div>
                 @using (@Html.BeginForm("EditControlePresenca", "Evento", FormMethod.Post, new { id = "formEditControlePresencaEvento", @class = "form-horizontal" }))
                 {
-                    <input type="hidden" name="editControlePresencaId" :value="editDto.Id" />
+                    <input type="hidden" name="editControlePresencaEventoId" :value="editControlePresencaEventoDto.Id" />
+                    <input type="hidden" name="editEventoId" :value="editControlePresencaEventoDto.EventoId" />
 
                     <div class="modal-body">
                         <div class="form-group">
                             <label class="col-sm-2 control-label text-sm-right pt-2">Convidado <span class="required">*</span></label>
-                            <div class="col-md-10">
-                                <input type="text" name="convidado" class="form-control" required :value="editDto.Convidado" />
+                            <div class="col-md-9">
+                                <input type="text" name="convidado" class="form-control" required :value="editControlePresencaEventoDto.Convidado" />
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-3 control-label text-sm-right pt-2">Controle <span class="required">*</span></label>
+                            <label class="col-sm-2 control-label text-sm-right pt-2">Controle <span class="required">*</span></label>
                             <div class="col-sm-4">
                                 <div class="radio-custom radio-success">
-                                    <input type="radio" id="controlePresente" name="controle" value="P" required title="Por favor selecione uma opção" :checked="editDto.Controle === 'P'">
+                                    <input type="radio" id="controlePresente" name="controle" value="P" required title="Por favor selecione uma opção" :checked="editControlePresencaEventoDto.Controle === 'P'">
                                     <label>Presente</label>
                                 </div>
                                 <div class="radio-custom radio-danger">
-                                    <input type="radio" id="controleFalta" name="controle" value="F" required title="Por favor selecione uma opção" :checked="editDto.Controle === 'F'">
+                                    <input type="radio" id="controleFalta" name="controle" value="F" required title="Por favor selecione uma opção" :checked="editControlePresencaEventoDto.Controle === 'F'">
                                     <label>Falta</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 control-label text-sm-right pt-2">Status</label>
-                            <div class="col-md-3">
-                                <div class="switch switch-sm switch-primary">
-                                    <div v-show="editDto.Status">
-                                        <input type="checkbox" id="editStatus" name="editStatus" data-plugin-ios-switch checked="checked" />
-                                    </div>
-                                    <div v-show="!editDto.Status">
-                                        <input type="checkbox" id="editStatus" name="editStatus" data-plugin-ios-switch />
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -154,12 +142,14 @@
     <link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />
 }
 @section Scripts {
-    <script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
     <script src="~/assets/vendor/select2/js/select2.js"></script>
+    <script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
+    <script src="~/assets/vendor/jquery-mask/jquery.mask.js"></script>
+    <script src="~/assets/vendor/ios7-switch/ios7-switch.js"></script>
     <script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
-    <script src="~/js/formatTable.js"></script>
     <script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
-    <script src="~/js/ControlesPresencas.js"></script>
+    <script src="~/js/formatTable.js"></script>
+    <script src="~/js/Evento.js"></script>
 
     <script>
 

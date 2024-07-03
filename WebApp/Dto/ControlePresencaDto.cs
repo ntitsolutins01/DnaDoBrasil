@@ -4,7 +4,8 @@
     {
         public int Id { get; set; }
         public int AlunoId { get; set; }
-        public required string NomeAluno { get; set; }
+        public int? EventoId { get; set; }
+		public required string NomeAluno { get; set; }
         public required string Controle { get; set; }
         public string? Justificativa { get; set; }
         public string? MunicipioEstado { get; set; }

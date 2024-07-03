@@ -251,7 +251,7 @@ public class EventoController : BaseController
 		{
 			var command = new ControlePresencaModel.CreateUpdateControlePresencaCommand()
 			{
-				Id = Convert.ToInt32(collection["editControlePresencaId"]),
+				Id = Convert.ToInt32(collection["editControlePresencaEventoId"]),
 				Controle = collection["controle"].ToString(),
 				Justificativa = collection["convidado"].ToString(),
 				Status = collection["editStatus"].ToString() == "" ? false : true
@@ -259,11 +259,24 @@ public class EventoController : BaseController
 
 			await ApiClientFactory.Instance.UpdateControlePresenca(command.Id, command);
 
-			return RedirectToAction(nameof(IndexControlePresenca), new { eventoId = command.EventoId, crud = (int)EnumCrud.Updated });
+			return RedirectToAction(nameof(IndexControlePresenca), new { eventoId = Convert.ToInt32(collection["editEventoId"]), crud = (int)EnumCrud.Updated });
 		}
 		catch (Exception e)
 		{
-			return RedirectToAction(nameof(IndexControlePresenca), new { eventoId = Convert.ToInt32(collection["eventoId"]), notify = (int)EnumNotify.Error, message = "Erro ao executar esta ação. Favor entrar em contato com o administrador do sistema." });
+			return RedirectToAction(nameof(IndexControlePresenca), new { eventoId = Convert.ToInt32(collection["editEventoId"]), notify = (int)EnumNotify.Error, message = "Erro ao executar esta ação. Favor entrar em contato com o administrador do sistema." });
+		}
+	}
+	[ClaimsAuthorize(ClaimType.ControlePresenca, Claim.Excluir)]
+	public ActionResult DeleteControlePresenca(int id, int eventoId)
+	{
+		try
+		{
+			ApiClientFactory.Instance.DeleteControlePresenca(id);
+			return RedirectToAction(nameof(IndexControlePresenca), new { eventoId = eventoId, crud = (int)EnumCrud.Deleted });
+		}
+		catch
+		{
+			return RedirectToAction(nameof(IndexControlePresenca), new { eventoId = eventoId, notify = (int)EnumNotify.Error, message = "Erro ao executar esta ação. Favor entrar em contato com o administrador do sistema." });
 		}
 	}
 	#endregion

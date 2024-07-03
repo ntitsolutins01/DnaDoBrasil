@@ -2,7 +2,8 @@ var vm = new Vue({
     el: "#vEvento",
     data: {
         loading: false,
-        editDto: { Id: "", Titulo: "", Decricao: "", DtEvento: "", sigla: "", MunicipioId: "", Localidade: "", Status: true }
+        editDto: { Id: "", Titulo: "", Decricao: "", DtEvento: "", sigla: "", MunicipioId: "", Localidade: "", Status: true, Convidado:"" },
+        editControlePresencaEventoDto: { Id: "", Convidado: "", Controle: "", EventoId:"" }
     },
     mounted: function () {
         var self = this;
@@ -262,6 +263,22 @@ var vm = new Vue({
             }).catch(error => {
                 Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
             });
+        },
+        DeleteControlePresencaEvento: function (id, eventoId) {
+            var url = "../Evento/DeleteControlePresenca?id=" + id+"&eventoId="+eventoId;
+            $("#deleteControlePresencaEventoHref").prop("href", url);
+        },
+        EditControlePresencaEvento: function (id, eventoId) {
+            var self = this;
+
+            axios.get("../ControlePresenca/GetControlePresencaById/?id=" + id).then(result => {
+                self.editControlePresencaEventoDto.Id = result.data.id;
+                self.editControlePresencaEventoDto.EventoId = eventoId;
+                self.editControlePresencaEventoDto.Convidado = result.data.justificativa;
+                self.editControlePresencaEventoDto.Controle = result.data.controle;
+            }).catch(error => {
+                Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
+            });
         }
     }
 });
@@ -276,5 +293,15 @@ var crud = {
         $('input[name="editEventoId"]').attr('value', id);
         $('#mdEditEvento').modal('show');
         vm.EditEvento(id)
+    },
+    DeleteControlePresencaEventoModal: function (id, eventoId) {
+        $('input[name="deleteControlePresencaEventoId"]').attr('value', id);
+        $('#mdDeleteControlePresencaEvento').modal('show');
+        vm.DeleteControlePresencaEvento(id, eventoId)
+    },
+    EditControlePresencaEventoModal: function (id, eventoId) {
+        $('input[name="editControlePresencaEventoId"]').attr('value', id);
+        $('#mdEditControlePresencaEvento').modal('show');
+        vm.EditControlePresencaEvento(id, eventoId)
     }
 };
