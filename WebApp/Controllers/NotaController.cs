@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Globalization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
 using WebApp.Authorization;
@@ -94,10 +95,10 @@ public class NotaController : BaseController
             {
                 AlunoId = collection["ddlAluno"] == "" ? null : Convert.ToInt32(collection["ddlAluno"].ToString()).ToString(),
                 DisciplinaId = collection["ddlDisciplina"] == "" ? null : Convert.ToInt32(collection["ddlDisciplina"].ToString()).ToString(),
-                PrimeiroBimestre = collection["notaPrimeiroBimestre"].ToString() == "" ? null : Convert.ToDecimal(collection["notaPrimeiroBimestre"].ToString()),
-                SegundoBimestre = collection["notaSegundoBimestre"].ToString() == "" ? null : Convert.ToDecimal(collection["notaSegundoBimestre"].ToString()),
-                TerceiroBimestre = collection["notaTerceiroBimestre"].ToString() == "" ? null : Convert.ToDecimal(collection["notaTerceiroBimestre"].ToString()),
-                QuartoBimestre = collection["notaQuartoBimestre"].ToString() == "" ? null : Convert.ToDecimal(collection["notaQuartoBimestre"].ToString())
+                PrimeiroBimestre = collection["notaPrimeiroBimestre"].ToString() == "" ? null : Convert.ToDecimal(collection["notaPrimeiroBimestre"].ToString(), new CultureInfo("pt-BR", true)),
+                SegundoBimestre = collection["notaSegundoBimestre"].ToString() == "" ? null : Convert.ToDecimal(collection["notaSegundoBimestre"].ToString(), new CultureInfo("pt-BR", true)),
+                TerceiroBimestre = collection["notaTerceiroBimestre"].ToString() == "" ? null : Convert.ToDecimal(collection["notaTerceiroBimestre"].ToString(), new CultureInfo("pt-BR", true)),
+                QuartoBimestre = collection["notaQuartoBimestre"].ToString() == "" ? null : Convert.ToDecimal(collection["notaQuartoBimestre"].ToString(), new CultureInfo("pt-BR", true))
             };
 
             await ApiClientFactory.Instance.CreateNota(command);

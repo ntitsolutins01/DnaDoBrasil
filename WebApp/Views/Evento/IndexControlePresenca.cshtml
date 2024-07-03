@@ -17,7 +17,7 @@
                 <div class="panel-body">
                     <div class="form-group row">
                         <div class="col-sm-2 pull-right">
-                            <a href="@Url.Action("CreateControlePresenca", "Evento")" id="addToTable" class="btn btn-block btn-primary pull-right"><i class="fa fa-plus"></i> &nbsp;&nbsp;Novo Controle</a>
+                            <a href="@Url.Action("CreateControlePresenca", "Evento", new {eventoId = @Model.Evento.Id})" id="addToTable" class="btn btn-block btn-primary pull-right"><i class="fa fa-plus"></i> &nbsp;&nbsp;Novo Controle</a>
                         </div>
                     </div>
                     <table class="table table-bordered table-striped mb-0" id="datatable-default">
@@ -100,28 +100,15 @@
                         <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Alterar ControlePresenca</strong>
                     </h5>
                 </div>
-                @using (@Html.BeginForm("Edit", "ControlePresenca", FormMethod.Post, new { id = "formEditControlePresenca", @class = "form-horizontal" }))
+                @using (@Html.BeginForm("EditControlePresenca", "Evento", FormMethod.Post, new { id = "formEditControlePresencaEvento", @class = "form-horizontal" }))
                 {
                     <input type="hidden" name="editControlePresencaId" :value="editDto.Id" />
-                    <input type="hidden" name="editAlunoId" :value="editDto.AlunoId" />
 
                     <div class="modal-body">
-                        <div class="form-group row">
-                            <label class="col-sm-3 control-label text-sm-right pt-2">Município / UF</label>
-                            <div class="col-sm-5">
-                                <input type="text" name="municipio" class="form-control" :value="editDto.MunicipioEstado" readonly />
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-3 control-label text-sm-right pt-2">Localidade</label>
-                            <div class="col-sm-9">
-                                <input type="text" name="localidade" class="form-control" :value="editDto.NomeLocalidade" readonly />
-                            </div>
-                        </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label text-sm-right pt-2">Aluno <span class="required">*</span></label>
-                            <div class="col-md-9">
-                                <input type="text" name="aluno" class="form-control" :value="editDto.NomeAluno" readonly />
+                            <label class="col-sm-2 control-label text-sm-right pt-2">Convidado <span class="required">*</span></label>
+                            <div class="col-md-10">
+                                <input type="text" name="convidado" class="form-control" required :value="editDto.Convidado" />
                             </div>
                         </div>
                         <div class="form-group row">
@@ -137,10 +124,17 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label text-sm-right pt-2">Justificativa <span class="required">*</span></label>
-                            <div class="col-sm-9">
-                                <textarea class="form-control" rows="3" maxlength="500" :value="editDto.Justificativa" name="justificativa"></textarea>
+                        <div class="form-group row">
+                            <label class="col-sm-2 control-label text-sm-right pt-2">Status</label>
+                            <div class="col-md-3">
+                                <div class="switch switch-sm switch-primary">
+                                    <div v-show="editDto.Status">
+                                        <input type="checkbox" id="editStatus" name="editStatus" data-plugin-ios-switch checked="checked" />
+                                    </div>
+                                    <div v-show="!editDto.Status">
+                                        <input type="checkbox" id="editStatus" name="editStatus" data-plugin-ios-switch />
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

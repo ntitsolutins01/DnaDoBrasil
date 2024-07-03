@@ -16,32 +16,34 @@
 						<div class="panel-actions">
 							<a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
 						</div>
-						<h2 class="panel-title">Cadastro de Controle de Presença do Evento</h2>
+						<h2 class="panel-title">Cadastro de Controle de Presença do Evento @Model.Evento.Titulo</h2>
 					</header>
 					<div class="panel-body">
-
+						<input type="hidden" id="eventoId" name="eventoId" value="@Model.Evento.Id"/>
+						<input type="hidden" id="convidadoId" name="convidadoId" value="@Model.Convidado!.Id" />
 						<div class="form-group">
 							<label class="col-sm-2 control-label text-sm-right pt-2">Estado </label>
-							<div class="col-md-4">
-                                <input type="text" name="estado" class="form-control" readonly  />
+                            <div class="col-md-4">
+								<input type="hidden" id="estadoId" name="estadoId" value="@Model.Evento.EstadoId" />
+                                <input type="text" name="estado" class="form-control" readonly value="@Model.Evento.Estado" />
 							</div>
-							<label class="col-sm-2 control-label text-sm-right pt-2">Município </label>
-							<div class="col-md-4">
-								<input type="text" name="municipio" class="form-control" readonly  />
+							<label class="col-sm-1 control-label text-sm-right pt-2">Município </label>
+							<div class="col-md-5">
+								<input type="hidden" id="municipioId" name="municipioId" value="@Model.Evento.MunicipioId" />
+								<input type="text" name="municipio" class="form-control" readonly value="@Model.Evento.Municipio" />
 							</div>
 						</div>
-                        <div class="form-group col-sm-6">
+                        <div class="form-group">
 							<label class="col-sm-2 control-label text-sm-right pt-2">Localidade </label>
 							<div class="col-md-4">
-                                <input type="text" name="localidade" class="form-control" readonly  />
+								<input type="hidden" id="localidadeId" name="localidadeId" value="@Model.Evento.LocalidadeId" />
+								<input type="text" name="localidade" class="form-control" readonly value="@Model.Evento.Localidade" />
+                            </div>
+                            <label class="col-sm-1 control-label text-sm-right pt-2">Convidado <span class="required">*</span></label>
+                            <div class="col-md-5">
+                                <input type="text" name="convidado" class="form-control" required="" />
                             </div>
                         </div>
-                        <div class="form-group col-sm-6">
-							<label class="col-sm-2 control-label text-sm-right pt-2">Convidado <span class="required">*</span></label>
-							<div class="col-md-4">
-								<input type="text" name="convidado" class="form-control" readonly  />
-							</div>
-						</div>
 						<div class="form-group row">
 							<label class="col-sm-2 control-label text-sm-right pt-2">Controle <span class="required">*</span></label>
 							<div class="col-sm-4">
@@ -78,7 +80,7 @@
 @section Scripts {
 	<script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
 	<script src="~/assets/vendor/select2/js/select2.js"></script>
-	<script src="~/js/ControlesPresencas.js"></script>
+	<script src="~/js/evento.js"></script>
 	<script>
 
 		(function ($) {

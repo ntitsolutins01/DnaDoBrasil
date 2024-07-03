@@ -14,6 +14,60 @@ var vm = new Vue({
             var $dtEvento = $("#dtEvento");
             $dtEvento.mask('00/00/0000', { reverse: false });
 
+            //skin checkbox
+            if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
+
+                $(function () {
+                    $('[data-plugin-ios-switch]').each(function () {
+                        var $this = $(this);
+
+                        $this.themePluginIOS7Switch();
+                    });
+                });
+            }
+
+            if (formid === "formControlePresencaEvento") {
+
+                $("#formControlePresencaEvento").validate({
+                    highlight: function (label) {
+                        $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
+                    },
+                    success: function (label) {
+                        $(label).closest('.form-group').removeClass('has-error');
+                        label.remove();
+                    },
+                    errorPlacement: function (error, element) {
+                        var placement = element.closest('.input-group');
+                        if (!placement.get(0)) {
+                            placement = element;
+                        }
+                        if (error.text() !== '') {
+                            placement.after(error);
+                        }
+                    }
+                });
+            }
+            if (formid === "formEditControlePresencaEvento") {
+
+                $("#formEditControlePresencaEvento").validate({
+                    highlight: function (label) {
+                        $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
+                    },
+                    success: function (label) {
+                        $(label).closest('.form-group').removeClass('has-error');
+                        label.remove();
+                    },
+                    errorPlacement: function (error, element) {
+                        var placement = element.closest('.input-group');
+                        if (!placement.get(0)) {
+                            placement = element;
+                        }
+                        if (error.text() !== '') {
+                            placement.after(error);
+                        }
+                    }
+                });
+            }
             if (formid === "formEditEvento") {
 
                 $("#formEditEvento").validate({
@@ -200,13 +254,8 @@ var vm = new Vue({
             var self = this;
 
             axios.get("Evento/GetEventoById/?id=" + id).then(result => {
-                $("#ddlEstado").val(self.editDto.sigla).trigger("change");
-                $("#ddlMunicipio").val(self.editDto.MunicipioId).trigger("change");
-                $("#ddlLocalidade").val(self.editDto.LocalidadeId).trigger("change");
                 self.editDto.Id = result.data.id;
-                self.editDto.Titulo = result.data.titulo;
-                self.editDto.Descricao = result.data.descricao;
-                self.editDto.DtEvento = result.data.dataEvento;
+                self.editDto.Convidado = result.data.justificativa;
                 self.editDto.Status = result.data.status;
                 
 

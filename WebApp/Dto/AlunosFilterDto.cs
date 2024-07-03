@@ -11,6 +11,7 @@
 		public string? LocalidadeId { get; set; }
         public string? DeficienciaId { get; set; }
         public string? Etnia { get; set; }
+        public string? Nome { get; set; }
 
         #endregion
 
