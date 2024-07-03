@@ -1029,11 +1029,11 @@ var vm = new Vue({
                             y: result.data.dashboard.listTotalizadorDesempenho.percDesempenho.aptidaoCardio,
                             z: 50
                         }, {
-                            name: 'Agilidade ou Shuttle run',
+                            name: 'Agilidade',
                             y: result.data.dashboard.listTotalizadorDesempenho.percDesempenho.shutlleRun,
                             z: 50
                         }, {
-                            name: 'Prancha (ABD)',
+                            name: 'Força do Core',
                             y: result.data.dashboard.listTotalizadorDesempenho.percDesempenho.prancha,
                             z: 50
                         }]
@@ -1053,7 +1053,7 @@ var vm = new Vue({
                         text: undefined
                     },
                     xAxis: {
-                        categories: ['Velocidade', 'Flexibilidade Muscular', 'Força de Membros Superiores', 'Força Explosiva de Membros Inferiores', 'Aptidão Cardiorrespiratória', 'Agilidade ou Shuttle run', 'Prancha (ABD)'],
+                        categories: ['Velocidade', 'Flexibilidade Muscular', 'Força de Membros Superiores', 'Força Explosiva de Membros Inferiores', 'Aptidão Cardiorrespiratória', 'Agilidade', 'Força do Core'],
 
                         labels: {
                             style: {
@@ -1585,7 +1585,7 @@ var vm = new Vue({
                         minPointSize: 10,
                         innerSize: '20%',
                         zMin: 0,
-                        name: 'Percentual de consumo alimentar dos alunos',
+                        name: 'Percentual de hábitos alimentares dos alunos',
                         borderRadius: 5,
                         data: [{
                             name: 'Hábitos não saudáveis',
