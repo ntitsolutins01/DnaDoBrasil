@@ -8,9 +8,9 @@ namespace WebApp.Enumerators
         Parceiro = 8,
         [Description("Aluno")]
         Aluno = 6,
-        [Description("Coordenador")]
-        Coordenador = 7,
+        [Description("Profissional")]
+        Profissional = 7,
         [Description("Professor")]
-        Professor = 10
+        Professor = 10,
     }
 }

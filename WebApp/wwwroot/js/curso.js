@@ -2,7 +2,7 @@ var vm = new Vue({
     el: "#vCurso ",
     data: {
         loading: false,
-        editDto: { Id: "", Nome: "", Status: true }
+        editDto: { Id: "", Titulo: "", Descricao: "", CargaHoraria: "", Status: true }
     },
     mounted: function () {
         var self = this;
@@ -128,7 +128,9 @@ var vm = new Vue({
             axios.get("Curso/GetCursoById/?id=" + id).then(result => {
 
                 self.editDto.Id = result.data.id;
-                self.editDto.Nome = result.data.Curso;
+                self.editDto.Titulo = result.data.titulo;
+                self.editDto.Descricao = result.data.descricao;
+                self.editDto.CargaHoraria = result.data.cargaHoraria;
                 self.editDto.Status = result.data.status;
 
             }).catch(error => {
