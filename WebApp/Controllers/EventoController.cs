@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using WebApp.Authorization;
 using WebApp.Configuration;
@@ -146,6 +147,10 @@ public class EventoController : BaseController
     {
         try
         {
+	        if (ApiClientFactory.Instance.GetControlesPresencasByEventoId(id).Any())
+	        {
+				return RedirectToAction(nameof(IndexControlePresenca), new { eventoId = id, notify = (int)EnumNotify.Error, message = "O evento não pode ser excluído pois existem presenças registradas para o mesmo." });
+			}
             ApiClientFactory.Instance.DeleteEvento(id);
             return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
         }
@@ -191,16 +196,16 @@ public class EventoController : BaseController
             SetNotifyMessage(notify, message);
             SetCrudMessage(crud);
             var evento = ApiClientFactory.Instance.GetEventoById(eventoId);
-            var convidado = ApiClientFactory.Instance.GetAlunosByFilter(new AlunosFilterDto()
-                { LocalidadeId = evento.LocalidadeId, Nome = "Convidado" });
-            var alunos = new SelectList(ApiClientFactory.Instance.GetAlunosByLocalidade(Convert.ToInt32(evento.LocalidadeId)), "Id", "Nome"); ;
+            var listAlunos = ApiClientFactory.Instance.GetAlunosByLocalidade(Convert.ToInt32(evento.LocalidadeId));
 
+			var alunos = new SelectList(listAlunos, "Id", "Nome"); ;
+			var convidado = listAlunos.First(x => x.Nome.Contains("Convidado"));
 
             return View(new EventoModel()
             {
                 Evento = evento,
-                Convidado = convidado.Result?.Alunos!.FirstOrDefault(),
-                ListAlunos = alunos
+                ListAlunos = alunos,
+                Convidado = convidado
             });
         }
         catch (Exception e)
@@ -232,7 +237,14 @@ public class EventoController : BaseController
 				AlunoId = collection["alunoConvidadoEvento"] == "A" ? collection["ddlAluno"].ToString() : collection["convidadoId"].ToString(),
 			};
 
-		    await ApiClientFactory.Instance.CreateControlePresenca(command);
+		    var possuiPrecensa = ApiClientFactory.Instance.GetControlePresencaByAlunoId(Convert.ToInt32(command.AlunoId)).Where(x => x.Data == DateTime.Now.ToString("dd/MM/yyyy"));
+
+		    if (possuiPrecensa.Any())
+		    {
+			    return RedirectToAction(nameof(CreateControlePresenca), new { eventoId = command.EventoId, notify = (int)EnumNotify.Warning, message = "Já existe presença cadastrada para este aluno no dia de hoje." });
+		    }
+
+			await ApiClientFactory.Instance.CreateControlePresenca(command);
 
 		    return RedirectToAction(nameof(IndexControlePresenca), new { eventoId = command.EventoId, crud = (int)EnumCrud.Created });
 	    }

@@ -1,4 +1,4 @@
-﻿
+
 
 using WebApp.Views;
 
@@ -16,6 +16,8 @@ namespace WebApp.Dto
 	    public required string Titulo { get; set; }
 	    public string? Descricao { get; set; }
 	    public required string DataEvento { get; set; }
-	    public bool Status { get; set; }
+        public int TotalConvidado { get; set; }
+        public int TotalAluno { get; set; }
+        public bool Status { get; set; }
 	}
 }

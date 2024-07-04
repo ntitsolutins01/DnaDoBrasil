@@ -26,7 +26,9 @@
 								<th class="text-center">Id</th>
 								<th class="text-center">Titulo</th>
 								<th class="text-center">Localidade</th>
-								<th class="text-center">Data do Evento</th>
+                                <th class="text-center">Data do Evento</th>
+                                <th class="text-center">Total de Convidados</th>
+                                <th class="text-center">Total de Alunos</th>
 								<th class="text-center">Status</th>
 								<th class="text-center">Ações</th>
 							</tr>
@@ -39,6 +41,8 @@
 									<td class="text-center">@Html.DisplayFor(modelItem => item.Titulo)</td>
 									<td class="text-center">@Html.DisplayFor(modelItem => item.Localidade)</td>
 									<td class="text-center">@Html.DisplayFor(modelItem => item.DataEvento)</td>
+									<td class="text-center">@Html.DisplayFor(modelItem => item.TotalConvidado)</td>
+									<td class="text-center">@Html.DisplayFor(modelItem => item.TotalAluno)</td>
 									@if (item.Status)
 									{
 										<td class="text-center"><span class="label label-success" style="display: block;">ATIVO</span></td>
@@ -127,7 +131,7 @@
 									<span class="input-group-addon">
 										<i class="fa fa-calendar"></i>
 									</span>
-									<input id="dtEvento" name="dtEvento" :value="editDto.DtEvento"
+									<input id="dtEvento" name="dtEvento" :value="editDto.DataEvento"
 										   required
 										   title="Por favor informe a data do evento."
 										   style="z-index: auto;"

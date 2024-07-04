@@ -2,7 +2,7 @@ var vm = new Vue({
     el: "#vEvento",
     data: {
         loading: false,
-        editDto: { Id: "", Titulo: "", Decricao: "", DtEvento: "", sigla: "", MunicipioId: "", Localidade: "", Status: true, Convidado:"" },
+        editDto: { Id: "", Titulo: "", Decricao: "", DataEvento: "", Status: true },
         editControlePresencaEventoDto: { Id: "", Convidado: "", Controle: "", EventoId: "" },
         params: {
             visible: true
@@ -207,7 +207,7 @@ var vm = new Vue({
                             else {
                                 new PNotify({
                                     title: 'Fomento',
-                                    text: 'Municípios não encontrados.',
+                                    text: 'MunicÃ­pios nÃ£o encontrados.',
                                     type: 'warning'
                                 });
                             }
@@ -237,7 +237,7 @@ var vm = new Vue({
                             else {
                                 new PNotify({
                                     title: 'Localidades',
-                                    text: 'Localidades não encontradas.',
+                                    text: 'Localidades nÃ£o encontradas.',
                                     type: 'warning'
                                 });
                             }
@@ -267,7 +267,7 @@ var vm = new Vue({
                             else {
                                 new PNotify({
                                     title: 'Alunos',
-                                    text: 'Alunos não encontrados.',
+                                    text: 'Alunos nÃ£o encontrados.',
                                     type: 'warning'
                                 });
                             }
@@ -324,7 +324,9 @@ var vm = new Vue({
 
             axios.get("Evento/GetEventoById/?id=" + id).then(result => {
                 self.editDto.Id = result.data.id;
-                self.editDto.Convidado = result.data.justificativa;
+                self.editDto.Titulo = result.data.titulo;
+                self.editDto.Descricao = result.data.descricao;
+                self.editDto.DataEvento = result.data.dataEvento;
                 self.editDto.Status = result.data.status;
                 
 
@@ -340,8 +342,18 @@ var vm = new Vue({
             var self = this;
 
             axios.get("../ControlePresenca/GetControlePresencaById/?id=" + id).then(result => {
+                if (result.data.justificativa === "") {
+                    self.params.visible = true;
+                }
+                else {
+                    self.params.visible = false;
+                }
+
+
                 self.editControlePresencaEventoDto.Id = result.data.id;
                 self.editControlePresencaEventoDto.EventoId = eventoId;
+                self.editControlePresencaEventoDto.AlunoId = result.data.alunoId;
+                self.editControlePresencaEventoDto.NomeAluno = result.data.nomeAluno;
                 self.editControlePresencaEventoDto.Convidado = result.data.justificativa;
                 self.editControlePresencaEventoDto.Controle = result.data.controle;
             }).catch(error => {

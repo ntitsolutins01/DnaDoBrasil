@@ -9,5 +9,7 @@
 		public required int CargaHoraria { get; set; }
 		public string? Descricao { get; set; }
 		public bool Status { get; set; }
-    }
+		public required string TituloTipoCurso { get; set; }
+		public required string NomeProfissional { get; set; }
+	}
 }
