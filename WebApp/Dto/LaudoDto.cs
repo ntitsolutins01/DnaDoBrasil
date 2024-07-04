@@ -2,28 +2,21 @@
 {
     public class LaudoDto
     {
-        public int? AlunoId { get; set; }
-
-        public string? NomeTipoLaudo { get; set; }
-        public string? LaudosFinalizados { get; set; }
-        public string? LaudosAndamentos { get; set; }
-        public double? Progresso { get; set; }
-
-        public int? VocacionalId { get; set; }
-        public int? QualidadeDeVidaId { get; set; }
-        public int? SaudeId { get; set; }
-        public int? ConsumoAlimentarId { get; set; }
-        public int? SaudeBucalId { get; set; }
-        public int? Id { get; set; }
-        public string? NomeAluno { get; set; }
-        public string? MunicipioEstado { get; set; }
-        public int? LocalidadeId { get; set; }
-        public string? Localidade { get; set; }
-        public string? Encaminhamento { get; set; }
+        public int? TalentoEsportivoId { get; init; }
+        public int? VocacionalId { get; init; }
+        public int? QualidadeDeVidaId { get; init; }
+        public int? SaudeId { get; init; }
+        public int? ConsumoAlimentarId { get; init; }
+        public int? SaudeBucalId { get; init; }
+        public int? AlunoId { get; init; }
+        public int? Id { get; init; }
+        public string? NomeAluno { get; init; }
+        public string? MunicipioEstado { get; init; }
+        public int? LocalidadeId { get; init; }
+        public string? Localidade { get; init; }
+        public string? Encaminhamento { get; init; }
         public string? StatusLaudo { get; set; }
-        public TalentoEsportivoDto? TalentoEsportivo { get; set; }
         public string? Sexo { get; set; }
         public DateTime DtNascimento { get; set; }
-        public SaudeDto? Saude { get; set; }
     }
 }

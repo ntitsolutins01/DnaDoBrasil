@@ -17,14 +17,29 @@ namespace WebApp.Controllers
     [Authorize(Policy = ModuloAccess.ControlePresenca)]
     public class ControlePresencaController : BaseController
 	{
-		private readonly IOptions<UrlSettings> _appSettings;
-
-		public ControlePresencaController(IOptions<UrlSettings> appSettings)
+        #region Constructor
+        /// <summary>
+        /// Construtor da página
+        /// </summary>
+        /// <param name="appSettings">configurações de url da api</param>
+        public ControlePresencaController(IOptions<UrlSettings> appSettings)
 		{
-			_appSettings = appSettings;
-			ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
+            ApplicationSettings.WebApiUrl = appSettings.Value.WebApiBaseUrl;
 		}
 
+        #endregion
+
+
+        #region Crud Methods
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="crud"></param>
+        /// <param name="notify"></param>
+        /// <param name="collection"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
         [ClaimsAuthorize(ClaimType.ControlePresenca, Claim.Consultar)]
         public async Task<ActionResult> Index(int? crud, int? notify, IFormCollection collection, string message = null)
         {
@@ -125,7 +140,6 @@ namespace WebApp.Controllers
 		{
 			try
 			{
-                
 				var command = new ControlePresencaModel.CreateUpdateControlePresencaCommand
 				{
 					MunicipioId = collection["ddlMunicipio"] == "" ? null : Convert.ToInt32(collection["ddlMunicipio"].ToString()).ToString(),
@@ -160,7 +174,7 @@ namespace WebApp.Controllers
 				{
 					Id = Convert.ToInt32(collection["editControlePresencaId"]),
 					Controle = collection["controle"].ToString(),
-					Justificativa = collection["justificativa"].ToString()
+					Justificativa = collection["convidado"].ToString()
 				};
 
 				await ApiClientFactory.Instance.UpdateControlePresenca(command.Id, command);
@@ -186,6 +200,8 @@ namespace WebApp.Controllers
 				return RedirectToAction(nameof(Index));
 			}
 		}
+
+        #endregion
 
         [ClaimsAuthorize(ClaimType.ControlePresenca, Claim.Consultar)]
         public Task<ControlePresencaDto> GetControlePresencaById(int id)

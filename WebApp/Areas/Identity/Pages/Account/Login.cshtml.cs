@@ -90,7 +90,7 @@ namespace WebApp.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string? returnUrl = null)
         {
-			returnUrl = Url.Content("~/Dashboard");
+			returnUrl = Url.Content("~/ControlePresenca");
 
             if (!ModelState.IsValid) return Page();
             var result =

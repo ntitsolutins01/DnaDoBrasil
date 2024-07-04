@@ -123,7 +123,14 @@
                     <input type="hidden" name="editEventoId" :value="editControlePresencaEventoDto.EventoId" />
 
                     <div class="modal-body">
-                        <div class="form-group">
+                        <div v-if="params.visible" class="form-group">
+                            <label class="col-sm-2 control-label text-sm-right pt-2">Aluno <span class="required">*</span></label>
+                            <div class="col-md-9">
+                                <input type="text" name="aluno" class="form-control" required :value="editControlePresencaEventoDto.NomeAluno" readonly/>
+                                <input type="hidden" name="editAlunoId" :value="editControlePresencaEventoDto.AlunoId" />
+                            </div>
+                        </div>
+                        <div v-if="!params.visible" class="form-group">
                             <label class="col-sm-2 control-label text-sm-right pt-2">Convidado <span class="required">*</span></label>
                             <div class="col-md-9">
                                 <input type="text" name="convidado" class="form-control" required :value="editControlePresencaEventoDto.Convidado" />
