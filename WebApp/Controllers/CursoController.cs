@@ -196,5 +196,11 @@ public class CursoController : BaseController
 
         return Task.FromResult(result);
     }
+    public Task<List<CursoDto>> GetCursoByTipoCursoId(int tipoCursoId)
+    {
+        var result = ApiClientFactory.Instance.GetCursoByTipoCursoId(tipoCursoId);
+
+        return Task.FromResult(result);
+    }
     #endregion
 }
