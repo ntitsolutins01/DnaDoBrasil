@@ -61,7 +61,7 @@ public class CursoController : BaseController
             SetNotifyMessage(notify, message);
             SetCrudMessage(crud);
             var tiposcursos = new SelectList(ApiClientFactory.Instance.GetTipoCursosAll(), "Id", "Nome");
-            var coordenadores = new SelectList(ApiClientFactory.Instance.GetUsuarioAll().Where(x=>x.PerfilId == (int)EnumPerfil.Coordenador), "Id", "Nome");
+            var coordenadores = new SelectList(ApiClientFactory.Instance.GetUsuarioAll().Where(x=>x.PerfilId == (int)EnumPerfil.Profissional), "Id", "Nome");
 
 
             return View(new CursoModel()
@@ -91,25 +91,26 @@ public class CursoController : BaseController
         {
             var command = new CursoModel.CreateUpdateCursoCommand
             {
-                Nome = collection["nome"].ToString(),
-                TipoCursoId = Convert.ToInt32(collection["ddlTipoCurso"].ToString()),
-                CoordenadorId = Convert.ToInt32(collection["ddlCoordenador"].ToString()),
-                CargaHoraria = Convert.ToInt32(collection["cargaHoraria"].ToString())
-            };
+	            TipoCursoId = Convert.ToInt32(collection["ddlTipoCurso"].ToString()),
+	            UsuarioId = Convert.ToInt32(collection["ddlCoordenador"].ToString()),
+	            Titulo = collection["nome"].ToString(),
+	            Descricao = collection["descricao"].ToString(),
+				CargaHoraria = Convert.ToInt32(collection["cargaHoraria"].ToString())
+			};
 
-            foreach (var file in collection.Files)
-            {
-                if (file.Length <= 0) continue;
+            //foreach (var file in collection.Files)
+            //{
+            //    if (file.Length <= 0) continue;
 
-                command.Imagem = Path.GetFileName(collection.Files[0].FileName);
+            //    command.Imagem = Path.GetFileName(collection.Files[0].FileName);
 
-                using (var ms = new MemoryStream())
-                {
-                    file.CopyToAsync(ms);
-                    var byteIMage = ms.ToArray();
-                    command.ByteImage = byteIMage;
-                }
-            }
+            //    using (var ms = new MemoryStream())
+            //    {
+            //        file.CopyToAsync(ms);
+            //        var byteIMage = ms.ToArray();
+            //        command.ByteImage = byteIMage;
+            //    }
+            //}
 
             await ApiClientFactory.Instance.CreateCurso(command);
 
@@ -121,45 +122,6 @@ public class CursoController : BaseController
         }
     }
 
-    /// <summary>
-    /// Tela Alteração de curso
-    /// </summary>
-    /// <param name="id">Id de alteração do curso</param>
-    /// <returns>retorna mensagem de alteração através do parametro crud</returns>
-    /// <exception cref="ArgumentNullException">Mensagem de erro ao alterar o curso</exception>
-    [ClaimsAuthorize(ClaimType.Curso, Claim.Alterar)]
-    public ActionResult Edit(int id, int? crud, int? notify, string message = null)
-    {
-        try
-        {
-
-            SetNotifyMessage(notify, message);
-            SetCrudMessage(crud);
-
-            var curso = ApiClientFactory.Instance.GetCursoById(id);
-            
-            var tiposcursos = new SelectList(ApiClientFactory.Instance.GetTipoCursosAll(), "Id", 
-                "Nome");
-            var coordenadores = new SelectList(ApiClientFactory.Instance.GetUsuarioAll().Where(x => x.PerfilId == (int)EnumPerfil.Coordenador), "Id", "Nome");
-
-
-            return View(new CursoModel()
-            {
-                ListTiposCursos = tiposcursos,
-                ListCoordenadores = coordenadores,
-                Curso = curso
-            });
-        }
-        catch (Exception ex)
-        {
-            return RedirectToAction(nameof(Index),
-                new
-                {
-                    notify = (int)EnumNotify.Error,
-                    message = $"Erro ao alterar usuário. Favor entrar em contato com o administrador do sistema. {ex.Message}"
-                });
-        }
-    }
 
     /// <summary>
     /// Ação de alteração do Curso
@@ -175,26 +137,25 @@ public class CursoController : BaseController
             var command = new CursoModel.CreateUpdateCursoCommand
             {
                 Id = Convert.ToInt32(collection["editCursoId"]),
-                Nome = collection["nome"].ToString(),
-                TipoCursoId = Convert.ToInt32(collection["ddlTipoCurso"].ToString()),
-                CoordenadorId = Convert.ToInt32(collection["ddlCoordenador"].ToString()),
+                Titulo = collection["nome"].ToString(),
+                Descricao = collection["descricao"].ToString(),
                 CargaHoraria = Convert.ToInt32(collection["cargaHoraria"].ToString()),
                 Status = collection["editStatus"].ToString() == "" ? false : true
             };
 
-            foreach (var file in collection.Files)
-            {
-                if (file.Length <= 0) continue;
+            //foreach (var file in collection.Files)
+            //{
+            //    if (file.Length <= 0) continue;
 
-                command.Imagem = Path.GetFileName(collection.Files[0].FileName);
+            //    command.Imagem = Path.GetFileName(collection.Files[0].FileName);
 
-                using (var ms = new MemoryStream())
-                {
-                    file.CopyToAsync(ms);
-                    var byteIMage = ms.ToArray();
-                    command.ByteImage = byteIMage;
-                }
-            }
+            //    using (var ms = new MemoryStream())
+            //    {
+            //        file.CopyToAsync(ms);
+            //        var byteIMage = ms.ToArray();
+            //        command.ByteImage = byteIMage;
+            //    }
+            //}
 
             await ApiClientFactory.Instance.UpdateCurso(command.Id, command);
 
