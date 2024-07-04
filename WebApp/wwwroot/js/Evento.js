@@ -324,7 +324,9 @@ var vm = new Vue({
 
             axios.get("Evento/GetEventoById/?id=" + id).then(result => {
                 self.editDto.Id = result.data.id;
-                self.editDto.Convidado = result.data.justificativa;
+                self.editDto.DtEvento = result.data.dataEvento;
+                self.editDto.Titulo = result.data.titulo;
+                self.editDto.Descricao = result.data.descricao;
                 self.editDto.Status = result.data.status;
                 
 

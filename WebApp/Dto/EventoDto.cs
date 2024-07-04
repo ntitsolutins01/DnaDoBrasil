@@ -17,5 +17,7 @@ namespace WebApp.Dto
 	    public string? Descricao { get; set; }
 	    public required string DataEvento { get; set; }
 	    public bool Status { get; set; }
+	    public int TotalConvidado { get; set; }
+	    public int TotalAluno { get; set; }
 	}
 }
