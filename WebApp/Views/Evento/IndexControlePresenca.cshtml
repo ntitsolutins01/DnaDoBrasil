@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div id="vControlePresenca">
+<div id="vEvento">
     <div class="row">
         <div class="col-lg-12">
             <section class="panel">
@@ -12,19 +12,20 @@
                     <div class="panel-actions">
                         <a href="#" class="card-action card-action-toggle" data-card-toggle></a>
                     </div>
-                    <h2 class="panel-title">Listagem de Controles de Presenças de Evento</h2>
+                    <h2 class="panel-title">Listagem de Controles de Presenças do Evento @Model.Evento.Titulo</h2>
                 </header>
                 <div class="panel-body">
                     <div class="form-group row">
                         <div class="col-sm-2 pull-right">
-                            <a href="@Url.Action("CreateControlePresenca", "Evento")" id="addToTable" class="btn btn-block btn-primary pull-right"><i class="fa fa-plus"></i> &nbsp;&nbsp;Novo Controle</a>
+                            <a href="@Url.Action("CreateControlePresenca", "Evento", new {eventoId = @Model.Evento.Id})" id="addToTable" class="btn btn-block btn-primary pull-right"><i class="fa fa-plus"></i> &nbsp;&nbsp;Novo Controle</a>
                         </div>
                     </div>
                     <table class="table table-bordered table-striped mb-0" id="datatable-default">
                         <thead>
                             <tr>
                                 <th class="text-center">Id</th>
-                                <th class="text-center">Convidado</th>
+                                <th class="text-center">Público</th>
+                                <th class="text-center">Nome</th>
                                 <th class="text-center">Localidade</th>
                                 <th class="text-center" style="width: 10%;">Controle</th>
                                 <th class="text-center">Data</th>
@@ -36,7 +37,23 @@
                             {
                                 <tr>
                                     <td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Id)</td>
-                                    <td class="text-center">@Html.DisplayFor(modelItem => item.Justificativa)</td>
+                                    @if (item.Justificativa == "")
+                                    {
+                                        <td class="text-center"><span class="label label-primary" style="display: block;">Aluno</span></td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-center"><span class="label label-dark" style="display: block;">Convidado</span></td>
+                                    }
+                                    @if (item.Justificativa == "")
+                                    {
+                                        <td class="text-center">@Html.DisplayFor(modelItem => item.NomeAluno)</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-center">@Html.DisplayFor(modelItem => item.Justificativa)</td>
+                                    }
+                                    
                                     <td class="text-center">@Html.DisplayFor(modelItem => item.NomeLocalidade)</td>
                                     @if (item.Controle == "P")
                                     {
@@ -49,11 +66,11 @@
                                     <td class="text-center">@Html.DisplayFor(modelItem => item.Data)</td>
                                     <td class="actions text-center">
                                         <a data-toggle="tooltip" data-placement="top" title="Editar"
-                                           href='javascript:(crud.EditModal(@item.Id))'
+                                           href='javascript:(crud.EditControlePresencaEventoModal(@item.Id,@Model.Evento.Id))'
                                            class="on-default edit-row" style='color: #FF9800' style="display: block;">
                                             <i class="fa fa-pencil"></i>
                                         </a>
-                                        <a data-toggle="tooltip" data-placement="top" title="Excluir" href='javascript:(crud.DeleteModal(@item.Id))'
+                                        <a data-toggle="tooltip" data-placement="top" title="Excluir" href='javascript:(crud.DeleteControlePresencaEventoModal(@item.Id,@Model.Evento.Id))'
                                            class="on-default remove-row" style=" cursor: pointer;color: #F44336"><i class="fa fa-trash"></i></a>
                                     </td>
                                 </tr>
@@ -65,12 +82,12 @@
         </div>
     </div>
     <!-- Modal -->
-    <div class="modal fade" id="mdDeleteControlePresenca" tabindex="-1" role="dialog" aria-labelledby="mdDeleteControlePresencaLabel" aria-hidden="true">
+    <div class="modal fade" id="mdDeleteControlePresencaEvento" tabindex="-1" role="dialog" aria-labelledby="mdDeleteControlePresencaEventoLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="mdDeleteControlePresencaLabel">
-                        <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Exclusão de ControlePresenca</strong>
+                    <h5 class="modal-title" id="mdDeleteControlePresencaEventoLabel">
+                        <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Exclusão de Controle de Presenca do Evento</strong>
                     </h5>
                 </div>
                 <div class="modal-body">
@@ -78,7 +95,7 @@
                         <i class="fa fa-question-circle"></i>
                     </div>
                     <div class="modal-text">
-                        <input type="hidden" id="deleteControlePresencaId" />
+                        <input type="hidden" id="deleteControlePresencaEventoId" />
                         <p class="mb-0">Tem certeza que deseja <b>excluir</b> esse registro?</p>
                     </div>
                     <div class="modal-wrapper">
@@ -86,61 +103,43 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-thumbs-o-down"></i> &nbsp;&nbsp;Não</button>
-                    <a id="deleteControlePresencaHref" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</a>
+                    <a id="deleteControlePresencaEventoHref" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</a>
                 </div>
             </div>
         </div>
     </div>
     <!-- Modal -->
-    <div class="modal fade" id="mdEditControlePresenca" tabindex="-1" role="dialog" aria-labelledby="mdEditControlePresencaLabel" aria-hidden="true">
+    <div class="modal fade" id="mdEditControlePresencaEvento" tabindex="-1" role="dialog" aria-labelledby="mdEditControlePresencaEventoLabel" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="mdEditControlePresencaLabel">
-                        <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Alterar ControlePresenca</strong>
+                    <h5 class="modal-title" id="mdEditControlePresencaEventoLabel">
+                        <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Alterar Controle de Presenca do Evento</strong>
                     </h5>
                 </div>
-                @using (@Html.BeginForm("Edit", "ControlePresenca", FormMethod.Post, new { id = "formEditControlePresenca", @class = "form-horizontal" }))
+                @using (@Html.BeginForm("EditControlePresenca", "Evento", FormMethod.Post, new { id = "formEditControlePresencaEvento", @class = "form-horizontal" }))
                 {
-                    <input type="hidden" name="editControlePresencaId" :value="editDto.Id" />
-                    <input type="hidden" name="editAlunoId" :value="editDto.AlunoId" />
+                    <input type="hidden" name="editControlePresencaEventoId" :value="editControlePresencaEventoDto.Id" />
+                    <input type="hidden" name="editEventoId" :value="editControlePresencaEventoDto.EventoId" />
 
                     <div class="modal-body">
-                        <div class="form-group row">
-                            <label class="col-sm-3 control-label text-sm-right pt-2">Município / UF</label>
-                            <div class="col-sm-5">
-                                <input type="text" name="municipio" class="form-control" :value="editDto.MunicipioEstado" readonly />
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-3 control-label text-sm-right pt-2">Localidade</label>
-                            <div class="col-sm-9">
-                                <input type="text" name="localidade" class="form-control" :value="editDto.NomeLocalidade" readonly />
-                            </div>
-                        </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label text-sm-right pt-2">Aluno <span class="required">*</span></label>
+                            <label class="col-sm-2 control-label text-sm-right pt-2">Convidado <span class="required">*</span></label>
                             <div class="col-md-9">
-                                <input type="text" name="aluno" class="form-control" :value="editDto.NomeAluno" readonly />
+                                <input type="text" name="convidado" class="form-control" required :value="editControlePresencaEventoDto.Convidado" />
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-3 control-label text-sm-right pt-2">Controle <span class="required">*</span></label>
+                            <label class="col-sm-2 control-label text-sm-right pt-2">Controle <span class="required">*</span></label>
                             <div class="col-sm-4">
                                 <div class="radio-custom radio-success">
-                                    <input type="radio" id="controlePresente" name="controle" value="P" required title="Por favor selecione uma opção" :checked="editDto.Controle === 'P'">
+                                    <input type="radio" id="controlePresente" name="controle" value="P" required title="Por favor selecione uma opção" :checked="editControlePresencaEventoDto.Controle === 'P'">
                                     <label>Presente</label>
                                 </div>
                                 <div class="radio-custom radio-danger">
-                                    <input type="radio" id="controleFalta" name="controle" value="F" required title="Por favor selecione uma opção" :checked="editDto.Controle === 'F'">
+                                    <input type="radio" id="controleFalta" name="controle" value="F" required title="Por favor selecione uma opção" :checked="editControlePresencaEventoDto.Controle === 'F'">
                                     <label>Falta</label>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label text-sm-right pt-2">Justificativa <span class="required">*</span></label>
-                            <div class="col-sm-9">
-                                <textarea class="form-control" rows="3" maxlength="500" :value="editDto.Justificativa" name="justificativa"></textarea>
                             </div>
                         </div>
                     </div>
@@ -160,12 +159,14 @@
     <link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />
 }
 @section Scripts {
-    <script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
     <script src="~/assets/vendor/select2/js/select2.js"></script>
+    <script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
+    <script src="~/assets/vendor/jquery-mask/jquery.mask.js"></script>
+    <script src="~/assets/vendor/ios7-switch/ios7-switch.js"></script>
     <script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
-    <script src="~/js/formatTable.js"></script>
     <script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
-    <script src="~/js/ControlesPresencas.js"></script>
+    <script src="~/js/formatTable.js"></script>
+    <script src="~/js/Evento.js"></script>
 
     <script>
 

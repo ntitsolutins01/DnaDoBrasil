@@ -13,15 +13,18 @@ namespace WebApp.Models
         public SelectList ListMunicipios { get; set; }
         public int LocalidadeId { get; set; }
         public SelectList ListLocalidades { get; set; }
+        public string AlunoId { get; set; }
+        public SelectList ListAlunos { get; set; }
         public EventoDto Evento { get; set; }
         public List<EventoDto> Eventos { get; set; }
         public List<ControlePresencaDto> ControlesPresencas { get; set; }
+        public AlunoIndexDto? Convidado { get; set; }
 
 
         public class CreateUpdateEventoCommand
 		{
 			public int Id { get; set; }
-            public required int LocalidadeId { get; init; }
+            public int LocalidadeId { get; init; }
             public required string Titulo { get; init; }
             public string? Descricao { get; init; }
             public required string DataEvento { get; init; }

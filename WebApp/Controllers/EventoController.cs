@@ -120,7 +120,6 @@ public class EventoController : BaseController
             var command = new EventoModel.CreateUpdateEventoCommand
             {
                 Id = Convert.ToInt32(collection["editEventoId"]),
-				LocalidadeId = Convert.ToInt32(collection["ddlLocalidade"].ToString()),
 				Titulo = collection["titulo"].ToString(),
 				Descricao = collection["descricao"].ToString(),
 				DataEvento = collection["dtEvento"].ToString(),
@@ -171,9 +170,10 @@ public class EventoController : BaseController
     {
         SetNotifyMessage(notify, message);
         SetCrudMessage(crud);
-        var response = ApiClientFactory.Instance.GetControlesPresencasByEventoId(eventoId);
+        var listControlePresenca = ApiClientFactory.Instance.GetControlesPresencasByEventoId(eventoId);
+        var evento = ApiClientFactory.Instance.GetEventoById(eventoId);
 
-        return View(new EventoModel() { ControlesPresencas = response });
+        return View(new EventoModel() { ControlesPresencas = listControlePresenca, Evento = evento});
     }
 
     /// <summary>
@@ -190,29 +190,107 @@ public class EventoController : BaseController
         {
             SetNotifyMessage(notify, message);
             SetCrudMessage(crud);
-            var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
+            var evento = ApiClientFactory.Instance.GetEventoById(eventoId);
+            var convidado = ApiClientFactory.Instance.GetAlunosByFilter(new AlunosFilterDto()
+                { LocalidadeId = evento.LocalidadeId, Nome = "Convidado" });
+            var alunos = new SelectList(ApiClientFactory.Instance.GetAlunosByLocalidade(Convert.ToInt32(evento.LocalidadeId)), "Id", "Nome"); ;
+
 
             return View(new EventoModel()
             {
-                ListEstados = estados
+                Evento = evento,
+                Convidado = convidado.Result?.Alunos!.FirstOrDefault(),
+                ListAlunos = alunos
             });
         }
         catch (Exception e)
         {
             Console.Write(e.StackTrace);
-            return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = e.Message });
+            return RedirectToAction(nameof(IndexControlePresenca), new { eventoId = eventoId, notify = (int)EnumNotify.Error, message = e.Message });
 
         }
     }
-    #endregion
 
-    #region Get Methods
     /// <summary>
-    /// Busca um evento por Id
+    /// Ação para inclusão de Controle de Presença do Evento
     /// </summary>
-    /// <param name="id">Id do evento</param>
-    /// <returns>Entidade evento</returns>
-    public Task<EventoDto> GetEventoById(int id)
+    /// <param name="collection">coleção de dados para inclusao de Controle de Presença do Evento</param>
+    /// <returns>retorna mensagem de inclusao através do parametro crud</returns>
+    [HttpPost]
+    [ClaimsAuthorize(ClaimType.Evento, Identity.Claim.Alterar)]
+    public async Task<ActionResult> CreateControlePresenca(IFormCollection collection)
+    {
+	    try
+	    {
+		    var command = new ControlePresencaModel.CreateUpdateControlePresencaCommand()
+		    {
+			    EventoId = Convert.ToInt32(collection["eventoId"]),
+				MunicipioId = collection["municipioId"] == "" ? null : Convert.ToInt32(collection["municipioId"].ToString()).ToString(),
+				LocalidadeId = collection["localidadeId"] == "" ? null : Convert.ToInt32(collection["localidadeId"].ToString()),
+				Controle = collection["controle"].ToString(),
+				Justificativa = collection["alunoConvidadoEvento"] == "A" ? "":collection["convidado"].ToString(),
+				AlunoId = collection["alunoConvidadoEvento"] == "A" ? collection["ddlAluno"].ToString() : collection["convidadoId"].ToString(),
+			};
+
+		    await ApiClientFactory.Instance.CreateControlePresenca(command);
+
+		    return RedirectToAction(nameof(IndexControlePresenca), new { eventoId = command.EventoId, crud = (int)EnumCrud.Created });
+	    }
+	    catch (Exception e)
+	    {
+		    return RedirectToAction(nameof(IndexControlePresenca), new { eventoId = Convert.ToInt32(collection["eventoId"]), notify = (int)EnumNotify.Error, message = "Erro ao executar esta ação. Favor entrar em contato com o administrador do sistema." });
+	    }
+    }
+
+	/// <summary>
+	/// Ação de alteração do Controle de Presença do Evento
+	/// </summary>
+	/// <param name="collection">coleção de dados para alteração de controle de presença do Evento</param>
+	/// <returns>retorna mensagem de alteração através do parametro crud</returns>
+	[ClaimsAuthorize(ClaimType.Evento, Identity.Claim.Alterar)]
+	public async Task<ActionResult> EditControlePresenca(IFormCollection collection)
+	{
+		try
+		{
+			var command = new ControlePresencaModel.CreateUpdateControlePresencaCommand()
+			{
+				Id = Convert.ToInt32(collection["editControlePresencaEventoId"]),
+				Controle = collection["controle"].ToString(),
+				Justificativa = collection["convidado"].ToString(),
+				Status = collection["editStatus"].ToString() == "" ? false : true
+			};
+
+			await ApiClientFactory.Instance.UpdateControlePresenca(command.Id, command);
+
+			return RedirectToAction(nameof(IndexControlePresenca), new { eventoId = Convert.ToInt32(collection["editEventoId"]), crud = (int)EnumCrud.Updated });
+		}
+		catch (Exception e)
+		{
+			return RedirectToAction(nameof(IndexControlePresenca), new { eventoId = Convert.ToInt32(collection["editEventoId"]), notify = (int)EnumNotify.Error, message = "Erro ao executar esta ação. Favor entrar em contato com o administrador do sistema." });
+		}
+	}
+	[ClaimsAuthorize(ClaimType.ControlePresenca, Claim.Excluir)]
+	public ActionResult DeleteControlePresenca(int id, int eventoId)
+	{
+		try
+		{
+			ApiClientFactory.Instance.DeleteControlePresenca(id);
+			return RedirectToAction(nameof(IndexControlePresenca), new { eventoId = eventoId, crud = (int)EnumCrud.Deleted });
+		}
+		catch
+		{
+			return RedirectToAction(nameof(IndexControlePresenca), new { eventoId = eventoId, notify = (int)EnumNotify.Error, message = "Erro ao executar esta ação. Favor entrar em contato com o administrador do sistema." });
+		}
+	}
+	#endregion
+
+	#region Get Methods
+	/// <summary>
+	/// Busca um evento por Id
+	/// </summary>
+	/// <param name="id">Id do evento</param>
+	/// <returns>Entidade evento</returns>
+	public Task<EventoDto> GetEventoById(int id)
     {
         var result = ApiClientFactory.Instance.GetEventoById(id);
 

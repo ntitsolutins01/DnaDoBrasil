@@ -2,7 +2,11 @@ var vm = new Vue({
     el: "#vEvento",
     data: {
         loading: false,
-        editDto: { Id: "", Titulo: "", Decricao: "", DtEvento: "", sigla: "", MunicipioId: "", Localidade: "", Status: true }
+        editDto: { Id: "", Titulo: "", Decricao: "", DtEvento: "", sigla: "", MunicipioId: "", Localidade: "", Status: true, Convidado:"" },
+        editControlePresencaEventoDto: { Id: "", Convidado: "", Controle: "", EventoId: "" },
+        params: {
+            visible: true
+        }
     },
     mounted: function () {
         var self = this;
@@ -11,10 +15,125 @@ var vm = new Vue({
 
             var formid = $('form')[1].id;
 
-            var $dtEvento = $("#dtEvento");
-            $dtEvento.mask('00/00/0000', { reverse: false });
+            
 
+            //skin checkbox
+            if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
+
+                $(function () {
+                    $('[data-plugin-ios-switch]').each(function () {
+                        var $this = $(this);
+
+                        $this.themePluginIOS7Switch();
+                    });
+                });
+            }
+
+            if (formid === "formControlePresencaEvento") {
+
+                //skin select
+                var $select = $(".select2").select2({
+                    allowClear: true
+                });
+
+                $(".select2").each(function () {
+                    var $this = $(this),
+                        opts = {};
+
+                    var pluginOptions = $this.data('plugin-options');
+                    if (pluginOptions)
+                        opts = pluginOptions;
+
+                    $this.themePluginSelect2(opts);
+                });
+
+                /*
+                 * When you change the value the select via select2, it triggers
+                 * a 'change' event, but the jquery validation plugin
+                 * only re-validates on 'blur'*/
+
+                $select.on('change', function () {
+                    $(this).trigger('blur');
+                });
+
+                var alunoConvidadoEvento = $("input:radio[name=alunoConvidadoEvento]");
+                alunoConvidadoEvento.on("change", function () {
+                    //skin select
+                    var $select = $(".select2").select2({
+                        allowClear: true
+                    });
+
+                    $(".select2").each(function () {
+                        var $this = $(this),
+                            opts = {};
+
+                        var pluginOptions = $this.data('plugin-options');
+                        if (pluginOptions)
+                            opts = pluginOptions;
+
+                        $this.themePluginSelect2(opts);
+                    });
+
+                    /*
+                     * When you change the value the select via select2, it triggers
+                     * a 'change' event, but the jquery validation plugin
+                     * only re-validates on 'blur'*/
+
+                    $select.on('change', function () {
+                        $(this).trigger('blur');
+                    });
+
+                    if ($(this).val() == "A") {
+                        self.params.visible = true;
+                    } else if ($(this).val() == "C") {
+                        self.params.visible = false;
+                    }
+                });
+
+                $("#formControlePresencaEvento").validate({
+                    highlight: function (label) {
+                        $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
+                    },
+                    success: function (label) {
+                        $(label).closest('.form-group').removeClass('has-error');
+                        label.remove();
+                    },
+                    errorPlacement: function (error, element) {
+                        var placement = element.closest('.input-group');
+                        if (!placement.get(0)) {
+                            placement = element;
+                        }
+                        if (error.text() !== '') {
+                            placement.after(error);
+                        }
+                    }
+                });
+            }
+            if (formid === "formEditControlePresencaEvento") {
+
+                $("#formEditControlePresencaEvento").validate({
+                    highlight: function (label) {
+                        $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
+                    },
+                    success: function (label) {
+                        $(label).closest('.form-group').removeClass('has-error');
+                        label.remove();
+                    },
+                    errorPlacement: function (error, element) {
+                        var placement = element.closest('.input-group');
+                        if (!placement.get(0)) {
+                            placement = element;
+                        }
+                        if (error.text() !== '') {
+                            placement.after(error);
+                        }
+                    }
+                });
+            }
             if (formid === "formEditEvento") {
+
+                var $dtEvento = $("#dtEvento");
+                $dtEvento.mask('00/00/0000', { reverse: false });
 
                 $("#formEditEvento").validate({
                     highlight: function (label) {
@@ -37,6 +156,10 @@ var vm = new Vue({
             }
 
             if (formid === "formEvento") {
+
+                var $dtEvento = $("#dtEvento");
+                $dtEvento.mask('00/00/0000', { reverse: false });
+
                 //skin select
                 var $select = $(".select2").select2({
                     allowClear: true
@@ -200,16 +323,27 @@ var vm = new Vue({
             var self = this;
 
             axios.get("Evento/GetEventoById/?id=" + id).then(result => {
-                $("#ddlEstado").val(self.editDto.sigla).trigger("change");
-                $("#ddlMunicipio").val(self.editDto.MunicipioId).trigger("change");
-                $("#ddlLocalidade").val(self.editDto.LocalidadeId).trigger("change");
                 self.editDto.Id = result.data.id;
-                self.editDto.Titulo = result.data.titulo;
-                self.editDto.Descricao = result.data.descricao;
-                self.editDto.DtEvento = result.data.dataEvento;
+                self.editDto.Convidado = result.data.justificativa;
                 self.editDto.Status = result.data.status;
                 
 
+            }).catch(error => {
+                Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
+            });
+        },
+        DeleteControlePresencaEvento: function (id, eventoId) {
+            var url = "../Evento/DeleteControlePresenca?id=" + id+"&eventoId="+eventoId;
+            $("#deleteControlePresencaEventoHref").prop("href", url);
+        },
+        EditControlePresencaEvento: function (id, eventoId) {
+            var self = this;
+
+            axios.get("../ControlePresenca/GetControlePresencaById/?id=" + id).then(result => {
+                self.editControlePresencaEventoDto.Id = result.data.id;
+                self.editControlePresencaEventoDto.EventoId = eventoId;
+                self.editControlePresencaEventoDto.Convidado = result.data.justificativa;
+                self.editControlePresencaEventoDto.Controle = result.data.controle;
             }).catch(error => {
                 Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
             });
@@ -227,5 +361,15 @@ var crud = {
         $('input[name="editEventoId"]').attr('value', id);
         $('#mdEditEvento').modal('show');
         vm.EditEvento(id)
+    },
+    DeleteControlePresencaEventoModal: function (id, eventoId) {
+        $('input[name="deleteControlePresencaEventoId"]').attr('value', id);
+        $('#mdDeleteControlePresencaEvento').modal('show');
+        vm.DeleteControlePresencaEvento(id, eventoId)
+    },
+    EditControlePresencaEventoModal: function (id, eventoId) {
+        $('input[name="editControlePresencaEventoId"]').attr('value', id);
+        $('#mdEditControlePresencaEvento').modal('show');
+        vm.EditControlePresencaEvento(id, eventoId)
     }
 };

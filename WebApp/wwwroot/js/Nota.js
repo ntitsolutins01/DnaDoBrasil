@@ -39,6 +39,39 @@ var vm = new Vue({
             if (formid === "formEditNota") {
 
                 $("#formEditNota").validate({
+                    rules:
+                    {
+                        notaPrimeiroBimestre:
+                        {
+                            range: [0.00, 10.00]
+                        },
+                        notaSegundoBimestre:
+                        {
+                            range: [0.00, 10.00]
+                        },
+                        notaTerceiroBimestre:
+                        {
+                            range: [0.00, 10.00]
+                        },
+                        notaQuartoBimestre:
+                        {
+                            range: [0.00, 10.00]
+                        }
+                    },
+                    messages: {
+                        "notaPrimeiroBimestre": {
+                            range: "Nota deve ser entre 00,00 à 10,00."
+                        },
+                        "notaSegundoBimestre": {
+                            range: "Nota deve ser entre 00,00 à 10,00."
+                        },
+                        "notaTerceiroBimestre": {
+                            range: "Nota deve ser entre 00,00 à 10,00."
+                        },
+                        "notaQuartoBimestre": {
+                            range: "Nota deve ser entre 00,00 à 10,00."
+                        }
+                    },
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
                     },
@@ -106,7 +139,7 @@ var vm = new Vue({
                             else {
                                 new PNotify({
                                     title: 'Fomento',
-                                    text: 'Munic�pios n�o encontrados.',
+                                    text: 'Municípios não encontrados.',
                                     type: 'warning'
                                 });
                             }
@@ -135,7 +168,7 @@ var vm = new Vue({
                             else {
                                 new PNotify({
                                     title: 'Localidades',
-                                    text: 'Localidades n�o encontradas.',
+                                    text: 'Localidades não encontradas.',
                                     type: 'warning'
                                 });
                             }
@@ -164,7 +197,7 @@ var vm = new Vue({
                             else {
                                 new PNotify({
                                     title: 'Alunos',
-                                    text: 'Alunos n�o encontrados.',
+                                    text: 'Alunos não encontrados.',
                                     type: 'warning'
                                 });
                             }
@@ -172,6 +205,39 @@ var vm = new Vue({
                 });
 
                 $("#formNota").validate({
+                    rules:
+                    {
+                        notaPrimeiroBimestre:
+                        {
+                            range: [0.00, 10.00]
+                        },
+                        notaSegundoBimestre:
+                        {
+                            range: [0.00, 10.00]
+                        },
+                        notaTerceiroBimestre:
+                        {
+                            range: [0.00, 10.00]
+                        },
+                        notaQuartoBimestre:
+                        {
+                            range: [0.00, 10.00]
+                        }
+                    },
+                    messages: {
+                        "notaPrimeiroBimestre": {
+                            range: "Nota deve ser entre 00,00 à 10,00."
+                        },
+                        "notaSegundoBimestre": {
+                            range: "Nota deve ser entre 00,00 à 10,00."
+                        },
+                        "notaTerceiroBimestre": {
+                            range: "Nota deve ser entre 00,00 à 10,00."
+                        },
+                        "notaQuartoBimestre": {
+                            range: "Nota deve ser entre 00,00 à 10,00."
+                        }
+                    },
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
                     },
