@@ -18,14 +18,13 @@ namespace WebApp.Models
         public class CreateUpdateCursoCommand
 		{
 			public int Id { get; set; }
-			public string? Nome { get; set; }
-			public string? Imagem { get; set; }
-            public int CoordenadorId { get; set; }
-            public int TipoCursoId { get; set; }
-            public bool Status { get; set; } = true;
-            public byte[] ByteImage { get; set; }
-            public int CargaHoraria { get; set; }
-        }
+			public int TipoCursoId { get; set; }
+			public int UsuarioId { get; set; }
+			public required string Titulo { get; set; }
+			public required int CargaHoraria { get; set; }
+			public string? Descricao { get; set; }
+			public bool Status { get; set; }
+		}
 	}
 
 }

@@ -17,7 +17,7 @@
 				<div class="panel-body">
 					<div class="form-group row">
 						<div class="col-sm-12 pull-right">
-							<a href="@Url.Action("Create", "Curso")" id="addToTable" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Nova Métrica </a>
+							<a href="@Url.Action("Create", "Curso")" id="addToTable" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Novo Curso </a>
 						</div>
 					</div>
 					<table class="table table-bordered table-striped mb-0" id="datatable-default">
@@ -36,9 +36,9 @@
 							{ 
 								<tr>
 									<td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Id)</td>
-									<td class="text-center">@Html.DisplayFor(modelItem => item.Nome)</td>
+									<td class="text-center">@Html.DisplayFor(modelItem => item.Titulo)</td>
 									<td class="text-center">@Html.DisplayFor(modelItem => item.TipoCursoId)</td>
-									<td class="text-center">@Html.DisplayFor(modelItem => item.CoordenadorId)</td>
+									<td class="text-center">@Html.DisplayFor(modelItem => item.UsuarioId)</td>
 									@if (item.Status)
 									{
 										<td class="text-center"><span class="label label-success">ATIVO</span></td>
@@ -105,36 +105,28 @@
 					<div class="modal-body">
 						<input type="hidden" name="editCursoId" :value="editDto.Id" />
 						<div class="form-group row">
-							<label class="col-sm-2 control-label">Sexo <span class="required">*</span></label>
-							<div class="col-sm-3">
-								<input type="text" name="sexo" class="form-control" :value="editDto.Sexo" readonly />
+							<label class="col-sm-3 control-label text-sm-right pt-2">Titulo do Curso  <span class="required">*</span></label>
+							<div class="col-sm-9">
+								<input type="text" name="nome" :value="editDto.Titulo" class="form-control"
+								       maxlength="150"
+									   title="Por favor informe o nome do curso." required/>
 							</div>
-							<label class="col-sm-2 control-label text-sm-right pt-2">Classificação <span class="required">*</span></label>
-							<div class="col-sm-5">
-								<input type="text" name="classificacao" class="form-control"
-								       maxlength="100" :value="editDto.Classificacao"
-								       title="Por favor informe a classificação." required />
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label text-sm-right pt-2">Descrição </label>
+							<div class="col-sm-9">
+								<textarea class="form-control" rows="3" maxlength="500" name="descricao" :value="editDto.Descricao" id="descricao"></textarea>
 							</div>
 						</div>
 						<div class="form-group row">
-							<label class="col-sm-2 control-label text-sm-right pt-2">Idade <span class="required">*</span></label>
+							<label class="col-sm-3 control-label text-sm-right pt-2">Carga Horária<span class="required">*</span></label>
 							<div class="col-sm-2">
-								<input type="number" name="idade" class="form-control" maxlength="2" :value="editDto.Idade"
-								       title="Por favor informe o idade." required />
-							</div>
-							<label class="col-sm-2 control-label text-sm-right pt-2">Valor Inicial <span class="required">*</span></label>
-							<div class="col-sm-2">
-								<input type="text" id="valorInicial" name="valorInicial" class="form-control" maxlength="6" :value="editDto.ValorInicial"
-								       title="Por favor informe o valor inicial." required />
-							</div>
-							<label class="col-sm-2 control-label text-sm-right pt-2">Valor Final <span class="required">*</span></label>
-							<div class="col-sm-2">
-								<input type="text" id="valorFinal" name="valorFinal" class="form-control" maxlength="6" :value="editDto.ValorFinal"
-								       title="Por favor informe o valor final." required />
+								<input type="text" id="cargaHoraria" name="cargaHoraria" class="form-control" maxlength="6"
+									   title="Por favor informe o valor final." required :value="editDto.CargaHoraria" />
 							</div>
 						</div>
 						<div class="form-group row">
-							<label class="col-sm-2 control-label text-sm-right pt-2">Status</label>
+							<label class="col-sm-3 control-label text-sm-right pt-2">Status</label>
 							<div class="col-md-3">
 								<div class="switch switch-sm switch-primary">
 									<div v-show="editDto.Status">
@@ -222,14 +214,14 @@
 
 			if (crub === 1) {
 				new PNotify({
-					title: 'Métrica',
+					title: 'Curso',
 					text: 'Cadastro realizado com sucesso!',
 					type: 'success'
 				});
 				crub = 0;
 			} else if (crub === 2) {
 				new PNotify({
-					title: 'Métrica',
+					title: 'Curso',
 					text: 'Dados alterados com sucesso.',
 					type: 'warning',
 					icon: 'fa fa-pencil'
@@ -237,7 +229,7 @@
 				crub = 0;
 			} else if (crub === 3) {
 				new PNotify({
-					title: 'Métrica',
+					title: 'Curso',
 					text: 'Registro excluído com sucesso.',
 					type: 'error',
 					icon: 'fa fa-trash-o'
@@ -251,21 +243,21 @@
 
 			if (notify === 0) {
 				new PNotify({
-					title: 'Métrica',
+					title: 'Curso',
 					text: messagem,
 					type: 'success'
 				});
 				crub = 0;
 			} else if (notify === 1) {
 				new PNotify({
-					title: 'Métrica',
+					title: 'Curso',
 					text: messagem,
 					type: 'warning'
 				});
 				crub = 0;
 			} else if (notify === 2) {
 				new PNotify({
-					title: 'Métrica',
+					title: 'Curso',
 					text: messagem,
 					type: 'error'
 				});

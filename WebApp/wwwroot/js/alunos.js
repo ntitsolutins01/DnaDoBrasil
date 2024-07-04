@@ -2,7 +2,7 @@
     el: "#vPesquisarAluno",
     data: {
         loading: false,
-        editDto: { Id: "", Nome: "", Status: true, Email: "", Sexo: "", DtNascimento: "", MunicipioEstado: "", NomeLocalidade: "", Cpf: "", Image: "", ModalidadeLinhaAcao: "" }
+        editDto: { Id: "", Nome: "", Status: true, Email: "", Sexo: "", DtNascimento: "", MunicipioEstado: "", NomeLocalidade: "", Cpf: "", Image: "", ModalidadeLinhaAcao: "", Cep: "" }
     },
     mounted: function () {
         var self = this;
@@ -162,6 +162,8 @@
                 self.editDto.Status = result.data.status;
                 self.editDto.Email = result.data.email;
                 self.editDto.Sexo = result.data.sexo;
+                self.editDto.Cpf = result.data.cpf;
+                self.editDto.Cep = result.data.cep;
                 self.editDto.DtNascimento = result.data.dtNascimento;
                 self.editDto.MunicipioEstado = result.data.municipioEstado;
                 self.editDto.NomeLocalidade = result.data.nomeLocalidade;
