@@ -5,27 +5,27 @@ namespace WebApp.ApiClient
 {
     public partial class DnaApiClient
     {
-	    private const string ResourceCurso = "Cursos";
+	    private const string ResourceModuloEad = "ModulosEad";
 
 		#region Main Methods
 
-		public Task<long> CreateCurso (CursoModel.CreateUpdateCursoCommand command)
+		public Task<long> CreateModuloEad (ModuloEadModel.CreateUpdateModuloEadCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceCurso }"));
+                $"{ResourceModuloEad}"));
             return Post(requestUrl, command);
         }
-        public Task<bool> UpdateCurso (int id, CursoModel.CreateUpdateCursoCommand command)
+        public Task<bool> UpdateModuloEad (int id, ModuloEadModel.CreateUpdateModuloEadCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceCurso }/{id}"));
+                $"{ResourceModuloEad}/{id}"));
             return Put(requestUrl, command);
         }
 
-        public Task<bool> DeleteCurso (int id)
+        public Task<bool> DeleteModuloEad (int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceCurso }/{id}"));
+                $"{ResourceModuloEad}/{id}"));
             return Delete<bool>(requestUrl);
         }
 
@@ -33,23 +33,17 @@ namespace WebApp.ApiClient
 
         #region Methods
 
-        public CursoDto GetCursoById(int id)
+        public ModuloEadDto GetModuloEadById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceCurso }/Curso/{id}"));
-            return Get<CursoDto>(requestUrl);
+                $"{ResourceModuloEad}/ModuloEad/{id}"));
+            return Get<ModuloEadDto>(requestUrl);
         }
-        public List<CursoDto> GetCursosAll()
+        public List<ModuloEadDto> GetModulosEadAll()
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceCurso }"));
-            return Get<List<CursoDto>>(requestUrl);
-        }
-        public List<CursoDto> GetCursosAllByTipoCursoId(int tipoCursoId)
-        {
-            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceCurso }/Curso/TipoCurso/{tipoCursoId}"));
-            return Get<List<CursoDto>>(requestUrl);
+                $"{ResourceModuloEad}"));
+            return Get<List<ModuloEadDto>>(requestUrl);
         }
 
         #endregion

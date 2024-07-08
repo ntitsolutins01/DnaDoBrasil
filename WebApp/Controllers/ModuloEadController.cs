@@ -12,59 +12,63 @@ using WebApp.Utility;
 
 namespace WebApp.Controllers;
 
-public class CursoController : BaseController
+public class ModuloEadController : BaseController
 {
     #region Constructor
+    private readonly IOptions<UrlSettings> _appSettings;
 
     /// <summary>
-    /// Contrutor da página
+    /// Construtor da página
     /// </summary>
-    /// <param name="appSettings">paramentros para chamada de </param>
-    public CursoController(IOptions<UrlSettings> appSettings)
+    /// <param name="app">configurações de urls do sistema</param>
+    /// <param name="host">informações da aplicação em execução</param>
+    public ModuloEadController(IOptions<UrlSettings> appSettings)
     {
-        ApplicationSettings.WebApiUrl = appSettings.Value.WebApiBaseUrl;
+        _appSettings = appSettings;
+        ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
     }
     #endregion
 
     #region Crud Methods
     /// <summary>
-    /// Listagem de Curso
+    /// Listagem de ModuloEad
     /// </summary>
     /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
     /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
     /// <param name="collection">lista de filtros selecionados para pesquisa de alunos</param>
     /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
-    [ClaimsAuthorize(ClaimType.Curso, Identity.Claim.Consultar)]
+    [ClaimsAuthorize(ClaimType.ModuloEad, Identity.Claim.Consultar)]
     public IActionResult Index(int? crud, int? notify, string message = null)
     {
         SetNotifyMessage(notify, message);
         SetCrudMessage(crud);
-        var response = ApiClientFactory.Instance.GetCursosAll();
+        var response = ApiClientFactory.Instance.GetModulosEadAll();
 
-        return View(new CursoModel() { Cursos = response });
+        return View(new ModuloEadModel() { ModulosEad = response });
     }
 
     /// <summary>
-    /// Tela para inclusão de Curso
+    /// Tela para inclusão de Modulo Ead
     /// </summary>
     /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
     /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
     /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
-    [ClaimsAuthorize(ClaimType.Curso, Identity.Claim.Incluir)]
+    [ClaimsAuthorize(ClaimType.ModuloEad, Identity.Claim.Incluir)]
     public ActionResult Create(int? crud, int? notify, string message = null)
     {
         try
         {
             SetNotifyMessage(notify, message);
             SetCrudMessage(crud);
-            var tiposcursos = new SelectList(ApiClientFactory.Instance.GetTipoCursosAll(), "Id", "Nome");
-            var coordenadores = new SelectList(ApiClientFactory.Instance.GetUsuarioAll().Where(x=>x.PerfilId == (int)EnumPerfil.Profissional), "Id", "Nome");
+            var modulosEad = new SelectList(ApiClientFactory.Instance.GetModulosEadAll(), "Id", "Nome");
+            var tipoCurso = new SelectList(ApiClientFactory.Instance.GetTipoCursosAll(), "Id", "Nome");
+            //var curso = new SelectList(ApiClientFactory.Instance.GetCursosAll(), "Id", "Nome");
 
 
-            return View(new CursoModel()
+            return View(new ModuloEadModel()
             {
-                ListTiposCursos = tiposcursos,
-                ListCoordenadores = coordenadores
+                ListModulosEad = modulosEad,
+                ListTipoCursos = tipoCurso
             });
         }
         catch (Exception e)
@@ -76,20 +80,19 @@ public class CursoController : BaseController
     }
 
     /// <summary>
-    /// Ação de inclusão do Curso
+    /// Ação de inclusão do ModuloEad
     /// </summary>
-    /// <param name="collection">coleção de dados para inclusao de Curso</param>
+    /// <param name="collection">coleção de dados para inclusao de ModuloEad</param>
     /// <returns>retorna mensagem de inclusao através do parametro crud</returns>
-    [ClaimsAuthorize(ClaimType.Curso, Identity.Claim.Incluir)]
+    [ClaimsAuthorize(ClaimType.ModuloEad, Identity.Claim.Incluir)]
     [HttpPost]
     public async Task<ActionResult> Create(IFormCollection collection)
     {
         try
         {
-            var command = new CursoModel.CreateUpdateCursoCommand
+            var command = new ModuloEadModel.CreateUpdateModuloEadCommand
             {
-	            TipoCursoId = Convert.ToInt32(collection["ddlTipoCurso"].ToString()),
-	            UsuarioId = Convert.ToInt32(collection["ddlCoordenador"].ToString()),
+	            CursoId = Convert.ToInt32(collection["ddlCurso"].ToString()),
 	            Titulo = collection["nome"].ToString(),
 	            Descricao = collection["descricao"].ToString(),
 				CargaHoraria = Convert.ToInt32(collection["cargaHoraria"].ToString())
@@ -109,7 +112,7 @@ public class CursoController : BaseController
             //    }
             //}
 
-            await ApiClientFactory.Instance.CreateCurso(command);
+            await ApiClientFactory.Instance.CreateModuloEad(command);
 
             return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
         }
@@ -121,19 +124,19 @@ public class CursoController : BaseController
 
 
     /// <summary>
-    /// Ação de alteração do Curso
+    /// Ação de alteração do ModuloEad
     /// </summary>
-    /// <param name="id">identificador do Curso</param>
-    /// <param name="collection">coleção de dados para alteração de Curso</param>
+    /// <param name="id">identificador do ModuloEad</param>
+    /// <param name="collection">coleção de dados para alteração de ModuloEad</param>
     /// <returns>retorna mensagem de alteração através do parametro crud</returns>
-    [ClaimsAuthorize(ClaimType.Curso, Identity.Claim.Alterar)]
+    [ClaimsAuthorize(ClaimType.ModuloEad, Identity.Claim.Alterar)]
     public async Task<ActionResult> Edit(IFormCollection collection)
     {
         try
         {
-            var command = new CursoModel.CreateUpdateCursoCommand
+            var command = new ModuloEadModel.CreateUpdateModuloEadCommand
             {
-                Id = Convert.ToInt32(collection["editCursoId"]),
+                Id = Convert.ToInt32(collection["editModuloEadId"]),
                 Titulo = collection["nome"].ToString(),
                 Descricao = collection["descricao"].ToString(),
                 CargaHoraria = Convert.ToInt32(collection["cargaHoraria"].ToString()),
@@ -154,7 +157,7 @@ public class CursoController : BaseController
             //    }
             //}
 
-            await ApiClientFactory.Instance.UpdateCurso(command.Id, command);
+            await ApiClientFactory.Instance.UpdateModuloEad(command.Id, command);
 
             return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
         }
@@ -165,17 +168,17 @@ public class CursoController : BaseController
     }
 
     /// <summary>
-    /// Ação de exclusão do Curso
+    /// Ação de exclusão do ModuloEad
     /// </summary>
-    /// <param name="id">identificador do Curso</param>
-    /// <param name="collection">coleção de dados para exclusão de Curso</param>
+    /// <param name="id">identificador do ModuloEad</param>
+    /// <param name="collection">coleção de dados para exclusão de ModuloEad</param>
     /// <returns>retorna mensagem de exclusão através do parametro crud</returns>
-    [ClaimsAuthorize(ClaimType.Curso, Identity.Claim.Excluir)]
+    [ClaimsAuthorize(ClaimType.ModuloEad, Identity.Claim.Excluir)]
     public ActionResult Delete(int id)
     {
         try
         {
-            ApiClientFactory.Instance.DeleteCurso(id);
+            ApiClientFactory.Instance.DeleteModuloEad(id);
             return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
         }
         catch
@@ -187,15 +190,9 @@ public class CursoController : BaseController
 
     #region Get Methods
 
-    public Task<CursoDto> GetCursoById(int id)
+    public Task<ModuloEadDto> GetModuloEadById(int id)
     {
-        var result = ApiClientFactory.Instance.GetCursoById(id);
-
-        return Task.FromResult(result);
-    }
-    public Task<List<CursoDto>> GetCursoByTipoCursoId(int tipoCursoId)
-    {
-        var result = ApiClientFactory.Instance.GetCursosAllByTipoCursoId(tipoCursoId);
+        var result = ApiClientFactory.Instance.GetModuloEadById(id);
 
         return Task.FromResult(result);
     }
