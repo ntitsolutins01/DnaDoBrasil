@@ -8933,7 +8933,8 @@ html .panel .panel-heading-transparent + .panel-body {
 }
 
 .panel-action-toggle,
-.panel-action-dismiss {
+.panel-action-dismiss,
+.panel-action-print {
 	display: inline-block;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
@@ -8952,6 +8953,10 @@ html .panel .panel-heading-transparent + .panel-body {
 
 .panel-action-dismiss:before {
 	content: "\f00d";
+}
+
+.panel-action-print:before {
+	content: "\f02f";
 }
 
 .panel-collapsed .panel-body,

@@ -19,5 +19,6 @@ namespace WebApp.Dto
         public int TotalConvidado { get; set; }
         public int TotalAluno { get; set; }
         public bool Status { get; set; }
+        public List<FotoEventoDto>? Fotos { get; set; }
 	}
 }

@@ -2516,7 +2516,8 @@ html .panel.panel-admin .panel-heading-transparent + .panel-body {
 }
 
 .panel-admin .panel-action-toggle,
-.panel-admin .panel-action-dismiss {
+.panel-admin .panel-action-dismiss,
+.panel-admin .panel-action-print {
 	display: inline-block;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
@@ -2535,6 +2536,10 @@ html .panel.panel-admin .panel-heading-transparent + .panel-body {
 
 .panel-admin .panel-action-dismiss:before {
 	content: "\f00d";
+}
+
+.panel-admin .panel-action-print:before {
+	content: "\f02f";
 }
 
 .panel-collapsed .panel-body,

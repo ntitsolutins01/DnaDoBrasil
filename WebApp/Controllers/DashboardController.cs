@@ -474,5 +474,25 @@ namespace WebApp.Controllers
                 return await Task.FromResult(Json(ex));
             }
         }
+        public async Task<JsonResult> GetRelatorioVocacionalByFilter([FromBody] DashboardDto search)
+        {
+            try
+            {
+                var dashboard = await ApiClientFactory.Instance.GetRelatorioVocacionalByFilter(search);
+
+                var model = new DashboardModel
+                {
+                    Dashboard = dashboard,
+
+                };
+
+                return Json(model);
+
+            }
+            catch (Exception ex)
+            {
+                return Json(ex);
+            }
+        }
     }
 }
