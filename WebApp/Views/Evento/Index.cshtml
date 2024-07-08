@@ -26,7 +26,9 @@
 								<th class="text-center">Id</th>
 								<th class="text-center">Titulo</th>
 								<th class="text-center">Localidade</th>
-								<th class="text-center">Data do Evento</th>
+                                <th class="text-center">Data do Evento</th>
+                                <th class="text-center">Total de Convidados</th>
+                                <th class="text-center">Total de Alunos</th>
 								<th class="text-center">Status</th>
 								<th class="text-center">Ações</th>
 							</tr>
@@ -39,6 +41,8 @@
 									<td class="text-center">@Html.DisplayFor(modelItem => item.Titulo)</td>
 									<td class="text-center">@Html.DisplayFor(modelItem => item.Localidade)</td>
 									<td class="text-center">@Html.DisplayFor(modelItem => item.DataEvento)</td>
+									<td class="text-center">@Html.DisplayFor(modelItem => item.TotalConvidado)</td>
+									<td class="text-center">@Html.DisplayFor(modelItem => item.TotalAluno)</td>
 									@if (item.Status)
 									{
 										<td class="text-center"><span class="label label-success" style="display: block;">ATIVO</span></td>
@@ -50,6 +54,17 @@
                                     <td class="actions text-center">
                                         <a data-toggle="tooltip" data-placement="top" title="Controle de Presença" asp-action="IndexControlePresenca" asp-controller="Evento"
 										   asp-route-eventoId="@item.Id" style='color: #757575 '><i class="fa fa-user-plus"></i></a>
+
+                                        <a href="#" data-id="@item.Id" data-toggle="modal" data-target="#mdUpload"
+                                           data-toggle="tooltip" data-placement="top" title="Upload Foto"
+                                           class="on-default edit-row" style='color: #303F9F'><i class="fa fa-upload"></i></a>
+
+                                        @if (item.Fotos.Any()){
+                                            <a data-toggle="tooltip" data-placement="top" title="Download Fotos"
+                                               asp-action="Download" asp-controller="Evento" asp-route-id="@item.Id" class="on-default edit-row"
+											   style='color:#4CAF50'><i class="fa fa-download" target="_blank"></i></a>
+
+                                        }
                                         <a data-toggle="tooltip" data-placement="top" title="Editar"
                                            href='javascript:(crud.EditModal(@item.Id))'
                                            class="on-default edit-row" style='color: #FF9800'>
@@ -94,65 +109,106 @@
 		</div>
 	</div>
 	<!-- Modal -->
-	<div class="modal fade" id="mdEditEvento" tabindex="-1" role="dialog" aria-labelledby="mdEditEventoLabel" aria-hidden="true">
-		<div class="modal-dialog modal-md" role="document">
+    <div class="modal fade" id="mdEditEvento" tabindex="-1" role="dialog" aria-labelledby="mdEditEventoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mdEditEventoLabel">
+                        <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Alterar Evento</strong>
+                    </h5>
+                </div>
+                @using (@Html.BeginForm("Edit", "Evento", FormMethod.Post, new { id = "formEditEvento", @class = "form-horizontal" }))
+                {
+                    <div class="modal-body">
+                        <input type="hidden" name="editEventoId" :value="editDto.Id" />
+                        <div class="form-group row">
+                            <label class="col-sm-2 control-label text-sm-right pt-2">Titulo <span class="required">*</span></label>
+                            <div class="col-sm-10">
+                                <input type="text" name="titulo" :value="editDto.Titulo" class="form-control"
+                                       maxlength="250"
+                                       title="Por favor informe o Nome." required />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label text-sm-right pt-2">Descrição </label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" rows="3" maxlength="500" :value="editDto.Descricao" name="descricao"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Data do evento <span class="required">*</span></label>
+                            <div class="col-sm-4">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </span>
+                                    <input id="dtEvento" name="dtEvento" :value="editDto.DataEvento"
+                                           required
+                                           title="Por favor informe a data do evento."
+                                           style="z-index: auto;"
+                                           data-plugin-datepicker data-date-format="dd/mm/yyyy" data-plugin-options='{"language": "pt-BR"}'
+                                           placeholder="__/__/____" class="form-control startdate"
+                                           class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 control-label text-sm-right pt-2">Status</label>
+                            <div class="col-md-3">
+                                <div class="switch switch-sm switch-primary">
+                                    <div v-show="editDto.Status">
+                                        <input type="checkbox" id="editStatus" name="editStatus" data-plugin-ios-switch checked="checked" />
+                                    </div>
+                                    <div v-show="!editDto.Status">
+                                        <input type="checkbox" id="editStatus" name="editStatus" data-plugin-ios-switch />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="reset" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
+                        <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+	<!-- Modal -->
+	<div class="modal fade" id="mdUpload" tabindex="-1" role="dialog" aria-labelledby="mdUploadLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="mdEditEventoLabel">
-						<i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Alterar Evento</strong>
+					<h5 class="modal-title" id="mdUploadLabel">
+						<i class="fa fa-upload"></i> &nbsp;&nbsp;<strong>Upload Foto</strong>
 					</h5>
 				</div>
-				@using (@Html.BeginForm("Edit", "Evento", FormMethod.Post, new { id = "formEditEvento", @class = "form-horizontal" }))
+				@using (@Html.BeginForm("Upload", "Evento", FormMethod.Post, new { id = "formUploadFoto", @class = "form-horizontal", @enctype = "multipart/form-data" }))
 				{
 					<div class="modal-body">
-						<input type="hidden" name="editEventoId" :value="editDto.Id" />
-						<div class="form-group row">
-							<label class="col-sm-2 control-label text-sm-right pt-2">Titulo <span class="required">*</span></label>
+						<input type="hidden" id="eventoId" name="eventoId" />
+						<div class="form-group mb-lg">
+							<label class="col-sm-2 control-label">Foto</label>
 							<div class="col-sm-10">
-								<input type="text" name="titulo" :value="editDto.Titulo" class="form-control"
-									   maxlength="250"
-									   title="Por favor informe o Nome." required />
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-2 control-label text-sm-right pt-2">Descrição </label>
-							<div class="col-sm-10">
-								<textarea class="form-control" rows="3" maxlength="500" :value="editDto.Descricao" name="descricao"></textarea>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-2 control-label">Data do evento <span class="required">*</span></label>
-							<div class="col-sm-4">
-								<div class="input-group">
-									<span class="input-group-addon">
-										<i class="fa fa-calendar"></i>
-									</span>
-									<input id="dtEvento" name="dtEvento" :value="editDto.DtEvento"
-										   required
-										   title="Por favor informe a data do evento."
-										   style="z-index: auto;"
-										   data-plugin-datepicker data-date-format="dd/mm/yyyy" data-plugin-options='{"language": "pt-BR"}'
-										   placeholder="__/__/____" class="form-control startdate"
-										   class="form-control">
-								</div>
-							</div>
-						</div>
-						<div class="form-group row">
-							<label class="col-sm-2 control-label text-sm-right pt-2">Status</label>
-							<div class="col-md-3">
-								<div class="switch switch-sm switch-primary">
-									<div v-show="editDto.Status">
-										<input type="checkbox" id="editStatus" name="editStatus" data-plugin-ios-switch checked="checked" />
-									</div>
-									<div v-show="!editDto.Status">
-										<input type="checkbox" id="editStatus" name="editStatus" data-plugin-ios-switch />
+								<div class="fileupload fileupload-new" data-provides="fileupload">
+									<div class="input-append">
+										<div class="uneditable-input">
+											<i class="fa fa-file fileupload-exists"></i>
+											<span class="fileupload-preview"></span>
+										</div>
+										<span class="btn btn-default btn-file">
+											<span class="fileupload-exists">Alterar</span>
+											<span class="fileupload-new">Selecionar Arquivo</span>
+											<input type="file" id="arquivo" name="arquivo" multiple/>
+										</span>
+										<a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">Remover</a>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="reset" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
+						<button type="reset" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-remove"></i> &nbsp;&nbsp;Fechar</button>
 						<button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
 					</div>
 				}
@@ -162,11 +218,13 @@
 </div>
 
 @section CssSpecificVendor {
+	<link rel="stylesheet" href="~/assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.css" />
 	<link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css" />
 	<link rel="stylesheet" href="~/assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
 	<link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />
 }
 @section Scripts {
+	<script src="~/assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.js"></script>
 	<script src="~/assets/vendor/select2/js/select2.js"></script>
 	<script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
 	<script src="~/assets/vendor/jquery-mask/jquery.mask.js"></script>

@@ -43,33 +43,33 @@ var vm = new Vue({
                     {
                         notaPrimeiroBimestre:
                         {
-                            range: [0.00, 10.00]
+                            range: [0.00, 10]
                         },
                         notaSegundoBimestre:
                         {
-                            range: [0.00, 10.00]
+                            range: [0.00, 10]
                         },
                         notaTerceiroBimestre:
                         {
-                            range: [0.00, 10.00]
+                            range: [0.00, 10]
                         },
                         notaQuartoBimestre:
                         {
-                            range: [0.00, 10.00]
+                            range: [0.00, 10]
                         }
                     },
                     messages: {
                         "notaPrimeiroBimestre": {
-                            range: "Nota deve ser entre 00,00 à 10,00."
+                            range: "Nota deve ser entre 00,00 à 10."
                         },
                         "notaSegundoBimestre": {
-                            range: "Nota deve ser entre 00,00 à 10,00."
+                            range: "Nota deve ser entre 00,00 à 10."
                         },
                         "notaTerceiroBimestre": {
-                            range: "Nota deve ser entre 00,00 à 10,00."
+                            range: "Nota deve ser entre 00,00 à 10."
                         },
                         "notaQuartoBimestre": {
-                            range: "Nota deve ser entre 00,00 à 10,00."
+                            range: "Nota deve ser entre 00,00 à 10."
                         }
                     },
                     highlight: function (label) {
@@ -209,33 +209,33 @@ var vm = new Vue({
                     {
                         notaPrimeiroBimestre:
                         {
-                            range: [0.00, 10.00]
+                            range: [0.00, 10]
                         },
                         notaSegundoBimestre:
                         {
-                            range: [0.00, 10.00]
+                            range: [0.00, 10]
                         },
                         notaTerceiroBimestre:
                         {
-                            range: [0.00, 10.00]
+                            range: [0.00, 10]
                         },
                         notaQuartoBimestre:
                         {
-                            range: [0.00, 10.00]
+                            range: [0.00, 10]
                         }
                     },
                     messages: {
                         "notaPrimeiroBimestre": {
-                            range: "Nota deve ser entre 00,00 à 10,00."
+                            range: "Nota deve ser entre 00,00 à 10."
                         },
                         "notaSegundoBimestre": {
-                            range: "Nota deve ser entre 00,00 à 10,00."
+                            range: "Nota deve ser entre 00,00 à 10."
                         },
                         "notaTerceiroBimestre": {
-                            range: "Nota deve ser entre 00,00 à 10,00."
+                            range: "Nota deve ser entre 00,00 à 10."
                         },
                         "notaQuartoBimestre": {
-                            range: "Nota deve ser entre 00,00 à 10,00."
+                            range: "Nota deve ser entre 00,00 à 10."
                         }
                     },
                     highlight: function (label) {

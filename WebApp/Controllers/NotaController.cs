@@ -95,13 +95,20 @@ public class NotaController : BaseController
             {
                 AlunoId = collection["ddlAluno"] == "" ? null : Convert.ToInt32(collection["ddlAluno"].ToString()).ToString(),
                 DisciplinaId = collection["ddlDisciplina"] == "" ? null : Convert.ToInt32(collection["ddlDisciplina"].ToString()).ToString(),
-                PrimeiroBimestre = collection["notaPrimeiroBimestre"].ToString() == "" ? null : Convert.ToDecimal(collection["notaPrimeiroBimestre"].ToString(), new CultureInfo("pt-BR", true)),
-                SegundoBimestre = collection["notaSegundoBimestre"].ToString() == "" ? null : Convert.ToDecimal(collection["notaSegundoBimestre"].ToString(), new CultureInfo("pt-BR", true)),
-                TerceiroBimestre = collection["notaTerceiroBimestre"].ToString() == "" ? null : Convert.ToDecimal(collection["notaTerceiroBimestre"].ToString(), new CultureInfo("pt-BR", true)),
-                QuartoBimestre = collection["notaQuartoBimestre"].ToString() == "" ? null : Convert.ToDecimal(collection["notaQuartoBimestre"].ToString(), new CultureInfo("pt-BR", true))
+                PrimeiroBimestre = collection["notaPrimeiroBimestre"].ToString() == "" ? 0 : Convert.ToDecimal(collection["notaPrimeiroBimestre"].ToString(), new CultureInfo("pt-BR", true)),
+                SegundoBimestre = collection["notaSegundoBimestre"].ToString() == "" ? 0 : Convert.ToDecimal(collection["notaSegundoBimestre"].ToString(), new CultureInfo("pt-BR", true)),
+                TerceiroBimestre = collection["notaTerceiroBimestre"].ToString() == "" ? 0 : Convert.ToDecimal(collection["notaTerceiroBimestre"].ToString(), new CultureInfo("pt-BR", true)),
+                QuartoBimestre = collection["notaQuartoBimestre"].ToString() == "" ? 0 : Convert.ToDecimal(collection["notaQuartoBimestre"].ToString(), new CultureInfo("pt-BR", true))
             };
 
-            await ApiClientFactory.Instance.CreateNota(command);
+            //var possuiNota = ApiClientFactory.Instance.GetNotaByAlunoIdDisciplinaId(Convert.ToInt32(command.AlunoId), Convert.ToInt32(command.DisciplinaId));
+
+            //if (possuiNota==null)
+            //{
+	           // return RedirectToAction(nameof(Create), new { notify = (int)EnumNotify.Warning, message = "Já existe nota cadastrada para este aluno na disciplina informada." });
+            //}
+
+			await ApiClientFactory.Instance.CreateNota(command);
 
             return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
         }

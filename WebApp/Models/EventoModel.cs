@@ -25,9 +25,9 @@ namespace WebApp.Models
 		{
 			public int Id { get; set; }
             public int LocalidadeId { get; init; }
-            public required string Titulo { get; init; }
+            public string? Titulo { get; init; }
             public string? Descricao { get; init; }
-            public required string DataEvento { get; init; }
+            public string? DataEvento { get; init; }
             public bool Status { get; set; } = true;
            
         }

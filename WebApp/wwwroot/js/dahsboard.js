@@ -517,6 +517,46 @@ var vm = new Vue({
             });
 
         },
+        GetRelatorioVocacional: function () {
+            var self = this;
+
+            const obj = {
+                FomentoId: $("#ddlFomento").val(),
+                Estado: $("#ddlEstado").val(),
+                MunicipioId: $("#ddlMunicipio").val(),
+                LocalidadeId: $("#ddlLocalidade").val(),
+                DeficienciaId: $("#ddlDeficiencia").val(),
+                Etnia: $("#ddlEtnia").val()
+            }
+
+            let axiosConfig = {
+                headers: {
+                    "Content-Type": 'application/json;charset=UTF-8',
+                    "Access-Control-Allow-Origin": "*"
+                }
+            };
+
+            axios.post("Dashboard/GetRelatorioVocacionalByFilter", obj, axiosConfig).then(result => {
+
+                self.ShowLoad(true, "pVocacionalTot");
+
+                $("#cadastrosMasculinos").text(result.data.dashboard.cadastrosMasculinos);
+                $("#avaliacoesDna").text(result.data.dashboard.avaliacoesDna);
+                $("#laudosAndamentos").text(result.data.dashboard.laudosAndamentos);
+                $("#laudosFinalizados").text(result.data.dashboard.laudosFinalizados);
+                $("#cadastrosFemininos").text(result.data.dashboard.cadastrosFemininos);
+                $("#alunosCadastrados").text(result.data.dashboard.alunosCadastrados);
+                $("#laudosMasculinos").text(result.data.dashboard.laudosMasculinos);
+                $("#laudosFemininos").text(result.data.dashboard.laudosFemininos);
+
+                self.ShowLoad(false, "pVocacionalTot");
+
+            }).catch(error => {
+                Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
+
+                self.ShowLoad(false, "pVocacionalTot");
+            });
+        },
         SetGraficoControlePresenca: function (result) {
 
             var self = this;

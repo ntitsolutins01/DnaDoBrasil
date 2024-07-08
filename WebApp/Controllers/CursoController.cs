@@ -15,17 +15,14 @@ namespace WebApp.Controllers;
 public class CursoController : BaseController
 {
     #region Constructor
-    private readonly IOptions<UrlSettings> _appSettings;
 
     /// <summary>
-    /// Construtor da página
+    /// Contrutor da página
     /// </summary>
-    /// <param name="app">configurações de urls do sistema</param>
-    /// <param name="host">informações da aplicação em execução</param>
+    /// <param name="appSettings">paramentros para chamada de </param>
     public CursoController(IOptions<UrlSettings> appSettings)
     {
-        _appSettings = appSettings;
-        ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
+        ApplicationSettings.WebApiUrl = appSettings.Value.WebApiBaseUrl;
     }
     #endregion
 
