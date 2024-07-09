@@ -232,7 +232,7 @@ public class EventoController : BaseController
 		{
 			foreach (var file in files)
 			{
-				var filePath = Path.Combine(_host.WebRootPath, $"Eventos/{file.NomeArquivo}");
+				var filePath = Path.Combine(_host.WebRootPath, $"Eventos\\{file.NomeArquivo}");
 
 				if (!System.IO.File.Exists(filePath))
 				{

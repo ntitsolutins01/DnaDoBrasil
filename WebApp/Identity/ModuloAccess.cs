@@ -12,5 +12,7 @@
         public const string PlanoAula = "PlanoAula";
         public const string ControleAcesso = "ControleAcesso";
         public const string Nota = "Nota";
+        public const string Curso = "Curso";
+        public const string ConfiguracaoEad = "ConfiguracaoEad";
     }
 }
