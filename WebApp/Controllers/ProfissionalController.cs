@@ -305,16 +305,31 @@ namespace WebApp.Controllers
 		[ClaimsAuthorize(ClaimType.Profissional, Claim.Excluir)]
         public ActionResult Delete(int id)
 		{
-			try
-			{
-				ApiClientFactory.Instance.DeleteProfissional(id);
-				return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
-			}
-			catch
-			{
-				return RedirectToAction(nameof(Index));
-			}
-		}
+            try
+            {
+                ApiClientFactory.Instance.DeleteProfissional(id);
+                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
+            }
+            catch (ApplicationException e)
+            {
+                return RedirectToAction(nameof(Index),
+                    new
+                    {
+                        notify = (int)EnumNotify.Warning,
+                        message = e.Message
+                    });
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction(nameof(Index),
+                    new
+                    {
+                        notify = (int)EnumNotify.Error,
+                        message =
+                            $"Erro ao excluir Profissional. Favor entrar em contato com o administrador do sistema. {e.Message}"
+                    });
+            }
+        }
 
         [ClaimsAuthorize(ClaimType.Profissional, Claim.Consultar)]
         public Task<ProfissionalDto> GetProfissionalById(int id)

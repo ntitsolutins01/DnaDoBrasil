@@ -23,7 +23,7 @@ namespace WebApp.Models
 			public string Email { get; set; }
 			public string AspNetRoleId { get; set; }
 			public int PerfilId { get; set; }
-			public string Id { get; set; }
+			public int Id { get; set; }
             public string TipoPessoa { get; set; }
             public int MunicipioId { get; set; }
             public bool Status { get; set; }

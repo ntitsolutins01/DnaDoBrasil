@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
 using WebApp.Authorization;
@@ -12,6 +13,8 @@ using WebApp.Utility;
 
 namespace WebApp.Controllers;
 
+
+[Authorize(Policy = ModuloAccess.Curso)]
 public class CursoController : BaseController
 {
     #region Constructor
@@ -27,12 +30,12 @@ public class CursoController : BaseController
     #endregion
 
     #region Crud Methods
+
     /// <summary>
     /// Listagem de Curso
     /// </summary>
     /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
     /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
-    /// <param name="collection">lista de filtros selecionados para pesquisa de alunos</param>
     /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
     [ClaimsAuthorize(ClaimType.Curso, Identity.Claim.Consultar)]
     public IActionResult Index(int? crud, int? notify, string message = null)
