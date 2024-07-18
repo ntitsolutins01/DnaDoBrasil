@@ -16,28 +16,54 @@ using System.Security.Claims;
 using System.Text;
 using System.Text.RegularExpressions;
 using WebApp.Configuration;
+using Microsoft.AspNetCore.Authorization;
+using WebApp.Identity;
+using WebApp.Authorization;
 
 namespace WebApp.Controllers
 {
+    /// <summary>
+    /// Controler de Usuário
+    /// </summary>
+    [Authorize(Policy = ModuloAccess.ControleAcesso)]
     public class UsuarioController : BaseController
     {
-        private readonly IOptions<UrlSettings> _appSettings;
+        #region Constructor
+
         private readonly IEmailSender _emailSender;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IHostingEnvironment _host;
 
+        /// <summary>
+        /// Construtor da página
+        /// </summary>
+        /// <param name="app">configurações de urls do sistema</param>
+        /// <param name="emailSender">imlementacao de infraestrutura de identidade possa enviar emails de confirmação e redefinição de senha.</param>
+        /// <param name="userManager">gerenciador de identidade de usuários</param>
+        /// <param name="host">informações da aplicação em execução</param>
+        /// <param name="roleManager">gerenciador de regras de permissoes</param>
         public UsuarioController(IOptions<UrlSettings> app, IEmailSender emailSender,
             UserManager<IdentityUser> userManager, IHostingEnvironment host, RoleManager<IdentityRole> roleManager)
         {
-            _appSettings = app;
             _emailSender = emailSender;
             _userManager = userManager;
             _host = host;
             _roleManager = roleManager;
-            ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
+            ApplicationSettings.WebApiUrl = app.Value.WebApiBaseUrl;
         }
-        //[ClaimsAuthorize("Usuario", "Consultar")]
+
+        #endregion
+
+        #region Crud Methods
+
+        /// <summary>
+        /// Listagem de usuário
+        /// </summary>
+        /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
+        /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
+        /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
+        [ClaimsAuthorize(ClaimType.Usuario, Identity.Claim.Consultar)]
         public IActionResult Index(int? crud, int? notify, string message = null)
         {
             SetNotifyMessage(notify, message);
@@ -52,7 +78,13 @@ namespace WebApp.Controllers
             });
         }
 
-        //[ClaimsAuthorize("Usuario", "Incluir")]
+        /// <summary>
+        /// Tela para inclusão de Usuario
+        /// </summary>
+        /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
+        /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
+        /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
+        [ClaimsAuthorize(ClaimType.Usuario, Identity.Claim.Incluir)]
         public ActionResult Create(int? crud, int? notify, string message = null)
         {
             SetNotifyMessage(notify, message);
@@ -68,7 +100,12 @@ namespace WebApp.Controllers
             return View(model);
         }
 
-        //[ClaimsAuthorize("Usuario", "Incluir")]
+        /// <summary>
+        /// Ação de inclusão do Usuario
+        /// </summary>
+        /// <param name="collection">coleção de dados para inclusao de Usuario</param>
+        /// <returns>retorna mensagem de inclusao através do parametro crud</returns>
+        [ClaimsAuthorize(ClaimType.Usuario, Identity.Claim.Incluir)]
         [HttpPost]
         public async Task<ActionResult> Create(IFormCollection collection)
         {
@@ -155,23 +192,12 @@ namespace WebApp.Controllers
             }
         }
 
-        private async Task SendNewUserEmail(IdentityUser user, string email, string nome)
-        {
-            var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-
-            var callbackUrl = Url.ActionLink("ResetPassword",
-                "Identity/Account", new { code, email });
-
-            var message =
-                System.IO.File.ReadAllText(Path.Combine(_host.WebRootPath, "emailtemplates/ConfirmEmail.html"));
-            message = message.Replace("%NAME%", nome);
-            message = message.Replace("%CALLBACK%", HtmlEncoder.Default.Encode(callbackUrl.Replace("%2FAccount", "/Account")));
-
-            await _emailSender.SendEmailAsync(user.Email, "Primeiro acesso sistema Dna do Brasil",
-                message);
-        }
-
-        //[ClaimsAuthorize("Usuario", "Alterar")]
+        /// <summary>
+        /// Tela de alteração de Usuario
+        /// </summary>
+        /// <param name="id">id do usuario</param>
+        /// <exception cref="ArgumentNullException">Mensagem de erro ao alterar o tentar acessar tela de alteração do Usuario</exception>
+        [ClaimsAuthorize(ClaimType.Usuario, Identity.Claim.Alterar)]
         public ActionResult Edit(string id)
         {
             try
@@ -185,7 +211,7 @@ namespace WebApp.Controllers
 
                 var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", obj.Uf);
                 var municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(obj.Uf!), "Id", "Nome", obj.MunicipioId);
-                
+
                 model = new UsuarioModel
                 {
                     ListPerfis = new SelectList(resultPerfil, "Id", "Nome", obj.Perfil.Id),
@@ -207,20 +233,35 @@ namespace WebApp.Controllers
             }
         }
 
-        //[ClaimsAuthorize("Usuario", "Alterar")]
+        /// <summary>
+        /// Ação de alteração do Usuario
+        /// </summary>
+        /// <param name="id">identificador do Usuario</param>
+        /// <param name="collection">coleção de dados para alteração de Usuario</param>
+        /// <returns>retorna mensagem de alteração através do parametro crud</returns>
+        [ClaimsAuthorize(ClaimType.Curso, Identity.Claim.Alterar)]
         [HttpPost]
         public async Task<ActionResult> Edit(int id, IFormCollection collection)
         {
             try
             {
                 var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                var perfil = ApiClientFactory.Instance.GetPerfilById(Convert.ToInt32(collection["ddlPerfil"].ToString()));
 
-                var includedUserId = ""; //_userManager.Users.FirstOrDefault(x => x.Email == newUser.Email).Id;
+                var usuario = ApiClientFactory.Instance.GetUsuarioById(id.ToString());
+
+                var perfil = ApiClientFactory.Instance.GetPerfilById(Convert.ToInt32(collection["ddlPerfis"].ToString()));
+
+                var role = await _roleManager.FindByIdAsync(perfil.AspNetRoleId);//find passed in role id
+                var currentRole = await _roleManager.FindByIdAsync(usuario.AspNetRoleId);//find the role of current user
+                var user = await _userManager.FindByIdAsync(usuario.AspNetUserId);
+
+                await _userManager.RemoveFromRoleAsync(user, currentRole.Name);
+                await _userManager.AddToRoleAsync(user, role.Name);
 
 
                 var command = new UsuarioModel.CreateUpdateUsuarioCommand
                 {
+                    Id = id,
                     Email = collection["email"].ToString(),
                     Nome = collection["nome"].ToString(),
                     TipoPessoa = collection["tipoPessoa"].ToString(),
@@ -246,7 +287,13 @@ namespace WebApp.Controllers
             }
         }
 
-        //[ClaimsAuthorize("Usuario", "Excluir")]
+        /// <summary>
+        /// Ação de exclusão do Usuario
+        /// </summary>
+        /// <param name="id">identificador do Usuario</param>
+        /// <param name="collection">coleção de dados para exclusão de Usuario</param>
+        /// <returns>retorna mensagem de exclusão através do parametro crud</returns>
+        [ClaimsAuthorize(ClaimType.Usuario, Identity.Claim.Excluir)]
         public async Task<ActionResult> Delete(int id)
         {
             try
@@ -291,8 +338,39 @@ namespace WebApp.Controllers
                     });
             }
         }
+        #endregion
 
-        //[ClaimsAuthorize("Usuario", "Consultar")]
+        #region Get Methods
+
+        /// <summary>
+        /// Método para envio de email
+        /// </summary>
+        /// <param name="user">identidade do usuário</param>
+        /// <param name="email">email a ser enviado</param>
+        /// <param name="nome">nome da pessoa que receberá o email</param>
+        [ClaimsAuthorize(ClaimType.Usuario, Identity.Claim.Excluir)]
+        private async Task SendNewUserEmail(IdentityUser user, string email, string nome)
+        {
+            var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+            var callbackUrl = Url.ActionLink("ResetPassword",
+                "Identity/Account", new { code, email });
+
+            var message =
+                System.IO.File.ReadAllText(Path.Combine(_host.WebRootPath, "emailtemplates/ConfirmEmail.html"));
+            message = message.Replace("%NAME%", nome);
+            message = message.Replace("%CALLBACK%", HtmlEncoder.Default.Encode(callbackUrl.Replace("%2FAccount", "/Account")));
+
+            await _emailSender.SendEmailAsync(user.Email, "Primeiro acesso sistema Dna do Brasil",
+                message);
+        }
+
+        /// <summary>
+        /// Método de busca de Usuario por email
+        /// </summary>
+        /// <param name="email">email</param>
+        /// <returns>retorna objeto Usuario</returns>
+        [ClaimsAuthorize(ClaimType.Usuario, Identity.Claim.Consultar)]
         public Task<JsonResult> GetUsuarioByEmail(string email)
         {
             try
@@ -315,6 +393,12 @@ namespace WebApp.Controllers
 
         }
 
+        /// <summary>
+        /// Método de busca de Usuario por cpf
+        /// </summary>
+        /// <param name="cpf">cpf do Usuario</param>
+        /// <returns>retorna objeto Usuario</returns>
+        [ClaimsAuthorize(ClaimType.Usuario, Identity.Claim.Consultar)]
         public Task<JsonResult> GetUsuarioByCpf(string cpf)
         {
             try
@@ -334,5 +418,7 @@ namespace WebApp.Controllers
                 return Task.FromResult(Json(ex.Message));
             }
         }
+
+        #endregion
     }
 }

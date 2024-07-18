@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using System.Security.Claims;
 using WebApp.Areas.Identity.Models;
+using WebApp.Enumerators;
 
 namespace WebApp.Areas.Identity.Pages.Account
 {
@@ -71,7 +72,7 @@ namespace WebApp.Areas.Identity.Pages.Account
 			}
 		}
 
-		public async Task OnGetAsync(string returnUrl = null)
+		public async Task OnGetAsync(int? notify, string message = null, string returnUrl = null)
 		{
 			if (!string.IsNullOrEmpty(ErrorMessage))
 			{
@@ -92,7 +93,7 @@ namespace WebApp.Areas.Identity.Pages.Account
 		{
 
 #if DEBUG
-			returnUrl = Url.Content("~/Evento");
+			returnUrl = Url.Content("~/Aluno/Create");
 #else
 			returnUrl = Url.Content("~/Dashboard");
 #endif
@@ -142,8 +143,8 @@ namespace WebApp.Areas.Identity.Pages.Account
 					if (userRole == UserRoles.Aluno)
 					{
 
-						return LocalRedirect("~/BemVindo");
-					}
+                        return RedirectToPage("Login", new { notify = (int)EnumNotify.Success, message = $"Este usuário não possui permissão de acesso ao sistema DNA." });
+                    }
 
 					return LocalRedirect(returnUrl);
 				default:

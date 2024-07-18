@@ -13,9 +13,14 @@ using WebApp.Identity;
 using WebApp.Models;
 using WebApp.Utility;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApp.Controllers;
 
+/// <summary>
+/// Controller de Evento
+/// </summary>
+[Authorize(Policy = ModuloAccess.Evento)]
 public class EventoController : BaseController
 {
     #region Constructor

@@ -125,10 +125,13 @@ builder.Services.AddAuthorization(o =>
 
     o.AddPolicy(ModuloAccess.Profissional, policy =>
         policy.RequireAssertion(context =>
+            context.User.IsInRole(UserRoles.Profissional) ||
+            context.User.IsInRole(UserRoles.Gestor) ||
             context.User.IsInRole(UserRoles.Administrador)));
 
     o.AddPolicy(ModuloAccess.SistemaSocioeconomico, policy =>
         policy.RequireAssertion(context =>
+            context.User.IsInRole(UserRoles.Profissional) ||
             context.User.IsInRole(UserRoles.Parceiro) ||
             context.User.IsInRole(UserRoles.Gestor) ||
             context.User.IsInRole(UserRoles.Administrador)));
@@ -154,6 +157,12 @@ builder.Services.AddAuthorization(o =>
 
     o.AddPolicy(ModuloAccess.Curso, policy =>
         policy.RequireAssertion(context =>
+            context.User.IsInRole(UserRoles.Administrador)));
+
+    o.AddPolicy(ModuloAccess.Evento, policy =>
+        policy.RequireAssertion(context =>
+            context.User.IsInRole(UserRoles.Profissional) ||
+            context.User.IsInRole(UserRoles.Gestor) ||
             context.User.IsInRole(UserRoles.Administrador)));
 });
 

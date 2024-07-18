@@ -14,5 +14,6 @@
         public const string Nota = "Nota";
         public const string Curso = "Curso";
         public const string ConfiguracaoEad = "ConfiguracaoEad";
+        public const string Evento = "Evento";
     }
 }

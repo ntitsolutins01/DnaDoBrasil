@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
 using WebApp.Authorization;
@@ -12,6 +13,8 @@ using WebApp.Utility;
 
 namespace WebApp.Controllers;
 
+
+[Authorize(Policy = ModuloAccess.Curso)]
 public class CursoController : BaseController
 {
     #region Constructor

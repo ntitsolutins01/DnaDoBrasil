@@ -382,7 +382,7 @@
                                     </li>
                                 }
 
-                                @if ((await AuthorizationService.AuthorizeAsync(User, ModuloAccess.Profissional)).Succeeded)
+                                @if ((await AuthorizationService.AuthorizeAsync(User, ModuloAccess.Evento)).Succeeded)
                                 {
                                     <li class="nav-parent nav-expanded">
                                         <a href="@Url.Action("Index", "Evento")">
@@ -484,34 +484,6 @@
                                             
                                         </ul>
                                     </li>
-                                }
-                                @{
-                                #if DEBUG
-                                <li class="nav-parent nav-expanded">
-	                                <a href="@Url.Action("Index", "Curso")">
-		                                <i class="fa fa-files-o" aria-hidden="true"></i>
-		                                <span>Cursos</span>
-	                                </a>
-                                </li>
-                                <li class="nav-parent nav-expanded">
-	                                <a href="@Url.Action("Index", "Certificado")">
-                                        <i class="fa fa-certificate" aria-hidden="true"></i>
-                                        <span>Certificado</span>
-	                                </a>
-                                </li>
-                                <li class="nav-parent nav-expanded">
-	                                <a href="@Url.Action("Index", "Ranking")">
-		                                <i class="fa fa-bar-chart-o" aria-hidden="true"></i>
-		                                <span>Ranking</span>
-	                                </a>
-                                </li>
-                                <li class="nav-parent nav-expanded">
-                                    <a href="@Url.Action("Index", "Comunidade")">
-                                        <i class="fa fa-users" aria-hidden="true"></i>
-                                        <span>Comunidade</span>
-                                    </a>
-                                </li>
-                                #endif
                                 }
                             </ul>
                         </nav>
