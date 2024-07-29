@@ -15,7 +15,14 @@ var vm = new Vue({
 
             var formid = $('form')[1].id;
 
-            
+            //triggered when modal is about to be shown
+            $('#mdUpload').on('show.bs.modal', function (e) {
+
+                //get data-id attribute of the clicked element
+                var id = $(e.relatedTarget).data('id');
+
+                $("input[name='eventoId']").val(id);
+            });
 
             //skin checkbox
             if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {

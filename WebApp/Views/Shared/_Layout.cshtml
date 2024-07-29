@@ -334,11 +334,12 @@
                                                     Métrica Imc
                                                 </a>
                                             </li>
-                                            @* <li>
-                                        <a href="@Url.Action("Index", "Serie")">
-                                        Série
-                                        </a>
-                                        </li> *@
+
+                                            <li>
+                                                <a href="@Url.Action("Index", "Disciplina")">
+                                                    Disciplinas
+                                                </a>
+                                            </li>
                                             <li>
                                                 <a href="@Url.Action("Index", "Modulo")">
                                                     Módulo
@@ -381,7 +382,7 @@
                                     </li>
                                 }
 
-                                @if ((await AuthorizationService.AuthorizeAsync(User, ModuloAccess.Profissional)).Succeeded)
+                                @if ((await AuthorizationService.AuthorizeAsync(User, ModuloAccess.Evento)).Succeeded)
                                 {
                                     <li class="nav-parent nav-expanded">
                                         <a href="@Url.Action("Index", "Evento")">
@@ -466,59 +467,24 @@
                                         </a>
                                         <ul class="nav nav-children">
                                             <li>
-                                                <a href="@Url.Action("Index", "Disciplina")">
-                                                    Disciplinas
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="@Url.Action("Index", "Nota")">
-                                                    Notas
-                                                </a>
-                                            </li>
-                                            <li>
                                                 <a href="@Url.Action("Index", "TipoCurso")">
                                                     Tipos de Curso
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="@Url.Action("Index", "Curso")">
-                                                    Cursos
+                                                <a href="@Url.Action("Index", "ModuloEad")">
+                                                    Módulo
                                                 </a>
                                             </li>
-                                            <li>
+                                            @* <li>
                                                 <a href="@Url.Action("Index", "Aula")">
                                                     Aulas 
                                                 </a>
-                                            </li>
+                                            </li> *@
                                             
                                         </ul>
                                     </li>
                                 }
-                                <li class="nav-parent nav-expanded">
-	                                <a href="@Url.Action("Index", "Curso")">
-		                                <i class="fa fa-files-o" aria-hidden="true"></i>
-		                                <span>Cursos</span>
-	                                </a>
-                                </li>
-                                <li class="nav-parent nav-expanded">
-	                                <a href="@Url.Action("Index", "Certificado")">
-                                        <i class="fa fa-certificate" aria-hidden="true"></i>
-                                        <span>Certificado</span>
-	                                </a>
-                                </li>
-                                <li class="nav-parent nav-expanded">
-	                                <a href="@Url.Action("Index", "Ranking")">
-		                                <i class="fa fa-bar-chart-o" aria-hidden="true"></i>
-		                                <span>Ranking</span>
-	                                </a>
-                                </li>
-                                <li class="nav-parent nav-expanded">
-                                    <a href="@Url.Action("Index", "Comunidade")">
-                                        <i class="fa fa-users" aria-hidden="true"></i>
-                                        <span>Comunidade</span>
-                                    </a>
-                                </li>
-                               
                             </ul>
                         </nav>
                     </div>

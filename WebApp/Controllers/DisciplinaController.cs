@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using WebApp.Authorization;
 using WebApp.Configuration;
@@ -11,6 +12,7 @@ using WebApp.Utility;
 
 namespace WebApp.Controllers
 {
+	[Authorize(Policy = ModuloAccess.ConfiguracaoSistema)]
 	public class DisciplinaController : BaseController
     {
         #region Constructor

@@ -1,7 +1,6 @@
 using System.Text;
 using Newtonsoft.Json;
-using WebApp.Dto;
-using WebApp.Models;
+using Newtonsoft.Json.Linq;
 
 namespace WebApp.ApiClient
 {
@@ -72,6 +71,13 @@ namespace WebApp.ApiClient
             addHeaders();
              var response = _httpClient.DeleteAsync(requestUrl);
             var data = response.Result.Content.ReadAsStringAsync();
+            dynamic dataResult = JObject.Parse(data.Result);
+            if (dataResult.status == 409)
+            {
+                //throw new ArgumentException(dataResult.detail);
+                //throw new CustomException<MyCustomException>("your error description");
+                throw new ApplicationException(dataResult.detail.Value);
+            }
             return Task.FromResult(JsonConvert.DeserializeObject<T>(data.Result));
         }
 
