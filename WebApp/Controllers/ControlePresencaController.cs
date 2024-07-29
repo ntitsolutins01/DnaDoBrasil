@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
@@ -18,14 +20,19 @@ namespace WebApp.Controllers
     public class ControlePresencaController : BaseController
 	{
         #region Constructor
+
+        private readonly UserManager<IdentityUser> _userManager;
+
         /// <summary>
         /// Construtor da página
         /// </summary>
         /// <param name="appSettings">configurações de url da api</param>
-        public ControlePresencaController(IOptions<UrlSettings> appSettings)
-		{
+        /// <param name="userManager">gerenciador de identidade de usuários</param>
+        public ControlePresencaController(IOptions<UrlSettings> appSettings, UserManager<IdentityUser> userManager)
+        {
+            _userManager = userManager;
             ApplicationSettings.WebApiUrl = appSettings.Value.WebApiBaseUrl;
-		}
+        }
 
         #endregion
 
@@ -116,14 +123,19 @@ namespace WebApp.Controllers
 			try
 			{
 				SetNotifyMessage(notify, message);
-			SetCrudMessage(crud);
-			var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
+			    SetCrudMessage(crud);
+
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+                var usuario = ApiClientFactory.Instance.GetUsuarioByAspNetUserId(userId);
+
+                var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
 
 
-			return View(new ControlePresencaModel()
-			{
-				ListEstados = estados
-			});
+			    return View(new ControlePresencaModel()
+			    {
+				    ListEstados = estados
+			    });
 
 			}
 			catch (Exception e)
