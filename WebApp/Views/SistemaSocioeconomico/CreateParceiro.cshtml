@@ -1,0 +1,247 @@
+@model ParceiroModel
+@{
+    ViewData["Title"] = "Cadastro Sistema Socioeconomico";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div id="vParceiro">
+    <div class="row">
+        <div class="col-md-12">
+            @using (@Html.BeginForm("Create", "SistemaSocioeconomico", FormMethod.Post, new { id = "formParceiro", @class = "form-horizontal" }))
+            {
+                <section class="panel">
+                    <header class="panel-heading">
+                        <div class="panel-actions">
+                            <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
+                        </div>
+
+                        <h2 class="panel-title">Cadastro de Parceiro</h2>
+                    </header>
+                    <div class="panel-body">
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Nome <span class="required">*</span></label>
+                            <div class="col-sm-4">
+                                <input type="text" id="nome" name="nome" class="form-control" required title="Por favor informe o Nome" />
+                            </div>
+                            <label class="col-sm-1 control-label">Email <span class="required">*</span></label>
+                            <div class="col-sm-5">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-envelope"></i>
+                                    </span>
+                                    <input type="text" name="email" id="email" maxlength="100" class="form-control"
+                                           title="Por favor informe um email válido do parceiro" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Selecione a Parceria <span class="required">*</span></label>
+                            <div class="col-sm-2">
+                                <div class="radio-custom radio-danger">
+                                    <input id="empresas" name="parceria" type="radio" value="1" required title="Por favor selecione a parceiria." checked />
+                                    <label>Empresas parceiras</label>
+                                </div>
+                                <div class="radio-custom radio-warning">
+                                    <input id="clubesFederacoes" name="parceria" type="radio" value="2" required title="Por favor selecione a parceiria." />
+                                    <label>Clubes e Federações</label>
+                                </div>
+                                <div class="radio-custom radio-success">
+                                    <input id="assistenciaSocial" name="parceria" type="radio" value="3" required title="Por favor selecione a parceiria." />
+                                    <label>Assistência Social</label>
+                                </div>
+                                <div class="radio-custom radio-primary">
+                                    <input id="educacional" name="parceria" type="radio" value="4" required title="Por favor selecione a parceiria." />
+                                    <label>Educacional</label>
+                                </div>
+                                <label class="error" for="tipoParceria"></label>
+                            </div>
+                            <label class="col-sm-2 control-label">Tipo Parceria <span class="required">*</span></label>
+                            <div class="col-sm-3">
+                                <select class="form-control populate select2" name="ddlTipoParceria" id="ddlTipoParceria" style="width:100%"
+                                        title="Por favor selecione um tipo de parceria."
+                                        asp-for="TipoParceriaId" asp-items="Model.ListTiposParcerias">
+                                    <option value="">Selecionar Tipo Parceria</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Tipo Pessoa <span class="required">*</span></label>
+                            <div class="col-sm-2">
+                                <div class="radio-custom radio-default">
+                                    <input id="pf" name="tipoPessoa" type="radio" value="pf" checked
+                                           required title="Por favor selecione o tipo pessoa." />
+                                    <label for="tipoPessoa">Pessoa Física</label>
+                                </div>
+                                <div class="radio-custom radio-info">
+                                    <input id="pj" name="tipoPessoa" type="radio" value="pj" required title="Por favor selecione o tipo pessoa." />
+                                    <label for="tipoPessoa">Pessoa Jurídica</label>
+                                </div>
+                                <label class="error" for="tipoPessoa"></label>
+                            </div>
+                            <div v-if="params.visible" id="hideCpf">
+                                <label class="col-sm-2 control-label">CPF <span class="required">*</span></label>
+                                <div class="col-sm-3">
+                                    <input id="cpf" name="cpf"
+                                           type="text" value="" class="form-control"
+                                           title="Por favor informe o cpf do parceiro."
+                                           maxlength="14" />
+                                </div>
+                            </div>
+                            <div v-if="!params.visible" id="hideCnpj">
+                                <label class="col-sm-2 control-label">CNPJ <span class="required">*</span></label>
+                                <div class="col-sm-3">
+                                    <input id="cnpj" name="cnpj"
+                                           type="text" value="" class="form-control"
+                                           title="Por favor informe o cnpj do parceiro."
+                                           maxlength="19" />
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Telefone </label>
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-phone"></i>
+                                    </span>
+                                    <input id="numTelefone" name="numTelefone" class="form-control"
+                                           maxlength="14"
+                                           title="Por favor informe o telefone ">
+                                </div>
+                            </div>
+                            <label class="col-sm-1 control-label">Celular </label>
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-phone"></i>
+                                    </span>
+                                    <input id="numCelular" name="numCelular" class="form-control"
+                                           maxlength="14"
+                                           title="Por favor informe o celular">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Endereço</label>
+                            <div class="col-sm-6">
+                                <input type="text" id="endereco" name="endereco" class="form-control" />
+                            </div>
+                            <label class="col-sm-1 control-label">Número</label>
+                            <div class="col-sm-2">
+                                <input type="number" id="numero" name="numero" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Bairro </label>
+                            <div class="col-sm-3">
+                                <input type="text" id="bairro" name="bairro" class="form-control" />
+                            </div>
+                            <label class="col-sm-1 control-label">Cep</label>
+                            <div class="col-sm-2">
+                                <input type="text" id="cep" name="cep" class="form-control" />
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Estado <span class="required">*</span></label>
+                            <div class="col-md-3">
+                                <select class="form-control populate select2" name="ddlEstado" id="ddlEstado"
+                                        title="Por favor informe o estado." required
+                                        asp-for="EstadoId" asp-items="Model.ListEstados">
+                                    <option value="">Selecionar Estado</option>
+                                </select>
+                            </div>
+                            <label class="col-sm-1 control-label">Município <span class="required">*</span></label>
+                            <div class="col-md-3">
+                                <select class="form-control populate select2" name="ddlMunicipio" id="ddlMunicipio"
+                                        title="Por favor informe o município." required
+                                        asp-for="MunicipioId" asp-items="Model.ListMunicipios">
+                                    <option value="">Selecionar Município</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label pull-left">Cadastro ativo?</label>
+                            <div class="col-sm-1">
+                                <div class="switch switch-sm switch-success">
+                                    <input type="checkbox" id="status" name="status" data-plugin-ios-switch checked="checked" />
+                                </div>
+                            </div>
+                            <label class="col-sm-2 control-label">Cadastro habilitado?</label>
+                            <div class="col-sm-1">
+                                <div class="switch switch-sm switch-success">
+                                    <input type="checkbox" id="habilitado" name="habilitado" data-plugin-ios-switch />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-1 control-label pull-left">&nbsp;&nbsp;</label>
+                            <div class="col-sm-10">
+                                <div class="checkbox-custom chekbox-success">
+                                    <input id="for-project" value="project" type="checkbox" id="comprometimento" name="comprometimento" required title="Campo obrigatorio" />
+                                    <label for="for-project">Me comprometo que todas as informações prestadas são verdadeiras.</label>
+                                </div>
+                                <label class="error" for="comprometimento"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <footer class="panel-footer">
+                        <div class="row">
+                            <div class="col-md-9 col-md-offset-3">
+                                <a href="@Url.Action("Parceiro", "SistemaSocioeconomico")" class="btn btn-dark pull-right" style="margin-left: 5px;margin-right: 5px;"><i class="fa fa-reply"></i> &nbsp;&nbsp;Voltar</a>
+                                <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
+                                <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
+                            </div>
+                        </div>
+                    </footer>
+                </section>
+            }
+        </div>
+    </div>
+</div>
+@section CssSpecificVendor {
+    <link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css" />
+    <link rel="stylesheet" href="~/assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
+    <link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />
+}
+@section Scripts {
+    <script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
+    <script src="~/assets/vendor/select2/js/select2.js"></script>
+    <script src="~/assets/vendor/jquery-mask/jquery.mask.js"></script>
+    <script src="~/assets/vendor/ios7-switch/ios7-switch.js"></script>
+    <script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
+    <script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/js/formatTable.js"></script>
+    <script src="~/js/parceiro.js"></script>
+    <script>
+
+
+        // iosSwitcher
+        (function ($) {
+
+            'use strict';
+
+            if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
+
+                $(function () {
+                    $('[data-plugin-ios-switch]').each(function () {
+                        var $this = $(this);
+
+                        $this.themePluginIOS7Switch();
+                    });
+                });
+
+            }
+
+        }).apply(this, [jQuery]);
+
+    </script>
+}
+
+
+
+
+

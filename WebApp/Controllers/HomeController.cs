@@ -1,23 +1,31 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Options;
 using System.Diagnostics;
+using WebApp.Factory;
 using WebApp.Models;
+using WebApp.Utility;
 
 namespace WebApp.Controllers
 {
 	public class HomeController : Controller
 	{
-		private readonly ILogger<HomeController> _logger;
-
-		public HomeController(ILogger<HomeController> logger)
-		{
-			_logger = logger;
-		}
-
 		public IActionResult Index()
-		{
-			return View();
-		}
-
+        {
+            //return Redirect("/Identity/Account/Login");
+            //return RedirectToPage("/Identity/Account/Login");
+            return View();
+        }
+		public IActionResult EmpresaParceira()
+        {
+            return View();
+        }
+		public IActionResult Index2()
+        {
+            return Redirect("/Identity/Account/Login");
+            //return RedirectToPage("/Identity/Account/Login");
+            //return View();
+        }
 		public IActionResult Privacy()
 		{
 			return View();

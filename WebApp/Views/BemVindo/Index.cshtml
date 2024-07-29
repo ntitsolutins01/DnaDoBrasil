@@ -1,0 +1,274 @@
+﻿@model AlunoModel
+@{
+    ViewData["Title"] = "Bem Vindo";
+}
+
+<div class="row">
+    <div class="col-md-4 col-lg-3">
+
+        <section class="panel">
+            <div class="panel-body">
+                <div class="thumb-info mb-md">
+                    <img src="assets/images/!logged-user.jpg" class="rounded img-responsive" alt="John Doe">
+                    <div class="thumb-info-title">
+                        <span class="thumb-info-inner">@Model.Aluno.Nome</span>
+                        <span class="thumb-info-type">@Model.NomePerfil</span>
+                    </div>
+                </div>
+
+                <div class="widget-toggle-expand mb-md">
+                    <div class="widget-header">
+                        <h6>Conclusão do Laudo</h6>
+                        <div class="widget-toggle">+</div>
+                    </div>
+                    <div class="widget-content-collapsed">
+                        <div class="progress progress-xs light">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+                                40%
+                            </div>
+                        </div>
+                    </div>
+                    <div class="widget-content-expanded">
+                        <ul class="simple-todo-list">
+                            <li class="completed">Saúde</li>
+                            <li class="completed">Talento Esportivo</li>
+                            <li>Consumo Alimentar</li>
+                            <li>Saude Bucal</li>
+                            <li>Qualidade de vida</li>
+                            <li>Vocacional</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="col-md-8 col-lg-9">
+
+        <div class="tabs">
+            <ul class="nav nav-tabs tabs-primary">
+                <li class="active">
+                    <a href="#overview" data-toggle="tab">Carteirinha</a>
+                </li>
+                <li>
+                    <a href="#edit" data-toggle="tab">Alterar</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div id="overview" class="tab-pane active">
+                    <div class="row" style="margin: 10px">
+                        <div class="tabs">
+                            <ul class="nav nav-tabs">
+                                <li class="active">
+                                    <a href="#frente" data-toggle="tab">Frente</a>
+                                </li>
+                                <li>
+                                    <a href="#verso" data-toggle="tab">Verso</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content" style="background-image: url(assets/images/background_carteirinha.png);background-repeat: no-repeat;background-size: 100% 100%;">
+                                div class="tab-content">
+                                <div id="frente" class="tab-pane active">
+                                    <div class="row">
+                                        <div class="col-md-8 form-group">
+                                            <img src="~/assets/images/logo.png" style="width: 25%;float:right;" />
+                                        </div>
+
+                                        <div class="col-md-3 form-group pull-right">
+                                            <img src="~/assets/images/img_8519.png" style="width:100%" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+
+                                        <div class="col-md-4 form-group">
+                                            <img src="~/assets/images/!logged-user.jpg" style="width: 85%;margin-left: 15px;" />
+                                        </div>
+                                        <div class="col-md-4 form-group">
+                                            <label class="control-label">Nome</label>
+
+                                            <input type="text" readonly="readonly" value="@Model.Aluno.Nome" class="form-control" class="form-control">
+                                        </div>
+                                        <div class="col-md-4 form-group">
+                                            <label class="control-label">Sexo</label>
+
+                                            <input type="text" readonly="readonly" value="@Model.Aluno.Sexo" class="form-control" class="form-control">
+                                        </div>
+                                        <div class="col-md-4 form-group">
+                                            <label class="control-label">Matrícula</label>
+
+                                            <input type="text" readonly="readonly" value="@Model.Aluno.Id" class="form-control" class="form-control">
+                                        </div>
+                                        <div class="col-md-4 form-group">
+                                            <label class="control-label">Data Nascimento</label>
+
+                                            <input type="text" readonly="readonly" value="@Model.Aluno.DtNascimento" class="form-control" class="form-control">
+                                        </div>
+                                        <div class="col-md-4 form-group">
+                                            <label class="control-label">Email</label>
+
+                                            <input type="text" readonly="readonly" value="@Model.Aluno.Email" class="form-control" class="form-control">
+                                        </div>
+                                        <div class="col-md-4 form-group">
+                                            <label class="control-label">Cpf</label>
+
+                                            <input type="text" readonly="readonly" value="@Model.Aluno.Cpf" class="form-control" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="verso" class="tab-pane">
+                                    <div class="row">
+                                        <div class="col-md-4 form-group">
+                                        </div>
+
+                                        <div class="col-md-2 form-group">
+                                        </div>
+
+                                        <div class="col-md-2 form-group">
+                                            <img src="~/assets/images/logo_slogan_270224.png" style="width:50%" />
+                                        </div>
+
+                                        <div class="col-md-2 form-group">
+                                            <img src="~/assets/images/logo_idecace.png" style="width:70%" />
+                                        </div>
+
+                                        <div class="col-md-2 form-group">
+                                            <img src="~/assets/images/logo-sejus-horizontal.png" style="width:100%" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+
+                                        <div class="col-md-4 form-group">
+                                            <div class="qrcode" id="qr" style="width:95%"></div>
+                                            @* <img src="~/assets/images/!logged-user.jpg" style="width: 85%;margin-left: 15px;"/> *@
+                                        </div>
+                                        <div class="col-md-4 form-group">
+                                            <label class="control-label">Município / Estado</label>
+
+                                            <input type="text" readonly="readonly" value="@Model.Aluno.MunicipioEstado" class="form-control" class="form-control">
+                                        </div>
+                                        <div class="col-md-4 form-group">
+                                            <label class="control-label">Modalidade Esportiva</label>
+
+                                            <input type="text" readonly="readonly" value="" class="form-control" class="form-control">
+                                        </div>
+                                        <div class="col-md-4 form-group">
+                                            <label class="control-label">Unidade Escolar</label>
+
+                                            <input type="text" readonly="readonly" value="@Model.Aluno.NomeLocalidade" class="form-control" class="form-control">
+                                        </div>
+                                        <div class="col-md-4 form-group">
+                                            <label class="control-label">Controle</label>
+
+                                            <input type="text" readonly="readonly" value="" class="form-control" class="form-control">
+                                        </div>
+                                        <div class="col-md-4 form-group">
+                                            <img src="~/assets/images/pagameia.jpg" style="width: 37%;float: right;" />
+                                        </div>
+                                        <div class="col-md-4 form-group">
+                                            <img src="~/assets/images/android-app-store-logos.png" style="width: 50%;" />
+                                        </div>
+                                        <p class="text-warning" style="margin-left: 25px;margin-right: 25px;float: left;">
+                                            <code>
+                                                Documento padronizado nacionalmente conforme a Lei 12.933/2013. Válido para todo o território nacional até março do ano seguinte.
+                                            </code>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="edit" class="tab-pane">
+                    <form class="form-horizontal" method="get">
+                        <h4 class="mb-xlg">Informação Pessoal</h4>
+                        <fieldset>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="profileFirstName">Foto</label>
+                                <div class="col-md-8">
+                                    <div class="fileupload fileupload-new" data-provides="fileupload">
+                                        <div class="input-append">
+                                            <div class="uneditable-input">
+                                                <i class="fa fa-file fileupload-exists"></i>
+                                                <span class="fileupload-preview"></span>
+                                            </div>
+                                            <span class="btn btn-default btn-file">
+                                                <span class="fileupload-exists">Alterar</span>
+                                                <span class="fileupload-new">Selecionar foto</span>
+                                                <input type="file" />
+                                            </span>
+                                            <a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">Remover</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="profileLastName">Nome</label>
+                                <div class="col-md-8">
+                                    <input type="text" name="nome" id="nome" maxlength="200" class="form-control" required title="Por favor informe um nome." />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="profileLastName">Email</label>
+                                <div class="col-md-8">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-envelope"></i>
+                                        </span>
+                                        <input type="text" name="email" maxlength="100" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <hr class="dotted tall">
+                        <h4 class="mb-xlg">Alterar Senha</h4>
+                        <fieldset class="mb-xl">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="profileNewPassword">Senha Atual</label>
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control" id="profileNewPassword">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label" for="profileNewPassword">Nova Senha</label>
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control" id="profileNewPassword">
+                                </div>
+                                <label class="col-md-3 control-label" for="profileNewPasswordRepeat">Confirmar Senha</label>
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control" id="profileNewPasswordRepeat">
+                                </div>
+                            </div>
+                        </fieldset>
+                        <div class="panel-footer">
+                            <div class="row">
+                                <div class="col-md-9 col-md-offset-3">
+                                    <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
+                                    <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section CssSpecificVendor {
+    <link rel="stylesheet" href="~/assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.css"/>
+}
+
+@section Scripts {
+    <script src="~/assets/vendor/classy-qr/jquery.classyqr.js"></script>
+    <script src="~/assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.js"></script>
+    <script>
+        var text = 'http://front.hml.dnadobrasil.org.br/Identity/Account/ControlePresenca?alunoId=';//+ self.editDto.Id;
+        $('#qr').ClassyQR({
+            create: true,// signals the library to create the image tag inside the container div.
+            type: 'text',// text/url/sms/email/call/locatithe text to encode in the QR. on/wifi/contact, default is TEXT
+            text: text// the text to encode in the QR.
+        });
+    </script>
+}

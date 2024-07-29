@@ -1,0 +1,260 @@
+﻿@model WebApp.Models.TextoLaudoModel
+@{
+    ViewData["Title"] = "Listagem de TextosLaudos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="vTextoLaudo">
+    <div class="row">
+        <div class="col-lg-12">
+            <section class="panel">
+                <header class="panel-heading">
+                    <div class="panel-actions">
+                        <a href="#" class="card-action card-action-toggle" data-card-toggle></a>
+                    </div>
+                    <h2 class="panel-title">Listagem de TextosLaudos</h2>
+                </header>
+                <div class="panel-body">
+                    <div class="form-group row">
+                        <div class="col-sm-2 pull-right">
+                            <a href="@Url.Action("Create", "TextoLaudo")" id="addToTable" class="btn btn-block btn-primary pull-right"><i class="fa fa-plus"></i> &nbsp;&nbsp; Novo TextoLaudo </a>
+                        </div>
+                    </div>
+                    <table class="table table-bordered table-striped mb-0" id="datatable-default">
+                        <thead>
+                            <tr>
+                                <th class="text-center">Id</th>
+	                            <th class="text-center">Tipo Laudo</th>
+	                            <th class="text-center">Classificação</th>
+	                            <th class="text-center">Ponto Inicial</th>
+	                            <th class="text-center">Ponto Final</th>
+	                            <th class="text-center">Aviso</th>
+	                            <th class="text-center">Texto</th>
+                                <th class="text-center">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.TextosLaudos)
+                            {
+                                <tr>
+                                    <td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Id)</td>
+                                    <td class="text-center">@Html.DisplayFor(modelItem => item.NomeTipoLaudo)</td>
+                                    <td class="text-center">@Html.DisplayFor(modelItem => item.Classificacao)</td>
+                                    <td class="text-center">@Html.DisplayFor(modelItem => item.PontoInicial)</td>
+                                    <td class="text-center">@Html.DisplayFor(modelItem => item.PontoFinal)</td>
+                                    <td class="text-center">@Html.DisplayFor(modelItem => item.Aviso)</td>
+                                    <td class="text-center">@Html.DisplayFor(modelItem => item.Texto)</td>
+                                    <td class="actions text-center">
+                                        <a data-toggle="tooltip" data-placement="top" title="Editar"
+                                           href='javascript:(crud.EditModal(@item.Id))'
+                                           class="on-default edit-row" style='color: #FF9800'>
+                                            <i class="fa fa-pencil"></i>
+                                        </a>
+                                        <a data-toggle="tooltip" data-placement="top" title="Excluir" href='javascript:(crud.DeleteModal(@item.Id))'
+                                           class="on-default remove-row" style="cursor: pointer;color: #F44336"><i class="fa fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="mdDeleteTextoLaudo" tabindex="-1" role="dialog" aria-labelledby="mdDeleteTextoLaudoLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mdDeleteTextoLaudoLabel">
+                        <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Exclusão de TextoLaudo</strong>
+                    </h5>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-icon">
+                        <i class="fa fa-question-circle"></i>
+                    </div>
+                    <div class="modal-text">
+                        <input type="hidden" id="deleteTextoLaudoId" />
+                        <p class="mb-0">Tem certeza que deseja <b>excluir</b> esse registro?</p>
+                    </div>
+                    <div class="modal-wrapper">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-thumbs-o-down"></i> &nbsp;&nbsp;Não</button>
+                    <a id="deleteTextoLaudoHref" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="mdEditTextoLaudo" tabindex="-1" role="dialog" aria-labelledby="mdEditTextoLaudoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mdEditTextoLaudoLabel">
+                        <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Alterar TextoLaudo</strong>
+                    </h5>
+                </div>
+                @using (@Html.BeginForm("Edit", "TextoLaudo", FormMethod.Post, new { id = "formEditTextoLaudo", @class = "form-horizontal" }))
+                {
+                    <input type="hidden" name="editTextoLaudoId" :value="editDto.Id" />
+
+	                <div class="modal-body">
+
+                        <div class="form-group row">
+                            <label class="col-sm-3 control-label text-sm-right pt-2">Tipo Laudo <span class="required">*</span></label>
+                            <div class="col-sm-3">
+                                <input type="text" name="tipoLaudo" class="form-control"
+                                       maxlength="100" :value="editDto.NomeTipoLaudo"
+                                       title="Por favor informe o Tipo Laudo." required readonly/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 control-label text-sm-right pt-2">Idade <span class="required">*</span> </label>
+                            <div class="col-sm-3">
+                                <input type="number" id="idade" name="idade" class="form-control"
+                                       title="Por favor informe a idade." required :value="editDto.Idade" />
+                            </div>
+                            <label class="col-sm-2 control-label text-sm-right pt-2">Sexo <span class="required">*</span></label>
+                            <div class="col-sm-3">
+                                <input type="text" id="sexo" name="sexo" class="form-control"
+                                       title="Por favor informe o sexo." required :value="editDto.Sexo" readonly />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 control-label text-sm-right pt-2">Classificação <span class="required">*</span></label>
+                            <div class="col-sm-8">
+                                <input type="text" name="classificacao" class="form-control"
+                                       maxlength="100" :value="editDto.Classificacao"
+                                       title="Por favor informe a classificação." required />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+							
+                            <label class="col-sm-3 control-label text-sm-right pt-2">Aviso <span class="required">*</span></label>
+                            <div class="col-sm-8">
+                                <input type="text" name="aviso" class="form-control" maxlength="100" :value="editDto.Aviso"
+                                       title="Por favor informe o aviso." required />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 control-label text-sm-right pt-2">Ponto Inicial <span class="required">*</span></label>
+                            <div class="col-sm-2">
+                                <input type="text" id="pontoInicial" name="pontoInicial" class="form-control" maxlength="5"
+                                       title="Por favor informe o ponto inicial." required :value="editDto.PontoInicial" />
+                            </div>
+                            <label class="col-sm-1 control-label text-sm-right pt-2">Ponto Final <span class="required">*</span></label>
+                            <div class="col-sm-2">
+                                <input type="text" id="pontoFinal" name="pontoFinal" class="form-control" :value="editDto.PontoFinal" maxlength="5"
+                                       title="Por favor informe o ponto final." required />
+                            </div>
+
+                            <label class="col-sm-1 control-label text-sm-right pt-2">Quadrante <span class="required">*</span></label>
+                            <div class="col-sm-2">
+                                <input type="number" id="quadrante" name="quadrante" class="form-control" maxlength="2" :value="editDto.Quadrante"
+                                       title="Por favor informe o Quadrante." required />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 control-label text-sm-right pt-2">Texto <span class="required">*</span></label>
+                            <div class="col-sm-8">
+                                <textarea class="form-control" rows="3" maxlength="500" name="texto" title="Por favor informe o texto." :value="editDto.Texto"></textarea>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="reset" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
+                        <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section CssSpecificVendor {
+    <link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css" />
+    <link rel="stylesheet" href="~/assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
+    <link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />
+}
+@section Scripts {
+    <script src="~/assets/vendor/select2/js/select2.js"></script>
+    <script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
+    <script src="~/assets/vendor/jquery-mask/jquery.mask.js"></script>
+    <script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
+    <script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/js/formatTable.js"></script>
+    <script src="~/js/TextoLaudo.js"></script>
+
+    <script>
+
+        (function ($) {
+
+            'use strict';
+            var crub = @ViewBag.CrudMessage;
+
+            if (crub === 1) {
+                new PNotify({
+                    title: 'TextoLaudo',
+                    text: 'Cadastro realizado com sucesso!',
+                    type: 'success'
+                });
+                crub = 0;
+            } else if (crub === 2) {
+                new PNotify({
+                    title: 'TextoLaudo',
+                    text: 'Dados alterados com sucesso.',
+                    type: 'warning',
+                    icon: 'fa fa-pencil'
+                });
+                crub = 0;
+            } else if (crub === 3) {
+                new PNotify({
+                    title: 'TextoLaudo',
+                    text: 'Registro excluído com sucesso.',
+                    type: 'error',
+                    icon: 'fa fa-trash-o'
+                });
+                crub = 0;
+            }
+
+
+            var notify = @ViewBag.NotifyMessage;
+            var messagem = '@ViewBag.Notify';
+
+            if (notify === 0) {
+                new PNotify({
+                    title: 'TextoLaudo',
+                    text: messagem,
+                    type: 'success'
+                });
+                crub = 0;
+            } else if (notify === 1) {
+                new PNotify({
+                    title: 'TextoLaudo',
+                    text: messagem,
+                    type: 'warning'
+                });
+                crub = 0;
+            } else if (notify === 2) {
+                new PNotify({
+                    title: 'TextoLaudo',
+                    text: messagem,
+                    type: 'error'
+                });
+                crub = 0;
+            }
+
+            if ($.isFunction($.fn['tooltip'])) {
+                $('[data-toggle=tooltip],[rel=tooltip]').tooltip({ container: 'body' });
+            }
+
+        }).apply(this, [jQuery]);
+    </script>
+}
+
+
+

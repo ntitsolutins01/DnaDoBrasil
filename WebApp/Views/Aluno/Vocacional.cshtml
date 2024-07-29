@@ -1,0 +1,1716 @@
+﻿@{
+    ViewBag.Title = "Cadastro Vocacional";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row form-group col-md-12">
+    <div class="panel-group" id="accordionMeuTalento">
+        <div class="panel panel-accordion panel-accordion-voc">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a style="text-align: center">
+                        Vocacional
+                        <br />
+                    </a>
+                </h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        @using (@Html.BeginForm("CreateVocacional", "Aluno", FormMethod.Post, new { id = "form", @class = "form-horizontal" }))
+        {
+            <div class="panel-body">
+                <div class="row form-group col-md-12">
+                    <form id="chk-radios-form" action="forms-validation.html">
+                        <section class="panel">
+                            <div class="panel-body">
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>Profissional</strong></label>
+                                    </div>
+                                    <div class="row col-sm-6">
+                                        <select id="company" class="form-control" title="Please select at least one company" required>
+                                            <option value="">Selecione um profissional</option>
+                                            <option value="wagner telles da silva">Wagner Telles Da Silva</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            
+                                <div class="row form-group">
+                                    <div class="row form-group col-sm-12">
+                                        <label class="control-label"><strong>1. Trabalhar com máquinas ou equipamentos tecnológicos.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row form-group col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>2. Realizar experiências em laboratório.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>3. Criar alguma coisa, do ponto de vista artístico.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>4. Tratar de ou dar assistência a outras pessoas.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>5. Coordenar o trabalho de uma equipe.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>6. Fazer a contabilidade.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>7. Analisar o funcionamento de alguma coisa.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>8. Ler artigos científicos.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>9. Interpretar e compreender quadros.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>10. Ensinar ou educar alguém.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>11. Gerir um negócio ou uma empresa.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>12. Datilografar e/ou estenografar.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>13. Trabalhar a madeira ou produzir objetos de madeira.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>14. Ocupar-se com coisas inexploradas.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>15. Ler e interpretar poesia/literatura.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>16. Aconselhar pessoas.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>17. Moderar um debate.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>18. Escrever cartas comerciais.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>19. Conduzir ou fazer a manutenção de veículos.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>20. Observar e analisar rigorosamente alguma coisa.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>21. Traduzir livros.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>22. Trabalhar em equipe.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>23. Fazer a propaganda de alguma coisa.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>24. Trabalhar com calculadora ou computador.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>25. Fazer a reparação de aparelhos ou máquinas.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>26. Participar em projetos de investigação.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>27. Assistir a peças de teatro ou concertos.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>28. Servir ou cuidar de outras pessoas.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>29. Organizar congressos.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>30. Interpretar e aplicar leis.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>31. Desenhar planos de construção.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>32. Trabalhar durante um longo período, na solução de um problema.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>33. Criar e dar forma estética a objetos (ornamentar).</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>34. Governar uma casa.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>35. Controlar ou vigiar os outros.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>36. Organizar e avaliar estatísticas.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>37. Construir aparelhos elétricos ou fazer instalações elétricas.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>38. Realizar experiências químicas.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>39. Ocupar-se com arte e literatura.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>40. Prestar cuidados médicos.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>41. Vender alguma coisa.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>42. Fazer a escrita ou listagem de coisas.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>43. Trabalhar metais ou produzir alguma coisa de metal.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>44. Desenvolver um programa de informática.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>45. Fazer parte de um grupo de teatro ou banda.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>46. Cuidar de crianças ou adultos necessitados.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>47. Convencer os outros de alguma coisa.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>48. Classificar e organizar objetos ou materiais.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                            <label class="control-label"><strong>49. Cuidar, limpar e conservar objetos.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>50. Pesquisar as causas de um problema.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>51. Pintar, desenhar.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>52. Trabalhar num grupo de jovens.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>53. Negociar com outras pessoas.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>54. Vigiar o cumprimento das normas.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>55. Fazer ou fabricar algo de acordo com um plano ou esboço.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>56. Desenvolver e testar novas ideias.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>57. Criar obras artísticas e literárias.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>58. Imaginar-se na situação de outras pessoas.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>59. Assumir o cargo de orador, num grupo.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="row col-sm-12">
+                                        <label class="control-label"><strong>60. Controlar receitas e despesas.</strong><span class="required">*</span></label>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="awesome" name="porto_is" type="radio" value="awesome" required />
+                                            <label for="awesome">Não me interessa; não faço com prazer</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="very-awesome" name="porto_is" type="radio" value="very-awesome" />
+                                            <label for="very-awesome">Interessa-me pouco</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me suficientemente</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-3">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me bastante</label>
+                                        </div>
+                                        <div class="radio-custom radio-primary col-sm-4">
+                                            <input id="ultra-awesome" name="porto_is" type="radio" value="ultra-awesome" />
+                                            <label for="ultra-awesome">Interessa-me muito; faço com muito prazer</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+
+                            </div>
+
+                            <footer class="panel-footer">
+                                <div class="row">
+                                    <div class="col-sm-9 col-sm-offset-3">
+                                        <button type="submit" class="btn btn-primary pull-right" style="margin-left: 5px;margin-right: 5px;"><i class="fa fa-forward"></i> &nbsp;&nbsp;Próximo</button>
+                                        <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
+                                        <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
+                                    </div>
+                                </div>
+                            </footer>
+                        </section>
+                    </form>
+                </div>
+            </div>
+
+        }
+    </div>
+</div>
+
+@section CssSpecificVendor {
+    <link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />
+}
+@section Scripts {
+    <script src="~/assets/vendor/ios7-switch/ios7-switch.js"></script>
+    <script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
+    <script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
+    <script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/js/formatTable.js"></script>
+    <script>
+
+
+        // iosSwitcher
+        (function ($) {
+
+            'use strict';
+
+            if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
+
+                $(function () {
+                    $('[data-plugin-ios-switch]').each(function () {
+                        var $this = $(this);
+
+                        $this.themePluginIOS7Switch();
+                    });
+                });
+
+            }
+
+        }).apply(this, [jQuery]);
+
+    </script>
+}

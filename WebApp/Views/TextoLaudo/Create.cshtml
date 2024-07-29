@@ -1,0 +1,167 @@
+﻿@model TiposLaudoModel
+@{
+	ViewData["Title"] = "Inclusão de TextoLaudo";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="vTextoLaudo">
+	<div class="row">
+		<div class="col-md-12">
+			@using (@Html.BeginForm("Create", "TextoLaudo", FormMethod.Post, new { id = "formTextoLaudo", @class = "form-horizontal" }))
+
+			{
+				<section class="panel">
+					<header class="panel-heading">
+						<div class="panel-actions">
+							<a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
+						</div>
+
+						<h2 class="panel-title">Cadastro de TextoLaudo</h2>
+					</header>
+					<div class="panel-body">
+                        <div class="form-group row">
+                            <label class="col-sm-3 control-label text-sm-right pt-2">Tipo Laudo <span class="required">*</span></label>
+                            <div class="col-sm-4">
+                                <select class="form-control populate select2" name="ddlTipoLaudo" id="ddlTipoLaudo" style="width:100%"
+                                        required title="Por favor selecione o tipo de laudo"
+                                        asp-for="TiposLaudoId" asp-items="Model.ListTiposLaudos">
+                                    <option value="">Selecionar Tipo Laudo</option>
+                                </select>
+                            </div>
+                        </div>
+
+						<div class="form-group row">
+							<label class="col-sm-3 control-label text-sm-right pt-2">Idade <span class="required">*</span> </label>
+							<div class="col-sm-3">
+								<input type="number" name="idade" class="form-control" required
+									   title="Por favor informe a idade." />
+							</div>
+							<label class="col-sm-2 control-label text-sm-right pt-2">Sexo <span class="required">*</span></label>
+							<div class="col-sm-3">
+								<select class="form-control populate select2" name="ddlSexo" id="ddlSexo" required
+										title="Por favor selecione um sexo.">
+									<option value="">Selecionar Sexo</option>
+									<option value="G">GERAL</option>
+									<option value="M">MASCULINO</option>
+									<option value="F">FEMININO</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-3 control-label text-sm-right pt-2">Classificação <span class="required">*</span></label>
+                            <div class="col-sm-8">
+                                <input type="text" name="classificacao" class="form-control"
+                                       maxlength="100"
+                                       title="Por favor informe a classificação." required />
+                            </div>
+						</div>
+
+						<div class="form-group row">
+                            <label class="col-sm-3 control-label text-sm-right pt-2">Aviso <span class="required">*</span></label>
+                            <div class="col-sm-8">
+                                <input type="text" name="aviso" class="form-control" maxlength="100"
+                                       title="Por favor informe o aviso." required />
+                            </div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-3 control-label text-sm-right pt-2">Ponto Inicial <span class="required">*</span> </label>
+							<div class="col-sm-2">
+								<input type="text" id="pontoInicial" name="pontoInicial" class="form-control"  maxlength="5" required
+									   title="Por favor informe o ponto inicial." />
+							</div>
+							<label class="col-sm-1 control-label text-sm-right pt-2">Ponto Final <span class="required">*</span> </label>
+							<div class="col-sm-2">
+                                <input type="text" id="pontoFinal" name="pontoFinal" class="form-control" maxlength="5" required
+									   title="Por favor informe o ponto final." />
+							</div>
+
+							<label class="col-sm-1 control-label text-sm-right pt-2">Quadrante <span class="required">*</span></label>
+							<div class="col-sm-2">
+                                <input type="number" id="quadrante" name="quadrante" class="form-control" maxlength="2" required
+									   title="Por favor informe o Quadrante." />
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-3 control-label text-sm-right pt-2">Texto <span class="required">*</span></label>
+							<div class="col-sm-8">
+								<textarea class="form-control" rows="5" name="texto" title="Por favor informe o texto." required></textarea>
+							</div>
+						</div>
+					</div>
+					<footer class="panel-footer">
+						<div class="row">
+							<div class="col-md-9 col-md-offset-3">
+								<a href="@Url.Action("Index", "TextoLaudo")" class="btn btn-dark pull-right" style="margin-left: 5px;margin-right: 5px;"><i class="fa fa-reply"></i> &nbsp;&nbsp;Voltar</a>
+								<button type="reset" class="btn btn-danger pull-right" style="margin-left: 5px;"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
+								<button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
+							</div>
+						</div>
+					</footer>
+				</section>
+			}
+		</div>
+	</div>
+</div>
+@section CssSpecificVendor {
+    <link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css" />
+    <link rel="stylesheet" href="~/assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
+}
+@section Scripts {
+    <script src="~/assets/vendor/select2/js/select2.js"></script>
+	<script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
+	<script src="~/assets/vendor/jquery-mask/jquery.mask.js"></script>
+	<script src="~/js/TextoLaudo.js"></script>
+	<script>
+
+		(function ($) {
+
+			'use strict';
+			var crud = @ViewBag.CrudMessage;
+
+			if (crud === 1) {
+				new PNotify({
+					title: 'TextoLaudo',
+					text: 'Cadastro realizado com sucesso!',
+					type: 'success'
+				});
+			} else if (crud === 2) {
+				new PNotify({
+					title: 'TextoLaudo',
+					text: 'Dados alterados com sucesso.',
+					type: 'warning'
+				});
+			} else if (crud === 3) {
+				new PNotify({
+					title: 'TextoLaudo',
+					text: 'Registro excluído com sucesso.',
+					type: 'error'
+				});
+			}
+
+			var notify = @ViewBag.NotifyMessage;
+			var messagem = '@ViewBag.Notify';
+
+			if (notify === 0) {
+				new PNotify({
+					title: 'TextoLaudo',
+					text: messagem,
+					type: 'success'
+				});
+			} else if (notify === 1) {
+				new PNotify({
+					title: 'TextoLaudo',
+					text: messagem,
+					type: 'warning'
+				});
+			} else if (notify === 2) {
+				new PNotify({
+					title: 'TextoLaudo',
+					text: messagem,
+					type: 'error'
+				});
+			}
+
+		}).apply(this, [jQuery]);
+
+	</script>
+}

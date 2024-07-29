@@ -838,6 +838,15 @@ ul.simple-bullet-list li:before {
 .simple-card-list li.primary {
 	background: #0088cc;
 }
+.simple-card-list li.rosa {
+	background: #E91E63;
+}
+.simple-card-list li.roxo {
+	background: #9C27B0;
+}
+.simple-card-list li.azul {
+	background: #673AB7;
+}
 /* Search Results */
 .search-content .search-toolbar .nav-pills li.active a {
 	color: #0088cc;

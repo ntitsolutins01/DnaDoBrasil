@@ -11,35 +11,38 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using System.Security.Claims;
+using WebApp.Areas.Identity.Models;
+using WebApp.Enumerators;
 
 namespace WebApp.Areas.Identity.Pages.Account
 {
-    [AllowAnonymous]
-    public class LoginModel : PageModel
-    {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly ILogger<LoginModel> _logger;
+	[AllowAnonymous]
+	public class LoginModel : PageModel
+	{
+		private readonly UserManager<IdentityUser> _userManager;
+		private readonly SignInManager<IdentityUser> _signInManager;
+		private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<IdentityUser> signInManager, 
-            ILogger<LoginModel> logger,
-            UserManager<IdentityUser> userManager)
-        {
-            _userManager = userManager;
-            _signInManager = signInManager;
-            _logger = logger;
-        }
+		public LoginModel(SignInManager<IdentityUser> signInManager,
+			ILogger<LoginModel> logger,
+			UserManager<IdentityUser> userManager)
+		{
+			_userManager = userManager;
+			_signInManager = signInManager;
+			_logger = logger;
+		}
 
-        [BindProperty]
-        public LoginInput Login { get; set; }
-        
+		[BindProperty]
+		public LoginInput Login { get; set; }
+
 
 		public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
-        public string ReturnUrl { get; set; }
+		public string ReturnUrl { get; set; }
 
-        [TempData]
-        public string ErrorMessage { get; set; }
+		[TempData]
+		public string ErrorMessage { get; set; }
 
 		public class LoginInput : IValidatableObject
 		{
@@ -69,57 +72,85 @@ namespace WebApp.Areas.Identity.Pages.Account
 			}
 		}
 
-		public async Task OnGetAsync(string returnUrl = null)
-        {
-            if (!string.IsNullOrEmpty(ErrorMessage))
-            {
-                ModelState.AddModelError(string.Empty, ErrorMessage);
-            }
+		public async Task OnGetAsync(int? notify, string message = null, string returnUrl = null)
+		{
+			if (!string.IsNullOrEmpty(ErrorMessage))
+			{
+				ModelState.AddModelError(string.Empty, ErrorMessage);
+			}
 
-            returnUrl ??= Url.Content("~/");
+			returnUrl ??= Url.Content("~/");
 
-            // Clear the existing external cookie to ensure a clean login process
-            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+			// Clear the existing external cookie to ensure a clean login process
+			await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+			ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
-            ReturnUrl = returnUrl;
-        }
+			ReturnUrl = returnUrl;
+		}
 
-        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
-        {
-            returnUrl ??= Url.Content("~/");
+		public async Task<IActionResult> OnPostAsync(string? returnUrl = null)
+		{
 
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-        
-            if (ModelState.IsValid)
-            {
-                // This doesn't count login failures towards account lockout
-                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Login.Email, Login.Password, Login.RememberMe, lockoutOnFailure: false);
-                if (result.Succeeded)
-                {
-                    _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
-                }
-                if (result.RequiresTwoFactor)
-                {
-                    return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Login.RememberMe });
-                }
-                if (result.IsLockedOut)
-                {
-                    _logger.LogWarning("User account locked out.");
-                    return RedirectToPage("./Lockout");
-                }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                    return Page();
-                }
-            }
+#if DEBUG
+			returnUrl = Url.Content("~/Aluno/Create");
+#else
+			returnUrl = Url.Content("~/Dashboard");
+#endif
 
-            // If we got this far, something failed, redisplay form
-            return Page();
-        }
-    }
+			if (!ModelState.IsValid) return Page();
+			var result =
+				await _signInManager.PasswordSignInAsync(Login.Email, Login.Password, Login.RememberMe, true);
+
+			var user = await _userManager.FindByEmailAsync(Login.Email);
+
+			var roles = await _userManager.GetRolesAsync(user);
+
+
+			if (user == null)
+			{
+				ModelState.AddModelError(string.Empty, "Usuário não cadastrado.");
+				return Page();
+			}
+
+			switch (result.Succeeded)
+			{
+				case false when result.IsLockedOut:
+					_logger.LogWarning("A sua conta foi bloqueada.");
+					ModelState.AddModelError(string.Empty, "A sua conta foi bloqueada.");
+					return RedirectToPage("./ForgotPassword");
+				case false:
+					ModelState.AddModelError(string.Empty, "Senha inválida.");
+					return Page();
+				case true when !user.EmailConfirmed:
+					{
+						_logger.LogInformation("Primeiro acesso do usuário.");
+
+						var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+						var email = Login.Email;
+						var callbackUrl = Url.Page(
+							"/Account/FirstAccessPassword",
+							null,
+							new { email, code },
+							Request.Scheme);
+
+						return Redirect($"/Identity/Account/Manage/FirstAccessPassword?email={email}&code={code}");
+					}
+				case true:
+					_logger.LogInformation("User logged in.");
+					var userRole = roles.First();
+					//var userRole = ((ClaimsIdentity)user.Identity).FindFirst(ClaimTypes.Role).Value;
+					if (userRole == UserRoles.Aluno)
+					{
+
+                        return RedirectToPage("Login", new { notify = (int)EnumNotify.Success, message = $"Este usuário não possui permissão de acesso ao sistema DNA." });
+                    }
+
+					return LocalRedirect(returnUrl);
+				default:
+					// If we got this far, something failed, redisplay form
+					return Page();
+			}
+		}
+	}
 }

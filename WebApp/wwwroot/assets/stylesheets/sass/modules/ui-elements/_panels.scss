@@ -394,7 +394,8 @@ html .panel#{if($admin-ext, '.panel-admin', '')} .panel-heading-transparent {
 // ACTIONS
 // -----------------------------------------------------------------------------
 #{if($admin-ext, '.panel-admin ', '')}.panel-action-toggle,
-#{if($admin-ext, '.panel-admin ', '')}.panel-action-dismiss {
+#{if($admin-ext, '.panel-admin ', '')}.panel-action-dismiss,
+#{if($admin-ext, '.panel-admin ', '')}.panel-action-print {
 	display: inline-block;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
@@ -418,6 +419,12 @@ html .panel#{if($admin-ext, '.panel-admin', '')} .panel-heading-transparent {
 #{if($admin-ext, '.panel-admin ', '')}.panel-action-dismiss {
 	&:before {
 		content: "\f00d";
+	}
+}
+
+#{if($admin-ext, '.panel-admin ', '')}.panel-action-print {
+	&:before {
+		content: "\f02f";
 	}
 }
 

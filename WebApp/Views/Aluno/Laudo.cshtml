@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewData["Title"] = "Laudo do Aluno";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="row">
+	<div class="col-md-12">
+		@using (@Html.BeginForm("CreateLaudo", "Aluno", FormMethod.Post, new { id = "form", @class = "form-horizontal" }))
+		{
+			<section class="panel">
+				<header class="panel-heading">
+					<div class="panel-actions">
+						<a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
+					</div>
+
+					<h2 class="panel-title">Laudo do Aluno</h2>
+				</header>
+				<div class="panel-body">
+					<div class="panel-body">
+						<div class="wizard-progress wizard-progress-lg">
+							<div class="steps-progress">
+								<div class="progress-indicator" style="width: 0%;"></div>
+							</div>
+							<ul class="wizard-steps">
+								<li class="active">
+									<a href="@Url.Action("TalentoEsportivo", "Aluno")" data-toggle="tab"><span><i class="fa fa-trophy"></i></span>Talento Esportivo</a>
+								</li>
+								<li>
+									<a href="@Url.Action("Vocacional", "Aluno")" data-toggle="tab"><span><i class="fa fa-star-half-o"></i></span>Vocacional</a>
+								</li>
+								<li>
+									<a href="@Url.Action("QualidadeVida", "Aluno")" data-toggle="tab"><span><i class="fa fa-star-o"></i></span>Qualidade de Vida</a>
+								</li>
+								<li>
+									<a href="@Url.Action("Saude", "Aluno")" data-toggle="tab"><span><i class="fa fa-heartbeat"></i></span>Saude</a>
+								</li>
+								<li>
+									<a href="@Url.Action("ConsumoAlimentar", "Aluno")" data-toggle="tab"><span><i class="fa fa-cutlery"></i></span>Consumo Alimentar</a>
+								</li>
+								<li>
+									<a href="@Url.Action("SaudeBucal", "Aluno")" data-toggle="tab"><span><i class="fa fa-medkit"></i></span>Saude Bucal</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</section>
+		}
+	</div>
+</div>
+
+
+
+

@@ -8406,6 +8406,11 @@ html.ie11 .scroll-to-top {
 	color: #FFF;
 }
 
+.panel-body.bg-green {
+	background: #4CAF50;
+	color: #FFF;
+}
+
 .panel-body.bg-tertiary {
 	background: #2BAAB1;
 	color: #FFF;
@@ -8423,6 +8428,31 @@ html.ie11 .scroll-to-top {
 
 .panel-body.bg-warning {
 	background: #ed9c28;
+	color: #FFF;
+}
+
+.panel-body.bg-warning-less {
+	background: #f2b55e;
+	color: #FFF;
+}
+
+.panel-body.bg-danger-less {
+	background: #d9524d;
+	color: #FFF;
+}
+
+.panel-body.bg-success-less {
+	background: #80c883;
+	color: #FFF;
+}
+
+.panel-body.bg-voc {
+	background: #cdbadb;
+	color: #FFF;
+}
+
+.panel-body.bg-qv {
+	background: #00a4a9;
 	color: #FFF;
 }
 
@@ -8903,7 +8933,8 @@ html .panel .panel-heading-transparent + .panel-body {
 }
 
 .panel-action-toggle,
-.panel-action-dismiss {
+.panel-action-dismiss,
+.panel-action-print {
 	display: inline-block;
 	font: normal normal normal 14px/1 FontAwesome;
 	font-size: inherit;
@@ -8922,6 +8953,10 @@ html .panel .panel-heading-transparent + .panel-body {
 
 .panel-action-dismiss:before {
 	content: "\f00d";
+}
+
+.panel-action-print:before {
+	content: "\f02f";
 }
 
 .panel-collapsed .panel-body,
@@ -10613,9 +10648,9 @@ body .ui-pnotify.icon-nb .notification .ui-pnotify-icon > span {
 	margin-right: 4px;
 }
 
-.panel-group .panel-accordion .panel-body {
-	border-radius: 0 0 5px 5px;
-}
+	.panel-group .panel-accordion .panel-body {
+		border-radius: 15px 15px 15px 15px;
+	}
 
 .panel-group .panel-accordion.panel-accordion-first {
 	border-radius: 0 0 5px 5px;
@@ -10647,6 +10682,16 @@ body .ui-pnotify.icon-nb .notification .ui-pnotify-icon > span {
 
 .panel-group .panel-accordion-info .panel-heading .panel-title a {
 	background: #5bc0de;
+	color: #FFF;
+}
+
+.panel-group .panel-accordion-qv .panel-heading .panel-title a {
+	background: #00a4a9;
+	color: #FFF;
+}
+
+.panel-group .panel-accordion-voc .panel-heading .panel-title a {
+	background: #a787c0;
 	color: #FFF;
 }
 
@@ -10847,7 +10892,7 @@ html.dark .panel-group .panel-accordion .form-control {
 	position: relative;
 	max-height: 200px;
 	max-width: 200px;
-	margin: 0 auto;
+	/*margin: 0 auto;*/
 	width: 100%;
 	padding-bottom: 50%;
 }
@@ -10872,7 +10917,7 @@ html.dark .panel-group .panel-accordion .form-control {
 
 .liquid-meter-wrapper.liquid-meter-sm .liquid-meter {
 	max-height: 150px;
-	max-width: 150px;
+	max-width: 90px;
 }
 
 .liquid-meter-wrapper.liquid-meter-md .liquid-meter {
@@ -14983,12 +15028,12 @@ ul.widget-todo-list li:last-child {
 
 .widget-profile-info .profile-picture img {
 	display: block;
-	width: 100px;
-	height: 100px;
+	width: 200px;
+	height: 200px;
 	margin-right: 15px;
 	border: 4px solid #fff;
 	-webkit-border-radius: 50px;
-	border-radius: 50px;
+	border-radius: 100px;
 }
 
 .widget-profile-info .profile-info {
@@ -15639,6 +15684,7 @@ html.dark .table .actions-hover a {
 /* Common Fixes */
 .dataTables_wrapper {
 	position: relative;
+	padding: 0px;
 }
 
 .dataTables_wrapper .DTTT.btn-group {
