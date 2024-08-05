@@ -347,6 +347,25 @@ var vm = new Vue({
                 self.ShowLoad(false, "pEvolutivo");
             });
 
+            axios.post("Dashboard/GetGraficosVocacionalByFilter", obj, axiosConfig).then(result => {
+                var self = this;
+
+                self.ShowLoad(true, "pVocacionalPerc");
+                self.ShowLoad(true, "pVocacionalTot");
+
+                self.SetGraficoVocacionalPercentual(result);
+                self.SetGraficoTotalizadorVocacional(result);
+
+                self.ShowLoad(false, "pVocacionalPerc");
+                self.ShowLoad(false, "pVocacionalTot");
+
+            }).catch(error => {
+                Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
+
+                self.ShowLoad(false, "pVocacionalPerc");
+                self.ShowLoad(false, "pVocacionalTot");
+            });
+
 
             axios.post("Dashboard/GetGraficosSaudeByFilter", obj, axiosConfig).then(result => {
                 var self = this;
@@ -439,25 +458,6 @@ var vm = new Vue({
 
                 self.ShowLoad(false, "pQualidadeVidaPerc");
                 self.ShowLoad(false, "pQualidadeVidaTot");
-            });
-
-            axios.post("Dashboard/GetGraficosVocacionalByFilter", obj, axiosConfig).then(result => {
-                var self = this;
-
-                self.ShowLoad(true, "pVocacionalPerc");
-                self.ShowLoad(true, "pVocacionalTot");
-
-                self.SetGraficoVocacionalPercentual(result);
-                self.SetGraficoTotalizadorVocacional(result);
-
-                self.ShowLoad(false, "pVocacionalPerc");
-                self.ShowLoad(false, "pVocacionalTot");
-
-            }).catch(error => {
-                Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
-
-                self.ShowLoad(false, "pVocacionalPerc");
-                self.ShowLoad(false, "pVocacionalTot");
             });
 
 
