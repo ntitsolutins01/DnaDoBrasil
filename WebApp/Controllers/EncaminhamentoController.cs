@@ -93,7 +93,7 @@ public class EncaminhamentoController : BaseController
         {
             var command = new EncaminhamentoModel.CreateUpdateEncaminhamentoCommand
             {
-                TipoLaudoId = collection["ddlTipoLaudo"] == "" ? null : Convert.ToInt32(collection["ddlTipoLaudo"].ToString()).ToString(),
+                TipoLaudoId = Convert.ToInt32(collection["ddlTipoLaudo"].ToString()),
                 Nome = collection["nome"].ToString(),
                 Parametro = collection["parametro"].ToString(),
                 Descricao = collection["descricao"].ToString(),
@@ -129,12 +129,13 @@ public class EncaminhamentoController : BaseController
         {
             var command = new EncaminhamentoModel.CreateUpdateEncaminhamentoCommand
             {
-                Id = Convert.ToInt32(collection["editEncaminhamentoId"]),
+	            Id = Convert.ToInt32(collection["editEncaminhamentoId"]),
 				Nome = collection["nome"].ToString(),
 				Parametro = collection["parametro"].ToString(),
 				Descricao = collection["descricao"].ToString(),
 				Status = collection["editStatus"].ToString() == "" ? false : true
-            };
+
+			};
 
             await ApiClientFactory.Instance.UpdateEncaminhamento(command.Id, command);
 

@@ -26,40 +26,7 @@ var vm = new Vue({
 
             if (formid === "formEditEncaminhamento") {
 
-                $("#formEditEncaminhamento").validate({
-                    rules:
-                    {
-                        EncaminhamentoPrimeiroBimestre:
-                        {
-                            range: [0.00, 10]
-                        },
-                        EncaminhamentoSegundoBimestre:
-                        {
-                            range: [0.00, 10]
-                        },
-                        EncaminhamentoTerceiroBimestre:
-                        {
-                            range: [0.00, 10]
-                        },
-                        EncaminhamentoQuartoBimestre:
-                        {
-                            range: [0.00, 10]
-                        }
-                    },
-                    messages: {
-                        "EncaminhamentoPrimeiroBimestre": {
-                            range: "Encaminhamento deve ser entre 00,00 à 10."
-                        },
-                        "EncaminhamentoSegundoBimestre": {
-                            range: "Encaminhamento deve ser entre 00,00 à 10."
-                        },
-                        "EncaminhamentoTerceiroBimestre": {
-                            range: "Encaminhamento deve ser entre 00,00 à 10."
-                        },
-                        "EncaminhamentoQuartoBimestre": {
-                            range: "Encaminhamento deve ser entre 00,00 à 10."
-                        }
-                    },
+                $("#formEditEncaminhamento ").validate({
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
                     },
@@ -193,39 +160,6 @@ var vm = new Vue({
                 });
 
                 $("#formEncaminhamento").validate({
-                    rules:
-                    {
-                        EncaminhamentoPrimeiroBimestre:
-                        {
-                            range: [0.00, 10]
-                        },
-                        EncaminhamentoSegundoBimestre:
-                        {
-                            range: [0.00, 10]
-                        },
-                        EncaminhamentoTerceiroBimestre:
-                        {
-                            range: [0.00, 10]
-                        },
-                        EncaminhamentoQuartoBimestre:
-                        {
-                            range: [0.00, 10]
-                        }
-                    },
-                    messages: {
-                        "EncaminhamentoPrimeiroBimestre": {
-                            range: "Encaminhamento deve ser entre 00,00 à 10."
-                        },
-                        "EncaminhamentoSegundoBimestre": {
-                            range: "Encaminhamento deve ser entre 00,00 à 10."
-                        },
-                        "EncaminhamentoTerceiroBimestre": {
-                            range: "Encaminhamento deve ser entre 00,00 à 10."
-                        },
-                        "EncaminhamentoQuartoBimestre": {
-                            range: "Encaminhamento deve ser entre 00,00 à 10."
-                        }
-                    },
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
                     },
@@ -277,7 +211,7 @@ var vm = new Vue({
 
                 self.editDto.Id = result.data.id;
                 self.editDto.Nome = result.data.nome;
-                self.editDto.Parametro = result.data.paremetro;
+                self.editDto.Parametro = result.data.parametro;
                 self.editDto.Descricao = result.data.descricao;
                 self.editDto.Status = result.data.status;
                 

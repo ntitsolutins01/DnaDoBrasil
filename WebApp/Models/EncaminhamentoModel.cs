@@ -25,9 +25,9 @@ namespace WebApp.Models
         public class CreateUpdateEncaminhamentoCommand
 		{
 			public int Id { get; set; }
-            public string TipoLaudoId { get; set; }
-            public string Nome { get; set; }
-            public string Parametro { get; set; }
+            public int TipoLaudoId { get; set; }
+            public required string Nome { get; set; }
+            public required string Parametro { get; set; }
             public string? Descricao { get; set; }
             public bool Status { get; set; } = true;
            
