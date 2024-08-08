@@ -161,7 +161,8 @@ namespace WebApp.Controllers
 					AlunoId = collection["ddlAluno"] == "" ? null : Convert.ToInt32(collection["ddlAluno"].ToString()).ToString(),
 				};
 
-                var possuiPrecensa = ApiClientFactory.Instance.GetControlePresencaByAlunoId(Convert.ToInt32(command.AlunoId)).Where(x=>x.Data == DateTime.Now.ToString("dd/MM/yyyy"));
+                var possuiPrecensa = ApiClientFactory.Instance.GetControlePresencaByAlunoId(Convert.ToInt32(command.AlunoId))
+                    .Where(x=>x.Data == DateTime.Now.ToString("dd/MM/yyyy") && x.EventoId == null);
 
                 if (possuiPrecensa.Any())
                 {
