@@ -24,7 +24,11 @@
 						<thead>
 							<tr>
 								<th class="text-center">Id</th>
-								@* campos de exibição na grid *@
+								<th class="text-center">Professor</th>
+								<th class="text-center">ModuloEad</th>
+								<th class="text-center">Carga Horária</th>
+								<th class="text-center">Titulo</th>
+								<th class="text-center">Descrição</th>
 								<th class="text-center">Status</th>
 								<th class="text-center">Ações</th>
 							</tr>
@@ -34,7 +38,11 @@
 							{ 
 								<tr>
 									<td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Id)</td>
-									
+									<td class="text-center">@Html.DisplayFor(modelItem => item.NomeProfessor)</td>
+									<td class="text-center">@Html.DisplayFor(modelItem => item.ModuloEadId)</td>
+									<td class="text-center">@Html.DisplayFor(modelItem => item.CargaHoraria)</td>
+									<td class="text-center">@Html.DisplayFor(modelItem => item.Titulo)</td>
+									<td class="text-center">@Html.DisplayFor(modelItem => item.Descricao)</td>
 									@if (item.Status)
 									{
 										<td class="text-center"><span class="label label-success">ATIVO</span></td>
@@ -100,7 +108,27 @@
 				{
 					<div class="modal-body">
 						<input type="hidden" name="editAulaId" :value="editDto.Id" />
-						@* campos de alteracao de aula *@
+						<div class="form-group row">
+							<label class="col-sm-3 control-label text-sm-right pt-2">Carga Horária<span class="required">*</span></label>
+							<div class="col-sm-2">
+								<input type="text" id="cargaHoraria" name="cargaHoraria" class="form-control" maxlength="6"
+									   title="Por favor informe o valor final." required :value="editDto.CargaHoraria" />
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-3 control-label text-sm-right pt-2">Titulo da Aula  <span class="required">*</span></label>
+							<div class="col-sm-9">
+								<input type="text" name="nome" :value="editDto.Titulo" class="form-control"
+								       maxlength="150"
+								       title="Por favor informe o nome do curso." required/>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label text-sm-right pt-2">Descrição </label>
+							<div class="col-sm-9">
+								<textarea class="form-control" rows="3" maxlength="500" name="descricao" :value="editDto.Descricao" id="descricao"></textarea>
+							</div>
+						</div>
 						<div class="form-group row">
 							<label class="col-sm-2 control-label text-sm-right pt-2">Status</label>
 							<div class="col-md-3">

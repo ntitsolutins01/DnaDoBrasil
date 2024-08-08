@@ -13,8 +13,6 @@ var vm = new Vue({
             var cargaHoraria = $("#cargaHoraria");
             cargaHoraria.mask('000', { reverse: false });
 
-            
-
 
             //skin checkbox
             if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
