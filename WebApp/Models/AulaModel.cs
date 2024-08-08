@@ -7,15 +7,21 @@ namespace WebApp.Models
 	{
         public AulaDto Aula { get; set; }
         public List<AulaDto> Aulas { get; set; }
-        public int ProfessorId { get; set; }
-        public SelectList Professores { get; set; }
+        public string ProfessorId { get; set; }
+        public SelectList ListProfessores { get; set; }
+        public string ModuloEadId { get; set; }
+        public SelectList ListModulosEad { get; set; }
+        public string CursoId { get; set; }
+        public SelectList ListCursos { get; set; }
+        public string TipoCursosId { get; set; }
+        public SelectList ListTipoCursos { get; set; }
 
         public class CreateUpdateAulaCommand
 		{
-            public required int Id { get; set; }
+			public int Id { get; set; }
             public required int CargaHoraria { get; set; }
-            public required int ProfessorId { get; set; }
-            public required int MuduloEadId { get; set; }
+			public required int ProfessorId { get; set; }
+			public required int MuduloEadId { get; set; }
             public required string Titulo { get; set; }
             public string? Descricao { get; set; }
             public bool Status { get; set; } = true;

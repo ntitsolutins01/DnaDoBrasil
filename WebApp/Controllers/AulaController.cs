@@ -60,20 +60,19 @@ public class AulaController : BaseController
         {
             SetNotifyMessage(notify, message);
             SetCrudMessage(crud);
-            var professores = new SelectList(ApiClientFactory.Instance.GetUsuarioAll().Where(x=>x.PerfilId == (int)EnumPerfil.Professor), "Sigla", "Nome");
+            var professores = new SelectList(ApiClientFactory.Instance.GetUsuarioAll().Where(x=>x.PerfilId == (int)EnumPerfil.Professor), "Id", "Nome");
+            var tipoCurso = new SelectList(ApiClientFactory.Instance.GetTipoCursosAll(), "Id", "Nome");
 
-
-
-            return View(new AulaModel()
+			return View(new AulaModel()
             {
-                Professores = professores
-            });
+                ListProfessores = professores,
+                ListTipoCursos = tipoCurso
+			});
         }
         catch (Exception e)
         {
             Console.Write(e.StackTrace);
             return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = e.Message });
-
         }
     }
 
@@ -90,11 +89,16 @@ public class AulaController : BaseController
         {
             var command = new AulaModel.CreateUpdateAulaCommand
             {
-                Id = 0,
-                CargaHoraria = 0,
-                ProfessorId = 0,
-                MuduloEadId = 0,
-                Titulo = null
+	            CargaHoraria = Convert.ToInt32(collection["cargaHoraria"]
+		            .ToString()),
+	            ProfessorId = Convert.ToInt32(collection["ddlTipoCurso"]
+		            .ToString()),
+	            MuduloEadId = Convert.ToInt32(collection["ddlTipoCurso"]
+		            .ToString()),
+	            Titulo = collection["nome"]
+		            .ToString(),
+	            Descricao = collection["descricao"]
+		            .ToString()
             };
 
             await ApiClientFactory.Instance.CreateAula(command);
@@ -127,7 +131,7 @@ public class AulaController : BaseController
 
             return View(new AulaModel()
             {
-                
+               
              
             });
         }
@@ -155,17 +159,20 @@ public class AulaController : BaseController
         {
             var command = new AulaModel.CreateUpdateAulaCommand
             {
-                Id = Convert.ToInt32(collection["editAulaId"]),
-
-                Status = collection["editStatus"]
-                             .ToString() ==
-                         ""
-                    ? false
-                    : true,
-                CargaHoraria = 0,
-                ProfessorId = 0,
-                MuduloEadId = 0,
-                Titulo = null
+	            Id = Convert.ToInt32(collection["editAulaId"]),
+	            CargaHoraria = Convert.ToInt32(collection["cargaHoraria"]
+		            .ToString()),
+	            Titulo = collection["nome"]
+		            .ToString(),
+	            Descricao = collection["descricao"]
+		            .ToString(),
+	            Status = collection["editStatus"]
+		                     .ToString() ==
+	                     ""
+		            ? false
+		            : true,
+	            ProfessorId = 0,
+	            MuduloEadId = 0
             };
 
             await ApiClientFactory.Instance.UpdateAula(command.Id, command);
