@@ -8,20 +8,15 @@ namespace WebApp.Models
         public AulaDto Aula { get; set; }
         public List<AulaDto> Aulas { get; set; }
         public string ProfessorId { get; set; }
-        public string ModuloEadId { get; set; }
-        public string TipoCursosId { get; set; }
-        public string CursoId { get; set; }
         public SelectList ListProfessores { get; set; }
-        public SelectList ListCursos { get; set; }
+        public string ModuloEadId { get; set; }
         public SelectList ListModulosEad { get; set; }
+        public string CursoId { get; set; }
+        public SelectList ListCursos { get; set; }
+        public string TipoCursosId { get; set; }
         public SelectList ListTipoCursos { get; set; }
 
-        public string EstadoId { get; set; }
-        public SelectList ListEstados { get; set; }
-        public string MunicipioId { get; set; }
-        public SelectList ListMunicipios { get; set; }
-
-		public class CreateUpdateAulaCommand
+        public class CreateUpdateAulaCommand
 		{
 			public int Id { get; set; }
             public required int CargaHoraria { get; set; }

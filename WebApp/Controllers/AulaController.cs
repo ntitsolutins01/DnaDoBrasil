@@ -63,21 +63,16 @@ public class AulaController : BaseController
             var professores = new SelectList(ApiClientFactory.Instance.GetUsuarioAll().Where(x=>x.PerfilId == (int)EnumPerfil.Professor), "Id", "Nome");
             var tipoCurso = new SelectList(ApiClientFactory.Instance.GetTipoCursosAll(), "Id", "Nome");
 
-            var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
-
-
 			return View(new AulaModel()
             {
                 ListProfessores = professores,
-                ListTipoCursos = tipoCurso,
-                ListEstados = estados
+                ListTipoCursos = tipoCurso
 			});
         }
         catch (Exception e)
         {
             Console.Write(e.StackTrace);
             return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = e.Message });
-
         }
     }
 

@@ -1,5 +1,5 @@
 var vm = new Vue({
-    el: "#vAula",
+    el: "#vAula ",
     data: {
         loading: false,
         editDto: { Id: "", Titulo: "", Descricao: "", CargaHoraria: "", Status: true }
@@ -12,6 +12,7 @@ var vm = new Vue({
             //mascara dos inputs
             var cargaHoraria = $("#cargaHoraria");
             cargaHoraria.mask('000', { reverse: false });
+
 
             //skin checkbox
             if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
@@ -27,24 +28,54 @@ var vm = new Vue({
 
             var formid = $('form')[1].id;
 
-            var $select = $(".select2").select2({
-                allowClear: true
-            });
+            if (formid === "formEditAula") {
 
-            $(".select2").each(function () {
-                var $this = $(this),
-                    opts = {};
+                $("#formEditAula ").validate({
+                    highlight: function (label) {
+                        $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
+                    },
+                    success: function (label) {
+                        $(label).closest('.form-group').removeClass('has-error');
+                        label.remove();
+                    },
+                    errorPlacement: function (error, element) {
+                        var placement = element.closest('.input-group');
+                        if (!placement.get(0)) {
+                            placement = element;
+                        }
+                        if (error.text() !== '') {
+                            placement.after(error);
+                        }
+                    }
+                });
+            }
 
-                var pluginOptions = $this.data('plugin-options');
-                if (pluginOptions)
-                    opts = pluginOptions;
+            if (formid === "formAula") {
 
-                $this.themePluginSelect2(opts);
-            });
+                //skin select
+                var $select = $(".select2").select2({
+                    allowClear: true
+                });
 
-            $select.on('change', function () {
-                $(this).trigger('blur');
-            });
+                $(".select2").each(function () {
+                    var $this = $(this),
+                        opts = {};
+
+                    var pluginOptions = $this.data('plugin-options');
+                    if (pluginOptions)
+                        opts = pluginOptions;
+
+                    $this.themePluginSelect2(opts);
+                });
+
+                /*
+                 * When you change the value the select via select2, it triggers
+                 * a 'change' event, but the jquery validation plugin
+                 * only re-validates on 'blur'*/
+
+                $select.on('change', function () {
+                    $(this).trigger('blur');
+                });
 
                 $("#ddlTipoCurso").change(function () {
                     var sigla = $("#ddlTipoCurso").val();
@@ -75,57 +106,7 @@ var vm = new Vue({
                         });
                 });
 
-            if (formid === "formEditAula") {
-
-                $("#formEditAula").validate({
-                    highlight: function (label) {
-                        $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
-                    },
-                    success: function (label) {
-                        $(label).closest('.form-group').removeClass('has-error');
-                        label.remove();
-                    },
-                    errorPlacement: function (error, element) {
-                        var placement = element.closest('.input-group');
-                        if (!placement.get(0)) {
-                            placement = element;
-                        }
-                        if (error.text() !== '') {
-                            placement.after(error);
-                        }
-                    }
-                });
-            }
-
-            if (formid === "formAula") {
-                //skin select
-                var $select = $(".select2").select2({
-                    allowClear: true
-                });
-
-                $(".select2").each(function () {
-                    var $this = $(this),
-                        opts = {};
-
-                    var pluginOptions = $this.data('plugin-options');
-                    if (pluginOptions)
-                        opts = pluginOptions;
-
-                    $this.themePluginSelect2(opts);
-                });
-
-                /*
-                 * When you change the value the select via select2, it triggers
-                 * a 'change' event, but the jquery validation plugin
-                 * only re-validates on 'blur'*/
-
-                $select.on('change', function () {
-                    $(this).trigger('blur');
-                });
-
-
                 $("#formAula").validate({
-
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
                     },
@@ -143,8 +124,6 @@ var vm = new Vue({
                         }
                     }
                 });
-
-
             }
         }).apply(this, [jQuery]);
     },
@@ -182,7 +161,6 @@ var vm = new Vue({
                 self.editDto.Descricao = result.data.descricao;
                 self.editDto.CargaHoraria = result.data.cargaHoraria;
                 self.editDto.Status = result.data.status;
-
 
             }).catch(error => {
                 Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
