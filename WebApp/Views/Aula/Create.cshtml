@@ -1,19 +1,13 @@
-﻿@model AulaModel
+@model AulaModel
 @{
 	ViewData["Title"] = "Inclusão de Aula";
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div id="vAula">
-	<div class="row">
-		<div class="col-md-12">
-			@using (@Html.BeginForm("Create", "Aula", FormMethod.Post, new { id = "formAula", @class = "form-horizontal" }))
-			{
-				<section class="panel">
-					<header class="panel-heading">
-						<div class="panel-actions">
-							<a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
-						</div>
+<div id="vModuloEad">
+    <div class="row">
+        <div class="col-md-12">
+            @using (@Html.BeginForm("Create", "Aula", FormMethod.Post, new { id = "formAula", @class = "form-horizontal" }))
 
 						<h2 class="panel-title">Cadastro de Aula</h2>
 					</header>
@@ -97,19 +91,55 @@
 						</div>
 					</div>
 
-					<footer class="panel-footer">
-						<div class="row">
-							<div class="col-md-9 col-md-offset-3">
-								<a href="@Url.Action("Index", "Aula")" class="btn btn-dark pull-right" style="margin-left: 5px;margin-right: 5px;"><i class="fa fa-reply"></i> &nbsp;&nbsp;Voltar</a>
-								<button type="reset" class="btn btn-danger pull-right" style="margin-left: 5px;"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
-								<button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
-							</div>
-						</div>
-					</footer>
-				</section>
-			}
-		</div>
-	</div>
+                        <h2 class="panel-title">Cadastro de Aula</h2>
+                    </header>
+                    <div class="panel-body">
+
+                        <div class="form-group row">
+                            <label class="col-sm-3 control-label text-sm-right pt-2">Tipo de Curso <span class="required">*</span></label>
+                            <div class="col-sm-4">
+                                <select class="form-control populate select2" name="ddlTipoCurso" id="ddlTipoCurso" style="width:100%"
+                                        required title="Por favor selecione o tipo de curso"
+                                        asp-for="TipoCursosId" asp-items="Model.ListTipoCursos">
+                                    <option value="">Selecionar Tipo de Curso</option>
+                                </select>
+                            </div>
+                            <label class="col-sm-3 control-label text-sm-right pt-2">Curso <span class="required">*</span></label>
+                            <div class="col-sm-4">
+                                <select class="form-control populate select2" name="ddlCurso" id="ddlCurso" style="width:100%"
+                                        required title="Por favor selecione o curso"
+                                        asp-for="CursoId" asp-items="Model.ListCursos">
+                                    <option value="">Selecionar Curso</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label text-sm-right pt-2">Descrição </label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control" rows="3" maxlength="500" name="descricao" id="descricao"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label text-sm-right pt-2">Carga Horária<span class="required">*</span></label>
+                            <div class="col-sm-2">
+                                <input type="text" id="cargaHoraria" name="cargaHoraria" class="form-control" maxlength="6"
+                                       title="Por favor informe o valor final." required />
+                            </div>
+                        </div>
+                    </div>
+                    <footer class="panel-footer">
+                        <div class="row">
+                            <div class="col-md-9 col-md-offset-3">
+                                <a href="@Url.Action("Index", "Aula")" class="btn btn-dark pull-right" style="margin-left: 5px;margin-right: 5px;"><i class="fa fa-reply"></i> &nbsp;&nbsp;Voltar</a>
+                                <button type="reset" class="btn btn-danger pull-right" style="margin-left: 5px;"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
+                                <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
+                            </div>
+                        </div>
+                    </footer>
+                </section>
+            }
+        </div>
+    </div>
 </div>
 @section CssSpecificVendor {
 	<link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css" />

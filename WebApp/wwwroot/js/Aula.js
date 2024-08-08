@@ -1,5 +1,5 @@
 var vm = new Vue({
-    el: "#vAula",
+    el: "#vAula ",
     data: {
         loading: false,
         editDto: { Id: "", Titulo: "", Descricao: "", CargaHoraria: "", Status: true }
@@ -12,6 +12,7 @@ var vm = new Vue({
             //mascara dos inputs
             var cargaHoraria = $("#cargaHoraria");
             cargaHoraria.mask('000', { reverse: false });
+
 
             //skin checkbox
             if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
@@ -27,57 +28,9 @@ var vm = new Vue({
 
             var formid = $('form')[1].id;
 
-            var $select = $(".select2").select2({
-                allowClear: true
-            });
-
-            $(".select2").each(function () {
-                var $this = $(this),
-                    opts = {};
-
-                var pluginOptions = $this.data('plugin-options');
-                if (pluginOptions)
-                    opts = pluginOptions;
-
-                $this.themePluginSelect2(opts);
-            });
-
-            $select.on('change', function () {
-                $(this).trigger('blur');
-            });
-
-                $("#ddlTipoCurso").change(function () {
-                    var sigla = $("#ddlTipoCurso").val();
-
-                    var url = "../Curso/GetCursosAllByTipoCursoId";
-
-                    var ddlSource = "#ddlCurso";
-
-                    $.getJSON(url,
-                        { id: $(ddlSource).val() },
-                        function (data) {
-                            if (data.length > 0) {
-                                var items = '<option value="">Selecionar Curso</option>';
-                                $("#ddlCurso").empty;
-                                $.each(data,
-                                    function (i, row) {
-                                        items += "<option value='" + row.value + "'>" + row.text + "</option>";
-                                    });
-                                $("#ddlCurso").html(items);
-                            }
-                            else {
-                                new PNotify({
-                                    title: 'Curso',
-                                    text: 'Curso não encontrados.',
-                                    type: 'warning'
-                                });
-                            }
-                        });
-                });
-
             if (formid === "formEditAula") {
 
-                $("#formEditAula").validate({
+                $("#formEditAula ").validate({
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
                     },
@@ -98,6 +51,7 @@ var vm = new Vue({
             }
 
             if (formid === "formAula") {
+
                 //skin select
                 var $select = $(".select2").select2({
                     allowClear: true
@@ -123,6 +77,34 @@ var vm = new Vue({
                     $(this).trigger('blur');
                 });
 
+                $("#ddlTipoCurso").change(function () {
+                    var sigla = $("#ddlTipoCurso").val();
+
+                    var url = "../Curso/GetCursosAllByTipoCursoId";
+
+                    var ddlSource = "#ddlCurso";
+
+                    $.getJSON(url,
+                        { id: $(ddlSource).val() },
+                        function (data) {
+                            if (data.length > 0) {
+                                var items = '<option value="">Selecionar Curso</option>';
+                                $("#ddlCurso").empty;
+                                $.each(data,
+                                    function (i, row) {
+                                        items += "<option value='" + row.value + "'>" + row.text + "</option>";
+                                    });
+                                $("#ddlCurso").html(items);
+                            }
+                            else {
+                                new PNotify({
+                                    title: 'Curso',
+                                    text: 'Curso nï¿½o encontrados.',
+                                    type: 'warning'
+                                });
+                            }
+                        });
+                });
 
                 $("#formAula").validate({
 
