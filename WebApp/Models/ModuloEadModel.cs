@@ -13,10 +13,8 @@ namespace WebApp.Models
         public string ModuloEadId { get; set; }
         public string CursoId { get; set; }
         public string TipoCursosId { get; set; }
-		public SelectList ListCoordenadores { get; set; }
 		public SelectList ListTipoCursos { get; set; }
 		public SelectList ListCursos { get; set; }
-        public string CoordenadorId { get; set; }
 
 
         public class CreateUpdateModuloEadCommand

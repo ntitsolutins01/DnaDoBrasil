@@ -1,8 +1,8 @@
 var vm = new Vue({
-    el: "#vAula",
+    el: "#vAula ",
     data: {
         loading: false,
-        editDto: { Id: "", Aula: "", }
+        editDto: { Id: "", Titulo: "", Descricao: "", CargaHoraria: "", Status: true }
     },
     mounted: function () {
         var self = this;
@@ -10,110 +10,27 @@ var vm = new Vue({
             'use strict';
 
             //mascara dos inputs
-            var AulaPrimeiroBimestre = $("#AulaPrimeiroBimestre");
-            AulaPrimeiroBimestre.mask('00.00', { reverse: false });
+            var cargaHoraria = $("#cargaHoraria");
+            cargaHoraria.mask('000', { reverse: false });
 
-            var AulaSegundoBimestre = $("#AulaSegundoBimestre");
-            AulaSegundoBimestre.mask('00.00', { reverse: false });
 
-            var AulaTerceiroBimestre = $("#AulaTerceiroBimestre");
-            AulaTerceiroBimestre.mask('00.00', { reverse: false });
+            //skin checkbox
+            if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
 
-            var AulaQuartoBimestre = $("#AulaQuartoBimestre");
-            AulaQuartoBimestre.mask('00.00', { reverse: false });
+                $(function () {
+                    $('[data-plugin-ios-switch]').each(function () {
+                        var $this = $(this);
+
+                        $this.themePluginIOS7Switch();
+                    });
+                });
+            }
 
             var formid = $('form')[1].id;
 
-           {
-
-                var $select = $(".select2").select2({
-                    allowClear: true
-                });
-
-                $(".select2").each(function () {
-                    var $this = $(this),
-                        opts = {};
-
-                    var pluginOptions = $this.data('plugin-options');
-                    if (pluginOptions)
-                        opts = pluginOptions;
-
-                    $this.themePluginSelect2(opts);
-                });
-
-                /*
-                 * When you change the value the select via select2, it triggers
-                 * a 'change' event, but the jquery validation plugin
-                 * only re-validates on 'blur'*/
-
-                $select.on('change', function () {
-                    $(this).trigger('blur');
-                });
-
-
-                //clique de escolha do select
-                $("#ddlEstado").change(function () {
-                    var sigla = $("#ddlEstado").val();
-
-                    var url = "../../DivisaoAdministrativa/GetMunicipioByUf?uf=" + sigla;
-
-                    var ddlSource = "#ddlMunicipio";
-
-                    $.getJSON(url,
-                        { id: $(ddlSource).val() },
-                        function (data) {
-                            if (data.length > 0) {
-                                var items = '<option value="">Selecionar Municipio</option>';
-                                $("#ddlMunicipio").empty;
-                                $.each(data,
-                                    function (i, row) {
-                                        items += "<option value='" + row.value + "'>" + row.text + "</option>";
-                                    });
-                                $("#ddlMunicipio").html(items);
-                            }
-                            else {
-                                new PNotify({
-                                    title: 'Usuario',
-                                    text: data,
-                                    type: 'warning'
-                                });
-                            }
-                        });
-                });
-
-                //clique de escolha do select
-                $("#ddlMunicipio").change(function () {
-                    var id = $("#ddlMunicipio").val();
-
-                    var url = "../../Localidade/GetLocalidadeByMunicipio?id=" + id;
-
-                    var ddlSource = "#ddlLocalidade";
-
-                    $.getJSON(url,
-                        { id: $(ddlSource).val() },
-                        function (data) {
-                            if (data.length > 0) {
-                                var items = '<option value="">Selecionar Localidade</option>';
-                                $("#ddlLocalidade").empty;
-                                $.each(data,
-                                    function (i, row) {
-                                        items += "<option value='" + row.value + "'>" + row.text + "</option>";
-                                    });
-                                $("#ddlLocalidade").html(items);
-                            }
-                            else {
-                                new PNotify({
-                                    title: 'Localidades',
-                                    text: 'Localidades não encontradas.',
-                                    type: 'warning'
-                                });
-                            }
-                        });
-                });
-            }
             if (formid === "formEditAula") {
 
-                $("#formEditAula").validate({
+                $("#formEditAula ").validate({
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
                     },
@@ -134,6 +51,7 @@ var vm = new Vue({
             }
 
             if (formid === "formAula") {
+
                 //skin select
                 var $select = $(".select2").select2({
                     allowClear: true
@@ -159,89 +77,29 @@ var vm = new Vue({
                     $(this).trigger('blur');
                 });
 
-                $("#ddlEstado").change(function () {
-                    var sigla = $("#ddlEstado").val();
+                $("#ddlTipoCurso").change(function () {
+                    var sigla = $("#ddlTipoCurso").val();
 
-                    var url = "../DivisaoAdministrativa/GetMunicipioByUf?uf=" + sigla;
+                    var url = "../Curso/GetCursosAllByTipoCursoId";
 
-                    var ddlSource = "#ddlMunicipio";
-
-                    $.getJSON(url,
-                        { id: $(ddlSource).val() },
-                        function (data) {
-                            if (data.length > 0) {
-                                var items = '<option value="">Selecionar Municipio</option>';
-                                $("#ddlMunicipio").empty;
-                                $.each(data,
-                                    function (i, row) {
-                                        items += "<option value='" + row.value + "'>" + row.text + "</option>";
-                                    });
-                                $("#ddlMunicipio").html(items);
-                            }
-                            else {
-                                new PNotify({
-                                    title: 'Fomento',
-                                    text: 'Municípios não encontrados.',
-                                    type: 'warning'
-                                });
-                            }
-                        });
-                });
-
-                //clique de escolha do select
-                $("#ddlMunicipio").change(function () {
-                    var id = $("#ddlMunicipio").val();
-
-                    var url = "../../Localidade/GetLocalidadeByMunicipio?id=" + id;
-
-                    var ddlSource = "#ddlLocalidade";
+                    var ddlSource = "#ddlCurso";
 
                     $.getJSON(url,
                         { id: $(ddlSource).val() },
                         function (data) {
                             if (data.length > 0) {
-                                var items = '<option value="">Selecionar Localidade</option>';
-                                $("#ddlLocalidade").empty;
+                                var items = '<option value="">Selecionar Curso</option>';
+                                $("#ddlCurso").empty;
                                 $.each(data,
                                     function (i, row) {
                                         items += "<option value='" + row.value + "'>" + row.text + "</option>";
                                     });
-                                $("#ddlLocalidade").html(items);
+                                $("#ddlCurso").html(items);
                             }
                             else {
                                 new PNotify({
-                                    title: 'Localidades',
-                                    text: 'Localidades não encontradas.',
-                                    type: 'warning'
-                                });
-                            }
-                        });
-                });
-
-                //clique de escolha do select
-                $("#ddlLocalidade").change(function () {
-                    var id = $("#ddlLocalidade").val();
-
-                    var url = "../../Aluno/GetAlunosByLocalidade?id=" + id;
-
-                    var ddlSource = "#ddlAluno";
-
-                    $.getJSON(url,
-                        { id: $(ddlSource).val() },
-                        function (data) {
-                            if (data.length > 0) {
-                                var items = '<option value="">Selecionar Aluno</option>';
-                                $("#ddlAluno").empty;
-                                $.each(data,
-                                    function (i, row) {
-                                        items += "<option value='" + row.value + "'>" + row.text + "</option>";
-                                    });
-                                $("#ddlAluno").html(items);
-                            }
-                            else {
-                                new PNotify({
-                                    title: 'Alunos',
-                                    text: 'Alunos não encontrados.',
+                                    title: 'Curso',
+                                    text: 'Curso não encontrados.',
                                     type: 'warning'
                                 });
                             }
@@ -299,8 +157,10 @@ var vm = new Vue({
             axios.get("Aula/GetAulaById/?id=" + id).then(result => {
 
                 self.editDto.Id = result.data.id;
-                self.editDto.Aula = result.data.Aula;
-                
+                self.editDto.Titulo = result.data.titulo;
+                self.editDto.Descricao = result.data.descricao;
+                self.editDto.CargaHoraria = result.data.cargaHoraria;
+                self.editDto.Status = result.data.status;
 
             }).catch(error => {
                 Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
