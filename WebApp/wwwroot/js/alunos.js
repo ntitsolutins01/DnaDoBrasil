@@ -2,7 +2,7 @@
     el: "#vPesquisarAluno",
     data: {
         loading: false,
-        editDto: { Id: "", Nome: "", Status: true, Email: "", Sexo: "", DtNascimento: "", MunicipioEstado: "", NomeLocalidade: "", Cpf: "", Image: "", ModalidadeLinhaAcao: "", Cep: "" }
+        editDto: { Id: "", Nome: "", Status: true, Email: "", Sexo: "", DtNascimento: "", MunicipioEstado: "", NomeLocalidade: "", Cpf: "", Image: "", ModalidadeLinhaAcao: "", Cep: "", Etinia: "", Deficiencia: "" }
     },
     mounted: function () {
         var self = this;
