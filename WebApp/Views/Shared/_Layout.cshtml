@@ -358,7 +358,7 @@
                                         </ul>
                                     </li>
                                 }
-                                @if ((await AuthorizationService.AuthorizeAsync(User, ModuloAccess.ConfiguracaoSistema)).Succeeded)
+                                @if ((await AuthorizationService.AuthorizeAsync(User, ModuloAccess.ConfiguracaoSistemaDna)).Succeeded)
                                 {
                                     <li class="nav-parent">
                                         <a href="#">
@@ -385,7 +385,7 @@
                                         </ul>
                                     </li>
                                 }
-                                @if ((await AuthorizationService.AuthorizeAsync(User, UserRoles.Aluno)).Succeeded)
+                                @if ((await AuthorizationService.AuthorizeAsync(User, ModuloAccess.Aluno)).Succeeded)
                                 {
                                     <li class="nav-parent nav-expanded">
                                         <a href="@Url.Action("Index", "Aluno")">

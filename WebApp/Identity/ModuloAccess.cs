@@ -15,5 +15,6 @@
         public const string Curso = "Curso";
         public const string ConfiguracaoEad = "ConfiguracaoEad";
         public const string Evento = "Evento";
+        public const string ConfiguracaoSistemaDna = "ConfiguracaoSistemaDna";
     }
 }
