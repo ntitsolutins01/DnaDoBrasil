@@ -97,6 +97,10 @@ builder.Services.AddAuthorization(o =>
         policy.RequireAssertion(context =>
             context.User.IsInRole(UserRoles.Administrador)));
 
+    o.AddPolicy(ModuloAccess.ConfiguracaoSistemaDna, policy =>
+        policy.RequireAssertion(context =>
+            context.User.IsInRole(UserRoles.AdministradorDna)));
+
     o.AddPolicy(ModuloAccess.ConfiguracaoEad, policy =>
         policy.RequireAssertion(context =>
             context.User.IsInRole(UserRoles.Administrador)));
