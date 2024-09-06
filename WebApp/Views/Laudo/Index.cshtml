@@ -27,7 +27,7 @@
                                 <th class="text-center">Nome Aluno</th>
                                 <th class="text-center">Município / Uf</th>
                                 <th class="text-center">Localidade</th>
-                                <th class="text-center">Encaminhamento</th>
+                                @* <th class="text-center">Encaminhamento</th> *@
                                 <th class="text-center">Status do Laudo</th>
 								<th class="text-center">Ações</th>
 							</tr>
@@ -39,15 +39,15 @@
 									<td class="text-center">@Html.DisplayFor(modelItem => item.Id)</td>
 									<td class="text-center">@Html.DisplayFor(modelItem => item.NomeAluno)</td>
 									<td class="text-center">@Html.DisplayFor(modelItem => item.MunicipioEstado)</td>
-									<td class="text-center">@Html.DisplayFor(modelItem => item.Localidade)</td>
-									@if (string.IsNullOrEmpty(item.Encaminhamento))
+									<td class="text-center">@Html.DisplayFor(modelItem => item.NomeLocalidade)</td>
+									@* @if (string.IsNullOrEmpty(item.Encaminhamento))
                                     {
                                         <td class="text-center"><span class="label label-dark">EM DESENVOLVIMENTO</span></td>
                                     }
                                     else
                                     {
                                         <td class="text-center"><span class="label label-success">FINALIZADO</span></td>
-                                    }
+                                    } *@
 									@if (item.StatusLaudo == "F")
                                     {
                                         <td class="text-center"><span class="label label-success">FINALIZADO</span></td>

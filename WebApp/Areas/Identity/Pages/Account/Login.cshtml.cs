@@ -145,6 +145,11 @@ namespace WebApp.Areas.Identity.Pages.Account
 
                         return RedirectToPage("Login", new { notify = (int)EnumNotify.Success, message = $"Este usuário não possui permissão de acesso ao sistema DNA." });
                     }
+					if (userRole == UserRoles.AdministradorEad)
+					{
+
+                        returnUrl = Url.Content("~/DashboardEad");
+                    }
 
 					return LocalRedirect(returnUrl);
 				default:

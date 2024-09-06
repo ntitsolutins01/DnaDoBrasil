@@ -31,8 +31,13 @@ namespace WebApp.Models
         public class CreateUpdateLaudoCommand
 		{
 			public int Id { get; set; }
-            public string? StatusQualidadeDeVida { get; set; }
-            public string[] listQualidadeDeVida { get; set; }
+            public required int AlunoId { get; set; }
+            public int SaudeId { get; set; }
+            public int VocacionalId { get; set; }
+            public int ConsumoAlimentarId { get; set; }
+            public int QualidadeDeVidaId { get; set; }
+            public int SaudeBucalId { get; set; }
+            public int TalentoEsportivoId { get; set; }
 
 
 
@@ -57,8 +62,6 @@ namespace WebApp.Models
             public string[] listConsumoAlimentar { get; set; }
             
             
-            public int SaudeId { get; set; }
-            public required int AlunoId { get; set; }
         }
 	}
 

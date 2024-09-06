@@ -97,17 +97,20 @@ builder.Services.AddAuthorization(o =>
         policy.RequireAssertion(context =>
             context.User.IsInRole(UserRoles.Administrador)));
 
-    o.AddPolicy(ModuloAccess.ConfiguracaoSistemaDna, policy =>
+    o.AddPolicy(ModuloAccess.ConfiguracaoSistemaEad, policy =>
         policy.RequireAssertion(context =>
-            context.User.IsInRole(UserRoles.AdministradorDna)));
+            context.User.IsInRole(UserRoles.Administrador) ||
+            context.User.IsInRole(UserRoles.AdministradorEad)));
 
-    o.AddPolicy(ModuloAccess.ConfiguracaoEad, policy =>
+    o.AddPolicy(ModuloAccess.DashboardEad, policy =>
         policy.RequireAssertion(context =>
+            context.User.IsInRole(UserRoles.AdministradorEad) ||
             context.User.IsInRole(UserRoles.Administrador)));
 
     o.AddPolicy(ModuloAccess.ControleAcesso, policy =>
         policy.RequireAssertion(context =>
-            context.User.IsInRole(UserRoles.Administrador)));
+            context.User.IsInRole(UserRoles.Administrador) ||
+            context.User.IsInRole(UserRoles.AdministradorEad)));
 
     o.AddPolicy(ModuloAccess.Dashboard, policy =>
         policy.RequireAssertion(context =>
@@ -119,12 +122,14 @@ builder.Services.AddAuthorization(o =>
         policy.RequireAssertion(context =>
             context.User.IsInRole(UserRoles.Profissional) ||
             context.User.IsInRole(UserRoles.Gestor) ||
+            context.User.IsInRole(UserRoles.AdministradorEad) ||
             context.User.IsInRole(UserRoles.Administrador)));
 
     o.AddPolicy(ModuloAccess.Nota, policy =>
         policy.RequireAssertion(context =>
             context.User.IsInRole(UserRoles.Profissional) ||
             context.User.IsInRole(UserRoles.Gestor) ||
+            context.User.IsInRole(UserRoles.AdministradorEad) ||
             context.User.IsInRole(UserRoles.Administrador)));
 
     o.AddPolicy(ModuloAccess.Profissional, policy =>
@@ -157,10 +162,12 @@ builder.Services.AddAuthorization(o =>
             context.User.IsInRole(UserRoles.Gestor) ||
             context.User.IsInRole(UserRoles.Profissional) ||
             context.User.IsInRole(UserRoles.Parceiro) ||
+            context.User.IsInRole(UserRoles.AdministradorEad) ||
             context.User.IsInRole(UserRoles.Administrador)));
 
     o.AddPolicy(ModuloAccess.Curso, policy =>
         policy.RequireAssertion(context =>
+            context.User.IsInRole(UserRoles.AdministradorEad) ||
             context.User.IsInRole(UserRoles.Administrador)));
 
     o.AddPolicy(ModuloAccess.Evento, policy =>
