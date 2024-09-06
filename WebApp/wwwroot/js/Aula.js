@@ -99,7 +99,7 @@ var vm = new Vue({
                             else {
                                 new PNotify({
                                     title: 'Curso',
-                                    text: 'Curso não encontrados.',
+                                    text: 'Curso nï¿½o encontrados.',
                                     type: 'warning'
                                 });
                             }
@@ -107,6 +107,7 @@ var vm = new Vue({
                 });
 
                 $("#formAula").validate({
+
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
                     },
@@ -124,6 +125,8 @@ var vm = new Vue({
                         }
                     }
                 });
+
+
             }
         }).apply(this, [jQuery]);
     },
@@ -161,6 +164,7 @@ var vm = new Vue({
                 self.editDto.Descricao = result.data.descricao;
                 self.editDto.CargaHoraria = result.data.cargaHoraria;
                 self.editDto.Status = result.data.status;
+
 
             }).catch(error => {
                 Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
