@@ -12,10 +12,11 @@ namespace WebApp.Models
 
         public class CreateUpdateVocacionalCommand
         {
-            public required int ProfissionalId { get; set; }
-            public required int QuestionarioId { get; set; }
-            public required string Resposta { get; set; }
             public int Id { get; set; }
+            public required int ProfissionalId { get; set; }
+            public required int AlunoId { get; set; }
+            public required string Respostas { get; set; }
+            public required string StatusVocacional { get; set; }
         }
     }
 

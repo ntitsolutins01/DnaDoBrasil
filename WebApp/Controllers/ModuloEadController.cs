@@ -13,7 +13,7 @@ using WebApp.Utility;
 
 namespace WebApp.Controllers;
 
-[Authorize(Policy = ModuloAccess.ConfiguracaoEad)]
+[Authorize(Policy = ModuloAccess.ConfiguracaoSistemaEad)]
 public class ModuloEadController : BaseController
 {
     #region Constructor
