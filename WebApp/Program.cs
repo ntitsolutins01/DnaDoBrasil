@@ -87,9 +87,9 @@ builder.Services.Configure<DataProtectionTokenProviderOptions>(options =>
     options.TokenLifespan = TimeSpan.FromMinutes(config.TokenTime));
 
 // Registra o servi�o de e-mail. Configurado em appsettings.json
-
 builder.Services.AddTransient<IEmailSender, EmailService>();
 
+// Cria um grupo de pol�ticas de administradores para requisitos de seguran�a de alto n�vel
 builder.Services.AddAuthorization(o =>
 {
 
@@ -177,32 +177,6 @@ builder.Services.AddAuthorization(o =>
             context.User.IsInRole(UserRoles.Administrador)));
 });
 
-//// Cria um grupo de pol�ticas de administradores para requisitos de seguran�a de alto n�vel
-//builder.Services.AddAuthorization(options =>
-//{
-//    options.AddPolicy(ModuloAccess.Dashboard, policy =>
-//        policy.RequireAssertion(context =>
-//            context.User.IsInRole(UserRoles.Administrador)
-//        || context.User.IsInRole(UserRoles.Aluno)));
-
-////options.AddPolicy(ModuloAccess.Relatos, policy =>
-////    policy.RequireAssertion(context =>
-////        context.User.IsInRole(UserRoles.Administrator)
-////        || context.User.IsInRole(UserRoles.UsuarioPublico)));
-
-////options.AddPolicy(ModuloAccess.AtribuirResponsavelRelato, policy =>
-////    policy.RequireAssertion(context =>
-////        context.User.IsInRole(UserRoles.Administrator)
-////        || context.User.IsInRole(UserRoles.GestorSgsoSite)
-////        || context.User.IsInRole(UserRoles.ResponsavelTecnico)
-////        || context.User.IsInRole(UserRoles.UsuarioPublico)));
-
-////options.AddPolicy(ModuloAccess.ConfigurarAmbiente, policy =>
-////    policy.RequireAssertion(context =>
-////        context.User.IsInRole(UserRoles.Administrator)
-////        || context.User.IsInRole(UserRoles.GestorSgsoSite)));
-
-//});
 
 var app = builder.Build();
 
