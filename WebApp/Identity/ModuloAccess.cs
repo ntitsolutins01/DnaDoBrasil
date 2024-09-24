@@ -16,5 +16,6 @@
         public const string Evento = "Evento";
         public const string ConfiguracaoSistemaEad = "ConfiguracaoSistemaEad";
         public const string DashboardEad = "DashboardEad";
+        public const string ControleMaterial = "ControleMaterial";
     }
 }
