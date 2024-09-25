@@ -188,6 +188,38 @@ public class ModuloEadController : BaseController
             return RedirectToAction(nameof(Index));
         }
     }
+
+    public Task<JsonResult> GetCursosAllByTipoCursoId(string id)
+    {
+        try
+        {
+            if (string.IsNullOrEmpty(id)) throw new Exception("Tipo de Curso não informado.");
+            var resultLocal = ApiClientFactory.Instance.GetCursosAllByTipoCursoId(Convert.ToInt32(id));
+
+            return Task.FromResult(Json(new SelectList(resultLocal, "Id", "Titulo")));
+
+        }
+        catch (Exception ex)
+        {
+            return Task.FromResult(Json(ex.Message));
+        }
+    }
+
+    public Task<JsonResult> GetModulosEadAllByCursoId(string id)
+    {
+        try
+        {
+            if (string.IsNullOrEmpty(id)) throw new Exception("Curso não informado.");
+            var resultLocal = ApiClientFactory.Instance.GetModulosEadAllByCursoId(Convert.ToInt32(id));
+
+            return Task.FromResult(Json(new SelectList(resultLocal, "Id", "Titulo")));
+
+        }
+        catch (Exception ex)
+        {
+            return Task.FromResult(Json(ex.Message));
+        }
+    }
     #endregion
 
     #region Get Methods

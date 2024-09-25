@@ -105,7 +105,8 @@ namespace WebApp.Controllers
 
         //[ClaimsAuthorize("Perfil", "Alterar")]
         public ActionResult Edit(int id)
-        {
+        {   
+            // todo: Fábio não edita perfil quando existe modulo sem funcionalidade
             var perfil = ApiClientFactory.Instance.GetPerfilById(id);
 
             if (id != null)

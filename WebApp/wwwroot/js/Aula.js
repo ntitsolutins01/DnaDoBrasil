@@ -78,14 +78,14 @@ var vm = new Vue({
                 });
 
                 $("#ddlTipoCurso").change(function () {
+                    var tipoCursoId = $("#ddlTipoCurso").val();
+
                     var sigla = $("#ddlTipoCurso").val();
 
                     var url = "../Curso/GetCursosAllByTipoCursoId";
 
-                    var ddlSource = "#ddlCurso";
-
                     $.getJSON(url,
-                        { id: $(ddlSource).val() },
+                        { id: tipoCursoId },
                         function (data) {
                             if (data.length > 0) {
                                 var items = '<option value="">Selecionar Curso</option>';
@@ -100,6 +100,35 @@ var vm = new Vue({
                                 new PNotify({
                                     title: 'Curso',
                                     text: 'Curso n�o encontrados.',
+                                    type: 'warning'
+                                });
+                            }
+                        });
+                });
+
+                $("#ddlCurso").change(function () {
+                    var cursoId = $("#ddlCurso").val();
+
+                    var sigla = $("#ddlCurso").val();
+
+                    var url = "../ModuloEad/GetModulosEadAllByCursoId";
+
+                    $.getJSON(url,
+                        { id: cursoId },
+                        function (data) {
+                            if (data.length > 0) {
+                                var items = '<option value="">Selecionar Modulo</option>';
+                                $("#ddlModuloEad").empty;
+                                $.each(data,
+                                    function (i, row) {
+                                        items += "<option value='" + row.value + "'>" + row.text + "</option>";
+                                    });
+                                $("#ddlModuloEad").html(items);
+                            }
+                            else {
+                                new PNotify({
+                                    title: 'Modulo',
+                                    text: 'Modulo n�o encontrados.',
                                     type: 'warning'
                                 });
                             }
