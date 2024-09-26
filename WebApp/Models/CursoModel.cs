@@ -11,6 +11,8 @@ namespace WebApp.Models
 		public List<CursoDto> Cursos { get; set; }
 		public SelectList ListTiposCursos { get; set; } 
         public string TipoCursoId { get; set; }
+        public AulaDto ModuloEadId { get; set; }
+		public SelectList ListModulosEad { get; set; }
 		public SelectList ListCoordenadores { get; set; }
         public string CoordenadorId { get; set; }
 

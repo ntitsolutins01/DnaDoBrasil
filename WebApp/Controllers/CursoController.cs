@@ -196,11 +196,20 @@ public class CursoController : BaseController
 
         return Task.FromResult(result);
     }
-    public Task<List<CursoDto>> GetCursoByTipoCursoId(int tipoCursoId)
+    public Task<JsonResult> GetCursosAllByTipoCursoId(string id)
     {
-        var result = ApiClientFactory.Instance.GetCursosAllByTipoCursoId(tipoCursoId);
+        try
+        {
+            if (string.IsNullOrEmpty(id)) throw new Exception("Tipo de Curso não informado.");
+            var resultLocal = ApiClientFactory.Instance.GetCursosAllByTipoCursoId(Convert.ToInt32(id));
 
-        return Task.FromResult(result);
+            return Task.FromResult(Json(new SelectList(resultLocal, "Id", "Titulo")));
+
+        }
+        catch (Exception ex)
+        {
+            return Task.FromResult(Json(ex.Message));
+        }
     }
     #endregion
 }

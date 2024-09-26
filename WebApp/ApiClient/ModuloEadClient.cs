@@ -45,7 +45,12 @@ namespace WebApp.ApiClient
                 $"{ResourceModuloEad}"));
             return Get<List<ModuloEadDto>>(requestUrl);
         }
-
+        public List<ModuloEadDto> GetModulosEadAllByCursoId(int cursoId)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceModuloEad}/Curso/{cursoId}"));
+            return Get<List<ModuloEadDto>>(requestUrl);
+        }
         #endregion
     }
 }

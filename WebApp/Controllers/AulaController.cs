@@ -91,11 +91,11 @@ public class AulaController : BaseController
             {
 	            CargaHoraria = Convert.ToInt32(collection["cargaHoraria"]
 		            .ToString()),
-	            ProfessorId = Convert.ToInt32(collection["ddlTipoCurso"]
+	            ProfessorId = Convert.ToInt32(collection["ddlProfessor"]
 		            .ToString()),
-	            MuduloEadId = Convert.ToInt32(collection["ddlTipoCurso"]
+	            ModuloEadId = Convert.ToInt32(collection["ddlModuloEad"]
 		            .ToString()),
-	            Titulo = collection["nome"]
+	            Titulo = collection["titulo"]
 		            .ToString(),
 	            Descricao = collection["descricao"]
 		            .ToString()
@@ -172,7 +172,7 @@ public class AulaController : BaseController
 		            ? false
 		            : true,
 	            ProfessorId = 0,
-	            MuduloEadId = 0
+	            ModuloEadId = 0
             };
 
             await ApiClientFactory.Instance.UpdateAula(command.Id, command);
@@ -211,8 +211,10 @@ public class AulaController : BaseController
     public Task<AulaDto> GetAulaById(int id)
     {
         var result = ApiClientFactory.Instance.GetAulaById(id);
+        var professores = new SelectList(ApiClientFactory.Instance.GetUsuarioAll().Where(x => x.PerfilId == (int)EnumPerfil.Professor), "Id", "Nome", result.ProfessorId);
+        //result.ProfessorId = professores;
 
-        return Task.FromResult(result);
+		return Task.FromResult(result);
     }
     #endregion
 }
