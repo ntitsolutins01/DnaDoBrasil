@@ -212,7 +212,7 @@ public class AulaController : BaseController
     {
         var result = ApiClientFactory.Instance.GetAulaById(id);
         var professores = new SelectList(ApiClientFactory.Instance.GetUsuarioAll().Where(x => x.PerfilId == (int)EnumPerfil.Professor), "Id", "Nome", result.ProfessorId);
-        //result.ProfessorId = professores;
+        result.ListProfessores = professores;
 
 		return Task.FromResult(result);
     }
