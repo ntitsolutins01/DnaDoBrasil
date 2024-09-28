@@ -137,7 +137,8 @@ public class CursoController : BaseController
             var command = new CursoModel.CreateUpdateCursoCommand
             {
                 Id = Convert.ToInt32(collection["editCursoId"]),
-                Titulo = collection["nome"].ToString(),
+                CoordenadorId = Convert.ToInt32(collection["ddlCoordenador"].ToString()),
+				Titulo = collection["nome"].ToString(),
                 Descricao = collection["descricao"].ToString(),
                 CargaHoraria = Convert.ToInt32(collection["cargaHoraria"].ToString()),
                 Status = collection["editStatus"].ToString() == "" ? false : true
@@ -193,8 +194,10 @@ public class CursoController : BaseController
     public Task<CursoDto> GetCursoById(int id)
     {
         var result = ApiClientFactory.Instance.GetCursoById(id);
+        var coordenadores = new SelectList(ApiClientFactory.Instance.GetUsuarioAll().Where(x => x.PerfilId == (int)EnumPerfil.Coordenador), "Id", "Nome", result.CoordenadorId);
+        result.ListCoordenadores = coordenadores;
 
-        return Task.FromResult(result);
+		return Task.FromResult(result);
     }
     public Task<JsonResult> GetCursosAllByTipoCursoId(string id)
     {
