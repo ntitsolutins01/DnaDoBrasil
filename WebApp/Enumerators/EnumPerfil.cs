@@ -12,5 +12,7 @@ namespace WebApp.Enumerators
         Profissional = 7,
         [Description("Professor")]
         Professor = 13,
+        [Description("Coordenador")]
+        Coordenador = 14
     }
 }

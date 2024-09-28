@@ -93,7 +93,7 @@ namespace WebApp.Areas.Identity.Pages.Account
 		{
 
 #if DEBUG
-			returnUrl = Url.Content("~/Aluno/Create");
+			returnUrl = Url.Content("~/DashboardEad");
 #else
 			returnUrl = Url.Content("~/Dashboard");
 #endif

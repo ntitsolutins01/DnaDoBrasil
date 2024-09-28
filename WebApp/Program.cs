@@ -1,16 +1,13 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.EntityFrameworkCore;
-using System.Configuration;
 using WebApp.Areas.Identity.Models;
 using WebApp.Data;
 using WebApp.Models;
 using WebApp.Services;
 using WebApp.Configuration;
 using WebApp.Identity;
-using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -82,29 +79,20 @@ builder.Services.Configure<SmtpClientSettings>(builder.Configuration.GetSection(
 
 var config = builder.Configuration.GetSection("DnaParameters").Get<ParametersModel>();
 
-//define a quantidade de tempo que um token gerado permanece v�lido. PS: O padr�o � 1 dia.
+//define a quantidade de tempo que um token gerado permanece válido. PS: O padrão é 1 dia.
 builder.Services.Configure<DataProtectionTokenProviderOptions>(options =>
     options.TokenLifespan = TimeSpan.FromMinutes(config.TokenTime));
 
-// Registra o servi�o de e-mail. Configurado em appsettings.json
+// Registra o serviço de e-mail. Configurado em appsettings.json
 
 builder.Services.AddTransient<IEmailSender, EmailService>();
 
 builder.Services.AddAuthorization(o =>
 {
+    #region Sistema DNA
 
     o.AddPolicy(ModuloAccess.ConfiguracaoSistema, policy =>
         policy.RequireAssertion(context =>
-            context.User.IsInRole(UserRoles.Administrador)));
-
-    o.AddPolicy(ModuloAccess.ConfiguracaoSistemaEad, policy =>
-        policy.RequireAssertion(context =>
-            context.User.IsInRole(UserRoles.Administrador) ||
-            context.User.IsInRole(UserRoles.AdministradorEad)));
-
-    o.AddPolicy(ModuloAccess.DashboardEad, policy =>
-        policy.RequireAssertion(context =>
-            context.User.IsInRole(UserRoles.AdministradorEad) ||
             context.User.IsInRole(UserRoles.Administrador)));
 
     o.AddPolicy(ModuloAccess.ControleAcesso, policy =>
@@ -165,52 +153,42 @@ builder.Services.AddAuthorization(o =>
             context.User.IsInRole(UserRoles.AdministradorEad) ||
             context.User.IsInRole(UserRoles.Administrador)));
 
-    o.AddPolicy(ModuloAccess.Curso, policy =>
-        policy.RequireAssertion(context =>
-            context.User.IsInRole(UserRoles.AdministradorEad) ||
-            context.User.IsInRole(UserRoles.Administrador)));
-
     o.AddPolicy(ModuloAccess.Evento, policy =>
-        policy.RequireAssertion(context =>
-            context.User.IsInRole(UserRoles.Profissional) ||
-            context.User.IsInRole(UserRoles.Gestor) ||
-            context.User.IsInRole(UserRoles.Administrador)));
+         policy.RequireAssertion(context =>
+             context.User.IsInRole(UserRoles.Profissional) ||
+             context.User.IsInRole(UserRoles.Gestor) ||
+             context.User.IsInRole(UserRoles.Administrador)));
 
     o.AddPolicy(ModuloAccess.ControleMaterial, policy =>
         policy.RequireAssertion(context =>
             context.User.IsInRole(UserRoles.Administrador)));
+
+
+    #endregion
+
+    #region Sistema EAD
+
+
+    o.AddPolicy(ModuloAccess.DashboardEad, policy =>
+        policy.RequireAssertion(context =>
+            context.User.IsInRole(UserRoles.AdministradorEad) ||
+            context.User.IsInRole(UserRoles.Professor) ||
+            context.User.IsInRole(UserRoles.Coordenador) ||
+            context.User.IsInRole(UserRoles.Administrador)));
+
+    o.AddPolicy(ModuloAccess.ConfiguracaoSistemaEad, policy =>
+        policy.RequireAssertion(context =>
+            context.User.IsInRole(UserRoles.AdministradorEad) ||
+            context.User.IsInRole(UserRoles.Professor) ||
+            context.User.IsInRole(UserRoles.Coordenador) ||
+            context.User.IsInRole(UserRoles.Administrador)));
+
+    #endregion
 });
-
-//// Cria um grupo de pol�ticas de administradores para requisitos de seguran�a de alto n�vel
-//builder.Services.AddAuthorization(options =>
-//{
-//    options.AddPolicy(ModuloAccess.Dashboard, policy =>
-//        policy.RequireAssertion(context =>
-//            context.User.IsInRole(UserRoles.Administrador)
-//        || context.User.IsInRole(UserRoles.Aluno)));
-
-////options.AddPolicy(ModuloAccess.Relatos, policy =>
-////    policy.RequireAssertion(context =>
-////        context.User.IsInRole(UserRoles.Administrator)
-////        || context.User.IsInRole(UserRoles.UsuarioPublico)));
-
-////options.AddPolicy(ModuloAccess.AtribuirResponsavelRelato, policy =>
-////    policy.RequireAssertion(context =>
-////        context.User.IsInRole(UserRoles.Administrator)
-////        || context.User.IsInRole(UserRoles.GestorSgsoSite)
-////        || context.User.IsInRole(UserRoles.ResponsavelTecnico)
-////        || context.User.IsInRole(UserRoles.UsuarioPublico)));
-
-////options.AddPolicy(ModuloAccess.ConfigurarAmbiente, policy =>
-////    policy.RequireAssertion(context =>
-////        context.User.IsInRole(UserRoles.Administrator)
-////        || context.User.IsInRole(UserRoles.GestorSgsoSite)));
-
-//});
 
 var app = builder.Build();
 
-// Configura��o the HTTP request pipeline.
+// Configuraçãoo the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();

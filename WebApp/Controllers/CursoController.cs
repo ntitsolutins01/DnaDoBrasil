@@ -14,7 +14,7 @@ using WebApp.Utility;
 namespace WebApp.Controllers;
 
 
-[Authorize(Policy = ModuloAccess.Curso)]
+[Authorize(Policy = ModuloAccess.ConfiguracaoSistemaEad)]
 public class CursoController : BaseController
 {
     #region Constructor

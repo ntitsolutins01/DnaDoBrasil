@@ -210,7 +210,10 @@ namespace WebApp.Controllers
 
                 var obj = _db.Roles.Where(x => x.Id == perfil.AspNetRoleId).FirstOrDefault();
 
-                var result = await _roleManager.DeleteAsync(obj);
+                if (obj != null)
+                {
+                    var result = await _roleManager.DeleteAsync(obj);
+                }
 
                 ApiClientFactory.Instance.DeletePerfil(id);
 
@@ -223,7 +226,12 @@ namespace WebApp.Controllers
             }
             catch
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index),
+                    new
+                    {
+                        notify = 2,
+                        message = "Erro ao excluir o perfil. Favor entrar em contato com o administrador do sistema."
+                    });
             }
         }
 
