@@ -177,15 +177,15 @@ public class CursoController : BaseController
     [ClaimsAuthorize(ClaimType.Curso, Identity.Claim.Excluir)]
     public ActionResult Delete(int id)
     {
-        try
-        {
-            ApiClientFactory.Instance.DeleteCurso(id);
-            return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
-        }
-        catch
-        {
-            return RedirectToAction(nameof(Index));
-        }
+	    try
+	    {
+		    ApiClientFactory.Instance.DeleteCurso(id);
+		    return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
+	    }
+	    catch (Exception e)
+	    {
+			return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = "Este curso não pode ser excluído pois possui módulos vinculadas a ele." });
+		}
     }
     #endregion
 
