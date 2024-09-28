@@ -1,5 +1,7 @@
 ﻿
 
+using Microsoft.AspNetCore.Mvc.Rendering;
+
 namespace WebApp.Dto
 {
     public class AulaDto
@@ -12,5 +14,6 @@ namespace WebApp.Dto
 		public required string Titulo { get; set; }
 		public string? Descricao { get; set; }
 		public bool Status { get; set; }
-	}
+        public SelectList? ListProfessores { get; set; }
+    }
 }

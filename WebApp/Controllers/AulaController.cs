@@ -112,41 +112,6 @@ public class AulaController : BaseController
     }
 
     /// <summary>
-    /// Tela Alteração de Aula
-    /// </summary>
-    /// <param name="id">Id de alteração do Aula</param>
-    /// <returns>retorna mensagem de alteração através do parametro crud</returns>
-    /// <exception cref="ArgumentNullException">Mensagem de erro ao alterar o Aula</exception>
-    [ClaimsAuthorize(ClaimType.Aula, Claim.Alterar)]
-    public ActionResult Edit(int id, int? crud, int? notify, string message = null)
-    {
-        try
-        {
-
-            SetNotifyMessage(notify, message);
-            SetCrudMessage(crud);
-
-            var Aula = ApiClientFactory.Instance.GetAulaById(id);
-
-
-            return View(new AulaModel()
-            {
-               
-             
-            });
-        }
-        catch (Exception ex)
-        {
-            return RedirectToAction(nameof(Index),
-                new
-                {
-                    notify = (int)EnumNotify.Error,
-                    message = $"Erro ao alterar usuário. Favor entrar em contato com o administrador do sistema. {ex.Message}"
-                });
-        }
-    }
-
-    /// <summary>
     /// Ação de alteração do Aula
     /// </summary>
     /// <param name="id">identificador do Aula</param>
@@ -171,8 +136,8 @@ public class AulaController : BaseController
 	                     ""
 		            ? false
 		            : true,
-	            ProfessorId = 0,
-	            ModuloEadId = 0
+                ProfessorId = Convert.ToInt32(collection["ddlProfessor"]
+                    .ToString())
             };
 
             await ApiClientFactory.Instance.UpdateAula(command.Id, command);
@@ -212,7 +177,7 @@ public class AulaController : BaseController
     {
         var result = ApiClientFactory.Instance.GetAulaById(id);
         var professores = new SelectList(ApiClientFactory.Instance.GetUsuarioAll().Where(x => x.PerfilId == (int)EnumPerfil.Professor), "Id", "Nome", result.ProfessorId);
-        //result.ProfessorId = professores;
+        result.ListProfessores = professores;
 
 		return Task.FromResult(result);
     }

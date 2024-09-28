@@ -23,10 +23,11 @@
 					<table class="table table-bordered table-striped mb-0" id="datatable-default">
 						<thead>
 							<tr>
-								<th class="text-center">Id</th>
+                                <th class="text-center">Id</th>
+                                <th class="text-center">Tipo de Curso</th>
 								<th class="text-center">Título do Curso</th>
-								<th class="text-center">Tipo de Curso</th>
-								<th class="text-center">Profissional</th>
+								<th class="text-center">Descrição</th>
+								<th class="text-center">Coordenador</th>
 								<th class="text-center">Status</th>
 								<th class="text-center">Ações</th>
 							</tr>
@@ -36,9 +37,10 @@
 							{ 
 								<tr>
 									<td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Id)</td>
-									<td class="text-center">@Html.DisplayFor(modelItem => item.Titulo)</td>
-									<td class="text-center">@Html.DisplayFor(modelItem => item.TituloTipoCurso)</td>
-									<td class="text-center">@Html.DisplayFor(modelItem => item.NomeProfissional)</td>
+                                    <td class="text-center" style="width:60px;">@Html.DisplayFor(modelItem => item.TituloTipoCurso)</td>
+                                    <td class="text-center">@Html.DisplayFor(modelItem => item.Titulo)</td>
+                                    <td class="text-center">@Html.DisplayFor(modelItem => item.Descricao)</td>
+									<td class="text-center">@Html.DisplayFor(modelItem => item.NomeCoordenador)</td>
 									@if (item.Status)
 									{
 										<td class="text-center"><span class="label label-success" style="display: block;">ATIVO</span></td>

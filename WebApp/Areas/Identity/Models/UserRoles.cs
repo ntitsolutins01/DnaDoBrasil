@@ -8,5 +8,7 @@
         public const string Parceiro = "Parceiro";
         public const string Profissional = "Profissional";
         public const string Gestor = "Gestor";
+        public const string Professor = "Professor";
+        public const string Coordenador = "Coordenador";
     }
 }

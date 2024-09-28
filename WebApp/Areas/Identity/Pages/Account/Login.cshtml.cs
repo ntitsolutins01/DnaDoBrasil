@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
@@ -103,8 +103,7 @@ namespace WebApp.Areas.Identity.Pages.Account
 		{
 
 #if DEBUG
-			//returnUrl = Url.Content("~/Modulo");
-			returnUrl = Url.Content("~/Dashboard");
+			returnUrl = Url.Content("~/DashboardEad");
 #else
 			returnUrl = Url.Content("~/Dashboard");
 #endif

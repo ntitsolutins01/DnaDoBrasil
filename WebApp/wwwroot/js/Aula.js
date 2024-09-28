@@ -9,6 +9,31 @@ var vm = new Vue({
         (function ($) {
             'use strict';
 
+            //skin select
+            var $select = $(".select2").select2({
+                allowClear: true
+            });
+
+            $(".select2").each(function () {
+                var $this = $(this),
+                    opts = {};
+
+                var pluginOptions = $this.data('plugin-options');
+                if (pluginOptions)
+                    opts = pluginOptions;
+
+                $this.themePluginSelect2(opts);
+            });
+
+            /*
+             * When you change the value the select via select2, it triggers
+             * a 'change' event, but the jquery validation plugin
+             * only re-validates on 'blur'*/
+
+            $select.on('change', function () {
+                $(this).trigger('blur');
+            });
+
             //mascara dos inputs
             var cargaHoraria = $("#cargaHoraria");
             cargaHoraria.mask('000', { reverse: false });
@@ -51,31 +76,6 @@ var vm = new Vue({
             }
 
             if (formid === "formAula") {
-
-                //skin select
-                var $select = $(".select2").select2({
-                    allowClear: true
-                });
-
-                $(".select2").each(function () {
-                    var $this = $(this),
-                        opts = {};
-
-                    var pluginOptions = $this.data('plugin-options');
-                    if (pluginOptions)
-                        opts = pluginOptions;
-
-                    $this.themePluginSelect2(opts);
-                });
-
-                /*
-                 * When you change the value the select via select2, it triggers
-                 * a 'change' event, but the jquery validation plugin
-                 * only re-validates on 'blur'*/
-
-                $select.on('change', function () {
-                    $(this).trigger('blur');
-                });
 
                 $("#ddlTipoCurso").change(function () {
                     var tipoCursoId = $("#ddlTipoCurso").val();
@@ -193,6 +193,27 @@ var vm = new Vue({
                 self.editDto.Descricao = result.data.descricao;
                 self.editDto.CargaHoraria = result.data.cargaHoraria;
                 self.editDto.Status = result.data.status;
+
+                if (result.data.listProfessores.length > 0) {
+                    var items = '<option value="">Selecionar o Professor</option>';
+                    $("#ddlProfessor").empty;
+                    $.each(result.data.listProfessores,
+                        function (i, row) {
+                            if (row.selected) {
+                                items += "<option selected value='" + row.value + "'>" + row.text + "</option>";
+                            } else {
+                                items += "<option value='" + row.value + "'>" + row.text + "</option>";
+                            }
+                        });
+                    $("#ddlProfessor").html(items);
+                }
+                else {
+                    new PNotify({
+                        title: 'Professor',
+                        text: 'Professores não encontrados.',
+                        type: 'warning'
+                    });
+                }
 
 
             }).catch(error => {
