@@ -197,7 +197,7 @@ var vm = new Vue({
                 if (result.data.listProfessores.length > 0) {
                     var items = '<option value="">Selecionar o Professor</option>';
                     $("#ddlProfessor").empty;
-                    $.each(data,
+                    $.each(result.data.listProfessores,
                         function (i, row) {
                             if (row.selected) {
                                 items += "<option selected value='" + row.value + "'>" + row.text + "</option>";
@@ -209,7 +209,7 @@ var vm = new Vue({
                 }
                 else {
                     new PNotify({
-                        title: 'Modulo',
+                        title: 'Professor',
                         text: 'Professores não encontrados.',
                         type: 'warning'
                     });
