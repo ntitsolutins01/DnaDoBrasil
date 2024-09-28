@@ -61,7 +61,7 @@ public class CursoController : BaseController
             SetNotifyMessage(notify, message);
             SetCrudMessage(crud);
             var tiposcursos = new SelectList(ApiClientFactory.Instance.GetTipoCursosAll(), "Id", "Nome");
-            var coordenadores = new SelectList(ApiClientFactory.Instance.GetUsuarioAll().Where(x=>x.PerfilId == (int)EnumPerfil.Profissional), "Id", "Nome");
+            var coordenadores = new SelectList(ApiClientFactory.Instance.GetUsuarioAll().Where(x=>x.PerfilId == (int)EnumPerfil.Coordenador), "Id", "Nome");
 
 
             return View(new CursoModel()
@@ -92,7 +92,7 @@ public class CursoController : BaseController
             var command = new CursoModel.CreateUpdateCursoCommand
             {
 	            TipoCursoId = Convert.ToInt32(collection["ddlTipoCurso"].ToString()),
-	            UsuarioId = Convert.ToInt32(collection["ddlCoordenador"].ToString()),
+	            CoordenadorId = Convert.ToInt32(collection["ddlCoordenador"].ToString()),
 	            Titulo = collection["nome"].ToString(),
 	            Descricao = collection["descricao"].ToString(),
 				CargaHoraria = Convert.ToInt32(collection["cargaHoraria"].ToString())
