@@ -183,10 +183,10 @@ public class ModuloEadController : BaseController
             ApiClientFactory.Instance.DeleteModuloEad(id);
             return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
         }
-        catch
+        catch (Exception e)
         {
-            return RedirectToAction(nameof(Index));
-        }
+			return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = "Este módulo não pode ser excluído pois possui aulas vinculadas a ele." });
+		}
     }
 
     public Task<JsonResult> GetCursosAllByTipoCursoId(string id)
