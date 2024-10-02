@@ -44,13 +44,19 @@ namespace WebApp.ApiClient
                 $"{ResourceLaudo}"));
             return Get<List<LaudoDto>>(requestUrl);
         }
-        //public List<LaudoDto> GetLaudosByEncaminhamentos()
-        //{
-        //    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-        //        $"{ResourceLaudo}/Encaminhamento/{}"));
-        //    return Get<List<LaudoDto>>(requestUrl);
-        //}
+		//public List<LaudoDto> GetLaudosByEncaminhamentos()
+		//{
+		//    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+		//        $"{ResourceLaudo}/Encaminhamento/{}"));
+		//    return Get<List<LaudoDto>>(requestUrl);
+		//}
+		public LaudoDto GetEncaminhamentoBySaudeId(int id)
+		{
+			var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+				$"{ResourceLaudo}/EncaminhamentoSaude/{id}"));
+			return Get<LaudoDto>(requestUrl);
+		}
 
-        #endregion
-    }
+		#endregion
+	}
 }
