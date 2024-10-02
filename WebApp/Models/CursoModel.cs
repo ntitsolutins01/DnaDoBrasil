@@ -19,7 +19,7 @@ namespace WebApp.Models
 		{
 			public int Id { get; set; }
 			public int TipoCursoId { get; set; }
-			public int UsuarioId { get; set; }
+			public int CoordenadorId { get; set; }
 			public required string Titulo { get; set; }
 			public required int CargaHoraria { get; set; }
 			public string? Descricao { get; set; }

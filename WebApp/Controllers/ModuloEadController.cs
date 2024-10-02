@@ -183,9 +183,41 @@ public class ModuloEadController : BaseController
             ApiClientFactory.Instance.DeleteModuloEad(id);
             return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
         }
-        catch
+        catch (Exception e)
         {
-            return RedirectToAction(nameof(Index));
+			return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = "Este módulo não pode ser excluído pois possui aulas vinculadas a ele." });
+		}
+    }
+
+    public Task<JsonResult> GetCursosAllByTipoCursoId(string id)
+    {
+        try
+        {
+            if (string.IsNullOrEmpty(id)) throw new Exception("Tipo de Curso não informado.");
+            var resultLocal = ApiClientFactory.Instance.GetCursosAllByTipoCursoId(Convert.ToInt32(id));
+
+            return Task.FromResult(Json(new SelectList(resultLocal, "Id", "Titulo")));
+
+        }
+        catch (Exception ex)
+        {
+            return Task.FromResult(Json(ex.Message));
+        }
+    }
+
+    public Task<JsonResult> GetModulosEadAllByCursoId(string id)
+    {
+        try
+        {
+            if (string.IsNullOrEmpty(id)) throw new Exception("Curso não informado.");
+            var resultLocal = ApiClientFactory.Instance.GetModulosEadAllByCursoId(Convert.ToInt32(id));
+
+            return Task.FromResult(Json(new SelectList(resultLocal, "Id", "Titulo")));
+
+        }
+        catch (Exception ex)
+        {
+            return Task.FromResult(Json(ex.Message));
         }
     }
     #endregion

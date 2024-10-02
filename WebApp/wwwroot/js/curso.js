@@ -133,6 +133,27 @@ var vm = new Vue({
                 self.editDto.CargaHoraria = result.data.cargaHoraria;
                 self.editDto.Status = result.data.status;
 
+                if (result.data.listCoordenadores.length > 0) {
+                    var items = '<option value="">Selecionar o Coordenador</option>';
+                    $("#ddlCoordenador").empty;
+                    $.each(result.data.listCoordenadores,
+                        function (i, row) {
+                            if (row.selected) {
+                                items += "<option selected value='" + row.value + "'>" + row.text + "</option>";
+                            } else {
+                                items += "<option value='" + row.value + "'>" + row.text + "</option>";
+                            }
+                        });
+                    $("#ddlCoordenador").html(items);
+                }
+                else {
+                    new PNotify({
+                        title: 'Coordenador',
+                        text: 'Coordenadores não encontrados.',
+                        type: 'warning'
+                    });
+                }
+
             }).catch(error => {
                 Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
             });

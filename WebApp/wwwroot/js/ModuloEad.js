@@ -77,15 +77,16 @@ var vm = new Vue({
                     $(this).trigger('blur');
                 });
 
+                //Açao de seleçao de valor na combo primaria para preencher a combo secundára
                 $("#ddlTipoCurso").change(function () {
-                    var sigla = $("#ddlTipoCurso").val();
+                    var tipoCursoId = $("#ddlTipoCurso").val();
 
                     var url = "../Curso/GetCursosAllByTipoCursoId";
 
                     var ddlSource = "#ddlCurso";
 
                     $.getJSON(url,
-                        { id: $(ddlSource).val() },
+                        { id: tipoCursoId },
                         function (data) {
                             if (data.length > 0) {
                                 var items = '<option value="">Selecionar Curso</option>';
@@ -99,7 +100,7 @@ var vm = new Vue({
                             else {
                                 new PNotify({
                                     title: 'Curso',
-                                    text: 'Curso n�o encontrados.',
+                                    text: 'Curso não encontrados.',
                                     type: 'warning'
                                 });
                             }

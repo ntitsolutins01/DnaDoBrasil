@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Net;
+using System.Security.Claims;
+using System.Security.Principal;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
@@ -21,9 +25,17 @@ namespace WebApp.Controllers
         {
             _appSettings = appSettings;
             ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
+            
         }
         public async Task<IActionResult> Index(IFormCollection collection)
         {
+            var usu = User?.Identity.Name;
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userName = User.FindFirstValue(ClaimTypes.Name); // will give the user's userName
+            var email = User.FindFirstValue(ClaimTypes.Email);
+            var token = HttpContext.Request.Cookies["token"];
+            //ApplicationSettings.Token = HttpContext.Request.Cookies["token"];
+
             return View();
         }
     }

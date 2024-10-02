@@ -45,13 +45,12 @@ namespace WebApp.ApiClient
 				$"{ResourceEncaminhamento}"));
 			return Get<List<EncaminhamentoDto>>(requestUrl);
 		}
-
-		//public EncaminhamentoDto GetEncaminhamentoByAlunoIdDisciplinaId(int alunoId, int disciplinaId)
-		//{
-		//	var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-		//		$"{ResourceEncaminhamento}/Aluno/{alunoId}/Disciplina/{disciplinaId}"));
-		//	return Get<EncaminhamentoDto>(requestUrl);
-		//}
+		public List<EncaminhamentoDto> GetEncaminhamentosByTipoLaudoId(int id)
+		{
+			var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+				$"{ResourceEncaminhamento}/Encaminhamento/TipoLaudo/{id}"));
+			return Get<List<EncaminhamentoDto>>(requestUrl);
+		}
 
 		#endregion
 

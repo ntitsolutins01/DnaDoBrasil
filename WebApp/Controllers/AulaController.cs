@@ -91,11 +91,11 @@ public class AulaController : BaseController
             {
 	            CargaHoraria = Convert.ToInt32(collection["cargaHoraria"]
 		            .ToString()),
-	            ProfessorId = Convert.ToInt32(collection["ddlTipoCurso"]
+	            ProfessorId = Convert.ToInt32(collection["ddlProfessor"]
 		            .ToString()),
-	            MuduloEadId = Convert.ToInt32(collection["ddlTipoCurso"]
+	            ModuloEadId = Convert.ToInt32(collection["ddlModuloEad"]
 		            .ToString()),
-	            Titulo = collection["nome"]
+	            Titulo = collection["titulo"]
 		            .ToString(),
 	            Descricao = collection["descricao"]
 		            .ToString()
@@ -108,41 +108,6 @@ public class AulaController : BaseController
         catch (Exception e)
         {
             return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = "Erro ao executar esta ação. Favor entrar em contato com o administrador do sistema." });
-        }
-    }
-
-    /// <summary>
-    /// Tela Alteração de Aula
-    /// </summary>
-    /// <param name="id">Id de alteração do Aula</param>
-    /// <returns>retorna mensagem de alteração através do parametro crud</returns>
-    /// <exception cref="ArgumentNullException">Mensagem de erro ao alterar o Aula</exception>
-    [ClaimsAuthorize(ClaimType.Aula, Claim.Alterar)]
-    public ActionResult Edit(int id, int? crud, int? notify, string message = null)
-    {
-        try
-        {
-
-            SetNotifyMessage(notify, message);
-            SetCrudMessage(crud);
-
-            var Aula = ApiClientFactory.Instance.GetAulaById(id);
-
-
-            return View(new AulaModel()
-            {
-               
-             
-            });
-        }
-        catch (Exception ex)
-        {
-            return RedirectToAction(nameof(Index),
-                new
-                {
-                    notify = (int)EnumNotify.Error,
-                    message = $"Erro ao alterar usuário. Favor entrar em contato com o administrador do sistema. {ex.Message}"
-                });
         }
     }
 
@@ -171,8 +136,8 @@ public class AulaController : BaseController
 	                     ""
 		            ? false
 		            : true,
-	            ProfessorId = 0,
-	            MuduloEadId = 0
+                ProfessorId = Convert.ToInt32(collection["ddlProfessor"]
+                    .ToString())
             };
 
             await ApiClientFactory.Instance.UpdateAula(command.Id, command);
@@ -211,8 +176,10 @@ public class AulaController : BaseController
     public Task<AulaDto> GetAulaById(int id)
     {
         var result = ApiClientFactory.Instance.GetAulaById(id);
+        var professores = new SelectList(ApiClientFactory.Instance.GetUsuarioAll().Where(x => x.PerfilId == (int)EnumPerfil.Professor), "Id", "Nome", result.ProfessorId);
+        result.ListProfessores = professores;
 
-        return Task.FromResult(result);
+		return Task.FromResult(result);
     }
     #endregion
 }
