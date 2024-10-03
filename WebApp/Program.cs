@@ -87,6 +87,7 @@ builder.Services.Configure<DataProtectionTokenProviderOptions>(options =>
 
 builder.Services.AddTransient<IEmailSender, EmailService>();
 
+// Cria um grupo de pol�ticas de administradores para requisitos de seguran�a de alto n�vel
 builder.Services.AddAuthorization(o =>
 {
     #region Sistema DNA

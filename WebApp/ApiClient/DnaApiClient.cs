@@ -1,3 +1,4 @@
+using System.Net.Http.Headers;
 using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -44,6 +45,13 @@ namespace WebApp.ApiClient
             return Task.FromResult(JsonConvert.DeserializeObject<long>(data.Result));
         }
 
+        public Task<T?> PostWithResponseBody<T>(Uri requestUrl, T content)
+        {
+            addHeaders();
+             var response = _httpClient.PostAsync(requestUrl.ToString(), CreateHttpContent<T>(content));
+            var data = response.Result.Content.ReadAsStringAsync();
+            return Task.FromResult(JsonConvert.DeserializeObject<T>(data.Result));
+        }
 
         /// <summary>
         /// Common method for making PUT calls
