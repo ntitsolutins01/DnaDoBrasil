@@ -52,9 +52,24 @@ namespace WebApp.Controllers
         public ActionResult Details(int id)
         {
             var laudo = ApiClientFactory.Instance.GetLaudoById(id);
+            var aluno = ApiClientFactory.Instance.GetAlunoById(id);
             var model = new LaudoModel()
             {
-                Laudo = laudo
+                Laudo = laudo,
+                Aluno = aluno
+            };
+            return View(model);
+        }
+
+        //[ClaimsAuthorize(ClaimType.Laudo, Claim.Ver)]
+        public ActionResult View(int id)
+        {
+            var laudo = ApiClientFactory.Instance.GetLaudoById(id);
+            var aluno = ApiClientFactory.Instance.GetAlunoById(id);
+            var model = new LaudoModel()
+            {
+                Laudo = laudo,
+                Aluno = aluno
             };
             return View(model);
         }
