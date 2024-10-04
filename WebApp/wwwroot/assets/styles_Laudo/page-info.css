@@ -201,7 +201,7 @@
     left: 125px;
     overflow: hidden;
 }
-.turma.user.info span {
+.turma-user-info span {
     width: 92px;
     color: rgba(128, 128, 128, 1);
     position: absolute;
