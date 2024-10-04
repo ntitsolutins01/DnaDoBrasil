@@ -51,7 +51,7 @@ namespace WebApp.Controllers
         [ClaimsAuthorize(ClaimType.Laudo, Claim.Detalhar)]
         public ActionResult Details(int id)
         {
-            var laudo = ApiClientFactory.Instance.GetLaudoById(id);
+            var laudo = ApiClientFactory.Instance.GetLaudoByAluno(id);
             var aluno = ApiClientFactory.Instance.GetAlunoById(id);
             var model = new LaudoModel()
             {
@@ -64,12 +64,17 @@ namespace WebApp.Controllers
         //[ClaimsAuthorize(ClaimType.Laudo, Claim.Ver)]
         public ActionResult View(int id)
         {
-            var laudo = ApiClientFactory.Instance.GetLaudoById(id);
+            var laudo = ApiClientFactory.Instance.GetLaudoByAluno(id);
             var aluno = ApiClientFactory.Instance.GetAlunoById(id);
+            var talentoEsportivo = ApiClientFactory.Instance.GetTalentoEsportivoByAluno(laudo.AlunoId.ToString());
+            //var encaminamentoSaude = ApiClientFactory.Instance.GetEncaminhamentoBySaudeId(id);
+
             var model = new LaudoModel()
             {
                 Laudo = laudo,
-                Aluno = aluno
+                Aluno = aluno,
+                //EncaminhamentoSaude = encaminamentoSaude
+                TalentoEsportivo = talentoEsportivo
             };
             return View(model);
         }
@@ -339,7 +344,7 @@ namespace WebApp.Controllers
             {
                 SetNotifyMessage(notify, message);
                 SetCrudMessage(crud);
-                var laudo = ApiClientFactory.Instance.GetLaudoById(id);
+                var laudo = ApiClientFactory.Instance.GetLaudoByAluno(id);
 
                 var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
 

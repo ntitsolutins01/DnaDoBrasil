@@ -37,6 +37,7 @@
         public byte[]? ByteImage { get; init; }
         public string? NomeFoto { get; init; }
         public string? Modalidade { get; init; }
+        public int? Idade { get; init; }
         //public string? Serie { get; init; }
         //public string? Turma { get; init; }
         //public int? MunicipioId { get; init; }

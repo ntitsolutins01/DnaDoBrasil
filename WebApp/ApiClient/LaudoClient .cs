@@ -32,10 +32,10 @@ namespace WebApp.ApiClient
 
         #region Methods
 
-        public LaudoDto GetLaudoById(int id)
+        public LaudoDto GetLaudoByAluno(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceLaudo}/Laudo/{id}"));
+                $"{ResourceLaudo}/Laudo/Aluno/{id}"));
             return Get<LaudoDto>(requestUrl);
         }
         public List<LaudoDto> GetLaudoAll()

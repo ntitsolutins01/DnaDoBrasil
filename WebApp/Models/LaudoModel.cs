@@ -8,7 +8,9 @@ namespace WebApp.Models
 	{
 		public LaudoDto Laudo { get; set; }
 		public AlunoDto Aluno { get; set; }
-		public List<LaudoDto> Laudos { get; set; }
+        public EncaminhamentoDto EncaminhamentoSaude { get; set; }
+        public TalentoEsportivoDto TalentoEsportivo { get; set; }
+        public List<LaudoDto> Laudos { get; set; }
 		public List<QuestionarioDto> QuestionarioVocacional { get; set; }
 		public List<QuestionarioDto> QuestionarioConsumoAlimentar { get; set; }
 		public List<QuestionarioDto> QuestionarioQualidadeVida { get; set; }
