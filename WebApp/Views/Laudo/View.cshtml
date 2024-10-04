@@ -4,6 +4,882 @@
     Layout = "";
 }
 
-<h1>
-    Hello World!, @Model.Aluno.Nome
-</h1>
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DNA do Brasil Talentos - Laudo</title>
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap"
+          rel="stylesheet" />
+    <link rel="stylesheet" href="~/assets/styles_Laudo/index.css" media="all">
+    <link rel="stylesheet" href="~/assets/styles_Laudo/page-capa.css" media="all">
+    <link rel="stylesheet" href="~/assets/styles_Laudo/page-info.css" media="all">
+    <link rel="stylesheet" href="~/assets/styles_Laudo/page-esporte-info.css" media="all">
+    <link rel="stylesheet" href="~/assets/styles_Laudo/pgfinal.css" media="all">
+    <link rel="stylesheet" href="~/assets/styles_Laudo/page-saude-info.css" media="all">
+    <!-- Serve para gerar html da página de laudos e informações de laudos -->
+    <link rel="stylesheet" href="~/assets/styles_Laudo/page-laudo.css" media="all">
+    <link rel="stylesheet" href="~/assets/styles_Laudo/page-laudos-info.css" media="all">
+</head>
+
+<body>
+    <!-- Página 1 - Capa -->
+    <div class="page-container page1">
+        <div class="newContainer">
+            <div class="newContainer2">
+                <div class="container-background-img-capa"></div>
+                <div class="sideContainer">
+                    <div class="red" style="top: 0%;"></div>
+                    <div class="orange" style="top: 25%;"></div>
+                    <div class="purple" style="top: 75%;"></div>
+                    <div class="blue" style="top: 50%;"></div>
+                </div>
+            </div>
+            <div class="container-logo-capa"></div>
+            <div class="container-text-capa">
+                <span>DESCUBRA SEU</span>
+                <span>TALENTO</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Página 2 - Info -->
+    <div class="page-container">
+        <div class="newContainer">
+            <div class="newContainer2">
+                <div class="container-background-img-info"></div>
+                <div class="esporte-img-info" 
+                     style="background-image: url('/assets/assets_Laudo/icon_info_esporte.png'); background-size: cover;"></div>
+                <div class="sideContainer">
+                    <div class="red" style="top: 0%;"></div>
+                    <div class="orange" style="top: 25%;"></div>
+                    <div class="purple" style="top: 75%;"></div>
+                    <div class="blue" style="top: 50%;"></div>
+                </div>
+                <div class="container-qrcode-info">
+                    <span>
+                        Este QR Code é único e nele estão
+                        contidos seus dados cadastrais na DNA do
+                        Brasil.
+                    </span>
+                    <div class="img-qrcode-info"
+                         style="background-image: url('/assets/assets_Laudo/qrCode.svg'); background-size: cover;">
+                    </div>
+                </div>
+                <div class="container-text-info">
+                    <span>O que é o índice DNA?</span>
+                    <span>
+                        O Score DNA é um sistema que
+                        permitirá acompanhar seu rendimento em diferentes
+                        momentos.
+                    </span>
+                </div>
+                <div class="container-title-info">
+                    <span class="v90_260">MEU TALENTO</span>
+                    <span class="v90_261">VOLEIBOL</span>
+                </div>
+                <div class="container-graph-info">
+                    <div class="container-graph-external-info"></div>
+                    <div class="container-graph-principal-info"
+                         style="background: conic-gradient(#00eabc  0 80deg, #c0faee 80deg 360deg);"></div>
+
+                    <span class="graph-text-info">DNA</span>
+                    <span class="graph-value-info"
+                          style="color: #00eabc;">118</span>
+                </div>
+                <div class="container-main-info">
+                    <div class="user-img-info"
+                         style="background: url('/wwwroot/assets/assets_Laudo/icon_info_user.png'); background-size: cover;">
+                    </div>
+                    <div class="turma-user-info">
+                        <span>
+                            Série: 8º ano
+                            Turma: D
+                        </span>
+                    </div>
+                    <div class="container-2-info">
+                        <span class="name-info">
+                            Agatha Pinheiro Pereira de
+                            Lima
+                        </span>
+                        <span class="email-info">agathapinheiro@idecace.com.br</span>
+                        <span class="endereco-info">
+                            Centro Educacional 123
+                            de
+                            Samambaia
+                        </span>
+                    </div>
+                    <div class="container-3-info">
+                        <span class="text-info">Ficha Técnica</span>
+                        <span class="data-info">
+                            SEXTA-FEIRA, 20 DE DEZ
+                            DE 2019
+                        </span>
+                    </div>
+                    <div class="container-4-info">
+                        <div class="row-info">
+                            <span class="label-info">Idade</span>
+                            <span class="value-info">14 anos</span>
+                        </div>
+                        <div class="row-info">
+                            <span class="label-info">Sexo</span>
+                            <span class="value-info">Feminino</span>
+                        </div>
+                        <div class="row-info">
+                            <span class="label-info">Estatura</span>
+                            <span class="value-info">170 cm</span>
+                        </div>
+                        <div class="row-info">
+                            <span class="label-info">Massa Corporal</span>
+                            <span class="value-info">53 Kg</span>
+                        </div>
+                        <div class="row-info">
+                            <span class="label-info">Modalidade</span>
+                            <span class="value-info">Não definida</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="logo"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Laudo Esporte -->
+    <div class="page-container">
+        <div class="newContainer">
+            <div class="newContainer2">
+                <div class="laudo-img"
+                     style="background: url('/assets/assets_Laudo/background-esporte.png'); background-size: cover;"></div>
+                <div class="sideContainer">
+                    <div class="red" style="top: 0%;"></div>
+                </div>
+                <div class="container-indicadores">
+                    <div>
+                        <span>0%</span>
+                        <span>–</span>
+                        <span>Força de membros superiores</span>
+                    </div>
+                    <div>
+                        <span>0%</span>
+                        <span>–</span>
+                        <span>Flexibilidade Muscular</span>
+                    </div>
+                    <div>
+                        <span>0%</span>
+                        <span>–</span>
+                        <span>Força Explosiva de Membros Inferiores</span>
+                    </div>
+                    <div>
+                        <span>0%</span>
+                        <span>–</span>
+                        <span>Velocidade</span>
+                    </div>
+                    <div>
+                        <span>0%</span>
+                        <span>–</span>
+                        <span>Agilidade</span>
+                    </div>
+                    <div>
+                        <span>0%</span>
+                        <span>–</span>
+                        <span>Resistência Abdominal</span>
+                    </div>
+                    <div>
+                        <span>0%</span>
+                        <span>–</span>
+                        <span>Aptidão Cardiorrespiratória</span>
+                    </div>
+                </div>
+                <div class="container-laudo-text">
+                    <span>Profissional</span>
+                    <span>Felipe De Souza</span>
+                    <span>
+                        O percentual abaixo apresenta a variação dos
+                        Indicadores frente ao histórico
+                        de Laudos preenchidos. Se o percentual for 0% é
+                        porque ou não houve variação ou este é o seu
+                        primeiro Laudo.
+                    </span>
+                </div>
+                <div class="laudo-title">
+                    <span>Esporte</span>
+                    <span>Laudo</span>
+                </div>
+                <div class="container-graph">
+                    <div class="circle-graph-external"></div>
+                    <div class="circle-graph-principal"
+                         style="background: conic-gradient(#df436c 0 80deg, #f7d1db 80deg 360deg);"></div>
+                    <span class="graph-text">Esporte</span>
+                    <span class="graph-value"
+                          style="color:#df436c">58</span>
+                </div>
+                <div class="logo"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Info Laudo Esporte -->
+    <div class="page-container">
+        <div class="newContainer">
+            <div class="newContainer2">
+                <div class="sideContainer">
+                    <div class="red" style="top: 0%"></div>
+                </div>
+                <div class="v102_488">
+                    <!-- Card IMC -->
+                    <div class="card card-1">
+                        <div class="div-icon">
+                            <div class="circle"></div>
+                            <div class="icon"
+                                 style="background-image: url('/assets/assets_Laudo/icon_esporte_massa_corporal.png');">
+                            </div>
+                        </div>
+                        <div class="div-title">
+                            <span class="span-title">
+                                Índice de massa
+                                corporal
+                            </span>
+                            <span class="span-subtitle">
+                                Abaixo do peso
+                                adequado
+                            </span>
+                        </div>
+                        <div class="bar-title">
+                            <span>imc</span>
+                            <span style="color: #00eabc;">18,3</span>
+                        </div>
+                        <div class="bar-div">
+                            <div style="background-color: #c0faee;"></div>
+                            <div style="background-color: #00eabc; width: 190px;"></div>
+                        </div>
+                        <div class="div-desc">
+                            <span>
+                                É importante prestar atenção a nossa dieta
+                                e assessorar-nos com
+                                especialistas tanto em nutrição, como
+                                psicologia, e em medicina integral.
+                                Prestemos
+                                atenção ao que nossos pais nos falam e
+                                recomendam. Alimentos ricos em proteína e
+                                frutas são nossos grandes aliados!
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Card Velocidade -->
+                    <div class="card card-2">
+                        <div class="div-icon">
+                            <div class="circle"></div>
+                            <div class="icon"
+                                 style="background-image: url('/assets/assets_Laudo/icon_esporte_velocidade.png');">
+                            </div>
+                        </div>
+                        <div class="div-title">
+                            <span class="span-title">Velocidade 20m</span>
+                            <span class="span-subtitle"
+                                  style="display: none">""</span>
+                        </div>
+                        <div class="bar-title">
+                            <span>seg</span>
+                            <span style="color: #00eabc;">0</span>
+                        </div>
+                        <div class="bar-div">
+                            <div style="display: none;"></div>
+                            <div style="display: none;"></div>
+                        </div>
+                        <div class="div-desc">
+                            <span>
+                                A velocidade diz respeito a sua capacidade
+                                de reagir a um
+                                determinado estímulo. Uma arrancada no
+                                futebol, uma saída de bloco na natação ou um
+                                voleio junto à rede no tênis, são exemplos
+                                desta qualidade física. Você teve
+                                resultados de um campeão! Parabéns! Continue
+                                assim!
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Card Impulsão -->
+                    <div class="card card-3">
+                        <div class="div-icon">
+                            <div class="circle"></div>
+                            <div class="icon"
+                                 style="background-image: url('/assets/assets_Laudo/icon_esporte_impulsao.png');"></div>
+                        </div>
+                        <div class="div-title">
+                            <span class="span-title">
+                                Impulsão
+                                Horizontal
+                            </span>
+                            <span class="span-subtitle">
+                                Normal
+                                Desenvolvimento
+                            </span>
+                        </div>
+                        <div class="bar-title">
+                            <span>cm</span>
+                            <span style="color: #e44971;">145</span>
+                        </div>
+                        <div class="bar-div">
+                            <div style="background-color: #f7d1db;"></div>
+                            <div style="background-color: #e44971; width: 200px;"></div>
+                        </div>
+                        <div class="div-desc">
+                            <span>
+                                A força de nossas pernas é utilizada por
+                                muitos esportes de
+                                velocidade, como o futebol.
+                                Movimentos rápidos representam mais goles! A
+                                melhoria da coordenação motora é chave
+                                para o desenvolvimento de sua força. Tiros
+                                de corrida ou saltos em plintos, podem
+                                ser uma boa opção!
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Card Flexibilidade -->
+                    <div class="card card-4">
+                        <div class="div-icon">
+                            <div class="circle"></div>
+                            <div class="icon"
+                                 style="background-image: url('/assets/assets_Laudo/icon_esporte_flexibilidade.png');">
+                            </div>
+                        </div>
+                        <div class="div-title">
+                            <span class="span-title">Flexibilidade</span>
+                            <span class="span-subtitle">
+                                Desenvolvimento
+                                Destacado
+                            </span>
+                        </div>
+                        <div class="bar-title">
+                            <span>cm</span>
+                            <span style="color: #00eabc;">35</span>
+                        </div>
+                        <div class="bar-div">
+                            <div style="background-color: #c0faee;"></div>
+                            <div style="background-color: #00eabc; width: 25px;"></div>
+                        </div>
+                        <div class="div-desc">
+                            <span>
+                                Você apresenta um ótimo potencial para
+                                desenvolver a
+                                flexibilidade! Para isso é necessário muito
+                                treino e cuidados para que você não
+                                tenha lesões! Mantenha o alongamento em dia,
+                                isso irá ajudá-lo a sempre estar
+                                disponível para melhorar a
+                                flexibilidade!
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Card Aptidão Aeróbica -->
+                    <div class="card card-5">
+                        <div class="div-icon">
+                            <div class="circle"></div>
+                            <div class="icon"
+                                 style="background-image: url('/assets/assets_Laudo/icon_esporte_aptidao_aerobica.png');"></div>
+                        </div>
+                        <div class="div-title">
+                            <span class="span-title">
+                                Aptidão Aeróbica
+                                1km
+                            </span>
+                            <span class="span-subtitle"
+                                  style="display:none">""</span>
+                        </div>
+                        <div class="bar-title">
+                            <span>seg</span>
+                            <span style="color: #00eabc">8,1</span>
+                        </div>
+                        <div class="bar-div">
+                            <div style="display: none;"></div>
+                            <div class="display: none;"></div>
+                        </div>
+                        <div class="div-desc">
+                            <span>
+                                A aptidão aeróbica permite ter energia
+                                durante os exercícios que
+                                realizamos. Uma boa condição desta
+                                capacidade é uma chave de saúde. Não fique
+                                chateado se você não apresentou bons
+                                índices. Melhorar é algo perfeitamente
+                                possível
+                                por meio do treinamento!
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Card Preensão Manual -->
+                    <div class="card card-6">
+                        <div class="div-icon">
+                            <div class="circle"></div>
+                            <div class="icon"
+                                 style="background-image: url('/assets/assets_Laudo/icon_esporte_preensao_manual.png');">
+                            </div>
+                        </div>
+                        <div class="div-title">
+                            <span class="span-title">Preensão Manual</span>
+                            <span class="span-subtitle">
+                                Desenvolvimento
+                                Destacado
+                            </span>
+                        </div>
+                        <div class="bar-title">
+                            <span>kg</span>
+                            <span style="color: #00eabc;">30</span>
+                        </div>
+                        <div class="bar-div">
+                            <div style="background-color: #c0faee;"></div>
+                            <div style="background-color: #00eabc; width: 50px;"></div>
+                        </div>
+                        <div class="div-desc">
+                            <span>
+                                A força de nossas mãos é um índice
+                                objetivo da nossa força
+                                integral. Seus resultados são comparáveis
+                                com os de um campeão!Parabéns e continua
+                                assim!
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Laudo Saúde -->
+    <div class="page-container">
+        <div class="newContainer">
+            <div class="newContainer2">
+                <div class="laudo-img"
+                     style="background: url('/assets/assets_Laudo/background-saude.png'); background-size: cover;"></div>
+                <div class="sideContainer">
+                    <div class="orange" style="top: 25%;"></div>
+                </div>
+                <div class="container-indicadores">
+                    <div>
+                        <span>0%</span>
+                        <span>–</span>
+                        <span>Baixo Peso</span>
+                    </div>
+                    <div>
+                        <span>0%</span>
+                        <span>–</span>
+                        <span>Acima do Peso</span>
+                    </div>
+                    <div>
+                        <span>0%</span>
+                        <span>–</span>
+                        <span>Pré-disposição à resistência à insulina</span>
+                    </div>
+                    <div>
+                        <span>0%</span>
+                        <span>–</span>
+                        <span>Índice Positivo de Saúde</span>
+                    </div>
+                    <div>
+                        <span>0%</span>
+                        <span>–</span>
+                        <span>
+                            Pré-disposição à desequilíbrios
+                            musculares
+                        </span>
+                    </div>
+                </div>
+                <div class="container-laudo-text">
+                    <span>Profissional</span>
+                    <span>Felipe De Souza</span>
+                    <span>
+                        O percentual abaixo apresenta a variação dos
+                        Indicadores frente ao histórico
+                        de Laudos preenchidos. Se o percentual for 0% é
+                        porque ou não houve variação ou este é seu
+                        primeiro Laudo.
+                    </span>
+                </div>
+                <div class="laudo-title">
+                    <span>Saúde</span>
+                    <span>Laudo</span>
+                </div>
+                <div class="container-graph">
+                    <div class="circle-graph-external"></div>
+                    <div class="circle-graph-principal"
+                         style="background: conic-gradient(#EDAB55 0 80deg, #FFEFD9 80deg 360deg);"></div>
+                    <span class="graph-text">Esporte</span>
+                    <span class="graph-value"
+                          style="color:#EDAB55">58</span>
+                </div>
+                <div class="logo"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Info Laudo Saúde -->
+    <div class="page-container">
+        <div class="newContainer">
+            <div class="newContainer2">
+                <div class="sideContainer">
+                    <div class="orange" style="top: 25%;"></div>
+                </div>
+                <div class="container-main-saude">
+                    <div class="container-2-saude">
+                        <div class="container-icon-saude">
+                            <div class="circle-saude"></div>
+                            <div class="icon-saude"
+                                 style="background-image: url('/assets/assets_Laudo/icon_imc_saude.png'); background-size: cover;">
+                            </div>
+                        </div>
+                        <div class="container-3-saude">
+                            <span>
+                                Índice
+                                de massa
+                                corporal
+                            </span>
+                            <span>
+                                Abaixo
+                                do peso
+                                adequado
+                            </span>
+                        </div>
+                        <div class="container-4-saude">
+                            <span class>imc</span><span class>18,3</span>
+                        </div>
+                        <div class="container-bar-saude">
+                            <div class="bar-main-saude"></div>
+                            <div class="bar-second-saude"
+                                 style="width: 445px;"></div>
+                        </div>
+                        <div class="container-text-saude">
+                            <span>
+                                É
+                                importante
+                                prestar atenção
+                                a nossa dieta e
+                                assessorar-nos
+                                com
+                                especialistas
+                                tanto em
+                                nutrição, como
+                                psicologia, e em
+                                medicina
+                                integral.
+                                Prestemos
+                                atenção ao que
+                                nossos pais nos
+                                falam e
+                                recomendam.
+                                Alimentos ricos
+                                em proteína e
+                                frutas são
+                                nossos grandes
+                                aliados!
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Laudo Vida -->
+    <div class="page-container">
+        <div class="newContainer">
+            <div class="newContainer2">
+                <div class="laudo-img"
+                     style="background: url('/assets/assets_Laudo/background-vida.png'); background-size: cover;">
+                </div>
+                <div class="sideContainer">
+                    <div class="blue" style="top: 50%;"></div>
+                </div>
+                <div class="container-indicadores">
+                    <div>
+                        <span>0%</span>
+                        <span>–</span>
+                        <span>Baixo Peso</span>
+                    </div>
+                    <div>
+                        <span>0%</span>
+                        <span>–</span>
+                        <span>Acima do Peso</span>
+                    </div>
+                    <div>
+                        <span>0%</span>
+                        <span>–</span>
+                        <span>Pré-disposição à resistência à insulina</span>
+                    </div>
+                    <div>
+                        <span>0%</span>
+                        <span>–</span>
+                        <span>Índice Positivo de Saúde</span>
+                    </div>
+                    <div>
+                        <span>0%</span>
+                        <span>–</span>
+                        <span>
+                            Pré-disposição à desequilíbrios
+                            musculares
+                        </span>
+                    </div>
+                </div>
+                <div class="container-laudo-text">
+                    <span>Profissional</span>
+                    <span>Felipe De Souza</span>
+                    <span>
+                        O percentual abaixo apresenta a variação dos
+                        Indicadores frente ao histórico
+                        de Laudos preenchidos. Se o percentual for 0% é
+                        porque ou não houve variação ou este é o seu
+                        primeiro Laudo.
+                    </span>
+                </div>
+                <div class="laudo-title">
+                    <span>Vida</span>
+                    <span>Laudo</span>
+                </div>
+                <div class="container-graph">
+                    <div class="circle-graph-external"></div>
+                    <div class="circle-graph-principal"
+                         style="background: conic-gradient(#23bfff 0 80deg, #c9efff 80deg 360deg);"></div>
+                    <span class="graph-text">Esporte</span>
+                    <span class="graph-value"
+                          style="color:#23bfff">58</span>
+                </div>
+                <div class="logo"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Info Laudo Vida -->
+    <div class="page-container">
+        <div class="newContainer">
+            <div class="newContainer2">
+                <div class="sideContainer">
+                    <div class="blue" style="top: 50%;"></div>
+                </div>
+                <div class="container-main-vida">
+                    <!-- O laço For vai clonar essa div -->
+                    <div class="row-vida">
+                        <div class="label-vida">
+                            <div class="label-vida-container-1"
+                                 style="background-color: #23bfff;">
+                                <div class="label-vida-icon"
+                                     style="background-image: url('/assets/assets_Laudo/laudo-saude-1.png'); background-size: cover;"></div>
+                            </div>
+                            <div class="label-vida-container-2">
+                                <span>Amigos</span>
+                                <span>Necessita Melhorar</span>
+                            </div>
+                        </div>
+                        <div class="value-vida">
+                            <span>
+                                Dê preferência às atividades em grupo. Às
+                                vezes sentimos que somos muito diferentes do
+                                resto das pessoas, mas é só dar uma
+                                oportunidade e começar a falar com alguém
+                                para perceber, que ainda sendo diferentes,
+                                podemos chegar a ser muito bons amigos! Tome
+                                a iniciativa!
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Laudo Vocação -->
+    <div class="page-container">
+        <div class="newContainer">
+            <div class="newContainer2">
+                <div class="laudo-img"
+                     style="background: url('/assets/assets_Laudo/background-vocacao.png'); background-size: cover;"></div>
+                <div class="sideContainer">
+                    <div class="purple" style="top: 75%;"></div>
+                </div>
+                <div class="container-indicadores">
+                    <div>
+                        <span>0%</span>
+                        <span>–</span>
+                        <span>Tecnologias aplicadas</span>
+                    </div>
+                    <div>
+                        <span>0%</span>
+                        <span>–</span>
+                        <span>Ciências Exatas e Naturais</span>
+                    </div>
+                    <div>
+                        <span>0%</span>
+                        <span>–</span>
+                        <span>Artístico</span>
+                    </div>
+                    <div>
+                        <span>0%</span>
+                        <span>–</span>
+                        <span>Ciências Humanas</span>
+                    </div>
+                    <div>
+                        <span>0%</span>
+                        <span>–</span>
+                        <span>Empreendedorismo</span>
+                    </div>
+                    <div>
+                        <span>0%</span>
+                        <span>–</span>
+                        <span>Ciências Contábeis e Administrativas</span>
+                    </div>
+                </div>
+                <div class="container-laudo-text">
+                    <span>Profissional</span>
+                    <span>Felipe De Souza</span>
+                    <span>
+                        O percentual abaixo apresenta a variação dos
+                        Indicadores frente ao histórico
+                        de Laudos preenchidos. Se o percentual for 0% é
+                        porque ou não houve variação ou este é o seu
+                        primeiro Laudo.
+                    </span>
+                </div>
+                <div class="laudo-title">
+                    <span>Vocação</span>
+                    <span>Laudo</span>
+                </div>
+                <div class="container-graph">
+                    <div class="circle-graph-external"></div>
+                    <div class="circle-graph-principal"
+                         style="background: conic-gradient(#5B5C9C 0 80deg, #D6D7E7 80deg 360deg);"></div>
+                    <span class="graph-text">Esporte</span>
+                    <span class="graph-value"
+                          style="color:#5B5C9C">58</span>
+                </div>
+                <div class="logo"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Info Laudo Vocação -->
+    <div class="page-container">
+        <div class="newContainer">
+            <div class="newContainer2">
+                <div class="newContainer2">
+                    <div class="sideContainer">
+                        <div class="purple" style="top: 75%;"></div>
+                    </div>
+                    <div class="container-main-vida">
+                        <!-- O laço For vai clonar essa div -->
+                        <div class="row-vida">
+                            <div class="label-vida">
+                                <div class="label-vida-container-1"
+                                     style="background-color: #5B5C9C;">
+                                    <div class="label-vida-icon"
+                                         style="background-image: url('/assets/assets_Laudo/laudo-vocacao-1.png'); background-size: cover;"></div>
+                                </div>
+                                <div class="label-vida-container-2">
+                                    <span>Interesse Artístico</span>
+                                </div>
+                            </div>
+                            <div class="value-vida">
+                                <span>
+                                    Pessoas que preferem as
+                                    atividades em que possam
+                                    produzir objetos criativos a partir
+                                    de diversos materiais, ou orientar
+                                    outras pessoas nas produções
+                                    artísticas. Algumas possíveis
+                                    áreas de atuação podem
+                                    involucrar LETRAS, MÚSICA,
+                                    ARTES PLÁSTICAS,TEATRO,
+                                    LITERATURA E DESIGN.
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Página Final -->
+    <div class="page-container">
+        <div class="v102_825">
+            <div class="v102_826">
+                <!-- Background -->
+                <div class="v102_919"></div>
+
+                <!-- Powered by Section -->
+                <div class="v103_57">
+                    <span class="v103_55">Powered by</span>
+                    <span class="v103_56">Zollie</span>
+                </div>
+
+                <!-- Social Media Section -->
+                <div class="v102_923">
+                    <!-- Facebook -->
+                    <div class="v102_927">
+                        <span class="v102_939">
+                            Siga-nos no
+                            Facebook
+                        </span>
+                        <span class="v102_940">/IDECACE</span>
+                        <div class="v102_941"></div>
+                    </div>
+
+                    <!-- Instagram -->
+                    <div class="v102_943">
+                        <span class="v102_944">
+                            Confira nosso 
+                            instagram
+                        </span>
+                        <span class="v102_945">@Html.Raw("@InstitutoIDECACE")</span>
+                        <div class="v102_946"></div>
+                    </div>
+
+                    <!-- Youtube -->
+                    <div class="v102_948">
+                        <span class="v102_949">
+                            Assista nosso canal no
+                            youtube
+                        </span>
+                        <span class="v102_950">
+                            IDECACE DNA do
+                            Brasil
+                        </span>
+                        <div class="v102_951"></div>
+                    </div>
+                </div>
+
+                <!-- Footer Information -->
+                <div class="v102_933">
+                    <div class="v102_934">
+                        <div class="v102_935"></div>
+                    </div>
+                    <span class="v102_936">
+                        © Copyright 2020 - IDECACE -
+                        DNA
+                        do Brasil
+                    </span>
+                    <span class="v102_937">
+                        O IDECACE - Instituto para o
+                        Desenvolvimento da Criança e do Adolescente pela
+                        Cultura, Esporte e Educação, é uma entidade de
+                        Interesse Público - OSCIP, conta com os mais
+                        renomados empresários, sociólogos e doutores,
+                        atuando no atendimento de mais de 250 mil
+                        crianças
+                        e jovens.
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
