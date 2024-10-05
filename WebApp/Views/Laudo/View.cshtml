@@ -274,16 +274,16 @@
                     corporal
                 </span>
                 <span class="span-subtitle">
-                    @* @Model.EncaminhamentoSaude.Parametro *@
+                    @* @Model.TalentoEsportivo.Encaminhamento  *@
                 </span>
             </div>
             <div class="bar-title">
                 <span>imc</span>
-                <span style="color: #00eabc;">@* @Model.TalentoEsportivo.Imc? *@</span>
+                <span style="color: #00eabc;">@Model.Laudo.ImcSaude</span>
             </div>
             <div class="bar-div">
                 <div style="background-color: #c0faee;"></div>
-                <div style="background-color: #00eabc; width: 190px;"></div>
+                <div style="background-color: #00eabc; width: 220px;"></div>
             </div>
             <div class="div-desc">
                 <span>
@@ -314,11 +314,11 @@
             </div>
             <div class="bar-title">
                 <span>seg</span>
-                <span style="color: #00eabc;">0</span>
+                <span style="color: #000000;">@Model.TalentoEsportivo.Velocidade</span>
             </div>
             <div class="bar-div">
                 <div style="display: none;"></div>
-                <div style="display: none;"></div>
+                <div style="background-color: #none; width: @( (@Model.TalentoEsportivo.Velocidade * 220) / 19 )px;"></div>
             </div>
             <div class="div-desc">
                 <span>
@@ -353,11 +353,11 @@
             </div>
             <div class="bar-title">
                 <span>cm</span>
-                <span style="color: #e44971;">145</span>
+                <span style="color: #e44971;">@Model.TalentoEsportivo.ImpulsaoHorizontal</span>
             </div>
             <div class="bar-div">
                 <div style="background-color: #f7d1db;"></div>
-                <div style="background-color: #e44971; width: 200px;"></div>
+                <div style="background-color: #e44971; width: @( (@Model.TalentoEsportivo.ImpulsaoHorizontal * 220) / 455 )px;"></div>
             </div>
             <div class="div-desc">
                 <span>
@@ -390,11 +390,11 @@
             </div>
             <div class="bar-title">
                 <span>cm</span>
-                <span style="color: #00eabc;">35</span>
+                <span style="color: #00eabc;">@Model.TalentoEsportivo.Flexibilidade</span>
             </div>
             <div class="bar-div">
                 <div style="background-color: #c0faee;"></div>
-                <div style="background-color: #00eabc; width: 25px;"></div>
+                <div style="background-color: #00eabc; width: @( (@Model.TalentoEsportivo.Flexibilidade * 220) / 455 )px;"></div>
             </div>
             <div class="div-desc">
                 <span>
@@ -427,11 +427,11 @@
             </div>
             <div class="bar-title">
                 <span>seg</span>
-                <span style="color: #00eabc">8,1</span>
+                <span style="color: #000000">@Model.TalentoEsportivo.Vo2Max</span>
             </div>
             <div class="bar-div">
                 <div style="display: none;"></div>
-                <div class="display: none;"></div>
+                <div style="background-color: none; width: @( (@Model.TalentoEsportivo.Vo2Max * 220) / 134 )px;"></div>
             </div>
             <div class="div-desc">
                 <span>
@@ -464,11 +464,11 @@
             </div>
             <div class="bar-title">
                 <span>kg</span>
-                <span style="color: #00eabc;">30</span>
+                <span style="color: #00eabc;">@Model.TalentoEsportivo.PreensaoManual</span>
             </div>
             <div class="bar-div">
                 <div style="background-color: #c0faee;"></div>
-                <div style="background-color: #00eabc; width: 50px;"></div>
+                <div style="background-color: #00eabc; width: @( (@Model.TalentoEsportivo.PreensaoManual * 220) / 55 )px;"></div>
             </div>
             <div class="div-desc">
                 <span>

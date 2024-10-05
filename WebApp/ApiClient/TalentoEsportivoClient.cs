@@ -36,7 +36,7 @@ namespace WebApp.ApiClient
         public TalentoEsportivoDto GetTalentoEsportivoByAluno(string id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceTalentoEsportivo}/{id}"));
+                $"Laudos/Laudo/TalentoEsportivo/Aluno/{id}"));
             return Get<TalentoEsportivoDto>(requestUrl);
         }
         public List<TalentoEsportivoDto> GetTalentoEsportivoAll()

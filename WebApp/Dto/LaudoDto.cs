@@ -30,6 +30,7 @@
         public string? Sexo { get; init; }
         public string? StatusLaudo { get; init; }
         public DateTime? DtNascimento { get; init; }
+        public int? Idade { get; init; }
         public string? Email { get; init; }
         public byte[]? QrCode { get; init; }
         public decimal? Estatura { get; init; }
@@ -37,7 +38,6 @@
         public byte[]? ByteImage { get; init; }
         public string? NomeFoto { get; init; }
         public string? Modalidade { get; init; }
-        public int? Idade { get; init; }
         //public string? Serie { get; init; }
         //public string? Turma { get; init; }
         //public int? MunicipioId { get; init; }
