@@ -8,7 +8,7 @@
 
         public int? TalentoEsportivoId { get; init; }
         public int? VocacionalId { get; init; }
-        public int? QualidadeDeVidaId { get; init; }
+        public int QualidadeDeVidaId { get; init; }
         public int? SaudeId { get; init; }
         public int? ConsumoAlimentarId { get; init; }
         public int? SaudeBucalId { get; init; }

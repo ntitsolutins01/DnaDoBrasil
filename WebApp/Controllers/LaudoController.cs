@@ -31,7 +31,7 @@ namespace WebApp.Controllers
             {
                 SetNotifyMessage(notify, message);
                 SetCrudMessage(crud);
-                var response = ApiClientFactory.Instance.GetLaudoAll();
+                var response = ApiClientFactory.Instance.GetLaudosAll();
 
                 var model = new LaudoModel()
                 {
@@ -62,19 +62,19 @@ namespace WebApp.Controllers
         }
 
         //[ClaimsAuthorize(ClaimType.Laudo, Claim.Ver)]
-        public ActionResult View(int id)
+        public ActionResult Report(int id)
         {
             var laudo = ApiClientFactory.Instance.GetLaudoByAluno(id);
-            var aluno = ApiClientFactory.Instance.GetAlunoById(id);
             var talentoEsportivo = ApiClientFactory.Instance.GetTalentoEsportivoByAluno(laudo.AlunoId.ToString());
-            //var encaminhamentoImc = ApiClientFactory.Instance.GetEncaminhamentoBySaudeId(Convert.ToInt32(laudo.SaudeId));
+            var encaminhamentoImc = ApiClientFactory.Instance.GetEncaminhamentoBySaudeId(Convert.ToInt32(laudo.SaudeId));
+            var qualidadeDeVida = ApiClientFactory.Instance.GetEncaminhamentoByQualidadeDeVidaId(laudo.QualidadeDeVidaId);
 
             var model = new LaudoModel()
             {
                 Laudo = laudo,
-                Aluno = aluno,
                 TalentoEsportivo = talentoEsportivo,
-                //EncaminhamentoImc = encaminhamentoImc
+                EncaminhamentoImc = encaminhamentoImc,
+                QualidadeDeVida = qualidadeDeVida
             };
             return View(model);
         }

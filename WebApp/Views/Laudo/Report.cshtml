@@ -269,7 +269,7 @@
                     corporal
                 </span>
                 <span class="span-subtitle">
-                    @* @Model.TalentoEsportivo.Encaminhamento  *@
+                    @Model.EncaminhamentoImc.Nome
                 </span>
             </div>
             <div class="bar-title">
@@ -572,13 +572,11 @@
                                     corporal
                                 </span>
                                 <span>
-                                    Abaixo
-                                    do peso
-                                    adequado
+                                    @Model.EncaminhamentoImc.Nome
                                 </span>
                             </div>
                             <div class="container-4-saude">
-                                <span class>imc</span><span class>18,3</span>
+                                <span class>imc</span><span class>@Model.Laudo.ImcSaude</span>
                             </div>
                             <div class="container-bar-saude">
                                 <div class="bar-main-saude"></div>
@@ -720,7 +718,27 @@
                                 </span>
                             </div>
                         </div>
-
+                        @foreach (var item in Model.QualidadeDeVida)
+                        {
+                            <div class="row-vida">
+                                <div class="label-vida">
+                                    <div class="label-vida-container-1"
+                                         style="background-color: #707070;">
+                                        <div class="label-vida-icon"
+                                             style="background-image: url('/assets/assets_Laudo/laudo-saude-1.png'); background-size: cover;"></div>
+                                    </div>
+                                    <div class="label-vida-container-2">
+                                        <span>@item.Nome</span>
+                                        <span>@* @item.Encaminhamento *@</span>
+                                    </div>
+                                </div>
+                                <div class="value-vida">
+                                    <span>
+                                        @item.Descricao
+                                    </span>
+                                </div>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
