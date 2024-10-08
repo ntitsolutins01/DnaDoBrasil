@@ -41,29 +41,7 @@ namespace WebApp.Models
             public int QualidadeDeVidaId { get; set; }
             public int SaudeBucalId { get; set; }
             public int TalentoEsportivoId { get; set; }
-            public int EncaminhamentoId { get; set; }
-
-
-
-
-
-            public decimal? Flexibilidade { get; set; }
-            public decimal? PreensaoManual { get; set; }
-            public decimal? Velocidade { get; set; }
-            public decimal? ImpulsaoHorizontal { get; set; }
-            public decimal? AptidaoFisica { get; set; }
-            public bool Abdominal { get; set; }
-            public decimal? Imc { get; set; }
-            public decimal? Quadrado { get; set; }
-            public string? Encaminhamento { get; set; }
-            public decimal? Altura { get; set; }
-            public decimal? Peso { get; set; }
-            public decimal? Agilidade { get; set; }
-
-
-            public string[] ListVocacional { get; set; }
-            public string[] listSaudeBucal { get; set; }
-            public string[] listConsumoAlimentar { get; set; }
+            public int StatusLaudo { get; set; }
             
             
         }
