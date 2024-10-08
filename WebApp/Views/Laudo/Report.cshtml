@@ -695,6 +695,9 @@
                     </div>
                     <div class="container-main-vida">
                         <!-- O laço For vai clonar essa div -->
+                        @{
+                            var index = 1;
+                        }
                         @foreach (var item in Model.QualidadeDeVida)
                         {
                             <div class="row-vida">
@@ -702,7 +705,7 @@
                                     <div class="label-vida-container-1"
                                          style="background-color: #23bfff;">
                                         <div class="label-vida-icon"
-                                             style="background-image: url('/assets/assets_Laudo/laudo-saude-1.png'); background-size: cover;"></div>
+                                             style="background-image: url('@($"/assets/assets_Laudo/img-vida/laudo-vida-{index}.png")'); background-size: cover;"></div>
                                     </div>
                                     <div class="label-vida-container-2">
                                         <span>@item.Nome</span>
@@ -715,6 +718,8 @@
                                     </span>
                                 </div>
                             </div>
+
+                            index++;
                         }
                     </div>
                 </div>
@@ -803,6 +808,11 @@
                         </div>
                         <div class="container-main-vida">
                             <!-- O laço For vai clonar essa div -->
+                            
+                            @{
+                                var index = 1;
+                            }
+
                             @foreach(var item in Model.Vocacional)
                             {
                                 var teste = Model.Laudo.VocacionalId;
@@ -813,7 +823,7 @@
                                             <div class="label-vida-container-1"
                                                  style="background-color: #5B5C9C;">
                                                 <div class="label-vida-icon"
-                                                     style="background-image: url('/assets/assets_Laudo/laudo-vocacao-1.png'); background-size: cover;"></div>
+                                                     style="background-image: url('@($"/assets/assets_Laudo/img-vocacao/laudo-vocacao-{index}.png")'); background-size: cover;"></div>
                                             </div>
                                             <div class="label-vida-container-2">
                                                 <span>@item.Nome</span>
@@ -833,7 +843,7 @@
                                             <div class="label-vida-container-1"
                                                  style="background-color: #707070;">
                                                 <div class="label-vida-icon"
-                                                     style="background-image: url('/assets/assets_Laudo/laudo-vocacao-1.png'); background-size: cover;"></div>
+                                                                             style="background-image: url('@($"/assets/assets_Laudo/img-vocacao/laudo-vocacao-{index}.png")'); background-size: cover;"></div>
                                             </div>
                                             <div class="label-vida-container-2">
                                                 <span>@item.Nome</span>
@@ -846,6 +856,8 @@
                                         </div>
                                     </div>
                                 }
+
+                                index++;
                             }
 
                         </div>
