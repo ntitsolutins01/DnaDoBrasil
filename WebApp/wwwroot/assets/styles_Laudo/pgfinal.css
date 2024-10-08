@@ -38,40 +38,6 @@ body {
     overflow: hidden;
 }
 
-.v103_57 {
-    width: 127px;
-    height: 23px;
-    margin: 10px;
-    opacity: 1;
-    position: absolute;
-    top: 955px;
-    left: 620px;
-    overflow: hidden;
-}
-.v103_55 {
-    width: 65px;
-    color: rgba(0, 0, 0, 1);
-    position: absolute;
-    top: 3px;
-    left: 2px;
-    font-family: Nunito;
-    font-weight: Regular;
-    font-size: 12px;
-    opacity: 1;
-    text-align: left;
-}
-.v103_56 {
-    width: 48px;
-    color: rgba(0, 0, 0, 1);
-    position: absolute;
-    top: 0px;
-    left: 77px;
-    font-family: Times New Roman;
-    font-weight: Regular;
-    font-size: 20px;
-    opacity: 1;
-    text-align: left;
-}
 .v102_923 {
     width: 350px;
     height: 205px;
