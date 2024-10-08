@@ -68,13 +68,15 @@ namespace WebApp.Controllers
             var talentoEsportivo = ApiClientFactory.Instance.GetTalentoEsportivoByAluno(laudo.AlunoId.ToString());
             var encaminhamentoImc = ApiClientFactory.Instance.GetEncaminhamentoBySaudeId(Convert.ToInt32(laudo.SaudeId));
             var qualidadeDeVida = ApiClientFactory.Instance.GetEncaminhamentoByQualidadeDeVidaId(laudo.QualidadeDeVidaId);
+            var vocacional = ApiClientFactory.Instance.GetEncaminhamentoByVocacionalId();
 
             var model = new LaudoModel()
             {
                 Laudo = laudo,
                 TalentoEsportivo = talentoEsportivo,
                 EncaminhamentoImc = encaminhamentoImc,
-                QualidadeDeVida = qualidadeDeVida
+                QualidadeDeVida = qualidadeDeVida,
+                Vocacional = vocacional
             };
             return View(model);
         }
