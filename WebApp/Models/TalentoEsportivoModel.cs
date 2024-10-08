@@ -13,6 +13,7 @@ namespace WebApp.Models
         public class CreateUpdateTalentoEsportivoCommand
         {
             public int Id { get; internal set; }
+            public int? AlunoId { get; set; }
             public int? ProfissionalId { get; set; }
             public decimal? Altura { get; set; }
             public decimal? MassaCorporal { get; set; }
