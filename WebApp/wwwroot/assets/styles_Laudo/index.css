@@ -174,7 +174,7 @@ body {
 .logo {
     width: 150px;
     height: 94px;
-    background: url('../assets/logo_1.png');
+    background: url('/assets/assets_Laudo/logo_1.png');
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
