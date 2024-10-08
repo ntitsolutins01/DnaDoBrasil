@@ -31,7 +31,7 @@ namespace WebApp.Controllers
             {
                 SetNotifyMessage(notify, message);
                 SetCrudMessage(crud);
-                var response = ApiClientFactory.Instance.GetLaudoAll();
+                var response = ApiClientFactory.Instance.GetLaudosAll();
 
                 var model = new LaudoModel()
                 {
@@ -51,10 +51,30 @@ namespace WebApp.Controllers
         [ClaimsAuthorize(ClaimType.Laudo, Claim.Detalhar)]
         public ActionResult Details(int id)
         {
-            var laudo = ApiClientFactory.Instance.GetLaudoById(id);
+            var laudo = ApiClientFactory.Instance.GetLaudoByAluno(id);
+            var aluno = ApiClientFactory.Instance.GetAlunoById(id);
             var model = new LaudoModel()
             {
-                Laudo = laudo
+                Laudo = laudo,
+                Aluno = aluno
+            };
+            return View(model);
+        }
+
+        //[ClaimsAuthorize(ClaimType.Laudo, Claim.Ver)]
+        public ActionResult Report(int id)
+        {
+            var laudo = ApiClientFactory.Instance.GetLaudoByAluno(id);
+            var talentoEsportivo = ApiClientFactory.Instance.GetTalentoEsportivoByAluno(laudo.AlunoId.ToString());
+            var encaminhamentoImc = ApiClientFactory.Instance.GetEncaminhamentoBySaudeId(Convert.ToInt32(laudo.SaudeId));
+            var qualidadeDeVida = ApiClientFactory.Instance.GetEncaminhamentoByQualidadeDeVidaId(laudo.QualidadeDeVidaId);
+
+            var model = new LaudoModel()
+            {
+                Laudo = laudo,
+                TalentoEsportivo = talentoEsportivo,
+                EncaminhamentoImc = encaminhamentoImc,
+                QualidadeDeVida = qualidadeDeVida
             };
             return View(model);
         }
@@ -324,7 +344,7 @@ namespace WebApp.Controllers
             {
                 SetNotifyMessage(notify, message);
                 SetCrudMessage(crud);
-                var laudo = ApiClientFactory.Instance.GetLaudoById(id);
+                var laudo = ApiClientFactory.Instance.GetLaudoByAluno(id);
 
                 var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
 
