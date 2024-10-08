@@ -67,7 +67,7 @@ namespace WebApp.Controllers
             var laudo = ApiClientFactory.Instance.GetLaudoByAluno(id);
             var talentoEsportivo = ApiClientFactory.Instance.GetTalentoEsportivoByAluno(laudo.AlunoId.ToString());
             var encaminhamentoImc = ApiClientFactory.Instance.GetEncaminhamentoBySaudeId(Convert.ToInt32(laudo.SaudeId));
-            var qualidadeDeVida = ApiClientFactory.Instance.GetEncaminhamentoByQualidadeDeVidaId(laudo.QualidadeDeVidaId);
+            var qualidadeDeVida = laudo.QualidadeDeVidaId == null ? null : ApiClientFactory.Instance.GetEncaminhamentoByQualidadeDeVidaId((int)laudo.QualidadeDeVidaId);
             var vocacional = ApiClientFactory.Instance.GetEncaminhamentoByVocacionalId();
 
             var model = new LaudoModel()
