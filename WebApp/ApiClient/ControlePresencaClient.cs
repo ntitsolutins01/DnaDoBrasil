@@ -45,11 +45,11 @@ namespace WebApp.ApiClient
                 $"{ResourceControlesPresencas}/ControlePresenca/Aluno/{alunoId}"));
             return Get<List<ControlePresencaDto>>(requestUrl);
         }
-        public List<ControlePresencaDto> GetControlesPresencasAll()
+        public PaginatedListDto<ControlePresencaDto> GetControlesPresencasAll(int pageNumber = 1, int pageSize = 10)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceControlesPresencas}"));
-            return Get<List<ControlePresencaDto>>(requestUrl);
+                $"{ResourceControlesPresencas}"), $"PageNumber={pageNumber}&PageSize={pageSize}");
+            return Get<PaginatedListDto<ControlePresencaDto>>(requestUrl);
         }
         public List<ControlePresencaDto> GetControlesPresencasByEventoId(int eventoId)
         {

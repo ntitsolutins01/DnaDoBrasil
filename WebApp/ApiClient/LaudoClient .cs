@@ -1,4 +1,5 @@
-﻿using WebApp.Dto;
+﻿using System.Drawing.Printing;
+using WebApp.Dto;
 using WebApp.Models;
 
 namespace WebApp.ApiClient
@@ -38,11 +39,11 @@ namespace WebApp.ApiClient
                 $"{ResourceLaudo}/Aluno/{id}"));
             return Get<LaudoDto>(requestUrl);
         }
-        public List<LaudoDto> GetLaudosAll()
+        public PaginatedListDto<LaudoDto> GetLaudosAll(int pageNumber = 1, int pageSize = 10)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceLaudo}"));
-            return Get<List<LaudoDto>>(requestUrl);
+                $"{ResourceLaudo}"), $"PageNumber={pageNumber}&PageSize={pageSize}");
+            return Get<PaginatedListDto<LaudoDto>>(requestUrl);
         }
         public EncaminhamentoDto GetEncaminhamentoBySaudeId(int id)
         {
@@ -54,6 +55,12 @@ namespace WebApp.ApiClient
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 $"{ResourceLaudo}/Encaminhamento/QualidadeDeVida/{id}"));
+            return Get<List<EncaminhamentoDto>>(requestUrl);
+        }
+        public List<EncaminhamentoDto> GetEncaminhamentoByVocacionalId()
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceLaudo}/Encaminhamentos/Vocacional"));
             return Get<List<EncaminhamentoDto>>(requestUrl);
         }
 
