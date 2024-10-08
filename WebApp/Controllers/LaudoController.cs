@@ -246,6 +246,7 @@ namespace WebApp.Controllers
                 var commandTalentoEsportivo = new TalentoEsportivoModel.CreateUpdateTalentoEsportivoCommand()
                 {
                     ProfissionalId = collection["ddlProfissional"] == "" ? null : Convert.ToInt32(collection["ddlProfissional"].ToString()),
+                    AlunoId = collection["ddlAluno"] == "" ? null : Convert.ToInt32(collection["ddlAluno"].ToString()),
                     Altura = collection["altura"] == "" ? null : Convert.ToDecimal(collection["altura"].ToString()),
                     MassaCorporal = collection["massaCorporalSaude"] == "" ? null : Convert.ToInt32(collection["massaCorporalSaude"].ToString()),
                     PreensaoManual = collection["preensaoManual"] == "" ? null : Convert.ToDecimal(collection["preensaoManual"].ToString()),
@@ -254,7 +255,7 @@ namespace WebApp.Controllers
                     Velocidade = collection["testeVelocidade"] == "" ? null : Convert.ToDecimal(collection["testeVelocidade"].ToString()),
                     AptidaoFisica = collection["aptidaoFisica"] == "" ? null : Convert.ToDecimal(collection["aptidaoFisica"].ToString()),
                     Agilidade = collection["agilidade"] == "" ? null : Convert.ToDecimal(collection["agilidade"].ToString()),
-                    Abdominal = Convert.ToBoolean(collection["abdominal"].ToString()),
+                    Abdominal = Convert.ToBoolean(collection["rdbAbdominal"]),
                     StatusTalentosEsportivos = statusTalentoEsportivo
                 };
 
@@ -266,7 +267,7 @@ namespace WebApp.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = $"Erro ao executar esta ação. Favor entrar em contato com o administrador do sistema.{e.Message}" });
             }
         }
         
@@ -316,14 +317,14 @@ namespace WebApp.Controllers
 
                 var command = new LaudoModel.CreateUpdateLaudoCommand
                 {
-                    ImpulsaoHorizontal = Convert.ToDecimal(collection["impulsaoHorizontal"].ToString()),
-                    Flexibilidade = Convert.ToDecimal(collection["flexibilidade"].ToString()),
-                    PreensaoManual = Convert.ToDecimal(collection["preensaoManual"].ToString()),
-                    Velocidade = Convert.ToDecimal(collection["testeVelocidade"].ToString()),
-                    AptidaoFisica = Convert.ToDecimal(collection["aptidaoFisica"].ToString()),
-                    Agilidade = Convert.ToDecimal(collection["agilidade"].ToString()),
-                    Abdominal = Convert.ToBoolean(collection["abdominal"].ToString()),
-                    Altura = Convert.ToDecimal(collection["altura"].ToString()),
+                    //ImpulsaoHorizontal = Convert.ToDecimal(collection["impulsaoHorizontal"].ToString()),
+                    //Flexibilidade = Convert.ToDecimal(collection["flexibilidade"].ToString()),
+                    //PreensaoManual = Convert.ToDecimal(collection["preensaoManual"].ToString()),
+                    //Velocidade = Convert.ToDecimal(collection["testeVelocidade"].ToString()),
+                    //AptidaoFisica = Convert.ToDecimal(collection["aptidaoFisica"].ToString()),
+                    //Agilidade = Convert.ToDecimal(collection["agilidade"].ToString()),
+                    //Abdominal = Convert.ToBoolean(collection["abdominal"].ToString()),
+                    //Altura = Convert.ToDecimal(collection["altura"].ToString()),
                     AlunoId = Convert.ToInt32(collection["ddlAluno"].ToString()),
                 };
 
