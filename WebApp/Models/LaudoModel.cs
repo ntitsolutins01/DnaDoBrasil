@@ -9,9 +9,12 @@ namespace WebApp.Models
 		public LaudoDto Laudo { get; set; }
 		public AlunoDto Aluno { get; set; }
         public EncaminhamentoDto EncaminhamentoImc { get; set; }
+        public EncaminhamentoDto EncaminhamentoSaudeBucal { get; set; }
+        public EncaminhamentoDto EncaminhamentoConsumoAlimentar { get; set; }
         public List<EncaminhamentoDto> QualidadeDeVida { get; set; }
+        public List<EncaminhamentoDto> Vocacional { get; set; }
         public TalentoEsportivoDto TalentoEsportivo { get; set; }
-        public List<LaudoDto> Laudos { get; set; }
+        public PaginatedListDto<LaudoDto> Laudos { get; set; }
 		public List<QuestionarioDto> QuestionarioVocacional { get; set; }
 		public List<QuestionarioDto> QuestionarioConsumoAlimentar { get; set; }
 		public List<QuestionarioDto> QuestionarioQualidadeVida { get; set; }
@@ -30,6 +33,8 @@ namespace WebApp.Models
         public SelectList ListAlunos { get; set; }
         public SelectList ListProfissionais { get; set; }
         public string ProfissionalId { get; set; }
+        public string TipoLaudoId { get; set; }
+        public SelectList ListTiposLaudos { get; set; }
 
         public class CreateUpdateLaudoCommand
 		{

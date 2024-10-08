@@ -134,15 +134,15 @@
     left: 5px;
     overflow: hidden;
 }
-.container-bar-saude div {
+    .container-bar-saude div {
         height: 12px;
         opacity: 1;
         position: absolute;
         top: 0px;
         left: 0px;
         overflow: hidden;
-
-}
+        border-radius: 20px;
+    }
 .bar-main-saude {
     width: 490px;
     background: rgba(192, 250, 238, 1);
