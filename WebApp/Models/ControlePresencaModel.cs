@@ -6,7 +6,7 @@ namespace WebApp.Models
     public class ControlePresencaModel
     {
         public ControlePresencaDto ControlePresenca { get; set; }
-        public List<ControlePresencaDto>? ControlesPresencas { get; set; }
+        public PaginatedListDto<ControlePresencaDto>? ControlesPresencas { get; set; }
         public string ControlePresencaId { get; set; }
         public SelectList ListControlePresencas { get; set; }
         public string EstadoId { get; set; }
