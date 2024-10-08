@@ -33,10 +33,10 @@ namespace WebApp.ApiClient
 
         #region Methods
 
-        public TalentoEsportivoDto GetTalentoEsportivoById(string id)
+        public TalentoEsportivoDto GetTalentoEsportivoByAluno(string id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceTalentoEsportivo}/{id}"));
+                $"Laudos/TalentoEsportivo/Aluno/{id}"));
             return Get<TalentoEsportivoDto>(requestUrl);
         }
         public List<TalentoEsportivoDto> GetTalentoEsportivoAll()

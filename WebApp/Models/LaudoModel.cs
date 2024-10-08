@@ -8,7 +8,10 @@ namespace WebApp.Models
 	{
 		public LaudoDto Laudo { get; set; }
 		public AlunoDto Aluno { get; set; }
-		public List<LaudoDto> Laudos { get; set; }
+        public EncaminhamentoDto EncaminhamentoImc { get; set; }
+        public List<EncaminhamentoDto> QualidadeDeVida { get; set; }
+        public TalentoEsportivoDto TalentoEsportivo { get; set; }
+        public List<LaudoDto> Laudos { get; set; }
 		public List<QuestionarioDto> QuestionarioVocacional { get; set; }
 		public List<QuestionarioDto> QuestionarioConsumoAlimentar { get; set; }
 		public List<QuestionarioDto> QuestionarioQualidadeVida { get; set; }
@@ -38,6 +41,7 @@ namespace WebApp.Models
             public int QualidadeDeVidaId { get; set; }
             public int SaudeBucalId { get; set; }
             public int TalentoEsportivoId { get; set; }
+            public int EncaminhamentoId { get; set; }
 
 
 

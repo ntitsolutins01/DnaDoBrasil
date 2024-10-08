@@ -1,0 +1,308 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+
+.container-background-img-info {
+    width: 372px;
+    height: 100%;
+    background: url('/assets/assets_Laudo/background-info.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    opacity: 1;
+    position: absolute;
+    top: 0px;
+    left: 400px;
+    overflow: hidden;
+}
+.esporte-img-info {
+    width: 95px;
+    height: 95px;
+    opacity: 1;
+    position: absolute;
+    top: 73px;
+    left: 633px;
+    overflow: hidden;
+}
+.container-qrcode-info {
+    width: 372px;
+    height: 132px;
+    padding: 10px 10px;
+    opacity: 1;
+    position: absolute;
+    top: 905px;
+    left: 400px;
+    overflow: hidden;
+}
+.container-qrcode-info span {
+    width: 220px;
+    color: rgba(255, 255, 255, 1);
+    position: absolute;
+    top: 39px;
+    left: 20px;
+    font-family: Ubuntu;
+    font-weight: 400;
+    font-size: 14px;
+    opacity: 1;
+    text-align: right;
+}
+.img-qrcode-info {
+    width: 112px;
+    height: 112px;
+    background: rgba(255, 255, 255, 1);
+    opacity: 1;
+    position: absolute;
+    top: 10px;
+    left: 250px;
+}
+.container-text-info {
+    width: 220px;
+    height: 168px;
+    padding: 10px 10px;
+    margin: 10px;
+    opacity: 1;
+    position: absolute;
+    top: 483px;
+    left: 533px;
+    overflow: hidden;
+}
+.container-text-info span {
+    width: 200px;
+    color: rgba(255, 255, 255, 1);
+    position: absolute;
+    left: 10px;
+    font-family: Ubuntu;
+    font-size: 18px;
+    opacity: 1;
+}
+.container-text-info span:nth-child(1) {
+    top: 10px;
+    font-weight: 800;
+    text-align: center;
+}
+.container-text-info span:nth-child(2) {
+    top: 43px;
+    font-weight: 400;
+    text-align: left;
+}
+
+.container-title-info {
+    width: 200px;
+    height: 120px;
+    padding: 25px 0px;
+    opacity: 1;
+    position: absolute;
+    top: 68px;
+    left: 433px;
+    overflow: hidden;
+}
+.container-title-info span {
+    width: 120px;
+    color: rgba(255, 255, 255, 1);
+    position: absolute;
+    font-family: Ubuntu;
+    opacity: 1;
+    text-align: center;
+}
+.container-title-info span:nth-child(1) {
+    top: 30px;
+    left: 68px;
+    font-weight: 400;
+    font-size: 18px;
+
+}
+.container-title-info span:nth-child(2) {
+    top: 44px;
+    left: 25px;
+    font-weight: 700;
+    font-size: 35px;
+}
+.container-graph-info {
+    width: 230px;
+    height: 230px;
+    opacity: 1;
+    position: absolute;
+    top: 437px;
+    left: 295px;
+    overflow: hidden;
+}
+.container-graph-external-info {
+    width: 230px;
+    height: 230px;
+    background: rgba(255, 255, 255, 1);
+    opacity: 1;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    border-radius: 50%;
+}
+.container-graph-principal-info {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    opacity: 1;
+    position: absolute;
+    display: flex;
+    top: 25px;
+    left: 25px;
+    align-items: center;
+    justify-content: center;
+}
+.container-graph-principal-info::before {
+    content: '';
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: #fff;
+}
+.container-graph-info span {
+    position: absolute;
+    font-family: Ubuntu;
+    opacity: 1;
+    text-align: left;
+}
+.graph-text-info {
+    width: 52px;
+    color: #808080;
+    top: 119px;
+    left: 89px;
+    font-weight: 300;
+    font-size: 25px;
+}
+.graph-value-info {
+    width: 86px;
+    top: 68px;
+    left: 72px;
+    font-weight: 800;
+    font-size: 50px;
+}
+
+.container-main-info {
+    width: 318px;
+    margin: 10px;
+    opacity: 1;
+    position: absolute;
+    top: 206px;
+    left: 82px;
+}
+.user-img-info {
+    width: 105px;
+    height: 105px;
+    opacity: 1;
+    position: absolute;
+    top: 0px;
+    left: 10px;
+    overflow: hidden;
+}
+.turma-user-info {
+    width: 105px;
+    height: 105px;
+    opacity: 1;
+    position: absolute;
+    top: 0px;
+    left: 125px;
+    overflow: hidden;
+}
+.turma.user.info span {
+    width: 92px;
+    color: rgba(128, 128, 128, 1);
+    position: absolute;
+    top: 31px;
+    left: 6px;
+    font-family: Ubuntu;
+    font-weight: 400;
+    font-size: 16px;
+    opacity: 1;
+    text-align: left;
+}
+.container-2-info {
+    width: 304px;
+    min-height: 112px;
+    max-height: 150px;
+    opacity: 1;
+    position: absolute;
+    top: 115px;
+    left: 10px;
+    overflow: hidden;
+}
+.container-2-info span {
+    width: 100%;
+    font-family: Ubuntu;
+    opacity: 1;
+    text-align: left;
+    position: relative; /* Altera para relative */
+    display: block; /* Garante que os elementos sejam blocos */
+}
+
+.name-info {
+    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 10px; /* Adiciona margem inferior para espaçamento */
+    color: #000000;
+}
+
+.email-info, .endereco-info {
+    font-weight: 400;
+    font-size: 16px;
+    color: #808080;
+    margin-bottom: 5px; /* Adiciona margem inferior para espaçamento */
+}
+.container-3-info {
+    width: 304px;
+    height: 165px;
+    padding: 40px 0px;
+    opacity: 1;
+    position: absolute;
+    top: 237px;
+    left: 10px;
+    overflow: hidden;
+}
+.container-3-info span {
+    width: 70%;
+    font-family: Ubuntu;
+    opacity: 1;
+    text-align: left;
+    position: absolute;
+    display: block;
+    left: 0px;
+}
+.text-info {
+    color: #000000;
+    top: 40px;
+    font-weight: 300;
+    font-size: 30px;
+}
+.data-info {
+    color: #808080;
+    top: 79px;
+    font-weight: 400;
+    font-size: 18px;
+}
+
+.container-4-info {
+    width: 250px;
+    font-family: Ubuntu, sans-serif;
+    font-size: 16px;
+    opacity: 1;
+    position: absolute;
+    top: 412px;
+    overflow: hidden;
+}
+
+.row-info {
+    display: flex;
+    padding: 5px 0;
+    border-bottom: 1px solid #9e9e9e;
+    height: 31px;
+    box-sizing: border-box;
+}
+
+.label-info {
+    width: 120px;
+    color: #808080;
+    text-align: left;
+}
+
+.value-info {
+    flex-grow: 1;
+    color: #000;
+    text-align: right;
+}
