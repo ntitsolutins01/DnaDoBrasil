@@ -56,6 +56,12 @@ namespace WebApp.ApiClient
                 $"{ResourceLaudo}/Encaminhamento/QualidadeDeVida/{id}"));
             return Get<List<EncaminhamentoDto>>(requestUrl);
         }
+        public List<EncaminhamentoDto> GetEncaminhamentoByVocacionalId()
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceLaudo}/Encaminhamentos/Vocacional"));
+            return Get<List<EncaminhamentoDto>>(requestUrl);
+        }
 
         #endregion
     }
