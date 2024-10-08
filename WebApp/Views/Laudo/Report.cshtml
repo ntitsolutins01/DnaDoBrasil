@@ -270,7 +270,7 @@
                     corporal
                 </span>
                 <span class="span-subtitle">
-                    @* @Model.TalentoEsportivo.Encaminhamento  *@
+                    @Model.EncaminhamentoImc.Nome
                 </span>
             </div>
             <div class="bar-title">
@@ -573,13 +573,11 @@
                                     corporal
                                 </span>
                                 <span>
-                                    Abaixo
-                                    do peso
-                                    adequado
+                                    @Model.EncaminhamentoImc.Nome
                                 </span>
                             </div>
                             <div class="container-4-saude">
-                                <span class>imc</span><span class>18,3</span>
+                                <span class>imc</span><span class>@Model.Laudo.ImcSaude</span>
                             </div>
                             <div class="container-bar-saude">
                                 <div class="bar-main-saude"></div>
@@ -697,31 +695,27 @@
                     </div>
                     <div class="container-main-vida">
                         <!-- O laço For vai clonar essa div -->
-                        <div class="row-vida">
-                            <div class="label-vida">
-                                <div class="label-vida-container-1"
-                                     style="background-color: #23bfff;">
-                                    <div class="label-vida-icon"
-                                         style="background-image: url('/assets/assets_Laudo/laudo-saude-1.png'); background-size: cover;"></div>
+                        @foreach (var item in Model.QualidadeDeVida)
+                        {
+                            <div class="row-vida">
+                                <div class="label-vida">
+                                    <div class="label-vida-container-1"
+                                         style="background-color: #23bfff;">
+                                        <div class="label-vida-icon"
+                                             style="background-image: url('/assets/assets_Laudo/laudo-saude-1.png'); background-size: cover;"></div>
+                                    </div>
+                                    <div class="label-vida-container-2">
+                                        <span>@item.Nome</span>
+                                        <span>@* @item.Encaminhamento *@</span>
+                                    </div>
                                 </div>
-                                <div class="label-vida-container-2">
-                                    <span>Amigos</span>
-                                    <span>Necessita Melhorar</span>
+                                <div class="value-vida">
+                                    <span>
+                                        @item.Descricao
+                                    </span>
                                 </div>
                             </div>
-                            <div class="value-vida">
-                                <span>
-                                    Dê preferência às atividades em grupo. Às
-                                    vezes sentimos que somos muito diferentes do
-                                    resto das pessoas, mas é só dar uma
-                                    oportunidade e começar a falar com alguém
-                                    para perceber, que ainda sendo diferentes,
-                                    podemos chegar a ser muito bons amigos! Tome
-                                    a iniciativa!
-                                </span>
-                            </div>
-                        </div>
-
+                        }
                     </div>
                 </div>
             </div>
@@ -809,32 +803,50 @@
                         </div>
                         <div class="container-main-vida">
                             <!-- O laço For vai clonar essa div -->
-                            <div class="row-vida">
-                                <div class="label-vida">
-                                    <div class="label-vida-container-1"
-                                         style="background-color: #5B5C9C;">
-                                        <div class="label-vida-icon"
-                                             style="background-image: url('/assets/assets_Laudo/laudo-vocacao-1.png'); background-size: cover;"></div>
+                            @foreach(var item in Model.Vocacional)
+                            {
+                                var teste = Model.Laudo.VocacionalId;
+                                if (item.Id == Model.Laudo.VocacionalId)
+                                {
+                                    <div class="row-vida">
+                                        <div class="label-vida">
+                                            <div class="label-vida-container-1"
+                                                 style="background-color: #5B5C9C;">
+                                                <div class="label-vida-icon"
+                                                     style="background-image: url('/assets/assets_Laudo/laudo-vocacao-1.png'); background-size: cover;"></div>
+                                            </div>
+                                            <div class="label-vida-container-2">
+                                                <span>@item.Nome</span>
+                                            </div>
+                                        </div>
+                                        <div class="value-vida">
+                                            <span>
+                                                @item.Descricao
+                                            </span>
+                                        </div>
                                     </div>
-                                    <div class="label-vida-container-2">
-                                        <span>Interesse Artístico</span>
+                                }
+                                else
+                                {
+                                    <div class="row-vida">
+                                        <div class="label-vida">
+                                            <div class="label-vida-container-1"
+                                                 style="background-color: #707070;">
+                                                <div class="label-vida-icon"
+                                                     style="background-image: url('/assets/assets_Laudo/laudo-vocacao-1.png'); background-size: cover;"></div>
+                                            </div>
+                                            <div class="label-vida-container-2">
+                                                <span>@item.Nome</span>
+                                            </div>
+                                        </div>
+                                        <div class="value-vida">
+                                            <span>
+                                                @item.Descricao
+                                            </span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="value-vida">
-                                    <span>
-                                        Pessoas que preferem as
-                                        atividades em que possam
-                                        produzir objetos criativos a partir
-                                        de diversos materiais, ou orientar
-                                        outras pessoas nas produções
-                                        artísticas. Algumas possíveis
-                                        áreas de atuação podem
-                                        involucrar LETRAS, MÚSICA,
-                                        ARTES PLÁSTICAS,TEATRO,
-                                        LITERATURA E DESIGN.
-                                    </span>
-                                </div>
-                            </div>
+                                }
+                            }
 
                         </div>
                     </div>
