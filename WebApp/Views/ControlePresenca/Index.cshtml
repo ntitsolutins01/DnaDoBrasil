@@ -100,7 +100,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach (var item in Model.ControlesPresencas)
+                        @foreach (var item in Model.ControlesPresencas.Items)
                         {
                             <tr>
                                 <td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Id)</td>

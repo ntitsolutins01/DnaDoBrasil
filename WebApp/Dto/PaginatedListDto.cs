@@ -1,7 +1,4 @@
-
-
 using Microsoft.EntityFrameworkCore;
-using WebApp.Views;
 
 namespace WebApp.Dto
 {

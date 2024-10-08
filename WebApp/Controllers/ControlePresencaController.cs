@@ -55,6 +55,8 @@ namespace WebApp.Controllers
                 SetNotifyMessage(notify, message);
                 SetCrudMessage(crud);
 
+                var result3 =  ApiClientFactory.Instance.GetControlesPresencasAll();
+
                 var searchFilter = new ControlesPresencasFilterDto()
                 {
                     FomentoId = collection["ddlFomento"].ToString(),
