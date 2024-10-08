@@ -10,6 +10,8 @@ using WebApp.Authorization;
 using Claim = WebApp.Identity.Claim;
 using WebApp.Identity;
 using Microsoft.AspNetCore.Authorization;
+using NuGet.Protocol.Core.Types;
+using WebApp.Dto;
 
 namespace WebApp.Controllers
 {
@@ -25,17 +27,49 @@ namespace WebApp.Controllers
         }
 
         [ClaimsAuthorize(ClaimType.Laudo, Claim.Consultar)]
-        public IActionResult Index(int? crud, int? notify, string message = null)
+        public IActionResult Index(int? crud, int? notify, IFormCollection collection, string message = null)
         {
             try
             {
                 SetNotifyMessage(notify, message);
                 SetCrudMessage(crud);
+
+                var searchFilter = new ControlesPresencasFilterDto()
+                {
+                    FomentoId = collection["ddlFomento"].ToString(),
+                    Estado = collection["ddlEstado"].ToString(),
+                    MunicipioId = collection["ddlMunicipio"].ToString(),
+                    LocalidadeId = collection["ddlLocalidade"].ToString(),
+                    DeficienciaId = collection["ddlDeficiencia"].ToString(),
+                    Etnia = collection["ddlEtnia"].ToString()
+                };
+
                 var response = ApiClientFactory.Instance.GetLaudosAll();
+                var fomentos = new SelectList(ApiClientFactory.Instance.GetFomentoAll(), "Id", "Nome", searchFilter.FomentoId);
+                var tiposLaudos = new SelectList(ApiClientFactory.Instance.GetTiposLaudoAll().Where(x => x.Status), "Id", "Nome", searchFilter.DeficienciaId);
+                var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", searchFilter.Estado);
+
+                SelectList municipios = null;
+
+                if (!string.IsNullOrEmpty(searchFilter.Estado))
+                {
+                    municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(searchFilter.Estado), "Id", "Nome", searchFilter.MunicipioId);
+                }
+                SelectList localidades = null;
+
+                if (!string.IsNullOrEmpty(searchFilter.LocalidadeId))
+                {
+                    localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeByMunicipio(searchFilter.MunicipioId), "Id", "Nome", searchFilter.LocalidadeId);
+                }
 
                 var model = new LaudoModel()
                 {
-                    Laudos = response
+                    Laudos = response,
+                    ListFomentos = fomentos,
+                    ListEstados = estados,
+                    ListTiposLaudos = tiposLaudos,
+                    ListMunicipios = municipios!,
+                    ListLocalidades = localidades!,
                 };
 
                 return View(model);
