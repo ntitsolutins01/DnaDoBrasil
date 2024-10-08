@@ -33,6 +33,8 @@ namespace WebApp.Models
         public SelectList ListAlunos { get; set; }
         public SelectList ListProfissionais { get; set; }
         public string ProfissionalId { get; set; }
+        public string TipoLaudoId { get; set; }
+        public SelectList ListTiposLaudos { get; set; }
 
         public class CreateUpdateLaudoCommand
 		{
