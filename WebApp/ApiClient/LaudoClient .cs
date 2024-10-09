@@ -1,4 +1,5 @@
-﻿using WebApp.Dto;
+﻿using System.Drawing.Printing;
+using WebApp.Dto;
 using WebApp.Models;
 
 namespace WebApp.ApiClient
@@ -32,31 +33,37 @@ namespace WebApp.ApiClient
 
         #region Methods
 
-        public LaudoDto GetLaudoById(int id)
+        public LaudoDto GetLaudoByAluno(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceLaudo}/Laudo/{id}"));
+                $"{ResourceLaudo}/Aluno/{id}"));
             return Get<LaudoDto>(requestUrl);
         }
-        public List<LaudoDto> GetLaudoAll()
+        public PaginatedListDto<LaudoDto> GetLaudosAll(int pageNumber = 1, int pageSize = 10)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceLaudo}"));
-            return Get<List<LaudoDto>>(requestUrl);
+                $"{ResourceLaudo}"), $"PageNumber={pageNumber}&PageSize={pageSize}");
+            return Get<PaginatedListDto<LaudoDto>>(requestUrl);
         }
-		//public List<LaudoDto> GetLaudosByEncaminhamentos()
-		//{
-		//    var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-		//        $"{ResourceLaudo}/Encaminhamento/{}"));
-		//    return Get<List<LaudoDto>>(requestUrl);
-		//}
-		public LaudoDto GetEncaminhamentoBySaudeId(int id)
-		{
-			var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-				$"{ResourceLaudo}/EncaminhamentoSaude/{id}"));
-			return Get<LaudoDto>(requestUrl);
-		}
+        public EncaminhamentoDto GetEncaminhamentoBySaudeId(int id)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceLaudo}/Encaminhamento/Saude/{id}"));
+            return Get<EncaminhamentoDto>(requestUrl);
+        }
+        public List<EncaminhamentoDto> GetEncaminhamentoByQualidadeDeVidaId(int id)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceLaudo}/Encaminhamento/QualidadeDeVida/{id}"));
+            return Get<List<EncaminhamentoDto>>(requestUrl);
+        }
+        public List<EncaminhamentoDto> GetEncaminhamentoByVocacional()
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceLaudo}/Encaminhamentos/Vocacional"));
+            return Get<List<EncaminhamentoDto>>(requestUrl);
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

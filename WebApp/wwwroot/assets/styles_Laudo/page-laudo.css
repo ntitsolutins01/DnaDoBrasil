@@ -1,0 +1,194 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+
+.laudo-img {
+    width: 493px;
+    height: 100%;
+    opacity: 1;
+    position: absolute;
+    top: 0px;
+    left: 280px;
+    overflow: hidden;
+}
+/* Container principal */
+.container-indicadores {
+    width: 44.08%;
+    height: 18.21%;
+    padding: 10px;
+    margin: 5px;
+    width: 350px; /* Largura fixa */
+    height: auto; /* Altura adaptável */
+    padding: 15px;
+    margin: 5px;
+    position: absolute;
+    top: 54.53%;
+    left: 51.26%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px; /* Espaço entre as linhas */
+}
+
+/* Containers das linhas de estatísticas */
+.container-indicadores div {
+    width: 100%;
+    min-height: 24px; /* Altura mínima para comportar o texto */
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 5px; /* Espaço entre os elementos */
+    padding: 4px 0;
+}
+
+/* Estilo comum para todos os spans */
+.container-indicadores div span {
+    color: rgba(255, 255, 255, 1);
+    font-family: Ubuntu;
+    font-size: 16px;
+    white-space: normal; /* Permite quebra de linha */
+    display: inline-block;
+}
+
+/* Porcentagens */
+.container-indicadores div span:nth-child(1) {
+    font-weight: 800;
+}
+/* Traços */
+.container-indicadores div span:nth-child(2) {
+    margin: 0 5px;
+}
+/* Texto */
+.container-indicadores div span:nth-child(3) {
+    flex: 1;
+    font-weight: 400;
+}
+
+.container-laudo-text {
+    width: 37.78%;
+    height: 18.67%;
+    padding: 10px;
+    margin: 5px;
+    position: absolute;
+    top: 33.36%;
+    left: 54.66%;
+    overflow: hidden;
+}
+.container-laudo-text span {
+    width: 93.33%;
+    color: rgba(255, 255, 255, 1);
+    position: absolute;
+    left: 3.33%;
+    font-family: Ubuntu;
+    text-align: left;
+}
+.container-laudo-text span:nth-child(1) {
+    top: 4.95%;
+    font-size: 18px;
+    font-weight: 400;
+}
+.container-laudo-text span:nth-child(2) {
+    top: 18.81%;
+    font-size: 18px;
+    font-weight: Bold;
+}
+.container-laudo-text span:nth-child(3) {
+    top: 32.67%;
+    font-weight: 400;
+    font-size: 16px;
+}
+
+
+.laudo-title {
+    width: 26.19%;
+    height: 11.09%;
+    padding: 25px 0px;
+    position: absolute;
+    top: 5.73%;
+    left: 63.85%;
+}
+.laudo-title span {
+    width: 100%;
+    color: rgba(255, 255, 255, 1);
+    position: absolute;
+    font-family: Ubuntu;
+    text-align: right;
+}
+.laudo-title span:nth-child(1) {
+    top: 36.67%;
+    font-weight: 800;
+    font-size: 50px;
+}
+.laudo-title span:nth-child(2) {
+    top: 9.17%;
+    font-weight: 400;
+    font-size: 38px;
+}
+
+/* Container principal do gráfico */
+.container-graph {
+    width: 230px;
+    height: 230px;
+    position: absolute;
+    top: 40.94%;
+    left: 20.28%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Círculo exterior branco */
+.circle-graph-external {
+    width: 230px;
+    height: 230px;
+    background: rgba(255, 255, 255, 1);
+    position: absolute;
+    border-radius: 50%;
+}
+
+/* Círculo do gráfico com gradiente */
+.circle-graph-principal {
+    width: 180px;
+    height: 180px;
+    position: absolute;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Círculo interno branco usando pseudo-elemento */
+.circle-graph-principal::before {
+    content: '';
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: #fff;
+    position: absolute;
+}
+
+/* Container para o texto no centro */
+.circle-graph-principal::after {
+    content: '';
+    width: 120px;
+    height: 120px;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+.container-graph span {
+    position: absolute;
+    font-family: Ubuntu;
+    text-align: center;
+    z-index: 2;
+}
+.graph-text {
+    color: #808080;
+    font-weight: 300;
+    font-size: 22px;
+    transform: translateY(20px); /* Ajuste fino da posição vertical */
+}
+.graph-value {
+    font-weight: 800;
+    font-size: 50px;
+    transform: translateY(-15px); /* Ajuste fino da posição vertical */
+}

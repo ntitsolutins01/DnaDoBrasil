@@ -368,7 +368,7 @@ namespace WebApp.Controllers
 
         public IActionResult Estudantes()
         {
-            var response = ApiClientFactory.Instance.GetLaudoAll();
+            var response = ApiClientFactory.Instance.GetLaudosAll();
 
             return View();
         }

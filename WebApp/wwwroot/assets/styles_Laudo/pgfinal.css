@@ -1,0 +1,248 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+body {
+    font-size: 14px;
+}
+
+.v102_825 {
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 1);
+    padding: 20px 0px;
+    position: relative;
+    overflow: hidden;
+}
+.v102_826 {
+    width: 100%;
+    height: calc(100% - 40px);
+    position: absolute;
+    top: 20px;
+    left: 0px;
+    overflow: hidden;
+}
+
+.v102_919 {
+    width: 794px;
+    height: 100%;
+    background: url('/assets/assets_Laudo/background-final.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    opacity: 1;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    overflow: hidden;
+}
+
+.v102_923 {
+    width: 350px;
+    height: 205px;
+    opacity: 1;
+    position: absolute;
+    top: 677px;
+    left: 447px;
+    overflow: hidden;
+}
+.v102_927 {
+    width: 300px;
+    height: 69px;
+    padding: 14px 0px;
+    margin: 10px;
+    opacity: 1;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    overflow: hidden;
+}
+.v102_939 {
+    width: 300px;
+    color: rgba(30, 30, 30, 1);
+    position: absolute;
+    top: 14px;
+    left: 0px;
+    font-family: Nunito;
+    font-weight: Regular;
+    font-size: 14px;
+    opacity: 1;
+    text-align: right;
+}
+.v102_940 {
+    width: 63px;
+    color: rgba(0, 0, 0, 1);
+    position: absolute;
+    top: 34px;
+    left: 205px;
+    font-family: Nunito;
+    font-weight: Regular;
+    font-size: 14px;
+    opacity: 1;
+    text-align: left;
+}
+.v102_941 {
+    width: 22px;
+    height: 22px;
+    background: url('/assets/assets_Laudo/icon_facebook.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    opacity: 1;
+    position: absolute;
+    top: 33px;
+    left: 278px;
+    overflow: hidden;
+}
+.v102_943 {
+    width: 300px;
+    height: 69px;
+    padding: 14px 0px;
+    margin: 10px;
+    opacity: 1;
+    position: absolute;
+    top: 69px;
+    left: 0px;
+    overflow: hidden;
+}
+.v102_944 {
+    width: 300px;
+    color: rgba(30, 30, 30, 1);
+    position: absolute;
+    top: 14px;
+    left: 0px;
+    font-family: Nunito;
+    font-weight: Regular;
+    font-size: 14px;
+    opacity: 1;
+    text-align: right;
+}
+.v102_945 {
+    width: 124px;
+    color: rgba(0, 0, 0, 1);
+    position: absolute;
+    top: 34px;
+    left: 144px;
+    font-family: Nunito;
+    font-weight: Regular;
+    font-size: 14px;
+    opacity: 1;
+    text-align: left;
+}
+.v102_946 {
+    width: 22px;
+    height: 22px;
+    background: url('/assets/assets_Laudo/icon_instagram.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    opacity: 1;
+    position: absolute;
+    top: 33px;
+    left: 278px;
+    overflow: hidden;
+}
+.v102_948 {
+    width: 300px;
+    height: 67px;
+    padding: 14px 0px;
+    margin: 10px;
+    opacity: 1;
+    position: absolute;
+    top: 138px;
+    left: 0px;
+    overflow: hidden;
+}
+.v102_949 {
+    width: 300px;
+    color: rgba(30, 30, 30, 1);
+    position: absolute;
+    top: 14px;
+    left: 0px;
+    font-family: Nunito;
+    font-weight: Regular;
+    font-size: 14px;
+    opacity: 1;
+    text-align: right;
+}
+.v102_950 {
+    width: 153px;
+    color: rgba(0, 0, 0, 1);
+    position: absolute;
+    top: 33px;
+    left: 110px;
+    font-family: Nunito;
+    font-weight: Regular;
+    font-size: 14px;
+    opacity: 1;
+    text-align: left;
+}
+.v102_951 {
+    width: 27px;
+    height: 20px;
+    background: url('/assets/assets_Laudo/icon_youtube.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    opacity: 1;
+    position: absolute;
+    top: 33px;
+    left: 273px;
+    overflow: hidden;
+}
+
+.v102_933 {
+    width: 500px;
+    height: 237px;
+    opacity: 1;
+    position: absolute;
+    top: 98px;
+    left: 97px;
+    overflow: hidden;
+}
+.v102_934 {
+    width: 500px;
+    height: 100px;
+    opacity: 1;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    overflow: hidden;
+}
+.v102_935 {
+    width: 150px;
+    height: 88px;
+    background: url('/assets/assets_Laudo/logo_idecace.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    opacity: 1;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    overflow: hidden;
+}
+.v102_936 {
+    width: 500px;
+    color: rgba(0, 0, 0, 1);
+    position: absolute;
+    top: 100px;
+    left: 0px;
+    font-family: Nunito;
+    font-weight: Regular;
+    font-size: 14px;
+    opacity: 1;
+    text-align: left;
+}
+.v102_937 {
+    width: 500px;
+    color: #1E1E1E;
+    position: absolute;
+    top: 138px;
+    left: 0px;
+    font-family: Nunito;
+    font-weight: Regular;
+    opacity: 1;
+    text-align: left;
+}
