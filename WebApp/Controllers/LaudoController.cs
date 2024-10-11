@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
 using WebApp.Configuration;
@@ -79,8 +79,8 @@ namespace WebApp.Controllers
                 EncaminhamentoImc = encaminhamentoImc,
                 QualidadeDeVida = qualidadeDeVida,
                 Vocacional = vocacional,
-                EncaminhamentoSaudeBucal = encaminhamentoSaudeBucal,
-                EncaminhamentoConsumoAlimentar = encaminhamentoConsumoAlimentar
+                EncaminhamentoConsumoAlimentar = encaminhamentoConsumoAlimentar,
+                EncaminhamentoSaudeBucal = encaminhamentoSaudeBucal
             };
             return View(model);
         }
