@@ -986,26 +986,25 @@
                             <div class="sideContainer">
                                 <div class="cor-alimento" style="top: 66.64%;"></div>
                             </div>
-                            <div class="container-main-vida">
-                                <!-- O laço For vai clonar essa div -->
-                                <div class="row-vida">
-                                    <div class="label-vida">
-                                        <div class="label-vida-container-1"
-                                             style="background-color: #68D061;">
-                                            <div class="label-vida-icon"
-                                                 style="background-image: url('/assets/assets_Laudo/laudo-vocacao-1.png'); background-size: cover;"></div>
-                                        </div>
-                                        <div class="label-vida-container-2">
-                                            <span>@Model.EncaminhamentoConsumoAlimentar.Nome</span>
+                            <div class="container-main-saude">
+                                <div class="container-2-saude">
+                                    <div class="container-icon-saude">
+                                        <div class="circle-saude" style="background-color: #68D061"></div>
+                                        <div class="icon-saude"
+                                             style="background-image: url('/assets/assets_Laudo/laudo-vocacao-1.png'); background-size: cover;">
                                         </div>
                                     </div>
-                                    <div class="value-vida">
+                                    <div class="container-3-saude">
+                                        <span>
+                                            @Model.EncaminhamentoConsumoAlimentar.Nome
+                                        </span>
+                                    </div>
+                                    <div class="container-text-saude" style="top: 90px">
                                         <span>
                                             @Model.EncaminhamentoConsumoAlimentar.Descricao
                                         </span>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -1069,34 +1068,31 @@
                 </div>
             </div>
 
-            <!-- Info Laudo Consumo Alimentar -->
+            <!-- Info Laudo Bucal -->
             <div class="page-container">
                 <div class="newContainer">
                     <div class="newContainer2">
-                        <div class="newContainer2">
-                            <div class="sideContainer">
-                                <div class="cor-bucal" style="top: 83.3%;"></div>
-                            </div>
-                            <div class="container-main-vida">
-                                <!-- O laço For vai clonar essa div -->
-                                <div class="row-vida">
-                                    <div class="label-vida">
-                                        <div class="label-vida-container-1"
-                                             style="background-color: #E96D53;">
-                                            <div class="label-vida-icon"
-                                                 style="background-image: url('/assets/assets_Laudo/laudo-vocacao-1.png'); background-size: cover;"></div>
-                                        </div>
-                                        <div class="label-vida-container-2">
-                                            <span>@Model.EncaminhamentoSaudeBucal.Nome</span>
-                                        </div>
-                                    </div>
-                                    <div class="value-vida">
-                                        <span>
-                                            @Model.EncaminhamentoSaudeBucal.Descricao
-                                        </span>
+                        <div class="sideContainer">
+                            <div class="cor-bucal" style="top: 83.3%;"></div>
+                        </div>
+                        <div class="container-main-saude">
+                            <div class="container-2-saude">
+                                <div class="container-icon-saude">
+                                    <div class="circle-saude" style="background-color: #E96D53"></div>
+                                    <div class="icon-saude"
+                                         style="background-image: url('/assets/assets_Laudo/laudo-vocacao-1.png'); background-size: cover;">
                                     </div>
                                 </div>
-
+                                <div class="container-3-saude">
+                                    <span>
+                                        @Model.EncaminhamentoSaudeBucal.Nome
+                                    </span>
+                                </div>
+                                <div class="container-text-saude" style="top: 90px">
+                                    <span>
+                                        @Model.EncaminhamentoSaudeBucal.Descricao
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </div>
