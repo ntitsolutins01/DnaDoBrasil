@@ -105,6 +105,7 @@ namespace WebApp.Controllers
             var vocacional = ApiClientFactory.Instance.GetEncaminhamentoByVocacional();
             var encaminhamentoConsumoAlimentar = laudo.ConsumoAlimentarId == null ? null : ApiClientFactory.Instance.GetEncaminhamentoById((int)laudo.ConsumoAlimentarId);
             var encaminhamentoSaudeBucal = laudo.SaudeBucalId == null ? null : ApiClientFactory.Instance.GetEncaminhamentoById((int)laudo.SaudeBucalId);
+            var score = ApiClientFactory.Instance.GetDesempenhoByAluno(Convert.ToInt32(laudo.AlunoId));
 
             var model = new LaudoModel()
             {
@@ -114,7 +115,8 @@ namespace WebApp.Controllers
                 QualidadeDeVida = qualidadeDeVida,
                 Vocacional = vocacional,
                 EncaminhamentoSaudeBucal = encaminhamentoSaudeBucal,
-                EncaminhamentoConsumoAlimentar = encaminhamentoConsumoAlimentar
+                EncaminhamentoConsumoAlimentar = encaminhamentoConsumoAlimentar,
+                Score = score
             };
             return View(model);
         }
