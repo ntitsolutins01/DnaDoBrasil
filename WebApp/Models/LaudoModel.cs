@@ -8,7 +8,7 @@ namespace WebApp.Models
 	{
 		public LaudoDto Laudo { get; set; }
 		public AlunoDto Aluno { get; set; }
-        public DesempenhoDto Score { get; set; }
+        public DesempenhoDto Desempenho { get; set; }
         public EncaminhamentoDto EncaminhamentoImc { get; set; }
         public EncaminhamentoDto EncaminhamentoSaudeBucal { get; set; }
         public EncaminhamentoDto EncaminhamentoConsumoAlimentar { get; set; }
