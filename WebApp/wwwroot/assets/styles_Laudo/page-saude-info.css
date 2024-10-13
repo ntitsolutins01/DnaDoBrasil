@@ -23,7 +23,6 @@
     left: 136px;
     border-top-left-radius: 16px;
     border-bottom-left-radius: 16px;
-    overflow: hidden;
 }
 .container-icon-saude {
     width: 60px;
@@ -74,7 +73,7 @@
     font-weight: Bold;
     font-size: 18px;
     opacity: 1;
-    text-align: left;
+    text-align: center;
 }
 .container-3-saude span:nth-child(2) {
     width: 164px;
@@ -86,15 +85,11 @@
     font-weight: Regular;
     font-size: 14px;
     opacity: 1;
-    text-align: left;
+    text-align: center;
 }
 .container-4-saude {
     width: 490px;
     height: 25px;
-    background: url('../images/v149_73.png');
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
     opacity: 1;
     position: absolute;
     top: 125px;
@@ -159,7 +154,6 @@
     position: absolute;
     top: 162px;
     left: 5px;
-    overflow: hidden;
 }
 .container-text-saude span {
     width: 490px;

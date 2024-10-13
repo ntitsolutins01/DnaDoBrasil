@@ -138,7 +138,7 @@
 
                     <span class="graph-text-info">DNA</span>
                     <span class="graph-value-info"
-                          style="color: #00eabc;">118</span>
+                          style="color: #00eabc;">@Model.Desempenho.ScoreDna</span>
                 </div>
                 <div class="container-main-info">
                     @if (Model.Laudo.ByteImage != null)
@@ -293,7 +293,7 @@
                              style="background: conic-gradient(#df436c 0 80deg, #f7d1db 80deg 360deg);"></div>
                         <span class="graph-text">Esporte</span>
                         <span class="graph-value"
-                              style="color:#df436c">58</span>
+                              style="color:#df436c">@Model.Desempenho.ScoreTalentoEsportivo</span>
                     </div>
                     <div class="logo"></div>
                 </div>
@@ -370,14 +370,7 @@
                             </div>
                             <div class="div-desc">
                                 <span>
-                                    A velocidade diz respeito a sua capacidade
-                                    de reagir a um
-                                    determinado estímulo. Uma arrancada no
-                                    futebol, uma saída de bloco na natação ou um
-                                    voleio junto à rede no tênis, são exemplos
-                                    desta qualidade física. Você teve
-                                    resultados de um campeão! Parabéns! Continue
-                                    assim!
+                                    @Model.Desempenho.TextoVelocidade
                                 </span>
                             </div>
                         </div>
@@ -409,14 +402,7 @@
                             </div>
                             <div class="div-desc">
                                 <span>
-                                    A força de nossas pernas é utilizada por
-                                    muitos esportes de
-                                    velocidade, como o futebol.
-                                    Movimentos rápidos representam mais goles! A
-                                    melhoria da coordenação motora é chave
-                                    para o desenvolvimento de sua força. Tiros
-                                    de corrida ou saltos em plintos, podem
-                                    ser uma boa opção!
+                                    @Model.Desempenho.TextoImpulsao
                                 </span>
                             </div>
                         </div>
@@ -446,14 +432,7 @@
                             </div>
                             <div class="div-desc">
                                 <span>
-                                    Você apresenta um ótimo potencial para
-                                    desenvolver a
-                                    flexibilidade! Para isso é necessário muito
-                                    treino e cuidados para que você não
-                                    tenha lesões! Mantenha o alongamento em dia,
-                                    isso irá ajudá-lo a sempre estar
-                                    disponível para melhorar a
-                                    flexibilidade!
+                                    @Model.Desempenho.TextoFlexibilidadeMuscular
                                 </span>
                             </div>
                         </div>
@@ -483,14 +462,7 @@
                             </div>
                             <div class="div-desc">
                                 <span>
-                                    A aptidão aeróbica permite ter energia
-                                    durante os exercícios que
-                                    realizamos. Uma boa condição desta
-                                    capacidade é uma chave de saúde. Não fique
-                                    chateado se você não apresentou bons
-                                    índices. Melhorar é algo perfeitamente
-                                    possível
-                                    por meio do treinamento!
+                                    @Model.Desempenho.TextoAptidaoCardio
                                 </span>
                             </div>
                         </div>
@@ -520,11 +492,7 @@
                             </div>
                             <div class="div-desc">
                                 <span>
-                                    A força de nossas mãos é um índice
-                                    objetivo da nossa força
-                                    integral. Seus resultados são comparáveis
-                                    com os de um campeão!Parabéns e continua
-                                    assim!
+                                    @Model.Desempenho.TextoForcaMembrosSup
                                 </span>
                             </div>
                         </div>
@@ -596,7 +564,7 @@
                              style="background: conic-gradient(#EDAB55 0 80deg, #FFEFD9 80deg 360deg);"></div>
                         <span class="graph-text">Esporte</span>
                         <span class="graph-value"
-                              style="color:#EDAB55">58</span>
+                              style="color:#EDAB55">@Model.Desempenho.ScoreSaude</span>
                     </div>
                     <div class="logo"></div>
                 </div>
@@ -638,28 +606,7 @@
                             </div>
                             <div class="container-text-saude">
                                 <span>
-                                    É
-                                    importante
-                                    prestar atenção
-                                    a nossa dieta e
-                                    assessorar-nos
-                                    com
-                                    especialistas
-                                    tanto em
-                                    nutrição, como
-                                    psicologia, e em
-                                    medicina
-                                    integral.
-                                    Prestemos
-                                    atenção ao que
-                                    nossos pais nos
-                                    falam e
-                                    recomendam.
-                                    Alimentos ricos
-                                    em proteína e
-                                    frutas são
-                                    nossos grandes
-                                    aliados!
+                                    @Model.Desempenho.TextoImc
                                 </span>
                             </div>
                         </div>
@@ -731,7 +678,7 @@
                              style="background: conic-gradient(#23bfff 0 80deg, #c9efff 80deg 360deg);"></div>
                         <span class="graph-text">Esporte</span>
                         <span class="graph-value"
-                              style="color:#23bfff">58</span>
+                              style="color:#23bfff">@Model.Desempenho.ScoreVida</span>
                     </div>
                     <div class="logo"></div>
                 </div>
@@ -843,7 +790,7 @@
                              style="background: conic-gradient(#5B5C9C 0 80deg, #D6D7E7 80deg 360deg);"></div>
                         <span class="graph-text">Esporte</span>
                         <span class="graph-value"
-                              style="color:#5B5C9C">58</span>
+                              style="color:#5B5C9C">@Model.Desempenho.ScoreVocacional</span>
                     </div>
                     <div class="logo"></div>
                 </div>
@@ -971,7 +918,7 @@
                                  style="background: conic-gradient(#68D061 0 80deg, #DEFFDC 80deg 360deg);"></div>
                             <span class="graph-text">Esporte</span>
                             <span class="graph-value"
-                                  style="color:#68D061">58</span>
+                                  style="color:#68D061">@Model.Desempenho.ScoreConsumoAlimentar</span>
                         </div>
                         <div class="logo"></div>
                     </div>
@@ -986,26 +933,25 @@
                             <div class="sideContainer">
                                 <div class="cor-alimento" style="top: 66.64%;"></div>
                             </div>
-                            <div class="container-main-vida">
-                                <!-- O laço For vai clonar essa div -->
-                                <div class="row-vida">
-                                    <div class="label-vida">
-                                        <div class="label-vida-container-1"
-                                             style="background-color: #68D061;">
-                                            <div class="label-vida-icon"
-                                                 style="background-image: url('/assets/assets_Laudo/laudo-vocacao-1.png'); background-size: cover;"></div>
-                                        </div>
-                                        <div class="label-vida-container-2">
-                                            <span>@Model.EncaminhamentoConsumoAlimentar.Nome</span>
+                            <div class="container-main-saude">
+                                <div class="container-2-saude">
+                                    <div class="container-icon-saude">
+                                        <div class="circle-saude" style="background-color: #68D061"></div>
+                                        <div class="icon-saude"
+                                             style="background-image: url('/assets/assets_Laudo/laudo-vocacao-1.png'); background-size: cover;">
                                         </div>
                                     </div>
-                                    <div class="value-vida">
+                                    <div class="container-3-saude">
+                                        <span>
+                                            @Model.EncaminhamentoConsumoAlimentar.Nome
+                                        </span>
+                                    </div>
+                                    <div class="container-text-saude" style="top: 90px">
                                         <span>
                                             @Model.EncaminhamentoConsumoAlimentar.Descricao
                                         </span>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -1062,41 +1008,38 @@
                                  style="background: conic-gradient(#E96D53 0 80deg, #FDE4DE 80deg 360deg);"></div>
                             <span class="graph-text">Esporte</span>
                             <span class="graph-value"
-                                  style="color:#E96D53">58</span>
+                                  style="color:#E96D53">@Model.Desempenho.ScoreSaudeBucal</span>
                         </div>
                         <div class="logo"></div>
                     </div>
                 </div>
             </div>
 
-            <!-- Info Laudo Consumo Alimentar -->
+            <!-- Info Laudo Bucal -->
             <div class="page-container">
                 <div class="newContainer">
                     <div class="newContainer2">
-                        <div class="newContainer2">
-                            <div class="sideContainer">
-                                <div class="cor-bucal" style="top: 83.3%;"></div>
-                            </div>
-                            <div class="container-main-vida">
-                                <!-- O laço For vai clonar essa div -->
-                                <div class="row-vida">
-                                    <div class="label-vida">
-                                        <div class="label-vida-container-1"
-                                             style="background-color: #E96D53;">
-                                            <div class="label-vida-icon"
-                                                 style="background-image: url('/assets/assets_Laudo/laudo-vocacao-1.png'); background-size: cover;"></div>
-                                        </div>
-                                        <div class="label-vida-container-2">
-                                            <span>@Model.EncaminhamentoSaudeBucal.Nome</span>
-                                        </div>
-                                    </div>
-                                    <div class="value-vida">
-                                        <span>
-                                            @Model.EncaminhamentoSaudeBucal.Descricao
-                                        </span>
+                        <div class="sideContainer">
+                            <div class="cor-bucal" style="top: 83.3%;"></div>
+                        </div>
+                        <div class="container-main-saude">
+                            <div class="container-2-saude">
+                                <div class="container-icon-saude">
+                                    <div class="circle-saude" style="background-color: #E96D53"></div>
+                                    <div class="icon-saude"
+                                         style="background-image: url('/assets/assets_Laudo/laudo-vocacao-1.png'); background-size: cover;">
                                     </div>
                                 </div>
-
+                                <div class="container-3-saude">
+                                    <span>
+                                        @Model.EncaminhamentoSaudeBucal.Nome
+                                    </span>
+                                </div>
+                                <div class="container-text-saude" style="top: 90px">
+                                    <span>
+                                        @Model.EncaminhamentoSaudeBucal.Descricao
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </div>
