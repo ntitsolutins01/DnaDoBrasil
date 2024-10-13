@@ -322,7 +322,7 @@
                                     corporal
                                 </span>
                                 <span class="span-subtitle">
-                                    @Model.EncaminhamentoImc.Nome
+                                    @Model.Desempenho.AvisoImc
                                 </span>
                             </div>
                             <div class="bar-title">
@@ -335,14 +335,7 @@
                             </div>
                             <div class="div-desc">
                                 <span>
-                                    É importante prestar atenção a nossa dieta
-                                    e assessorar-nos com
-                                    especialistas tanto em nutrição, como
-                                    psicologia, e em medicina integral.
-                                    Prestemos
-                                    atenção ao que nossos pais nos falam e
-                                    recomendam. Alimentos ricos em proteína e
-                                    frutas são nossos grandes aliados!
+                                    @Model.Desempenho.TextoImc
                                 </span>
                             </div>
                         </div>
@@ -357,8 +350,9 @@
                             </div>
                             <div class="div-title">
                                 <span class="span-title">Velocidade 20m</span>
-                                <span class="span-subtitle"
-                                      style="display: none">""</span>
+                                <span class="span-subtitle">
+                                    @Model.Desempenho.AvisoVelocidade
+                                </span>
                             </div>
                             <div class="bar-title">
                                 <span>seg</span>
@@ -388,8 +382,7 @@
                                     Horizontal
                                 </span>
                                 <span class="span-subtitle">
-                                    Normal
-                                    Desenvolvimento
+                                    @Model.Desempenho.AvisoImpulsao
                                 </span>
                             </div>
                             <div class="bar-title">
@@ -418,8 +411,7 @@
                             <div class="div-title">
                                 <span class="span-title">Flexibilidade</span>
                                 <span class="span-subtitle">
-                                    Desenvolvimento
-                                    Destacado
+                                    @Model.Desempenho.AvisoFlexibilidadeMuscular
                                 </span>
                             </div>
                             <div class="bar-title">
@@ -449,8 +441,9 @@
                                     Aptidão Aeróbica
                                     1km
                                 </span>
-                                <span class="span-subtitle"
-                                      style="display:none">""</span>
+                                <span class="span-subtitle">
+                                    @Model.Desempenho.AvisoAptidaoCardio
+                                </span>
                             </div>
                             <div class="bar-title">
                                 <span>seg</span>
@@ -478,8 +471,7 @@
                             <div class="div-title">
                                 <span class="span-title">Preensão Manual</span>
                                 <span class="span-subtitle">
-                                    Desenvolvimento
-                                    Destacado
+                                    @Model.Desempenho.AvisoForcaMembrosSup
                                 </span>
                             </div>
                             <div class="bar-title">
@@ -593,7 +585,7 @@
                                     corporal
                                 </span>
                                 <span>
-                                    @Model.EncaminhamentoImc.Nome
+                                    @Model.Desempenho.AvisoImc
                                 </span>
                             </div>
                             <div class="container-4-saude">
@@ -695,7 +687,14 @@
                     <div class="container-main-vida">
                         <!-- O laço For vai clonar essa div -->
                         @{
-                            var index = 1;
+                            var index = 0;
+                            List<string> textosVida = new List<string>
+                            {
+                                Model.Desempenho.TextoBemEstar,
+                                Model.Desempenho.TextoAutoestima,
+                                Model.Desempenho.TextoFamilia,
+                                Model.Desempenho.TextoContexto
+                            };
                         }
                         @foreach (var item in Model.QualidadeDeVida)
                         {
@@ -704,16 +703,16 @@
                                     <div class="label-vida-container-1"
                                          style="background-color: #23bfff;">
                                         <div class="label-vida-icon"
-                                             style="background-image: url('@($"/assets/assets_Laudo/img-vida/laudo-vida-{index}.png")'); background-size: cover;"></div>
+                                             style="background-image: url('@($"/assets/assets_Laudo/img-vida/laudo-vida-{index + 1}.png")'); background-size: cover;"></div>
                                     </div>
                                     <div class="label-vida-container-2">
                                         <span>@item.Nome</span>
-                                        <span>@* @item.Encaminhamento *@</span>
+                                        <span>@* @item.Desempenho.Aviso *@</span>
                                     </div>
                                 </div>
                                 <div class="value-vida">
                                     <span>
-                                        @item.Descricao
+                                        @textosVida[index]
                                     </span>
                                 </div>
                             </div>
@@ -943,7 +942,7 @@
                                     </div>
                                     <div class="container-3-saude">
                                         <span>
-                                            @Model.EncaminhamentoConsumoAlimentar.Nome
+                                            @Model.Desempenho.AvisoConsumoAlimentar
                                         </span>
                                     </div>
                                     <div class="container-text-saude" style="top: 90px">
@@ -1032,7 +1031,7 @@
                                 </div>
                                 <div class="container-3-saude">
                                     <span>
-                                        @Model.EncaminhamentoSaudeBucal.Nome
+                                        @Model.Desempenho.AvisoSaudeBucal
                                     </span>
                                 </div>
                                 <div class="container-text-saude" style="top: 90px">

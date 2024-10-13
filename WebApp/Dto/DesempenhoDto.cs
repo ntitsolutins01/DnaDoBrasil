@@ -6,9 +6,19 @@
         public int ScoreSaude { get; init; }
         public int ScoreVida { get; init; }
         public int ScoreVocacional { get; init; }
-        public int ScoreConsumoAlimentar { get; init; }
         public int ScoreSaudeBucal { get; init; }
+        public int ScoreConsumoAlimentar { get; init; }
         public int ScoreDna { get; init; }
+        public string? AvisoVelocidade { get; init; }
+        public string? AvisoImpulsao { get; init; }
+        public string? AvisoShuttleRun { get; init; }
+        public string? AvisoFlexibilidadeMuscular { get; init; }
+        public string? AvisoForcaMembrosSup { get; init; }
+        public string? AvisoAptidaoCardio { get; init; }
+        public string? AvisoPrancha { get; init; }
+        public string? AvisoImc { get; init; }
+        public string? AvisoSaudeBucal { get; init; }
+        public string? AvisoConsumoAlimentar { get; init; }
         public string? TextoVelocidade { get; init; }
         public string? TextoImpulsao { get; init; }
         public string? TextoShuttleRun { get; init; }
