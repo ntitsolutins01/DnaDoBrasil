@@ -63,6 +63,12 @@ namespace WebApp.ApiClient
                 $"{ResourceLaudo}/Encaminhamentos/Vocacional"));
             return Get<List<EncaminhamentoDto>>(requestUrl);
         }
+        public Task<LaudosFilterDto?> GetLaudosByFilter(LaudosFilterDto searchFilter)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceLaudo}/Filter"));
+            return GetFiltro(requestUrl, searchFilter);
+        }
 
         #endregion
     }
