@@ -40,7 +40,8 @@ namespace WebApp.Models
             public bool Status { get; set; }
             public string? ModalidadesIds { get; set; }
             public int LinhaAcaoId { get; set; }
-        }
+            public byte[]? ByteImage { get; set; }
+		}
     }
 
 }
