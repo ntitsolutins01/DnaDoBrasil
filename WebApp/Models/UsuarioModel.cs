@@ -28,5 +28,15 @@ namespace WebApp.Models
             public int MunicipioId { get; set; }
             public bool Status { get; set; }
         }
+
+        public class LoginUsuarioRequest
+        {
+            public string Email { get; set; }
+            public string Password { get; set; }
+            public string TokenType { get; set; }
+            public string AccessToken { get; set; }
+            public string ExpiresIn { get; set; }
+            public string RefreshToken { get; set; }
+        }
 	}
 }

@@ -1,0 +1,169 @@
+.container-main-saude {
+    width: 772px;
+    height: 950px;
+    background: url('../images/v149_65.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    padding: 40px 40px;
+    margin: 15px;
+    opacity: 1;
+    position: absolute;
+    top: 66px;
+    left: 0px;
+    overflow: hidden;
+}
+.container-2-saude {
+    width: 500px;
+    height: 273px;
+    padding: 5px 5px;
+    opacity: 1;
+    position: absolute;
+    top: 338px;
+    left: 136px;
+    border-top-left-radius: 16px;
+    border-bottom-left-radius: 16px;
+}
+.container-icon-saude {
+    width: 60px;
+    height: 60px;
+    opacity: 1;
+    position: absolute;
+    top: 5px;
+    left: 220px;
+    overflow: hidden;
+}
+.circle-saude {
+    width: 60px;
+    height: 60px;
+    background: #ffbe67;
+    opacity: 1;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    border-radius: 50%;
+}
+.icon-saude {
+    width: 40px;
+    height: 40px;
+    opacity: 1;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    overflow: hidden;
+}
+.container-3-saude {
+    width: 207px;
+    height: 60px;
+    padding: 10px 0px;
+    opacity: 1;
+    position: absolute;
+    top: 65px;
+    left: 146px;
+    overflow: hidden;
+}
+
+.container-3-saude span:nth-child(1) {
+    width: 207px;
+    color: rgba(0, 0, 0, 1);
+    position: absolute;
+    top: 8px;
+    left: 0px;
+    font-family: Nunito;
+    font-weight: Bold;
+    font-size: 18px;
+    opacity: 1;
+    text-align: center;
+}
+.container-3-saude span:nth-child(2) {
+    width: 164px;
+    color: rgba(0, 0, 0, 1);
+    position: absolute;
+    top: 33px;
+    left: 21px;
+    font-family: Nunito;
+    font-weight: Regular;
+    font-size: 14px;
+    opacity: 1;
+    text-align: center;
+}
+.container-4-saude {
+    width: 490px;
+    height: 25px;
+    opacity: 1;
+    position: absolute;
+    top: 125px;
+    left: 5px;
+    overflow: hidden;
+}
+.container-4-saude span:nth-child(1) {
+    width: 28px;
+    color: rgba(0, 0, 0, 1);
+    position: absolute;
+    top: 0px;
+    left: 5px;
+    font-family: Nunito;
+    font-weight: Regular;
+    font-size: 18px;
+    opacity: 1;
+    text-align: left;
+}
+.container-4-saude span:nth-child(2) {
+    width: 452px;
+    color: rgba(0, 234, 188, 1);
+    position: absolute;
+    top: 1px;
+    left: 33px;
+    font-family: Nunito;
+    font-weight: ExtraBold;
+    font-size: 16px;
+    opacity: 1;
+    text-align: right;
+}
+.container-bar-saude {
+    width: 490px;
+    height: 12px;
+    opacity: 1;
+    position: absolute;
+    top: 150px;
+    left: 5px;
+    overflow: hidden;
+}
+    .container-bar-saude div {
+        height: 12px;
+        opacity: 1;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        overflow: hidden;
+        border-radius: 20px;
+    }
+.bar-main-saude {
+    width: 490px;
+    background: rgba(192, 250, 238, 1);
+}
+.bar-second-saude {
+    background: rgba(0, 234, 188, 1);
+}
+.container-text-saude {
+    width: 490px;
+    height: 106px;
+    padding: 15px 0px;
+    margin: 10px;
+    opacity: 1;
+    position: absolute;
+    top: 162px;
+    left: 5px;
+}
+.container-text-saude span {
+    width: 490px;
+    color: rgba(0, 0, 0, 1);
+    position: absolute;
+    top: 15px;
+    left: 0px;
+    font-family: Nunito;
+    font-weight: Regular;
+    font-size: 14px;
+    opacity: 1;
+    text-align: left;
+}

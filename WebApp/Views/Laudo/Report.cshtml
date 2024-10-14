@@ -1,0 +1,1120 @@
+@using System.Globalization
+@using Microsoft.CodeAnalysis.CSharp.Syntax
+@model LaudoModel
+@{
+    ViewData["Title"] = "Listagem de Laudos";
+    Layout = "";
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DNA do Brasil Talentos - Laudo</title>
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap"
+          rel="stylesheet" />
+    <link rel="stylesheet" href="~/assets/styles_Laudo/index.css" media="all">
+    <link rel="stylesheet" href="~/assets/styles_Laudo/page-capa.css" media="all">
+    <link rel="stylesheet" href="~/assets/styles_Laudo/page-info.css" media="all">
+    <link rel="stylesheet" href="~/assets/styles_Laudo/page-esporte-info.css" media="all">
+    <link rel="stylesheet" href="~/assets/styles_Laudo/pgfinal.css" media="all">
+    <link rel="stylesheet" href="~/assets/styles_Laudo/page-saude-info.css" media="all">
+    <!-- Serve para gerar html da página de laudos e informações de laudos -->
+    <link rel="stylesheet" href="~/assets/styles_Laudo/page-laudo.css" media="all">
+    <link rel="stylesheet" href="~/assets/styles_Laudo/page-laudos-info.css" media="all">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Barra de navegação fixa -->
+    <div class="navigation-bar">
+        <!-- Navegação de páginas -->
+        <div class="page-navigation">
+            <button class="nav-button" id="prevButton" onclick="previousPage()" title="Página Anterior">
+                <span class="material-icons">arrow_upward</span>
+            </button>
+            <div class="page-counter">
+                <span id="currentPage">0</span>
+                <span>/</span>
+                <span id="totalPages">0</span>
+            </div>
+            <button class="nav-button" id="nextButton" onclick="nextPage()" title="Próxima Página">
+                <span class="material-icons">arrow_downward</span>
+            </button>
+        </div>
+        <!-- Botões de ação -->
+        <div class="action-buttons">
+            <button class="action-button" onclick="printDocument()" title="Imprimir">
+                <span class="material-icons">print</span>
+            </button>
+            <button class="action-button" onclick="downloadDocument()" title="Baixar">
+                <span class="material-icons">download</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Página 1 - Capa -->
+    <div class="page-container page1">
+        <div class="newContainer">
+            <div class="newContainer2">
+                <div class="container-background-img-capa"></div>
+            </div>
+            <div class="container-logo-capa"></div>
+            <div class="container-text-capa">
+                <span>DESCUBRA SEU</span>
+                <span>TALENTO</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Página 2 - Info -->
+    <div class="page-container">
+        <div class="newContainer">
+            <div class="newContainer2">
+                <div class="container-background-img-info"></div>
+                <div class="sideContainer">
+                    <div class="cor-esporte" style="top: 0%;"></div>
+                    <div class="cor-saude" style="top: 16.66%;"></div>
+                    <div class="cor-vida" style="top: 33.32%;"></div>
+                    <div class="cor-vocacao" style="top: 49.98%;"></div>
+                    <div class="cor-alimento" style="top: 66.64%;"></div>
+                    <div class="cor-bucal" style="top: 83.3%;"></div>
+                </div>
+                <div class="container-wrapper-info">
+                    <div class="container-title-info">
+                        <span>MEU TALENTO</span>
+                        <span>
+                            @if (Model.Laudo.Modalidade == null)
+                            {
+                                <text>Não Definido</text>
+                            }
+                            else
+                            {
+                                <text>@Model.Laudo.Modalidade</text>
+                            }
+                        </span>
+                    </div>
+                    <div class="esporte-img-info" style="background-image: url('/assets/assets_Laudo/icon_info_esporte.png');"></div>
+                </div>
+                <div class="container-qrcode-info">
+                    <span>
+                        Este QR Code é único e nele estão
+                        contidos seus dados cadastrais na DNA do
+                        Brasil.
+                    </span>
+                    @if (Model.Laudo.QrCode != null)
+                    {
+                        <div class="img-qrcode-info"
+                             style=" background-size: cover;">
+                            @{
+                                var base64 = Convert.ToBase64String(Model.Laudo.QrCode);
+                                var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                            }
+                            <img src="@imgSrc"/>
+                        </div>
+
+                    }
+                    else
+                    {
+                        <div class="img-qrcode-info"
+                             style="background-image: url('/assets/assets_Laudo/qrCode.svg'); background-size: cover;">
+                        </div>
+                    }
+                </div>
+                <div class="container-text-info">
+                    <span>O que é o índice DNA?</span>
+                    <span>
+                        O Score DNA é um sistema que
+                        permitirá acompanhar seu rendimento em diferentes
+                        momentos.
+                    </span>
+                </div>
+                <div class="container-graph-info">
+                    <div class="container-graph-external-info"></div>
+                    <div class="container-graph-principal-info"
+                         style="background: conic-gradient(#00eabc  0 80deg, #c0faee 80deg 360deg);"></div>
+
+                    <span class="graph-text-info">DNA</span>
+                    <span class="graph-value-info"
+                          style="color: #00eabc;">@Model.Desempenho.ScoreDna</span>
+                </div>
+                <div class="container-main-info">
+                    @if (Model.Laudo.ByteImage != null)
+                    {
+                        <div class="user-img-info">
+                            @{
+                                var base64 = Convert.ToBase64String(Model.Laudo.ByteImage);
+                                var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                            }
+                            <img src="@imgSrc" style="width:100%;" />
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="user-img-info"
+                             style="background: url(/assets/assets_Laudo/icon_info_user.png); background-size: cover;">
+                        </div>
+                    }
+                    <div class="turma-user-info">
+                        <span>
+                            Série: 8º ano
+                            Turma: D
+                        </span>
+                    </div>
+                    <div class="container-2-info">
+                        <span class="name-info">
+                            @Model.Laudo.NomeAluno
+                        </span>
+                        <span class="email-info">@Model.Laudo.Email</span>
+                        <span class="endereco-info">
+                            @Model.Laudo.NomeLocalidade
+                        </span>
+                    </div>
+                    <div class="container-3-info">
+                        <span class="text-info">Ficha Técnica</span>
+                        <span class="data-info">
+                            @DateTime.Now.ToString("D", CultureInfo.CreateSpecificCulture("pt-BR")).ToUpper() @* Formato de data pt-BR *@
+                        </span>
+                    </div>
+                    <div class="container-4-info">
+                        <div class="row-info">
+                            <span class="label-info">Idade</span>
+                            <span class="value-info">@Model.Laudo.Idade</span>
+                        </div>
+                        <div class="row-info">
+                            <span class="label-info">Sexo</span>
+                            <span class="value-info">
+                                @if (Model.Laudo.Sexo == null)
+                                {
+                                    <text>Não Definido</text>
+                                }
+                                else
+                                {
+                                    <text>@Model.Laudo.Sexo</text>
+                                }
+                            </span>
+                        </div>
+                        <div class="row-info">
+                            <span class="label-info">Estatura</span>
+                            <span class="value-info">@Model.Laudo.Estatura cm</span>
+                        </div>
+                        <div class="row-info">
+                            <span class="label-info">Massa Corporal</span>
+                            <span class="value-info">@Model.Laudo.Massa Kg</span>
+                        </div>
+                        <div class="row-info">
+                            <span class="label-info">Modalidade</span>
+                            <span class="value-info">
+                                @if (Model.Laudo.Modalidade == null)
+                                {
+                                    <text>Não Definido</text>
+                                }
+                                else
+                                {
+                                    <text>@Model.Laudo.Modalidade</text>
+                                }
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="logo"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Laudo Esporte -->
+    @if (@Model.Laudo.TalentoEsportivoId != null)
+    {
+        <div class="page-container">
+            <div class="newContainer">
+                <div class="newContainer2">
+                    <div class="laudo-img"
+                         style="background: url('/assets/assets_Laudo/background-esporte.png'); background-size: cover;"></div>
+                    <div class="sideContainer">
+                        <div class="cor-esporte" style="top: 0%;"></div>
+                    </div>
+                    <div class="container-indicadores">
+                        <div>
+                            <span>0%</span>
+                            <span>–</span>
+                            <span>Força de membros superiores</span>
+                        </div>
+                        <div>
+                            <span>0%</span>
+                            <span>–</span>
+                            <span>Flexibilidade Muscular</span>
+                        </div>
+                        <div>
+                            <span>0%</span>
+                            <span>–</span>
+                            <span>Força Explosiva de Membros Inferiores</span>
+                        </div>
+                        <div>
+                            <span>0%</span>
+                            <span>–</span>
+                            <span>Velocidade</span>
+                        </div>
+                        <div>
+                            <span>0%</span>
+                            <span>–</span>
+                            <span>Agilidade</span>
+                        </div>
+                        <div>
+                            <span>0%</span>
+                            <span>–</span>
+                            <span>Resistência Abdominal</span>
+                        </div>
+                        <div>
+                            <span>0%</span>
+                            <span>–</span>
+                            <span>Aptidão Cardiorrespiratória</span>
+                        </div>
+                    </div>
+                    <div class="container-laudo-text">
+                        <span>Profissional</span>
+                        <span>Felipe De Souza</span>
+                        <span>
+                            O percentual abaixo apresenta a variação dos
+                            Indicadores frente ao histórico
+                            de Laudos preenchidos. Se o percentual for 0% é
+                            porque ou não houve variação ou este é o seu
+                            primeiro Laudo.
+                        </span>
+                    </div>
+                    <div class="laudo-title">
+                        <span>Esporte</span>
+                        <span>Laudo</span>
+                    </div>
+                    <div class="container-graph">
+                        <div class="circle-graph-external"></div>
+                        <div class="circle-graph-principal"
+                             style="background: conic-gradient(#df436c 0 80deg, #f7d1db 80deg 360deg);"></div>
+                        <span class="graph-text">Esporte</span>
+                        <span class="graph-value"
+                              style="color:#df436c">@Model.Desempenho.ScoreTalentoEsportivo</span>
+                    </div>
+                    <div class="logo"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info Laudo Esporte -->
+        <div class="page-container">
+            <div class="newContainer">
+                <div class="newContainer2">
+                    <div class="sideContainer">
+                        <div class="cor-esporte" style="top: 0%;"></div>
+                    </div>
+                    <div class="v102_488">
+                        <!-- Card IMC -->
+                        <div class="card card-1">
+                            <div class="div-icon">
+                                <div class="circle"></div>
+                                <div class="icon"
+                                     style="background-image: url('/assets/assets_Laudo/icon_esporte_massa_corporal.png');">
+                                </div>
+                            </div>
+                            <div class="div-title">
+                                <span class="span-title">
+                                    Índice de massa
+                                    corporal
+                                </span>
+                                <span class="span-subtitle">
+                                    @Model.Desempenho.AvisoImc
+                                </span>
+                            </div>
+                            <div class="bar-title">
+                                <span>imc</span>
+                                <span style="color: #00eabc;">@Model.Laudo.ImcSaude</span>
+                            </div>
+                            <div class="bar-div">
+                                <div style="background-color: #c0faee;"></div>
+                                <div style="background-color: #00eabc; width: 220px;"></div>
+                            </div>
+                            <div class="div-desc">
+                                <span>
+                                    @Model.Desempenho.TextoImc
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Card Velocidade -->
+                        <div class="card card-2">
+                            <div class="div-icon">
+                                <div class="circle"></div>
+                                <div class="icon"
+                                     style="background-image: url('/assets/assets_Laudo/icon_esporte_velocidade.png');">
+                                </div>
+                            </div>
+                            <div class="div-title">
+                                <span class="span-title">Velocidade 20m</span>
+                                <span class="span-subtitle">
+                                    @Model.Desempenho.AvisoVelocidade
+                                </span>
+                            </div>
+                            <div class="bar-title">
+                                <span>seg</span>
+                                <span style="color: #000000;">@Model.TalentoEsportivo.Velocidade</span>
+                            </div>
+                            <div class="bar-div">
+                                <div style="display: none;"></div>
+                                <div style="background-color: #none; width: @((@Model.TalentoEsportivo.Velocidade * 220) / 19)px;"></div>
+                            </div>
+                            <div class="div-desc">
+                                <span>
+                                    @Model.Desempenho.TextoVelocidade
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Card Impulsão -->
+                        <div class="card card-3">
+                            <div class="div-icon">
+                                <div class="circle"></div>
+                                <div class="icon"
+                                     style="background-image: url('/assets/assets_Laudo/icon_esporte_impulsao.png');"></div>
+                            </div>
+                            <div class="div-title">
+                                <span class="span-title">
+                                    Impulsão
+                                    Horizontal
+                                </span>
+                                <span class="span-subtitle">
+                                    @Model.Desempenho.AvisoImpulsao
+                                </span>
+                            </div>
+                            <div class="bar-title">
+                                <span>cm</span>
+                                <span style="color: #e44971;">@Model.TalentoEsportivo.ImpulsaoHorizontal</span>
+                            </div>
+                            <div class="bar-div">
+                                <div style="background-color: #f7d1db;"></div>
+                                <div style="background-color: #e44971; width: @((@Model.TalentoEsportivo.ImpulsaoHorizontal * 220) / 455)px;"></div>
+                            </div>
+                            <div class="div-desc">
+                                <span>
+                                    @Model.Desempenho.TextoImpulsao
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Card Flexibilidade -->
+                        <div class="card card-4">
+                            <div class="div-icon">
+                                <div class="circle"></div>
+                                <div class="icon"
+                                     style="background-image: url('/assets/assets_Laudo/icon_esporte_flexibilidade.png');">
+                                </div>
+                            </div>
+                            <div class="div-title">
+                                <span class="span-title">Flexibilidade</span>
+                                <span class="span-subtitle">
+                                    @Model.Desempenho.AvisoFlexibilidadeMuscular
+                                </span>
+                            </div>
+                            <div class="bar-title">
+                                <span>cm</span>
+                                <span style="color: #00eabc;">@Model.TalentoEsportivo.Flexibilidade</span>
+                            </div>
+                            <div class="bar-div">
+                                <div style="background-color: #c0faee;"></div>
+                                <div style="background-color: #00eabc; width: @((@Model.TalentoEsportivo.Flexibilidade * 220) / 455)px;"></div>
+                            </div>
+                            <div class="div-desc">
+                                <span>
+                                    @Model.Desempenho.TextoFlexibilidadeMuscular
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Card Aptidão Aeróbica -->
+                        <div class="card card-5">
+                            <div class="div-icon">
+                                <div class="circle"></div>
+                                <div class="icon"
+                                     style="background-image: url('/assets/assets_Laudo/icon_esporte_aptidao_aerobica.png');"></div>
+                            </div>
+                            <div class="div-title">
+                                <span class="span-title">
+                                    Aptidão Aeróbica
+                                    1km
+                                </span>
+                                <span class="span-subtitle">
+                                    @Model.Desempenho.AvisoAptidaoCardio
+                                </span>
+                            </div>
+                            <div class="bar-title">
+                                <span>seg</span>
+                                <span style="color: #000000">@Model.TalentoEsportivo.Vo2Max</span>
+                            </div>
+                            <div class="bar-div">
+                                <div style="display: none;"></div>
+                                <div style="background-color: none; width: @((@Model.TalentoEsportivo.Vo2Max * 220) / 134)px;"></div>
+                            </div>
+                            <div class="div-desc">
+                                <span>
+                                    @Model.Desempenho.TextoAptidaoCardio
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Card Preensão Manual -->
+                        <div class="card card-6">
+                            <div class="div-icon">
+                                <div class="circle"></div>
+                                <div class="icon"
+                                     style="background-image: url('/assets/assets_Laudo/icon_esporte_preensao_manual.png');">
+                                </div>
+                            </div>
+                            <div class="div-title">
+                                <span class="span-title">Preensão Manual</span>
+                                <span class="span-subtitle">
+                                    @Model.Desempenho.AvisoForcaMembrosSup
+                                </span>
+                            </div>
+                            <div class="bar-title">
+                                <span>kg</span>
+                                <span style="color: #00eabc;">@Model.TalentoEsportivo.PreensaoManual</span>
+                            </div>
+                            <div class="bar-div">
+                                <div style="background-color: #c0faee;"></div>
+                                <div style="background-color: #00eabc; width: @((@Model.TalentoEsportivo.PreensaoManual * 220) / 55)px;"></div>
+                            </div>
+                            <div class="div-desc">
+                                <span>
+                                    @Model.Desempenho.TextoForcaMembrosSup
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <!-- Laudo Saúde -->
+    @if (@Model.Laudo.SaudeId != null)
+    {
+        <div class="page-container">
+            <div class="newContainer">
+                <div class="newContainer2">
+                    <div class="laudo-img"
+                         style="background: url('/assets/assets_Laudo/background-saude.png'); background-size: cover;"></div>
+                    <div class="sideContainer">
+                        <div class="cor-saude" style="top: 16.66%;"></div>
+                    </div>
+                    <div class="container-indicadores">
+                        <div>
+                            <span>0%</span>
+                            <span>–</span>
+                            <span>Baixo Peso</span>
+                        </div>
+                        <div>
+                            <span>0%</span>
+                            <span>–</span>
+                            <span>Acima do Peso</span>
+                        </div>
+                        <div>
+                            <span>0%</span>
+                            <span>–</span>
+                            <span>Pré-disposição à resistência à insulina</span>
+                        </div>
+                        <div>
+                            <span>0%</span>
+                            <span>–</span>
+                            <span>Índice Positivo de Saúde</span>
+                        </div>
+                        <div>
+                            <span>0%</span>
+                            <span>–</span>
+                            <span>
+                                Pré-disposição à desequilíbrios
+                                musculares
+                            </span>
+                        </div>
+                    </div>
+                    <div class="container-laudo-text">
+                        <span>Profissional</span>
+                        <span>Felipe De Souza</span>
+                        <span>
+                            O percentual abaixo apresenta a variação dos
+                            Indicadores frente ao histórico
+                            de Laudos preenchidos. Se o percentual for 0% é
+                            porque ou não houve variação ou este é seu
+                            primeiro Laudo.
+                        </span>
+                    </div>
+                    <div class="laudo-title">
+                        <span>Saúde</span>
+                        <span>Laudo</span>
+                    </div>
+                    <div class="container-graph">
+                        <div class="circle-graph-external"></div>
+                        <div class="circle-graph-principal"
+                             style="background: conic-gradient(#EDAB55 0 80deg, #FFEFD9 80deg 360deg);"></div>
+                        <span class="graph-text">Esporte</span>
+                        <span class="graph-value"
+                              style="color:#EDAB55">@Model.Desempenho.ScoreSaude</span>
+                    </div>
+                    <div class="logo"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info Laudo Saúde -->
+        <div class="page-container">
+            <div class="newContainer">
+                <div class="newContainer2">
+                    <div class="sideContainer">
+                        <div class="cor-saude" style="top: 16.66%;"></div>
+                    </div>
+                    <div class="container-main-saude">
+                        <div class="container-2-saude">
+                            <div class="container-icon-saude">
+                                <div class="circle-saude"></div>
+                                <div class="icon-saude"
+                                     style="background-image: url('/assets/assets_Laudo/icon_imc_saude.png'); background-size: cover;">
+                                </div>
+                            </div>
+                            <div class="container-3-saude">
+                                <span>
+                                    Índice
+                                    de massa
+                                    corporal
+                                </span>
+                                <span>
+                                    @Model.Desempenho.AvisoImc
+                                </span>
+                            </div>
+                            <div class="container-4-saude">
+                                <span class>imc</span><span class>@Model.Laudo.ImcSaude</span>
+                            </div>
+                            <div class="container-bar-saude">
+                                <div class="bar-main-saude"></div>
+                                <div class="bar-second-saude"
+                                     style="width: 445px;"></div>
+                            </div>
+                            <div class="container-text-saude">
+                                <span>
+                                    @Model.Desempenho.TextoImc
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    <!-- Laudo Vida -->
+    @if (@Model.Laudo.QualidadeDeVidaId != null)
+    {
+        <div class="page-container">
+            <div class="newContainer">
+                <div class="newContainer2">
+                    <div class="laudo-img"
+                         style="background: url('/assets/assets_Laudo/background-vida.png'); background-size: cover;">
+                    </div>
+                    <div class="sideContainer">
+                        <div class="cor-vida" style="top: 33.32%;"></div>
+                    </div>
+                    <div class="container-indicadores">
+                        <div>
+                            <span>0%</span>
+                            <span>–</span>
+                            <span>Baixo Peso</span>
+                        </div>
+                        <div>
+                            <span>0%</span>
+                            <span>–</span>
+                            <span>Acima do Peso</span>
+                        </div>
+                        <div>
+                            <span>0%</span>
+                            <span>–</span>
+                            <span>Pré-disposição à resistência à insulina</span>
+                        </div>
+                        <div>
+                            <span>0%</span>
+                            <span>–</span>
+                            <span>Índice Positivo de Saúde</span>
+                        </div>
+                        <div>
+                            <span>0%</span>
+                            <span>–</span>
+                            <span>
+                                Pré-disposição à desequilíbrios
+                                musculares
+                            </span>
+                        </div>
+                    </div>
+                    <div class="container-laudo-text">
+                        <span>Profissional</span>
+                        <span>Felipe De Souza</span>
+                        <span>
+                            O percentual abaixo apresenta a variação dos
+                            Indicadores frente ao histórico
+                            de Laudos preenchidos. Se o percentual for 0% é
+                            porque ou não houve variação ou este é o seu
+                            primeiro Laudo.
+                        </span>
+                    </div>
+                    <div class="laudo-title">
+                        <span>Vida</span>
+                        <span>Laudo</span>
+                    </div>
+                    <div class="container-graph">
+                        <div class="circle-graph-external"></div>
+                        <div class="circle-graph-principal"
+                             style="background: conic-gradient(#23bfff 0 80deg, #c9efff 80deg 360deg);"></div>
+                        <span class="graph-text">Esporte</span>
+                        <span class="graph-value"
+                              style="color:#23bfff">@Model.Desempenho.ScoreVida</span>
+                    </div>
+                    <div class="logo"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info Laudo Vida -->
+        <div class="page-container">
+            <div class="newContainer">
+                <div class="newContainer2">
+                    <div class="sideContainer">
+                        <div class="cor-vida" style="top: 33.32%;"></div>
+                    </div>
+                    <div class="container-main-vida">
+                        <!-- O laço For vai clonar essa div -->
+                        @{
+                            var index = 0;
+                            List<string> textosVida = new List<string>
+                            {
+                                Model.Desempenho.TextoBemEstar,
+                                Model.Desempenho.TextoAutoestima,
+                                Model.Desempenho.TextoFamilia,
+                                Model.Desempenho.TextoContexto
+                            };
+                        }
+                        @foreach (var item in Model.QualidadeDeVida)
+                        {
+                            <div class="row-vida">
+                                <div class="label-vida">
+                                    <div class="label-vida-container-1"
+                                         style="background-color: #23bfff;">
+                                        <div class="label-vida-icon"
+                                             style="background-image: url('@($"/assets/assets_Laudo/img-vida/laudo-vida-{index + 1}.png")'); background-size: cover;"></div>
+                                    </div>
+                                    <div class="label-vida-container-2">
+                                        <span>@item.Nome</span>
+                                        <span>@* @item.Desempenho.Aviso *@</span>
+                                    </div>
+                                </div>
+                                <div class="value-vida">
+                                    <span>
+                                        @textosVida[index]
+                                    </span>
+                                </div>
+                            </div>
+
+                            index++;
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <!-- Laudo Vocação -->
+    @if (@Model.Laudo.VocacionalId != null)
+    {
+        <div class="page-container">
+            <div class="newContainer">
+                <div class="newContainer2">
+                    <div class="laudo-img"
+                         style="background: url('/assets/assets_Laudo/background-vocacao.png'); background-size: cover;"></div>
+                    <div class="sideContainer">
+                        <div class="cor-vocacao" style="top: 49.98%;"></div>
+                    </div>
+                    <div class="container-indicadores">
+                        <div>
+                            <span>0%</span>
+                            <span>–</span>
+                            <span>Tecnologias aplicadas</span>
+                        </div>
+                        <div>
+                            <span>0%</span>
+                            <span>–</span>
+                            <span>Ciências Exatas e Naturais</span>
+                        </div>
+                        <div>
+                            <span>0%</span>
+                            <span>–</span>
+                            <span>Artístico</span>
+                        </div>
+                        <div>
+                            <span>0%</span>
+                            <span>–</span>
+                            <span>Ciências Humanas</span>
+                        </div>
+                        <div>
+                            <span>0%</span>
+                            <span>–</span>
+                            <span>Empreendedorismo</span>
+                        </div>
+                        <div>
+                            <span>0%</span>
+                            <span>–</span>
+                            <span>Ciências Contábeis e Administrativas</span>
+                        </div>
+                    </div>
+                    <div class="container-laudo-text">
+                        <span>Profissional</span>
+                        <span>Felipe De Souza</span>
+                        <span>
+                            O percentual abaixo apresenta a variação dos
+                            Indicadores frente ao histórico
+                            de Laudos preenchidos. Se o percentual for 0% é
+                            porque ou não houve variação ou este é o seu
+                            primeiro Laudo.
+                        </span>
+                    </div>
+                    <div class="laudo-title">
+                        <span>Vocação</span>
+                        <span>Laudo</span>
+                    </div>
+                    <div class="container-graph">
+                        <div class="circle-graph-external"></div>
+                        <div class="circle-graph-principal"
+                             style="background: conic-gradient(#5B5C9C 0 80deg, #D6D7E7 80deg 360deg);"></div>
+                        <span class="graph-text">Esporte</span>
+                        <span class="graph-value"
+                              style="color:#5B5C9C">@Model.Desempenho.ScoreVocacional</span>
+                    </div>
+                    <div class="logo"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info Laudo Vocação -->
+        <div class="page-container">
+            <div class="newContainer">
+                <div class="newContainer2">
+                    <div class="newContainer2">
+                        <div class="sideContainer">
+                            <div class="cor-vocacao" style="top: 49.98%;"></div>
+                        </div>
+                        <div class="container-main-vida">
+                            <!-- O laço For vai clonar essa div -->
+                            @{
+                                var index = 1;
+                            }
+
+                            @foreach (var item in Model.Vocacional)
+                            {
+                                var teste = Model.Laudo.VocacionalId;
+                                if (item.Id == Model.Laudo.VocacionalId)
+                                {
+                                    <div class="row-vida">
+                                        <div class="label-vida">
+                                            <div class="label-vida-container-1"
+                                                 style="background-color: #5B5C9C;">
+                                                <div class="label-vida-icon"
+                                                     style="background-image: url('@($"/assets/assets_Laudo/img-vocacao/laudo-vocacao-{index}.png")'); background-size: cover;"></div>
+                                            </div>
+                                            <div class="label-vida-container-2">
+                                                <span>@item.Nome</span>
+                                            </div>
+                                        </div>
+                                        <div class="value-vida">
+                                            <span>
+                                                @item.Descricao
+                                            </span>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="row-vida">
+                                        <div class="label-vida">
+                                            <div class="label-vida-container-1"
+                                                 style="background-color: #707070;">
+                                                <div class="label-vida-icon"
+                                                     style="background-image: url('@($"/assets/assets_Laudo/img-vocacao/laudo-vocacao-{index}.png")'); background-size: cover;"></div>
+                                            </div>
+                                            <div class="label-vida-container-2">
+                                                <span>@item.Nome</span>
+                                            </div>
+                                        </div>
+                                        <div class="value-vida">
+                                            <span>
+                                                @item.Descricao
+                                            </span>
+                                        </div>
+                                    </div>
+                                }
+
+                                index++;
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Laudo Consumo Alimentar -->
+        @if (Model.Laudo.ConsumoAlimentarId != null)
+        {
+            <div class="page-container">
+                <div class="newContainer">
+                    <div class="newContainer2">
+                        <div class="laudo-img"
+                             style="background: url('/assets/assets_Laudo/background-consumoalimentar.jpg'); background-size: cover;"></div>
+                        <div class="sideContainer">
+                            <div class="cor-alimento" style="top: 66.64%;"></div>
+                        </div>
+                        <div class="container-indicadores">
+                            <div>
+                                <span>0%</span>
+                                <span>–</span>
+                                <span>Hábitos não Saudáveis</span>
+                            </div>
+                            <div>
+                                <span>0%</span>
+                                <span>–</span>
+                                <span>Hábitos Satisfatórios</span>
+                            </div>
+                            <div>
+                                <span>0%</span>
+                                <span>–</span>
+                                <span>Bons Hábitos Alimentares</span>
+                            </div>
+                            <div>
+                                <span>0%</span>
+                                <span>–</span>
+                                <span>Hábitos Saudáveis</span>
+                            </div>
+                        </div>
+                        <div class="container-laudo-text">
+                            <span>Profissional</span>
+                            <span>Felipe De Souza</span>
+                            <span>
+                                O percentual abaixo apresenta a variação dos
+                                Indicadores frente ao histórico
+                                de Laudos preenchidos. Se o percentual for 0% é
+                                porque ou não houve variação ou este é o seu
+                                primeiro Laudo.
+                            </span>
+                        </div>
+                        <div class="laudo-title">
+                            <span>Consumo Alimentar</span>
+                            <span>Laudo</span>
+                        </div>
+                        <div class="container-graph">
+                            <div class="circle-graph-external"></div>
+                            <div class="circle-graph-principal"
+                                 style="background: conic-gradient(#68D061 0 80deg, #DEFFDC 80deg 360deg);"></div>
+                            <span class="graph-text">Esporte</span>
+                            <span class="graph-value"
+                                  style="color:#68D061">@Model.Desempenho.ScoreConsumoAlimentar</span>
+                        </div>
+                        <div class="logo"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Info Laudo Consumo Alimentar -->
+            <div class="page-container">
+                <div class="newContainer">
+                    <div class="newContainer2">
+                        <div class="newContainer2">
+                            <div class="sideContainer">
+                                <div class="cor-alimento" style="top: 66.64%;"></div>
+                            </div>
+                            <div class="container-main-saude">
+                                <div class="container-2-saude">
+                                    <div class="container-icon-saude">
+                                        <div class="circle-saude" style="background-color: #68D061"></div>
+                                        <div class="icon-saude"
+                                             style="background-image: url('/assets/assets_Laudo/laudo-vocacao-1.png'); background-size: cover;">
+                                        </div>
+                                    </div>
+                                    <div class="container-3-saude">
+                                        <span>
+                                            @Model.Desempenho.AvisoConsumoAlimentar
+                                        </span>
+                                    </div>
+                                    <div class="container-text-saude" style="top: 90px">
+                                        <span>
+                                            @Model.EncaminhamentoConsumoAlimentar.Descricao
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <!-- Laudo Saúde Bucal -->
+        @if (Model.Laudo.SaudeBucalId != null)
+        {
+            <div class="page-container">
+                <div class="newContainer">
+                    <div class="newContainer2">
+                        <div class="laudo-img"
+                             style="background: url('/assets/assets_Laudo/background-saudebucaljpg.jpg'); background-size: cover;"></div>
+                        <div class="sideContainer">
+                            <div class="cor-bucal" style="top: 83.3%;"></div>
+                        </div>
+                        <div class="container-indicadores">
+                            <div>
+                                <span>0%</span>
+                                <span>–</span>
+                                <span>Atenção</span>
+                            </div>
+                            <div>
+                                <span>0%</span>
+                                <span>–</span>
+                                <span>Cuidado</span>
+                            </div>
+                            <div>
+                                <span>0%</span>
+                                <span>–</span>
+                                <span>Muito Bom</span>
+                            </div>
+                        </div>
+                        <div class="container-laudo-text">
+                            <span>Profissional</span>
+                            <span>Felipe De Souza</span>
+                            <span>
+                                O percentual abaixo apresenta a variação dos
+                                Indicadores frente ao histórico
+                                de Laudos preenchidos. Se o percentual for 0% é
+                                porque ou não houve variação ou este é o seu
+                                primeiro Laudo.
+                            </span>
+                        </div>
+                        <div class="laudo-title">
+                            <span>Saúde Bucal</span>
+                            <span>Laudo</span>
+                        </div>
+                        <div class="container-graph">
+                            <div class="circle-graph-external"></div>
+                            <div class="circle-graph-principal"
+                                 style="background: conic-gradient(#E96D53 0 80deg, #FDE4DE 80deg 360deg);"></div>
+                            <span class="graph-text">Esporte</span>
+                            <span class="graph-value"
+                                  style="color:#E96D53">@Model.Desempenho.ScoreSaudeBucal</span>
+                        </div>
+                        <div class="logo"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Info Laudo Bucal -->
+            <div class="page-container">
+                <div class="newContainer">
+                    <div class="newContainer2">
+                        <div class="sideContainer">
+                            <div class="cor-bucal" style="top: 83.3%;"></div>
+                        </div>
+                        <div class="container-main-saude">
+                            <div class="container-2-saude">
+                                <div class="container-icon-saude">
+                                    <div class="circle-saude" style="background-color: #E96D53"></div>
+                                    <div class="icon-saude"
+                                         style="background-image: url('/assets/assets_Laudo/laudo-vocacao-1.png'); background-size: cover;">
+                                    </div>
+                                </div>
+                                <div class="container-3-saude">
+                                    <span>
+                                        @Model.Desempenho.AvisoSaudeBucal
+                                    </span>
+                                </div>
+                                <div class="container-text-saude" style="top: 90px">
+                                    <span>
+                                        @Model.EncaminhamentoSaudeBucal.Descricao
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <!-- Página Final -->
+        <div class="page-container">
+            <div class="v102_825">
+                <div class="v102_826">
+                    <!-- Background -->
+                    <div class="v102_919"></div>
+
+                    <!-- Social Media Section -->
+                    <div class="v102_923">
+                        <!-- Facebook -->
+                        <div class="v102_927">
+                            <span class="v102_939">
+                                Siga-nos no
+                                Facebook
+                            </span>
+                            <span class="v102_940">/IDECACE</span>
+                            <div class="v102_941"></div>
+                        </div>
+
+                        <!-- Instagram -->
+                        <div class="v102_943">
+                            <span class="v102_944">
+                                Confira nosso
+                                instagram
+                            </span>
+                            <span class="v102_945">@Html.Raw("@InstitutoIDECACE")</span>
+                            <div class="v102_946"></div>
+                        </div>
+
+                        <!-- Youtube -->
+                        <div class="v102_948">
+                            <span class="v102_949">
+                                Assista nosso canal no
+                                youtube
+                            </span>
+                            <span class="v102_950">
+                                IDECACE DNA do
+                                Brasil
+                            </span>
+                            <div class="v102_951"></div>
+                        </div>
+                    </div>
+
+                    <!-- Footer Information -->
+                    <div class="v102_933">
+                        <div class="v102_934">
+                            <div class="v102_935"></div>
+                        </div>
+                        <span class="v102_936">
+                            © Copyright 2020 - IDECACE -
+                            DNA
+                            do Brasil
+                        </span>
+                        <span class="v102_937">
+                            O IDECACE - Instituto para o
+                            Desenvolvimento da Criança e do Adolescente pela
+                            Cultura, Esporte e Educação, é uma entidade de
+                            Interesse Público - OSCIP, conta com os mais
+                            renomados empresários, sociólogos e doutores,
+                            atuando no atendimento de mais de 250 mil
+                            crianças
+                            e jovens.
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    <script src="~/assets/scripts_Laudo/index.js"></script>
+</body>
+
+</html>

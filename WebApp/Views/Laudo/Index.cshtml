@@ -1,54 +1,120 @@
-﻿@model LaudoModel
+@model LaudoModel
 @{
 	ViewData["Title"] = "Listagem de Laudos";
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div id="formLaudo">
-	<div class="row">
-		<div class="col-lg-12">
-			<section class="panel">
-				<header class="panel-heading">
-					<div class="panel-actions">
-						<a href="#" class="card-action card-action-toggle" data-card-toggle></a>
-					</div>
-					<h2 class="panel-title">Listagem de Laudos</h2>
-				</header>
-				<div class="panel-body">
-					<div class="form-group row">
-						<div class="col-sm-12 pull-right">
-							<a href="@Url.Action("Create", "Laudo")" id="addToTable" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Novo Laudo </a>
-						</div>
-					</div>
-					<table class="table table-bordered table-striped mb-0" id="datatable-default">
-						<thead>
-							<tr>
+    <div class="row">
+        <div class="col-md-12">
+            @using (@Html.BeginForm("Index", "Laudo", FormMethod.Post, new { id = "formPesquisarLaudo", @class = "form-horizontal" }))
+            {
+                <section class="panel">
+                    <header class="panel-heading">
+                        <div class="panel-actions">
+                            <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
+                        </div>
+                        <h2 class="panel-title">Filtro de pesquisa</h2>
+                    </header>
+                    <div class="panel-body">
+                        <label class="col-sm-2 control-label">Fomento:</label>
+                        <div class="col-md-4 form-group">
+                            <select class="form-control populate select2" name="ddlFomento" id="ddlFomento" style="width:100%"
+                                    asp-for="FomentoId" asp-items="Model.ListFomentos">
+                                <option value="">Selecionar Fomento</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-2 control-label">Estado:</label>
+                        <div class="col-md-4 form-group">
+                            <select class="form-control populate select2" name="ddlEstado" id="ddlEstado" style="width:100%"
+                                    asp-for="EstadoId" asp-items="Model.ListEstados">
+                                <option value="">Selecionar Estado</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-2 control-label">Municipio:</label>
+                        <div class="col-md-4 form-group">
+                            <select class="form-control populate select2" name="ddlMunicipio" id="ddlMunicipio" style="width:100%"
+                                    asp-for="MunicipioId" asp-items="Model.ListMunicipios">
+                                <option value="">Selecionar Municipio</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-2 control-label">Localidade:</label>
+                        <div class="col-md-4 form-group">
+                            <select class="form-control populate select2" name="ddlLocalidade" id="ddlLocalidade" style="width:100%"
+                                    asp-for="LocalidadeId" asp-items="Model.ListLocalidades">
+                                <option value="">Selecionar Localidade</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-2 control-label">Aluno:</label>
+                        <div class="col-md-4 form-group">
+                            <select class="form-control populate select2" name="ddlAluno" id="ddlAluno" style="width:100%"
+                                    asp-for="AlunoId" asp-items="Model.ListAlunos">
+                                <option value="">Selecionar Aluno</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-2 control-label">Tipo de Laudo:</label>
+                        <div class="col-md-4 form-group">
+                            <select class="form-control populate select2" name="ddlTipoLaudo" id="ddlTipoLaudo"
+                                    asp-for="TipoLaudoId" asp-items="Model.ListTiposLaudos">
+                                <option value="">Selecionar Tipo de Laudo</option>
+                            </select>
+                        </div>
+                    </div>
+                    <footer class="panel-footer">
+                        <div class="row">
+                            <div class="col-sm-2 pull-right">
+                                <button type="submit" class="btn btn-block btn-primary pull-right"><i class="fa fa-search"></i> &nbsp;&nbsp;Pesquisar</button>
+                            </div>
+                        </div>
+                    </footer>
+                </section>
+            }
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+                <section class="panel">
+                    <header class="panel-heading">
+                        <div class="panel-actions">
+                            <a href="#" class="card-action card-action-toggle" data-card-toggle></a>
+                        </div>
+                        <h2 class="panel-title">Listagem de Laudos</h2>
+                    </header>
+                    <div class="panel-body">
+                        <div class="form-group row">
+                            <div class="col-sm-2 pull-right">
+                            <a href="@Url.Action("Create", "Laudo")" id="addToTable" class="btn btn-block btn-primary pull-right"><i class="fa fa-plus"></i> Novo Laudo </a>
+                            </div>
+                        </div>
+                        <table class="table table-bordered table-striped mb-0" id="datatable-default">
+                            <thead>
+                            <tr>
                                 <th class="text-center">Id</th>
                                 <th class="text-center">Nome Aluno</th>
                                 <th class="text-center">Município / Uf</th>
                                 <th class="text-center">Localidade</th>
-                                <th class="text-center">Encaminhamento</th>
+                                @* <th class="text-center">Encaminhamento</th> *@
                                 <th class="text-center">Status do Laudo</th>
-								<th class="text-center">Ações</th>
-							</tr>
-						</thead>
-						<tbody>
-							@foreach (var item in Model.Laudos)
-							{
-								<tr>
-									<td class="text-center">@Html.DisplayFor(modelItem => item.Id)</td>
-									<td class="text-center">@Html.DisplayFor(modelItem => item.NomeAluno)</td>
-									<td class="text-center">@Html.DisplayFor(modelItem => item.MunicipioEstado)</td>
-									<td class="text-center">@Html.DisplayFor(modelItem => item.Localidade)</td>
-									@if (string.IsNullOrEmpty(item.Encaminhamento))
+                                <th class="text-center">Ações</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (var item in Model.Laudos.Items)
+                            {
+                                <tr>
+                                    <td class="text-center">@Html.DisplayFor(modelItem => item.Id)</td>
+                                    <td class="text-center">@Html.DisplayFor(modelItem => item.NomeAluno)</td>
+                                    <td class="text-center">@Html.DisplayFor(modelItem => item.MunicipioEstado)</td>
+                                    <td class="text-center">@Html.DisplayFor(modelItem => item.NomeLocalidade)</td>
+                                    @* @if (string.IsNullOrEmpty(item.Encaminhamento))
                                     {
                                         <td class="text-center"><span class="label label-dark">EM DESENVOLVIMENTO</span></td>
                                     }
                                     else
                                     {
                                         <td class="text-center"><span class="label label-success">FINALIZADO</span></td>
-                                    }
-									@if (item.StatusLaudo == "F")
+                                    } *@
+                                    @if (item.StatusLaudo == "F")
                                     {
                                         <td class="text-center"><span class="label label-success">FINALIZADO</span></td>
                                     }
@@ -56,35 +122,37 @@
                                     {
                                         <td class="text-center"><span class="label label-warning">EM ANDAMENTO</span></td>
                                     }
-									<td class="actions text-center">
-										<a data-toggle="tooltip" data-placement="top" title="Editar"
+                                    <td class="actions text-center">
+                                        <a data-toggle="tooltip" data-placement="top" title="Editar"
                                            href='javascript:(crud.EditModal(@item.AlunoId))'
-										   class="on-default edit-row" style='color: #FF9800'>
-											<i class="fa fa-pencil"></i>
-										</a>
-                                        
+                                           class="on-default edit-row" style='color: #FF9800'>
+                                            <i class="fa fa-pencil"></i>
+                                        </a>
+
                                         <a data-toggle="tooltip" data-placement="top" title="Avaliação Completa" asp-action="Details" asp-controller="Laudo" asp-route-id="@item.AlunoId" class="on-default edit-row" style='color: #d2322d'><i class="fa fa-bar-chart"></i></a>
-                                        <a data-toggle="tooltip" data-placement="top" title="Relatório" asp-action="Details" asp-controller="Laudo" asp-route-id="@item.AlunoId" class="on-default edit-row" style='color: #47a447'><i class="fa fa-file-text"></i></a>
-									</td>
-								</tr>
-							}
-						</tbody>
-					</table>
-				</div>
-			</section>
-		</div>
-	</div>
+                                        <a data-toggle="tooltip" data-placement="top" title="Relatório" asp-action="Report" asp-controller="Laudo" asp-route-id="@item.AlunoId" class="on-default edit-row" style='color: #47a447' target="_blank"><i class="fa fa-file-text"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+        </div>
+    </div>
 </div>
 
 @section CssSpecificVendor {
-	<link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />
+    <link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css" />
+    <link rel="stylesheet" href="~/assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
+    <link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />
 }
 @section Scripts {
 	<script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
+    <script src="~/assets/vendor/select2/js/select2.js"></script>
 	<script src="~/assets/vendor/ios7-switch/ios7-switch.js"></script>
 	<script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
 	<script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
-	<script src="~/js/formatTable.js"></script>
 	<script src="~/js/Laudo.js"></script>
 
 	<script>

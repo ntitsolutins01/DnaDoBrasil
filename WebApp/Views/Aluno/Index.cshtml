@@ -8,7 +8,7 @@
 <div id="vPesquisarAluno">
     <div class="row">
         <div class="col-md-12">
-            @using (@Html.BeginForm("Index", "Aluno", FormMethod.Post, new { id = "formPesquisarAluno", @class = "form-horizontal" }))
+            @using (@Html.BeginForm("Index", "Aluno", FormMethod.Post, new { id = "vPesquisarAluno", @class = "form-horizontal" }))
             {
                 <section class="panel">
                     <header class="panel-heading">
@@ -126,7 +126,6 @@
             <table class="table table-bordered table-striped mb-0" id="datatable-default">
                 <thead>
                     <tr>
-                        <th class="text-center"></th>
                         <th class="text-center">Id</th>
                         <th class="text-center">Nome</th>
                         <th class="text-center">Email</th>
@@ -139,7 +138,6 @@
                     @foreach (var item in Model.Alunos)
                     {
                         <tr>
-                            <td class="text-center"></td>
                             <td class="text-center">@Html.DisplayFor(modelItem => item.Id)</td>
                             <td class="text-center">@Html.DisplayFor(modelItem => item.Nome)</td>
                             <td class="text-center">@Html.DisplayFor(modelItem => item.Email)</td>

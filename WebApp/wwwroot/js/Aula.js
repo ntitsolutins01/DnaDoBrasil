@@ -9,6 +9,31 @@ var vm = new Vue({
         (function ($) {
             'use strict';
 
+            //skin select
+            var $select = $(".select2").select2({
+                allowClear: true
+            });
+
+            $(".select2").each(function () {
+                var $this = $(this),
+                    opts = {};
+
+                var pluginOptions = $this.data('plugin-options');
+                if (pluginOptions)
+                    opts = pluginOptions;
+
+                $this.themePluginSelect2(opts);
+            });
+
+            /*
+             * When you change the value the select via select2, it triggers
+             * a 'change' event, but the jquery validation plugin
+             * only re-validates on 'blur'*/
+
+            $select.on('change', function () {
+                $(this).trigger('blur');
+            });
+
             //mascara dos inputs
             var cargaHoraria = $("#cargaHoraria");
             cargaHoraria.mask('000', { reverse: false });
@@ -52,40 +77,15 @@ var vm = new Vue({
 
             if (formid === "formAula") {
 
-                //skin select
-                var $select = $(".select2").select2({
-                    allowClear: true
-                });
-
-                $(".select2").each(function () {
-                    var $this = $(this),
-                        opts = {};
-
-                    var pluginOptions = $this.data('plugin-options');
-                    if (pluginOptions)
-                        opts = pluginOptions;
-
-                    $this.themePluginSelect2(opts);
-                });
-
-                /*
-                 * When you change the value the select via select2, it triggers
-                 * a 'change' event, but the jquery validation plugin
-                 * only re-validates on 'blur'*/
-
-                $select.on('change', function () {
-                    $(this).trigger('blur');
-                });
-
                 $("#ddlTipoCurso").change(function () {
+                    var tipoCursoId = $("#ddlTipoCurso").val();
+
                     var sigla = $("#ddlTipoCurso").val();
 
                     var url = "../Curso/GetCursosAllByTipoCursoId";
 
-                    var ddlSource = "#ddlCurso";
-
                     $.getJSON(url,
-                        { id: $(ddlSource).val() },
+                        { id: tipoCursoId },
                         function (data) {
                             if (data.length > 0) {
                                 var items = '<option value="">Selecionar Curso</option>';
@@ -99,7 +99,36 @@ var vm = new Vue({
                             else {
                                 new PNotify({
                                     title: 'Curso',
-                                    text: 'Curso não encontrados.',
+                                    text: 'Curso nï¿½o encontrados.',
+                                    type: 'warning'
+                                });
+                            }
+                        });
+                });
+
+                $("#ddlCurso").change(function () {
+                    var cursoId = $("#ddlCurso").val();
+
+                    var sigla = $("#ddlCurso").val();
+
+                    var url = "../ModuloEad/GetModulosEadAllByCursoId";
+
+                    $.getJSON(url,
+                        { id: cursoId },
+                        function (data) {
+                            if (data.length > 0) {
+                                var items = '<option value="">Selecionar Modulo</option>';
+                                $("#ddlModuloEad").empty;
+                                $.each(data,
+                                    function (i, row) {
+                                        items += "<option value='" + row.value + "'>" + row.text + "</option>";
+                                    });
+                                $("#ddlModuloEad").html(items);
+                            }
+                            else {
+                                new PNotify({
+                                    title: 'Modulo',
+                                    text: 'Modulo nï¿½o encontrados.',
                                     type: 'warning'
                                 });
                             }
@@ -107,6 +136,7 @@ var vm = new Vue({
                 });
 
                 $("#formAula").validate({
+
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
                     },
@@ -124,6 +154,8 @@ var vm = new Vue({
                         }
                     }
                 });
+
+
             }
         }).apply(this, [jQuery]);
     },
@@ -161,6 +193,28 @@ var vm = new Vue({
                 self.editDto.Descricao = result.data.descricao;
                 self.editDto.CargaHoraria = result.data.cargaHoraria;
                 self.editDto.Status = result.data.status;
+
+                if (result.data.listProfessores.length > 0) {
+                    var items = '<option value="">Selecionar o Professor</option>';
+                    $("#ddlProfessor").empty;
+                    $.each(result.data.listProfessores,
+                        function (i, row) {
+                            if (row.selected) {
+                                items += "<option selected value='" + row.value + "'>" + row.text + "</option>";
+                            } else {
+                                items += "<option value='" + row.value + "'>" + row.text + "</option>";
+                            }
+                        });
+                    $("#ddlProfessor").html(items);
+                }
+                else {
+                    new PNotify({
+                        title: 'Professor',
+                        text: 'Professores nÃ£o encontrados.',
+                        type: 'warning'
+                    });
+                }
+
 
             }).catch(error => {
                 Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);

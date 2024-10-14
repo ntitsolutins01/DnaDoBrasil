@@ -14,7 +14,7 @@ using WebApp.Utility;
 namespace WebApp.Controllers;
 
 
-[Authorize(Policy = ModuloAccess.Curso)]
+[Authorize(Policy = ModuloAccess.ConfiguracaoSistemaEad)]
 public class CursoController : BaseController
 {
     #region Constructor
@@ -61,7 +61,7 @@ public class CursoController : BaseController
             SetNotifyMessage(notify, message);
             SetCrudMessage(crud);
             var tiposcursos = new SelectList(ApiClientFactory.Instance.GetTipoCursosAll(), "Id", "Nome");
-            var coordenadores = new SelectList(ApiClientFactory.Instance.GetUsuarioAll().Where(x=>x.PerfilId == (int)EnumPerfil.Profissional), "Id", "Nome");
+            var coordenadores = new SelectList(ApiClientFactory.Instance.GetUsuarioAll().Where(x=>x.PerfilId == (int)EnumPerfil.Coordenador), "Id", "Nome");
 
 
             return View(new CursoModel()
@@ -92,7 +92,7 @@ public class CursoController : BaseController
             var command = new CursoModel.CreateUpdateCursoCommand
             {
 	            TipoCursoId = Convert.ToInt32(collection["ddlTipoCurso"].ToString()),
-	            UsuarioId = Convert.ToInt32(collection["ddlCoordenador"].ToString()),
+	            CoordenadorId = Convert.ToInt32(collection["ddlCoordenador"].ToString()),
 	            Titulo = collection["nome"].ToString(),
 	            Descricao = collection["descricao"].ToString(),
 				CargaHoraria = Convert.ToInt32(collection["cargaHoraria"].ToString())
@@ -137,7 +137,8 @@ public class CursoController : BaseController
             var command = new CursoModel.CreateUpdateCursoCommand
             {
                 Id = Convert.ToInt32(collection["editCursoId"]),
-                Titulo = collection["nome"].ToString(),
+                CoordenadorId = Convert.ToInt32(collection["ddlCoordenador"].ToString()),
+				Titulo = collection["nome"].ToString(),
                 Descricao = collection["descricao"].ToString(),
                 CargaHoraria = Convert.ToInt32(collection["cargaHoraria"].ToString()),
                 Status = collection["editStatus"].ToString() == "" ? false : true
@@ -176,15 +177,15 @@ public class CursoController : BaseController
     [ClaimsAuthorize(ClaimType.Curso, Identity.Claim.Excluir)]
     public ActionResult Delete(int id)
     {
-        try
-        {
-            ApiClientFactory.Instance.DeleteCurso(id);
-            return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
-        }
-        catch
-        {
-            return RedirectToAction(nameof(Index));
-        }
+	    try
+	    {
+		    ApiClientFactory.Instance.DeleteCurso(id);
+		    return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
+	    }
+	    catch (Exception e)
+	    {
+			return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = "Este curso não pode ser excluído pois possui módulos vinculadas a ele." });
+		}
     }
     #endregion
 
@@ -193,14 +194,25 @@ public class CursoController : BaseController
     public Task<CursoDto> GetCursoById(int id)
     {
         var result = ApiClientFactory.Instance.GetCursoById(id);
+        var coordenadores = new SelectList(ApiClientFactory.Instance.GetUsuarioAll().Where(x => x.PerfilId == (int)EnumPerfil.Coordenador), "Id", "Nome", result.CoordenadorId);
+        result.ListCoordenadores = coordenadores;
 
-        return Task.FromResult(result);
+		return Task.FromResult(result);
     }
-    public Task<List<CursoDto>> GetCursoByTipoCursoId(int tipoCursoId)
+    public Task<JsonResult> GetCursosAllByTipoCursoId(string id)
     {
-        var result = ApiClientFactory.Instance.GetCursosAllByTipoCursoId(tipoCursoId);
+        try
+        {
+            if (string.IsNullOrEmpty(id)) throw new Exception("Tipo de Curso não informado.");
+            var resultLocal = ApiClientFactory.Instance.GetCursosAllByTipoCursoId(Convert.ToInt32(id));
 
-        return Task.FromResult(result);
+            return Task.FromResult(Json(new SelectList(resultLocal, "Id", "Titulo")));
+
+        }
+        catch (Exception ex)
+        {
+            return Task.FromResult(Json(ex.Message));
+        }
     }
     #endregion
 }

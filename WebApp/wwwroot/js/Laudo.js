@@ -124,6 +124,167 @@
 
             var formid = $('form')[1].id;
 
+            if (formid === "formPesquisarLaudo") {
+
+                (function ($) {
+
+                    'use strict';
+
+                    var datatableInit = function () {
+
+                        $('#datatable-default').dataTable({
+                            order: [[0, 'desc']],
+                            dom: '<"row"<"col-lg-6"l><"col-lg-6"f>><"table-responsive"t>p',
+                            "language": {
+                                "sEmptyTable": "Nenhum registro encontrado",
+                                "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                                "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+                                "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+                                "sInfoPostFix": "",
+                                "sInfoThousands": ".",
+                                "sLengthMenu": "_MENU_ resultados por página",
+                                "sLoadingRecords": "Carregando...",
+                                "sProcessing": "Processando...",
+                                "sZeroRecords": "Nenhum registro encontrado",
+                                "sSearch": "Pesquisar: ",
+                                "oPaginate": {
+                                    "sNext": "Próximo →" +
+                                        "" +
+                                        "",
+                                    "sPrevious": "← Anterior",
+                                    "sFirst": "Primeiro",
+                                    "sLast": "Último"
+                                },
+                                "oAria": {
+                                    "sSortAscending": ": Ordenar colunas de forma ascendente",
+                                    "sSortDescending": ": Ordenar colunas de forma descendente"
+                                }
+                            }
+                        });
+
+                    };
+
+                    $(function () {
+                        datatableInit();
+                    });
+
+                }).apply(this, [jQuery]);
+
+                var $select = $(".select2").select2({
+                    allowClear: true
+                });
+
+                $(".select2").each(function () {
+                    var $this = $(this),
+                        opts = {};
+
+                    var pluginOptions = $this.data('plugin-options');
+                    if (pluginOptions)
+                        opts = pluginOptions;
+
+                    $this.themePluginSelect2(opts);
+                });
+
+                /*
+                 * When you change the value the select via select2, it triggers
+                 * a 'change' event, but the jquery validation plugin
+                 * only re-validates on 'blur'*/
+
+                $select.on('change', function () {
+                    $(this).trigger('blur');
+                });
+
+
+                //clique de escolha do select
+                $("#ddlEstado").change(function () {
+                    var sigla = $("#ddlEstado").val();
+
+                    var url = "../../DivisaoAdministrativa/GetMunicipioByUf?uf=" + sigla;
+
+                    var ddlSource = "#ddlMunicipio";
+
+                    $.getJSON(url,
+                        { id: $(ddlSource).val() },
+                        function (data) {
+                            if (data.length > 0) {
+                                var items = '<option value="">Selecionar Municipio</option>';
+                                $("#ddlMunicipio").empty;
+                                $.each(data,
+                                    function (i, row) {
+                                        items += "<option value='" + row.value + "'>" + row.text + "</option>";
+                                    });
+                                $("#ddlMunicipio").html(items);
+                            }
+                            else {
+                                new PNotify({
+                                    title: 'Usuario',
+                                    text: data,
+                                    type: 'warning'
+                                });
+                            }
+                        });
+                });
+
+                //clique de escolha do select
+                $("#ddlMunicipio").change(function () {
+                    var id = $("#ddlMunicipio").val();
+
+                    var url = "../../Localidade/GetLocalidadeByMunicipio?id=" + id;
+
+                    var ddlSource = "#ddlLocalidade";
+
+                    $.getJSON(url,
+                        { id: $(ddlSource).val() },
+                        function (data) {
+                            if (data.length > 0) {
+                                var items = '<option value="">Selecionar Localidade</option>';
+                                $("#ddlLocalidade").empty;
+                                $.each(data,
+                                    function (i, row) {
+                                        items += "<option value='" + row.value + "'>" + row.text + "</option>";
+                                    });
+                                $("#ddlLocalidade").html(items);
+                            }
+                            else {
+                                new PNotify({
+                                    title: 'Localidades',
+                                    text: 'Localidades não encontradas.',
+                                    type: 'warning'
+                                });
+                            }
+                        });
+                });
+
+                $("#ddlLocalidade").change(function () {
+                    var id = $("#ddlLocalidade").val();
+
+                    var url = "../../Aluno/GetAlunosByLocalidade?id=" + id;
+
+                    var ddlSource = "#ddlAluno";
+
+                    $.getJSON(url,
+                        { id: $(ddlSource).val() },
+                        function (data) {
+                            if (data.length > 0) {
+                                var items = '<option value="">Selecionar Aluno</option>';
+                                $("#ddlAluno").empty;
+                                $.each(data,
+                                    function (i, row) {
+                                        items += "<option value='" + row.value + "'>" + row.text + "</option>";
+                                    });
+                                $("#ddlAluno").html(items);
+                            }
+                            else {
+                                new PNotify({
+                                    title: 'Alunos',
+                                    text: 'Alunos não encontrados.',
+                                    type: 'warning'
+                                });
+                            }
+                        });
+                });
+            }
+
             if (formid === "formEditLaudo") {
 
                 $("#formEditLaudo").validate({
@@ -307,9 +468,9 @@
                 var $numEnvergaduraSaude = $("#envergaduraSaude");
                 $numEnvergaduraSaude.mask('000', { reverse: false });
                 var $numTesteVelocidade = $("#testeVelocidade");
-                $numTesteVelocidade.mask('00:00', { reverse: false });
-                var $numAptidaoFisica = $("#aptidaoFisica");
-                $numAptidaoFisica.mask('00:00', { reverse: false });
+                $numTesteVelocidade.mask('00', { reverse: false });
+                var $numAgilidade = $("#agilidade");
+                $numAgilidade.mask('00', { reverse: false });
 
                 $("#formLaudo").validate({
                     highlight: function (label) {

@@ -175,7 +175,8 @@
                                                     <span class="input-group-addon">
                                                         <i class="fa fa-clock-o"></i>
                                                     </span>
-                                                    <input type="text" id="testeVelocidade" name="testeVelocidade" value="00:00" data-plugin-timepicker class="form-control" data-plugin-options='{ "showMeridian": false, "explicitMode": true, "setDefaultTime": false }'>
+                                                    @* <input type="text" id="testeVelocidade" name="testeVelocidade" value="00:00" data-plugin-timepicker class="form-control" data-plugin-options='{ "showMeridian": false, "explicitMode": true, "setDefaultTime": false }'> *@
+                                                    <input type="text" class="form-control" id="testeVelocidade" name="testeVelocidade" maxlength="2" />
                                                 </div>
                                             </div>
                                         </div>
@@ -194,7 +195,9 @@
                                                     <span class="input-group-addon">
                                                         <i class="fa fa-clock-o"></i>
                                                     </span>
-                                                    <input type="text" id="agilidade" name="agilidade" value="00:00" data-plugin-timepicker class="form-control" data-plugin-options='{ "showMeridian": false, "explicitMode": true , "setDefaultTime": false }'>
+                                                    @* <input type="text" id="agilidade" name="agilidade" value="00:00" data-plugin-timepicker class="form-control" data-plugin-options='{ "showMeridian": false, "explicitMode": true , "setDefaultTime": false }'> *@
+                                                    <input type="text" class="form-control" id="agilidade" name="agilidade" maxlength="2" />
+
                                                 </div>
                                             </div>
                                         </div>
@@ -204,14 +207,14 @@
                                             <label class="col-sm-2 control-label"><strong>Abdominal</strong></label>
                                             <div class="col-sm-3">
                                                 <div class="radio-custom radio-success">
-                                                    <input id="abdominalSim" name="rdbAbdominal" type="radio" value="true" required />
+                                                    <input id="abdominalSim" name="rdbAbdominal" type="radio" value="true" required title="Por favor selecione uma opção." />
                                                     <label for="abdominalSim">Sim</label>
                                                 </div>
                                                 <div class="radio-custom radio-danger">
-                                                    <input id="abdominalNao" name="rdbAbdominal" type="radio" value="false" />
+                                                    <input id="abdominalNao" name="rdbAbdominal" type="radio" value="false" required title="Por favor selecione uma opção." />
                                                     <label for="abdominalNao">Não</label>
                                                 </div>
-                                                <label class="error" for="porto_is"></label>
+                                                <label class="error" for="rdbAbdominal"></label>
                                             </div>
                                         </div>
                                     </div>
@@ -231,10 +234,12 @@
                                                 @foreach (var resp in @item.Respostas)
                                                 {
                                                     <div class="radio-custom radio-default col-sm-3">
-                                                        <input id="respVocacional_@resp.Id" name="nomeRespVocacional_@index" type="radio" value="@resp.Id-@resp.ValorPesoResposta" />
+                                                        <input id="respVocacional_@resp.Id" name="nomeRespVocacional_@index" type="radio" value="@resp.Id"
+                                                               required title="Por favor selecione uma opção." />
                                                         <label for="respVocacional_@resp.Id">@resp.RespostaQuestionario</label>
                                                     </div>
                                                 }
+                                                <label class="error" for="nomeRespVocacional_@index"></label>
                                             </div>
                                         </div>
                                     }
@@ -255,10 +260,12 @@
                                                 @foreach (var resp in @item.Respostas)
                                                 {
                                                     <div class="radio-custom radio-default col-sm-2">
-                                                        <input id="respQualidadeVida_@resp.Id" name="nomeRespQualidadeVida_@index" type="radio" value="@resp.Id" />
+                                                        <input id="respQualidadeVida_@resp.Id" name="nomeRespQualidadeVida_@index" type="radio" value="@resp.Id"
+                                                               required title="Por favor selecione uma opção." />
                                                         <label for="respQualidadeVida_@resp.Id">@resp.RespostaQuestionario</label>
                                                     </div>
                                                 }
+                                                <label class="error" for="nomeRespQualidadeVida_@index"></label>
                                             </div>
                                         </div>
                                     }
@@ -278,10 +285,12 @@
                                                 @foreach (var resp in @item.Respostas)
                                                 {
                                                     <div class="radio-custom radio-default col-sm-3">
-                                                        <input id="respConsumoAlimentar_@resp.Id" name="nomeRespConsumoAlimentar_@index" type="radio" value="@resp.Id-@resp.ValorPesoResposta" />
+                                                        <input id="respConsumoAlimentar_@resp.Id" name="nomeRespConsumoAlimentar_@index" type="radio" value="@resp.Id"
+                                                               required title="Por favor selecione uma opção." />
                                                         <label for="respConsumoAlimentar_@resp.Id">@resp.RespostaQuestionario</label>
                                                     </div>
                                                 }
+                                                <label class="error" for="nomeRespConsumoAlimentar_@index"></label>
                                             </div>
                                         </div>
                                     }
@@ -300,10 +309,12 @@
                                                 @foreach (var resp in @item.Respostas)
                                                 {
                                                     <div class="radio-custom radio-default col-sm-3">
-                                                        <input id="respSaudeBucal_@resp.Id" name="nomeRespSaudeBucal_@index" type="radio" value="@resp.Id-@resp.ValorPesoResposta" />
+                                                        <input id="respSaudeBucal_@resp.Id" name="nomeRespSaudeBucal_@index" type="radio" value="@resp.Id"
+                                                               required title="Por favor selecione uma opção." />
                                                         <label for="respSaudeBucal_@resp.Id">@resp.RespostaQuestionario</label>
                                                     </div>
                                                 }
+                                                <label class="error" for="nomeRespSaudeBucal_@index"></label>
                                             </div>
                                         </div>
                                     }

@@ -24,8 +24,8 @@
 						<thead>
 							<tr>
 								<th class="text-center">Id</th>
-								<th class="text-center">Nome</th>
-								<th class="text-center">Tipo de Laudo</th>
+                                <th class="text-center">Tipo de Laudo</th>
+                                <th class="text-center">Nome</th>
 								<th class="text-center">Parametro</th>
 								<th class="text-center">Descrição</th>
 								<th class="text-center">Status</th>
@@ -36,11 +36,11 @@
                         @foreach (var item in Model.Encaminhamentos)
 							{ 
 								<tr>
-									<td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Id)</td>
-									<td class="text-center" >@Html.DisplayFor(modelItem => item.NomeTipoLaudo)</td>
-									<td class="text-center" >@Html.DisplayFor(modelItem => item.Nome)</td>
-									<td class="text-center" >@Html.DisplayFor(modelItem => item.Parametro)</td>
-									<td class="text-center" >@Html.DisplayFor(modelItem => item.Descricao)</td>
+                                    <td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Id)</td>
+                                    <td class="text-center" style="width:200px;">@Html.DisplayFor(modelItem => item.NomeTipoLaudo)</td>
+                                    <td class="text-center" style="width:100px;">@Html.DisplayFor(modelItem => item.Nome)</td>
+                                    <td class="text-center" style="width:100px;">@Html.DisplayFor(modelItem => item.Parametro)</td>
+                                    <td class="text-center" style="width:500px;">@Html.DisplayFor(modelItem => item.Descricao)</td>
 									@if (item.Status)
 									{
 										<td class="text-center"><span class="label label-success">ATIVO</span></td>

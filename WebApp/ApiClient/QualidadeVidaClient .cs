@@ -5,7 +5,7 @@ namespace WebApp.ApiClient
 {
     public partial class DnaApiClient
     {
-        private const string ResourceQualidadeVida = "QualidadesVidas";
+        private const string ResourceQualidadeVida = "QualidadeDeVidas";
         #region Main Methods
 
         public Task<long> CreateQualidadeVida(QualidadeVidaModel.CreateUpdateQualidadeVidaCommand command)
