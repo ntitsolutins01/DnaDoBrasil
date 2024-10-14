@@ -73,7 +73,20 @@ namespace WebApp.Controllers
                     Status = true
                 };
 
-                await ApiClientFactory.Instance.CreateModalidade(command);
+                foreach (var file in collection.Files)
+                {
+	                if (file.Length <= 0) continue;
+
+	                using (var ms = new MemoryStream())
+	                {
+		                file.CopyToAsync(ms);
+		                var byteIMage = ms.ToArray();
+		                command.ByteImage = byteIMage;
+	                }
+                }
+
+
+				await ApiClientFactory.Instance.CreateModalidade(command);
 
                 return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
             }
@@ -114,7 +127,19 @@ namespace WebApp.Controllers
                 Status = collection["editStatus"].ToString() == "" ? false : true
             };
 
-            await ApiClientFactory.Instance.UpdateModalidade(command.Id, command);
+            foreach (var file in collection.Files)
+            {
+	            if (file.Length <= 0) continue;
+
+	            using (var ms = new MemoryStream())
+	            {
+		            file.CopyToAsync(ms);
+		            var byteIMage = ms.ToArray();
+		            command.ByteImage = byteIMage;
+	            }
+            }
+
+			await ApiClientFactory.Instance.UpdateModalidade(command.Id, command);
 
             return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
         }
