@@ -99,14 +99,19 @@ public class EncaminhamentoController : BaseController
                 Descricao = collection["descricao"].ToString(),
 			};
 
-            //var possuiEncaminhamento = ApiClientFactory.Instance.GetEncaminhamentoByAlunoIdDisciplinaId(Convert.ToInt32(command.AlunoId), Convert.ToInt32(command.DisciplinaId));
+            foreach (var file in collection.Files)
+            {
+                if (file.Length <= 0) continue;
 
-            //if (possuiEncaminhamento==null)
-            //{
-	           // return RedirectToAction(nameof(Create), new { notify = (int)EnumNotify.Warning, message = "Já existe Encaminhamento cadastrada para este aluno na disciplina informada." });
-            //}
+                using (var ms = new MemoryStream())
+                {
+                    file.CopyToAsync(ms);
+                    var byteIMage = ms.ToArray();
+                    command.ByteImage = byteIMage;
+                }
+            }
 
-			await ApiClientFactory.Instance.CreateEncaminhamento(command);
+            await ApiClientFactory.Instance.CreateEncaminhamento(command);
 
             return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
         }
@@ -137,7 +142,17 @@ public class EncaminhamentoController : BaseController
 
 			};
 
-            await ApiClientFactory.Instance.UpdateEncaminhamento(command.Id, command);
+            foreach (var file in collection.Files)
+            {
+	            if (file.Length <= 0) continue;
+
+	            using var ms = new MemoryStream();
+	            await file.CopyToAsync(ms);
+	            var byteIMage = ms.ToArray();
+	            command.ByteImage = byteIMage;
+            }
+
+			await ApiClientFactory.Instance.UpdateEncaminhamento(command.Id, command);
 
             return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
         }

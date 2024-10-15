@@ -34,19 +34,22 @@ namespace WebApp.Controllers
                 SetNotifyMessage(notify, message);
                 SetCrudMessage(crud);
 
-                var searchFilter = new ControlesPresencasFilterDto()
+                var searchFilter = new LaudosFilterDto()
                 {
                     FomentoId = collection["ddlFomento"].ToString(),
                     Estado = collection["ddlEstado"].ToString(),
                     MunicipioId = collection["ddlMunicipio"].ToString(),
                     LocalidadeId = collection["ddlLocalidade"].ToString(),
-                    DeficienciaId = collection["ddlDeficiencia"].ToString(),
-                    Etnia = collection["ddlEtnia"].ToString()
+                    TipoLaudoId = collection["ddlTipoLaudo"].ToString(),
+                    AlunoId = collection["ddlAluno"].ToString(),
+                    PageNumber = 1,
+                    PageSize = 500
                 };
 
-                var response = ApiClientFactory.Instance.GetLaudosAll();
+                var response = ApiClientFactory.Instance.GetLaudosByFilter(searchFilter);
+
                 var fomentos = new SelectList(ApiClientFactory.Instance.GetFomentoAll(), "Id", "Nome", searchFilter.FomentoId);
-                var tiposLaudos = new SelectList(ApiClientFactory.Instance.GetTiposLaudoAll().Where(x => x.Status), "Id", "Nome", searchFilter.DeficienciaId);
+                var tiposLaudos = new SelectList(ApiClientFactory.Instance.GetTiposLaudoAll(), "Id", "Nome", searchFilter.TipoLaudoId);
                 var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", searchFilter.Estado);
 
                 SelectList municipios = null;
@@ -61,10 +64,9 @@ namespace WebApp.Controllers
                 {
                     localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeByMunicipio(searchFilter.MunicipioId), "Id", "Nome", searchFilter.LocalidadeId);
                 }
-
                 var model = new LaudoModel()
                 {
-                    Laudos = response,
+                    Laudos = response.Result.Laudos,
                     ListFomentos = fomentos,
                     ListEstados = estados,
                     ListTiposLaudos = tiposLaudos,
@@ -105,6 +107,7 @@ namespace WebApp.Controllers
             var vocacional = ApiClientFactory.Instance.GetEncaminhamentoByVocacional();
             var encaminhamentoConsumoAlimentar = laudo.ConsumoAlimentarId == null ? null : ApiClientFactory.Instance.GetEncaminhamentoById((int)laudo.ConsumoAlimentarId);
             var encaminhamentoSaudeBucal = laudo.SaudeBucalId == null ? null : ApiClientFactory.Instance.GetEncaminhamentoById((int)laudo.SaudeBucalId);
+            var desempenho = ApiClientFactory.Instance.GetDesempenhoByAluno(Convert.ToInt32(laudo.AlunoId));
 
             var model = new LaudoModel()
             {
@@ -114,7 +117,8 @@ namespace WebApp.Controllers
                 QualidadeDeVida = qualidadeDeVida,
                 Vocacional = vocacional,
                 EncaminhamentoSaudeBucal = encaminhamentoSaudeBucal,
-                EncaminhamentoConsumoAlimentar = encaminhamentoConsumoAlimentar
+                EncaminhamentoConsumoAlimentar = encaminhamentoConsumoAlimentar,
+                Desempenho = desempenho
             };
             return View(model);
         }
