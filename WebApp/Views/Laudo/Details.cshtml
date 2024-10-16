@@ -947,107 +947,165 @@
                                                     </div>
                                                 </div>
 
+                                                @{
+                                                    var primeirosItens = Model.Vocacional.Take(3).ToList();
+                                                    var ultimosItens = Model.Vocacional.Skip(Math.Max(0, Model.Vocacional.Count() - 3)).Take(3).ToList();
+                                                }
+
                                                 <div class="row form-group">
-                                                    <a data-toggle="modal" data-target="#mdDetalhamento">
-                                                        <section class="panel col-md-4">
-                                                            <div class="panel-body bg-voc">
-                                                                <div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-right">
-                                                                    <div class="circular-bar-chart" data-percent="@Model.Desempenho.ScoreVocacional" data-plugin-options='{ "barColor": "#593a6f", "delay": 300, "size": 50, "lineWidth": 4 }'>
-                                                                        <strong>Average</strong>
-                                                                        <label><span class="percent">@Model.Desempenho.ScoreVocacional</span>%</label>
+                                                    @foreach (var item in primeirosItens)
+                                                    {
+                                                        @if (item.Id == Model.Laudo.VocacionalId)
+                                                        {
+                                                            <a data-toggle="modal" data-target="#mdDetalhamento">
+                                                                <section class="panel col-md-4">
+                                                                    <div class="panel-body bg-voc" style="background-color: #784e96">
+                                                                        <div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-right">
+                                                                            <div class="circular-bar-chart" data-percent="100" data-plugin-options='{ "barColor": "blue", "delay": 300, "size": 50, "lineWidth": 4 }'>
+                                                                                <strong>Average</strong>
+                                                                                <label><span class="percent">100</span>%</label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="h4 text-weight-bold mb-none">@item.Nome (%)</div>
+                                                                        <p class="text-xs mb-none">12 de 35</p>
                                                                     </div>
-                                                                </div>
-                                                                @{
-                                                                    string nomeVocacional = Model.Laudo.EncaminhamentoVocacionalId switch
-                                                                    {
-                                                                        1 => "Tecnologias Aplicadas",
-                                                                        5 => "Ciências Exatas Naturais",
-                                                                        6 => "Artistico",
-                                                                        9 => "Ciências Humanas",
-                                                                        10 => "Empreendedorismo",
-                                                                        11 => "Ciências Contábeis Administrativas",
-                                                                        _ => ""
-                                                                    };
-                                                                }
-                                                                <div class="h4 text-weight-bold mb-none">@* Interesses Realistas *@@nomeVocacional (%)</div>
-                                                                <p class="text-xs mb-none">12 de 35</p>
-                                                            </div>
-                                                        </section>
-                                                    </a>
-                                                    @* <a data-toggle="modal" data-target="#mdDetalhamento">
-                                                <section class="panel col-md-4">
-                                                <div class="panel-body bg-voc">
-                                                <div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-right">
-                                                <div class="circular-bar-chart" data-percent="46" data-plugin-options='{ "barColor": "#593a6f", "delay": 300, "size": 50, "lineWidth": 4 }'>
-                                                <strong>Average</strong>
-                                                <label><span class="percent">46</span>%</label>
-                                                </div>
-                                                </div>
-                                                <div class="h4 text-weight-bold mb-none">Interesses Intelectuais (%)</div>
-                                                <p class="text-xs mb-none">30 de 65</p>
-                                                </div>
-                                                </section>
-                                                </a>
-                                                <a data-toggle="modal" data-target="#mdDetalhamento">
-                                                <section class="panel col-md-4">
-                                                <div class="panel-body bg-voc">
-                                                <div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-right">
-                                                <div class="circular-bar-chart" data-percent="44" data-plugin-options='{ "barColor": "#593a6f", "delay": 300, "size": 50, "lineWidth": 4 }'>
-                                                <strong>Average</strong>
-                                                <label><span class="percent">44</span>%</label>
-                                                </div>
-                                                </div>
-                                                <div class="h4 text-weight-bold mb-none">Interesses Artísticos (%)</div>
-                                                <p class="text-xs mb-none">20 de 45</p>
-                                                </div>
-                                                </section>
-                                                </a>
+                                                                </section>
+                                                            </a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a data-toggle="modal" data-target="#mdDetalhamento">
+                                                                <section class="panel col-md-4">
+                                                                    <div class="panel-body bg-voc">
+                                                                        <div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-right">
+                                                                            <div class="circular-bar-chart" data-percent="0" data-plugin-options='{ "barColor": "#593a6f", "delay": 300, "size": 50, "lineWidth": 4 }'>
+                                                                                <strong>Average</strong>
+                                                                                <label><span class="percent">0</span>%</label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="h4 text-weight-bold mb-none">@item.Nome (%)</div>
+                                                                        <p class="text-xs mb-none">30 de 65</p>
+                                                                    </div>
+                                                                </section>
+                                                            </a>
+                                                        }
+                                                    }
                                                 </div>
 
                                                 <div class="row form-group">
-                                                <a data-toggle="modal" data-target="#mdDetalhamento">
-                                                <section class="panel col-md-4">
-                                                <div class="panel-body bg-voc">
-                                                <div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-right">
-                                                <div class="circular-bar-chart" data-percent="34" data-plugin-options='{ "barColor": "#593a6f", "delay": 300, "size": 50, "lineWidth": 4 }'>
-                                                <strong>Average</strong>
-                                                <label><span class="percent">34</span>%</label>
+                                                    @foreach (var item in ultimosItens)
+                                                    {
+                                                        @if (item.Id == Model.Laudo.VocacionalId)
+                                                        {
+                                                            <a data-toggle="modal" data-target="#mdDetalhamento">
+                                                                <section class="panel col-md-4">
+                                                                    <div class="panel-body bg-voc" style="background-color: #784e96">
+                                                                        <div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-right">
+                                                                            <div class="circular-bar-chart" data-percent="100" data-plugin-options='{ "barColor": "blue", "delay": 300, "size": 50, "lineWidth": 4 }'>
+                                                                                <strong>Average</strong>
+                                                                                <label><span class="percent">100</span>%</label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="h4 text-weight-bold mb-none">@item.Nome (%)</div>
+                                                                        <p class="text-xs mb-none">12 de 35</p>
+                                                                    </div>
+                                                                </section>
+                                                            </a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a data-toggle="modal" data-target="#mdDetalhamento">
+                                                                <section class="panel col-md-4">
+                                                                    <div class="panel-body bg-voc">
+                                                                        <div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-right">
+                                                                            <div class="circular-bar-chart" data-percent="0" data-plugin-options='{ "barColor": "#593a6f", "delay": 300, "size": 50, "lineWidth": 4 }'>
+                                                                                <strong>Average</strong>
+                                                                                <label><span class="percent">0</span>%</label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="h4 text-weight-bold mb-none">@item.Nome (%)</div>
+                                                                        <p class="text-xs mb-none">30 de 65</p>
+                                                                    </div>
+                                                                </section>
+                                                            </a>
+                                                        }
+                                                    }
                                                 </div>
-                                                </div>
-                                                <div class="h4 text-weight-bold mb-none">Interesses Sociais (%)</div>
-                                                <p class="text-xs mb-none">13 de 55</p>
-                                                </div>
-                                                </section>
-                                                </a>
-                                                <a data-toggle="modal" data-target="#mdDetalhamento">
-                                                <section class="panel col-md-4">
-                                                <div class="panel-body bg-voc">
-                                                <div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-right">
-                                                <div class="circular-bar-chart" data-percent="46" data-plugin-options='{ "barColor": "#593a6f", "delay": 300, "size": 50, "lineWidth": 4 }'>
-                                                <strong>Average</strong>
-                                                <label><span class="percent">46</span>%</label>
-                                                </div>
-                                                </div>
-                                                <div class="h4 text-weight-bold mb-none">Interesses Empreendedores (%)</div>
-                                                <p class="text-xs mb-none">27 de 55</p>
-                                                </div>
-                                                </section>
-                                                </a>
-                                                <a data-toggle="modal" data-target="#mdDetalhamento">
-                                                <section class="panel col-md-4">
-                                                <div class="panel-body bg-voc">
-                                                <div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-right">
-                                                <div class="circular-bar-chart" data-percent="44" data-plugin-options='{ "barColor": "#593a6f", "delay": 300, "size": 50, "lineWidth": 4 }'>
-                                                <strong>Average</strong>
-                                                <label><span class="percent">44</span>%</label>
-                                                </div>
-                                                </div>
-                                                <div class="h4 text-weight-bold mb-none">Interesses Convencionais (%)</div>
-                                                <p class="text-xs mb-none">15 de 45</p>
-                                                </div>
-                                                </section>
-                                                </a> *@
-                                                </div>
+
+
+                                                @* <a data-toggle="modal" data-target="#mdDetalhamento">
+                                            <section class="panel col-md-4">
+                                            <div class="panel-body bg-voc">
+                                            <div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-right">
+                                            <div class="circular-bar-chart" data-percent="46" data-plugin-options='{ "barColor": "#593a6f", "delay": 300, "size": 50, "lineWidth": 4 }'>
+                                            <strong>Average</strong>
+                                            <label><span class="percent">46</span>%</label>
+                                            </div>
+                                            </div>
+                                            <div class="h4 text-weight-bold mb-none">Interesses Intelectuais (%)</div>
+                                            <p class="text-xs mb-none">30 de 65</p>
+                                            </div>
+                                            </section>
+                                            </a>
+                                            <a data-toggle="modal" data-target="#mdDetalhamento">
+                                            <section class="panel col-md-4">
+                                            <div class="panel-body bg-voc">
+                                            <div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-right">
+                                            <div class="circular-bar-chart" data-percent="44" data-plugin-options='{ "barColor": "#593a6f", "delay": 300, "size": 50, "lineWidth": 4 }'>
+                                            <strong>Average</strong>
+                                            <label><span class="percent">44</span>%</label>
+                                            </div>
+                                            </div>
+                                            <div class="h4 text-weight-bold mb-none">Interesses Artísticos (%)</div>
+                                            <p class="text-xs mb-none">20 de 45</p>
+                                            </div>
+                                            </section>
+                                            </a>
+                                            </div>
+
+                                            <div class="row form-group">
+                                            <a data-toggle="modal" data-target="#mdDetalhamento">
+                                            <section class="panel col-md-4">
+                                            <div class="panel-body bg-voc">
+                                            <div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-right">
+                                            <div class="circular-bar-chart" data-percent="34" data-plugin-options='{ "barColor": "#593a6f", "delay": 300, "size": 50, "lineWidth": 4 }'>
+                                            <strong>Average</strong>
+                                            <label><span class="percent">34</span>%</label>
+                                            </div>
+                                            </div>
+                                            <div class="h4 text-weight-bold mb-none">Interesses Sociais (%)</div>
+                                            <p class="text-xs mb-none">13 de 55</p>
+                                            </div>
+                                            </section>
+                                            </a>
+                                            <a data-toggle="modal" data-target="#mdDetalhamento">
+                                            <section class="panel col-md-4">
+                                            <div class="panel-body bg-voc">
+                                            <div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-right">
+                                            <div class="circular-bar-chart" data-percent="46" data-plugin-options='{ "barColor": "#593a6f", "delay": 300, "size": 50, "lineWidth": 4 }'>
+                                            <strong>Average</strong>
+                                            <label><span class="percent">46</span>%</label>
+                                            </div>
+                                            </div>
+                                            <div class="h4 text-weight-bold mb-none">Interesses Empreendedores (%)</div>
+                                            <p class="text-xs mb-none">27 de 55</p>
+                                            </div>
+                                            </section>
+                                            </a>
+                                            <a data-toggle="modal" data-target="#mdDetalhamento">
+                                            <section class="panel col-md-4">
+                                            <div class="panel-body bg-voc">
+                                            <div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-right">
+                                            <div class="circular-bar-chart" data-percent="44" data-plugin-options='{ "barColor": "#593a6f", "delay": 300, "size": 50, "lineWidth": 4 }'>
+                                            <strong>Average</strong>
+                                            <label><span class="percent">44</span>%</label>
+                                            </div>
+                                            </div>
+                                            <div class="h4 text-weight-bold mb-none">Interesses Convencionais (%)</div>
+                                            <p class="text-xs mb-none">15 de 45</p>
+                                            </div>
+                                            </section>
+                                            </a> *@
                                             </div>
                                         </section>
                                     </div>

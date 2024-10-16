@@ -89,6 +89,7 @@ namespace WebApp.Controllers
             var aluno = ApiClientFactory.Instance.GetAlunoById(id);
             var profissional = ApiClientFactory.Instance.GetProfissionalById(Convert.ToInt32(aluno.ProfissionalId));
             var talentoEsportivo = ApiClientFactory.Instance.GetTalentoEsportivoByAluno(laudo.AlunoId.ToString());
+            var vocacional = laudo.VocacionalId == null ? null : ApiClientFactory.Instance.GetEncaminhamentoByVocacional();
             var desempenho = ApiClientFactory.Instance.GetDesempenhoByAluno(Convert.ToInt32(laudo.AlunoId));
             var model = new LaudoModel()
             {
@@ -96,6 +97,7 @@ namespace WebApp.Controllers
                 Aluno = aluno,
                 Profissional = profissional,
                 TalentoEsportivo = talentoEsportivo,
+                Vocacional = vocacional,
                 Desempenho = desempenho
             };
             return View(model);
