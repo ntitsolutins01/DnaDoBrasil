@@ -45,6 +45,13 @@
                                 <option value="">Selecionar Localidade</option>
                             </select>
                         </div>
+                        <label class="col-sm-2 control-label">Aluno:</label>
+                        <div class="col-md-4 form-group">
+                            <select class="form-control populate select2" name="ddlAluno" id="ddlAluno" style="width:100%"
+                                    asp-for="AlunoId" asp-items="Model.ListAlunos">
+                                <option value="">Selecionar Aluno</option>
+                            </select>
+                        </div>
                         <label class="col-sm-2 control-label">Tipo de Laudo:</label>
                         <div class="col-md-4 form-group">
                             <select class="form-control populate select2" name="ddlTipoLaudo" id="ddlTipoLaudo"
@@ -146,7 +153,6 @@
 	<script src="~/assets/vendor/ios7-switch/ios7-switch.js"></script>
 	<script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
 	<script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
-	<script src="~/js/formatTable.js"></script>
 	<script src="~/js/Laudo.js"></script>
 
 	<script>

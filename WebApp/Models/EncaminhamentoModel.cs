@@ -30,7 +30,8 @@ namespace WebApp.Models
             public required string Parametro { get; set; }
             public string? Descricao { get; set; }
             public bool Status { get; set; } = true;
-           
+            public byte[]? ByteImage { get; set; }
+
         }
 	}
 

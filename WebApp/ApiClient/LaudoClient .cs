@@ -1,4 +1,4 @@
-﻿using System.Drawing.Printing;
+using System.Drawing.Printing;
 using WebApp.Dto;
 using WebApp.Models;
 
@@ -68,6 +68,12 @@ namespace WebApp.ApiClient
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 $"{ResourceLaudo}/Desempenho/{id}"));
             return Get<DesempenhoDto>(requestUrl);
+        }
+        public Task<LaudosFilterDto?> GetLaudosByFilter(LaudosFilterDto searchFilter)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceLaudo}/Filter"));
+            return GetFiltro(requestUrl, searchFilter);
         }
 
         #endregion
