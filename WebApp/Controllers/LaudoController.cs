@@ -47,7 +47,7 @@ namespace WebApp.Controllers
                 };
 
                 //var response = ApiClientFactory.Instance.GetLaudosByFilter(searchFilter);
-                var response = ApiClientFactory.Instance.GetLaudosAll();
+                var response = ApiClientFactory.Instance.GetLaudosByFilter(searchFilter);
 
                 var fomentos = new SelectList(ApiClientFactory.Instance.GetFomentoAll(), "Id", "Nome", searchFilter.FomentoId);
                 var tiposLaudos = new SelectList(ApiClientFactory.Instance.GetTiposLaudoAll(), "Id", "Nome", searchFilter.TipoLaudoId);
@@ -67,7 +67,7 @@ namespace WebApp.Controllers
                 }
                 var model = new LaudoModel()
                 {
-                    Laudos = response,
+                    Laudos = response.Result.Laudos,
                     ListFomentos = fomentos,
                     ListEstados = estados,
                     ListTiposLaudos = tiposLaudos,
