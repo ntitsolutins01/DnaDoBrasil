@@ -29,7 +29,7 @@
                                         <div class="col-sm-2" style="width: 10% !important;">
                                             <div class="liquid-meter-wrapper liquid-meter-sm">
                                                 <div class="liquid-meter">
-                                                    <meter min="0" max="100" value="35" id="meterSales"></meter>
+                                                    <meter min="0" max="100" value="@Model.Desempenho.ScoreSaude" id="meterSaude"></meter>
                                                 </div>
                                             </div>
                                         </div>
@@ -138,21 +138,26 @@
                         </div>
                         <div id="collapse2Two" class="accordion-body collapse">
                             <div class="panel-body">
-
-                                <div class="well well-lg">
-                                    <div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-right">
-                                        <div class="circular-bar-chart" data-percent="45" data-plugin-options='{ "barColor": "#ed9c28", "delay": 300, "size": 50, "lineWidth": 4 }'>
-                                            <strong>Average</strong>
-                                            <label><span class="percent">45</span>%</label>
+                                <div class="well well-sm">
+                                    <div class="form-group">
+                                        <div class="col-sm-2" style="width: 10% !important;">
+                                            <div class="liquid-meter-wrapper liquid-meter-sm">
+                                                <div class="liquid-meter">
+                                                    <meter min="0" max="100" value="@Model.Desempenho.ScoreTalentoEsportivo" id="meterTalentoEsportivo"></meter>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-10">
+                                            @{
+                                                string dataFormatada = Model.Desempenho.DataTalentoEsportivo?.ToString("d", CultureInfo.CreateSpecificCulture("pt-BR"));
+                                            }
+                                            <div class="h4 text-weight-bold mb-3" style="margin-top: 30px;">
+                                                Data de realização do teste em @dataFormatada
+                                            </div>
+                                            <p>Porcentagem do talento esportivo</p>
                                         </div>
                                     </div>
-                                    @{
-                                        string dataFormatada = Model.Desempenho.DataTalentoEsportivo?.ToString("d", CultureInfo.CreateSpecificCulture("pt-BR"));
-                                    }
-                                    <div class="h4 text-weight-bold mb-3" style="margin-top: 30px;">
-                                        Data de realização do teste em @dataFormatada
-                                    </div>
-                                    <p class="text-xs text-muted mb-none">Porcentagem de Talento Esportivo</p>
+
                                 </div>
 
                                 <div class="row">
@@ -423,20 +428,26 @@
                         </div>
                         <div id="collapse2ThreeFinal" class="accordion-body collapse">
                             <div class="panel-body">
-                                <div class="well well-lg">
-                                    <div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-right">
-                                        <div class="circular-bar-chart" data-percent="45" data-plugin-options='{ "barColor": "#00a4a9", "delay": 300, "size": 50, "lineWidth": 4 }'>
-                                            <strong>Average</strong>
-                                            <label><span class="percent">45</span>%</label>
+                                <div class="well well-sm">
+                                    <div class="form-group">
+                                        <div class="col-sm-2" style="width: 10% !important;">
+                                            <div class="liquid-meter-wrapper liquid-meter-sm">
+                                                <div class="liquid-meter">
+                                                    <meter min="0" max="100" value="@Model.Desempenho.ScoreConsumoAlimentar" id="meterConsumoAlimentar"></meter>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-10">
+                                            @{
+                                                string dataFormatada = Model.Desempenho.DataConsumoAlimentar?.ToString("d", CultureInfo.CreateSpecificCulture("pt-BR"));
+                                            }
+                                            <div class="h4 text-weight-bold mb-3" style="margin-top: 30px;">
+                                                Data de realização do teste em @dataFormatada
+                                            </div>
+                                            <p>Porcentagem de consumo alimentar</p>
                                         </div>
                                     </div>
-                                    @{
-                                        string dataFormatada = Model.Desempenho.DataConsumoAlimentar?.ToString("d", CultureInfo.CreateSpecificCulture("pt-BR"));
-                                    }
-                                    <div class="h4 text-weight-bold mb-3" style="margin-top: 30px;">
-                                        Data de realização do teste em @dataFormatada
-                                    </div>
-                                    <p class="text-xs text-muted mb-none">Porcentagem de Consumo Alimentar</p>
+
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
@@ -503,20 +514,26 @@
                         </div>
                         <div id="collapse2FourFinal" class="accordion-body collapse">
                             <div class="panel-body">
-                                <div class="well well-lg">
-                                    <div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-right">
-                                        <div class="circular-bar-chart" data-percent="45" data-plugin-options='{ "barColor": "#00a4a9", "delay": 300, "size": 50, "lineWidth": 4 }'>
-                                            <strong>Average</strong>
-                                            <label><span class="percent">45</span>%</label>
+                                <div class="well well-sm">
+                                    <div class="form-group">
+                                        <div class="col-sm-2" style="width: 10% !important;">
+                                            <div class="liquid-meter-wrapper liquid-meter-sm">
+                                                <div class="liquid-meter">
+                                                    <meter min="0" max="100" value="@Model.Desempenho.ScoreSaudeBucal" id="meterSaudeBucal"></meter>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-10">
+                                            @{
+                                                string dataFormatada = Model.Desempenho.DataSaudeBucal?.ToString("d", CultureInfo.CreateSpecificCulture("pt-BR"));
+                                            }
+                                            <div class="h4 text-weight-bold mb-3" style="margin-top: 30px;">
+                                                Data de realização do teste em @dataFormatada
+                                            </div>
+                                            <p>Porcentagem de saúde bucal</p>
                                         </div>
                                     </div>
-                                    @{
-                                        string dataFormatada = Model.Desempenho.DataSaudeBucal?.ToString("d", CultureInfo.CreateSpecificCulture("pt-BR"));
-                                    }
-                                    <div class="h4 text-weight-bold mb-3" style="margin-top: 30px;">
-                                        Data de realização do teste em @dataFormatada
-                                    </div>
-                                    <p class="text-xs text-muted mb-none">Porcentagem de Saude Bucal</p>
+
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
@@ -593,20 +610,26 @@
                         </div>
                         <div id="collapse2Five" class="accordion-body collapse">
                             <div class="panel-body">
-                                <div class="well well-lg">
-                                    <div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-right">
-                                        <div class="circular-bar-chart" data-percent="45" data-plugin-options='{ "barColor": "#00a4a9", "delay": 300, "size": 50, "lineWidth": 4 }'>
-                                            <strong>Average</strong>
-                                            <label><span class="percent">45</span>%</label>
+                                <div class="well well-sm">
+                                    <div class="form-group">
+                                        <div class="col-sm-2" style="width: 10% !important;">
+                                            <div class="liquid-meter-wrapper liquid-meter-sm">
+                                                <div class="liquid-meter">
+                                                    <meter min="0" max="100" value="@Model.Desempenho.ScoreVida" id="meterQualidadeVida"></meter>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-10">
+                                            @{
+                                                string dataFormatada = Model.Desempenho.DataVida?.ToString("d", CultureInfo.CreateSpecificCulture("pt-BR"));
+                                            }
+                                            <div class="h4 text-weight-bold mb-3" style="margin-top: 30px;">
+                                                Data de realização do teste em @dataFormatada
+                                            </div>
+                                            <p>Porcentagem de qualidade de vida</p>
                                         </div>
                                     </div>
-                                    @{
-                                        string dataFormatada = Model.Desempenho.DataVida?.ToString("d", CultureInfo.CreateSpecificCulture("pt-BR"));
-                                    }
-                                    <div class="h4 text-weight-bold mb-3" style="margin-top: 30px;">
-                                        Data de realização do teste em @dataFormatada
-                                    </div>
-                                    <p class="text-xs text-muted mb-none">Porcentagem de Qualidade de vida</p>
+
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
@@ -822,20 +845,26 @@
                         </div>
                         <div id="collapse2Six" class="accordion-body collapse">
                             <div class="panel-body">
-                                <div class="well well-lg">
-                                    <div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-right">
-                                        <div class="circular-bar-chart" data-percent="45" data-plugin-options='{ "barColor": "#784e96", "delay": 300, "size": 50, "lineWidth": 4 }'>
-                                            <strong>Average</strong>
-                                            <label><span class="percent">45</span>%</label>
+                                <div class="well well-sm">
+                                    <div class="form-group">
+                                        <div class="col-sm-2" style="width: 10% !important;">
+                                            <div class="liquid-meter-wrapper liquid-meter-sm">
+                                                <div class="liquid-meter">
+                                                    <meter min="0" max="100" value="@Model.Desempenho.ScoreVocacional" id="meterVocacional"></meter>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-10">
+                                            @{
+                                                string dataFormatada = Model.Desempenho.DataVocacional?.ToString("d", CultureInfo.CreateSpecificCulture("pt-BR"));
+                                            }
+                                            <div class="h4 text-weight-bold mb-3" style="margin-top: 30px;">
+                                                Data de realização do teste em @dataFormatada
+                                            </div>
+                                            <p>Porcentagem do vocacional</p>
                                         </div>
                                     </div>
-                                    @{
-                                        string dataFormatada = Model.Desempenho.DataVocacional?.ToString("d", CultureInfo.CreateSpecificCulture("pt-BR"));
-                                    }
-                                    <div class="h4 text-weight-bold mb-3" style="margin-top: 30px;">
-                                        Data de realização do teste em @dataFormatada
-                                    </div>
-                                    <p class="text-xs text-muted mb-none">Porcentagem Vocacional</p>
+
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
