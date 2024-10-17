@@ -46,7 +46,8 @@ namespace WebApp.Controllers
                     PageSize = 500
                 };
 
-                var response = ApiClientFactory.Instance.GetLaudosByFilter(searchFilter);
+                //var response = ApiClientFactory.Instance.GetLaudosByFilter(searchFilter);
+                var response = ApiClientFactory.Instance.GetLaudosAll();
 
                 var fomentos = new SelectList(ApiClientFactory.Instance.GetFomentoAll(), "Id", "Nome", searchFilter.FomentoId);
                 var tiposLaudos = new SelectList(ApiClientFactory.Instance.GetTiposLaudoAll(), "Id", "Nome", searchFilter.TipoLaudoId);
@@ -66,7 +67,7 @@ namespace WebApp.Controllers
                 }
                 var model = new LaudoModel()
                 {
-                    Laudos = response.Result.Laudos,
+                    Laudos = response,
                     ListFomentos = fomentos,
                     ListEstados = estados,
                     ListTiposLaudos = tiposLaudos,
@@ -91,6 +92,7 @@ namespace WebApp.Controllers
             var aluno = ApiClientFactory.Instance.GetAlunoById(id);
             var profissional = ApiClientFactory.Instance.GetProfissionalById(Convert.ToInt32(aluno.ProfissionalId));
             var talentoEsportivo = ApiClientFactory.Instance.GetTalentoEsportivoByAluno(laudo.AlunoId.ToString());
+            var vocacional = laudo.VocacionalId == null ? null : ApiClientFactory.Instance.GetEncaminhamentoByVocacional();
             var desempenho = ApiClientFactory.Instance.GetDesempenhoByAluno(Convert.ToInt32(laudo.AlunoId));
             var model = new LaudoModel()
             {
@@ -98,6 +100,7 @@ namespace WebApp.Controllers
                 Aluno = aluno,
                 Profissional = profissional,
                 TalentoEsportivo = talentoEsportivo,
+                Vocacional = vocacional,
                 Desempenho = desempenho
             };
             return View(model);

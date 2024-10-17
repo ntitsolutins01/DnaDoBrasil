@@ -1,3 +1,4 @@
+@using System.Globalization
 @model LaudoModel
 @{
     ViewData["Title"] = "Laudo Detalhado";
@@ -33,7 +34,12 @@
                                             </div>
                                         </div>
                                         <div class="col-md-10">
-                                            <div class="h4 text-weight-bold mb-3" style="margin-top: 30px;">Data de realização do teste em </div>@* @Model.Laudo.Saude.DataRealizacaoTeste *@
+                                            @{
+                                                string dataFormatada = Model.Desempenho.DataSaude?.ToString("d", CultureInfo.CreateSpecificCulture("pt-BR"));
+                                            }
+                                            <div class="h4 text-weight-bold mb-3" style="margin-top: 30px;">
+                                                Data de realização do teste em @dataFormatada
+                                            </div>
                                             <p>Porcentagem de saúde</p>
                                         </div>
                                     </div>
@@ -110,24 +116,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
-
-
-                                                @* <div class="row form-group">
-                                            <label class="col-md-2 control-label" for="textareaDefault">Plano de aula </label>
-                                            <div class="col-md-10">
-                                            <textarea class="form-control" rows="2" id="recommend"></textarea>
                                             </div>
-                                            </div> *@
-                                            </div>
-                                            @* <footer class="panel-footer">
-                                        <div class="row">
-                                        <div class="col-md-9 col-md-offset-3">
-                                        <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
-
-                                        </div>
-                                        </div>
-                                        </footer> *@
                                         </section>
                                     </div>
                                 </div>
@@ -157,7 +146,12 @@
                                             <label><span class="percent">45</span>%</label>
                                         </div>
                                     </div>
-                                    <div class="h4 text-weight-bold mb-none">12/02/2023</div>
+                                    @{
+                                        string dataFormatada = Model.Desempenho.DataTalentoEsportivo?.ToString("d", CultureInfo.CreateSpecificCulture("pt-BR"));
+                                    }
+                                    <div class="h4 text-weight-bold mb-3" style="margin-top: 30px;">
+                                        Data de realização do teste em @dataFormatada
+                                    </div>
                                     <p class="text-xs text-muted mb-none">Porcentagem de Talento Esportivo</p>
                                 </div>
 
@@ -436,7 +430,12 @@
                                             <label><span class="percent">45</span>%</label>
                                         </div>
                                     </div>
-                                    <div class="h4 text-weight-bold mb-none">12/02/2023</div>
+                                    @{
+                                        string dataFormatada = Model.Desempenho.DataConsumoAlimentar?.ToString("d", CultureInfo.CreateSpecificCulture("pt-BR"));
+                                    }
+                                    <div class="h4 text-weight-bold mb-3" style="margin-top: 30px;">
+                                        Data de realização do teste em @dataFormatada
+                                    </div>
                                     <p class="text-xs text-muted mb-none">Porcentagem de Consumo Alimentar</p>
                                 </div>
                                 <div class="row">
@@ -511,7 +510,12 @@
                                             <label><span class="percent">45</span>%</label>
                                         </div>
                                     </div>
-                                    <div class="h4 text-weight-bold mb-none">12/02/2023</div>
+                                    @{
+                                        string dataFormatada = Model.Desempenho.DataSaudeBucal?.ToString("d", CultureInfo.CreateSpecificCulture("pt-BR"));
+                                    }
+                                    <div class="h4 text-weight-bold mb-3" style="margin-top: 30px;">
+                                        Data de realização do teste em @dataFormatada
+                                    </div>
                                     <p class="text-xs text-muted mb-none">Porcentagem de Saude Bucal</p>
                                 </div>
                                 <div class="row">
@@ -596,7 +600,12 @@
                                             <label><span class="percent">45</span>%</label>
                                         </div>
                                     </div>
-                                    <div class="h4 text-weight-bold mb-none">12/02/2023</div>
+                                    @{
+                                        string dataFormatada = Model.Desempenho.DataVida?.ToString("d", CultureInfo.CreateSpecificCulture("pt-BR"));
+                                    }
+                                    <div class="h4 text-weight-bold mb-3" style="margin-top: 30px;">
+                                        Data de realização do teste em @dataFormatada
+                                    </div>
                                     <p class="text-xs text-muted mb-none">Porcentagem de Qualidade de vida</p>
                                 </div>
                                 <div class="row">
@@ -707,7 +716,7 @@
                                                                     @{
                                                                         int percAutoestima = @Model.Desempenho.AvisoAutoestima switch
                                                                         {
-                                                                            "Excelente" => 100,
+                                                                            "Muito Bom" => 100,
                                                                             "Necessita Melhorar" => 50,
                                                                             _ => 0
                                                                         };
@@ -729,7 +738,7 @@
                                                                     @{
                                                                         int percFamilia = @Model.Desempenho.AvisoFamilia switch
                                                                         {
-                                                                            "Excelente" => 100,
+                                                                            "Muito Bom" => 100,
                                                                             "Necessita Melhorar" => 50,
                                                                             _ => 0
                                                                         };
@@ -751,7 +760,7 @@
                                                                     @{
                                                                         int percBemEstar = @Model.Desempenho.AvisoBemEstar switch
                                                                         {
-                                                                            "Excelente" => 100,
+                                                                            "Muito Bom" => 100,
                                                                             "Necessita Melhorar" => 50,
                                                                             _ => 0
                                                                         };
@@ -768,34 +777,6 @@
                                                     </a>
                                                 </div>
                                                 <div class="row form-group">
-                                                    @* <a data-toggle="modal" data-target="#mdDetalhamento">
-                                                <section class="panel col-md-4">
-                                                <div class="panel-body bg-qv">
-                                                <div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-right">
-                                                <div class="circular-bar-chart" data-percent="34" data-plugin-options='{ "barColor": "blue", "delay": 300, "size": 50, "lineWidth": 4 }'>
-                                                <strong>Average</strong>
-                                                <label><span class="percent">34</span>%</label>
-                                                </div>
-                                                </div>
-                                                <div class="h4 text-weight-bold mb-none">Bem Estar Emocional (%)</div>
-                                                <p class="text-xs mb-none">Necessita melhorar</p>
-                                                </div>
-                                                </section>
-                                                </a>
-                                                <a data-toggle="modal" data-target="#mdDetalhamento">
-                                                <section class="panel col-md-4">
-                                                <div class="panel-body bg-qv">
-                                                <div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-right">
-                                                <div class="circular-bar-chart" data-percent="46" data-plugin-options='{ "barColor": "blue", "delay": 300, "size": 50, "lineWidth": 4 }'>
-                                                <strong>Average</strong>
-                                                <label><span class="percent">46</span>%</label>
-                                                </div>
-                                                </div>
-                                                <div class="h4 text-weight-bold mb-none">Autoestima (%)</div>
-                                                <p class="text-xs mb-none">Em desenvolvimento</p>
-                                                </div>
-                                                </section>
-                                                </a> *@
                                                     <a data-toggle="modal" data-target="#mdDetalhamento">
                                                         <section class="panel col-md-4">
                                                             <div class="panel-body bg-qv">
@@ -803,7 +784,7 @@
                                                                     @{
                                                                         int percContexto = @Model.Desempenho.AvisoContexto switch
                                                                         {
-                                                                            "Excelente" => 100,
+                                                                            "Muito Bom" => 100,
                                                                             "Necessita Melhorar" => 50,
                                                                             _ => 0
                                                                         };
@@ -848,7 +829,12 @@
                                             <label><span class="percent">45</span>%</label>
                                         </div>
                                     </div>
-                                    <div class="h4 text-weight-bold mb-none">12/02/2023</div>
+                                    @{
+                                        string dataFormatada = Model.Desempenho.DataVocacional?.ToString("d", CultureInfo.CreateSpecificCulture("pt-BR"));
+                                    }
+                                    <div class="h4 text-weight-bold mb-3" style="margin-top: 30px;">
+                                        Data de realização do teste em @dataFormatada
+                                    </div>
                                     <p class="text-xs text-muted mb-none">Porcentagem Vocacional</p>
                                 </div>
                                 <div class="row">
@@ -947,107 +933,91 @@
                                                     </div>
                                                 </div>
 
+                                                @{
+                                                    var primeirosItens = Model.Vocacional.Take(3).ToList();
+                                                    var ultimosItens = Model.Vocacional.Skip(Math.Max(0, Model.Vocacional.Count() - 3)).Take(3).ToList();
+                                                }
+
                                                 <div class="row form-group">
-                                                    <a data-toggle="modal" data-target="#mdDetalhamento">
-                                                        <section class="panel col-md-4">
-                                                            <div class="panel-body bg-voc">
-                                                                <div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-right">
-                                                                    <div class="circular-bar-chart" data-percent="@Model.Desempenho.ScoreVocacional" data-plugin-options='{ "barColor": "#593a6f", "delay": 300, "size": 50, "lineWidth": 4 }'>
-                                                                        <strong>Average</strong>
-                                                                        <label><span class="percent">@Model.Desempenho.ScoreVocacional</span>%</label>
+                                                    @foreach (var item in primeirosItens)
+                                                    {
+                                                        @if (item.Id == Model.Laudo.VocacionalId)
+                                                        {
+                                                            <a data-toggle="modal" data-target="#mdDetalhamento">
+                                                                <section class="panel col-md-4">
+                                                                    <div class="panel-body bg-voc" style="background-color: #784e96">
+                                                                        <div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-right">
+                                                                            <div class="circular-bar-chart" data-percent="100" data-plugin-options='{ "barColor": "blue", "delay": 300, "size": 50, "lineWidth": 4 }'>
+                                                                                <strong>Average</strong>
+                                                                                <label><span class="percent">100</span>%</label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="h4 text-weight-bold mb-none">@item.Nome (%)</div>
+                                                                        <p class="text-xs mb-none">12 de 35</p>
                                                                     </div>
-                                                                </div>
-                                                                @{
-                                                                    string nomeVocacional = Model.Laudo.EncaminhamentoVocacionalId switch
-                                                                    {
-                                                                        1 => "Tecnologias Aplicadas",
-                                                                        5 => "Ciências Exatas Naturais",
-                                                                        6 => "Artistico",
-                                                                        9 => "Ciências Humanas",
-                                                                        10 => "Empreendedorismo",
-                                                                        11 => "Ciências Contábeis Administrativas",
-                                                                        _ => ""
-                                                                    };
-                                                                }
-                                                                <div class="h4 text-weight-bold mb-none">@* Interesses Realistas *@@nomeVocacional (%)</div>
-                                                                <p class="text-xs mb-none">12 de 35</p>
-                                                            </div>
-                                                        </section>
-                                                    </a>
-                                                    @* <a data-toggle="modal" data-target="#mdDetalhamento">
-                                                <section class="panel col-md-4">
-                                                <div class="panel-body bg-voc">
-                                                <div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-right">
-                                                <div class="circular-bar-chart" data-percent="46" data-plugin-options='{ "barColor": "#593a6f", "delay": 300, "size": 50, "lineWidth": 4 }'>
-                                                <strong>Average</strong>
-                                                <label><span class="percent">46</span>%</label>
-                                                </div>
-                                                </div>
-                                                <div class="h4 text-weight-bold mb-none">Interesses Intelectuais (%)</div>
-                                                <p class="text-xs mb-none">30 de 65</p>
-                                                </div>
-                                                </section>
-                                                </a>
-                                                <a data-toggle="modal" data-target="#mdDetalhamento">
-                                                <section class="panel col-md-4">
-                                                <div class="panel-body bg-voc">
-                                                <div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-right">
-                                                <div class="circular-bar-chart" data-percent="44" data-plugin-options='{ "barColor": "#593a6f", "delay": 300, "size": 50, "lineWidth": 4 }'>
-                                                <strong>Average</strong>
-                                                <label><span class="percent">44</span>%</label>
-                                                </div>
-                                                </div>
-                                                <div class="h4 text-weight-bold mb-none">Interesses Artísticos (%)</div>
-                                                <p class="text-xs mb-none">20 de 45</p>
-                                                </div>
-                                                </section>
-                                                </a>
+                                                                </section>
+                                                            </a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a data-toggle="modal" data-target="#mdDetalhamento">
+                                                                <section class="panel col-md-4">
+                                                                    <div class="panel-body bg-voc">
+                                                                        <div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-right">
+                                                                            <div class="circular-bar-chart" data-percent="0" data-plugin-options='{ "barColor": "#593a6f", "delay": 300, "size": 50, "lineWidth": 4 }'>
+                                                                                <strong>Average</strong>
+                                                                                <label><span class="percent">0</span>%</label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="h4 text-weight-bold mb-none">@item.Nome (%)</div>
+                                                                        <p class="text-xs mb-none">30 de 65</p>
+                                                                    </div>
+                                                                </section>
+                                                            </a>
+                                                        }
+                                                    }
                                                 </div>
 
                                                 <div class="row form-group">
-                                                <a data-toggle="modal" data-target="#mdDetalhamento">
-                                                <section class="panel col-md-4">
-                                                <div class="panel-body bg-voc">
-                                                <div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-right">
-                                                <div class="circular-bar-chart" data-percent="34" data-plugin-options='{ "barColor": "#593a6f", "delay": 300, "size": 50, "lineWidth": 4 }'>
-                                                <strong>Average</strong>
-                                                <label><span class="percent">34</span>%</label>
+                                                    @foreach (var item in ultimosItens)
+                                                    {
+                                                        @if (item.Id == Model.Laudo.VocacionalId)
+                                                        {
+                                                            <a data-toggle="modal" data-target="#mdDetalhamento">
+                                                                <section class="panel col-md-4">
+                                                                    <div class="panel-body bg-voc" style="background-color: #784e96">
+                                                                        <div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-right">
+                                                                            <div class="circular-bar-chart" data-percent="100" data-plugin-options='{ "barColor": "blue", "delay": 300, "size": 50, "lineWidth": 4 }'>
+                                                                                <strong>Average</strong>
+                                                                                <label><span class="percent">100</span>%</label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="h4 text-weight-bold mb-none">@item.Nome (%)</div>
+                                                                        <p class="text-xs mb-none">12 de 35</p>
+                                                                    </div>
+                                                                </section>
+                                                            </a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a data-toggle="modal" data-target="#mdDetalhamento">
+                                                                <section class="panel col-md-4">
+                                                                    <div class="panel-body bg-voc">
+                                                                        <div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-right">
+                                                                            <div class="circular-bar-chart" data-percent="0" data-plugin-options='{ "barColor": "#593a6f", "delay": 300, "size": 50, "lineWidth": 4 }'>
+                                                                                <strong>Average</strong>
+                                                                                <label><span class="percent">0</span>%</label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="h4 text-weight-bold mb-none">@item.Nome (%)</div>
+                                                                        <p class="text-xs mb-none">30 de 65</p>
+                                                                    </div>
+                                                                </section>
+                                                            </a>
+                                                        }
+                                                    }
                                                 </div>
-                                                </div>
-                                                <div class="h4 text-weight-bold mb-none">Interesses Sociais (%)</div>
-                                                <p class="text-xs mb-none">13 de 55</p>
-                                                </div>
-                                                </section>
-                                                </a>
-                                                <a data-toggle="modal" data-target="#mdDetalhamento">
-                                                <section class="panel col-md-4">
-                                                <div class="panel-body bg-voc">
-                                                <div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-right">
-                                                <div class="circular-bar-chart" data-percent="46" data-plugin-options='{ "barColor": "#593a6f", "delay": 300, "size": 50, "lineWidth": 4 }'>
-                                                <strong>Average</strong>
-                                                <label><span class="percent">46</span>%</label>
-                                                </div>
-                                                </div>
-                                                <div class="h4 text-weight-bold mb-none">Interesses Empreendedores (%)</div>
-                                                <p class="text-xs mb-none">27 de 55</p>
-                                                </div>
-                                                </section>
-                                                </a>
-                                                <a data-toggle="modal" data-target="#mdDetalhamento">
-                                                <section class="panel col-md-4">
-                                                <div class="panel-body bg-voc">
-                                                <div class="circular-bar circular-bar-xs m-none mt-xs mr-md pull-right">
-                                                <div class="circular-bar-chart" data-percent="44" data-plugin-options='{ "barColor": "#593a6f", "delay": 300, "size": 50, "lineWidth": 4 }'>
-                                                <strong>Average</strong>
-                                                <label><span class="percent">44</span>%</label>
-                                                </div>
-                                                </div>
-                                                <div class="h4 text-weight-bold mb-none">Interesses Convencionais (%)</div>
-                                                <p class="text-xs mb-none">15 de 45</p>
-                                                </div>
-                                                </section>
-                                                </a> *@
-                                                </div>
+
                                             </div>
                                         </section>
                                     </div>
@@ -1061,86 +1031,45 @@
             </div>
         </div>
     </div>
+</div>
 
-    @* <div class="col-md-12 col-lg-3">
-
-    <h4 class="mb-md">Porcentagem</h4>
-    <ul class="simple-card-list mb-xlg">
-    <li class="rosa">
-    <h3 style="color: white;">+25%</h3>
-    <p style="color: white;">Força explosiva de membros inferiores</p>
-    </li>
-    <li class="roxo">
-    <h3 style="color: white;">-7%</h3>
-    <p style="color: white;">Flexibilidade muscular</p>
-    </li>
-    <li class="azul">
-    <h3 style="color: white;">+16%</h3>
-    <p style="color: white;">Resistência aeróbica</p>
-    </li>
-    </ul>
-
-    <h4 class="mb-md">Recomendações</h4>
-    <ul class="simple-bullet-list mb-xlg">
-    <li class="red">
-    <span class="title">Porto Template</span>
-    <span class="description truncate">Lorem ipsom dolor sit.</span>
-    </li>
-    <li class="green">
-    <span class="title">Tucson HTML5 Template</span>
-    <span class="description truncate">Lorem ipsom dolor sit amet</span>
-    </li>
-    <li class="blue">
-    <span class="title">Porto HTML5 Template</span>
-    <span class="description truncate">Lorem ipsom dolor sit.</span>
-    </li>
-    <li class="orange">
-    <span class="title">Tucson Template</span>
-    <span class="description truncate">Lorem ipsom dolor sit.</span>
-    </li>
-    </ul>
-
-    </div> *@
-
-    <!-- Modal -->
-    <div class="modal fade" id="mdDetalhamento" tabindex="-1" role="dialog" aria-labelledby="mdDetalhamentoLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="mdDetalhamentoLabel"><i class="fa fa-info-circle"></i> &nbsp;&nbsp;<strong>Detalhes Talento Esportivo - IMC</strong></h5>
-                </div>
-                <div class="modal-body">
-                    <div class="scrollable visible-slider colored-slider" data-plugin-scrollable style="height: 350px;">
-                        <div class="scrollable-content">
-                            <div class="modal-text">
-                                <div>
-                                    <label>
-                                        O que é o índice de massa corporal é importante, pois é uma medida internacional usada para definir doenças sérias, crônicas e preveníeis, como a obesidade.
-                                        Além disso, ela é de fácil aplicação, o que facilita diagnósticos, permitindo que um especialista médico elimine possibilidades de doenças, ou vá atrás de uma específica com base no resultado da conta.
-                                        Doenças da tireóide, por exemplo, afetam o peso, e a medida simples do IMC pode ser uma pista para elas.
-                                    </label>
-                                    <a target=_blank href=https://idecacemmfdh.eadplataforma.com/curso/dna-do-brasil-materiais-complementares-especialistas>Clique aqui para acessar planos de aula sobre as variáveis estudadas</a>
-                                    <label>
-                                        Para você
-                                        continue cuidando de sua saúde integral, e de sua nutrição para conseguir ter forca para realizar qualquer atividade que física que gostemos.
-                                        Priorize o consumo frutas mais calóricas nos lanches como ameixa preta, uva passa, banana, abacate, caqui, manga, suco de laranja (2-3 unidades da fruta) ou suco de tamarindo.
-                                    </label>
-                                </div>
+<!-- Modal -->
+<div class="modal fade" id="mdDetalhamento" tabindex="-1" role="dialog" aria-labelledby="mdDetalhamentoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mdDetalhamentoLabel"><i class="fa fa-info-circle"></i> &nbsp;&nbsp;<strong>Detalhes Talento Esportivo - IMC</strong></h5>
+            </div>
+            <div class="modal-body">
+                <div class="scrollable visible-slider colored-slider" data-plugin-scrollable style="height: 350px;">
+                    <div class="scrollable-content">
+                        <div class="modal-text">
+                            <div>
+                                <label>
+                                    O que é o índice de massa corporal é importante, pois é uma medida internacional usada para definir doenças sérias, crônicas e preveníeis, como a obesidade.
+                                    Além disso, ela é de fácil aplicação, o que facilita diagnósticos, permitindo que um especialista médico elimine possibilidades de doenças, ou vá atrás de uma específica com base no resultado da conta.
+                                    Doenças da tireóide, por exemplo, afetam o peso, e a medida simples do IMC pode ser uma pista para elas.
+                                </label>
+                                <a target=_blank href=https://idecacemmfdh.eadplataforma.com/curso/dna-do-brasil-materiais-complementares-especialistas>Clique aqui para acessar planos de aula sobre as variáveis estudadas</a>
+                                <label>
+                                    Para você
+                                    continue cuidando de sua saúde integral, e de sua nutrição para conseguir ter forca para realizar qualquer atividade que física que gostemos.
+                                    Priorize o consumo frutas mais calóricas nos lanches como ameixa preta, uva passa, banana, abacate, caqui, manga, suco de laranja (2-3 unidades da fruta) ou suco de tamarindo.
+                                </label>
                             </div>
-
-                            <div class="modal-wrapper"></div>
                         </div>
+
+                        <div class="modal-wrapper"></div>
                     </div>
-                    <div class="modal-footer">
-                        @* <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-thumbs-o-down"></i> &nbsp;&nbsp;Não</button>
-                        <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</button> *@
-                    </div>
+                </div>
+                <div class="modal-footer">
+                    @* <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-thumbs-o-down"></i> &nbsp;&nbsp;Não</button>
+                    <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</button> *@
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 
 
 @section Scripts {
