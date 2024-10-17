@@ -17,8 +17,18 @@
         public string? AvisoAptidaoCardio { get; init; }
         public string? AvisoPrancha { get; init; }
         public string? AvisoImc { get; init; }
+        public string? AvisoBemEstar { get; init; }
+        public string? AvisoAutoestima { get; init; }
+        public string? AvisoFamilia { get; init; }
+        public string? AvisoContexto { get; init; }
         public string? AvisoSaudeBucal { get; init; }
         public string? AvisoConsumoAlimentar { get; init; }
+        public DateTimeOffset? DataTalentoEsportivo { get; init; }
+        public DateTimeOffset? DataSaude { get; init; }
+        public DateTimeOffset? DataVida { get; init; }
+        public DateTimeOffset? DataVocacional { get; init; }
+        public DateTimeOffset? DataConsumoAlimentar { get; init; }
+        public DateTimeOffset? DataSaudeBucal { get; init; }
         public string? TextoVelocidade { get; init; }
         public string? TextoImpulsao { get; init; }
         public string? TextoShuttleRun { get; init; }
