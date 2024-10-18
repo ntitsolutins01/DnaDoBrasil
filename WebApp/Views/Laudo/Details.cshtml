@@ -240,44 +240,54 @@
                                                         </a>
                                                     </div>
                                                     <div class="col-sm-4">
-                                                        <div class="alert alert-info">
-                                                            <strong>Impulsão horizontal (cm) - @Model.TalentoEsportivo.ImpulsaoHorizontal</strong>
-                                                            <div>
-                                                                <label class="control-label">@Model.Desempenho.AvisoImpulsao</label>
+                                                        <a href="#" data-toggle="modal" data-target="#mdDetalhamentoImpulsaoHorizontal" style="text-decoration: none">
+                                                            <div class="alert alert-info">
+                                                                <strong>Impulsão horizontal (cm) - @Model.TalentoEsportivo.ImpulsaoHorizontal</strong>
+                                                                <div>
+                                                                    <label class="control-label">@Model.Desempenho.AvisoImpulsao</label>
+                                                                </div>
                                                             </div>
-                                                        </div>
+                                                        </a>
                                                     </div>
                                                     <div class="col-sm-4">
-                                                        <div class=" alert alert-info">
-                                                            <strong>Velocidade-20m (seg) - @Model.TalentoEsportivo.Velocidade</strong>
-                                                            <div>
-                                                                <label class="control-label">@Model.Desempenho.AvisoVelocidade</label>
+                                                        <a href="#" data-toggle="modal" data-target="#mdDetalhamentoVelocidade" style="text-decoration: none">
+                                                            <div class=" alert alert-info">
+                                                                <strong>Velocidade-20m (seg) - @Model.TalentoEsportivo.Velocidade</strong>
+                                                                <div>
+                                                                    <label class="control-label">@Model.Desempenho.AvisoVelocidade</label>
+                                                                </div>
                                                             </div>
-                                                        </div>
+                                                        </a>
                                                     </div>
                                                     <div class="col-sm-4">
-                                                        <div class=" alert alert-info">
-                                                            <strong>Aptidão Física-6min (m) - @Model.TalentoEsportivo.Vo2Max</strong>
-                                                            <div>
-                                                                <label class="control-label">@Model.Desempenho.AvisoAptidaoCardio</label>
+                                                        <a href="#" data-toggle="modal" data-target="#mdDetalhamentoAptidaoFisica" style="text-decoration: none">
+                                                            <div class=" alert alert-info">
+                                                                <strong>Aptidão Física-6min (m) - @Model.TalentoEsportivo.Vo2Max</strong>
+                                                                <div>
+                                                                    <label class="control-label">@Model.Desempenho.AvisoAptidaoCardio</label>
+                                                                </div>
                                                             </div>
-                                                        </div>
+                                                        </a>
                                                     </div>
                                                     <div class="col-sm-4">
-                                                        <div class=" alert alert-info">
-                                                            <strong>Agilidade (seg) - @Model.TalentoEsportivo.ShuttleRun</strong>
-                                                            <div>
-                                                                <label class="control-label">@Model.Desempenho.AvisoShuttleRun</label>
+                                                        <a href="#" data-toggle="modal" data-target="#mdDetalhamentoAgilidade" style="text-decoration: none">
+                                                            <div class=" alert alert-info">
+                                                                <strong>Agilidade (seg) - @Model.TalentoEsportivo.ShuttleRun</strong>
+                                                                <div>
+                                                                    <label class="control-label">@Model.Desempenho.AvisoShuttleRun</label>
+                                                                </div>
                                                             </div>
-                                                        </div>
+                                                        </a>
                                                     </div>
                                                     <div class="col-sm-4">
-                                                        <div class=" alert alert-info">
-                                                            <strong>Abdominal (qtd) - @Model.TalentoEsportivo.Abdominal</strong>
-                                                            <div>
-                                                                <label class="control-label">@Model.Desempenho.AvisoPrancha</label>
+                                                        <a href="#" data-toggle="modal" data-target="#mdDetalhamentoAbdominal" style="text-decoration: none">
+                                                            <div class=" alert alert-info">
+                                                                <strong>Abdominal (qtd) - @Model.TalentoEsportivo.Abdominal</strong>
+                                                                <div>
+                                                                    <label class="control-label">@Model.Desempenho.AvisoPrancha</label>
+                                                                </div>
                                                             </div>
-                                                        </div>
+                                                        </a>
                                                     </div>
                                                 </div>
 
@@ -637,28 +647,37 @@
                                     <div class="col-md-12">
                                         <section class="panel">
                                             <div class="panel-body">
-                                                <table class="table table-bordered table-striped mb-0" id="datatable-default">
-                                                    <tbody>
-                                                        <tr>
-                                                            <th class="text" style="font-weight: bold;">Profissional</th>
-                                                            <td class="text-center">@Model.Profissional.Nome</td>
-                                                            <th class="text" style="font-weight: bold;">Idade</th>
-                                                            <td class="text-center">@Model.Aluno.Idade</td>
-                                                            <th class="text" style="font-weight: bold;">Sexo</th>
-                                                            <td class="text-center">@Model.Aluno.Sexo</td>
-                                                        </tr>
-                                                    </tbody>
-                                                    <tbody>
-                                                        <tr>
-                                                            <th class="text" style="font-weight: bold;">Local</th>
-                                                            <td class="text-center">@Model.Aluno.NomeLocalidade</td>
-                                                            <th class="text" style="font-weight: bold;">Série</th>
-                                                            <td class="text-center">Não Definido</td>
-                                                            <th class="text" style="font-weight: bold;">Turma</th>
-                                                            <td class="text-center">Não Definido</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
+                                                <div class="table-responsive">
+                                                    <table class="table mb-none table-striped">
+                                                        <tbody>
+                                                            <tr class="d-flex">
+                                                                <th class="text col-md-3 col-6" style="font-weight: bold;">Profissional</th>
+                                                                <td class="text-center col-md-3 col-6">@Model.Profissional.Nome</td>
+                                                                <th class="text col-md-3 col-6" style="font-weight: bold;">Idade</th>
+                                                                <td class="text-center col-md-3 col-6">@Model.Aluno.Idade</td>
+                                                            </tr>
+                                                        </tbody>
+                                                        <tbody>
+                                                            <tr class="d-flex">
+                                                                <th class="text col-md-3 col-6" style="font-weight: bold;">Sexo</th>
+                                                                <td class="text-center col-md-3 col-6">@Model.Aluno.Sexo</td>
+                                                                <th class="text col-md-3 col-6" style="font-weight: bold;">Local</th>
+                                                                <td class="text-center col-md-3 col-6">@Model.Aluno.NomeLocalidade</td>
+                                                            </tr>
+                                                        </tbody>
+                                                        <tbody>
+                                                            <tr class="d-flex">
+                                                                <th class="text col-md-3 col-6" style="font-weight: bold;">Série</th>
+                                                                <td class="text-center col-md-3 col-6">Não Definido</td>
+                                                                <th class="text col-md-3 col-6" style="font-weight: bold;">Turma</th>
+                                                                <td class="text-center col-md-3 col-6">Não Definido</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
+
+
                                                 @* <div class="row">
                                             <div class="col-md-12">
                                             <div class="panel-group" id="accordionMeuTalento">
@@ -675,7 +694,7 @@
                                             </div>
                                             </div>
                                             </div> *@
-
+                                                <br />
                                                 @{
                                                     var primeirosItens = Model.Vocacional.Take(3).ToList();
                                                     var ultimosItens = Model.Vocacional.Skip(Math.Max(0, Model.Vocacional.Count() - 3)).Take(3).ToList();
@@ -686,11 +705,14 @@
                                                     {
                                                         @if (item.Id == Model.Laudo.VocacionalId)
                                                         {
-                                                            <div class="col-sm-4">
-                                                                <div class=" alert alert-info" style="background-color: #cdbadb; color: #FFF">
-                                                                    <strong>@item.Nome</strong>
+                                                            <a href="#" data-toggle="modal" data-target="#mdDetalhamentoVocacional" style="text-decoration: none">
+
+                                                                <div class="col-sm-4">
+                                                                    <div class=" alert alert-info" style="background-color: #cdbadb; color: #FFF">
+                                                                        <strong>@item.Nome</strong>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
+                                                            </a>
                                                         }
                                                         else
                                                         {
@@ -708,11 +730,14 @@
                                                     {
                                                         @if (item.Id == Model.Laudo.VocacionalId)
                                                         {
-                                                            <div class="col-sm-4">
-                                                                <div class=" alert alert-info" style="background-color: #cdbadb; color: #FFF">
-                                                                    <strong>@item.Nome</strong>
+                                                            <a href="#" data-toggle="modal" data-target="#mdDetalhamentoVocacional" style="text-decoration: none">
+
+                                                                <div class="col-sm-4">
+                                                                    <div class=" alert alert-info" style="background-color: #cdbadb; color: #FFF">
+                                                                        <strong>@item.Nome</strong>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
+                                                            </a>
                                                         }
                                                         else
                                                         {
@@ -754,7 +779,203 @@
                     <div class="scrollable-content">
                         <div class="modal-text">
                             <div>
-                                <label>@Model.EncaminhamentoImc.Descricao</label>
+                                <label>@Model.Desempenho.TextoImc</label>
+                            </div>
+                        </div>
+                        <div class="modal-wrapper"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Detalhamento PreensaoManual -->
+<div class="modal fade" id="mdDetalhamentoPreensaoManual" tabindex="-1" role="dialog" aria-labelledby="mdDetalhamentoPreensaoManualLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mdDetalhamentoPreensaoManualLabel">
+                    <i class="fa fa-info-circle"></i> &nbsp;&nbsp;<strong>Detalhes - Preensao Manual</strong>
+                </h5>
+            </div>
+            <div class="modal-body">
+                <div class="scrollable visible-slider colored-slider" data-plugin-scrollable style="height: 350px;">
+                    <div class="scrollable-content">
+                        <div class="modal-text">
+                            <div>
+                                <label>@Model.Desempenho.TextoForcaMembrosSup</label>
+                            </div>
+                        </div>
+                        <div class="modal-wrapper"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Detalhamento Impulsão Horizontal -->
+<div class="modal fade" id="mdDetalhamentoImpulsaoHorizontal" tabindex="-1" role="dialog" aria-labelledby="mdDetalhamentoImpulsaoHorizontalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mdDetalhamentoImpulsaoHorizontalLabel">
+                    <i class="fa fa-info-circle"></i> &nbsp;&nbsp;<strong>Detalhes - Impulsão Horizontal</strong>
+                </h5>
+            </div>
+            <div class="modal-body">
+                <div class="scrollable visible-slider colored-slider" data-plugin-scrollable style="height: 350px;">
+                    <div class="scrollable-content">
+                        <div class="modal-text">
+                            <div>
+                                <label>@Model.Desempenho.TextoImpulsao</label>
+                            </div>
+                        </div>
+                        <div class="modal-wrapper"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Detalhamento Velocidade -->
+<div class="modal fade" id="mdDetalhamentoVelocidade" tabindex="-1" role="dialog" aria-labelledby="mdDetalhamentoVelocidadeLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mdDetalhamentoVelocidadeLabel">
+                    <i class="fa fa-info-circle"></i> &nbsp;&nbsp;<strong>Detalhes - Velocidade</strong>
+                </h5>
+            </div>
+            <div class="modal-body">
+                <div class="scrollable visible-slider colored-slider" data-plugin-scrollable style="height: 350px;">
+                    <div class="scrollable-content">
+                        <div class="modal-text">
+                            <div>
+                                <label>@Model.Desempenho.TextoVelocidade</label>
+                            </div>
+                        </div>
+                        <div class="modal-wrapper"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Detalhamento Aptidao Fisica -->
+<div class="modal fade" id="mdDetalhamentoAptidaoFisica" tabindex="-1" role="dialog" aria-labelledby="mdDetalhamentoAptidaoFisicaLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mdDetalhamentoAptidaoFisicaLabel">
+                    <i class="fa fa-info-circle"></i> &nbsp;&nbsp;<strong>Detalhes - Aptidão Física</strong>
+                </h5>
+            </div>
+            <div class="modal-body">
+                <div class="scrollable visible-slider colored-slider" data-plugin-scrollable style="height: 350px;">
+                    <div class="scrollable-content">
+                        <div class="modal-text">
+                            <div>
+                                <label>@Model.Desempenho.TextoAptidaoCardio</label>
+                            </div>
+                        </div>
+                        <div class="modal-wrapper"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Detalhamento Agilidade -->
+<div class="modal fade" id="mdDetalhamentoAgilidade" tabindex="-1" role="dialog" aria-labelledby="mdDetalhamentoAgilidadeLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mdDetalhamentoAgilidadeLabel">
+                    <i class="fa fa-info-circle"></i> &nbsp;&nbsp;<strong>Detalhes - Agilidade</strong>
+                </h5>
+            </div>
+            <div class="modal-body">
+                <div class="scrollable visible-slider colored-slider" data-plugin-scrollable style="height: 350px;">
+                    <div class="scrollable-content">
+                        <div class="modal-text">
+                            <div>
+                                <label>@Model.Desempenho.TextoShuttleRun</label>
+                            </div>
+                        </div>
+                        <div class="modal-wrapper"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Detalhamento Abdominal -->
+<div class="modal fade" id="mdDetalhamentoAbdominal" tabindex="-1" role="dialog" aria-labelledby="mdDetalhamentoAbdominalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mdDetalhamentoAbdominalLabel">
+                    <i class="fa fa-info-circle"></i> &nbsp;&nbsp;<strong>Detalhes - Abdominal</strong>
+                </h5>
+            </div>
+            <div class="modal-body">
+                <div class="scrollable visible-slider colored-slider" data-plugin-scrollable style="height: 350px;">
+                    <div class="scrollable-content">
+                        <div class="modal-text">
+                            <div>
+                                <label>@Model.Desempenho.TextoPrancha</label>
+                            </div>
+                        </div>
+                        <div class="modal-wrapper"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Detalhamento Consumo Alimentar -->
+<div class="modal fade" id="mdDetalhamentoConsumoAlimentar" tabindex="-1" role="dialog" aria-labelledby="mdDetalhamentoConsumoAlimentarLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mdDetalhamentoConsumoAlimentarLabel">
+                    <i class="fa fa-info-circle"></i> &nbsp;&nbsp;<strong>Detalhes - Consumo Alimentar</strong>
+                </h5>
+            </div>
+            <div class="modal-body">
+                <div class="scrollable visible-slider colored-slider" data-plugin-scrollable style="height: 350px;">
+                    <div class="scrollable-content">
+                        <div class="modal-text">
+                            <div>
+                                <label>@Model.Desempenho.TextoConsumoAlimentar</label>
                             </div>
                         </div>
                         <div class="modal-wrapper"></div>
@@ -782,7 +1003,7 @@
                     <div class="scrollable-content">
                         <div class="modal-text">
                             <div>
-                                <label>@Model.EncaminhamentoSaudeBucal.Descricao</label>
+                                <label>@Model.Desempenho.TextoSaudeBucal</label>
                             </div>
                         </div>
                         <div class="modal-wrapper"></div>
@@ -810,7 +1031,7 @@
                     <div class="scrollable-content">
                         <div class="modal-text">
                             <div>
-                                <label>@Model.QualidadeDeVida[0].Descricao</label>
+                                <label>@Model.Desempenho.TextoBemEstar</label>
                             </div>
                         </div>
                         <div class="modal-wrapper"></div>
@@ -838,7 +1059,7 @@
                     <div class="scrollable-content">
                         <div class="modal-text">
                             <div>
-                                <label>@Model.QualidadeDeVida[1].Descricao</label>
+                                <label>@Model.Desempenho.TextoAutoestima</label>
                             </div>
                         </div>
                         <div class="modal-wrapper"></div>
@@ -866,7 +1087,7 @@
                     <div class="scrollable-content">
                         <div class="modal-text">
                             <div>
-                                <label>@Model.QualidadeDeVida[2].Descricao</label>
+                                <label>@Model.Desempenho.TextoFamilia</label>
                             </div>
                         </div>
                         <div class="modal-wrapper"></div>
@@ -894,7 +1115,35 @@
                     <div class="scrollable-content">
                         <div class="modal-text">
                             <div>
-                                <label>@Model.QualidadeDeVida[3].Descricao</label>
+                                <label>@Model.Desempenho.TextoContexto</label>
+                            </div>
+                        </div>
+                        <div class="modal-wrapper"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Vocacional -->
+<div class="modal fade" id="mdDetalhamentoVocacional" tabindex="-1" role="dialog" aria-labelledby="mdDetalhamentoVocacionalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mdDetalhamentoVocacionalLabel">
+                    <i class="fa fa-info-circle"></i> &nbsp;&nbsp;<strong>Detalhes - Vocacional</strong>
+                </h5>
+            </div>
+            <div class="modal-body">
+                <div class="scrollable visible-slider colored-slider" data-plugin-scrollable style="height: 350px;">
+                    <div class="scrollable-content">
+                        <div class="modal-text">
+                            <div>
+                                <label>@Model.Desempenho.TextoVocacional</label>
                             </div>
                         </div>
                         <div class="modal-wrapper"></div>
