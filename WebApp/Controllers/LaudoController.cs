@@ -407,18 +407,19 @@ namespace WebApp.Controllers
             {
                 SetNotifyMessage(notify, message);
                 SetCrudMessage(crud);
-                var laudo = ApiClientFactory.Instance.GetLaudoByAluno(id);
 
                 var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
 
                 var questionarioVocacional =
-                    ApiClientFactory.Instance.GetQuestionarioByTipoLaudo((int)EnumTipoLaudo.Vocacional);
+                    ApiClientFactory.Instance.GetQuestionarioByTipoLaudo((int)EnumTipoLaudo.Vocacional).OrderBy(o => o.Questao).ToList();
                 var questionarioQualidadeVida =
-                    ApiClientFactory.Instance.GetQuestionarioByTipoLaudo((int)EnumTipoLaudo.QualidadeVida);
+                    ApiClientFactory.Instance.GetQuestionarioByTipoLaudo((int)EnumTipoLaudo.QualidadeVida).OrderBy(o => o.Questao).ToList();
                 var questionarioConsumoAlimentar =
-                    ApiClientFactory.Instance.GetQuestionarioByTipoLaudo((int)EnumTipoLaudo.ConsumoAlimentar);
+                    ApiClientFactory.Instance.GetQuestionarioByTipoLaudo((int)EnumTipoLaudo.ConsumoAlimentar).OrderBy(o => o.Questao).ToList();
                 var questionarioSaudeBucal =
-                    ApiClientFactory.Instance.GetQuestionarioByTipoLaudo((int)EnumTipoLaudo.SaudeBucal);
+                    ApiClientFactory.Instance.GetQuestionarioByTipoLaudo((int)EnumTipoLaudo.SaudeBucal).OrderBy(o => o.Questao).ToList();
+
+                var laudo = ApiClientFactory.Instance.GetLaudoById(id);
 
 
                 return View(new LaudoModel()
@@ -427,8 +428,7 @@ namespace WebApp.Controllers
                     QuestionarioQualidadeVida = questionarioQualidadeVida,
                     QuestionarioConsumoAlimentar = questionarioConsumoAlimentar,
                     QuestionarioSaudeBucal = questionarioSaudeBucal,
-                    ListEstados = estados,
-                    Laudo = laudo
+                    ListEstados = estados
                 });
 
             }
@@ -438,10 +438,6 @@ namespace WebApp.Controllers
                 return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = e.Message });
 
             }
-
-
-
-
         }
 
 

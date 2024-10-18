@@ -32,7 +32,12 @@ namespace WebApp.ApiClient
         #endregion
 
         #region Methods
-
+        public LaudoDto GetLaudoById(int id)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceLaudo}{id}"));
+            return Get<LaudoDto>(requestUrl);
+        }
         public LaudoDto GetLaudoByAluno(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
