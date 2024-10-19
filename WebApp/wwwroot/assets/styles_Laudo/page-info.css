@@ -180,6 +180,7 @@
     font-family: Ubuntu;
     opacity: 1;
     text-align: left;
+    z-index: 2;
 }
 
 .graph-text-info {
