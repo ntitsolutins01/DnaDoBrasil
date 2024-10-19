@@ -12,8 +12,9 @@ using WebApp.Factory;
 using WebApp.Identity;
 using WebApp.Models;
 using WebApp.Utility;
-using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
+using IWebHostEnvironment = Microsoft.AspNetCore.Hosting.IWebHostEnvironment;
 using Microsoft.AspNetCore.Authorization;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace WebApp.Controllers;
 
@@ -25,14 +26,14 @@ public class EventoController : BaseController
 {
     #region Constructor
 
-    private readonly IHostingEnvironment _host;
+    private readonly IWebHostEnvironment _host;
 
 	/// <summary>
 	/// Construtor da página
 	/// </summary>
 	/// <param name="app">configurações de urls do sistema</param>
 	/// <param name="host">informações da aplicação em execução</param>
-	public EventoController(IOptions<UrlSettings> appSettings, IHostingEnvironment host)
+	public EventoController(IOptions<UrlSettings> appSettings, IWebHostEnvironment host)
     {
 	    _host = host;
         ApplicationSettings.WebApiUrl = appSettings.Value.WebApiBaseUrl;
@@ -191,8 +192,8 @@ public class EventoController : BaseController
 			{
 				var file = t;
 				if (file.Length <= 0) continue;
-				fileName = $"{collection["eventoId"]}-{Path.GetFileName(t.FileName)}";
-				filePath = Path.Combine(_host.WebRootPath, $"Eventos\\{collection["eventoId"]}-{fileName}");
+				fileName = $"{collection["eventoId"]}-{Guid.NewGuid()}.jpg";
+				filePath = Path.Combine(_host.WebRootPath, $"Eventos\\{fileName}");
 
 				if (!Directory.Exists(Path.Combine(_host.WebRootPath, $"Eventos")))
 					Directory.CreateDirectory(Path.Combine(_host.WebRootPath, $"Eventos"));
@@ -207,10 +208,9 @@ public class EventoController : BaseController
 					Url = filePath
 				});
 			}
-            
-			await ApiClientFactory.Instance.CreateFotoEvento(list);
+            await ApiClientFactory.Instance.CreateFotoEvento(list);
 
-			return RedirectToAction(nameof(Index), new { notify = EnumNotify.Success, mesage = "Upload realizado com sucesso." });
+			return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Success, message = "Upload de foto realizado com sucesso." });
 		}
 		catch (Exception e)
 		{
