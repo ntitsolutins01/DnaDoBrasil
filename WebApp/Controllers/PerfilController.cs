@@ -215,7 +215,7 @@ namespace WebApp.Controllers
                     var result = await _roleManager.DeleteAsync(obj);
                 }
 
-                ApiClientFactory.Instance.DeletePerfil(id);
+                var resultDelete =  ApiClientFactory.Instance.DeletePerfil(id);
 
                 return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
 
@@ -224,13 +224,13 @@ namespace WebApp.Controllers
                 //    return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = "Existe  usuário vinculado a esse perfil." });
                 //}
             }
-            catch
+            catch(Exception ex)
             {
                 return RedirectToAction(nameof(Index),
                     new
                     {
                         notify = 2,
-                        message = "Erro ao excluir o perfil. Favor entrar em contato com o administrador do sistema."
+                        message = $"Erro ao excluir o perfil. {ex.Message}"
                     });
             }
         }
