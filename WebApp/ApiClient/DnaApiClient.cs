@@ -78,14 +78,25 @@ namespace WebApp.ApiClient
         {
             addHeaders();
              var response = _httpClient.DeleteAsync(requestUrl);
+
             var data = response.Result.Content.ReadAsStringAsync();
-            dynamic dataResult = JObject.Parse(data.Result);
-            if (dataResult.status == 409)
+
+            if (data.Result != "true")
             {
-                //throw new ArgumentException(dataResult.detail);
-                //throw new CustomException<MyCustomException>("your error description");
-                throw new ApplicationException(dataResult.detail.Value);
+                dynamic dataResult = JObject.Parse(data.Result);
+                if (dataResult.status == 409)
+                {
+                    //throw new ArgumentException(dataResult.detail);
+                    //throw new CustomException<MyCustomException>("your error description");
+                    throw new ApplicationException(dataResult.detail.Value);
+                }
             }
+            else if (data.Result == "false")
+            {
+                throw new ApplicationException("Erro ao executar esta ação. Favor entrar em contato com o administrador do sistema.");
+
+            } 
+            
             return Task.FromResult(JsonConvert.DeserializeObject<T>(data.Result));
         }
 
