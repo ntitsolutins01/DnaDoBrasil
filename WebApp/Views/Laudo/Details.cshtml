@@ -50,36 +50,44 @@
                                     <div class="col-md-12">
                                         <section class="panel">
                                             <div class="panel-body">
-                                                <table class="table table-bordered table-striped mb-0" id="datatable-default">
-                                                    <tbody>
-                                                        <tr>
-                                                            <th class="text" style="font-weight: bold;">Profissional</th>
-                                                            <td class="text-center">@Model.Profissional.Nome</td>
-                                                            <th class="text" style="font-weight: bold;">Idade</th>
-                                                            <td class="text-center">@Model.Aluno.Idade</td>
-                                                            <th class="text" style="font-weight: bold;">Sexo</th>
-                                                            <td class="text-center">@Model.Aluno.Sexo</td>
-                                                        </tr>
-                                                    </tbody>
-                                                    <tbody>
-                                                        <tr>
-                                                            <th class="text" style="font-weight: bold;">Local</th>
-                                                            <td class="text-center">@Model.Aluno.NomeLocalidade</td>
-                                                            <th class="text" style="font-weight: bold;">Série</th>
-                                                            <td class="text-center">Não Definido</td>
-                                                            <th class="text" style="font-weight: bold;">Turma</th>
-                                                            <td class="text-center">Não Definido</td>
-                                                        </tr>
-                                                    </tbody>
-                                                    <tbody>
-                                                        <tr>
-                                                            <th class="text" style="font-weight: bold; width: 20%">Altura</th>
-                                                            <td class="text-center">@Model.Laudo.Estatura</td>
-                                                            <th class="text" style="font-weight: bold; width: 20%">Peso</th>
-                                                            <td class="text-center">@Model.Laudo.Massa</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped mb-none">
+                                                        <tbody>
+                                                            <tr class="d-flex">
+                                                                <th class="text col-md-3 col-6" style="font-weight: bold;">Profissional</th>
+                                                                <td class="text-center col-md-3 col-6">@Model.Profissional.Nome</td>
+                                                                <th class="text col-md-3 col-6" style="font-weight: bold;">Idade</th>
+                                                                <td class="text-center col-md-3 col-6">@Model.Aluno.Idade</td>
+                                                            </tr>
+                                                        </tbody>
+                                                        <tbody>
+                                                            <tr class="d-flex">
+                                                                <th class="text col-md-3 col-6" style="font-weight: bold;">Sexo</th>
+                                                                <td class="text-center col-md-3 col-6">@Model.Aluno.Sexo</td>
+                                                                <th class="text col-md-3 col-6" style="font-weight: bold;">Local</th>
+                                                                <td class="text-center col-md-3 col-6">@Model.Aluno.NomeLocalidade</td>
+                                                            </tr>
+                                                        </tbody>
+                                                        <tbody>
+                                                            <tr class="d-flex">
+                                                                <th class="text col-md-3 col-6" style="font-weight: bold;">Série</th>
+                                                                <td class="text-center col-md-3 col-6">Não Definido</td>
+                                                                <th class="text col-md-3 col-6" style="font-weight: bold;">Turma</th>
+                                                                <td class="text-center col-md-3 col-6">Não Definido</td>
+                                                            </tr>
+                                                        </tbody>
+                                                        <tbody>
+                                                            <tr class="d-flex">
+                                                                <th class="text col-md-3 col-6" style="font-weight: bold;">Altura</th>
+                                                                <td class="text-center">@Model.Laudo.Estatura</td>
+                                                                <th class="text col-md-3 col-6" style="font-weight: bold;">Peso</th>
+                                                                <td class="text-center">@Model.Laudo.Massa</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <br />
+
                                                 <div class="form-group">
                                                     @* <div class="col-sm-4">
                                                 <div class="row form-group">
@@ -175,48 +183,49 @@
 
                                         <section class="panel">
                                             <div class="panel-body">
-                                                <table class="table table-bordered table-striped mb-0" id="datatable-default">
-                                                    <tbody>
-                                                        <tr>
-                                                            <th class="text" style="font-weight: bold;">Profissional</th>
-                                                            <td class="text-center">@Model.Profissional.Nome</td>
-                                                            <th class="text" style="font-weight: bold;">Idade</th>
-                                                            <td class="text-center">@Model.Aluno.Idade</td>
-                                                            <th class="text" style="font-weight: bold;">Sexo</th>
-                                                            <td class="text-center">@Model.Aluno.Sexo</td>
-                                                        </tr>
-                                                    </tbody>
-                                                    <tbody>
-                                                        <tr>
-                                                            <th class="text" style="font-weight: bold;">Local</th>
-                                                            <td class="text-center">@Model.Aluno.NomeLocalidade</td>
-                                                            <th class="text" style="font-weight: bold;">Série</th>
-                                                            <td class="text-center">Não Definido</td>
-                                                            <th class="text" style="font-weight: bold;">Turma</th>
-                                                            <td class="text-center">Não Definido</td>
-                                                        </tr>
-                                                    </tbody>
-                                                    <tbody>
-                                                        <tr>
-                                                            <th class="text" style="font-weight: bold;">Altura</th>
-                                                            <td class="text-center">@Model.Laudo.Estatura</td>
-                                                            <th class="text" style="font-weight: bold;">Peso</th>
-                                                            <td class="text-center">@Model.Laudo.Massa</td>
-                                                            <th class="text" style="font-weight: bold;">Modalidade</th>
-                                                            <td class="text-center">@Model.Laudo.Modalidade</td>
-                                                        </tr>
-                                                    </tbody>
-                                                    <tbody>
-                                                        <tr>
-                                                            <th class="text" style="font-weight: bold;">Indice Positivo de Saúde</th>
-                                                            <td class="text-center">0%</td>
-                                                            <th class="text" style="font-weight: bold;">Acima do Peso</th>
-                                                            <td class="text-center">0%</td>
-                                                            <th class="text" style="font-weight: bold;">Baixo Peso</th>
-                                                            <td class="text-center">0%</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped mb-none">
+                                                        <tbody>
+                                                            <tr class="d-flex">
+                                                                <th class="text col-md-3 col-6" style="font-weight: bold;">Profissional</th>
+                                                                <td class="text-center col-md-3 col-6">@Model.Profissional.Nome</td>
+                                                                <th class="text col-md-3 col-6" style="font-weight: bold;">Idade</th>
+                                                                <td class="text-center col-md-3 col-6">@Model.Aluno.Idade</td>
+                                                            </tr>
+                                                        </tbody>
+                                                        <tbody>
+                                                            <tr class="d-flex">
+                                                                <th class="text col-md-3 col-6" style="font-weight: bold;">Sexo</th>
+                                                                <td class="text-center col-md-3 col-6">@Model.Aluno.Sexo</td>
+                                                                <th class="text col-md-3 col-6" style="font-weight: bold;">Local</th>
+                                                                <td class="text-center col-md-3 col-6">@Model.Aluno.NomeLocalidade</td>
+                                                            </tr>
+                                                        </tbody>
+                                                        <tbody>
+                                                            <tr class="d-flex">
+                                                                <th class="text col-md-3 col-6" style="font-weight: bold;">Série</th>
+                                                                <td class="text-center col-md-3 col-6">Não Definido</td>
+                                                                <th class="text col-md-3 col-6" style="font-weight: bold;">Turma</th>
+                                                                <td class="text-center col-md-3 col-6">Não Definido</td>
+                                                            </tr>
+                                                        </tbody>
+                                                        <tbody>
+                                                            <tr class="d-flex">
+                                                                <th class="text col-md-3 col-6" style="font-weight: bold;">Altura</th>
+                                                                <td class="text-center">@Model.Laudo.Estatura</td>
+                                                                <th class="text col-md-3 col-6" style="font-weight: bold;">Peso</th>
+                                                                <td class="text-center">@Model.Laudo.Massa</td>
+                                                            </tr>
+                                                        </tbody>
+                                                        <tbody>
+                                                            <tr class="d-flex">
+                                                                <th class="text col-md-3 col-6" style="font-weight: bold;">Modalidade</th>
+                                                                <td class="text-center">@Model.Laudo.Modalidade</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <br />
 
                                                 <div class="form-group">
                                                     <div class="col-sm-4">
@@ -338,28 +347,35 @@
                                     <div class="col-md-12">
                                         <section class="panel">
                                             <div class="panel-body">
-                                                <table class="table table-bordered table-striped mb-0" id="datatable-default">
-                                                    <tbody>
-                                                        <tr>
-                                                            <th class="text" style="font-weight: bold;">Profissional</th>
-                                                            <td class="text-center">@Model.Profissional.Nome</td>
-                                                            <th class="text" style="font-weight: bold;">Idade</th>
-                                                            <td class="text-center">@Model.Aluno.Idade</td>
-                                                            <th class="text" style="font-weight: bold;">Sexo</th>
-                                                            <td class="text-center">@Model.Aluno.Sexo</td>
-                                                        </tr>
-                                                    </tbody>
-                                                    <tbody>
-                                                        <tr>
-                                                            <th class="text" style="font-weight: bold;">Local</th>
-                                                            <td class="text-center">@Model.Aluno.NomeLocalidade</td>
-                                                            <th class="text" style="font-weight: bold;">Série</th>
-                                                            <td class="text-center">Não Definido</td>
-                                                            <th class="text" style="font-weight: bold;">Turma</th>
-                                                            <td class="text-center">Não Definido</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped mb-none">
+                                                        <tbody>
+                                                            <tr class="d-flex">
+                                                                <th class="text col-md-3 col-6" style="font-weight: bold;">Profissional</th>
+                                                                <td class="text-center col-md-3 col-6">@Model.Profissional.Nome</td>
+                                                                <th class="text col-md-3 col-6" style="font-weight: bold;">Idade</th>
+                                                                <td class="text-center col-md-3 col-6">@Model.Aluno.Idade</td>
+                                                            </tr>
+                                                        </tbody>
+                                                        <tbody>
+                                                            <tr class="d-flex">
+                                                                <th class="text col-md-3 col-6" style="font-weight: bold;">Sexo</th>
+                                                                <td class="text-center col-md-3 col-6">@Model.Aluno.Sexo</td>
+                                                                <th class="text col-md-3 col-6" style="font-weight: bold;">Local</th>
+                                                                <td class="text-center col-md-3 col-6">@Model.Aluno.NomeLocalidade</td>
+                                                            </tr>
+                                                        </tbody>
+                                                        <tbody>
+                                                            <tr class="d-flex">
+                                                                <th class="text col-md-3 col-6" style="font-weight: bold;">Série</th>
+                                                                <td class="text-center col-md-3 col-6">Não Definido</td>
+                                                                <th class="text col-md-3 col-6" style="font-weight: bold;">Turma</th>
+                                                                <td class="text-center col-md-3 col-6">Não Definido</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <br />
 
                                                 <div class="col-sm-4">
                                                     <a href="#" data-toggle="modal" data-target="#mdDetalhamentoConsumoAlimentar" style="text-decoration: none">
@@ -418,28 +434,35 @@
                                     <div class="col-md-12">
                                         <section class="panel">
                                             <div class="panel-body">
-                                                <table class="table table-bordered table-striped mb-0" id="datatable-default">
-                                                    <tbody>
-                                                        <tr>
-                                                            <th class="text" style="font-weight: bold;">Profissional</th>
-                                                            <td class="text-center">@Model.Profissional.Nome</td>
-                                                            <th class="text" style="font-weight: bold;">Idade</th>
-                                                            <td class="text-center">@Model.Aluno.Idade</td>
-                                                            <th class="text" style="font-weight: bold;">Sexo</th>
-                                                            <td class="text-center">@Model.Aluno.Sexo</td>
-                                                        </tr>
-                                                    </tbody>
-                                                    <tbody>
-                                                        <tr>
-                                                            <th class="text" style="font-weight: bold;">Local</th>
-                                                            <td class="text-center">@Model.Aluno.NomeLocalidade</td>
-                                                            <th class="text" style="font-weight: bold;">Série</th>
-                                                            <td class="text-center">Não Definido</td>
-                                                            <th class="text" style="font-weight: bold;">Turma</th>
-                                                            <td class="text-center">Não Definido</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped mb-none">
+                                                        <tbody>
+                                                            <tr class="d-flex">
+                                                                <th class="text col-md-3 col-6" style="font-weight: bold;">Profissional</th>
+                                                                <td class="text-center col-md-3 col-6">@Model.Profissional.Nome</td>
+                                                                <th class="text col-md-3 col-6" style="font-weight: bold;">Idade</th>
+                                                                <td class="text-center col-md-3 col-6">@Model.Aluno.Idade</td>
+                                                            </tr>
+                                                        </tbody>
+                                                        <tbody>
+                                                            <tr class="d-flex">
+                                                                <th class="text col-md-3 col-6" style="font-weight: bold;">Sexo</th>
+                                                                <td class="text-center col-md-3 col-6">@Model.Aluno.Sexo</td>
+                                                                <th class="text col-md-3 col-6" style="font-weight: bold;">Local</th>
+                                                                <td class="text-center col-md-3 col-6">@Model.Aluno.NomeLocalidade</td>
+                                                            </tr>
+                                                        </tbody>
+                                                        <tbody>
+                                                            <tr class="d-flex">
+                                                                <th class="text col-md-3 col-6" style="font-weight: bold;">Série</th>
+                                                                <td class="text-center col-md-3 col-6">Não Definido</td>
+                                                                <th class="text col-md-3 col-6" style="font-weight: bold;">Turma</th>
+                                                                <td class="text-center col-md-3 col-6">Não Definido</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <br />
 
                                                 <div class="col-sm-4">
                                                     <a href="#" data-toggle="modal" data-target="#mdDetalhamentoSaudeBucal" style="text-decoration: none">
@@ -499,28 +522,35 @@
                                     <div class="col-md-12">
                                         <section class="panel">
                                             <div class="panel-body">
-                                                <table class="table table-bordered table-striped mb-0" id="datatable-default">
-                                                    <tbody>
-                                                        <tr>
-                                                            <th class="text" style="font-weight: bold;">Profissional</th>
-                                                            <td class="text-center">@Model.Profissional.Nome</td>
-                                                            <th class="text" style="font-weight: bold;">Idade</th>
-                                                            <td class="text-center">@Model.Aluno.Idade</td>
-                                                            <th class="text" style="font-weight: bold;">Sexo</th>
-                                                            <td class="text-center">@Model.Aluno.Sexo</td>
-                                                        </tr>
-                                                    </tbody>
-                                                    <tbody>
-                                                        <tr>
-                                                            <th class="text" style="font-weight: bold;">Local</th>
-                                                            <td class="text-center">@Model.Aluno.NomeLocalidade</td>
-                                                            <th class="text" style="font-weight: bold;">Série</th>
-                                                            <td class="text-center">Não Definido</td>
-                                                            <th class="text" style="font-weight: bold;">Turma</th>
-                                                            <td class="text-center">Não Definido</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped mb-none">
+                                                        <tbody>
+                                                            <tr class="d-flex">
+                                                                <th class="text col-md-3 col-6" style="font-weight: bold;">Profissional</th>
+                                                                <td class="text-center col-md-3 col-6">@Model.Profissional.Nome</td>
+                                                                <th class="text col-md-3 col-6" style="font-weight: bold;">Idade</th>
+                                                                <td class="text-center col-md-3 col-6">@Model.Aluno.Idade</td>
+                                                            </tr>
+                                                        </tbody>
+                                                        <tbody>
+                                                            <tr class="d-flex">
+                                                                <th class="text col-md-3 col-6" style="font-weight: bold;">Sexo</th>
+                                                                <td class="text-center col-md-3 col-6">@Model.Aluno.Sexo</td>
+                                                                <th class="text col-md-3 col-6" style="font-weight: bold;">Local</th>
+                                                                <td class="text-center col-md-3 col-6">@Model.Aluno.NomeLocalidade</td>
+                                                            </tr>
+                                                        </tbody>
+                                                        <tbody>
+                                                            <tr class="d-flex">
+                                                                <th class="text col-md-3 col-6" style="font-weight: bold;">Série</th>
+                                                                <td class="text-center col-md-3 col-6">Não Definido</td>
+                                                                <th class="text col-md-3 col-6" style="font-weight: bold;">Turma</th>
+                                                                <td class="text-center col-md-3 col-6">Não Definido</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <br />
 
                                                 <div class="row form-group">
                                                     <div class="col-sm-4">
@@ -648,7 +678,7 @@
                                         <section class="panel">
                                             <div class="panel-body">
                                                 <div class="table-responsive">
-                                                    <table class="table mb-none table-striped">
+                                                    <table class="table table-striped mb-none">
                                                         <tbody>
                                                             <tr class="d-flex">
                                                                 <th class="text col-md-3 col-6" style="font-weight: bold;">Profissional</th>
