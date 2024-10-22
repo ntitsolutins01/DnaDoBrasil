@@ -75,7 +75,8 @@ namespace WebApp.Controllers
 
 				var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
 				var modalidades = new SelectList(ApiClientFactory.Instance.GetModalidadeAll(), "Id", "Nome");
-                var resultPerfil = ApiClientFactory.Instance.GetPerfilAll();
+                var perfis = new[] { (int)EnumPerfil.Profissional, (int)EnumPerfil.GestorPedagogico, (int)EnumPerfil.GestorProjeto };
+                var resultPerfil = ApiClientFactory.Instance.GetPerfilAll().Where(x=>perfis.Contains(x.Id));
 
 
                 return View(new ProfissionalModel()

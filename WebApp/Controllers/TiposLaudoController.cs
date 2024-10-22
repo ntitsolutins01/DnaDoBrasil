@@ -50,7 +50,8 @@ namespace WebApp.Controllers
                 var command = new TiposLaudoModel.CreateUpdateTiposLaudoCommand
                 {
                     Nome = collection["nome"].ToString(),
-                    Descricao = collection["descricao"].ToString()
+                    Descricao = collection["descricao"].ToString(),
+                    IdadeMinima = Convert.ToInt32(collection["idade"])
                 };
 
                 await ApiClientFactory.Instance.CreateTiposLaudo(command);
@@ -71,6 +72,7 @@ namespace WebApp.Controllers
                 Id = Convert.ToInt32(collection["editTiposLaudoId"]),
                 Nome = collection["nome"].ToString(),
                 Descricao = collection["descricao"].ToString(),
+                IdadeMinima = Convert.ToInt32(collection["idade"]),
                 Status = collection["editStatus"].ToString() == "" ? false : true
 			};
 
