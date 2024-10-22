@@ -13,6 +13,10 @@ namespace WebApp.Enumerators
         [Description("Professor")]
         Professor = 13,
         [Description("Coordenador")]
-        Coordenador = 14
+        Coordenador = 14,
+        [Description("Gestor Pedagógico")]
+        GestorPedagogico = 9,
+        [Description("Gestor do Projeto")]
+        GestorProjeto = 10
     }
 }
