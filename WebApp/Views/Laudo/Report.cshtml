@@ -622,30 +622,42 @@
                         <div>
                             <span>0%</span>
                             <span>–</span>
-                            <span>Baixo Peso</span>
+                            <span>Bem-estar Físico</span>
                         </div>
                         <div>
                             <span>0%</span>
                             <span>–</span>
-                            <span>Acima do Peso</span>
+                            <span>Mal-estar Físico</span>
                         </div>
                         <div>
                             <span>0%</span>
                             <span>–</span>
-                            <span>Pré-disposição à resistência à insulina</span>
+                            <span>Autoestima adequada e estabilidade emocional</span>
                         </div>
                         <div>
                             <span>0%</span>
                             <span>–</span>
-                            <span>Índice Positivo de Saúde</span>
+                            <span>Baixa autoestima e di culdades emocionais</span>
                         </div>
                         <div>
                             <span>0%</span>
                             <span>–</span>
-                            <span>
-                                Pré-disposição à desequilíbrios
-                                musculares
-                            </span>
+                            <span>Funcionamento harmônico familiar</span>
+                        </div>
+                        <div>
+                            <span>0%</span>
+                            <span>–</span>
+                            <span>Conflitos no contexto familiar</span>
+                        </div>
+                        <div>
+                            <span>0%</span>
+                            <span>–</span>
+                            <span>Contextos favorecedores do desenvolvimento</span>
+                        </div>
+                        <div>
+                            <span>0%</span>
+                            <span>–</span>
+                            <span>Contextos não favorecedores do desenvolviment</span>
                         </div>
                     </div>
                     <div class="container-laudo-text">
@@ -688,12 +700,12 @@
                         @{
                             var index = 0;
                             List<string> textosVida = new List<string>
-                            {
-                                Model.Desempenho.TextoBemEstar,
-                                Model.Desempenho.TextoAutoestima,
-                                Model.Desempenho.TextoFamilia,
-                                Model.Desempenho.TextoContexto
-                            };
+                    {
+                    Model.Desempenho.TextoBemEstar,
+                    Model.Desempenho.TextoAutoestima,
+                    Model.Desempenho.TextoFamilia,
+                    Model.Desempenho.TextoContexto
+                    };
                         }
                         @foreach (var item in Model.QualidadeDeVida)
                         {
