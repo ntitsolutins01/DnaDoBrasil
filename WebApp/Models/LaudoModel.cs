@@ -25,7 +25,7 @@ namespace WebApp.Models
 		public SelectList ListLaudos { get; set; }
 		public string FomentoId { get; set; }
 		public SelectList ListFomentos { get; set; }
-		public int LocalidadeId { get; set; }
+		public string LocalidadeId { get; set; }
 		public SelectList ListLocalidades { get; set; }
 		public string EstadoId { get; set; }
 		public SelectList ListEstados { get; set; }
@@ -37,6 +37,7 @@ namespace WebApp.Models
         public string ProfissionalId { get; set; }
         public string TipoLaudoId { get; set; }
         public SelectList ListTiposLaudos { get; set; }
+        public SaudeDto Saude { get; set; }
 
         public class CreateUpdateLaudoCommand
 		{

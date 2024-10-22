@@ -35,7 +35,7 @@ namespace WebApp.ApiClient
         public LaudoDto GetLaudoById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceLaudo}{id}"));
+                $"{ResourceLaudo}/{id}"));
             return Get<LaudoDto>(requestUrl);
         }
         public LaudoDto GetLaudoByAluno(int id)

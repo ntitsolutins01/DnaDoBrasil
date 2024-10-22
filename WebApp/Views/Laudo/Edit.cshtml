@@ -137,13 +137,13 @@
                                         <div>
                                             <label class="col-sm-2 control-label"><strong>Altura (cm) </strong></label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="altura" name="altura" maxlength="3" />
+                                                <input type="text" class="form-control" id="altura" name="altura" maxlength="3" value="@Model.TalentoEsportivo.Altura" />
                                             </div>
                                         </div>
                                         <div>
                                             <label class="col-sm-3 control-label"><strong>Massa Corporal (kg)</strong></label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="massaCorporal" name="massaCorporal" maxlength="3" />
+                                                <input type="text" class="form-control" id="massaCorporal" name="massaCorporal" maxlength="3" value="@Model.TalentoEsportivo.Peso" />
                                             </div>
                                         </div>
                                     </div>
@@ -151,13 +151,13 @@
                                         <div>
                                             <label class="col-sm-2 control-label"><strong>Preensão Manual (kg)</strong></label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="preensaoManual" name="preensaoManual" maxlength="3" />
+                                                <input type="text" class="form-control" id="preensaoManual" name="preensaoManual" maxlength="3" value="@Model.TalentoEsportivo.PreensaoManual" />
                                             </div>
                                         </div>
                                         <div>
                                             <label class="col-sm-3 control-label"><strong>Flexibilidade (cm)</strong></label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="flexibilidade" name="flexibilidade" maxlength="3" />
+                                                <input type="text" class="form-control" id="flexibilidade" name="flexibilidade" maxlength="3" value="@Model.TalentoEsportivo.Flexibilidade" />
                                             </div>
                                         </div>
                                     </div>
@@ -165,7 +165,7 @@
                                         <div>
                                             <label class="col-sm-2 control-label"><strong>Impulsão Horizontal (cm)</strong></label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="impulsaoHorizontal" name="impulsaoHorizontal" maxlength="3" />
+                                                <input type="text" class="form-control" id="impulsaoHorizontal" name="impulsaoHorizontal" maxlength="3" value="@Model.TalentoEsportivo.ImpulsaoHorizontal" />
                                             </div>
                                         </div>
                                         <div>
@@ -175,8 +175,7 @@
                                                     <span class="input-group-addon">
                                                         <i class="fa fa-clock-o"></i>
                                                     </span>
-                                                    @* <input type="text" id="testeVelocidade" name="testeVelocidade" value="00:00" data-plugin-timepicker class="form-control" data-plugin-options='{ "showMeridian": false, "explicitMode": true, "setDefaultTime": false }'> *@
-                                                    <input type="text" class="form-control" id="testeVelocidade" name="testeVelocidade" maxlength="3" />
+                                                    <input type="text" class="form-control" id="testeVelocidade" name="testeVelocidade" maxlength="3" value="@Model.TalentoEsportivo.Velocidade" />
                                                 </div>
                                             </div>
                                         </div>
@@ -185,7 +184,7 @@
                                         <div>
                                             <label class="col-sm-2 control-label"><strong>Aptidão Física (mLO2/min)</strong></label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="aptidaoFisica" name="aptidaoFisica" maxlength="3" />
+                                                <input type="text" class="form-control" id="aptidaoFisica" name="aptidaoFisica" maxlength="3" value="@Model.TalentoEsportivo.Vo2Max" />
                                             </div>
                                         </div>
                                         <div>
@@ -195,8 +194,7 @@
                                                     <span class="input-group-addon">
                                                         <i class="fa fa-clock-o"></i>
                                                     </span>
-                                                    @* <input type="text" id="agilidade" name="agilidade" value="00:00" data-plugin-timepicker class="form-control" data-plugin-options='{ "showMeridian": false, "explicitMode": true , "setDefaultTime": false }'> *@
-                                                    <input type="text" class="form-control" id="agilidade" name="agilidade" maxlength="3" />
+                                                    <input type="text" class="form-control" id="agilidade" name="agilidade" maxlength="3" value="@Model.TalentoEsportivo.ShuttleRun" />
 
                                                 </div>
                                             </div>
@@ -206,14 +204,30 @@
                                         <div>
                                             <label class="col-sm-2 control-label"><strong>Abdominal</strong></label>
                                             <div class="col-sm-3">
-                                                <div class="radio-custom radio-success">
-                                                    <input id="abdominalSim" name="rdbAbdominal" type="radio" value="true" required title="Por favor selecione uma opção." />
-                                                    <label for="abdominalSim">Sim</label>
-                                                </div>
-                                                <div class="radio-custom radio-danger">
-                                                    <input id="abdominalNao" name="rdbAbdominal" type="radio" value="false" required title="Por favor selecione uma opção." />
-                                                    <label for="abdominalNao">Não</label>
-                                                </div>
+                                                @if (Model.TalentoEsportivo.Abdominal == 30)
+                                                {
+                                                    <div class="radio-custom radio-success">
+                                                        <input id="abdominalSim" name="rdbAbdominal" checked type="radio" value="true" required title="Por favor selecione uma opção."/>
+                                                        <label for="abdominalSim">Sim</label>
+                                                    </div>
+                                                    <div class="radio-custom radio-danger">
+                                                        <input id="abdominalNao" name="rdbAbdominal" type="radio" value="false" required title="Por favor selecione uma opção."/>
+                                                        <label for="abdominalNao">Não</label>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+
+                                                    <div class="radio-custom radio-success">
+                                                        <input id="abdominalSim" name="rdbAbdominal" type="radio" value="true" required title="Por favor selecione uma opção." />
+                                                        <label for="abdominalSim">Sim</label>
+                                                    </div>
+                                                    <div class="radio-custom radio-danger">
+                                                        <input id="abdominalNao" name="rdbAbdominal" checked type="radio" value="false" required title="Por favor selecione uma opção." />
+                                                        <label for="abdominalNao">Não</label>
+                                                    </div>
+                                                }
+                                                
                                                 <label class="error" for="rdbAbdominal"></label>
                                             </div>
                                         </div>
