@@ -73,7 +73,7 @@
                     <footer class="panel-footer">
                         <div class="row">
                             <div class="col-sm-2 pull-right">
-                                <button type="submit" onclick="imprimirCarteirinha()"  class="btn btn-block btn-info pull-right"><i class="fa fa-search"></i> &nbsp;&nbsp;Pesquisar</button>
+                                <button type="submit" onclick="imprimirCarteirinha()" class="btn btn-block btn-info pull-right"><i class="fa fa-search"></i> &nbsp;&nbsp;Pesquisar</button>
                             </div>
                         </div>
                     </footer>
@@ -161,7 +161,7 @@
                                 <a href="#" data-id="@item.Id" data-toggle="modal" data-target="#mdUpload"
                                    data-toggle="tooltip" data-placement="top" title="Upload Foto"
                                    class="on-default edit-row" style='color: #303F9F'><i class="fa fa-upload"></i></a>
-                                
+
                                 <a data-toggle="tooltip" data-placement="top" title="Excluir" href='javascript:(crud.DeleteModal(@item.Id))'
                                    class="on-default remove-row" style="cursor: pointer;color: #F44336"><i class="fa fa-trash"></i></a>
                             </td>
@@ -282,6 +282,15 @@
                 </div>
                 <div class="modal-footer">
                     <button type="reset" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-remove"></i> &nbsp;&nbsp;Fechar</button>
+                    <a data-toggle="tooltip"
+                       data-placement="top"
+                       title="Imprimir"
+                       :href="'/Aluno/ImprimirCarteirinha/' + editDto.Id"
+                       class="on-default edit-row"
+                       style="color: #47a447"
+                       target="_blank">
+                        <i class="fa fa-file-text"></i>
+                    </a>
                     <button type="reset" class="btn btn-primary pull-right" style="margin-left: 5px;"><i class="fa fa-print"></i> &nbsp;&nbsp;Imprimir</button>
                 </div>
             </div>

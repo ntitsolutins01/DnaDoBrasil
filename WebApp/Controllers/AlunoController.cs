@@ -15,6 +15,7 @@ using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 using QRCoder;
 using Claim = WebApp.Identity.Claim;
 using NuGet.Protocol.Core.Types;
+using WebApp.Views;
 
 namespace WebApp.Controllers
 {
@@ -728,6 +729,23 @@ namespace WebApp.Controllers
             {
                 return RedirectToAction(nameof(Index));
             }
+        }
+
+        /// <summary>
+        /// Tela para impressao de carteirinha
+        /// </summary>
+        /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
+        /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
+        /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
+        [ClaimsAuthorize(ClaimType.Aluno, Claim.Incluir)]
+        public ActionResult ImprimirCarteirinha(int id)
+        {
+            var aluno = ApiClientFactory.Instance.GetAlunoById(id);
+
+            return View(new AlunoModel()
+            {
+                Aluno = aluno,
+            });
         }
     }
 }
