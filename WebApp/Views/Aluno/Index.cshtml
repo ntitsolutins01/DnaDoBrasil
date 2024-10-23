@@ -73,7 +73,7 @@
                     <footer class="panel-footer">
                         <div class="row">
                             <div class="col-sm-2 pull-right">
-                                <button type="submit" class="btn btn-block btn-primary pull-right"><i class="fa fa-search"></i> &nbsp;&nbsp;Pesquisar</button>
+                                <button type="submit" onclick="imprimirCarteirinha()"  class="btn btn-block btn-info pull-right"><i class="fa fa-search"></i> &nbsp;&nbsp;Pesquisar</button>
                             </div>
                         </div>
                     </footer>
@@ -183,12 +183,6 @@
                 <input type="hidden" name="carteirinhaAlunoId" :value="editDto.Id" />
 
                 <div class="modal-body">
-                    @* <button onclick="window.print()">Print Page</button>
-
-
-                    <div class="wholebody">
-
-                    </div> *@
                     <div class="row" style="margin: 10px">
                         <div class="tabs">
                             <ul class="nav nav-tabs">
@@ -288,7 +282,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="reset" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-remove"></i> &nbsp;&nbsp;Fechar</button>
-                    @* <button type="reset" class="btn btn-primary pull-right" style="margin-left: 5px;"><i class="fa fa-print"></i> &nbsp;&nbsp;Imprimir</button> *@
+                    <button type="reset" class="btn btn-primary pull-right" style="margin-left: 5px;"><i class="fa fa-print"></i> &nbsp;&nbsp;Imprimir</button>
                 </div>
             </div>
         </div>
@@ -391,6 +385,10 @@
     <script src="~/js/alunos.js"></script>
 
     <script>
+        function imprimirCarteirinha() {
+            const alunoId = $('#carteirinhaAlunoId').val();
+            window.open(`/Aluno/ImprimirCarteirinha/${alunoId}`, '_blank');
+        }
 
         (function ($) {
 
