@@ -46,40 +46,65 @@
                             <div class="logo-dna"></div>
                         </div>
                         <div class="qr-code">
-                            <div class="qr-image" style="background-image: url(/assets/styles_Carteirinha/images/qr-code.jpeg);"></div>
+                            @if (Model.Aluno.QrCode != null)
+                            {
+                                <div class="qr-image">
+                                    @{
+                                        var base64QrCode = Convert.ToBase64String(Model.Aluno.QrCode);
+                                        var imgSrcQrCode = String.Format("data:image/gif;base64,{0}", base64QrCode);
+                                    }
+                                    <img src="@imgSrcQrCode" style="width:100%;"/>
+                                </div>
+                            }
                         </div>
                     </div>
                     <div class="main-content">
                         <div class="photo-section">
-                            <div class="photo" style="background-image: url(/assets/styles_Carteirinha/images/avatar.jpg);"></div>
+                        @if (Model.Aluno.ByteImage != null)
+                        {
+                            <div class="photo">
+                                @{
+                                    var base64 = Convert.ToBase64String(Model.Aluno.ByteImage);
+                                    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                                }
+                                <img src="@imgSrc" style="width:100%;"/>
+                            </div>
+                            }
+                            else if (Model.Aluno.ByteImage == null && Model.Aluno.Sexo == "Feminino")
+                            {
+                                <div class="photo" style="background-image: url('/assets/images/menina.jpg');">
+                                </div>
+                            }
+                            else if (Model.Aluno.ByteImage == null && Model.Aluno.Sexo == "Masculino")
+                            {
+                                <div class="photo" style="background-image: url('/assets/images/menino.jpg');">
+                                </div>
+                            }
                         </div>
                         <div class="info-section">
                             <div class="name-role">
-                                <span class="name">Abigail dos Santos Serrano</span>
+                                <span class="name">@Model.Aluno.Nome</span>
                                 <span class="role">Aluno</span>
                             </div>
                             <div class="details">
                                 <div class="detail-row">
                                     <span class="label">CPF:</span>
-                                    <span class="value">107.840.815-73</span>
+                                    <span class="value">@Model.Aluno.Cpf</span>
                                 </div>
                                 <div class="detail-row modalidade">
-                                    <span class="value">
-                                        Atividades Esportivas e Detecção de
-                                        Talentos - Duas modalidades
-                                    </span>
+                                    <span class="value">@Model.Aluno.ModalidadeLinhaAcao</span>
                                 </div>
                                 <div class="detail-row">
                                     <span class="label">Data Nascimento:</span>
-                                    <span class="value">27/05/2017</span>
+                                    <span class="value">@Model.Aluno.DtNascimento</span>
                                 </div>
                                 <div class="detail-row">
                                     <span class="label">Telefone:</span>
-                                    <span class="value">(61) 99663-2470</span>
+                                    <span class="value">@Model.Aluno.Celular</span>
                                 </div>
                                 <div class="detail-row">
                                     <span class="label">Matrícula:</span>
-                                    <span class="value">42983</span>
+                                    <span class="value">@Model.Aluno.Id</span>
                                 </div>
                             </div>
                         </div>
@@ -102,14 +127,11 @@
                             <div class="school-info">
                                 <div class="info-group">
                                     <span class="info-label">Município / Estado</span>
-                                    <span class="info-value">Brasília / DF</span>
+                                    <span class="info-value">@Model.Aluno.MunicipioEstado</span>
                                 </div>
                                 <div class="info-group">
                                     <span class="info-label">Unidade Escolar</span>
-                                    <span class="info-value">
-                                        Recanto das Emas - Ceu das
-                                        Artes
-                                    </span>
+                                    <span class="info-value">@Model.Aluno.NomeLocalidade</span>
                                 </div>
                             </div>
                             <div class="app-info">
