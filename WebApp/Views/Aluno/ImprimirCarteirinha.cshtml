@@ -9,166 +9,8 @@
 <html>
 <head>
     <title>Carteirinha</title>
+    <link rel="stylesheet" href="~/assets/styles_Carteirinha/impressao-carteirinha.css" />
     <link rel="stylesheet" href="~/assets/vendor/font-awesome/css/font-awesome.css"/>
-
-    <style>
-
-        @@page {
-        margin: 0.5cm;
-    }
-    body {
-        margin: 0;
-        padding: 0;
-        background-color: #f5f5f5;
-    }
-    
-    /* Estilos para tela */
-    @@media screen {
-        .print-controls {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: white;
-            padding: 15px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            z-index: 1000;
-        }
-    
-        .carteirinha-wrapper {
-            margin-top: 80px;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-        }
-    
-        .page-container {
-            background: white;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 21cm; /* Tamanho A4 */
-            margin: 0 auto;
-            min-height: 29.7cm;
-            /*display: flex;
-            align-items: center;*/
-        }
-    
-        /* Esconde o grid de verso na visualização */
-        .verso-grid {
-            display: none;
-        }
-    }
-    
-    /* Estilos para impressão */
-    @@media print {
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: white;
-            -webkit-print-color-adjust: exact !important;
-            print-color-adjust: exact !important;
-        }
-        .print-controls {
-            display: none;
-        }
-    
-        .carteirinha-wrapper {
-            margin-top: 0;
-            padding: 0;
-        }
-    
-        .page-container {
-            padding: 0;
-            box-shadow: none;
-            width: 21cm;
-        }
-    
-        .no-print {
-            display: none !important;
-        }
-    }
-    
-    /* Grid normal para visualização/impressão completa */
-    .carteirinha-grid {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.4cm;
-        justify-content: center;
-    }
-    
-    .carteirinha-pair {
-        display: flex;
-        gap: 0.4cm;
-        page-break-inside: avoid;
-    }
-    
-    /* Grid especial para impressão apenas do verso */
-    .verso-grid {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.4cm;
-        justify-content: center;
-    }
-    
-    .verso-row {
-        display: flex;
-        gap: 0.4cm;
-        margin-bottom: 0.5cm;
-        page-break-inside: avoid;
-    }
-    
-    /* Dimensões da carteirinha */
-    .carteirinha-container {
-        width: 8.5cm;
-        height: 5.4cm;
-        background-color: white;
-        border: 1px solid #ddd;
-        position: relative;
-        overflow: hidden;
-    }
-    
-    /* Linhas guia para corte */
-    @@media print {
-        .carteirinha-container::before {
-            content: '';
-            position: absolute;
-            top: -2mm;
-            bottom: -2mm;
-            left: -2mm;
-            right: -2mm;
-            border: 1px dashed #ccc;
-            pointer-events: none;
-        }
-    }
-    
-    .btn {
-        padding: 8px 16px;
-        margin: 5px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 14px;
-        transition: background-color 0.3s;
-    }
-    
-    .btn-primary {
-        background-color: #007bff;
-        color: white;
-    }
-    
-    .btn-secondary {
-        background-color: #6c757d;
-        color: white;
-    }
-    
-    @@media print {
-        .page-container {
-            page-break-after: always;
-        }
-    }
-
-    </style>
 
 </head>
 <body>
@@ -176,107 +18,221 @@
         <button class="btn btn-primary" onclick="printFull()">
             <i class="fa fa-print"></i> Imprimir Carteirinha Completa
         </button>
-        <button class="btn btn-secondary" onclick="printVerso()">
+        <button class="btn btn-primary" onclick="printVerso()">
             <i class="fa fa-print"></i> Imprimir Apenas Verso
         </button>
+        <div class="zoom-controls">
+            <button class="btn btn-info" onclick="adjustZoom('out')">
+                <i class="fa fa-minus"></i>
+            </button>
+            <span class="zoom-level">100%</span>
+            <button class="btn btn-info" onclick="adjustZoom('in')">
+                <i class="fa fa-plus"></i>
+            </button>
+        </div>
         <button class="btn btn-secondary" onclick="window.close()">
             <i class="fa fa-times"></i> Fechar
         </button>
     </div>
 
-    <!-- Layout normal para visualização e impressão completa -->
-    <div class="carteirinha-wrapper normal-view">
-        <div class="page-container">
-            <div class="carteirinha-grid">
-                <!-- Clona carteirinha-grid -->
-                <div class="carteirinha-pair">
-                    <div class="carteirinha-container" id="frente">
-                        @@Html.Partial("_CarteirinhaFrente", Model)@@
+    <div class="preview-wrapper">
+        <div class="preview-container">
+            <!-- Frente da carteirinha -->
+            <div class="page frente-page">
+                <div class="carteirinha-content">
+                    <div class="header">
+                        <div class="logo-section">
+                            <div class="logo-dne"></div>
+                            <div class="logo-dna"></div>
+                        </div>
+                        <div class="qr-code">
+                            <div class="qr-image" style="background-image: url(/assets/styles_Carteirinha/images/qr-code.jpeg);"></div>
+                        </div>
                     </div>
-                    <div class="carteirinha-container" id="verso">
-                        @@Html.Partial("_CarteirinhaVerso", Model)@@
+                    <div class="main-content">
+                        <div class="photo-section">
+                            <div class="photo" style="background-image: url(/assets/styles_Carteirinha/images/avatar.jpg);"></div>
+                        </div>
+                        <div class="info-section">
+                            <div class="name-role">
+                                <span class="name">Abigail dos Santos Serrano</span>
+                                <span class="role">Aluno</span>
+                            </div>
+                            <div class="details">
+                                <div class="detail-row">
+                                    <span class="label">CPF:</span>
+                                    <span class="value">107.840.815-73</span>
+                                </div>
+                                <div class="detail-row modalidade">
+                                    <span class="value">
+                                        Atividades Esportivas e Detecção de
+                                        Talentos - Duas modalidades
+                                    </span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="label">Data Nascimento:</span>
+                                    <span class="value">27/05/2017</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="label">Telefone:</span>
+                                    <span class="value">(61) 99663-2470</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="label">Matrícula:</span>
+                                    <span class="value">42983</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Verso da carteirinha -->
+            <div class="page verso-page">
+                <div class="carteirinha-content">
+                    <div class="header-verso">
+                        <div class="header-logos">
+                            <div class="logo-ceu"></div>
+                            <div class="logo-idecace"></div>
+                            <div class="logo-sejus"></div>
+                        </div>
+                    </div>
+                    <div class="main-content-verso">
+                        <div class="info-container">
+                            <div class="school-info">
+                                <div class="info-group">
+                                    <span class="info-label">Município / Estado</span>
+                                    <span class="info-value">Brasília / DF</span>
+                                </div>
+                                <div class="info-group">
+                                    <span class="info-label">Unidade Escolar</span>
+                                    <span class="info-value">
+                                        Recanto das Emas - Ceu das
+                                        Artes
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="app-info">
+                                <div class="app-logos">
+                                    <div class="logo-app-dna"></div>
+                                    <div class="logo-stores"></div>
+                                </div>
+                                <div class="year-seal">
+                                    <div class="seal-2024"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="disclaimer">
+                            <div class="disclaimer-text">
+                                <span>
+                                    <code>
+                                        Documento padronizado nacionalmente
+                                        conforme a Lei 12.933/2013. Válido
+                                        para todo o território nacional até
+                                        março do ano seguinte.
+                                    </code>
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- Layout otimizado para impressão apenas do verso (2x2) -->
-    <div class="carteirinha-wrapper verso-view" style="display: none">
-        <div class="page-container">
-            <div class="verso-grid">
-                <!-- Clona verso-row -->
-                <div class="verso-row">
-                    <div class="carteirinha-container">
-                        @@Html.Partial("_CarteirinhaVerso", Model)@@
-                    </div>
-                    <div class="carteirinha-container">
-                        @@Html.Partial("_CarteirinhaVerso", Model)@@
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script>
-        function printFull() {
-            document.querySelector('.normal-view').style.display = 'flex';
-            document.querySelector('.verso-view').style.display = 'none';
-            document
-                .querySelectorAll('.carteirinha-container')
-                .forEach((el) => {
-                    el.classList.remove('no-print');
-                });
-            window.print();
-        }
+        let currentZoom = 100;
+        const zoomStep = 20;
+        const maxZoom = 200;
+        const minZoom = 60;
 
-        function printVerso() {
-            document.querySelector('.normal-view').style.display = 'none';
-            document.querySelector('.verso-view').style.display = 'flex';
-            window.print();
-        }
+        function adjustZoom(direction) {
+            const container = document.querySelector('.preview-container');
+            const zoomDisplay = document.querySelector('.zoom-level');
 
-        // Função para calcular quantas carteirinhas cabem por página
-        function calculateCardsPerPage(isVersoOnly = false) {
-            const pageWidth = 21; // cm (A4 width)
-            const pageHeight = 29.7; // cm (A4 height)
-            const cardWidth = 8.5; // cm
-            const cardHeight = 5.4; // cm
-            const gap = 0.5; // cm
+            if (direction === 'in' && currentZoom < maxZoom) {
+                currentZoom += zoomStep;
+            } else if (direction === 'out' && currentZoom > minZoom) {
+                currentZoom -= zoomStep;
+            }
 
-            const cardsPerRow = Math.floor(pageWidth / (cardWidth + gap));
-            const cardsPerColumn = Math.floor(
-                pageHeight / (cardHeight + gap),
-            );
+            // Aplica o zoom
+            container.style.transform = `scale(${currentZoom / 100})`;
 
-            return isVersoOnly
-                ? cardsPerRow * cardsPerColumn
-                : (cardsPerRow * cardsPerColumn) / 2;
-        }
+            // Atualiza o display
+            zoomDisplay.textContent = `${currentZoom}%`;
 
-        // Para uso futuro com impressão em lote
-        function prepareBatchPrint(cards, isVersoOnly = false) {
-            const cardsPerPage = calculateCardsPerPage(isVersoOnly);
-            const pageCount = Math.ceil(cards.length / cardsPerPage);
-
-            // Lógica futura para distribuição das carteirinhas em múltiplas páginas
-        }
-
-        function adjustZoom() {
-            const cmToPx = 37.795275591;
-            const targetWidth = 8.5 * cmToPx;
-            const container = document.querySelector(
-                '.carteirinha-container',
-            );
-            const actualWidth = container.offsetWidth;
-            const scale = targetWidth / actualWidth;
-
-            if (!window.matchMedia('print').matches) {
-                document.body.style.zoom = scale;
+            // Ajusta o espaçamento para centralizar quando aumenta
+            if (currentZoom > 100) {
+                const adjustment = (currentZoom - 100) / 2;
+                container.style.marginLeft = `${adjustment}px`;
+            } else {
+                container.style.marginLeft = '0';
             }
         }
 
-        window.onload = adjustZoom;
+        // Adicionar suporte a zoom com a roda do mouse
+        document.querySelector('.preview-wrapper').addEventListener(
+            'wheel',
+            function (e) {
+                if (e.ctrlKey) {
+                    e.preventDefault();
+                    adjustZoom(e.deltaY < 0 ? 'in' : 'out');
+                }
+            },
+            { passive: false },
+        );
+
+        function printFull() {
+            // Reset zoom
+            const container = document.querySelector('.preview-container');
+            const originalTransform = container.style.transform;
+            container.style.transform = 'scale(1)';
+            container.style.marginLeft = '0';
+
+            // Remove no-print class
+            document
+                .querySelectorAll('.frente-page')
+                .forEach(function (page) {
+                    page.classList.remove('no-print');
+                });
+            document
+                .querySelectorAll('.verso-page')
+                .forEach(function (page) {
+                    page.classList.remove('no-print');
+                });
+
+            // Print
+            window.print();
+
+            // Restore zoom after printing
+            container.style.transform = originalTransform;
+        }
+
+        function printVerso() {
+            // Reset zoom
+            const container = document.querySelector('.preview-container');
+            const originalTransform = container.style.transform;
+            container.style.transform = 'scale(1)';
+            container.style.marginLeft = '0';
+
+            // Add/remove no-print class
+            document
+                .querySelectorAll('.frente-page')
+                .forEach(function (page) {
+                    page.classList.add('no-print');
+                });
+            document
+                .querySelectorAll('.verso-page')
+                .forEach(function (page) {
+                    page.classList.remove('no-print');
+                });
+
+            // Print
+            window.print();
+
+            // Restore zoom after printing
+            container.style.transform = originalTransform;
+        }
     </script>
 </body>
 </html>
