@@ -52,7 +52,7 @@ body {
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         page-break-after: always;
         overflow: hidden;
-        background: url(assets/images/background_carteirinha.png);
+        background: url(/assets/images/background_carteirinha.png);
         background-repeat: no-repeat;
         background-position: center center;
         background-size: cover;
@@ -138,7 +138,7 @@ body {
         margin: 0;
         padding: 0;
         overflow: hidden;
-        background: url(assets/images/background_carteirinha.png);
+        background: url(/assets/images/background_carteirinha.png);
         background-repeat: no-repeat;
         background-position: center center;
         background-size: cover;
@@ -198,13 +198,12 @@ body {
     width: 100%;
     height: 1.45cm; /* 55px */
     display: flex;
-    justify-content: space-between;
+    margin: 0.26cm; /* 10px */
 }
 
 .logo-section {
     width: 6.61cm; /* 251px */
     height: 1.45cm; /* 55px */
-    margin: 0.26cm; /* 10px */
     display: flex;
     gap: 0.26cm; /* 10px */
 }
