@@ -17,7 +17,7 @@
                     className: 'select-checkbox',
                     targets: 0
                 },
-                { "className": "text-center", "targets": "_all" }
+                //{ "className": "text-center", "targets": "_all" }
             ],
             select: {
                 style: 'os',
