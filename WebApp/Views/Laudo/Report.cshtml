@@ -196,6 +196,19 @@
                             </span>
                         </div>
                         <div class="row-info">
+                            <span class="label-info">Etnia</span>
+                            <span class="value-info" style="text-transform: capitalize;">
+                                @if (Model.Laudo.Etnia == null)
+                                {
+                                    <text>Não definido</text>
+                                }
+                                else
+                                {
+                                    <text>@Model.Laudo.Etnia.ToLower()</text>
+                                }
+                            </span>
+                        </div>
+                        <div class="row-info">
                             <span class="label-info">Estatura</span>
                             <span class="value-info">@Model.Laudo.Estatura cm</span>
                         </div>
