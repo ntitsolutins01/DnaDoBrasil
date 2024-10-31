@@ -749,6 +749,9 @@ namespace WebApp.Controllers
             });
         }
 
+        /// <summary>
+        /// Tela para impressao de carteirinha em lote
+        /// </summary>
         [ClaimsAuthorize(ClaimType.Aluno, Claim.Incluir)]
         public async Task<ActionResult> ImprimirCarteirinhasLote(string ids, string fomentoId = null, string estadoId = null,
             string municipioId = null, string localidadeId = null, string deficienciaId = null, string etniaId = null, string sexoId = null)
