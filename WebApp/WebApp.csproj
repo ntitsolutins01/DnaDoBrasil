@@ -175,6 +175,7 @@
 
   <ItemGroup>
     <Folder Include="Views\BemVindo\" />
+    <Folder Include="wwwroot\assets\styles_Carteirinha\images\" />
   </ItemGroup>
 
   <ItemGroup>

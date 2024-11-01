@@ -1,0 +1,260 @@
+@using System.Globalization
+@model WebApp.Models.AlunoModel
+@{
+    ViewData["Title"] = "Impressão de Carteirinhas";
+    Layout = "";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Carteirinha</title>
+    <link rel="stylesheet" href="~/assets/styles_Carteirinha/impressao-carteirinha.css" />
+    <link rel="stylesheet" href="~/assets/vendor/font-awesome/css/font-awesome.css"/>
+
+</head>
+<body>
+    <div class="print-controls">
+        <button class="btn btn-primary" onclick="printFull()">
+            <i class="fa fa-print"></i> Imprimir Carteirinha Completa
+        </button>
+        <button class="btn btn-primary" onclick="printVerso()">
+            <i class="fa fa-print"></i> Imprimir Apenas Verso
+        </button>
+        <div class="zoom-controls">
+            <button class="btn btn-info" onclick="adjustZoom('out')">
+                <i class="fa fa-minus"></i>
+            </button>
+            <span class="zoom-level">100%</span>
+            <button class="btn btn-info" onclick="adjustZoom('in')">
+                <i class="fa fa-plus"></i>
+            </button>
+        </div>
+        <button class="btn btn-secondary" onclick="window.close()">
+            <i class="fa fa-times"></i> Fechar
+        </button>
+    </div>
+
+    <div class="preview-wrapper">
+        <div class="preview-container">
+            <!-- Frente da carteirinha -->
+            <div class="page frente-page">
+                <div class="carteirinha-content">
+                    <div class="header">
+                        <div class="logo-section">
+                            <div class="logo-dne"></div>
+                            <div class="logo-dna"></div>
+                        </div>
+                        <div class="qr-code">
+                            @if (Model.Aluno.QrCode != null)
+                            {
+                                <div class="qr-image">
+                                    @{
+                                        var base64QrCode = Convert.ToBase64String(Model.Aluno.QrCode);
+                                        var imgSrcQrCode = String.Format("data:image/gif;base64,{0}", base64QrCode);
+                                    }
+                                    <img src="@imgSrcQrCode" style="width:100%;"/>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="main-content">
+                        <div class="photo-section">
+                        @if (Model.Aluno.ByteImage != null)
+                        {
+                            <div class="photo">
+                                @{
+                                    var base64 = Convert.ToBase64String(Model.Aluno.ByteImage);
+                                    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                                }
+                                <img src="@imgSrc" style="width:100%;"/>
+                            </div>
+                            }
+                            else if (Model.Aluno.ByteImage == null && Model.Aluno.Sexo == "Feminino")
+                            {
+                                <div class="photo" style="background-image: url('/assets/images/menina.jpg');">
+                                </div>
+                            }
+                            else if (Model.Aluno.ByteImage == null && Model.Aluno.Sexo == "Masculino")
+                            {
+                                <div class="photo" style="background-image: url('/assets/images/menino.jpg');">
+                                </div>
+                            }
+                        </div>
+                        <div class="info-section">
+                            <div class="name-role">
+                                <span class="name">@Model.Aluno.Nome</span>
+                                <span class="role">Aluno</span>
+                            </div>
+                            <div class="details">
+                                <div class="detail-row">
+                                    <span class="label">CPF:</span>
+                                    <span class="value">@Model.Aluno.Cpf</span>
+                                </div>
+                                <div class="detail-row modalidade">
+                                    <span class="value">@Model.Aluno.ModalidadeLinhaAcao</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="label">Data Nascimento:</span>
+                                    <span class="value">@Model.Aluno.DtNascimento</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="label">Telefone:</span>
+                                    <span class="value">@Model.Aluno.Celular</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="label">Matrícula:</span>
+                                    <span class="value">@Model.Aluno.Id</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Verso da carteirinha -->
+            <div class="page verso-page">
+                <div class="carteirinha-content">
+                    <div class="header-verso">
+                        <div class="header-logos">
+                            <div class="logo-ceu"></div>
+                            <div class="logo-idecace"></div>
+                            <div class="logo-sejus"></div>
+                        </div>
+                    </div>
+                    <div class="main-content-verso">
+                        <div class="info-container">
+                            <div class="school-info">
+                                <div class="info-group">
+                                    <span class="info-label">Município / Estado</span>
+                                    <span class="info-value">@Model.Aluno.MunicipioEstado</span>
+                                </div>
+                                <div class="info-group">
+                                    <span class="info-label">Unidade Escolar</span>
+                                    <span class="info-value">@Model.Aluno.NomeLocalidade</span>
+                                </div>
+                            </div>
+                            <div class="app-info">
+                                <div class="app-logos">
+                                    <div class="logo-app-dna"></div>
+                                    <div class="logo-stores"></div>
+                                </div>
+                                <div class="year-seal">
+                                    <div class="seal-2024"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="disclaimer">
+                            <div class="disclaimer-text">
+                                <span>
+                                    <code>
+                                        Documento padronizado nacionalmente
+                                        conforme a Lei 12.933/2013. Válido
+                                        para todo o território nacional até
+                                        março do ano seguinte.
+                                    </code>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        let currentZoom = 100;
+        const zoomStep = 20;
+        const maxZoom = 200;
+        const minZoom = 60;
+
+        function adjustZoom(direction) {
+            const container = document.querySelector('.preview-container');
+            const zoomDisplay = document.querySelector('.zoom-level');
+
+            if (direction === 'in' && currentZoom < maxZoom) {
+                currentZoom += zoomStep;
+            } else if (direction === 'out' && currentZoom > minZoom) {
+                currentZoom -= zoomStep;
+            }
+
+            // Aplica o zoom
+            container.style.transform = `scale(${currentZoom / 100})`;
+
+            // Atualiza o display
+            zoomDisplay.textContent = `${currentZoom}%`;
+
+            // Ajusta o espaçamento para centralizar quando aumenta
+            if (currentZoom > 100) {
+                const adjustment = (currentZoom - 100) / 2;
+                container.style.marginLeft = `${adjustment}px`;
+            } else {
+                container.style.marginLeft = '0';
+            }
+        }
+
+        // Adicionar suporte a zoom com a roda do mouse
+        document.querySelector('.preview-wrapper').addEventListener(
+            'wheel',
+            function (e) {
+                if (e.ctrlKey) {
+                    e.preventDefault();
+                    adjustZoom(e.deltaY < 0 ? 'in' : 'out');
+                }
+            },
+            { passive: false },
+        );
+
+        function printFull() {
+            // Reset zoom
+            const container = document.querySelector('.preview-container');
+            const originalTransform = container.style.transform;
+            container.style.transform = 'scale(1)';
+            container.style.marginLeft = '0';
+
+            // Remove no-print class
+            document
+                .querySelectorAll('.frente-page')
+                .forEach(function (page) {
+                    page.classList.remove('no-print');
+                });
+            document
+                .querySelectorAll('.verso-page')
+                .forEach(function (page) {
+                    page.classList.remove('no-print');
+                });
+
+            // Print
+            window.print();
+
+            // Restore zoom after printing
+            container.style.transform = originalTransform;
+        }
+
+        function printVerso() {
+            // Reset zoom
+            const container = document.querySelector('.preview-container');
+            const originalTransform = container.style.transform;
+            container.style.transform = 'scale(1)';
+            container.style.marginLeft = '0';
+
+            // Add/remove no-print class
+            document
+                .querySelectorAll('.frente-page')
+                .forEach(function (page) {
+                    page.classList.add('no-print');
+                });
+            document
+                .querySelectorAll('.verso-page')
+                .forEach(function (page) {
+                    page.classList.remove('no-print');
+                });
+
+            // Print
+            window.print();
+
+            // Restore zoom after printing
+            container.style.transform = originalTransform;
+        }
+    </script>
+</body>
+</html>
