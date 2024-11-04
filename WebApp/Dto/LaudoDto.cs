@@ -51,5 +51,9 @@
         public string? ImcSaude { get; set; }
 
         #endregion
+
+        #region Edição de Laudo
+        public string? Uf { get; init; }
+        #endregion
     }
 }
