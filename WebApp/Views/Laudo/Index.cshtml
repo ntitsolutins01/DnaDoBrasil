@@ -83,7 +83,12 @@
                     <div class="panel-body">
                         <div class="form-group row">
                             <div class="col-sm-2 pull-right">
-                            <a href="@Url.Action("Create", "Laudo")" id="addToTable" class="btn btn-block btn-primary pull-right"><i class="fa fa-plus"></i> Novo Laudo </a>
+                                <a href="@Url.Action("Create", "Laudo")" id="addToTable" class="btn btn-block btn-primary pull-right"><i class="fa fa-plus"></i> Novo Laudo </a>
+                            </div>
+                            <div class="col-sm-2 pull-right">
+                                <a id="btnExportarLaudo" class="btn btn-block btn-info pull-right">
+                                <i class="fa fa-download"></i> &nbsp;&nbsp;Exportar Laudo
+                                </a>
                             </div>
                         </div>
                         <table class="table table-bordered table-striped mb-0" id="datatable-default">
