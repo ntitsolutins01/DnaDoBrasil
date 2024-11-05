@@ -12,6 +12,8 @@ namespace WebApp.Models
         public string MunicipioId { get; set; }
         public SelectList ListMunicipios { get; set; }
         public List<FomentoDto> Fomentos { get; set; }
+        public string LinhaAcaoId { get; set; }
+        public SelectList ListLinhasAcoes { get; set; }
 
         public class CreateUpdateFomentoCommand
         {
@@ -23,6 +25,7 @@ namespace WebApp.Models
             public string DtFim { get; set; }
 			public int MunicipioId { get; set; }
             public int LocalidadeId { get; set; }
+            public string LinhaAcoes { get; set; }
         }
     }
 

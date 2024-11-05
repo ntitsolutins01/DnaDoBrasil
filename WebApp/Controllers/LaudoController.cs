@@ -27,15 +27,22 @@ namespace WebApp.Controllers
         }
 
         [ClaimsAuthorize(ClaimType.Laudo, Claim.Consultar)]
-        public IActionResult Index(int? crud, int? notify, IFormCollection collection, string message = null)
+        public async Task<IActionResult> Index(int? crud, int? notify, IFormCollection collection, string message = null)
         {
             try
             {
-                SetNotifyMessage(notify, message);
+	            var usuario = User.Identity.Name;
+
+				SetNotifyMessage(notify, message);
                 SetCrudMessage(crud);
 
-                var searchFilter = new LaudosFilterDto()
+                var listFomentos = ApiClientFactory.Instance.GetFomentoAll();
+					//.Where(x => x.MunicipioId == usuario.MunicipioId); 
+
+
+				var searchFilter = new LaudosFilterDto()
                 {
+                    UsuarioEmail = usuario,
                     FomentoId = collection["ddlFomento"].ToString(),
                     Estado = collection["ddlEstado"].ToString(),
                     MunicipioId = collection["ddlMunicipio"].ToString(),
@@ -43,31 +50,30 @@ namespace WebApp.Controllers
                     TipoLaudoId = collection["ddlTipoLaudo"].ToString(),
                     AlunoId = collection["ddlAluno"].ToString(),
                     PageNumber = 1,
-                    PageSize = 10
+                    PageSize = 50
                 };
 
-                //var response = ApiClientFactory.Instance.GetLaudosByFilter(searchFilter);
-                var response = ApiClientFactory.Instance.GetLaudosByFilter(searchFilter);
+                var response = await ApiClientFactory.Instance.GetLaudosByFilter(searchFilter);
 
-                var fomentos = new SelectList(ApiClientFactory.Instance.GetFomentoAll(), "Id", "Nome", searchFilter.FomentoId);
-                var tiposLaudos = new SelectList(ApiClientFactory.Instance.GetTiposLaudoAll(), "Id", "Nome", searchFilter.TipoLaudoId);
-                var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", searchFilter.Estado);
+				var fomentos = new SelectList(listFomentos, "Id", "Nome", response.FomentoId);
+                var tiposLaudos = new SelectList(ApiClientFactory.Instance.GetTiposLaudoAll(), "Id", "Nome", response.TipoLaudoId);
+                var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", response.Estado);
 
                 SelectList municipios = null;
 
-                if (!string.IsNullOrEmpty(searchFilter.Estado))
+                if (!string.IsNullOrEmpty(response.Estado))
                 {
-                    municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(searchFilter.Estado), "Id", "Nome", searchFilter.MunicipioId);
+                    municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(response.Estado), "Id", "Nome", response.MunicipioId);
                 }
                 SelectList localidades = null;
 
-                if (!string.IsNullOrEmpty(searchFilter.LocalidadeId))
+                if (!string.IsNullOrEmpty(response.LocalidadeId))
                 {
-                    localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeByMunicipio(searchFilter.MunicipioId), "Id", "Nome", searchFilter.LocalidadeId);
+                    localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeByMunicipio(response.MunicipioId), "Id", "Nome", response.LocalidadeId);
                 }
                 var model = new LaudoModel()
                 {
-                    Laudos = response.Result.Laudos,
+                    Laudos = response.Laudos,
                     ListFomentos = fomentos,
                     ListEstados = estados,
                     ListTiposLaudos = tiposLaudos,
@@ -121,7 +127,7 @@ namespace WebApp.Controllers
             var laudo = ApiClientFactory.Instance.GetLaudoByAluno(id);
             var aluno = ApiClientFactory.Instance.GetAlunoById(id);
             var profissional = ApiClientFactory.Instance.GetProfissionalById(Convert.ToInt32(aluno.ProfissionalId));
-            var talentoEsportivo = laudo.TalentoEsportivoId == null ? null : ApiClientFactory.Instance.GetTalentoEsportivoByAluno(laudo.AlunoId.ToString());
+            var talentoEsportivo = laudo.TalentoEsportivoId == null ? null : ApiClientFactory.Instance.GetTalentoEsportivoByAluno((int)laudo.AlunoId!);
             var encaminhamentoImc = laudo.SaudeId == null ? null : ApiClientFactory.Instance.GetEncaminhamentoBySaudeId(Convert.ToInt32(laudo.SaudeId));
             var qualidadeDeVida = laudo.QualidadeDeVidaId == null ? null : ApiClientFactory.Instance.GetEncaminhamentoByQualidadeDeVidaId((int)laudo.QualidadeDeVidaId);
             var vocacional = laudo.VocacionalId == null ? null : ApiClientFactory.Instance.GetEncaminhamentoByVocacional();
