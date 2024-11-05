@@ -28,6 +28,7 @@
         public required string NomeLocalidade { get; set; }
         public string? MunicipioEstado { get; set; }
         public string? Sexo { get; set; }
+        public string? Etnia { get; set; }
         public string? StatusLaudo { get; set; }
         public DateTime? DtNascimento { get; set; }
         public int? Idade { get; set; }
