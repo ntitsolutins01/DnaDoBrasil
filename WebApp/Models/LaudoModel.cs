@@ -38,7 +38,7 @@ namespace WebApp.Models
         public string TipoLaudoId { get; set; }
         public SelectList ListTiposLaudos { get; set; }
         public SaudeDto Saude { get; set; }
-
+        public SearchFilterDto SearchFilter { get; set; } = new SearchFilterDto();
         public class CreateUpdateLaudoCommand
 		{
 			public int Id { get; set; }
@@ -54,5 +54,14 @@ namespace WebApp.Models
             
         }
 	}
-
+    public class SearchFilterDto
+    {
+        public string MunicipioId { get; set; }
+        public string FomentoId { get; set; }
+        public string LocalidadeId { get; set; }
+        public string Sexo { get; set; }
+        public string DeficienciaId { get; set; }
+        public string Estado { get; set; }
+        public string Etnia { get; set; }
+    }
 }

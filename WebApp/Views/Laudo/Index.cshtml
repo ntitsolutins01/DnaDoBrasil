@@ -82,12 +82,35 @@
                     </header>
                     <div class="panel-body">
                         <div class="form-group row">
+                            @{
+                                bool nenhumFiltroSelecionado = string.IsNullOrEmpty(Model.FomentoId) &&
+                                                               string.IsNullOrEmpty(Model.EstadoId) &&
+                                                               string.IsNullOrEmpty(Model.MunicipioId) &&
+                                                               string.IsNullOrEmpty(Model.LocalidadeId) &&
+                                                               string.IsNullOrEmpty(Model.AlunoId) &&
+                                                               string.IsNullOrEmpty(Model.TipoLaudoId);
+
+                                bool semResultados = Model.Laudos?.Items == null || !Model.Laudos.Items.Any();
+    
+                                bool mostrarAlerta = nenhumFiltroSelecionado || (Context.Request.Method == "POST" && semResultados);
+
+                                if (mostrarAlerta)
+                                {
+                                    <div class="col-sm-8 pull-left">
+                                        <div class="alert alert-info" style="padding-bottom: 6px;padding-top: 6px; !important; margin-bottom: 10px; !important">
+                                            <strong>Atenção!</strong> Para exportação de laudos selecione o filtro e clique em 
+                                            <a href="" class="alert-link">Exportar Laudos</a>.
+                                        </div>
+                                    </div>
+                                }
+                            }
+
                             <div class="col-sm-2 pull-right">
                                 <a href="@Url.Action("Create", "Laudo")" id="addToTable" class="btn btn-block btn-primary pull-right"><i class="fa fa-plus"></i> Novo Laudo </a>
                             </div>
                             <div class="col-sm-2 pull-right">
                                 <a id="btnExportarLaudo" class="btn btn-block btn-info pull-right">
-                                <i class="fa fa-download"></i> &nbsp;&nbsp;Exportar Laudo
+                                    <i class="fa fa-download"></i> &nbsp;&nbsp;Exportar Laudos
                                 </a>
                             </div>
                         </div>
