@@ -10,8 +10,8 @@ using WebApp.Authorization;
 using Claim = WebApp.Identity.Claim;
 using WebApp.Identity;
 using Microsoft.AspNetCore.Authorization;
-using NuGet.Protocol.Core.Types;
 using WebApp.Dto;
+using ClosedXML.Excel;
 
 namespace WebApp.Controllers
 {
@@ -19,10 +19,12 @@ namespace WebApp.Controllers
     public class LaudoController : BaseController
     {
         private readonly IOptions<UrlSettings> _appSettings;
+        private readonly IWebHostEnvironment _host;
 
-        public LaudoController(IOptions<UrlSettings> appSettings)
+        public LaudoController(IOptions<UrlSettings> appSettings, IWebHostEnvironment host)
         {
             _appSettings = appSettings;
+            _host = host;
             ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
         }
 
@@ -50,7 +52,7 @@ namespace WebApp.Controllers
                     TipoLaudoId = collection["ddlTipoLaudo"].ToString(),
                     AlunoId = collection["ddlAluno"].ToString(),
                     PageNumber = 1,
-                    PageSize = 50
+                    PageSize = 1000
                 };
 
                 var response = await ApiClientFactory.Instance.GetLaudosByFilter(searchFilter);
@@ -67,7 +69,7 @@ namespace WebApp.Controllers
                 }
                 SelectList localidades = null;
 
-                if (!string.IsNullOrEmpty(response.LocalidadeId))
+                if (!string.IsNullOrEmpty(response.LocalidadeId) || response.MunicipioId != null)
                 {
                     localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeByMunicipio(response.MunicipioId), "Id", "Nome", response.LocalidadeId);
                 }
@@ -471,6 +473,82 @@ namespace WebApp.Controllers
                     Saude = saude,
                     TalentoEsportivo = talentoEsportivo
                 });
+            }
+            catch (Exception e)
+            {
+                Console.Write(e.StackTrace);
+                return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = e.Message });
+
+            }
+        }
+
+
+
+        [ClaimsAuthorize(ClaimType.Laudo, Claim.Consultar)]
+        public async Task<IActionResult> ExportLaudo(int? crud, int? notify, IFormCollection collection, string message = null)
+        {
+            try
+            {
+                var usuario = User.Identity.Name;
+
+                SetNotifyMessage(notify, message);
+                SetCrudMessage(crud);
+
+                var searchFilter = new LaudosFilterDto
+                {
+                    UsuarioEmail = usuario,
+                    FomentoId = collection["ddlFomento"].ToString(),
+                    Estado = collection["ddlEstado"].ToString(),
+                    MunicipioId = collection["ddlMunicipio"].ToString(),
+                    LocalidadeId = collection["ddlLocalidade"].ToString(),
+                    TipoLaudoId = collection["ddlTipoLaudo"].ToString(),
+                    AlunoId = collection["ddlAluno"].ToString(),
+                    PageNumber = 1,
+                    PageSize = 1000
+                };
+
+                var result = await ApiClientFactory.Instance.GetLaudosByFilter(searchFilter);
+
+                var workbook = new XLWorkbook();
+                workbook.AddWorksheet("sheetName");
+                var ws = workbook.Worksheet("sheetName");
+                ws.Cell(1, 1).Value = "Matrícula";
+                ws.Cell(1, 2).Value = "Aluno";
+                ws.Cell(1, 3).Value = "Localidade";
+                ws.Cell(1, 4).Value = "Email";
+                ws.Cell(1, 5).Value = "Telefone";
+                ws.Cell(1, 6).Value = "Celular";
+                int row = 2;
+                foreach (var item in result.Laudos.Items.ToList())
+                {
+                    ws.Cell("A" + row).Value = item.Id;
+                    ws.Cell("B" + row).Value = item.NomeAluno;
+                    ws.Cell("C" + row).Value = item.NomeLocalidade;
+                    ws.Cell("D" + row).Value = item.Email;
+                    ws.Cell("E" + row).Value = item.Telefone;
+                    ws.Cell("F" + row).Value = item.Celular;
+                    row++;
+                }
+                var filePath = Path.Combine(_host.WebRootPath, "Exportacao/laudo.xlsx");
+
+                if (!Directory.Exists(Path.Combine(_host.WebRootPath, "Exportacao")))
+                    Directory.CreateDirectory(Path.Combine(_host.WebRootPath, "Exportacao"));
+
+                workbook.SaveAs(filePath);
+
+                if (!System.IO.File.Exists(filePath))
+                {
+                    return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Warning, message = "Arquivo não encontrado." });
+                }
+
+                var fileBytes = System.IO.File.ReadAllBytes(filePath);
+
+                var response = new FileContentResult(fileBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                {
+                    FileDownloadName = DateTime.Now.ToString("ddMMyyyy") + "-laudo.xlsx"
+                };
+
+                return response;
             }
             catch (Exception e)
             {
