@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using WebApp.Authorization;
 using WebApp.Configuration;
 using WebApp.Dto;
@@ -55,17 +56,13 @@ public class QuestaoEadController : BaseController
     /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
     /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
     /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
-    [ClaimsAuthorize(ClaimType.QuestaoEad, Identity.Claim.Incluir)]
+    //[ClaimsAuthorize(ClaimType.QuestaoEad, Identity.Claim.Incluir)]
     public ActionResult Create(int? crud, int? notify, string message = null)
     {
         try
         {
             SetNotifyMessage(notify, message);
             SetCrudMessage(crud);
-            var modulosEad = new SelectList(ApiClientFactory.Instance.GetModulosEadAll(), "Id", "Nome");
-            var tipoCurso = new SelectList(ApiClientFactory.Instance.GetTipoCursosAll(), "Id", "Nome");
-            //var curso = new SelectList(ApiClientFactory.Instance.GetCursosAll(), "Id", "Nome");
-
 
             return View(new QuestaoEadModel());
         }
@@ -77,93 +74,70 @@ public class QuestaoEadController : BaseController
         }
     }
 
-    ///// <summary>
-    ///// Ação de inclusão do QuestaoEad
-    ///// </summary>
-    ///// <param name="collection">coleção de dados para inclusao de QuestaoEad</param>
-    ///// <returns>retorna mensagem de inclusao através do parametro crud</returns>
+    /// <summary>
+    /// Ação de inclusão do QuestaoEad
+    /// </summary>
+    /// <param name="collection">coleção de dados para inclusao de QuestaoEad</param>
+    /// <returns>retorna mensagem de inclusao através do parametro crud</returns>
     //[ClaimsAuthorize(ClaimType.QuestaoEad, Identity.Claim.Incluir)]
-    //[HttpPost]
-    //public async Task<ActionResult> Create(IFormCollection collection)
-    //{
-    //    try
-    //    {
-    //        var command = new QuestaoEadModel.CreateUpdateQuestaoEadCommand
-    //        {
-    //            CursoId = Convert.ToInt32(collection["ddlCurso"].ToString()),
-    //            Titulo = collection["nome"].ToString(),
-    //            Descricao = collection["descricao"].ToString(),
-    //            CargaHoraria = Convert.ToInt32(collection["cargaHoraria"].ToString())
-    //        };
+    [HttpPost]
+    public async Task<ActionResult> Create(IFormCollection collection)
+    {
+        try
+        {
+            List<RespostaEadDto> respostasList = new List<RespostaEadDto>();
 
-    //        //foreach (var file in collection.Files)
-    //        //{
-    //        //    if (file.Length <= 0) continue;
+            var command = new QuestaoEadModel.CreateUpdateQuestaoEadCommand
+            {
+                Id = Convert.ToInt32(collection["editQuestaoEadId"]),
+                Pergunta = collection["pergunta"].ToString(),
+                Respostas = JsonConvert.DeserializeObject<List<RespostaEadDto>>(collection["respostas"]),
+                Quadrante = Convert.ToInt32(collection["quadrante"].ToString()),
+                Questao = Convert.ToInt32(collection["questao"].ToString()),
+            };
 
-    //        //    command.Imagem = Path.GetFileName(collection.Files[0].FileName);
+            await ApiClientFactory.Instance.CreateQuestaoEad(command);
 
-    //        //    using (var ms = new MemoryStream())
-    //        //    {
-    //        //        file.CopyToAsync(ms);
-    //        //        var byteIMage = ms.ToArray();
-    //        //        command.ByteImage = byteIMage;
-    //        //    }
-    //        //}
-
-    //        await ApiClientFactory.Instance.CreateQuestaoEad(command);
-
-    //        return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
-    //    }
-    //    catch (Exception e)
-    //    {
-    //        return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = "Erro ao executar esta ação. Favor entrar em contato com o administrador do sistema." });
-    //    }
-    //}
+            return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
+        }
+        catch (Exception e)
+        {
+            return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = "Erro ao executar esta ação. Favor entrar em contato com o administrador do sistema." });
+        }
+    }
 
 
-    ///// <summary>
-    ///// Ação de alteração do QuestaoEad
-    ///// </summary>
-    ///// <param name="id">identificador do QuestaoEad</param>
-    ///// <param name="collection">coleção de dados para alteração de QuestaoEad</param>
-    ///// <returns>retorna mensagem de alteração através do parametro crud</returns>
-    //[ClaimsAuthorize(ClaimType.QuestaoEad, Identity.Claim.Alterar)]
-    //public async Task<ActionResult> Edit(IFormCollection collection)
-    //{
-    //    try
-    //    {
-    //        var command = new QuestaoEadModel.CreateUpdateQuestaoEadCommand
-    //        {
-    //            Id = Convert.ToInt32(collection["editQuestaoEadId"]),
-    //            Titulo = collection["nome"].ToString(),
-    //            Descricao = collection["descricao"].ToString(),
-    //            CargaHoraria = Convert.ToInt32(collection["cargaHoraria"].ToString()),
-    //            Status = collection["editStatus"].ToString() == "" ? false : true
-    //        };
+    /// <summary>
+    /// Ação de alteração do QuestaoEad
+    /// </summary>
+    /// <param name="id">identificador do QuestaoEad</param>
+    /// <param name="collection">coleção de dados para alteração de QuestaoEad</param>
+    /// <returns>retorna mensagem de alteração através do parametro crud</returns>
+    [ClaimsAuthorize(ClaimType.QuestaoEad, Identity.Claim.Alterar)]
+    public async Task<ActionResult> Edit(IFormCollection collection)
+    {
+        try
+        {
+            List<RespostaEadDto> respostasList = new List<RespostaEadDto>();
 
-    //        //foreach (var file in collection.Files)
-    //        //{
-    //        //    if (file.Length <= 0) continue;
+            var command = new QuestaoEadModel.CreateUpdateQuestaoEadCommand
+            {
+                Id = Convert.ToInt32(collection["editQuestaoEadId"]),
+                Pergunta = collection["pergunta"].ToString(),
+                Respostas = JsonConvert.DeserializeObject<List<RespostaEadDto>>(collection["respostas"]),
+                Quadrante = Convert.ToInt32(collection["quadrante"].ToString()),
+                Questao = Convert.ToInt32(collection["questao"].ToString()),
+            };
 
-    //        //    command.Imagem = Path.GetFileName(collection.Files[0].FileName);
+            await ApiClientFactory.Instance.UpdateQuestaoEad(command.Id, command);
 
-    //        //    using (var ms = new MemoryStream())
-    //        //    {
-    //        //        file.CopyToAsync(ms);
-    //        //        var byteIMage = ms.ToArray();
-    //        //        command.ByteImage = byteIMage;
-    //        //    }
-    //        //}
-
-    //        await ApiClientFactory.Instance.UpdateQuestaoEad(command.Id, command);
-
-    //        return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
-    //    }
-    //    catch (Exception e)
-    //    {
-    //        return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = "Erro ao executar esta ação. Favor entrar em contato com o administrador do sistema." });
-    //    }
-    //}
+            return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+        }
+        catch (Exception e)
+        {
+            return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = "Erro ao executar esta ação. Favor entrar em contato com o administrador do sistema." });
+        }
+    }
 
     /// <summary>
     /// Ação de exclusão do QuestaoEad

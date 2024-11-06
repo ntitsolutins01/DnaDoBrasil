@@ -2,10 +2,10 @@
 {
     public class QuestaoEadDto
     {
-        public int Id { get; init; }
-        public required string Pergunta { get; init; }
-        public List<RespostaEadDto>? Respostas { get; init; }
-        public required int Quadrante { get; init; }
-        public required int Questao { get; init; }
+        public int Id { get; set; }
+        public required string Pergunta { get; set; }
+        public List<RespostaEadDto>? Respostas { get; set; }
+        public required int Quadrante { get; set; }
+        public required int Questao { get; set; }
     }
 }

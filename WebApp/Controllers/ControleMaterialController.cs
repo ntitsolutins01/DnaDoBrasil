@@ -63,8 +63,6 @@ public class ControleMaterialController : BaseController
             SetCrudMessage(crud);
             var linhaAcao = new SelectList(ApiClientFactory.Instance.GetLinhasAcoesAll(), "Id", "Nome");
 
-
-
             return View(new ControleMaterialModel()
             {
                 ListLinhasAcoes = linhaAcao

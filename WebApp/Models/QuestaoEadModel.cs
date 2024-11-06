@@ -17,7 +17,10 @@ namespace WebApp.Models
         public class CreateUpdateQuestaoEadCommand
         {
             public int Id { get; set; }
-            public bool Status { get; set; }
+            public string Pergunta { get; set; }
+            public List<RespostaEadDto>? Respostas { get; set; }
+            public required int Quadrante { get; set; }
+            public required int Questao { get; set; }
         }
     }
 

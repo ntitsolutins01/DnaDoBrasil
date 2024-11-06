@@ -1,0 +1,74 @@
+﻿<div id="vQuestaoEad">
+    <div class="row">
+        <div class="col-md-12">
+            @using (@Html.BeginForm("Create", "QuestaoEad", FormMethod.Post, new { id = "formQuestaoEad", @class = "form-horizontal" }))
+            {
+                <section class="panel">
+                    <header class="panel-heading">
+                        <div class="panel-actions">
+                            <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
+                        </div>
+                        <h2 class="panel-title">Cadastro de Questão</h2>
+                    </header>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label class="col-sm-1 control-label text-sm-right pt-2">Pergunta </label>
+                            <div class="col-sm-11">
+                                <textarea class="form-control" rows="3" maxlength="500" name="pergunta" id="pergunta" required></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-1 control-label text-sm-right pt-2">Quadrante </label>
+                            <div class="col-sm-5">
+                                <input type="text" name="quadrante" id="quadrante" class="form-control"
+                                       maxlength="150"
+                                       title="Por favor informe o quadrante." required />
+                            </div>
+                            <label class="col-sm-1 control-label text-sm-right pt-2">Questao </label>
+                            <div class="col-sm-5">
+                                <input type="text" name="questao" id="questao" class="form-control"
+                                       maxlength="150"
+                                       title="Por favor informe a questao." required />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-1 control-label text-sm-right pt-2">Respostas</label>
+                            <div class="col-sm-11" id="answers-container">
+                                <input name="respostas" id="respostas" type="text" class="form-control" placeholder="Digite uma resposta" style="margin-bottom: 10px;" />
+                            </div>
+                            <div class="col-sm-11 col-sm-offset-1">
+                                <button type="button" class="btn btn-primary" onclick="addAnswerInput()">Adicionar Respostas</button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <footer class="panel-footer">
+                        <div class="row">
+                            <div class="col-md-9 col-md-offset-3">
+                                <a href="@Url.Action("Index", "QuestaoEad")" class="btn btn-dark pull-right" style="margin-left: 5px;margin-right: 5px;"><i class="fa fa-reply"></i> &nbsp;&nbsp;Voltar</a>
+                                <button type="reset" class="btn btn-danger pull-right" style="margin-left: 5px;"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
+                                <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
+                            </div>
+                        </div>
+                    </footer>
+                </section>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function addAnswerInput() {
+            const input = document.createElement("input");
+            input.type = "text";
+            input.name = "respostas[]";
+            input.className = "form-control";
+            input.placeholder = "Digite uma resposta";
+
+            document.getElementById("answers-container").appendChild(input);
+        }
+    </script>
+}
