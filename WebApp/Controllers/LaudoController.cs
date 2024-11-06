@@ -67,7 +67,7 @@ namespace WebApp.Controllers
                 }
                 SelectList localidades = null;
 
-                if (!string.IsNullOrEmpty(response.LocalidadeId))
+                if (!string.IsNullOrEmpty(response.LocalidadeId) || response.MunicipioId != null)
                 {
                     localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeByMunicipio(response.MunicipioId), "Id", "Nome", response.LocalidadeId);
                 }
