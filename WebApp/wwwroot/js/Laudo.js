@@ -73,18 +73,6 @@ var vm = new Vue({
                         datatableInit();
                     });
 
-                    new DataTable('#datatable-default', {
-                        layout: {
-                            topStart: {
-                                buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
-                            }
-                        }
-                    });
-
-                    //$("#btnExportarLaudo").on("click", function () {
-                    //    table.button('.buttons-csv').trigger();
-                    //});
-
                 }).apply(this, [jQuery]);
 
                 var $select = $(".select2").select2({
