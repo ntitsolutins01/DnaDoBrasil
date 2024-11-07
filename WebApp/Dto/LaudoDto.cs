@@ -1,4 +1,6 @@
-﻿namespace WebApp.Dto
+﻿using ClosedXML.Excel;
+
+namespace WebApp.Dto
 {
     public class LaudoDto
     {
@@ -49,6 +51,17 @@
         #region Saude
 
         public string? ImcSaude { get; set; }
+
+        #endregion
+
+        #region Edição de Laudo
+        public string? Uf { get; init; }
+
+        #endregion
+
+        #region Exportacao
+        public string Telefone { get; set; }
+        public string Celular { get; set; }
 
         #endregion
     }
