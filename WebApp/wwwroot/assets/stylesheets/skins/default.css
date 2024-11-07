@@ -290,6 +290,7 @@ body .btn-purple {
 }
 
 	body .btn-purple:hover {
+        color: #ffffff;
 		border-color: #ab47bc !important;
 		background-color: #ab47bc;
 	}
