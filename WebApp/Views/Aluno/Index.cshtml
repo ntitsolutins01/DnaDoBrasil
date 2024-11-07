@@ -84,104 +84,107 @@
         </div>
     </div>
 
-    <section class="panel">
-        <header class="panel-heading">
-            <div class="panel-actions">
-                <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
-            </div>
+<section class="panel">
+    <header class="panel-heading">
+        <div class="panel-actions">
+            <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
+        </div>
 
-            <h2 class="panel-title">Listagem de Alunos</h2>
+        <h2 class="panel-title">Listagem de Alunos</h2>
 
-        </header>
-        <div class="panel-body" id="pResult">
-            <div class="form-group row">
-                @{
-                    bool filtroVazio = string.IsNullOrEmpty(Model.SearchFilter.MunicipioId) ?
+    </header>
+    <div class="panel-body" id="pResult">
+        <div class="form-group row">
+            @{
+                bool filtroVazio = string.IsNullOrEmpty(Model.SearchFilter.MunicipioId) ?
                     string.IsNullOrEmpty(Model.SearchFilter.FomentoId) ?
-                    string.IsNullOrEmpty(Model.SearchFilter.LocalidadeId) ?
-                    string.IsNullOrEmpty(Model.SearchFilter.Sexo) ?
-                    string.IsNullOrEmpty(Model.SearchFilter.DeficienciaId) ?
-                    string.IsNullOrEmpty(Model.SearchFilter.Estado) ?
-                    string.IsNullOrEmpty(Model.SearchFilter.Etnia) : false
-                    : false
-                    : false
-                    : false
-                    : false
+                        string.IsNullOrEmpty(Model.SearchFilter.LocalidadeId) ?
+                            string.IsNullOrEmpty(Model.SearchFilter.Sexo) ?
+                                string.IsNullOrEmpty(Model.SearchFilter.DeficienciaId) ?
+                                    string.IsNullOrEmpty(Model.SearchFilter.Estado) ?
+                                        string.IsNullOrEmpty(Model.SearchFilter.Etnia) : false
+                                    : false
+                                : false
+                            : false
+                        : false
                     : false;
 
-                    if (filtroVazio)
-                    {
-                        <div class="col-sm-8 pull-left">
-                            <div class="alert alert-warning" style="padding-bottom: 6px;padding-top: 6px; !important; margin-bottom: 10px; !important">
-                                <strong>Atenção!</strong> Os alunos listados são referentes ao seu <a href="" class="alert-link">Estado/Município</a> de cadastro.
-                            </div>
+                if (filtroVazio)
+                {
+                    <div class="col-sm-8 pull-left">
+                        <div class="alert alert-warning" style="padding-bottom: 6px;padding-top: 6px; !important; margin-bottom: 10px; !important">
+                            <strong>Atenção!</strong> Os alunos listados são referentes ao seu <a href="" class="alert-link">Estado/Município</a> de cadastro.
                         </div>
-                        <div class="col-sm-8 pull-left">
-                            <div class="alert alert-info" style="padding-bottom: 6px;padding-top: 6px; !important; margin-bottom: 10px; !important">
-                                <strong>Info:</strong> Para impressão em lote selecione o filtro e clique em <a href="" class="alert-link">Impressão em Lote</a>.
-                            </div>
+                    </div>
+                    <div class="col-sm-8 pull-left">
+                        <div class="alert alert-info" style="padding-bottom: 6px;padding-top: 6px; !important; margin-bottom: 10px; !important">
+                            <strong>Info:</strong> Para impressão em lote selecione o filtro e clique em <a href="" class="alert-link">Impressão em Lote</a>.
                         </div>
-                    }
+                    </div>
                 }
-                <div class="col-sm-2 pull-right">
-                    <a href="@Url.Action("Create", "Aluno")" id="addToTable" class="btn btn-block btn-primary pull-right"><i class="fa fa-plus"></i>  &nbsp;&nbsp;Novo Aluno </a>
-                </div>
-                <div class="col-sm-2 pull-right">
-                    <a id="btnImprimirLote" class="btn btn-block btn-info pull-right">
-                        <i class="fa fa-print"></i> &nbsp;&nbsp;Impressão em Lote
-                    </a>
-                </div>
+            }
+            <div class="col-sm-2 pull-right">
+                <a href="@Url.Action("Create", "Aluno")" id="addToTable" class="btn btn-block btn-primary pull-right"><i class="fa fa-plus"></i>  &nbsp;&nbsp;Novo Aluno </a>
             </div>
-            <table class="table table-bordered table-striped mb-0" id="datatable-default">
-                <thead>
-                    <tr>
-                        <th class="text-center"></th>
-                        <th class="text-center">Id</th>
-                        <th class="text-center">Nome</th>
-                        <th class="text-center">Email</th>
-                        <th class="text-center">Data de Nascimento</th>
-                        <th class="text-center">Status</th>
-                        <th class="text-center">Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.Alunos)
-                    {
-                        <tr>
-                            <td class="text-center"></td>
-                            <td class="text-center">@Html.DisplayFor(modelItem => item.Id)</td>
-                            <td class="text-center">@Html.DisplayFor(modelItem => item.Nome)</td>
-                            <td class="text-center">@Html.DisplayFor(modelItem => item.Email)</td>
-                            <td class="text-center">@Html.DisplayFor(modelItem => item.DtNascimento)</td>
-                            @if (item.Status)
-                            {
-                                <td class="text-center"><span class="label label-success" style="display: block;">ATIVO</span></td>
-                            }
-                            else
-                            {
-                                <td class="text-center"><span class="label label-danger" style="display: block;">INATIVO</span></td>
-                            }
-                            <td class="actions text-center">
-                                <a data-toggle="tooltip" data-placement="top" title="Editar" asp-action="Edit" asp-controller="Aluno" asp-route-Id="@item.Id" class="on-default edit-row" style='color: #FF9800'><i class="fa fa-pencil"></i></a>
-                                <a data-toggle="tooltip" data-placement="top" title="Carteirinha"
-                                   href='javascript:(crud.CarterinhaModal(@item.Id))'
-                                   class="on-default edit-row" style='color: #8E24AA'>
-                                    <i class="fa fa-address-card-o"></i>
-                                </a>
-
-                                <a href="#" data-id="@item.Id" data-toggle="modal" data-target="#mdUpload"
-                                   data-toggle="tooltip" data-placement="top" title="Upload Foto"
-                                   class="on-default edit-row" style='color: #303F9F'><i class="fa fa-upload"></i></a>
-
-                                <a data-toggle="tooltip" data-placement="top" title="Excluir" href='javascript:(crud.DeleteModal(@item.Id))'
-                                   class="on-default remove-row" style="cursor: pointer;color: #F44336"><i class="fa fa-trash"></i></a>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+            <div class="col-sm-2 pull-right">
+                <a id="btnImprimirLote" class="btn btn-block btn-info pull-right">
+                    <i class="fa fa-print"></i> &nbsp;&nbsp;Impressão em Lote
+                </a>
+            </div>
         </div>
-    </section>
+        <table class="table table-bordered table-striped mb-0" id="datatable-default">
+            <thead>
+            <tr>
+                <th class="text-center"></th>
+                <th class="text-center">Id</th>
+                <th class="text-center">Nome</th>
+                <th class="text-center">Email</th>
+                <th class="text-center">Data de Nascimento</th>
+                <th class="text-center">Status</th>
+                <th class="text-center">Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model.Alunos)
+            {
+                <tr>
+                    <td class="text-center"></td>
+                    <td class="text-center">@Html.DisplayFor(modelItem => item.Id)</td>
+                    <td class="text-center">@Html.DisplayFor(modelItem => item.Nome)</td>
+                    <td class="text-center">@Html.DisplayFor(modelItem => item.Email)</td>
+                    <td class="text-center">@Html.DisplayFor(modelItem => item.DtNascimento)</td>
+                    @if (item.Status)
+                    {
+                        <td class="text-center"><span class="label label-success" style="display: block;">ATIVO</span></td>
+                    }
+                    else
+                    {
+                        <td class="text-center"><span class="label label-danger" style="display: block;">INATIVO</span></td>
+                    }
+                    <td class="actions text-center">
+                        <a data-toggle="tooltip" data-placement="top" title="Editar" asp-action="Edit" asp-controller="Aluno" asp-route-Id="@item.Id" class="on-default edit-row" style='color: #FF9800'><i class="fa fa-pencil"></i></a>
+                        <a data-toggle="tooltip" data-placement="top" title="Carteirinha"
+                           href='javascript:(crud.CarterinhaModal(@item.Id))'
+                           class="on-default edit-row" style='color: #8E24AA'>
+                            <i class="fa fa-address-card-o"></i>
+                        </a>
+
+                        <a href="#" data-id="@item.Id" data-toggle="modal" data-target="#mdUpload"
+                           data-toggle="tooltip" data-placement="top" title="Upload Foto"
+                           class="on-default edit-row" style='color: #303F9F'><i class="fa fa-upload"></i></a>
+
+                        <a data-toggle="tooltip" data-placement="top" title="Excluir" href='javascript:(crud.DeleteModal(@item.Id))'
+                           class="on-default remove-row" style="cursor: pointer;color: #F44336"><i class="fa fa-trash"></i></a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<link rel="stylesheet" href="~/assets/styles_Carteirinha/modal-carteirinha.css" />
+
     <!-- Modal Carteirinha -->
     <div class="modal fade" id="mdCarteirinhaAluno" tabindex="-1" role="dialog" aria-labelledby="mdCarteirinhaAlunoLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
@@ -192,7 +195,6 @@
                     </h5>
                 </div>
                 <input type="hidden" name="carteirinhaAlunoId" :value="editDto.Id" />
-
                 <div class="modal-body">
                     <div class="row" style="margin: 10px">
                         <div class="tabs">
@@ -204,86 +206,49 @@
                                     <a href="#verso" data-toggle="tab">Verso</a>
                                 </li>
                             </ul>
-                            <div class="tab-content" style="background-image: url(assets/images/background_carteirinha.png);background-repeat: no-repeat;background-size: 100% 100%;">
+                            <div class="tab-content">
                                 <div id="frente" class="tab-pane active">
-                                    <div class="row">
-                                        <div class="col-md-8 form-group">
-                                            <img src="/assets/images/logo.png" style="width: 25%;margin-left: 40px;">
-                                            <img src="/assets/images/img_8519.png" style="width: 38%;float: left;">
+                                    <div class="student-info">
+                                        <div class="info-row">
+                                            <label>NOME DO ESTUDANTE:</label>
+                                            <span>{{editDto.Nome}}</span>
                                         </div>
-
-                                        <div class="col-md-2 form-group pull-right">
-                                            <img :src="editDto.QRCode" style="width:100%" />
+                                        <div class="info-row">
+                                            <label>DATA DE NASCIMENTO:</label>
+                                            <span>{{editDto.DtNascimento}}</span>
+                                        </div>
+                                        <div class="info-row">
+                                            <label>TELEFONE:</label>
+                                            <span>{{editDto.Telefone}}</span>
+                                        </div>
+                                        <div class="info-row">
+                                            <label>CPF:</label>
+                                            <span>{{editDto.Cpf}}</span>
+                                        </div>
+                                        <div class="info-row">
+                                            <label>MATRÍCULA:</label>
+                                            <span>{{editDto.Id}}</span>
+                                        </div>
+                                        <div class="activity-info">
+                                            {{editDto.ModalidadeLinhaAcao}}
                                         </div>
                                     </div>
-                                    <div class="row">
-
-                                        <div class="col-md-4 form-group">
-                                            <img :src="editDto.Image" style="width: 85%;margin-left: 15px;" />
-                                        </div>
-                                        <div class="col-md-8 form-group" style="margin-bottom: 0px;">
-                                            <h1 style="margin: 0">
-                                                <label class="control-label text-primary"><b>{{editDto.Nome}}</b></label>
-                                            </h1>
-                                        </div>
-                                        <div class="col-md-8 form-group">
-                                            <h3 style="margin: 0"><label class="control-label text-primary"><b>Aluno</b> </label></h3>
-                                        </div>
-                                        <div class="col-md-8 form-group" style="margin-bottom: 0px;">
-                                            <h3 style="margin: 0;"><label class="control-label text-primary"><b>CPF: </b>{{editDto.Cpf}}</label></h3>
-
-                                            <h3 style="margin: 0;"><label class="control-label text-primary">{{editDto.ModalidadeLinhaAcao}}</label></h3>
-
-                                            <h3 style="margin: 0;"><label class="control-label text-primary"><b>Data de Nascimento: </b> {{editDto.DtNascimento}}</label></h3>
-
-                                            <h3 style="margin: 0;"><label class="control-label text-primary"><b>Telefone: </b>{{editDto.Telefone}}</label></h3>
-
-                                            <h3 style="margin: 0;"><label class="control-label text-primary"><b>Matrícula: </b>{{editDto.Id}}</label></h3>
-                                        </div>
+                                    <div class="photo-container">
+                                        <img :src="editDto.Image" alt="Foto do estudante" class="student-photo">
+                                    </div>
+                                    <div class="qr-code-container">
+                                        <img :src="editDto.QRCode" alt="QR Code" class="qr-code">
                                     </div>
                                 </div>
-
                                 <div id="verso" class="tab-pane">
-                                    <div class="row">
-
-                                        <div class="col-md-2 form-group">
-                                            <img src="~/assets/images/logo_slogan_270224.png" style="width: 60%;margin-left: 30px;" />
+                                    <div class="main-content-verso">
+                                        <div class="info-row-verso">
+                                            <label>MUNICÍPIO/ESTADO:</label>
+                                            <span>{{editDto.MunicipioEstado}}</span>
                                         </div>
-
-                                        <div class="col-md-2 form-group">
-                                            <img src="~/assets/images/logo_idecace.png" style="width:100%" />
-                                        </div>
-
-                                        <div class="col-md-2 form-group">
-                                            <img src="~/assets/images/logo-sejus-horizontal.png" style="width:190%" />
-                                        </div>
-                                        <div class="col-md-4 form-group">
-                                        </div>
-
-                                        <div class="col-md-2 form-group">
-                                        </div>
-                                    </div>
-                                    <div class="row" style="    margin-top: 20px;">
-
-                                        <div class="col-md-6 form-group" style="margin-top: 15px;padding-left: 100px;">
-                                            <h3 style="margin: 0;"><label class="control-label text-primary"><b>Município / Estado</b></label></h3>
-                                            <h3 style="margin: 0;"><label class="control-label text-primary">{{editDto.MunicipioEstado}}</label></h3>
-                                            <h3 style="margin: 0;"><label class="control-label text-primary"><b>Unidade Escolar</b></label></h3>
-                                            <h3 style="margin: 0;"><label class="control-label text-primary">{{editDto.NomeLocalidade}}</label></h3>
-                                        </div>
-
-                                        <div class="col-md-6 form-group">
-                                            <img src="~/assets/images/logo_app_meia_DNA.png" style="width: 37%;margin-right: 40px;" />
-                                            <img src="~/assets/images/android-app-store-logos.png" style="width: 30%;" />
-                                        </div>
-
-                                        <div class="col-md-1 form-group" style="margin-left: 25px;">
-                                            <img src="/assets/images/selo2024_carteirinha.png" style="width: 230%;">
-                                        </div>
-                                        <div class="col-md-9 form-group" style="margin-left: 30px;">
-                                            <code>
-                                                Documento padronizado nacionalmente conforme a Lei 12.933/2013. Válido para todo o território nacional até março do ano seguinte.
-                                            </code>
+                                        <div class="info-row-verso">
+                                            <label>UNIDADE ESCOLAR:</label>
+                                            <span>{{editDto.NomeLocalidade}}</span>
                                         </div>
                                     </div>
                                 </div>
