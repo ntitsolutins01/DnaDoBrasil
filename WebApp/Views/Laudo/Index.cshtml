@@ -95,9 +95,9 @@
 
                                 if (mostrarAlerta)
                                 {
-                                    <div class="col-sm-8 pull-left">
+                                    <div class="col-sm-6 pull-left">
                                         <div class="alert alert-info" style="padding-bottom: 6px;padding-top: 6px; !important; margin-bottom: 10px; !important">
-                                            <strong>Info:</strong> Para exportação de laudos selecione o filtro e clique em
+                                            <strong>Info:</strong> Para exportação / impressão de laudos selecione o filtro e clique em
                                             <a href="" class="alert-link">Exportar Laudos</a>.
                                         </div>
                                     </div>
@@ -110,6 +110,11 @@
                             <div class="col-sm-2 pull-right">
                                 <a href="@Url.Action("ExportLaudo", "Laudo")" id="btnExportarLaudo" class="btn btn-block btn-info pull-right">
                                     <i class="fa fa-download"></i> &nbsp;&nbsp;Exportar Laudos
+                                </a>
+                            </div>
+                            <div class="col-sm-2 pull-right">
+                                <a href="@Url.Action("PrintLaudo", "Laudo")" id="btnImprimirLaudo" class="btn btn-block btn-purple pull-right">
+                                    <i class="fa fa-print"></i> &nbsp;&nbsp;Imprimir Laudos
                                 </a>
                             </div>
                         </div>
