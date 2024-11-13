@@ -54,7 +54,7 @@ namespace WebApp.Controllers
             };
             return View(model);
         }
-        //[ClaimsAuthorize("Usuario", "Incluir")]
+
         [HttpPost]
         public async Task<ActionResult> Create(IFormCollection collection)
         {
@@ -67,9 +67,9 @@ namespace WebApp.Controllers
                     Codigo = collection["codigo"].ToString(),
                     DtIni = collection["dtIni"].ToString(),
                     DtFim = collection["dtFim"].ToString(),
-					Nome = collection["Nome"].ToString(),
-					LinhaAcoes = collection["ddlLinhaAcao"].ToString()
-				};
+                    Nome = collection["Nome"].ToString(),
+                    LinhaAcoes = collection["ddlLinhaAcao"].ToString()
+                };
 
                 await ApiClientFactory.Instance.CreateFomento(command);
 
@@ -81,25 +81,51 @@ namespace WebApp.Controllers
             }
         }
 
-        //[ClaimsAuthorize("Usuario", "Alterar")]
-        public async Task<ActionResult> Edit(IFormCollection collection)
+        public ActionResult Edit(int id, int? crud, int? notify, string message = null)
+        {
+            SetNotifyMessage(notify, message);
+            SetCrudMessage(crud);
+
+            var fomento = ApiClientFactory.Instance.GetFomentoById(id);
+
+            var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", fomento.Sigla);
+			var municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(fomento.Sigla), "Id", "Nome", fomento.MunicipioId);
+			var localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeByMunicipio(fomento.MunicipioId.ToString()), "Id", "Nome", fomento.LocalidadeId);
+			var linhasAcoes = new SelectList(ApiClientFactory.Instance.GetLinhasAcoesAll(), "Id", "Nome", fomento.LinhaAcoes);
+
+            var model = new FomentoModel
+            {
+                ListEstados = estados,
+                ListLinhasAcoes = linhasAcoes,
+                ListMunicipios = municipios,
+                ListLocalidades = localidades,
+                Fomento = fomento
+
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Edit(int id, IFormCollection collection)
         {
             var command = new FomentoModel.CreateUpdateFomentoCommand
             {
-                Id = Convert.ToInt32(collection["editFomentoId"]),
+                Id = id,
                 Codigo = collection["codigo"].ToString(),
                 Nome = collection["Nome"].ToString(),
                 DtIni = collection["dtIni"].ToString(),
                 DtFim = collection["dtFim"].ToString(),
-				Status = collection["editStatus"].ToString() == "" ? false : true
-			};
+                LinhaAcoes = collection["ddlLinhaAcao"].ToString(),
+                LocalidadeId = Convert.ToInt32(collection["ddlLocalidade"].ToString()),
+                MunicipioId = Convert.ToInt32(collection["ddlMunicipio"].ToString()),
+                Status = collection["editStatus"].ToString() == "" ? false : true
+            };
 
             await ApiClientFactory.Instance.UpdateFomento(command.Id, command);
 
             return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
         }
 
-        //[ClaimsAuthorize("Usuario", "Excluir")]
         public ActionResult Delete(int id)
         {
             try
@@ -116,7 +142,7 @@ namespace WebApp.Controllers
         public Task<FomentoDto> GetFomentoById(int id)
         {
             var result = ApiClientFactory.Instance.GetFomentoById(id);
-            
+
             return Task.FromResult(result);
         }
 
