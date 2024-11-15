@@ -44,9 +44,12 @@ namespace WebApp.Controllers
             SetCrudMessage(crud);
 
             var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
+            var linhasAcoes = new SelectList(ApiClientFactory.Instance.GetLinhasAcoesAll(), "Id", "Nome");
+
             var model = new FomentoModel
             {
-                ListEstados = estados
+                ListEstados = estados,
+                ListLinhasAcoes = linhasAcoes
 
             };
             return View(model);
@@ -64,8 +67,9 @@ namespace WebApp.Controllers
                     Codigo = collection["codigo"].ToString(),
                     DtIni = collection["dtIni"].ToString(),
                     DtFim = collection["dtFim"].ToString(),
-					Nome = collection["Nome"].ToString()
-                };
+					Nome = collection["Nome"].ToString(),
+					LinhaAcoes = collection["ddlLinhaAcao"].ToString()
+				};
 
                 await ApiClientFactory.Instance.CreateFomento(command);
 
