@@ -64,7 +64,12 @@ public class QuestaoEadController : BaseController
             SetNotifyMessage(notify, message);
             SetCrudMessage(crud);
 
-            return View(new QuestaoEadModel());
+            var aula = new SelectList(ApiClientFactory.Instance.GetAulasAll(), "Id", "Titulo");
+
+            return View(new QuestaoEadModel()
+            {
+                ListAulas = aula
+            });
         }
         catch (Exception e)
         {
@@ -90,9 +95,10 @@ public class QuestaoEadController : BaseController
             var command = new QuestaoEadModel.CreateUpdateQuestaoEadCommand
             {
                 Id = Convert.ToInt32(collection["editQuestaoEadId"]),
+                AulaId = Convert.ToInt32(collection["ddlAula"]),
+                Referencia = collection["referencia"].ToString(),
                 Pergunta = collection["pergunta"].ToString(),
                 Respostas = JsonConvert.DeserializeObject<List<RespostaEadDto>>(collection["respostas"]),
-                Quadrante = Convert.ToInt32(collection["quadrante"].ToString()),
                 Questao = Convert.ToInt32(collection["questao"].ToString()),
             };
 
@@ -113,7 +119,7 @@ public class QuestaoEadController : BaseController
     /// <param name="id">identificador do QuestaoEad</param>
     /// <param name="collection">coleção de dados para alteração de QuestaoEad</param>
     /// <returns>retorna mensagem de alteração através do parametro crud</returns>
-    [ClaimsAuthorize(ClaimType.QuestaoEad, Identity.Claim.Alterar)]
+    //[ClaimsAuthorize(ClaimType.QuestaoEad, Identity.Claim.Alterar)]
     public async Task<ActionResult> Edit(IFormCollection collection)
     {
         try
@@ -123,9 +129,9 @@ public class QuestaoEadController : BaseController
             var command = new QuestaoEadModel.CreateUpdateQuestaoEadCommand
             {
                 Id = Convert.ToInt32(collection["editQuestaoEadId"]),
+                Referencia = collection["referencia"].ToString(),
                 Pergunta = collection["pergunta"].ToString(),
                 Respostas = JsonConvert.DeserializeObject<List<RespostaEadDto>>(collection["respostas"]),
-                Quadrante = Convert.ToInt32(collection["quadrante"].ToString()),
                 Questao = Convert.ToInt32(collection["questao"].ToString()),
             };
 
@@ -145,7 +151,7 @@ public class QuestaoEadController : BaseController
     /// <param name="id">identificador do QuestaoEad</param>
     /// <param name="collection">coleção de dados para exclusão de QuestaoEad</param>
     /// <returns>retorna mensagem de exclusão através do parametro crud</returns>
-    [ClaimsAuthorize(ClaimType.QuestaoEad, Identity.Claim.Excluir)]
+    //[ClaimsAuthorize(ClaimType.QuestaoEad, Identity.Claim.Excluir)]
     public ActionResult Delete(int id)
     {
         try

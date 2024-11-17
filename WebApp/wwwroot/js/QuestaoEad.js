@@ -1,8 +1,8 @@
 var vm = new Vue({
-    el: "#vTextoLaudo",
+    el: "#vQuestaoEad",
     data: {
         loading: false,
-        editDto: { Id: "", Classificacao: "", PontoInicial: "", PontoFinal: "", Aviso: "", Txto: "", NomeTipoLaudo:"", Idade:"", Sexo: "" }
+        editDto: { Id: "", NomeAula: "", Pergunta: "", Questao: ""}
     },
     mounted: function () {
         var self = this;
@@ -12,7 +12,7 @@ var vm = new Vue({
 
             var formid = $('form').attr('id');
 
-            if (formid === "formEditTextoLaudo") {
+            if (formid === "formEditQuestaoEad") {
 
 
                 //mascara dos inputs
@@ -22,7 +22,7 @@ var vm = new Vue({
                 var $pontoFinal = $("#pontoFinal");
                 $pontoFinal.mask('00.00', { reverse: true });
 
-                $("#formEditTextoLaudo").validate({
+                $("#formEditQuestaoEad").validate({
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
                     },
@@ -42,7 +42,7 @@ var vm = new Vue({
                 });
             } 
 
-            if (formid === "formTextoLaudo") {
+            if (formid === "formQuestaoEad") {
                 var $select = $(".select2").select2({
                     allowClear: true
                 });
@@ -74,7 +74,7 @@ var vm = new Vue({
                 var $pontoFinal = $("#pontoFinal");
                 $pontoFinal.mask('00.00', { reverse: true });
 
-                $("#formTextoLaudo").validate({
+                $("#formQuestaoEad").validate({
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
                     },
@@ -115,14 +115,14 @@ var vm = new Vue({
                 self.loading = flag;
             }
         },
-        DeleteTextoLaudo: function (id) {
-            var url = "TextoLaudo/Delete/" + id;
-            $("#deleteTextoLaudoHref").prop("href", url);
+        DeleteQuestaoEad: function (id) {
+            var url = "QuestaoEad/Delete/" + id;
+            $("#deleteQuestaoEadHref").prop("href", url);
         },
-        EditTextoLaudo: function (id) {
+        EditQuestaoEad: function (id) {
             var self = this;
 
-            axios.get("TextoLaudo/GetTextoLaudoById/?id=" + id).then(result => {
+            axios.get("QuestaoEad/GetQuestaoEadById/?id=" + id).then(result => {
 
                 self.editDto.Id = result.data.id;
                 self.editDto.Classificacao = result.data.classificacao;
@@ -143,13 +143,13 @@ var vm = new Vue({
 
 var crud = {
     DeleteModal: function (id) {
-        $('input[name="deleteTextoLaudoId"]').attr('value', id);
-        $('#mdDeleteTextoLaudo').modal('show');
-        vm.DeleteTextoLaudo(id)
+        $('input[name="deleteQuestaoEadId"]').attr('value', id);
+        $('#mdDeleteQuestaoEad').modal('show');
+        vm.DeleteQuestaoEad(id)
     },
     EditModal: function (id) {
-        $('input[name="editTextoLaudoId"]').attr('value', id);
-        $('#mdEditTextoLaudo').modal('show');
-        vm.EditTextoLaudo(id)
+        $('input[name="editQuestaoEadId"]').attr('value', id);
+        $('#mdEditQuestaoEad').modal('show');
+        vm.EditQuestaoEad(id)
     }
 };

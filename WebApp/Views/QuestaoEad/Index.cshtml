@@ -24,9 +24,10 @@
                         <thead>
                             <tr>
                                 <th class="text-center">Id</th>
+                                <th class="text-center">Aula</th>
                                 <th class="text-center">Pergunta</th>
-                                <th class="text-center">Quadrante</th>
                                 <th class="text-center">Questao</th>
+                                <th class="text-center">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -34,19 +35,20 @@
                             {
                                 <tr>
                                     <td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Id)</td>
+                                    <td class="text-center" style="width:100px;">@Html.DisplayFor(modelItem => item.NomeAula)</td>
                                     <td class="text-center" style="width:500px;">@Html.DisplayFor(modelItem => item.Pergunta)</td>
-                                    <td class="text-center" style="width:50px;">@Html.DisplayFor(modelItem => item.Quadrante)</td>
-                                    <td class="text-center" style="width:100px;">@Html.DisplayFor(modelItem => item.Questao)</td>
+                                    <td class="text-center" style="width:20px; !important">@Html.DisplayFor(modelItem => item.Questao)</td>
 
-                                    <td class="actions text-center">
+                                    <td class="actions text-center" style="width: 20px; !important">
                                         <a data-toggle="tooltip" data-placement="top" title="Editar"
                                            href='javascript:(crud.EditModal(@item.Id))'
                                            class="on-default edit-row" style='color: #FF9800'>
                                             <i class="fa fa-pencil"></i>
                                         </a>
                                         <a data-toggle="tooltip" data-placement="top" title="Excluir" href='javascript:(crud.DeleteModal(@item.Id))'
-                                           class="on-default remove-row" style="QuestaoEad: pointer;color: #F44336"><i class="fa fa-trash"></i></a>
+                                           class="on-default remove-row" style="ModuloEad: pointer;color: #F44336"><i class="fa fa-trash"></i></a>
                                     </td>
+
                                 </tr>
                             }
                         </tbody>
