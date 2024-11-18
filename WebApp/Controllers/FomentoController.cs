@@ -118,7 +118,7 @@ namespace WebApp.Controllers
                 LinhaAcoes = collection["ddlLinhaAcao"].ToString(),
                 LocalidadeId = Convert.ToInt32(collection["ddlLocalidade"].ToString()),
                 MunicipioId = Convert.ToInt32(collection["ddlMunicipio"].ToString()),
-                Status = collection["editStatus"].ToString() == "" ? false : true
+                Status = collection["status"].ToString() == "" ? false : true
             };
 
             await ApiClientFactory.Instance.UpdateFomento(command.Id, command);
