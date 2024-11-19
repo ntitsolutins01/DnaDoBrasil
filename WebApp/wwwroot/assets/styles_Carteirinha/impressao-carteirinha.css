@@ -1,0 +1,247 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* Estilos base e configuração de mídia de impressão */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+}
+
+/* Configurações de visualização na tela */
+@media screen {
+    body {
+        padding-top: 80px;
+        flex-direction: column;
+    }
+
+    .print-controls {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: white;
+        padding: 15px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        z-index: 1000;
+    }
+
+    .preview-container {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        transform: scale(1.8);
+        transform-origin: top center;
+    }
+
+    .preview-wrapper {
+        max-width: 100vw;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        flex: 1;
+        min-height: 100%;
+    }
+
+    /* Responsividade do padding-top */
+    @media (max-width: 768px) and (min-width: 480px) {
+        body {
+            padding-top: 80px;
+        }
+    }
+
+    @media (max-width: 479px) and (min-width: 331px) {
+        body {
+            padding-top: 150px;
+        }
+    }
+
+    @media (max-width: 330px) {
+        body {
+            padding-top: 200px;
+        }
+    }
+}
+
+/* Configurações de página */
+.page {
+    width: 8.5cm;
+    height: 5.4cm;
+    overflow: hidden;
+    flex-shrink: 0;
+    position: relative;
+    font-family: 'Montserrat', sans-serif;
+    color: #1a237e;
+}
+
+.frente-page, .verso-page {
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+}
+
+.frente-page {
+    background-image: url(/assets/images/Carteirinha-Frente-New.jpg);
+}
+
+.verso-page {
+    background-image: url(/assets/images/Carteirinha-Verso-New.jpg);
+}
+
+/* Botões */
+.btn {
+    padding: 8px 16px;
+    margin: 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s, color 0.3s ease;
+}
+
+.btn-primary {
+    background-color: #5bc0de;
+    color: white;
+}
+
+    .btn-primary:hover {
+        background-color: #4a90e2;
+    }
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+    .btn-secondary:hover {
+        background-color: #5a6268;
+    }
+
+/* Configurações de impressão */
+@media print {
+    @page {
+        size: 8.5cm 5.4cm;
+        margin: 0;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        background: white;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .print-controls {
+        display: none;
+    }
+
+    .preview-container {
+        margin: 0;
+        padding: 0;
+        transform: scale(1);
+    }
+
+    .no-print {
+        display: none !important;
+    }
+}
+
+/* Frente page styles */
+.student-info {
+    position: absolute;
+    left: 0.5cm;
+    width: 5.5cm;
+    padding-top: 0.8cm;
+}
+
+.info-row {
+    margin-bottom: 0.2cm;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+    .info-row label {
+        display: block;
+        font-weight: 700;
+        font-size: 8px;
+        min-width: 102px;
+        flex-shrink: 0;
+    }
+
+    .info-row span {
+        display: block;
+        font-size: 8px;
+        flex: 1;
+        word-wrap: break-word;
+        font-weight: 500;
+    }
+
+.activity-info {
+    font-size: 8px;
+    font-weight: 500;
+    line-height: 1.2;
+    font-weight: 500;
+}
+
+.photo-container {
+    position: absolute;
+    right: 0.92cm;
+    top: 0.6cm;
+    width: 54px;
+    height: 80px;
+    overflow: hidden;
+}
+
+.student-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Se der ruim alternar para cover ou scale-down */
+    border-radius: 4px;
+}
+
+.qr-code-container {
+    position: absolute;
+    right: 0.98cm;
+    bottom: 0.8cm;
+    width: 51px;
+    height: 51px;
+}
+
+.qr-code {
+    width: 100%;
+    height: 100%;
+}
+
+/* Verso page styles */
+.main-content-verso {
+    position: absolute;
+    left: 0.6cm;
+    width: 5.2cm;
+}
+
+.info-row-verso {
+    margin-bottom: 0.2cm;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+    .info-row-verso label {
+        display: block;
+        font-weight: 700;
+        font-size: 8px;
+        min-width: 102px;
+        flex-shrink: 0;
+    }
+
+    .info-row-verso span {
+        display: block;
+        font-size: 8px;
+        flex: 1;
+        word-wrap: break-word;
+        font-weight: 500;
+    }

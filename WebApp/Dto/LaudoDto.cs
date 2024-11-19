@@ -1,4 +1,6 @@
-﻿namespace WebApp.Dto
+﻿using ClosedXML.Excel;
+
+namespace WebApp.Dto
 {
     public class LaudoDto
     {
@@ -28,6 +30,7 @@
         public required string NomeLocalidade { get; set; }
         public string? MunicipioEstado { get; set; }
         public string? Sexo { get; set; }
+        public string? Etnia { get; set; }
         public string? StatusLaudo { get; set; }
         public DateTime? DtNascimento { get; set; }
         public int? Idade { get; set; }
@@ -48,6 +51,17 @@
         #region Saude
 
         public string? ImcSaude { get; set; }
+
+        #endregion
+
+        #region Edição de Laudo
+        public string? Uf { get; init; }
+
+        #endregion
+
+        #region Exportacao
+        public string Telefone { get; set; }
+        public string Celular { get; set; }
 
         #endregion
     }

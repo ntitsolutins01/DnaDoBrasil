@@ -16,5 +16,6 @@
         #endregion
 
         public PaginatedListDto<LaudoDto>? Laudos { get; set; }
+        public string? UsuarioEmail { get; set; }
     }
 }
