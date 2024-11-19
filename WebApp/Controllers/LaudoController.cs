@@ -52,7 +52,11 @@ namespace WebApp.Controllers
                     TipoLaudoId = collection["ddlTipoLaudo"].ToString(),
                     AlunoId = collection["ddlAluno"].ToString(),
                     PageNumber = 1,
+#if DEBUG
+                    PageSize = 10
+#else
                     PageSize = 1000
+#endif
                 };
 
                 var response = await ApiClientFactory.Instance.GetLaudosByFilter(searchFilter);
