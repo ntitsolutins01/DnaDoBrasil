@@ -18,12 +18,12 @@
 
 #frente.tab-pane,
 .frente-page {
-    background-image: url(/assets/images/Carteirinha-Frente-Fast.jpg);
+    background-image: url(/assets/images/Carteirinha-Frente-New.jpg);
 }
 
 #verso.tab-pane,
 .verso-page {
-    background-image: url(/assets/images/Carteirinha-Verso-Fast.jpg);
+    background-image: url(/assets/images/Carteirinha-Verso-New.jpg);
 }
 
 /* Frente da Carteirinha */
