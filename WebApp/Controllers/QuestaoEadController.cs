@@ -64,11 +64,11 @@ public class QuestaoEadController : BaseController
             SetNotifyMessage(notify, message);
             SetCrudMessage(crud);
 
-            var aula = new SelectList(ApiClientFactory.Instance.GetAulasAll(), "Id", "Titulo");
+            var tipoCurso = new SelectList(ApiClientFactory.Instance.GetTipoCursosAll(), "Id", "Nome");
 
             return View(new QuestaoEadModel()
             {
-                ListAulas = aula
+                ListTipoCursos = tipoCurso
             });
         }
         catch (Exception e)

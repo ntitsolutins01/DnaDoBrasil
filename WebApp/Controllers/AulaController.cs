@@ -181,5 +181,21 @@ public class AulaController : BaseController
 
 		return Task.FromResult(result);
     }
+
+    public Task<JsonResult> GetAulasAllByModuloEadId(string id)
+    {
+        try
+        {
+            if (string.IsNullOrEmpty(id)) throw new Exception("Módulo não informado.");
+            var resultLocal = ApiClientFactory.Instance.GetAulasAllByModuloEadId(Convert.ToInt32(id));
+
+            return Task.FromResult(Json(new SelectList(resultLocal, "Id", "Nome")));
+
+        }
+        catch (Exception ex)
+        {
+            return Task.FromResult(Json(ex));
+        }
+    }
     #endregion
 }
