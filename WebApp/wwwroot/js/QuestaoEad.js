@@ -119,6 +119,14 @@
                         });
                 });
 
+                $("#ddlTipoResposta").change(function () {
+                    if ($(".wrapperResposta").find("*").length > 0) {
+                        $(".wrapperResposta").empty();
+                    }
+                });
+
+                
+
                 $("#formQuestaoEad").validate({
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
@@ -269,7 +277,6 @@
 
             switch (tipoResposta) {
                 case 'A':
-                    $('.wrapperResposta').nextAll('div').hide(); // Limpar respostas ao trocar tipo
 
                     var elem = $("input[name^=alternativa]").length;
 
@@ -289,7 +296,7 @@
                                                     class="form-control" required title="Por favor informe o texto da alternativa." />
                                                 </div>
                                                 <div class="col-sm-1">
-                                                    <a type="button" class="ml-xs btn btn-danger" v-on:click="delTipoResposta(`+ tipoResposta +`,` + alternativa +`)">
+                                                    <a type="button" class="ml-xs btn btn-danger" href="javascript:(crud.DelTipoResposta('`+ tipoResposta +`','` + alternativa +`'))">
                                                         <i class="fa fa-minus"></i>
                                                     </a>
                                                 </div>
@@ -298,7 +305,6 @@
                                         `);
                     break;
                 case 'D':
-                    $('.wrapperResposta').nextAll('div').hide(); // Limpar respostas ao trocar tipo
 
                     var elem = $("input[name^=dissertativa]").length;
 
@@ -315,7 +321,6 @@
                     `);
                     break;
                 case 'M':
-                    $('.wrapperResposta').nextAll('div').hide(); // Limpar respostas ao trocar tipo
 
                     var elem = $("input[name^=alternativa]").length;
 
@@ -375,5 +380,8 @@ var crud = {
         $('input[name="deleteQuestaoEadId"]').attr('value', id);
         $('#mdDeleteQuestaoEad').modal('show');
         vm.DeleteQuestaoEad(id)
+    },
+    DelTipoResposta: function (tipoResposta, elemento) {
+        vm.delTipoResposta(tipoResposta, elemento);
     }
 };
