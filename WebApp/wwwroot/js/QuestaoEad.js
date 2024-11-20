@@ -12,6 +12,19 @@
 
             if (formid === "formQuestaoEad") {
 
+
+                //skin checkbox
+                if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
+
+                    $(function () {
+                        $('[data-plugin-ios-switch]').each(function () {
+                            var $this = $(this);
+
+                            $this.themePluginIOS7Switch();
+                        });
+                    });
+                }
+                //skin select
                 var $select = $(".select2").select2({
                     allowClear: true
                 });
@@ -122,6 +135,7 @@
                 $("#ddlTipoResposta").change(function () {
                     if ($(".wrapperResposta").find("*").length > 0) {
                         $(".wrapperResposta").empty();
+                        $(".wrapperRespostaInfo").empty();
                     }
                 });
 
@@ -181,7 +195,7 @@
             var ddl = 'ddlTipoTextoImagem' + $("select[name^='ddlTipoTextoImagem']").length;
 
             $('.wrapper').append(`
-                <div class="col-sm-4" style="padding-top: 15px;">
+                <div class="col-sm-4" style="padding-top: 15px;" id="divDdl`+elem+`">
 	                <select class="form-control populate select2" name="`+ ddl + `" id="` + ddl + `"
 			                title="Por favor selecione um sexo." required style="width:100%">
 		                <option value="">Selecionar tipo texto ou imagem</option>
@@ -203,11 +217,11 @@
                     case 'T':
 
                         $('.wrapper').append(`
-                                            <div class="col-sm-7" style="padding-top: 15px;">
+                                            <div class="col-sm-7" style="padding-top: 15px;" id="div`+elem+`">
                                                 <textarea class="form-control" rows="3" maxlength="500" name="texto` + elem + `" id="texto` + elem + `"></textarea>
                                             </div>
-                                            <div class="col-sm-1" style="padding-top: 15px;">
-                                                <a type="button" class="ml-xs btn btn-danger" v-on:click="delTexto("`+ ddl + `, texto` + elem + `")">
+                                            <div class="col-sm-1" style="padding-top: 15px;" id="btn`+ elem +`">
+                                                <a type="button" class="ml-xs btn btn-danger" href="javascript:(crud.DelTextoImagem('divDdl`+ elem + `','div` + elem + `','btn` + elem +`'))">
                                                     <i class="fa fa-minus"></i>
                                                 </a>
                                             </div>
@@ -216,7 +230,7 @@
 
                     case 'I':
                         $('.wrapper').append(`
-                                            <div class="col-sm-7" style="padding-top: 15px;">
+                                            <div class="col-sm-7" style="padding-top: 15px;" id="div`+ elem +`">
                                                 <div class="fileupload fileupload-new" data-provides="fileupload">
                                                     <div class="input-append">
                                                         <div class="uneditable-input">
@@ -232,8 +246,9 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-1" style="padding-top: 15px;">
-                                                <a type="button" class="ml-xs btn btn-danger" v-on:click="delImagem("`+ ddl + `, imagem` + elem + `")">
+                                            <div class="col-sm-1" style="padding-top: 15px;" id="btn`+elem+`">
+                                                <a type="button" class="ml-xs btn btn-danger"
+                                                href="javascript:(crud.DelTextoImagem('divDdl`+ elem + `','div` + elem + `','btn` + elem +`'))">
                                                     <i class="fa fa-minus"></i>
                                                 </a>
                                             </div>
@@ -289,11 +304,6 @@
                     var alternativa = 'alternativa' + letter;
                     var div = 'div' + letter;
 
-                                                //<div class="col-sm-1">
-                                                //    <a type="button" class="ml-xs btn btn-danger" href="javascript:(crud.DelTipoResposta('`+ tipoResposta +`','` + div +`'))">
-                                                //        <i class="fa fa-minus"></i>
-                                                //    </a>
-                                                //</div>
                     $('.wrapperResposta').append(`
                                             <div class="form-group row" name="`+ div + `" id="` + div +`">
                                                 <label class="col-sm-1 control-label" style="padding-bottom: 15px;">`+ letter +` <span class="required">*</span></label>
@@ -323,13 +333,40 @@
                     break;
                 case 'M':
 
-                    var elem = $("input[name^=alternativa]").length;
+                    var elem = $("input[name^=multiplo]").length;
 
                     if (elem > 4) {
                         return false;
                     }
 
-                    var alternativa = 'escolha' + $("select[name^='alternativa']").length;
+                    let valueMultiplo = Math.pow(2, elem);
+
+                    var multiplo = 'multiplo' + valueMultiplo;
+                    var checkbox = 'ckMulti' + valueMultiplo;
+                    var div = 'div' + valueMultiplo;
+
+                    $('.wrapperResposta').append(`
+                                            <div class="form-group row" name="`+ div + `" id="` + div + `">
+                                                <div class="col-sm-1">
+                                                    <div class="checkbox-custom checkbox-default">
+			                                            <input id="`+ checkbox + `" name="` + checkbox + `" type="checkbox" value="` + valueMultiplo + `" />
+			                                            <label for="`+ checkbox + `"></label>
+		                                            </div>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <input type="text" name="`+ multiplo + `" id="` + multiplo + `" maxlength="200" 
+                                                    class="form-control" required title="Por favor informe o texto da multipla escolha." />
+                                                </div>
+                                            </div>
+                                        `);
+
+                    if ($("#infoMulti").length === 0) {
+
+                        $('.wrapperRespostaInfo').append(`
+                            <code id="infoMulti" name="infoMulti">.panel-featured.panel-featured-primary</code>
+                                            `);
+                    }
+
 
                     break;
                 default:
@@ -341,35 +378,20 @@
             var url = "QuestaoEad/Delete/" + id;
             $("#deleteQuestaoEadHref").prop("href", url);
         },
-        delTexto: function (ddl, texto) {
+        delTextoImagem: function (ddl, textoImagem, btn) {
             var self = this; 
 
-            var ddl = $("#" + ddl).val();
+            $("#" + ddl).remove();
 
-            var textoValue = $("#" + texto).val();
-        },
-        delImagem: function (ddl, imagem) {
-            var self = this;
+            $("#" + textoImagem).remove();
 
-            var ddl = $("#" + ddl).val();
-
-            var imagemValue = $("#" + imagem).val();
+            $("#" + btn).remove();
         },
         delTipoResposta: function (tipoResposta, elemento, label) {
             var self = this;
 
             $(".wrapperResposta").empty();
-            //switch (tipoResposta) {
-            //    case 'A':
-            //        $("#" + elemento).remove();
-            //        break;
-            //    case 'M':
-            //        $("#" + elemento).remove();
-            //        break;
-            //    default:
-            //        Site.Notification("Atenção!", "Por favor selecione o tipo de resposta", "warning", 1);
-            //        break;
-            //}
+            $(".wrapperRespostaInfo").empty();
         }
     }
 });
@@ -382,5 +404,8 @@ var crud = {
     },
     DelTipoResposta: function (tipoResposta, elemento) {
         vm.delTipoResposta(tipoResposta, elemento);
+    },
+    DelTextoImagem: function (ddl, textoImagem, btn) {
+        vm.delTextoImagem(ddl, textoImagem, btn);
     }
 };
