@@ -8,184 +8,272 @@
     <div class="row">
         <div class="col-md-12">
             @using (@Html.BeginForm("Create", "QuestaoEad", FormMethod.Post, new { id = "formQuestaoEad", @class = "form-horizontal" }))
-            {
-                <section class="panel">
-                    <!-- Header -->
-                    <header class="panel-heading">
-                        <div class="panel-actions">
-                            <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
-                        </div>
-                        <h2 class="panel-title">Cadastro de Questão</h2>
-                    </header>
+            { 
+                        <section class="panel">
+                            <!-- Header -->
+                            <header class="panel-heading">
+                                <div class="panel-actions">
+                                    <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
+                                </div>
+                                <h2 class="panel-title">Cadastro de Questão</h2>
+                            </header>
 
-                    <!-- Body -->
-                    <div class="panel-body">
-                        <div class="form-group">
-                            <label class="col-sm-1 control-label text-sm-right pt-2">Aula <span class="required">*</span></label>
-                            <div class="col-md-11">
-                                <select class="form-control populate select2" name="ddlAula" id="ddlAula"
-                                        title="Por favor informe uma aula." required
-                                        asp-for="AulaId" asp-items="Model.ListAulas">
-                                    <option value="">Selecionar Aula</option>
-                                </select>
-                            </div>
-                        </div>
-                        <!-- Texto/Imagem Section -->
-                        <div class="form-group">
-                            <label class="col-sm-1 control-label text-sm-right pt-2">Texto/Imagem</label>
-                            <div class="col-sm-11" id="textimg-container">
-                                <!-- Dynamic inputs will be added here -->
-                            </div>
-                            <div class="col-sm-11 col-sm-offset-1">
-                                <button type="button" class="btn btn-primary" onclick="addTextoImagem()">Adicionar Texto/Imagem</button>
-                            </div>
-                        </div>
+                            <!-- Body -->
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label class="col-sm-1 control-label text-sm-right pt-2">Aula <span class="required">*</span></label>
+                                    <div class="col-md-11">
+                                        <select class="form-control populate select2" name="ddlAula" id="ddlAula"
+                                                title="Por favor informe uma aula." required
+                                                asp-for="AulaId" asp-items="Model.ListAulas">
+                                            <option value="">Selecionar Aula</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!-- Texto/Imagem Section -->
+                                <div class="form-group">
+                                    <label class="col-sm-1 control-label text-sm-right pt-2">Texto/Imagem</label>
+                                    <div class="col-sm-11" id="textimg-container">
+                                        <!-- Dynamic inputs will be added here -->
+                                    </div>
+                                    <div class="col-sm-11 col-sm-offset-1">
+                                        <button type="button" class="btn btn-primary" onclick="addTextoImagem()">Adicionar Texto/Imagem</button>
+                                    </div>
+                                </div>
 
-                        <div class="form-group">
-                            <label class="col-sm-1 control-label text-sm-right pt-2">Referência</label>
-                            <div class="col-sm-11">
-                                <textarea class="form-control" rows="3" maxlength="300" name="referencia" id="referencia"></textarea>
-                            </div>
-                        </div>
+                                <div class="form-group">
+                                    <label class="col-sm-1 control-label text-sm-right pt-2">Referência</label>
+                                    <div class="col-sm-11">
+                                        <textarea class="form-control" rows="3" maxlength="300" name="referencia" id="referencia"></textarea>
+                                    </div>
+                                </div>
 
-                        <!-- Questao Field -->
-                        <div class="form-group">
-                            <label class="col-sm-1 control-label text-sm-right pt-2">Pergunta <span class="required">*</span></label>
-                            <div class="col-sm-9">
-                                <textarea class="form-control" rows="3" maxlength="500" name="pergunta" id="pergunta" required></textarea>
-                            </div>
-                            <label class="col-sm-1 control-label text-sm-right pt-2">Questao <span class="required">*</span></label>
-                            <div class="col-sm-1">
-                                <input type="text" name="questao" id="questao" class="form-control" maxlength="150" title="Por favor informe a questao." required />
-                            </div>
-                        </div>
+                                <!-- Questao Field -->
+                                <div class="form-group">
+                                    <label class="col-sm-1 control-label text-sm-right pt-2">Pergunta <span class="required">*</span></label>
+                                    <div class="col-sm-9">
+                                        <textarea class="form-control" rows="3" maxlength="500" name="pergunta" id="pergunta" required></textarea>
+                                    </div>
+                                    <label class="col-sm-1 control-label text-sm-right pt-2">Questao <span class="required">*</span></label>
+                                    <div class="col-sm-1">
+                                        <input type="text" name="questao" id="questao" class="form-control" maxlength="150" title="Por favor informe a questao." required />
+                                    </div>
+                                </div>
 
-                        <!-- Respostas Section -->
-                        <div class="form-group">
-                            <label class="col-sm-1 control-label text-sm-right pt-2">Respostas <span class="required">*</span></label>
-                            <div class="col-sm-11" id="answers-container">
-                                <input name="respostas" id="respostas" type="text" class="form-control" placeholder="Digite uma resposta" style="margin-bottom: 10px;" />
-                            </div>
-                            <div class="col-sm-11 col-sm-offset-1">
-                                <button type="button" class="btn btn-primary" onclick="addAnswerInput()">Adicionar Respostas</button>
-                            </div>
-                        </div>
-                    </div>
+                                <!-- Respostas Section -->
+                                <div class="form-group">
+                                    <label class="col-sm-1 control-label text-sm-right pt-2">Respostas <span class="required">*</span></label>
+                                    <div class="col-sm-11 btn-group">
+                                        <button type="button" class="mb-xs mt-xs mr-xs btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" id="responseTypeButton">
+                                            Selecione o Tipo de Resposta <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu" id="responseTypeDropdown">
+                                            <li><a href="#" data-type="short">Resposta curta</a></li>
+                                            <li><a href="#" data-type="paragraph">Parágrafo</a></li>
+                                            <li><a href="#" data-type="multiple">Múltipla escolha</a></li>
+                                            <li><a href="#" data-type="checkbox">Caixa de seleção</a></li>
+                                        </ul>
+                                    </div>
 
-                    <!-- Footer -->
-                    <footer class="panel-footer">
-                        <div class="row">
-                            <div class="col-md-9 col-md-offset-3">
-                                <a href="@Url.Action("Index", "QuestaoEad")" class="btn btn-dark pull-right" style="margin-left: 5px; margin-right: 5px;">
-                                    <i class="fa fa-reply"></i> &nbsp;&nbsp;Voltar
-                                </a>
-                                <button type="reset" class="btn btn-danger pull-right" style="margin-left: 5px;">
-                                    <i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar
-                                </button>
-                                <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;">
-                                    <i class="fa fa-save"></i> &nbsp;&nbsp;Salvar
-                                </button>
-                            </div>
-                        </div>
-                    </footer>
-                </section>
+                                    <!-- Botão para adicionar mais respostas -->
+                                    <div class="col-sm-11 col-sm-offset-1">
+                                        <button type="button" class="btn btn-primary" id="addAnswerButton" disabled>Adicionar Respostas</button>
+                                    </div>
+                                </div>
+
+                                    <!-- Área onde as respostas serão adicionadas -->
+                                <div class="form-group">
+                                    <div class="col-sm-11 col-sm-offset-1" id="answersContainer"></div>
+                                    </div>
+                                </div>
+
+                            <!-- Footer -->
+                            <footer class="panel-footer">
+                                <div class="row">
+                                    <div class="col-md-9 col-md-offset-3">
+                                        <a href="@Url.Action("Index", "QuestaoEad")" class="btn btn-dark pull-right" style="margin-left: 5px; margin-right: 5px;">
+                                            <i class="fa fa-reply"></i> &nbsp;&nbsp;Voltar
+                                        </a>
+                                        <button type="reset" class="btn btn-danger pull-right" style="margin-left: 5px;">
+                                            <i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar
+                                        </button>
+                                        <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;">
+                                            <i class="fa fa-save"></i> &nbsp;&nbsp;Salvar
+                                        </button>
+                                    </div>
+                                </div>
+                            </footer>
+                        </section>
             }
         </div>
     </div>
 </div>
 
 @section Scripts {
-    <script>
-        function addAnswerInput() {
-            const container = document.getElementById("answers-container");
+            <script>
+                function addAnswerInput() {
+                    const container = document.getElementById("answers-container");
 
-            // Create a new text input field
-            const input = document.createElement("input");
-            input.type = "text";
-            input.name = "respostas[]";
-            input.className = "form-control";
-            input.placeholder = "Digite uma resposta";
-            input.style.marginBottom = "10px";
+                    // Create a new text input field
+                    const input = document.createElement("input");
+                    input.type = "text";
+                    input.name = "respostas[]";
+                    input.className = "form-control";
+                    input.placeholder = "Digite uma resposta";
+                    input.style.marginBottom = "10px";
 
-            // Append the new input field to the answers container
-            container.appendChild(input);
-        }
-
-        function addTextoImagem() {
-            const container = document.getElementById("textimg-container");
-
-            // Create a wrapper div for each answer item
-            const answerWrapper = document.createElement("div");
-            answerWrapper.className = "answer-item";
-            answerWrapper.style.marginBottom = "10px";
-
-            // Create a dropdown to select text or image
-            const typeSelect = document.createElement("select");
-            typeSelect.className = "form-control";
-            typeSelect.style.width = "150px";
-            typeSelect.style.display = "inline-block";
-            typeSelect.style.marginRight = "10px";
-
-            // Options for the dropdown
-            const defaultOption = document.createElement("option");
-            defaultOption.value = "";
-            defaultOption.text = "Selecione o tipo";
-            defaultOption.disabled = true;
-            defaultOption.selected = true;
-            const textOption = document.createElement("option");
-            textOption.value = "text";
-            textOption.text = "Texto";
-            const imageOption = document.createElement("option");
-            imageOption.value = "image";
-            imageOption.text = "Imagem";
-
-            typeSelect.appendChild(defaultOption);
-            typeSelect.appendChild(textOption);
-            typeSelect.appendChild(imageOption);
-
-            // Create a placeholder for the input field (text or file)
-            const inputField = document.createElement("input");
-            inputField.className = "form-control";
-            inputField.style.display = "inline-block";
-            inputField.style.width = "calc(100% - 170px)"; // adjust width to fit with dropdown
-            inputField.style.marginLeft = "10px";
-
-            // Update input type based on selection
-            typeSelect.addEventListener("change", function () {
-                if (typeSelect.value === "text") {
-                    inputField.type = "text";
-                    inputField.name = "respostas[]";
-                    inputField.placeholder = "Digite um texto";
-                } else if (typeSelect.value === "image") {
-                    inputField.type = "file";
-                    inputField.name = "respostas[]";
+                    // Append the new input field to the answers container
+                    container.appendChild(input);
                 }
-            });
 
-            // Append the select and input field to the wrapper
-            answerWrapper.appendChild(typeSelect);
-            answerWrapper.appendChild(inputField);
+                function addTextoImagem() {
+                    const container = document.getElementById("textimg-container");
 
-            // Add the new answer item to the answers-container
-            container.appendChild(answerWrapper);
-        }
+                    // Create a wrapper div for each answer item
+                    const answerWrapper = document.createElement("div");
+                    answerWrapper.className = "answer-item";
+                    answerWrapper.style.marginBottom = "10px";
+
+                    // Create a dropdown to select text or image
+                    const typeSelect = document.createElement("select");
+                    typeSelect.className = "form-control";
+                    typeSelect.style.width = "150px";
+                    typeSelect.style.display = "inline-block";
+                    typeSelect.style.marginRight = "10px";
+
+                    // Options for the dropdown
+                    const defaultOption = document.createElement("option");
+                    defaultOption.value = "";
+                    defaultOption.text = "Selecione o tipo";
+                    defaultOption.disabled = true;
+                    defaultOption.selected = true;
+                    const textOption = document.createElement("option");
+                    textOption.value = "text";
+                    textOption.text = "Texto";
+                    const imageOption = document.createElement("option");
+                    imageOption.value = "image";
+                    imageOption.text = "Imagem";
+
+                    typeSelect.appendChild(defaultOption);
+                    typeSelect.appendChild(textOption);
+                    typeSelect.appendChild(imageOption);
+
+                    // Create a placeholder for the input field (text or file)
+                    const inputField = document.createElement("input");
+                    inputField.className = "form-control";
+                    inputField.style.display = "inline-block";
+                    inputField.style.width = "calc(100% - 170px)"; // adjust width to fit with dropdown
+                    inputField.style.marginLeft = "10px";
+
+                    // Update input type based on selection
+                    typeSelect.addEventListener("change", function () {
+                        if (typeSelect.value === "text") {
+                            inputField.type = "text";
+                            inputField.name = "respostas[]";
+                            inputField.placeholder = "Digite um texto";
+                        } else if (typeSelect.value === "image") {
+                            inputField.type = "file";
+                            inputField.name = "respostas[]";
+                        }
+                    });
+
+                    // Append the select and input field to the wrapper
+                    answerWrapper.appendChild(typeSelect);
+                    answerWrapper.appendChild(inputField);
+
+                    // Add the new answer item to the answers-container
+                    container.appendChild(answerWrapper);
+                }
 
 
-        function toggleInputType() {
-            var uploadType = document.getElementById("uploadType").value;
-            var textInput = document.getElementById("textInput");
-            var fileInput = document.getElementById("fileInput");
+                function toggleInputType() {
+                    var uploadType = document.getElementById("uploadType").value;
+                    var textInput = document.getElementById("textInput");
+                    var fileInput = document.getElementById("fileInput");
 
-            if (uploadType === "text") {
-                textInput.style.display = "block";
-                fileInput.style.display = "none";
-            } else if (uploadType === "image") {
-                textInput.style.display = "none";
-                fileInput.style.display = "block";
-            } else {
-                textInput.style.display = "none";
-                fileInput.style.display = "none";
+                    if (uploadType === "text") {
+                        textInput.style.display = "block";
+                        fileInput.style.display = "none";
+                    } else if (uploadType === "image") {
+                        textInput.style.display = "none";
+                        fileInput.style.display = "block";
+                    } else {
+                        textInput.style.display = "none";
+                        fileInput.style.display = "none";
+                    }
+                }
+
+        const responseTypeButton = document.getElementById('responseTypeButton');
+        const responseTypeDropdown = document.getElementById('responseTypeDropdown');
+        const addAnswerButton = document.getElementById('addAnswerButton');
+        const answersContainer = document.getElementById('answersContainer');
+        let selectedResponseType = null;
+
+        // Evento para alterar o tipo de resposta
+        responseTypeDropdown.addEventListener('click', function (e) {
+            e.preventDefault();
+            if (e.target.tagName === 'A') {
+                selectedResponseType = e.target.getAttribute('data-type');
+                responseTypeButton.textContent = e.target.textContent + ' ';
+                responseTypeButton.appendChild(document.createElement('span')).classList.add('caret');
+                addAnswerButton.disabled = false;
+                answersContainer.innerHTML = ''; // Limpar respostas ao trocar tipo
             }
-        }
-    </script>
+        });
+
+        // Função para adicionar inputs de resposta
+        addAnswerButton.addEventListener('click', function () {
+            if (!selectedResponseType) return;
+
+            const answerInput = document.createElement('div');
+            answerInput.className = 'form-group';
+
+            switch (selectedResponseType) {
+                
+                case 'short':
+                    answerInput.innerHTML = `
+                        <label class="col-sm-1 control-label text-sm-right">Resposta:</label>
+                            <div class="col-sm-11">
+                                <input type="text" class="form-control mb-3" placeholder="Resposta curta">
+                            </div>
+                    `;
+                    break;
+
+                case 'paragraph':
+                    answerInput.innerHTML = `
+                        <div class="form-group">
+                        <label class="col-sm-1 control-label text-sm-right">Resposta:</label>
+                            <div class="col-sm-11">
+                                <textarea class="form-control mb-3" rows="3" placeholder="Resposta em parágrafo"></textarea>
+                            </div>
+                        </div>
+                    `;
+                    break;
+
+                case 'multiple':
+                    const letter = String.fromCharCode(65 + answersContainer.children.length); // A, B, C...
+                    answerInput.innerHTML = `
+                        <label>${letter})</label>
+                        <input type="text" class="form-control" placeholder="Opção ${letter}">
+                    `;
+                    break;
+
+                case 'checkbox':
+                    answerInput.innerHTML = `
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox"> 
+                                <input type="text" class="form-control d-inline w-auto" placeholder="Texto da caixa de seleção">
+                            </label>
+                        </div>
+                    `;
+                    break;
+
+                default:
+                    break;
+            }
+
+            answersContainer.appendChild(answerInput);
+        });
+            </script>
 }
