@@ -284,19 +284,20 @@
                         return false;
                     }
 
-                    var alternativa = 'alternativa' + $("select[name^='alternativa']").length;
 
                     const letter = String.fromCharCode(65 + elem);
+                    var alternativa = 'alternativa' + letter;
+                    var div = 'div' + letter;
 
                     $('.wrapperResposta').append(`
-                                            <div class="form-group row">
+                                            <div class="form-group row" name="`+ div + `" id="` + div +`">
                                                 <label class="col-sm-1 control-label" style="padding-bottom: 15px;">`+ letter +` <span class="required">*</span></label>
                                                 <div class="col-sm-9">
                                                     <input type="text" name="`+ alternativa + `" id="` + alternativa +`" maxlength="200" 
                                                     class="form-control" required title="Por favor informe o texto da alternativa." />
                                                 </div>
                                                 <div class="col-sm-1">
-                                                    <a type="button" class="ml-xs btn btn-danger" href="javascript:(crud.DelTipoResposta('`+ tipoResposta +`','` + alternativa +`'))">
+                                                    <a type="button" class="ml-xs btn btn-danger" href="javascript:(crud.DelTipoResposta('`+ tipoResposta +`','` + div +`'))">
                                                         <i class="fa fa-minus"></i>
                                                     </a>
                                                 </div>
@@ -354,18 +355,16 @@
 
             var imagemValue = $("#" + imagem).val();
         },
-        delTipoResposta: function (tipoResposta, elemento) {
+        delTipoResposta: function (tipoResposta, elemento, label) {
             var self = this;
 
             switch (tipoResposta) {
                 case 'A':
-
-                    break;
-                case 'D':
-
+                    $("#" + elemento).remove();
+                    $("#" + label).remove();
                     break;
                 case 'M':
-
+                    $("#" + elemento).remove();
                     break;
                 default:
                     Site.Notification("Atenção!", "Por favor selecione o tipo de resposta", "warning", 1);
