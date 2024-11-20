@@ -337,9 +337,17 @@
         },
         delTexto: function (ddl, texto) {
             var self = this; 
+
+            var ddl = $("#" + ddl).val();
+
+            var textoValue = $("#" + texto).val();
         },
         delImagem: function (ddl, imagem) {
-            var self = this; 
+            var self = this;
+
+            var ddl = $("#" + ddl).val();
+
+            var imagemValue = $("#" + imagem).val();
         },
         delTipoResposta: function (tipoResposta, elemento) {
             var self = this;
