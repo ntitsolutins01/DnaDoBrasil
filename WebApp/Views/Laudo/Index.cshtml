@@ -113,7 +113,7 @@
                                 </a>
                             </div>
                             <div class="col-sm-2 pull-right">
-                                <a href="#" data-target="#mdPrintLaudo" id="btnImprimirLaudo" class="btn btn-block btn-purple pull-right">
+                                <a href="@Url.Action("Print", "Laudo")" id="btnImprimirLaudo" class="btn btn-block btn-purple pull-right" target="_blank">
                                     <i class="fa fa-print"></i> &nbsp;&nbsp;Imprimir Laudos
                                 </a>
                             </div>
@@ -211,6 +211,15 @@
     <script src="~/js/Laudo.js"></script>
 
     <script>
+
+        $(document).ready(function() {
+            $('#btnImprimirLaudo').click(function(e) {
+                e.preventDefault();
+                var formData = $('#formPesquisarLaudo').serialize();
+                var url = $(this).attr('href') + '?' + formData;
+                window.open(url, '_blank');
+            });
+        });
 
         (function ($) {
 
