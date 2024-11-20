@@ -88,7 +88,7 @@
                                         var base64 = Convert.ToBase64String(laudo.Laudo.ByteImage);
                                         var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
                                     }
-                                    <img src="@imgSrc"/>
+                                    <img src="@imgSrc" />
                                 </div>
                             }
                             else
@@ -115,7 +115,7 @@
                                     --progress: 85;
                                     --color-main: #00eabc;
                                     --color-second: #c0faee;
-                                                        ">
+                                                            ">
                             <div class="circular-progress-inner">
                                 <div class="circular-progress-value">
                                     @laudo.Desempenho.ScoreDna
@@ -129,7 +129,7 @@
                             <div style="
                                         font-weight: 600;
                                         margin-bottom: 6px;
-                                                            ">
+                                                                ">
                                 O que é o índice DNA?
                             </div>
                             <div style="font-size: 14px">
@@ -155,7 +155,7 @@
                                             --progress: 58;
                                             --color-main: #efad57;
                                             --color-second: #ffeed9;
-                                                                    ">
+                                                                            ">
                                         <div class="circular-progress-inner">
                                             <div class="circular-progress-value">
                                                 @laudo.Desempenho.ScoreSaude
@@ -172,7 +172,7 @@
                                     justify-content: space-between;
                                     align-items: center;
                                     padding: 5px 0;
-                                                            ">
+                                                                    ">
                                 <span>IMC</span>
                                 <span style="color: #00eabc; font-weight: bold">@laudo.Laudo.ImcSaude</span>
                             </div>
@@ -195,7 +195,7 @@
                                             --progress: 58;
                                             --color-main: #e96c52;
                                             --color-second: #fce3de;
-                                                                                        ">
+                                                                                                ">
                                         <div class="circular-progress-inner">
                                             <div class="circular-progress-value">
                                                 @laudo.Desempenho.ScoreSaudeBucal
@@ -221,7 +221,7 @@
                                             --progress: 58;
                                             --color-main: #73dc69;
                                             --color-second: #deffdc;
-                                                                                        ">
+                                                                                                ">
                                         <div class="circular-progress-inner">
                                             <div class="circular-progress-value">
                                                 @laudo.Desempenho.ScoreConsumoAlimentar
@@ -236,34 +236,36 @@
                     }
 
                     <!-- Vocation Card -->
-                    <div class="metric-card">
-                        <div class="card-header vocation">
-                            <div class="card-title">Vocação</div>
-                            <div class="card-score">
-                                <div class="circular-progress"
-                                     style="
+                    @if (laudo.Vocacional != null)
+                    {
+                        <div class="metric-card">
+                            <div class="card-header vocation">
+                                <div class="card-title">Vocação</div>
+                                <div class="card-score">
+                                    <div class="circular-progress"
+                                         style="
                                             --progress: 58;
                                             --color-main: #5b5c9c;
                                             --color-second: #d5d6e7;
-                                                                    ">
-                                    <div class="circular-progress-inner">
-                                        <div class="circular-progress-value">
-                                            58
+                                                                            ">
+                                        <div class="circular-progress-inner">
+                                            <div class="circular-progress-value">
+                                                58
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <h3>Interesse Artístico</h3>
+                            <p style="flex-grow: 1">
+                                Pessoas nessa área apresentam situações
+                                estruturadas que envolvem a autoexpressão de
+                                ideias e conceitos através de diferentes meios
+                                artísticos. É aberto a estímulos emocionais,
+                                capaz de perceber as reações das pessoas.
+                            </p>
                         </div>
-                        <h3>Interesse Artístico</h3>
-                        <p style="flex-grow: 1">
-                            Pessoas nessa área apresentam situações
-                            estruturadas que envolvem a autoexpressão de
-                            ideias e conceitos através de diferentes meios
-                            artísticos. É aberto a estímulos emocionais,
-                            capaz de perceber as reações das pessoas.
-                        </p>
-                    </div>
-
+                    }
                 </div>
 
             </div>
@@ -290,7 +292,7 @@
                                             --progress: 58;
                                             --color-main: #23bfff;
                                             --color-second: #c8eeff;
-                                                                                    ">
+                                                                                                ">
                                             <div class="circular-progress-inner">
                                                 <div class="circular-progress-value">
                                                     @laudo.Desempenho.ScoreVida
@@ -342,7 +344,7 @@
                                             --progress: 58;
                                             --color-main: #df436c;
                                             --color-second: #f7d1db;
-                                                                                    ">
+                                                                                                ">
                                             <div class="circular-progress-inner">
                                                 <div class="circular-progress-value">
                                                     @laudo.Desempenho.ScoreTalentoEsportivo

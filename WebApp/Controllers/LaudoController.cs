@@ -503,7 +503,7 @@ namespace WebApp.Controllers
                     TipoLaudoId = collection["ddlTipoLaudo"].ToString(),
                     AlunoId = collection["ddlAluno"].ToString(),
                     PageNumber = 1,
-                    PageSize = 200
+                    PageSize = 50
                 };
 
                 var result = await ApiClientFactory.Instance.GetLaudosByFilter(searchFilter);
@@ -520,6 +520,13 @@ namespace WebApp.Controllers
                     var encaminhamentoConsumoAlimentar = laudo.ConsumoAlimentarId == null ? null : ApiClientFactory.Instance.GetEncaminhamentoById((int)laudo.ConsumoAlimentarId);
                     var encaminhamentoSaudeBucal = laudo.SaudeBucalId == null ? null : ApiClientFactory.Instance.GetEncaminhamentoById((int)laudo.SaudeBucalId);
                     var desempenho = ApiClientFactory.Instance.GetDesempenhoByAluno(Convert.ToInt32(laudo.AlunoId));
+
+                    Console.WriteLine($"Desempenho data for aluno {laudo.AlunoId}: {desempenho != null}");
+                    if (desempenho != null)
+                    {
+                        Console.WriteLine($"ScoreSaude: {desempenho.ScoreSaude}");
+                        Console.WriteLine($"AvisoImc: {desempenho.AvisoImc}");
+                    }
 
                     laudoModels.Add(new LaudoModel
                     {
