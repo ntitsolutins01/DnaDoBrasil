@@ -144,7 +144,7 @@
                 <!-- Metrics Grid -->
                 <div class="cards-grid">
                     <!-- Health Card -->
-                    @if (laudo.Desempenho != null)
+                    @if (laudo.Saude != null)
                     {
                         <div class="metric-card">
                             <div class="card-header health">
@@ -275,7 +275,7 @@
         </div>
 
         <!-- Página 2 -->
-        @if (laudo.QualidadeDeVida != null && laudo.TalentoEsportivo != null)
+        @if (laudo.QualidadeDeVida != null || laudo.TalentoEsportivo != null)
         {
             <div class="page-container page1">
                 <div class="newContainer">
