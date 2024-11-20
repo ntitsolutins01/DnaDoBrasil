@@ -113,7 +113,7 @@
                                 </a>
                             </div>
                             <div class="col-sm-2 pull-right">
-                                <a href="@Url.Action("PrintLaudo", "Laudo")" id="btnImprimirLaudo" class="btn btn-block btn-purple pull-right">
+                                <a href="#" data-target="#mdPrintLaudo" id="btnImprimirLaudo" class="btn btn-block btn-purple pull-right">
                                     <i class="fa fa-print"></i> &nbsp;&nbsp;Imprimir Laudos
                                 </a>
                             </div>
@@ -170,7 +170,33 @@
         </div>
     }
 </div>
-
+<!-- Modal -->
+<div class="modal fade" id="mdPrintLaudo" tabindex="-1" role="dialog" aria-labelledby="mmdPrintLaudoLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mmdPrintLaudoLabel">
+                    <i class="fa fa-print"></i> &nbsp;&nbsp;<strong>Impressão de Laudos</strong>
+                </h5>
+            </div>
+            <div class="modal-body">
+                <div class="modal-icon">
+                    <i class="fa fa-question-circle"></i>
+                </div>
+                <div class="modal-text">
+                    <input type="hidden" id="printLaudoId" />
+                    <p class="mb-0">Escolha qual tipo de impressão deseja realizar <b>completa</b> ou resumida</p>
+                </div>
+                <div class="modal-wrapper">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-warning pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-thumbs-o-down"></i> &nbsp;&nbsp;Completa</button>
+                <a id="printLaudoHref" class="btn btn-info pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Resumida</a>
+            </div>
+        </div>
+    </div>
+</div>
 @section CssSpecificVendor {
     <link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css" />
     <link rel="stylesheet" href="~/assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
