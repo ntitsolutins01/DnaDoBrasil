@@ -62,7 +62,7 @@
                             <label class="col-sm-3 control-label text-sm-right pt-2">
                                 <a href="#" v-on:click="addTextoImagem()" id="addToTable" class="btn btn-block btn-primary pull-left"><i class="fa fa-plus"></i> &nbsp;&nbsp;Adicionar Texto/Imagem </a>
                             </label>
-                            <div class="col-sm-9 wrapper" id="textimg-container">
+                            <div class="col-sm-9 wrapper">
                                 <!-- Dynamic inputs will be added here -->
                             </div>
                         </div>
@@ -70,54 +70,53 @@
 
                         <!-- Questao Field -->
                         <div class="form-group">
-                            <label class="col-sm-1 control-label text-sm-right pt-2">Pergunta <span class="required">*</span></label>
-                            <div class="col-sm-9">
-                                <textarea class="form-control" rows="3" maxlength="500" name="pergunta" id="pergunta" required></textarea>
-                            </div>
-                            <label class="col-sm-1 control-label text-sm-right pt-2">Questao <span class="required">*</span></label>
+                            <label class="col-sm-3 control-label text-sm-right pt-2">Questao <span class="required">*</span></label>
                             <div class="col-sm-1">
                                 <input type="text" name="questao" id="questao" class="form-control" maxlength="150" title="Por favor informe a questao." required />
+                            </div>
+                            <label class="col-sm-1 control-label text-sm-right pt-2">Pergunta <span class="required">*</span></label>
+                            <div class="col-sm-7">
+                                <textarea class="form-control" rows="3" maxlength="500" name="pergunta" id="pergunta" required></textarea>
                             </div>
                         </div>
 
                         <!-- Respostas Section -->
                         <div class="form-group">
-                            <label class="col-sm-1 control-label text-sm-right pt-2">Respostas <span class="required">*</span></label>
-                            <div class="col-sm-11 btn-group">
-                                <button type="button" class="mb-xs mt-xs mr-xs btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" id="responseTypeButton">
-                                    Selecione o Tipo de Resposta <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu" role="menu" id="responseTypeDropdown">
-                                    <li><a href="#" data-type="short">Resposta curta</a></li>
-                                    <li><a href="#" data-type="paragraph">Parágrafo</a></li>
-                                    <li><a href="#" data-type="multiple">Múltipla escolha</a></li>
-                                    <li><a href="#" data-type="checkbox">Caixa de seleção</a></li>
-                                </ul>
-                            </div>
-
-                            <!-- Botão para adicionar mais respostas -->
-                            <div class="col-sm-11 col-sm-offset-1">
-                                <button type="button" class="btn btn-primary" id="addAnswerButton" disabled>Adicionar Respostas</button>
+                            <label class="col-sm-3 control-label text-sm-right pt-2">Respostas <span class="required">*</span></label>
+                            <div class="col-md-9">
+                                <section class="panel panel-featured panel-featured-success">
+                                    <header class="panel-heading" style="padding: 13px;">
+                                        <p class="panel-subtitle">Cadastre os tipos de respostas referente à questão</p>
+                                    </header>
+                                    <div class="panel-body" style="background: #f6f6f6;">
+                                        <div class="col-sm-4" style="padding-bottom: 15px;">
+                                            <select class="form-control populate select2" name="ddlTipoResposta" id="ddlTipoResposta"
+                                                    title="Por favor selecione um sexo." required style="width:100%">
+                                                <option value="">Selecionar tipo de resposta</option>
+                                                <option value="A">Alternativa</option>
+                                                <option value="D">Dissertativa</option>
+                                                <option value="M">Multipla Escolha</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <a type="button" class="ml-xs btn btn-success" v-on:click="addTipoResposta()">
+                                                <i class="fa fa-plus"></i>
+                                            </a>
+                                        </div>
+                                        <div class="col-sm-12 wrapperResposta">
+                                            <!-- Dynamic inputs will be added here -->
+                                        </div>
+                                    </div>
+                                </section>
                             </div>
                         </div>
-
-                        <!-- Área onde as respostas serão adicionadas -->
                         <div class="form-group">
-                            <div class="col-sm-11 col-sm-offset-1" id="answersContainer"></div>
-                        </div>
-
-
-                        <div class="form-group">
-                            <label class="col-sm-1 control-label text-sm-right pt-2">Referência</label>
-                            <div class="col-sm-11">
+                            <label class="col-sm-3 control-label text-sm-right pt-2">Referência</label>
+                            <div class="col-sm-9">
                                 <textarea class="form-control" rows="3" maxlength="300" name="referencia" id="referencia"></textarea>
                             </div>
                         </div>
-
                     </div>
-
-
-
                     <!-- Footer -->
                     <footer class="panel-footer">
                         <div class="row">
@@ -130,6 +129,9 @@
                                 </button>
                                 <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;">
                                     <i class="fa fa-save"></i> &nbsp;&nbsp;Salvar
+                                </button>
+                                <button type="submit" class="btn btn-info pull-right" style="margin-left: 5px;">
+                                    <i class="fa fa-eye"></i> &nbsp;&nbsp;Pré-Visualizar
                                 </button>
                             </div>
                         </div>
@@ -150,117 +152,4 @@
     <script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
     <script src="~/assets/vendor/select2/js/select2.js"></script>
     <script src="~/js/QuestaoEad.js"></script>
-    <script>
-        
-
-        function addAnswerInput() {
-            const container = document.getElementById("answers-container");
-
-            // Create a new text input field
-            const input = document.createElement("input");
-            input.type = "text";
-            input.name = "respostas[]";
-            input.className = "form-control";
-            input.placeholder = "Digite uma resposta";
-            input.style.marginBottom = "10px";
-
-            // Append the new input field to the answers container
-            container.appendChild(input);
-        }
-
-        function addTextoImagem() {
-
-        }
-
-
-        function toggleInputType() {
-            var uploadType = document.getElementById("uploadType").value;
-            var textInput = document.getElementById("textInput");
-            var fileInput = document.getElementById("fileInput");
-
-            if (uploadType === "text") {
-                textInput.style.display = "block";
-                fileInput.style.display = "none";
-            } else if (uploadType === "image") {
-                textInput.style.display = "none";
-                fileInput.style.display = "block";
-            } else {
-                textInput.style.display = "none";
-                fileInput.style.display = "none";
-            }
-        }
-
-        const responseTypeButton = document.getElementById('responseTypeButton');
-        const responseTypeDropdown = document.getElementById('responseTypeDropdown');
-        const addAnswerButton = document.getElementById('addAnswerButton');
-        const answersContainer = document.getElementById('answersContainer');
-        let selectedResponseType = null;
-
-        // Evento para alterar o tipo de resposta
-        responseTypeDropdown.addEventListener('click', function (e) {
-            e.preventDefault();
-            if (e.target.tagName === 'A') {
-                selectedResponseType = e.target.getAttribute('data-type');
-                responseTypeButton.textContent = e.target.textContent + ' ';
-                responseTypeButton.appendChild(document.createElement('span')).classList.add('caret');
-                addAnswerButton.disabled = false;
-                answersContainer.innerHTML = ''; // Limpar respostas ao trocar tipo
-            }
-        });
-
-        // Função para adicionar inputs de resposta
-        addAnswerButton.addEventListener('click', function () {
-            if (!selectedResponseType) return;
-
-            const answerInput = document.createElement('div');
-            answerInput.className = 'form-group';
-
-            switch (selectedResponseType) {
-
-                case 'short':
-                    answerInput.innerHTML = `
-                                                <label class="col-sm-1 control-label text-sm-right">Resposta:</label>
-                                                    <div class="col-sm-11">
-                                                        <input type="text" class="form-control mb-3" placeholder="Resposta curta">
-                                                    </div>
-                                            `;
-                    break;
-
-                case 'paragraph':
-                    answerInput.innerHTML = `
-                                                <div class="form-group">
-                                                <label class="col-sm-1 control-label text-sm-right">Resposta:</label>
-                                                    <div class="col-sm-11">
-                                                        <textarea class="form-control mb-3" rows="3" placeholder="Resposta em parágrafo"></textarea>
-                                                    </div>
-                                                </div>
-                                            `;
-                    break;
-
-                case 'multiple':
-                    const letter = String.fromCharCode(65 + answersContainer.children.length); // A, B, C...
-                    answerInput.innerHTML = `
-                                                <label>${letter})</label>
-                                                <input type="text" class="form-control" placeholder="Opção ${letter}">
-                                            `;
-                    break;
-
-                case 'checkbox':
-                    answerInput.innerHTML = `
-                                                <div class="checkbox">
-                                                    <label>
-                                                        <input type="checkbox">
-                                                        <input type="text" class="form-control d-inline w-auto" placeholder="Texto da caixa de seleção">
-                                                    </label>
-                                                </div>
-                                            `;
-                    break;
-
-                default:
-                    break;
-            }
-
-            answersContainer.appendChild(answerInput);
-        });
-    </script>
 }

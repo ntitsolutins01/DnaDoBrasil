@@ -1,4 +1,4 @@
-var vm = new Vue({
+﻿var vm = new Vue({
     el: "#vQuestaoEad",
     data: {
         loading: false,
@@ -58,7 +58,7 @@ var vm = new Vue({
                             else {
                                 new PNotify({
                                     title: 'Curso',
-                                    text: 'Curso n�o encontrados.',
+                                    text: 'Curso não encontrados.',
                                     type: 'warning'
                                 });
                             }
@@ -85,7 +85,7 @@ var vm = new Vue({
                             else {
                                 new PNotify({
                                     title: 'Modulo',
-                                    text: 'Modulo n�o encontrados.',
+                                    text: 'Modulo não encontrados.',
                                     type: 'warning'
                                 });
                             }
@@ -112,7 +112,7 @@ var vm = new Vue({
                             else {
                                 new PNotify({
                                     title: 'Aula',
-                                    text: 'Modulo n�o encontrados.',
+                                    text: 'Modulo não encontrados.',
                                     type: 'warning'
                                 });
                             }
@@ -164,9 +164,17 @@ var vm = new Vue({
         addTextoImagem: function () {
             var self = this;
 
+            var elem = $("select[name^=ddlTipoTextoImagem]").length;
+
+            if (elem > 3) {
+                return false;
+            }
+
+            var ddl = 'ddlTipoTextoImagem' + $("select[name^='ddlTipoTextoImagem']").length;
+
             $('.wrapper').append(`
-                <div class="col-sm-4">
-	                <select class="form-control populate select2" name="ddlTipoTextoImagem" id="ddlTipoTextoImagem"
+                <div class="col-sm-4" style="padding-top: 15px;">
+	                <select class="form-control populate select2" name="`+ ddl + `" id="` + ddl + `"
 			                title="Por favor selecione um sexo." required style="width:100%">
 		                <option value="">Selecionar tipo texto ou imagem</option>
 		                <option value="T">TEXTO</option>
@@ -175,10 +183,10 @@ var vm = new Vue({
                 </div>
             `);
 
-            self.setSelected2("ddlTipoTextoImagem");
+            self.setSelected2(ddl);
 
-            $("#ddlTipoTextoImagem").change(function () {
-                var value = $("#ddlTipoTextoImagem").val();
+            $("#"+ddl).change(function () {
+                var value = $("#" + ddl).val();
 
                 var innerHTML = '';
 
@@ -187,15 +195,20 @@ var vm = new Vue({
                     case 'T':
 
                         $('.wrapper').append(`
-                                            <div class="col-sm-8">
-                                                <textarea class="form-control" rows="3" maxlength="500" name="texto" id="texto"></textarea>
+                                            <div class="col-sm-7" style="padding-top: 15px;">
+                                                <textarea class="form-control" rows="3" maxlength="500" name="texto` + elem + `" id="texto` + elem + `"></textarea>
+                                            </div>
+                                            <div class="col-sm-1" style="padding-top: 15px;">
+                                                <a type="button" class="ml-xs btn btn-danger" v-on:click="delTexto("`+ ddl + `, texto` + elem + `")">
+                                                    <i class="fa fa-minus"></i>
+                                                </a>
                                             </div>
                                         `);
                         break;
 
                     case 'I':
                         $('.wrapper').append(`
-                                            <div class="col-sm-5">
+                                            <div class="col-sm-7" style="padding-top: 15px;">
                                                 <div class="fileupload fileupload-new" data-provides="fileupload">
                                                     <div class="input-append">
                                                         <div class="uneditable-input">
@@ -204,12 +217,17 @@ var vm = new Vue({
                                                         </div>
                                                         <span class="btn btn-default btn-file">
                                                             <span class="fileupload-exists">Alterar</span>
-                                                            <span class="fileupload-new">Selecionar Arquivo</span>
-                                                            <input type="file" id="arquivo" name="arquivo" />
+                                                            <span class="fileupload-new">Selecionar Imagem</span>
+                                                            <input type="file" id="imagem` + elem + `" name="imagem` + elem + `" />
                                                         </span>
                                                         <a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">Remover</a>
                                                     </div>
                                                 </div>
+                                            </div>
+                                            <div class="col-sm-1" style="padding-top: 15px;">
+                                                <a type="button" class="ml-xs btn btn-danger" v-on:click="delImagem("`+ ddl + `, imagem` + elem + `")">
+                                                    <i class="fa fa-minus"></i>
+                                                </a>
                                             </div>
                                         `);
                         break;
@@ -218,19 +236,6 @@ var vm = new Vue({
                         break;
                 }
             });
-        },
-        createElement: function (str) {
-
-            const container = document.getElementById("textimg-container");
-            var div = document.createElement('div');
-            div.className = "form-group";
-            div.innerHTML = str;
-
-            for (var i = 0; i < div.childNodes.length; i++) {
-                var node = div.childNodes[i].cloneNode(true);
-                container.appendChild(node);
-            }
-            return container.childNodes;
         },
         setSelected2: function (ddl) {
             var $select = $("#"+ddl).select2({
@@ -257,9 +262,102 @@ var vm = new Vue({
                 $(this).trigger('blur');
             });
         },
+        addTipoResposta: function () {
+            var self = this; 
+
+            var tipoResposta = $("#ddlTipoResposta").val();
+
+            switch (tipoResposta) {
+                case 'A':
+                    $('.wrapperResposta').nextAll('div').hide(); // Limpar respostas ao trocar tipo
+
+                    var elem = $("input[name^=alternativa]").length;
+
+                    if (elem > 4) {
+                        return false;
+                    }
+
+                    var alternativa = 'alternativa' + $("select[name^='alternativa']").length;
+
+                    const letter = String.fromCharCode(65 + elem);
+
+                    $('.wrapperResposta').append(`
+                                            <div class="form-group row">
+                                                <label class="col-sm-1 control-label" style="padding-bottom: 15px;">`+ letter +` <span class="required">*</span></label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" name="`+ alternativa + `" id="` + alternativa +`" maxlength="200" 
+                                                    class="form-control" required title="Por favor informe o texto da alternativa." />
+                                                </div>
+                                                <div class="col-sm-1">
+                                                    <a type="button" class="ml-xs btn btn-danger" v-on:click="delTipoResposta(`+ tipoResposta +`,` + alternativa +`)">
+                                                        <i class="fa fa-minus"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            
+                                        `);
+                    break;
+                case 'D':
+                    $('.wrapperResposta').nextAll('div').hide(); // Limpar respostas ao trocar tipo
+
+                    var elem = $("input[name^=dissertativa]").length;
+
+                    if (elem > 0) {
+                        return false;
+                    }
+
+                    $('.wrapperResposta').append(`
+                        <label class="col-sm-3 control-label text-sm-right pt-2">Quantidade de caracteres <span class="required">*</span></label>
+					                <div class="col-sm-2">
+                            <input type="number" id="dissertativa" name="dissertativa" class="form-control" maxlength="4" required
+							                   title="Por favor informe a quantidade de caracteres." />
+					                </div>
+                    `);
+                    break;
+                case 'M':
+                    $('.wrapperResposta').nextAll('div').hide(); // Limpar respostas ao trocar tipo
+
+                    var elem = $("input[name^=alternativa]").length;
+
+                    if (elem > 4) {
+                        return false;
+                    }
+
+                    var alternativa = 'escolha' + $("select[name^='alternativa']").length;
+
+                    break;
+                default:
+                    Site.Notification("Atenção!", "Por favor selecione o tipo de resposta", "warning", 1);
+                    break;
+            }
+        },
         DeleteQuestaoEad: function (id) {
             var url = "QuestaoEad/Delete/" + id;
             $("#deleteQuestaoEadHref").prop("href", url);
+        },
+        delTexto: function (ddl, texto) {
+            var self = this; 
+        },
+        delImagem: function (ddl, imagem) {
+            var self = this; 
+        },
+        delTipoResposta: function (tipoResposta, elemento) {
+            var self = this;
+
+            switch (tipoResposta) {
+                case 'A':
+
+                    break;
+                case 'D':
+
+                    break;
+                case 'M':
+
+                    break;
+                default:
+                    Site.Notification("Atenção!", "Por favor selecione o tipo de resposta", "warning", 1);
+                    break;
+            }
         }
     }
 });
