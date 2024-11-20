@@ -58,281 +58,462 @@
     @foreach (var laudo in Model)
     {
         <!-- Página 1 -->
-        <div class="page-container page1">
-            <div class="newContainer">
-                <!-- Header -->
-                <header class="header">
-                    <img src="~/assets/images/logo2.png"
-                         alt="DNA do Brasil"
-                         class="logo-dna" />
-                    <div class="talent-info">
-                        <div class="text-info">
-                            <div class="talent-label">MEU TALENTO</div>
-                            <div class="talent-name">VOLEIBOL</div>
+        if (laudo.Saude != null || laudo.EncaminhamentoSaudeBucal != null || laudo.EncaminhamentoConsumoAlimentar != null || laudo.Vocacional != null)
+        {
+            <div class="page-container page1">
+                <div class="newContainer">
+                    <!-- Header -->
+                    <header class="header">
+                        <img src="~/assets/images/logo2.png"
+                             alt="DNA do Brasil"
+                             class="logo-dna" />
+                        <div class="talent-info">
+                            <div class="text-info">
+                                <div class="talent-label">MEU TALENTO</div>
+                                <div class="talent-name">VOLEIBOL</div>
+
+                            </div>
+                            <img src="/assets/assets_Laudo/icon_info_esporte.png"
+                                 alt="Voleibol"
+                                 class="sport-icon" />
                         </div>
-                        <img src="/assets/assets_Laudo/icon_info_esporte.png"
-                             alt="Voleibol"
-                             class="sport-icon" />
-                    </div>
-                </header>
+                    </header>
 
-                <!-- Info Section -->
-                <section class="info-section">
-                    <div class="left-section">
-                        <div class="student-info">
-                            @if (laudo.Laudo.ByteImage != null)
-                            {
-                                <div class="student-photo" style="background-size: cover;">
+                    <!-- Info Section -->
+                    <section class="info-section">
+                        <div class="left-section">
+                            <div class="student-info">
+                                @if (laudo.Laudo.ByteImage != null)
+                                {
+                                    <div class="student-photo" style="background-size: cover;">
 
-                                    @{
-                                        var base64 = Convert.ToBase64String(laudo.Laudo.ByteImage);
-                                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-                                    }
-                                    <img src="@imgSrc" />
+                                        @{
+                                            var base64 = Convert.ToBase64String(laudo.Laudo.ByteImage);
+                                            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                                        }
+                                        <img src="@imgSrc" />
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="student-photo">
+                                        <img src="/assets/images/user.png" style="width:100%;" />
+                                    </div>
+                                }
+
+                                <div class="class-info">
+                                    <div>Série: 8º ano</div>
+                                    <div>Turma: D</div>
                                 </div>
-                            }
-                            else
-                            {
-                                <div class="student-photo">
-                                    <img src="/assets/images/user.png" style="width:100%;" />
-                                </div>
-                            }
-
-                            <div class="class-info">
-                                <div>Série: 8º ano</div>
-                                <div>Turma: D</div>
+                            </div>
+                            <div class="student-details">
+                                <div class="student-name">@laudo.Laudo.NomeAluno</div>
+                                <div class="student-email">@laudo.Laudo.Email</div>
+                                <div class="student-school">@laudo.Laudo.NomeLocalidade</div>
                             </div>
                         </div>
-                        <div class="student-details">
-                            <div class="student-name">@laudo.Laudo.NomeAluno</div>
-                            <div class="student-email">@laudo.Laudo.Email</div>
-                            <div class="student-school">@laudo.Laudo.NomeLocalidade</div>
-                        </div>
-                    </div>
-                    <div class="dna-score">
-                        <div class="circular-progress"
-                             style="
-                                    --progress: 85;
+                        <div class="dna-score">
+                            <div class="circular-progress"
+                                 style="
+                                    --progress: (@laudo.Desempenho.ScoreDna)/6;
                                     --color-main: #00eabc;
                                     --color-second: #c0faee;
-                                                            ">
-                            <div class="circular-progress-inner">
-                                <div class="circular-progress-value">
-                                    @laudo.Desempenho.ScoreDna
-                                </div>
-                                <div class="circular-progress-label">
-                                    DNA
+                                                                        ">
+                                <div class="circular-progress-inner">
+                                    <div class="circular-progress-value">
+                                        @laudo.Desempenho.ScoreDna
+                                    </div>
+                                    <div class="circular-progress-label">
+                                        DNA
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="score-info">
-                            <div style="
+                            <div class="score-info">
+                                <div style="
                                         font-weight: 600;
                                         margin-bottom: 6px;
-                                                                ">
-                                O que é o índice DNA?
-                            </div>
-                            <div style="font-size: 14px">
-                                O Score DNA é um sistema que permitirá
-                                acompanhar seu rendimento em diferentes
-                                momentos.
+                                                                            ">
+                                    O que é o índice DNA?
+                                </div>
+                                <div style="font-size: 14px">
+                                    O Score DNA é um sistema que permitirá
+                                    acompanhar seu rendimento em diferentes
+                                    momentos.
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </section>
+                    </section>
 
-                <!-- Metrics Grid -->
-                <div class="cards-grid">
-                    <!-- Health Card -->
-                    @if (laudo.Saude != null)
-                    {
-                        <div class="metric-card">
-                            <div class="card-header health">
-                                <div class="card-title">Saúde</div>
-                                <div class="card-score">
-                                    <div class="circular-progress"
-                                         style="
-                                            --progress: 58;
+                    <!-- Metrics Grid -->
+                    <div class="cards-grid">
+                        <!-- Health Card -->
+                        @if (laudo.Saude != null)
+                        {
+                            <div class="metric-card">
+                                <div class="card-header health">
+                                    <div class="card-title">Saúde</div>
+                                    <div class="card-score">
+                                        <div class="circular-progress"
+                                             style="
+                                            --progress: @laudo.Desempenho.ScoreSaude;
                                             --color-main: #efad57;
                                             --color-second: #ffeed9;
-                                                                            ">
-                                        <div class="circular-progress-inner">
-                                            <div class="circular-progress-value">
-                                                @laudo.Desempenho.ScoreSaude
+                                                                                                ">
+                                            <div class="circular-progress-inner">
+                                                <div class="circular-progress-value">
+                                                    @laudo.Desempenho.ScoreSaude
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <h3>Índice de massa corporal</h3>
-                            <p>@laudo.Desempenho.AvisoImc</p>
-                            <div class="progress-bar-page1"
-                                 style="
+                                <h3>Índice de massa corporal</h3>
+                                <p>@laudo.Desempenho.AvisoImc</p>
+                                <div class="progress-bar-page1"
+                                     style="
                                     display: flex;
                                     justify-content: space-between;
                                     align-items: center;
                                     padding: 5px 0;
-                                                                    ">
-                                <span>IMC</span>
-                                <span style="color: #00eabc; font-weight: bold">@laudo.Laudo.ImcSaude</span>
+                                                                                        ">
+                                    <span>IMC</span>
+                                    <span style="color: #00eabc; font-weight: bold">@laudo.Laudo.ImcSaude</span>
+                                </div>
+                                <div class="progress-bar progress-bar-page1">
+                                    <div class="progress" style="width: 50%"></div>
+                                </div>
+                                <p style="flex-grow: 1">@laudo.Desempenho.TextoImc</p>
                             </div>
-                            <div class="progress-bar progress-bar-page1">
-                                <div class="progress" style="width: 50%"></div>
-                            </div>
-                            <p style="flex-grow: 1">@laudo.Desempenho.TextoImc</p>
-                        </div>
-                    }
+                        }
 
-                    <!-- Dental Health Card -->
-                    @if (laudo.EncaminhamentoSaudeBucal != null)
-                    {
-                        <div class="metric-card">
-                            <div class="card-header dental">
-                                <div class="card-title">Saúde Bucal</div>
-                                <div class="card-score">
-                                    <div class="circular-progress"
-                                         style="
-                                            --progress: 58;
+                        <!-- Dental Health Card -->
+                        @if (laudo.EncaminhamentoSaudeBucal != null)
+                        {
+                            <div class="metric-card">
+                                <div class="card-header dental">
+                                    <div class="card-title">Saúde Bucal</div>
+                                    <div class="card-score">
+                                        <div class="circular-progress"
+                                             style="
+                                            --progress: @laudo.Desempenho.ScoreSaudeBucal;
                                             --color-main: #e96c52;
                                             --color-second: #fce3de;
-                                                                                                ">
-                                        <div class="circular-progress-inner">
-                                            <div class="circular-progress-value">
-                                                @laudo.Desempenho.ScoreSaudeBucal
+                                                                                                                    ">
+                                            <div class="circular-progress-inner">
+                                                <div class="circular-progress-value">
+                                                    @laudo.Desempenho.ScoreSaudeBucal
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                <h3>@laudo.Desempenho.AvisoSaudeBucal</h3>
+                                <p style="flex-grow: 1">@laudo.EncaminhamentoSaudeBucal.Descricao</p>
                             </div>
-                            <h3>@laudo.Desempenho.AvisoSaudeBucal</h3>
-                            <p style="flex-grow: 1">@laudo.EncaminhamentoSaudeBucal.Descricao</p>
-                        </div>
-                    }
+                        }
 
-                    <!-- Food Consumption Card -->
-                    @if (laudo.EncaminhamentoConsumoAlimentar != null)
-                    {
-                        <div class="metric-card">
-                            <div class="card-header food">
-                                <div class="card-title">Consumo Alimentar</div>
-                                <div class="card-score">
-                                    <div class="circular-progress"
-                                         style="
-                                            --progress: 58;
+                        <!-- Food Consumption Card -->
+                        @if (laudo.EncaminhamentoConsumoAlimentar != null)
+                        {
+                            <div class="metric-card">
+                                <div class="card-header food">
+                                    <div class="card-title">Consumo Alimentar</div>
+                                    <div class="card-score">
+                                        <div class="circular-progress"
+                                             style="
+                                            --progress: @laudo.Desempenho.ScoreConsumoAlimentar;
                                             --color-main: #73dc69;
                                             --color-second: #deffdc;
-                                                                                                ">
-                                        <div class="circular-progress-inner">
-                                            <div class="circular-progress-value">
-                                                @laudo.Desempenho.ScoreConsumoAlimentar
+                                                                                                                    ">
+                                            <div class="circular-progress-inner">
+                                                <div class="circular-progress-value">
+                                                    @laudo.Desempenho.ScoreConsumoAlimentar
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                <h3>@laudo.Desempenho.AvisoConsumoAlimentar</h3>
+                                <p style="flex-grow: 1">@laudo.EncaminhamentoConsumoAlimentar.Descricao</p>
                             </div>
-                            <h3>@laudo.Desempenho.AvisoConsumoAlimentar</h3>
-                            <p style="flex-grow: 1">@laudo.EncaminhamentoConsumoAlimentar.Descricao</p>
-                        </div>
-                    }
+                        }
 
-                    <!-- Vocation Card -->
-                    @if (laudo.Vocacional != null)
-                    {
-                        <div class="metric-card">
-                            <div class="card-header vocation">
-                                <div class="card-title">Vocação</div>
-                                <div class="card-score">
-                                    <div class="circular-progress"
-                                         style="
-                                            --progress: 58;
+                        <!-- Vocation Card -->
+                        @if (laudo.Vocacional != null)
+                        {
+                            <div class="metric-card">
+                                <div class="card-header vocation">
+                                    <div class="card-title">Vocação</div>
+                                    <div class="card-score">
+                                        <div class="circular-progress"
+                                             style="
+                                            --progress: 100;
                                             --color-main: #5b5c9c;
                                             --color-second: #d5d6e7;
-                                                                            ">
-                                        <div class="circular-progress-inner">
-                                            <div class="circular-progress-value">
-                                                58
+                                                                                                ">
+                                            <div class="circular-progress-inner">
+                                                <div class="circular-progress-value">
+                                                    100
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                <h3>Interesse Artístico</h3>
+                                <p style="flex-grow: 1">
+                                    Pessoas nessa área apresentam situações
+                                    estruturadas que envolvem a autoexpressão de
+                                    ideias e conceitos através de diferentes meios
+                                    artísticos. É aberto a estímulos emocionais,
+                                    capaz de perceber as reações das pessoas.
+                                </p>
                             </div>
-                            <h3>Interesse Artístico</h3>
-                            <p style="flex-grow: 1">
-                                Pessoas nessa área apresentam situações
-                                estruturadas que envolvem a autoexpressão de
-                                ideias e conceitos através de diferentes meios
-                                artísticos. É aberto a estímulos emocionais,
-                                capaz de perceber as reações das pessoas.
-                            </p>
-                        </div>
-                    }
-                </div>
+                        }
+                    </div>
 
+                </div>
+                <div class="page-date">
+                    @DateTime.Now.ToString("D", CultureInfo.CreateSpecificCulture("pt-BR")).ToUpper() @* Formato de data pt-BR *@
+                </div>
             </div>
-            <div class="page-date">
-                @DateTime.Now.ToString("D", CultureInfo.CreateSpecificCulture("pt-BR")).ToUpper() @* Formato de data pt-BR *@
-            </div>
-        </div>
+        }
 
         <!-- Página 2 -->
         @if (laudo.QualidadeDeVida != null || laudo.TalentoEsportivo != null)
         {
             <div class="page-container page1">
                 <div class="newContainer">
-                    <!-- Qualidade de Vida Section -->
-                    @if (laudo.QualidadeDeVida != null)
+                    @if (laudo.Saude == null && laudo.EncaminhamentoSaudeBucal == null && laudo.EncaminhamentoConsumoAlimentar == null && laudo.Vocacional == null)
                     {
-                        <section class="quality-section">
-                            <div class="section-header">
-                                <div class="card-header life">
-                                    <div class="card-title">Qualidade de Vida</div>
-                                    <div class="card-score">
-                                        <div class="circular-progress"
-                                             style="
-                                            --progress: 58;
-                                            --color-main: #23bfff;
-                                            --color-second: #c8eeff;
-                                                                                                ">
-                                            <div class="circular-progress-inner">
-                                                <div class="circular-progress-value">
-                                                    @laudo.Desempenho.ScoreVida
+                        <!-- Header -->
+                        <header class="header">
+                            <img src="~/assets/images/logo2.png"
+                                 alt="DNA do Brasil"
+                                 class="logo-dna" />
+                            <div class="talent-info">
+                                <div class="text-info">
+                                    <div class="talent-label">MEU TALENTO</div>
+                                    <div class="talent-name">VOLEIBOL</div>
+                                </div>
+                                <img src="/assets/assets_Laudo/icon_info_esporte.png"
+                                     alt="Voleibol"
+                                     class="sport-icon" />
+                            </div>
+                        </header>
+
+                        <!-- Info Section -->
+                        <section class="info-section">
+                            <div class="left-section" style="margin-bottom: 20px">
+                                <div class="student-info">
+                                    @if (laudo.Laudo.ByteImage != null)
+                                    {
+                                        <div class="student-photo" style="background-size: cover;">
+                                            @{
+                                                var base64 = Convert.ToBase64String(laudo.Laudo.ByteImage);
+                                                var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                                            }
+                                            <img src="@imgSrc" />
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="student-photo">
+                                            <img src="/assets/images/user.png" style="width:100%;" />
+                                        </div>
+                                    }
+
+                                    <div class="class-info">
+                                        <div>Série: 8º ano</div>
+                                        <div>Turma: D</div>
+                                    </div>
+                                </div>
+                                <div class="student-details">
+                                    <div class="student-name">@laudo.Laudo.NomeAluno</div>
+                                    <div class="student-email">@laudo.Laudo.Email</div>
+                                    <div class="student-school">@laudo.Laudo.NomeLocalidade</div>
+                                </div>
+                            </div>
+                            <div class="dna-score">
+                                <div class="circular-progress"
+                                     style="
+                                --progress: (@laudo.Desempenho.ScoreDna)/6;
+                                --color-main: #00eabc;
+                                --color-second: #c0faee;">
+                                    <div class="circular-progress-inner">
+                                        <div class="circular-progress-value">
+                                            @laudo.Desempenho.ScoreDna
+                                        </div>
+                                        <div class="circular-progress-label">
+                                            DNA
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="score-info">
+                                    <div style="font-weight: 600; margin-bottom: 6px;">
+                                        O que é o índice DNA?
+                                    </div>
+                                    <div style="font-size: 14px">
+                                        O Score DNA é um sistema que permitirá
+                                        acompanhar seu rendimento em diferentes
+                                        momentos.
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <!-- Esporte Section -->
+                        @if (laudo.QualidadeDeVida == null && laudo.TalentoEsportivo != null)
+                        {
+                            <section class="sport-section">
+                                <div class="section-header">
+                                    <div class="card-header sport">
+                                        <div class="card-title">Esporte</div>
+                                        <div class="card-score">
+                                            <div class="circular-progress"
+                                                 style="
+                                            --progress: @laudo.Desempenho.ScoreTalentoEsportivo;
+                                            --color-main: #df436c;
+                                            --color-second: #f7d1db;
+                                                                                                                                            ">
+                                                <div class="circular-progress-inner">
+                                                    <div class="circular-progress-value">
+                                                        @laudo.Desempenho.ScoreTalentoEsportivo
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="quality-grid">
-                                @{
-                                    var index = 0;
-                                    var textosVida = new List<string>();
-                                    if (laudo.Desempenho != null)
-                                    {
-                                        textosVida = new List<string>
+                                <div class="sport-grid">
+                                    <div class="sport-card">
+                                        <h3>Índice de Massa Corporal</h3>
+                                        <p>@laudo.Desempenho.AvisoImc</p>
+                                        <div class="metric-value"
+                                             style="border-bottom: none">
+                                            <span>imc</span>
+                                            <span class="default">@laudo.Laudo.ImcSaude</span>
+                                        </div>
+                                        <div class="progress-bar">
+                                            <div class="progress"
+                                                 style="width: 50%;"></div>
+                                        </div>
+                                        <p class="description">@laudo.Desempenho.AvisoImc</p>
+                                    </div>
+                                    <div class="sport-card">
+                                        <h3>Velocidade 20m</h3>
+                                        <div class="metric-value">
+                                            <span>seg</span>
+                                            <span>@laudo.TalentoEsportivo.Velocidade</span>
+                                        </div>
+                                        <p>@laudo.Desempenho.TextoVelocidade</p>
+                                    </div>
+                                    <div class="sport-card">
+                                        <h3>Impulsão Horizontal</h3>
+                                        <p>@laudo.Desempenho.AvisoImpulsao</p>
+                                        <div class="metric-value"
+                                             style="border-bottom: none">
+                                            <span>cm</span>
+                                            <span class="sport">@laudo.TalentoEsportivo.ImpulsaoHorizontal</span>
+                                        </div>
+                                        <div class="progress-bar progress-bar-sport">
+                                            <div class="progress progress-sport"
+                                                 style="width: 50%;"></div>
+                                        </div>
+                                        <p class="description">@laudo.Desempenho.TextoImpulsao</p>
+                                    </div>
+                                    <div class="sport-card">
+                                        <h3>Flexibilidade</h3>
+                                        <p>@laudo.Desempenho.AvisoFlexibilidadeMuscular</p>
+                                        <div class="metric-value"
+                                             style="border-bottom: none">
+                                            <span>cm</span>
+                                            <span class="default">@laudo.TalentoEsportivo.Flexibilidade</span>
+                                        </div>
+                                        <div class="progress-bar">
+                                            <div class="progress"
+                                                 style="width: 50%;"></div>
+                                        </div>
+                                        <p class="description">@laudo.Desempenho.TextoFlexibilidadeMuscular</p>
+                                    </div>
+                                    <div class="sport-card">
+                                        <h3>Aptidão Aeróbica</h3>
+                                        <div class="metric-value">
+                                            <span>seg</span>
+                                            <span>@laudo.TalentoEsportivo.Vo2Max</span>
+                                        </div>
+                                        <p>@laudo.Desempenho.TextoAptidaoCardio</p>
+                                    </div>
+                                    <div class="sport-card">
+                                        <h3>Preensão Manual</h3>
+                                        <p>@laudo.Desempenho.AvisoForcaMembrosSup</p>
+                                        <div class="metric-value"
+                                             style="border-bottom: none">
+                                            <span>kg</span>
+                                            <span class="default">@laudo.TalentoEsportivo.PreensaoManual</span>
+                                        </div>
+                                        <div class="progress-bar">
+                                            <div class="progress"
+                                                 style="width: 50%;"></div>
+                                        </div>
+                                        <p class="description">@laudo.Desempenho.TextoForcaMembrosSup</p>
+                                    </div>
+                                </div>
+                            </section>
+                        }
+                        <!-- Qualidade de Vida Section -->
+                        @if ((laudo.TalentoEsportivo == null && laudo.QualidadeDeVida != null) || (laudo.QualidadeDeVida != null && laudo.TalentoEsportivo != null))
+                        {
+                            <section class="quality-section">
+                                <div class="section-header">
+                                    <div class="card-header life">
+                                        <div class="card-title">Qualidade de Vida</div>
+                                        <div class="card-score">
+                                            <div class="circular-progress"
+                                                 style="
+                                            --progress: @laudo.Desempenho.ScoreVida;
+                                            --color-main: #23bfff;
+                                            --color-second: #c8eeff;
+                                                                                                                                            ">
+                                                <div class="circular-progress-inner">
+                                                    <div class="circular-progress-value">
+                                                        @laudo.Desempenho.ScoreVida
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="quality-grid">
+                                    @{
+                                        var index = 0;
+                                        var textosVida = new List<string>();
+                                        if (laudo.Desempenho != null)
+                                        {
+                                            textosVida = new List<string>
                     {
                     laudo.Desempenho.TextoBemEstar,
                     laudo.Desempenho.TextoAutoestima,
                     laudo.Desempenho.TextoFamilia,
                     laudo.Desempenho.TextoContexto
                     };
+                                        }
                                     }
-                                }
-                                @foreach (var item in laudo.QualidadeDeVida)
-                                {
-                                    <div class="quality-card">
-                                        <h3>@item.Nome</h3>
-                                        <p>@textosVida[index]</p>
-                                    </div>
+                                    @foreach (var item in laudo.QualidadeDeVida)
+                                    {
+                                        <div class="quality-card">
+                                            <h3>@item.Nome</h3>
+                                            <p>@textosVida[index]</p>
+                                        </div>
 
-                                    index++;
-                                }
-                            </div>
-                        </section>
+                                        index++;
+                                    }
+                                </div>
+                            </section>
+                        }
                     }
-
                     <!-- Esporte Section -->
-                    @if (laudo.TalentoEsportivo != null)
+                    @if (laudo.TalentoEsportivo != null && laudo.QualidadeDeVida != null)
                     {
                         <section class="sport-section">
                             <div class="section-header">
@@ -341,10 +522,10 @@
                                     <div class="card-score">
                                         <div class="circular-progress"
                                              style="
-                                            --progress: 58;
+                                            --progress: @laudo.Desempenho.ScoreTalentoEsportivo;
                                             --color-main: #df436c;
                                             --color-second: #f7d1db;
-                                                                                                ">
+                                                                                                                        ">
                                             <div class="circular-progress-inner">
                                                 <div class="circular-progress-value">
                                                     @laudo.Desempenho.ScoreTalentoEsportivo
