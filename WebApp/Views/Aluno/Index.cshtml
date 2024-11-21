@@ -8,7 +8,7 @@
 <div id="vPesquisarAluno">
     <div class="row">
         <div class="col-md-12">
-            @using (@Html.BeginForm("Index", "Aluno", FormMethod.Post, new { id = "vPesquisarAluno", @class = "form-horizontal" }))
+            @using (@Html.BeginForm("Index", "Aluno", FormMethod.Post, new { id = "formPesquisarAluno", @class = "form-horizontal" }))
             {
                 <section class="panel">
                     <header class="panel-heading">
@@ -135,7 +135,6 @@
         <table class="table table-bordered table-striped mb-0" id="datatable-default">
             <thead>
             <tr>
-                <th class="text-center"></th>
                 <th class="text-center">Id</th>
                 <th class="text-center">Nome</th>
                 <th class="text-center">Email</th>
@@ -148,7 +147,6 @@
             @foreach (var item in Model.Alunos)
             {
                 <tr>
-                    <td class="text-center"></td>
                     <td class="text-center">@Html.DisplayFor(modelItem => item.Id)</td>
                     <td class="text-center">@Html.DisplayFor(modelItem => item.Nome)</td>
                     <td class="text-center">@Html.DisplayFor(modelItem => item.Email)</td>
@@ -345,7 +343,6 @@
     <link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css" />
     <link rel="stylesheet" href="~/assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
     <link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />
-    <link rel="stylesheet" href="https://cdn.datatables.net/select/1.7.0/css/select.dataTables.min.css" />
     <style>
         .wholebody {
             height: 289px;
@@ -362,8 +359,6 @@
     <script src="~/assets/vendor/ios7-switch/ios7-switch.js"></script>
     <script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
     <script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
-    <script src="https://cdn.datatables.net/select/1.7.0/js/dataTables.select.min.js"></script>
-    <script src="https://cdn.datatables.net/select/2.0.1/js/select.dataTables.js"></script>
     <script src="~/js/formatTableMultiselect.js"></script>
     <script src="~/js/alunos.js"></script>
 

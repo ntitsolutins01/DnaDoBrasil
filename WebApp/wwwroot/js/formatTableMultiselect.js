@@ -4,24 +4,7 @@
 
     var datatableInit = function () {
         table = $('#datatable-default').DataTable({
-            layout: {
-                topStart: {
-                    buttons: ['selectAll', 'selectNone']
-                }
-            },
             dom: '<"row"<"col-lg-6"l><"col-lg-6"f>><"table-responsive"t>p',
-            columnDefs: [
-                {
-                    orderable: false,
-                    className: 'select-checkbox',
-                    targets: 0
-                }
-            ],
-            select: {
-                style: 'os',
-                selector: 'td:first-child',
-                style: 'multi'
-            },
             order: [[1, 'asc']],
             paging: true,
             searching: true,
