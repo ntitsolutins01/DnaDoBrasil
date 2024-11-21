@@ -215,8 +215,26 @@
         $(document).ready(function() {
             $('#btnImprimirLaudo').click(function(e) {
                 e.preventDefault();
-                var formData = $('#formPesquisarLaudo').serialize();
-                var url = $(this).attr('href') + '?' + formData;
+        
+                var filtros = {
+                    ddlFomento: $('#ddlFomento').val(),
+                    ddlEstado: $('#ddlEstado').val(),
+                    ddlMunicipio: $('#ddlMunicipio').val(),
+                    ddlLocalidade: $('#ddlLocalidade').val(),
+                    ddlAluno: $('#ddlAluno').val(),
+                    ddlTipoLaudo: $('#ddlTipoLaudo').val()
+                };
+
+                var queryString = Object.keys(filtros)
+                    .filter(key => filtros[key])
+                    .map(key => `${key}=${encodeURIComponent(filtros[key])}`)
+                    .join('&');
+
+                var url = $(this).attr('href');
+                if (queryString) {
+                    url += '?' + queryString;
+                }
+        
                 window.open(url, '_blank');
             });
         });

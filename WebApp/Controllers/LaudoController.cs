@@ -488,7 +488,9 @@ namespace WebApp.Controllers
 
 
         [ClaimsAuthorize(ClaimType.Laudo, Claim.Consultar)]
-        public async Task<IActionResult> Print(int? crud, int? notify, IFormCollection collection, string message = null)
+        public async Task<IActionResult> Print([FromQuery] string ddlFomento, [FromQuery] string ddlEstado,
+            [FromQuery] string ddlMunicipio, [FromQuery] string ddlLocalidade,
+            [FromQuery] string ddlAluno, [FromQuery] string ddlTipoLaudo)
         {
             try
             {
@@ -496,12 +498,12 @@ namespace WebApp.Controllers
                 var searchFilter = new LaudosFilterDto
                 {
                     UsuarioEmail = usuario,
-                    FomentoId = collection["ddlFomento"].ToString(),
-                    Estado = collection["ddlEstado"].ToString(),
-                    MunicipioId = collection["ddlMunicipio"].ToString(),
-                    LocalidadeId = collection["ddlLocalidade"].ToString(),
-                    TipoLaudoId = collection["ddlTipoLaudo"].ToString(),
-                    AlunoId = collection["ddlAluno"].ToString(),
+                    FomentoId = ddlFomento,
+                    Estado = ddlEstado,
+                    MunicipioId = ddlMunicipio,
+                    LocalidadeId = ddlLocalidade,
+                    TipoLaudoId = ddlTipoLaudo,
+                    AlunoId = ddlAluno,
                     PageNumber = 1,
                     PageSize = 50
                 };
@@ -513,20 +515,19 @@ namespace WebApp.Controllers
                 {
                     var aluno = ApiClientFactory.Instance.GetAlunoById((int)laudo.AlunoId);
                     var profissional = ApiClientFactory.Instance.GetProfissionalById(Convert.ToInt32(aluno.ProfissionalId));
-                    var talentoEsportivo = laudo.TalentoEsportivoId == null ? null : ApiClientFactory.Instance.GetTalentoEsportivoByAluno((int)laudo.AlunoId);
-                    var encaminhamentoImc = laudo.SaudeId == null ? null : ApiClientFactory.Instance.GetEncaminhamentoBySaudeId(Convert.ToInt32(laudo.SaudeId));
-                    var qualidadeDeVida = laudo.QualidadeDeVidaId == null ? null : ApiClientFactory.Instance.GetEncaminhamentoByQualidadeDeVidaId((int)laudo.QualidadeDeVidaId);
-                    var vocacional = laudo.VocacionalId == null ? null : ApiClientFactory.Instance.GetEncaminhamentoByVocacional();
-                    var encaminhamentoConsumoAlimentar = laudo.ConsumoAlimentarId == null ? null : ApiClientFactory.Instance.GetEncaminhamentoById((int)laudo.ConsumoAlimentarId);
-                    var encaminhamentoSaudeBucal = laudo.SaudeBucalId == null ? null : ApiClientFactory.Instance.GetEncaminhamentoById((int)laudo.SaudeBucalId);
+                    var talentoEsportivo = laudo.TalentoEsportivoId == null ? null :
+                        ApiClientFactory.Instance.GetTalentoEsportivoByAluno((int)laudo.AlunoId);
+                    var encaminhamentoImc = laudo.SaudeId == null ? null :
+                        ApiClientFactory.Instance.GetEncaminhamentoBySaudeId(Convert.ToInt32(laudo.SaudeId));
+                    var qualidadeDeVida = laudo.QualidadeDeVidaId == null ? null :
+                        ApiClientFactory.Instance.GetEncaminhamentoByQualidadeDeVidaId((int)laudo.QualidadeDeVidaId);
+                    var vocacional = laudo.VocacionalId == null ? null :
+                        ApiClientFactory.Instance.GetEncaminhamentoByVocacional();
+                    var encaminhamentoConsumoAlimentar = laudo.ConsumoAlimentarId == null ? null :
+                        ApiClientFactory.Instance.GetEncaminhamentoById((int)laudo.ConsumoAlimentarId);
+                    var encaminhamentoSaudeBucal = laudo.SaudeBucalId == null ? null :
+                        ApiClientFactory.Instance.GetEncaminhamentoById((int)laudo.SaudeBucalId);
                     var desempenho = ApiClientFactory.Instance.GetDesempenhoByAluno(Convert.ToInt32(laudo.AlunoId));
-
-                    Console.WriteLine($"Desempenho data for aluno {laudo.AlunoId}: {desempenho != null}");
-                    if (desempenho != null)
-                    {
-                        Console.WriteLine($"ScoreSaude: {desempenho.ScoreSaude}");
-                        Console.WriteLine($"AvisoImc: {desempenho.AvisoImc}");
-                    }
 
                     laudoModels.Add(new LaudoModel
                     {
