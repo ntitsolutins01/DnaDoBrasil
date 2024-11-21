@@ -98,19 +98,19 @@ body {
 }
 
 .frente-page {
-    background-image: url(/assets/images/Carteirinha-Frente-Fast.jpg);
+    background-image: url(/assets/images/Carteirinha-Frente-New.jpg);
 }
 
 .verso-page {
-    background-image: url(/assets/images/Carteirinha-Verso-Fast.jpg);
+    background-image: url(/assets/images/Carteirinha-Verso-New.jpg);
 }
 
 /* Frente page styles */
 .student-info {
     position: absolute;
-    left: 0.6cm;
+    left: 0.5cm;
     width: 5.5cm;
-    padding-top: 0.6cm;
+    padding-top: 0.8cm;
 }
 
 .info-row {
@@ -122,22 +122,24 @@ body {
     .info-row label {
         display: block;
         font-weight: 700;
-        font-size: 7px;
-        min-width: 95px;
+        font-size: 8px;
+        min-width: 102px;
         flex-shrink: 0;
     }
 
     .info-row span {
         display: block;
-        font-size: 7px;
+        font-size: 8px;
         flex: 1;
         word-wrap: break-word;
+        font-weight: 500;
     }
 
 .activity-info {
-    font-size: 7px;
+    font-size: 8px;
     font-weight: 500;
     line-height: 1.2;
+    font-weight: 500;
 }
 
 .photo-container {
@@ -173,7 +175,7 @@ body {
 .main-content-verso {
     position: absolute;
     left: 0.6cm;
-    width: 5cm;
+    width: 5.2cm;
 }
 
 .info-row-verso {
@@ -185,16 +187,17 @@ body {
     .info-row-verso label {
         display: block;
         font-weight: 700;
-        font-size: 7px;
-        min-width: 95px;
+        font-size: 8px;
+        min-width: 102px;
         flex-shrink: 0;
     }
 
     .info-row-verso span {
         display: block;
-        font-size: 7px;
+        font-size: 8px;
         flex: 1;
         word-wrap: break-word;
+        font-weight: 500;
     }
 
 /* Responsividade */
