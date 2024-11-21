@@ -100,6 +100,37 @@
 
     async Task RenderSportCardAsync(string title, string unit, string value, string message, string description = null, bool showProgressBar = false)
     {
+        string GetProgressBarWidth(string title, string value)
+        {
+            if (string.IsNullOrEmpty(value)) return "0%";
+
+            double numValue;
+            if (!double.TryParse(value.Replace(",", "."), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out numValue)) return "0%";
+
+            double percentage = 0;
+            switch (title)
+            {
+                case "Impulsão Horizontal":
+                    percentage = (numValue / 250.0) * 100;
+                    break;
+                case "Preensão Manual":
+                    percentage = (numValue / 80.0) * 100;
+                    break;
+                case "Flexibilidade":
+                    percentage = (numValue / 455.0) * 100;
+                    break;
+                case "Índice de Massa Corporal":
+                    percentage = (numValue / 37.26) * 100;
+                    percentage = Math.Min(percentage, 100);
+                    break;
+                default:
+                    percentage = 0;
+                    break;
+            }
+
+            return $"{percentage.ToString("F1", System.Globalization.CultureInfo.InvariantCulture)}%";
+        }
+
         <div class="sport-card">
             <h3>@title</h3>
             @if (!string.IsNullOrEmpty(message))
@@ -113,7 +144,9 @@
             @if (showProgressBar)
             {
                 <div class="progress-bar @(title.Contains("Impulsão") ? "progress-bar-sport" : "")">
-                    <div class="progress @(title.Contains("Impulsão") ? "progress-sport" : "")" style="width: 50%;"></div>
+                    <div class="progress @(title.Contains("Impulsão") ? "progress-sport" : "")"
+                         style="width: @GetProgressBarWidth(title, value);">
+                    </div>
                 </div>
             }
             @if (!string.IsNullOrEmpty(description))
@@ -196,8 +229,14 @@
 
                         @if (laudo.Vocacional != null)
                         {
-                            await RenderMetricCardAsync("Vocação", 100, "#5b5c9c", "#d5d6e7",
-                            "Interesse Artístico", "Pessoas nessa área apresentam situações estruturadas que envolvem a autoexpressão de ideias e conceitos através de diferentes meios artísticos. É aberto a estímulos emocionais, capaz de perceber as reações das pessoas.");
+                            foreach (var vocacional in laudo.Vocacional)
+                            {
+                                if (vocacional.Id == laudo.Laudo.VocacionalId)
+                                {
+                                    await RenderMetricCardAsync("Vocação", 100, "#5b5c9c", "#d5d6e7",
+                                    vocacional.Nome, vocacional.Descricao);
+                                }
+                            }
                         }
                     </div>
                 </div>
