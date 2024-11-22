@@ -125,7 +125,7 @@
                             else {
                                 new PNotify({
                                     title: 'Aula',
-                                    text: 'Modulo não encontrados.',
+                                    text: 'Aulas não encontradas.',
                                     type: 'warning'
                                 });
                             }
