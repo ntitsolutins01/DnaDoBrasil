@@ -3,6 +3,41 @@
 @{
     Layout = null;
 
+    string GetProgressBarWidth(string title, string value)
+    {
+        if (string.IsNullOrEmpty(value)) return "0%";
+
+        double numValue;
+        if (!double.TryParse(value.Replace(",", "."), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out numValue)) return "0%";
+
+        double percentage = 0;
+        switch (title)
+        {
+            case "Impulsão Horizontal":
+                percentage = (numValue / 250.0) * 100;
+                break;
+            case "Preensão Manual":
+                percentage = (numValue / 80.0) * 100;
+                break;
+            case "Flexibilidade":
+                percentage = (numValue / 455.0) * 100;
+                break;
+            case "Índice de Massa Corporal":
+                percentage = (numValue / 37.26) * 100;
+                percentage = Math.Min(percentage, 100);
+                break;
+            case "imc":
+                percentage = (numValue / 37.26) * 100;
+                percentage = Math.Min(percentage, 100);
+                break;
+            default:
+                percentage = 0;
+                break;
+        }
+
+        return $"{percentage.ToString("F1", System.Globalization.CultureInfo.InvariantCulture)}%";
+    }
+
     async Task RenderHeaderAsync(WebApp.Models.LaudoModel laudo)
     {
         <header class="header">
@@ -61,7 +96,7 @@
         </div>
     }
 
-    async Task RenderMetricCardAsync(string title, double score, string colorMain, string colorSecond, string message, string description = null)
+    async Task RenderMetricCardAsync(string title, double score, string colorMain, string colorSecond, string message, string description = null, string imc = null)
     {
         <div class="metric-card">
             <div class="card-header @title.ToLower()">
@@ -75,6 +110,21 @@
                 </div>
             </div>
             <h3>@message</h3>
+            @if (imc != null)
+            {
+                <div class="progress-bar-page1"
+                     style="display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 50x 0;
+                margin-bottom: 5px;">
+                    <span>IMC</span>
+                    <span style="color: #00eabc; font-weight: bold;">@imc</span>
+                </div>
+                <div class="progress-bar progress-bar-page1">
+                    <div class="progress" style="width: @GetProgressBarWidth("imc", imc);"></div>
+                </div>
+            }
             @if (!string.IsNullOrEmpty(description))
             {
                 <p style="flex-grow: 1">@description</p>
@@ -84,7 +134,7 @@
 
     async Task RenderSectionHeaderAsync(string title, double score, string colorMain, string colorSecond)
     {
-        <div class="section-header" style="margin-top: 20px;">
+        <div class="section-header">
             <div class="card-header @title.ToLower()">
                 <div class="card-title">@title</div>
                 <div class="card-score">
@@ -100,37 +150,6 @@
 
     async Task RenderSportCardAsync(string title, string unit, string value, string message, string description = null, bool showProgressBar = false)
     {
-        string GetProgressBarWidth(string title, string value)
-        {
-            if (string.IsNullOrEmpty(value)) return "0%";
-
-            double numValue;
-            if (!double.TryParse(value.Replace(",", "."), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out numValue)) return "0%";
-
-            double percentage = 0;
-            switch (title)
-            {
-                case "Impulsão Horizontal":
-                    percentage = (numValue / 250.0) * 100;
-                    break;
-                case "Preensão Manual":
-                    percentage = (numValue / 80.0) * 100;
-                    break;
-                case "Flexibilidade":
-                    percentage = (numValue / 455.0) * 100;
-                    break;
-                case "Índice de Massa Corporal":
-                    percentage = (numValue / 37.26) * 100;
-                    percentage = Math.Min(percentage, 100);
-                    break;
-                default:
-                    percentage = 0;
-                    break;
-            }
-
-            return $"{percentage.ToString("F1", System.Globalization.CultureInfo.InvariantCulture)}%";
-        }
-
         <div class="sport-card">
             <h3>@title</h3>
             @if (!string.IsNullOrEmpty(message))
@@ -152,6 +171,10 @@
             @if (!string.IsNullOrEmpty(description))
             {
                 <p class="description">@description</p>
+            }
+            else
+            {
+                <p class="description">O aluno não tem essa informação preenchida no laudo de Esporte.</p>
             }
         </div>
     }
@@ -209,7 +232,7 @@
                         @if (laudo.Laudo.SaudeId != null)
                         {
                             await RenderMetricCardAsync("Saúde", laudo.Desempenho.ScoreSaude, "#efad57", "#ffeed9",
-                            "Índice de massa corporal", laudo.Desempenho.TextoImc);
+                            "Índice de massa corporal", laudo.Desempenho.TextoImc, laudo.Laudo.ImcSaude);
                         }
 
                         @if (laudo.Laudo.EncaminhamentoSaudeBucalId != null)
