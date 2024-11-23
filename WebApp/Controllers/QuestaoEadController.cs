@@ -40,7 +40,7 @@ public class QuestaoEadController : BaseController
     /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
     /// <param name="collection">lista de filtros selecionados para pesquisa de alunos</param>
     /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
-    //[ClaimsAuthorize(ClaimType.QuestaoEad, Identity.Claim.Consultar)]
+    [ClaimsAuthorize(ClaimType.QuestaoEad, Identity.Claim.Consultar)]
     public IActionResult Index(int? crud, int? notify, string message = null)
     {
         SetNotifyMessage(notify, message);
@@ -51,12 +51,12 @@ public class QuestaoEadController : BaseController
     }
 
     /// <summary>
-    /// Tela para inclusão de Modulo Ead
+    /// Tela para inclusão de Questao Ead
     /// </summary>
     /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
     /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
     /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
-    //[ClaimsAuthorize(ClaimType.QuestaoEad, Identity.Claim.Incluir)]
+    [ClaimsAuthorize(ClaimType.QuestaoEad, Identity.Claim.Incluir)]
     public ActionResult Create(int? crud, int? notify, string message = null)
     {
         try
@@ -84,13 +84,13 @@ public class QuestaoEadController : BaseController
     /// </summary>
     /// <param name="collection">coleção de dados para inclusao de QuestaoEad</param>
     /// <returns>retorna mensagem de inclusao através do parametro crud</returns>
-    //[ClaimsAuthorize(ClaimType.QuestaoEad, Identity.Claim.Incluir)]
+    [ClaimsAuthorize(ClaimType.QuestaoEad, Identity.Claim.Incluir)]
     [HttpPost]
     public async Task<ActionResult> Create(IFormCollection collection)
     {
         try
         {
-            List<RespostaEadDto> respostasList = new List<RespostaEadDto>();
+                List<RespostaEadDto> respostasList = new List<RespostaEadDto>();
 
             var command = new QuestaoEadModel.CreateUpdateQuestaoEadCommand
             {
@@ -119,7 +119,7 @@ public class QuestaoEadController : BaseController
     /// <param name="id">identificador do QuestaoEad</param>
     /// <param name="collection">coleção de dados para alteração de QuestaoEad</param>
     /// <returns>retorna mensagem de alteração através do parametro crud</returns>
-    //[ClaimsAuthorize(ClaimType.QuestaoEad, Identity.Claim.Alterar)]
+    [ClaimsAuthorize(ClaimType.QuestaoEad, Identity.Claim.Alterar)]
     public async Task<ActionResult> Edit(IFormCollection collection)
     {
         try
@@ -151,7 +151,7 @@ public class QuestaoEadController : BaseController
     /// <param name="id">identificador do QuestaoEad</param>
     /// <param name="collection">coleção de dados para exclusão de QuestaoEad</param>
     /// <returns>retorna mensagem de exclusão através do parametro crud</returns>
-    //[ClaimsAuthorize(ClaimType.QuestaoEad, Identity.Claim.Excluir)]
+    [ClaimsAuthorize(ClaimType.QuestaoEad, Identity.Claim.Excluir)]
     public ActionResult Delete(int id)
     {
         try
@@ -164,58 +164,15 @@ public class QuestaoEadController : BaseController
             return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = "Este módulo não pode ser excluído pois possui aulas vinculadas a ele." });
         }
     }
-
-    public Task<JsonResult> GetCursosAllByTipoCursoId(string id)
-    {
-        try
-        {
-            if (string.IsNullOrEmpty(id)) throw new Exception("Tipo de Curso não informado.");
-            var resultLocal = ApiClientFactory.Instance.GetCursosAllByTipoCursoId(Convert.ToInt32(id));
-
-            return Task.FromResult(Json(new SelectList(resultLocal, "Id", "Titulo")));
-
-        }
-        catch (Exception ex)
-        {
-            return Task.FromResult(Json(ex.Message));
-        }
-    }
-
-    public Task<JsonResult> GetModulosEadAllByCursoId(string id)
-    {
-        try
-        {
-            if (string.IsNullOrEmpty(id)) throw new Exception("Curso não informado.");
-            var resultLocal = ApiClientFactory.Instance.GetModulosEadAllByCursoId(Convert.ToInt32(id));
-
-            return Task.FromResult(Json(new SelectList(resultLocal, "Id", "Titulo")));
-
-        }
-        catch (Exception ex)
-        {
-            return Task.FromResult(Json(ex.Message));
-        }
-    }
-
-    public Task<JsonResult> GetAulasAllByModuloEadId(string id)
-    {
-        try
-        {
-            if (string.IsNullOrEmpty(id)) throw new Exception("Modulo não informado.");
-            var resultLocal = ApiClientFactory.Instance.GetAulasAllByModuloEadId(Convert.ToInt32(id));
-
-            return Task.FromResult(Json(new SelectList(resultLocal, "Id", "Titulo")));
-
-        }
-        catch (Exception ex)
-        {
-            return Task.FromResult(Json(ex.Message));
-        }
-    }
     #endregion
 
     #region Get Methods
 
+    /// <summary>
+    /// Método de busca de Questão por id
+    /// </summary>
+    /// <param name="id">id da questao</param>
+    /// <returns>Retorna o objeto Questao</returns>
     public Task<QuestaoEadDto> GetQuestaoEadById(int id)
     {
         var result = ApiClientFactory.Instance.GetQuestaoEadById(id);

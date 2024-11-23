@@ -7,7 +7,7 @@
 <div id="vQuestaoEad">
     <div class="row">
         <div class="col-md-12">
-            @using (@Html.BeginForm("Create", "QuestaoEad", FormMethod.Post, new { id = "formQuestaoEad", @class = "form-horizontal" }))
+            @using (@Html.BeginForm("Create", "QuestaoEad", FormMethod.Post, new { id = "formQuestaoEad", @class = "form-horizontal", @enctype = "multipart/form-data" }))
             {
                 <section class="panel">
                     <!-- Header -->

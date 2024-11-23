@@ -182,19 +182,24 @@ public class AulaController : BaseController
 		return Task.FromResult(result);
     }
 
+    /// <summary>
+    /// Método de busca todas as aulas pelo id do módulo ead
+    /// </summary>
+    /// <param name="id">Id do módulo ead</param>
+    /// <returns>Retorna um json com todas as aulas</returns>
     public Task<JsonResult> GetAulasAllByModuloEadId(string id)
     {
         try
         {
-            if (string.IsNullOrEmpty(id)) throw new Exception("Módulo não informado.");
+            if (string.IsNullOrEmpty(id)) throw new Exception("Modulo não informado.");
             var resultLocal = ApiClientFactory.Instance.GetAulasAllByModuloEadId(Convert.ToInt32(id));
 
-            return Task.FromResult(Json(new SelectList(resultLocal, "Id", "Nome")));
+            return Task.FromResult(Json(new SelectList(resultLocal, "Id", "Titulo")));
 
         }
         catch (Exception ex)
         {
-            return Task.FromResult(Json(ex));
+            return Task.FromResult(Json(ex.Message));
         }
     }
     #endregion
