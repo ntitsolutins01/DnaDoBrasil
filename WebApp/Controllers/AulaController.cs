@@ -89,37 +89,37 @@ public class AulaController : BaseController
     {
         try
         {
-            var command = new AulaModel.CreateUpdateAulaCommand
-            {
-                CargaHoraria = Convert.ToInt32(collection["cargaHoraria"]
-              .ToString()),
-                ProfessorId = Convert.ToInt32(collection["ddlProfessor"]
-              .ToString()),
-                ModuloEadId = Convert.ToInt32(collection["ddlModuloEad"]
-              .ToString()),
-                Titulo = collection["titulo"]
-              .ToString(),
-                Descricao = collection["descricao"]
-              .ToString(),
-                Video = collection["video"]
-                    .ToString()
-            };
+	        var command = new AulaModel.CreateUpdateAulaCommand
+	        {
+		        CargaHoraria = Convert.ToInt32(collection["cargaHoraria"].ToString()),
+		        ProfessorId = Convert.ToInt32(collection["ddlProfessor"].ToString()),
+		        ModuloEadId = Convert.ToInt32(collection["ddlModuloEad"].ToString()),
+		        Titulo = collection["titulo"].ToString(),
+		        Descricao = collection["descricao"].ToString(),
+		        Video = collection["video"].ToString()
+	        };
 
             string? filePath;
             string? fileName;
+            string extension = ".jpg";
+            string newFileName = Path.ChangeExtension(
+	            Guid.NewGuid().ToString(),
+	            extension
+            );
 
-            foreach (var file in collection.Files)
+			foreach (var file in collection.Files)
             {
                 if (file.Length <= 0) continue;
                 fileName = Path.GetFileName(collection.Files[0].FileName);
-                filePath = Path.Combine(_host.WebRootPath, $"Aula/{fileName}");
+                filePath = Path.Combine(_host.WebRootPath, $"Aulas\\{newFileName}");
 
-                if (!Directory.Exists(Path.Combine(_host.WebRootPath, $"Aula")))
-                    Directory.CreateDirectory(Path.Combine(_host.WebRootPath, $"Aula"));
+                if (!Directory.Exists(Path.Combine(_host.WebRootPath, $"Aulas")))
+                    Directory.CreateDirectory(Path.Combine(_host.WebRootPath, $"Aulas"));
 
-                command.Imagem = filePath;
+				command.Material = filePath;
+				command.NomeMaterial = fileName;
 
-                using Stream fileStream = new FileStream(filePath, FileMode.Create);
+				using Stream fileStream = new FileStream(filePath, FileMode.Create);
                 await file.CopyToAsync(fileStream);
             }
 

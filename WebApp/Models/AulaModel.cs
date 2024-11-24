@@ -31,7 +31,8 @@ namespace WebApp.Models
             public string? Descricao { get; set; }
             public string? Video { get; set; }
             public bool Status { get; set; } = true;
-            public string? Imagem { get; set; }
+            public string? Material { get; set; }
+            public string? NomeMaterial { get; set; }
         }
 	}
 
