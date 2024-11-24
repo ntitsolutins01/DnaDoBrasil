@@ -30,6 +30,8 @@ namespace WebApp.Models
         {
             public int Id { get; set; }
             public int AulaId { get; set; }
+            public int TextoImagemId { get; set; }
+            public int RespostaId { get; set; }
             public string Referencia { get; set; }
             public string Pergunta { get; set; }
             public List<RespostaEadDto>? Respostas { get; set; }

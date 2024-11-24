@@ -84,13 +84,21 @@ public class QuestaoEadController : BaseController
     /// </summary>
     /// <param name="collection">coleção de dados para inclusao de QuestaoEad</param>
     /// <returns>retorna mensagem de inclusao através do parametro crud</returns>
-    [ClaimsAuthorize(ClaimType.QuestaoEad, Identity.Claim.Incluir)]
+    //[ClaimsAuthorize(ClaimType.QuestaoEad, Identity.Claim.Incluir)]
     [HttpPost]
     public async Task<ActionResult> Create(IFormCollection collection)
     {
         try
         {
-                List<RespostaEadDto> respostasList = new List<RespostaEadDto>();
+            var listTexto = (from item in collection where item.Key.Contains("texto") select item.Value).Select(v => (string)v).ToList();
+
+            var listImg = (from item in collection where item.Key.Contains("imagem") select item.Value).Select(v => (string)v).ToList();
+            
+            var listAlternativas = (from item in collection where item.Key.Contains("alternativa") select item.Value).Select(v => (string)v).ToList();
+
+            var Dissertativa = (from item in collection where item.Key.Contains("dissertativa") select item.Value).Select(v => (string)v).ToList();
+            
+            var listMultiplo = (from item in collection where item.Key.Contains("multiplo") select item.Value).Select(v => (string)v).ToList();
 
             var command = new QuestaoEadModel.CreateUpdateQuestaoEadCommand
             {
@@ -98,9 +106,18 @@ public class QuestaoEadController : BaseController
                 AulaId = Convert.ToInt32(collection["ddlAula"]),
                 Referencia = collection["referencia"].ToString(),
                 Pergunta = collection["pergunta"].ToString(),
-                Respostas = JsonConvert.DeserializeObject<List<RespostaEadDto>>(collection["respostas"]),
                 Questao = Convert.ToInt32(collection["questao"].ToString()),
             };
+
+            if (listAlternativas.Any())
+            {
+                command.RespostaId = (int)await ApiClientFactory.Instance.CreateResposta(
+                    new RespostaModel.CreateUpdateRespostaCommand()
+                    {
+                        QuestionarioId = command.Id,
+                        RespostaQuestionario = listAlternativas.FirstOrDefault()
+                    });
+            }
 
             await ApiClientFactory.Instance.CreateQuestaoEad(command);
 
