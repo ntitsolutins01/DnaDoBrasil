@@ -147,20 +147,46 @@ public class AulaController : BaseController
             var command = new AulaModel.CreateUpdateAulaCommand
             {
                 Id = Convert.ToInt32(collection["editAulaId"]),
-                CargaHoraria = Convert.ToInt32(collection["cargaHoraria"]
-              .ToString()),
-                Titulo = collection["nome"]
-              .ToString(),
-                Descricao = collection["descricao"]
-              .ToString(),
-                Status = collection["editStatus"]
-                       .ToString() ==
-                      ""
-              ? false
-              : true,
-                ProfessorId = Convert.ToInt32(collection["ddlProfessor"]
-                    .ToString())
+                CargaHoraria = Convert.ToInt32(collection["cargaHoraria"].ToString()),
+                Titulo = collection["nome"].ToString(),
+                Descricao = collection["descricao"].ToString(),
+                Video = collection["video"].ToString(),
+                Status = collection["editStatus"].ToString() == "" ? false : true,
+                ProfessorId = Convert.ToInt32(collection["ddlProfessor"].ToString())
             };
+
+            foreach (var file in collection.Files)
+            {
+                if (file.Length <= 0) continue;
+
+                var currentAula = ApiClientFactory.Instance.GetAulaById(command.Id);
+
+                if (!string.IsNullOrEmpty(currentAula.Material) && System.IO.File.Exists(currentAula.Material))
+                {
+                    System.IO.File.Delete(currentAula.Material);
+                }
+
+                string extension = ".jpg";
+                string newFileName = Path.ChangeExtension(Guid.NewGuid().ToString(), extension);
+                string fileName = Path.GetFileName(file.FileName);
+                string filePath = Path.Combine(_host.WebRootPath, $"Aulas\\{newFileName}");
+
+                if (!Directory.Exists(Path.Combine(_host.WebRootPath, "Aulas")))
+                    Directory.CreateDirectory(Path.Combine(_host.WebRootPath, "Aulas"));
+
+                command.Material = filePath;
+                command.NomeMaterial = fileName;
+
+                using Stream fileStream = new FileStream(filePath, FileMode.Create);
+                await file.CopyToAsync(fileStream);
+            }
+
+            if (!collection.Files.Any())
+            {
+                var currentAula = ApiClientFactory.Instance.GetAulaById(command.Id);
+                command.Material = currentAula.Material;
+                command.NomeMaterial = currentAula.NomeMaterial;
+            }
 
             await ApiClientFactory.Instance.UpdateAula(command.Id, command);
 

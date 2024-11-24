@@ -17,5 +17,6 @@ namespace WebApp.Dto
         public SelectList? ListProfessores { get; set; }
         public string? Material { get; set; }
         public string? NomeMaterial { get; set; }
+		public string? Video { get; set; }
     }
 }
