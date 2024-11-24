@@ -104,7 +104,7 @@
 						<i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Alterar Aula</strong>
 					</h5>
 				</div>
-				@using (@Html.BeginForm("Edit", "Aula", FormMethod.Post, new { id = "formEditAula", @class = "form-horizontal" }))
+				@using (@Html.BeginForm("Edit", "Aula", FormMethod.Post, new { id = "formEditAula", @class = "form-horizontal", @enctype = "multipart/form-data" }))
 				{
                     <div class="modal-body">
                         <input type="hidden" name="editAulaId" :value="editDto.Id"/>
@@ -133,13 +133,13 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label text-sm-right pt-2">Descrição </label>
                                 <div class="col-sm-9">
-                                    <textarea class="form-control" rows="3" maxlength="500" name="descricao" v-model="editDto.Descricao" id="descricao"></textarea>
+                                    <textarea class="form-control" rows="7" maxlength="500" name="descricao" v-model="editDto.Descricao" id="descricao"></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label text-sm-right pt-2">Video </label>
                                 <div class="col-sm-9">
-                                    <textarea class="form-control" rows="3" maxlength="500" name="video" v-model="editDto.Video" id="video"></textarea>
+                                    <textarea class="form-control" rows="7" maxlength="500" name="video" v-model="editDto.Video" id="video"></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -159,7 +159,7 @@
                                             <a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">Remover</a>
                                         </div>
                                         <div v-if="editDto.NomeMaterial" class="mt-2">
-                                            <small>Arquivo atual: {{ editDto.NomeMaterial }}</small>
+                                            <code>Arquivo atual: {{ editDto.NomeMaterial }}</code>
                                         </div>
                                     </div>
                                 </div>
