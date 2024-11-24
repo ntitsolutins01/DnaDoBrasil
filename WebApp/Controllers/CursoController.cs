@@ -172,10 +172,16 @@ public class CursoController : BaseController
                 extension
             );
 
-            var imagem = ApiClientFactory.Instance.GetCursoById(command.Id).Imagem!;
+            var curso = ApiClientFactory.Instance.GetCursoById(command.Id);
 
-            if (imagem != null)
-                System.IO.File.Delete(imagem);
+            if (curso.Imagem != null)
+                System.IO.File.Delete(curso.Imagem);
+
+            if (!collection.Files.Any())
+            {
+				command.Imagem = curso.Imagem;
+				command.NomeImagem = curso.NomeImagem;
+			}
 
             foreach (var file in collection.Files)
             {
