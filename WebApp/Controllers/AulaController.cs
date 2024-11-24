@@ -183,7 +183,12 @@ public class AulaController : BaseController
     {
         try
         {
-            ApiClientFactory.Instance.DeleteAula(id);
+	        var material = ApiClientFactory.Instance.GetAulaById(id).Material!;
+
+	        if (material != null)
+		        System.IO.File.Delete(material);
+
+			ApiClientFactory.Instance.DeleteAula(id);
             return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
         }
         catch
