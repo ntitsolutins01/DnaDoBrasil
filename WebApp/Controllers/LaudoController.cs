@@ -487,6 +487,70 @@ namespace WebApp.Controllers
         }
 
 
+        [ClaimsAuthorize(ClaimType.Laudo, Claim.Consultar)]
+        public async Task<IActionResult> Print([FromQuery] string ddlFomento, [FromQuery] string ddlEstado,
+            [FromQuery] string ddlMunicipio, [FromQuery] string ddlLocalidade,
+            [FromQuery] string ddlAluno, [FromQuery] string ddlTipoLaudo)
+        {
+            try
+            {
+                var usuario = User.Identity.Name;
+                var searchFilter = new LaudosFilterDto
+                {
+                    UsuarioEmail = usuario,
+                    FomentoId = ddlFomento,
+                    Estado = ddlEstado,
+                    MunicipioId = ddlMunicipio,
+                    LocalidadeId = ddlLocalidade,
+                    TipoLaudoId = ddlTipoLaudo,
+                    AlunoId = ddlAluno,
+                    PageNumber = 1,
+                    PageSize = 50
+                };
+
+                var result = await ApiClientFactory.Instance.GetLaudosByFilter(searchFilter);
+                var laudoModels = new List<LaudoModel>();
+
+                foreach (var laudo in result.Laudos.Items)
+                {
+                    var aluno = ApiClientFactory.Instance.GetAlunoById((int)laudo.AlunoId);
+                    var profissional = ApiClientFactory.Instance.GetProfissionalById(Convert.ToInt32(aluno.ProfissionalId));
+                    var talentoEsportivo = laudo.TalentoEsportivoId == null ? null :
+                        ApiClientFactory.Instance.GetTalentoEsportivoByAluno((int)laudo.AlunoId);
+                    var encaminhamentoImc = laudo.SaudeId == null ? null :
+                        ApiClientFactory.Instance.GetEncaminhamentoBySaudeId(Convert.ToInt32(laudo.SaudeId));
+                    var qualidadeDeVida = laudo.QualidadeDeVidaId == null ? null :
+                        ApiClientFactory.Instance.GetEncaminhamentoByQualidadeDeVidaId((int)laudo.QualidadeDeVidaId);
+                    var vocacional = laudo.VocacionalId == null ? null :
+                        ApiClientFactory.Instance.GetEncaminhamentoByVocacional();
+                    var encaminhamentoConsumoAlimentar = laudo.ConsumoAlimentarId == null ? null :
+                        ApiClientFactory.Instance.GetEncaminhamentoById((int)laudo.ConsumoAlimentarId);
+                    var encaminhamentoSaudeBucal = laudo.SaudeBucalId == null ? null :
+                        ApiClientFactory.Instance.GetEncaminhamentoById((int)laudo.SaudeBucalId);
+                    var desempenho = ApiClientFactory.Instance.GetDesempenhoByAluno(Convert.ToInt32(laudo.AlunoId));
+
+                    laudoModels.Add(new LaudoModel
+                    {
+                        Laudo = laudo,
+                        Aluno = aluno,
+                        Profissional = profissional,
+                        TalentoEsportivo = talentoEsportivo,
+                        EncaminhamentoImc = encaminhamentoImc,
+                        QualidadeDeVida = qualidadeDeVida,
+                        Vocacional = vocacional,
+                        EncaminhamentoSaudeBucal = encaminhamentoSaudeBucal,
+                        EncaminhamentoConsumoAlimentar = encaminhamentoConsumoAlimentar,
+                        Desempenho = desempenho
+                    });
+                }
+
+                return View(laudoModels);
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = e.Message });
+            }
+        }
 
         [ClaimsAuthorize(ClaimType.Laudo, Claim.Consultar)]
         public async Task<IActionResult> ExportLaudo(int? crud, int? notify, IFormCollection collection, string message = null)

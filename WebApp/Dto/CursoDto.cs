@@ -14,5 +14,7 @@ namespace WebApp.Dto
 		public string? Descricao { get; init; }
 		public bool Status { get; init; }
 		public SelectList? ListCoordenadores { get; set; }
-	}
+        public string? Imagem { get; set; }
+        public string? NomeImagem { get; set; }
+    }
 }
