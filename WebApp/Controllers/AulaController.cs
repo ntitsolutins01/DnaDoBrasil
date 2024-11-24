@@ -16,15 +16,17 @@ public class AulaController : BaseController
 {
     #region Constructor
     private readonly IOptions<UrlSettings> _appSettings;
+    private readonly IWebHostEnvironment _host;
 
     /// <summary>
     /// Construtor da página
     /// </summary>
     /// <param name="app">configurações de urls do sistema</param>
     /// <param name="host">informações da aplicação em execução</param>
-    public AulaController(IOptions<UrlSettings> appSettings)
+    public AulaController(IOptions<UrlSettings> appSettings, IWebHostEnvironment host)
     {
         _appSettings = appSettings;
+        _host = host;
         ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
     }
     #endregion
@@ -60,14 +62,14 @@ public class AulaController : BaseController
         {
             SetNotifyMessage(notify, message);
             SetCrudMessage(crud);
-            var professores = new SelectList(ApiClientFactory.Instance.GetUsuarioAll().Where(x=>x.PerfilId == (int)EnumPerfil.Professor), "Id", "Nome");
+            var professores = new SelectList(ApiClientFactory.Instance.GetUsuarioAll().Where(x => x.PerfilId == (int)EnumPerfil.Professor), "Id", "Nome");
             var tipoCurso = new SelectList(ApiClientFactory.Instance.GetTipoCursosAll(), "Id", "Nome");
 
-			return View(new AulaModel()
+            return View(new AulaModel()
             {
                 ListProfessores = professores,
                 ListTipoCursos = tipoCurso
-			});
+            });
         }
         catch (Exception e)
         {
@@ -89,17 +91,37 @@ public class AulaController : BaseController
         {
             var command = new AulaModel.CreateUpdateAulaCommand
             {
-	            CargaHoraria = Convert.ToInt32(collection["cargaHoraria"]
-		            .ToString()),
-	            ProfessorId = Convert.ToInt32(collection["ddlProfessor"]
-		            .ToString()),
-	            ModuloEadId = Convert.ToInt32(collection["ddlModuloEad"]
-		            .ToString()),
-	            Titulo = collection["titulo"]
-		            .ToString(),
-	            Descricao = collection["descricao"]
-		            .ToString()
+                CargaHoraria = Convert.ToInt32(collection["cargaHoraria"]
+              .ToString()),
+                ProfessorId = Convert.ToInt32(collection["ddlProfessor"]
+              .ToString()),
+                ModuloEadId = Convert.ToInt32(collection["ddlModuloEad"]
+              .ToString()),
+                Titulo = collection["titulo"]
+              .ToString(),
+                Descricao = collection["descricao"]
+              .ToString(),
+                Video = collection["video"]
+                    .ToString()
             };
+
+            string? filePath;
+            string? fileName;
+
+            foreach (var file in collection.Files)
+            {
+                if (file.Length <= 0) continue;
+                fileName = Path.GetFileName(collection.Files[0].FileName);
+                filePath = Path.Combine(_host.WebRootPath, $"Aula/{fileName}");
+
+                if (!Directory.Exists(Path.Combine(_host.WebRootPath, $"Aula")))
+                    Directory.CreateDirectory(Path.Combine(_host.WebRootPath, $"Aula"));
+
+                command.Imagem = filePath;
+
+                using Stream fileStream = new FileStream(filePath, FileMode.Create);
+                await file.CopyToAsync(fileStream);
+            }
 
             await ApiClientFactory.Instance.CreateAula(command);
 
@@ -124,18 +146,18 @@ public class AulaController : BaseController
         {
             var command = new AulaModel.CreateUpdateAulaCommand
             {
-	            Id = Convert.ToInt32(collection["editAulaId"]),
-	            CargaHoraria = Convert.ToInt32(collection["cargaHoraria"]
-		            .ToString()),
-	            Titulo = collection["nome"]
-		            .ToString(),
-	            Descricao = collection["descricao"]
-		            .ToString(),
-	            Status = collection["editStatus"]
-		                     .ToString() ==
-	                     ""
-		            ? false
-		            : true,
+                Id = Convert.ToInt32(collection["editAulaId"]),
+                CargaHoraria = Convert.ToInt32(collection["cargaHoraria"]
+              .ToString()),
+                Titulo = collection["nome"]
+              .ToString(),
+                Descricao = collection["descricao"]
+              .ToString(),
+                Status = collection["editStatus"]
+                       .ToString() ==
+                      ""
+              ? false
+              : true,
                 ProfessorId = Convert.ToInt32(collection["ddlProfessor"]
                     .ToString())
             };
@@ -179,7 +201,7 @@ public class AulaController : BaseController
         var professores = new SelectList(ApiClientFactory.Instance.GetUsuarioAll().Where(x => x.PerfilId == (int)EnumPerfil.Professor), "Id", "Nome", result.ProfessorId);
         result.ListProfessores = professores;
 
-		return Task.FromResult(result);
+        return Task.FromResult(result);
     }
     #endregion
 }
