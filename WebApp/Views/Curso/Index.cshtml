@@ -24,6 +24,7 @@
 						<thead>
 							<tr>
                                 <th class="text-center">Id</th>
+                                <th class="text-center">Capa Imagem</th>
                                 <th class="text-center">Tipo de Curso</th>
 								<th class="text-center">Título do Curso</th>
 								<th class="text-center">Descrição</th>
@@ -37,6 +38,7 @@
 							{ 
 								<tr>
 									<td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Id)</td>
+									<td class="text-center" style="width: 50px;"><img class='category-icon' width='40' src='@Html.DisplayFor(modelItem => item.Imagem)'></td>
                                     <td class="text-center" style="width:200px;">@Html.DisplayFor(modelItem => item.TituloTipoCurso)</td>
                                     <td class="text-center">@Html.DisplayFor(modelItem => item.Titulo)</td>
                                     <td class="text-center">@Html.DisplayFor(modelItem => item.Descricao)</td>
@@ -142,7 +144,7 @@
                                     <div class="input-append">
                                         <div class="uneditable-input">
                                             <i class="fa fa-file fileupload-exists"></i>
-                                            <span class="fileupload-preview"></span>
+											<span class="fileupload-preview">{{ editDto.NomeImagem }}</span>
                                         </div>
                                         <span class="btn btn-default btn-file">
                                             <span class="fileupload-exists">Alterar</span>
