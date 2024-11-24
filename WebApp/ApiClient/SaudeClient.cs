@@ -34,7 +34,7 @@ namespace WebApp.ApiClient
 
         #region Methods
 
-        public SaudeDto GetSaudeById(string id)
+        public SaudeDto GetSaudeById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 $"{ResourceSaude}/{id}"));

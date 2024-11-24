@@ -15,6 +15,7 @@ using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 using QRCoder;
 using Claim = WebApp.Identity.Claim;
 using NuGet.Protocol.Core.Types;
+using WebApp.Views;
 
 namespace WebApp.Controllers
 {
@@ -113,6 +114,7 @@ namespace WebApp.Controllers
                 };
 
                 var etnias = new SelectList(list, "IdNome", "Nome", searchFilter.Etnia);
+
                 SelectList municipios = null;
 
                 if (!string.IsNullOrEmpty(searchFilter.Estado))
@@ -727,6 +729,152 @@ namespace WebApp.Controllers
             catch (Exception e)
             {
                 return RedirectToAction(nameof(Index));
+            }
+        }
+
+        /// <summary>
+        /// Tela para impressao de carteirinha
+        /// </summary>
+        /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
+        /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
+        /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
+        [ClaimsAuthorize(ClaimType.Aluno, Claim.Incluir)]
+        public ActionResult ImprimirCarteirinha(int id)
+        {
+            var aluno = ApiClientFactory.Instance.GetAlunoById(id);
+
+            return View(new AlunoModel()
+            {
+                Aluno = aluno,
+            });
+        }
+
+        [ClaimsAuthorize(ClaimType.Aluno, Claim.Incluir)]
+        public async Task<ActionResult> ImprimirCarteirinhasLote(string ids, string fomentoId = null, string estadoId = null,
+            string municipioId = null, string localidadeId = null, string deficienciaId = null, string etniaId = null, string sexoId = null)
+        {
+            try
+            {
+                IEnumerable<AlunoDto> alunos;
+                if (!string.IsNullOrEmpty(ids))
+                {
+                    // Se IDs específicos foram selecionados
+                    var idList = ids.Split(',').Select(int.Parse).ToList();
+                    alunos = idList.Select(id =>
+                    {
+                        var aluno = ApiClientFactory.Instance.GetAlunoById(id);
+                        if (aluno.QrCode == null)
+                        {
+                            aluno.QrCode = GeraQrCode(aluno.Id);
+                            ApiClientFactory.Instance.UpdateDados(aluno.Id, new AlunoModel.CreateUpdateDadosAlunoCommand
+                            {
+                                Id = aluno.Id,
+                                QrCode = aluno.QrCode
+                            });
+                        }
+                        return aluno;
+                    });
+                }
+                else
+                {
+                    // Usa filtros para obter alunos
+                    var searchFilter = new AlunosFilterDto
+                    {
+                        FomentoId = fomentoId,
+                        Estado = estadoId,
+                        MunicipioId = municipioId,
+                        LocalidadeId = localidadeId,
+                        DeficienciaId = deficienciaId,
+                        Etnia = etniaId,
+                        Sexo = sexoId
+                    };
+                    Console.WriteLine($"Filtros aplicados: Sexo={searchFilter.Sexo}, Fomento={searchFilter.FomentoId}");
+                    var result = await ApiClientFactory.Instance.GetAlunosByFilter(searchFilter);
+
+                    if (!string.IsNullOrEmpty(sexoId))
+                    {
+                        result.Alunos = result.Alunos.Where(a =>
+                            !string.IsNullOrEmpty(a.Sexo) &&
+                            a.Sexo.Equals(sexoId, StringComparison.OrdinalIgnoreCase)
+                        ).ToList();
+                    }
+
+                    // Converte AlunoIndexDto para AlunoDto completo
+                    var alunosCompletos = result.Alunos.Select(async a =>
+                    {
+                        var alunoCompleto = ApiClientFactory.Instance.GetAlunoById(a.Id);
+                        if (alunoCompleto.QrCode == null)
+                        {
+                            alunoCompleto.QrCode = GeraQrCode(alunoCompleto.Id);
+                            await ApiClientFactory.Instance.UpdateDados(alunoCompleto.Id, new AlunoModel.CreateUpdateDadosAlunoCommand
+                            {
+                                Id = alunoCompleto.Id,
+                                QrCode = alunoCompleto.QrCode
+                            });
+                        }
+                        return alunoCompleto;
+                    });
+                    alunos = await Task.WhenAll(alunosCompletos);
+                }
+
+                var alunosList = alunos.ToList();
+                if (!alunosList.Any())
+                {
+                    return RedirectToAction(nameof(Index), new
+                    {
+                        notify = (int)EnumNotify.Warning,
+                        message = "Nenhum aluno encontrado com os filtros selecionados."
+                    });
+                }
+
+                // Se necessário, converte a imagem em base64
+                
+                foreach (var aluno in alunosList.Where(a => a.ByteImage != null && a.Image == null))
+                {
+                    aluno.Image = aluno.ByteImage;
+                }
+
+                return View(new AlunoModel
+                {
+                    Alunos = alunosList.Select(a => new AlunoIndexDto
+                    {
+                        Id = a.Id,
+                        Nome = a.Nome,
+                        Email = a.Email,
+                        DtNascimento = a.DtNascimento,
+                        Status = a.Status,
+                        Cpf = a.Cpf,
+                        Telefone = a.Telefone,
+                        Celular = a.Celular,
+                        ByteImage = a.ByteImage,
+                        QrCode = a.QrCode,
+                        Sexo = a.Sexo,
+                        ModalidadeLinhaAcao = a.ModalidadeLinhaAcao,
+                        MunicipioEstado = a.MunicipioEstado,
+                        NomeLocalidade = a.NomeLocalidade,
+                        // Adicionando os campos de navegação
+                        Municipio = new MunicipioDto
+                        {
+                            Id = int.TryParse(a.MunicipioId, out var mid) ? mid : 0,
+                            Nome = a.NomeMunicipio
+                        },
+                        Localidade = new LocalidadeDto
+                        {
+                            Id = a.LocalidadeId,
+                            Nome = a.NomeLocalidade
+                        }
+                    }).ToList() // Convertendo para List<AlunoIndexDto>
+                });
+            }
+            catch (Exception e)
+            {
+                Console.Write(e.StackTrace);
+                Console.WriteLine($"Erro ao aplicar filtros: {e.Message}");
+                return RedirectToAction(nameof(Index), new
+                {
+                    notify = (int)EnumNotify.Error,
+                    message = "Erro ao gerar impressão em lote: " + e.Message
+                });
             }
         }
     }

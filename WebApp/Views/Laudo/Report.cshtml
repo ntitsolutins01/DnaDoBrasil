@@ -196,6 +196,19 @@
                             </span>
                         </div>
                         <div class="row-info">
+                            <span class="label-info">Etnia</span>
+                            <span class="value-info" style="text-transform: capitalize;">
+                                @if (Model.Laudo.Etnia == null)
+                                {
+                                    <text>Não definido</text>
+                                }
+                                else
+                                {
+                                    <text>@Model.Laudo.Etnia.ToLower()</text>
+                                }
+                            </span>
+                        </div>
+                        <div class="row-info">
                             <span class="label-info">Estatura</span>
                             <span class="value-info">@Model.Laudo.Estatura cm</span>
                         </div>
@@ -204,18 +217,82 @@
                             <span class="value-info">@Model.Laudo.Massa Kg</span>
                         </div>
                         <div class="row-info">
-                            <span class="label-info">Modalidade</span>
+                            <span class="label-info">Saúde </span>
                             <span class="value-info">
-                                @if (Model.Laudo.Modalidade == null)
+                                @if (Model.Laudo.ImcSaude == "0")
                                 {
                                     <text>Não Definido</text>
                                 }
                                 else
                                 {
-                                    <text>@Model.Laudo.Modalidade</text>
+                                    <text>IMC - @Model.Laudo.ImcSaude</text>
                                 }
                             </span>
                         </div>
+                        @if (Model.QualidadeDeVida != null)
+                        {
+                            <div class="row-info">
+                                <span class="label-info">Qualidade de Vida </span>
+                                <span class="value-info" style="font-size: 9px;font-weight: 500;">
+
+                                    @foreach (var item in Model.QualidadeDeVida)
+                                    {
+                                        @item.Nome
+                                        <br />
+                                    }
+                                    @* Bem estar físico: Muito bom!
+                                <br/>
+                                Auto Estima: Muito bom!
+                                <br/>
+                                Funcionamento Harmonico: Muito bom!
+                                <br/>
+                                Contextos Favorecedores: Muito bom! *@
+                                </span>
+                            </div>
+                        }
+                        @if (Model.Vocacional != null)
+                        {
+                            <div class="row-info">
+                                <span class="label-info">Vocacional </span>
+                                <span class="value-info">
+                                    I
+                                    @foreach (var item in Model.Vocacional)
+                                    {
+                                        if (item.Id == Model.Laudo.VocacionalId)
+                                        {
+                                            @item.Nome
+                                        }
+                                    }
+                                </span>
+                            </div>
+                        }
+                        @if (Model.EncaminhamentoConsumoAlimentar != null)
+                        {
+                            <div class="row-info">
+                                <span class="label-info">Consumo Alimentar </span>
+                                <span class="value-info">@Model.Desempenho.AvisoConsumoAlimentar</span>
+                            </div>
+                        }
+                        @if (Model.EncaminhamentoSaudeBucal != null)
+                        {
+                            <div class="row-info">
+                                <span class="label-info">Saúde Bucal </span>
+                                <span class="value-info">@Model.Desempenho.AvisoSaudeBucal</span>
+                            </div>
+                        }
+                        @* <div class="row-info">
+                        <span class="label-info">Modalidade</span>
+                        <span class="value-info">
+                        @if (Model.Laudo.Modalidade == null)
+                        {
+                        <text>Em desenvolvimento</text>
+                        }
+                        else
+                        {
+                        <text>@Model.Laudo.Modalidade</text>
+                        }
+                        </span>
+                        </div>*@
                     </div>
                 </div>
                 <div class="logo"></div>

@@ -1,4 +1,4 @@
-﻿@model LaudoModel
+@model LaudoModel
 @{
     ViewData["Title"] = "CreateLaudo";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -113,13 +113,13 @@
                                         <div>
                                             <label class="col-sm-2 control-label"><strong>Altura (cm) </strong></label>
                                             <div class="col-sm-4">
-                                                <input type="text" class="form-control" id="alturaSaude" name="alturaSaude" maxlength="3" />
+                                                <input type="text" class="form-control" id="alturaSaude" name="alturaSaude" maxlength="6" />
                                             </div>
                                         </div>
                                         <div>
                                             <label class="col-sm-3 control-label"><strong>Massa Corporal (kg) </strong></label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="massaCorporalSaude" name="massaCorporalSaude" maxlength="3" />
+                                                <input type="text" class="form-control" id="massaCorporalSaude" name="massaCorporalSaude" maxlength="6" />
                                             </div>
                                         </div>
                                     </div>
@@ -127,7 +127,7 @@
                                         <div>
                                             <label class="col-sm-2 control-label"><strong>Envergadura (cm)</strong></label>
                                             <div class="col-sm-4">
-                                                <input type="text" class="form-control" id="envergaduraSaude" name="envergaduraSaude" maxlength="3" />
+                                                <input type="text" class="form-control" id="envergaduraSaude" name="envergaduraSaude" maxlength="6" />
                                             </div>
                                         </div>
                                     </div>
@@ -137,13 +137,13 @@
                                         <div>
                                             <label class="col-sm-2 control-label"><strong>Altura (cm) </strong></label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="altura" name="altura" maxlength="3" />
+                                                <input type="text" class="form-control" id="altura" name="altura" maxlength="6" />
                                             </div>
                                         </div>
                                         <div>
                                             <label class="col-sm-3 control-label"><strong>Massa Corporal (kg)</strong></label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="massaCorporal" name="massaCorporal" maxlength="3" />
+                                                <input type="text" class="form-control" id="massaCorporal" name="massaCorporal" maxlength="6" />
                                             </div>
                                         </div>
                                     </div>
@@ -151,13 +151,13 @@
                                         <div>
                                             <label class="col-sm-2 control-label"><strong>Preensão Manual (kg)</strong></label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="preensaoManual" name="preensaoManual" maxlength="3" />
+                                                <input type="text" class="form-control" id="preensaoManual" name="preensaoManual" maxlength="6" />
                                             </div>
                                         </div>
                                         <div>
                                             <label class="col-sm-3 control-label"><strong>Flexibilidade (cm)</strong></label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="flexibilidade" name="flexibilidade" maxlength="3" />
+                                                <input type="text" class="form-control" id="flexibilidade" name="flexibilidade" maxlength="6" />
                                             </div>
                                         </div>
                                     </div>
@@ -165,7 +165,7 @@
                                         <div>
                                             <label class="col-sm-2 control-label"><strong>Impulsão Horizontal (cm)</strong></label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="impulsaoHorizontal" name="impulsaoHorizontal" maxlength="3" />
+                                                <input type="text" class="form-control" id="impulsaoHorizontal" name="impulsaoHorizontal" maxlength="6" />
                                             </div>
                                         </div>
                                         <div>
@@ -176,7 +176,7 @@
                                                         <i class="fa fa-clock-o"></i>
                                                     </span>
                                                     @* <input type="text" id="testeVelocidade" name="testeVelocidade" value="00:00" data-plugin-timepicker class="form-control" data-plugin-options='{ "showMeridian": false, "explicitMode": true, "setDefaultTime": false }'> *@
-                                                    <input type="text" class="form-control" id="testeVelocidade" name="testeVelocidade" maxlength="2" />
+                                                    <input type="text" class="form-control" id="testeVelocidade" name="testeVelocidade" maxlength="6" />
                                                 </div>
                                             </div>
                                         </div>
@@ -196,7 +196,7 @@
                                                         <i class="fa fa-clock-o"></i>
                                                     </span>
                                                     @* <input type="text" id="agilidade" name="agilidade" value="00:00" data-plugin-timepicker class="form-control" data-plugin-options='{ "showMeridian": false, "explicitMode": true , "setDefaultTime": false }'> *@
-                                                    <input type="text" class="form-control" id="agilidade" name="agilidade" maxlength="2" />
+                                                    <input type="text" class="form-control" id="agilidade" name="agilidade" maxlength="6" />
 
                                                 </div>
                                             </div>
@@ -342,8 +342,6 @@
     <link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css" />
     <link rel="stylesheet" href="~/assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
     <link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />
-    <link href="~/assets/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.css" rel="stylesheet" />
-    <link rel="stylesheet" href="~/assets/vendor/bootstrap-timepicker/css/bootstrap-timepicker.css" />
 }
 @section Scripts {
     <script src="~/assets/vendor/ios7-switch/ios7-switch.js"></script>
@@ -352,9 +350,6 @@
     <script src="~/assets/vendor/jquery-mask/jquery.mask.js"></script>
     <script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
     <script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
-    <script src="~/assets/vendor/bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR.min.js"></script>
-    <script src="~/assets/vendor/bootstrap-timepicker/bootstrap-timepicker.js"></script>
-    <script src="~/assets/vendor/fuelux/js/spinner.js"></script>
     <script src="~/js/formatTable.js"></script>
     <script src="~/js/laudo.js"></script>
 }

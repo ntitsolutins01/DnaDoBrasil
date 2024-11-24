@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using DocumentFormat.OpenXml.Bibliography;
+using DocumentFormat.OpenXml.Spreadsheet;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
@@ -17,15 +19,22 @@ namespace WebApp.Controllers;
 [Authorize(Policy = ModuloAccess.ConfiguracaoSistemaEad)]
 public class CursoController : BaseController
 {
+    #region Parametros
+
+    private readonly IWebHostEnvironment _host;
+
+    #endregion
     #region Constructor
 
     /// <summary>
     /// Contrutor da página
     /// </summary>
-    /// <param name="appSettings">paramentros para chamada de </param>
-    public CursoController(IOptions<UrlSettings> appSettings)
+    /// <param name="appSettings">Configurações da aplicação</param>
+    /// <param name="host">Informação do ambiente em que a aplicação está rodando</param>
+    public CursoController(IOptions<UrlSettings> appSettings, IWebHostEnvironment host)
     {
         ApplicationSettings.WebApiUrl = appSettings.Value.WebApiBaseUrl;
+        _host = host;
     }
     #endregion
 
@@ -98,19 +107,30 @@ public class CursoController : BaseController
 				CargaHoraria = Convert.ToInt32(collection["cargaHoraria"].ToString())
 			};
 
-            //foreach (var file in collection.Files)
-            //{
-            //    if (file.Length <= 0) continue;
+            string? filePath;
+            string? fileName;
+            string extension = ".jpg";
+            string newFileName = Path.ChangeExtension(
+                Guid.NewGuid().ToString(),
+                extension
+            );
 
-            //    command.Imagem = Path.GetFileName(collection.Files[0].FileName);
+            foreach (var file in collection.Files)
+            {
+                if (file.Length <= 0) continue;
+                fileName = Path.GetFileName(collection.Files[0].FileName);
+                filePath = Path.Combine(_host.WebRootPath, $"Cursos\\{newFileName}");
 
-            //    using (var ms = new MemoryStream())
-            //    {
-            //        file.CopyToAsync(ms);
-            //        var byteIMage = ms.ToArray();
-            //        command.ByteImage = byteIMage;
-            //    }
-            //}
+                if (!Directory.Exists(Path.Combine(_host.WebRootPath, $"Cursos")))
+                    Directory.CreateDirectory(Path.Combine(_host.WebRootPath, $"Cursos"));
+
+                command.Imagem = filePath;
+                command.NomeImagem = fileName;
+
+                using Stream fileStream = new FileStream(filePath, FileMode.Create);
+                await file.CopyToAsync(fileStream);
+            }
+
 
             await ApiClientFactory.Instance.CreateCurso(command);
 
@@ -144,19 +164,40 @@ public class CursoController : BaseController
                 Status = collection["editStatus"].ToString() == "" ? false : true
             };
 
-            //foreach (var file in collection.Files)
-            //{
-            //    if (file.Length <= 0) continue;
+            string? filePath;
+            string? fileName;
+            string extension = ".jpg";
+            string newFileName = Path.ChangeExtension(
+                Guid.NewGuid().ToString(),
+                extension
+            );
 
-            //    command.Imagem = Path.GetFileName(collection.Files[0].FileName);
+            var curso = ApiClientFactory.Instance.GetCursoById(command.Id);
 
-            //    using (var ms = new MemoryStream())
-            //    {
-            //        file.CopyToAsync(ms);
-            //        var byteIMage = ms.ToArray();
-            //        command.ByteImage = byteIMage;
-            //    }
-            //}
+            if (curso.Imagem != null)
+                System.IO.File.Delete(curso.Imagem);
+
+            if (!collection.Files.Any())
+            {
+				command.Imagem = curso.Imagem;
+				command.NomeImagem = curso.NomeImagem;
+			}
+
+            foreach (var file in collection.Files)
+            {
+                if (file.Length <= 0) continue;
+                fileName = Path.GetFileName(collection.Files[0].FileName);
+                filePath = Path.Combine(_host.WebRootPath, $"Cursos\\{newFileName}");
+
+                if (!Directory.Exists(Path.Combine(_host.WebRootPath, $"Cursos")))
+                    Directory.CreateDirectory(Path.Combine(_host.WebRootPath, $"Cursos"));
+
+                command.Imagem = filePath;
+                command.NomeImagem = fileName;
+
+                using Stream fileStream = new FileStream(filePath, FileMode.Create);
+                await file.CopyToAsync(fileStream);
+            }
 
             await ApiClientFactory.Instance.UpdateCurso(command.Id, command);
 
@@ -179,7 +220,13 @@ public class CursoController : BaseController
     {
 	    try
 	    {
-		    ApiClientFactory.Instance.DeleteCurso(id);
+            var imagem = ApiClientFactory.Instance.GetCursoById(id).Imagem!;
+
+            if (imagem != null)
+                System.IO.File.Delete(imagem);
+
+            ApiClientFactory.Instance.DeleteCurso(id);
+
 		    return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
 	    }
 	    catch (Exception e)

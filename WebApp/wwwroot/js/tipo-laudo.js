@@ -2,7 +2,7 @@ var vm = new Vue({
     el: "#formTipoLaudo",
     data: {
         loading: false,
-        editDto: { Id: "", Nome: "", Descricao: "", Status: true }
+        editDto: { Id: "", Nome: "", Descricao: "", Status: true, Idade: "" }
     },
     mounted: function () {
         var self = this;
@@ -100,6 +100,7 @@ var vm = new Vue({
                 self.editDto.Nome = result.data.nome;
                 self.editDto.Descricao = result.data.descricao;
                 self.editDto.Status = result.data.status;
+                self.editDto.Idade = result.data.idadeMinima;
 
             }).catch(error => {
                 Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
