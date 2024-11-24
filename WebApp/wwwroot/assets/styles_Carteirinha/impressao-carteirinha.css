@@ -1,14 +1,16 @@
-﻿/* Estilos base */
+﻿@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* Estilos base e configuração de mídia de impressão */
 body {
     margin: 0;
     padding: 0;
     background-color: #f5f5f5;
 }
 
-/* Controles de impressão - apenas visíveis na tela */
+/* Configurações de visualização na tela */
 @media screen {
     body {
-        padding-top: 80px; /* Altura do print-controls + um pouco de espaço */
+        padding-top: 80px;
         flex-direction: column;
     }
 
@@ -24,15 +26,14 @@ body {
         z-index: 1000;
     }
 
-    /* Container principal para visualização */
     .preview-container {
         padding: 20px;
         display: flex;
         flex-direction: column;
         align-items: center;
         gap: 20px;
+        transform: scale(1.8);
         transform-origin: top center;
-        transition: transform 0.3s ease-in-out;
     }
 
     .preview-wrapper {
@@ -40,53 +41,11 @@ body {
         padding: 20px;
         display: flex;
         justify-content: center;
-        flex: 1; /* Faz o wrapper crescer e ocupar o espaço disponível */
+        flex: 1;
         min-height: 100%;
     }
 
-    /* Página individual */
-    .page {
-        width: 8.5cm;
-        height: 5.4cm;
-        background: white;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        page-break-after: always;
-        overflow: hidden;
-        background: url(/assets/images/background_carteirinha.png);
-        background-repeat: no-repeat;
-        background-position: center center;
-        background-size: cover;
-        flex-shrink: 0;
-    }
-
-    .zoom-controls {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        margin: 0 15px;
-        padding: 5px;
-        border-left: 1px solid #ddd;
-        border-right: 1px solid #ddd;
-    }
-
-        .zoom-controls .btn {
-            padding: 4px 8px;
-            min-width: 32px;
-        }
-
-    .zoom-level {
-        font-size: 14px;
-        color: #666;
-        min-width: 50px;
-        text-align: center;
-    }
-
-    /* Classe para aplicar o zoom */
-    .preview-container.zoomed {
-        transform-origin: center top;
-        transition: transform 0.3s ease;
-    }
-
+    /* Responsividade do padding-top */
     @media (max-width: 768px) and (min-width: 480px) {
         body {
             padding-top: 80px;
@@ -106,47 +65,31 @@ body {
     }
 }
 
-/* Estilos de impressão */
-@media print {
-    @page {
-        size: 8.5cm 5.4cm;
-        margin: 0;
-        /*padding: 0;*/
-    }
+/* Configurações de página */
+.page {
+    width: 8.5cm;
+    height: 5.4cm;
+    overflow: hidden;
+    flex-shrink: 0;
+    position: relative;
+    font-family: 'Montserrat', sans-serif;
+    color: #1a237e;
+}
 
-    body {
-        margin: 0;
-        padding: 0;
-        background: white;
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-    }
+.frente-page, .verso-page {
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+}
 
-    .print-controls {
-        display: none;
-    }
+.frente-page {
+    background-image: url(/assets/images/Carteirinha-Frente-New.jpg);
+}
 
-    .preview-container {
-        margin: 0;
-        padding: 0;
-    }
-
-    .page {
-        width: 8.5cm;
-        height: 5.4cm;
-        page-break-after: always;
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-        background: url(/assets/images/background_carteirinha.png);
-        background-repeat: no-repeat;
-        background-position: center center;
-        background-size: cover;
-    }
-
-    .no-print {
-        display: none !important;
-    }
+.verso-page {
+    background-image: url(/assets/images/Carteirinha-Verso-New.jpg);
 }
 
 /* Botões */
@@ -166,9 +109,7 @@ body {
 }
 
     .btn-primary:hover {
-        transform: none;
         background-color: #4a90e2;
-        color: white;
     }
 
 .btn-secondary {
@@ -178,301 +119,129 @@ body {
 
     .btn-secondary:hover {
         background-color: #5a6268;
-        color: white;
     }
 
-.zoom-controls .btn:hover {
-    background-color: #4a90e2; /* Cor específica para botões de zoom */
-    color: white;
+/* Configurações de impressão */
+@media print {
+    @page {
+        size: 8.5cm 5.4cm;
+        margin: 0;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        background: white;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .print-controls {
+        display: none;
+    }
+
+    .preview-container {
+        margin: 0;
+        padding: 0;
+        transform: scale(1);
+    }
+
+    .no-print {
+        display: none !important;
+    }
 }
 
+/* Frente page styles */
+.student-info {
+    position: absolute;
+    left: 0.5cm;
+    width: 5.5cm;
+    padding-top: 0.8cm;
+}
 
-/* Style Carteirinha FRENTE */
-.carteirinha-content {
+.info-row {
+    margin-bottom: 0.2cm;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+    .info-row label {
+        display: block;
+        font-weight: 700;
+        font-size: 8px;
+        min-width: 102px;
+        flex-shrink: 0;
+    }
+
+    .info-row span {
+        display: block;
+        font-size: 8px;
+        flex: 1;
+        word-wrap: break-word;
+        font-weight: 500;
+    }
+
+.activity-info {
+    font-size: 8px;
+    font-weight: 500;
+    line-height: 1.2;
+    font-weight: 500;
+}
+
+.photo-container {
+    position: absolute;
+    right: 0.92cm;
+    top: 0.6cm;
+    width: 54px;
+    height: 80px;
+    overflow: hidden;
+}
+
+.student-photo {
     width: 100%;
     height: 100%;
-    position: relative;
+    object-fit: cover; /* Se der ruim alternar para cover ou scale-down */
+    border-radius: 4px;
 }
 
-.header {
-    width: 100%;
-    height: 1.45cm; /* 55px */
-    display: flex;
-    margin: 0.26cm; /* 10px */
-}
-
-.logo-section {
-    width: 6.61cm; /* 251px */
-    height: 1.45cm; /* 55px */
-    display: flex;
-    gap: 0.26cm; /* 10px */
-}
-
-.logo-dne {
-    width: 2.32cm; /* 88px */
-    height: 0.66cm; /* 25px */
-    background: url('/assets/images/img_8519.png');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-    margin-top: 0.4cm; /* 15px */
-}
-
-.logo-dna {
-    width: 1.6cm; /* 46px */
-    background: url('/assets/images/logo.png');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-    margin-top: 0.34cm; /* 13px */
+.qr-code-container {
+    position: absolute;
+    right: 0.98cm;
+    bottom: 0.8cm;
+    width: 51px;
+    height: 51px;
 }
 
 .qr-code {
-    width: 1.45cm; /* 55px */
-    height: 1.45cm; /* 55px */
-}
-
-.qr-image {
     width: 100%;
     height: 100%;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
 }
 
-.main-content {
-    display: flex;
-    margin-top: 0.26cm; /* 10px */
-}
-
-.photo-section {
-    width: 2.69cm; /* 102px */
-    height: 3.4cm; /* 129px */
-}
-
-.photo {
-    width: 1.98cm; /* 75px */
-    height: 1.95cm; /* 74px */
-    margin-left: 0.37cm; /* 14px */
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-}
-
-.info-section {
-    width: 5.51cm; /* 209px */
-    margin-left: 0.13cm; /* 5px */
-}
-
-.name-role {
-    margin-bottom: 0.13cm; /* 5px */
-}
-
-.name {
-    color: #00a9ec;
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 800;
-    font-size: 12px;
-    display: block;
-}
-
-.role {
-    color: #00a9ec;
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 800;
-    font-size: 8px;
-    display: block;
-}
-
-.details {
-    display: flex;
-    flex-direction: column;
-    gap: 0.05cm; /* 2px */
-}
-
-.detail-row {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 8px;
-    color: #00a9ec;
-}
-
-    .detail-row .label {
-        font-weight: 800;
-    }
-
-    .detail-row .value {
-        font-weight: 600;
-    }
-
-.modalidade {
-    margin: 0.05cm 0;
-}
-
-    .modalidade .value {
-        line-height: 1.2;
-    }
-
-/* Estilos do verso da carteirinha */
-.header-verso {
-    width: 100%;
-    height: 1.45cm; /* 55px */
-    padding: 0.26cm 0.13cm; /* 10px 5px */
-}
-
-.header-logos {
-    width: 7.93cm; /* 301px */
-    height: 1.45cm; /* 55px */
-    display: flex;
-    gap: 0.2cm;
-    margin: 0.26cm 0.13cm; /* 10px 5px */
-}
-
-.logo-ceu {
-    width: 0.99cm; /* 36px */
-    height: 0.92cm; /* 35px */
-    background: url('/assets/images/logo_slogan_270224.png');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    margin-top: 0.26cm; /* 10px */
-}
-
-.logo-idecace {
-    width: 1.69cm; /* 64px */
-    height: 0.92cm; /* 35px */
-    background: url('/assets/images/logo_idecace.png');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    margin-top: 0.26cm; /* 10px */
-}
-
-.logo-sejus {
-    width: 2.35cm; /* 89px */
-    height: 0.92cm; /* 35px */
-    background: url('/assets/images/logo-sejus-horizontal.png');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    margin-top: 0.26cm; /* 10px */
-}
-
-/* Style Carteirinha VERSO */
+/* Verso page styles */
 .main-content-verso {
-    display: flex;
-    flex-direction: column;
-    height: calc(100% - 1.45cm); /* Altura total menos o header */
-    position: relative;
-}
-
-.info-container {
-    display: flex;
-    width: 100%;
-    margin-bottom: 0.5cm;
-}
-
-.school-info {
-    width: 3.7cm; /* 140px */
-    padding: 0.26cm 0.53cm; /* 10px 20px */
-    margin: 0.05cm; /* 2px */
-    flex-shrink: 0;
-}
-
-.info-group {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 0.26cm; /* 10px */
-}
-
-.info-label {
-    color: #00a9ec;
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 800;
-    font-size: 8px;
-}
-
-.info-value {
-    color: #00a9ec;
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 600;
-    font-size: 8px;
-}
-
-.app-info {
-    width: 4.51cm; /* 171px */
-    padding: 0.26cm 0;
-    flex-shrink: 0;
-}
-
-.app-logos {
-    width: 3.98cm; /* 151px */
-    height: 1.32cm; /* 50px */
-    display: flex;
-    gap: 0.42cm; /* 16px */
-}
-
-.logo-app-dna {
-    width: 1.35cm; /* 51px */
-    height: 1.32cm; /* 50px */
-    background: url('/assets/images/logo_app_meia_DNA.png');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-}
-
-.logo-stores {
-    width: 1.16cm; /* 44px */
-    height: 0.79cm; /* 30px */
-    background: url('/assets/images/android-app-store-logos.png');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    margin-top: 0.26cm; /* 10px */
-}
-
-.year-seal {
-    width: 3.98cm; /* 151px */
-    height: 0.42cm; /* 16px */
-    margin-top: 0.53cm; /* 20px */
-}
-
-.seal-2024 {
-    width: 0.98cm; /* 37px */
-    height: 0.42cm; /* 16px */
-    background: url('/assets/images/selo2024_carteirinha.png');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    margin-left: 0.21cm; /* 8px */
-}
-
-.disclaimer {
-    width: 100%;
-    padding: 0.18cm 0.53cm; /* 7px 20px */
     position: absolute;
-    bottom: 0.5cm;
-    left: 0;
+    left: 0.6cm;
+    width: 5.2cm;
 }
 
-.disclaimer-text {
-    width: 5.46cm; /* 207px */
-    height: 0.32cm; /* 12px */
-    padding: 0.05cm; /* 2px */
+.info-row-verso {
+    margin-bottom: 0.2cm;
     display: flex;
-    align-items: center;
+    flex-wrap: wrap;
 }
 
-    .disclaimer-text span {
-        color: #c7254e;
-        font-family: Consolas, monospace;
-        font-size: 5px; /* 5px */
-        line-height: 1.2; /* 1.2 */
+    .info-row-verso label {
         display: block;
+        font-weight: 700;
+        font-size: 8px;
+        min-width: 102px;
+        flex-shrink: 0;
     }
 
-code {
-    font-size: 90%;
-    color: #c7254e;
-    background-color: #f9f2f4;
-    border-radius: 4px;
-}
+    .info-row-verso span {
+        display: block;
+        font-size: 8px;
+        flex: 1;
+        word-wrap: break-word;
+        font-weight: 500;
+    }

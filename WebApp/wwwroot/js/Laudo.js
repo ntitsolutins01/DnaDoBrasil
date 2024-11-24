@@ -1,4 +1,4 @@
-﻿var vm = new Vue({
+var vm = new Vue({
     el: "#formLaudo",
     data: {
         loading: false,
