@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using WebApp.Authorization;
@@ -17,18 +18,24 @@ namespace WebApp.Controllers;
 [Authorize(Policy = ModuloAccess.ConfiguracaoSistemaEad)]
 public class QuestaoEadController : BaseController
 {
+
+    #region Parametros
+
+    private readonly IWebHostEnvironment _host;
+
+    #endregion
+
     #region Constructor
-    private readonly IOptions<UrlSettings> _appSettings;
 
     /// <summary>
-    /// Construtor da página
+    /// Contrutor da página
     /// </summary>
-    /// <param name="app">configurações de urls do sistema</param>
-    /// <param name="host">informações da aplicação em execução</param>
-    public QuestaoEadController(IOptions<UrlSettings> appSettings)
+    /// <param name="appSettings">Configurações da aplicação</param>
+    /// <param name="host">Informação do ambiente em que a aplicação está rodando</param>
+    public QuestaoEadController(IOptions<UrlSettings> appSettings, IWebHostEnvironment host)
     {
-        _appSettings = appSettings;
-        ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
+        ApplicationSettings.WebApiUrl = appSettings.Value.WebApiBaseUrl;
+        _host = host;
     }
     #endregion
 
@@ -90,36 +97,56 @@ public class QuestaoEadController : BaseController
     {
         try
         {
-            var listTexto = (from item in collection where item.Key.Contains("texto") select item.Value).Select(v => (string)v).ToList();
+            #region objeto questão
 
-            var listImg = (from item in collection where item.Key.Contains("imagem") select item.Value).Select(v => (string)v).ToList();
-            
-            var listAlternativas = (from item in collection where item.Key.Contains("alternativa") select item.Value).Select(v => (string)v).ToList();
-
-            var Dissertativa = (from item in collection where item.Key.Contains("dissertativa") select item.Value).Select(v => (string)v).ToList();
-            
-            var listMultiplo = (from item in collection where item.Key.Contains("multiplo") select item.Value).Select(v => (string)v).ToList();
-
-            var command = new QuestaoEadModel.CreateUpdateQuestaoEadCommand
+            var commandQuestaoEad = new QuestaoEadModel.CreateUpdateQuestaoEadCommand
             {
-                Id = Convert.ToInt32(collection["editQuestaoEadId"]),
-                AulaId = Convert.ToInt32(collection["ddlAula"]),
-                Referencia = collection["referencia"].ToString(),
+                AulaId = Convert.ToInt32(collection["ddlAula"].ToString()),
                 Pergunta = collection["pergunta"].ToString(),
                 Questao = Convert.ToInt32(collection["questao"].ToString()),
+                Referencia = collection["referencia"].ToString()
             };
 
-            if (listAlternativas.Any())
+            var listDdlTipoTextoImagem = (from item in collection where item.Key.Contains("texto") select item.Value).Select(v => (string)v).ToList();
+
+            if (listDdlTipoTextoImagem.Any())
             {
-                command.RespostaId = (int)await ApiClientFactory.Instance.CreateResposta(
-                    new RespostaModel.CreateUpdateRespostaCommand()
-                    {
-                        QuestionarioId = command.Id,
-                        RespostaQuestionario = listAlternativas.FirstOrDefault()
-                    });
+                commandQuestaoEad.ListTextos = listDdlTipoTextoImagem;
             }
 
-            await ApiClientFactory.Instance.CreateQuestaoEad(command);
+            if (collection.Files.Any())
+            {
+                var listImagens = new List<string?>();
+                string? filePath;
+                string extension = ".jpg";
+                string newFileName = Path.ChangeExtension(
+                    Guid.NewGuid().ToString(),
+                    extension
+                );
+
+                foreach (var file in collection.Files)
+                {
+                    if (file.Length <= 0) continue;
+                    filePath = Path.Combine(_host.WebRootPath, $"QuestoesEad\\{newFileName}");
+
+                    if (!Directory.Exists(Path.Combine(_host.WebRootPath, $"QuestoesEad")))
+                        Directory.CreateDirectory(Path.Combine(_host.WebRootPath, $"QuestoesEad"));
+
+                    listImagens.Add(filePath);
+
+                    using Stream fileStream = new FileStream(filePath, FileMode.Create);
+                    await file.CopyToAsync(fileStream);
+                }
+
+                if (listImagens.Any())
+                {
+                    commandQuestaoEad.ListImagens = listImagens;
+                }
+            }
+
+            #endregion
+
+            //await ApiClientFactory.Instance.CreateQuestaoEad(command);
 
             return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
         }

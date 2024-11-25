@@ -8,6 +8,7 @@
         (function ($) {
             'use strict';
 
+            //busca o id do form
             var formid = $('form')[1].id;
 
             if (formid === "formQuestaoEad") {
@@ -298,7 +299,7 @@
                     if (elem > 4) {
                         return false;
                     }
-
+                     
 
                     const letter = String.fromCharCode(65 + elem);
                     var alternativa = 'alternativa' + letter;
@@ -311,6 +312,10 @@
                                                     <input type="text" name="`+ alternativa + `" id="` + alternativa +`" maxlength="200" 
                                                     class="form-control" required title="Por favor informe o texto da alternativa." />
                                                 </div>
+                                                <div class="radio-custom radio-success">
+													<input type="radio" id="radio`+ alternativa + `" name="radioAlternativa">
+													<label for="radio`+ alternativa + `"> </label>
+												</div>
                                             </div>
                                             
                                         `);
