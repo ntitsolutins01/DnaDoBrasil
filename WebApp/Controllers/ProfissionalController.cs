@@ -409,7 +409,7 @@ namespace WebApp.Controllers
 				var newUser = new IdentityUser { UserName = command.Email, Email = command.Email };
 				await _userManager.CreateAsync(newUser, "12345678");
 
-				command.PerfilId = result2.PerfilId;
+				command.PerfilId = result2.Perfil.Id;
 				var perfil = ApiClientFactory.Instance.GetPerfilById(command.PerfilId);
 
 				var includedUserId = _userManager.Users.FirstOrDefault(x => x.Email == newUser.Email).Id;

@@ -581,6 +581,32 @@ var vm = new Vue({
                 $("#" + el).addClass("loading-overlay-showing");
                 self.loading = flag;
             }
+        },
+        Print: function () {
+            var self = this;
+
+            var filtros = {
+                ddlFomento: $('#ddlFomento').val(),
+                ddlEstado: $('#ddlEstado').val(),
+                ddlMunicipio: $('#ddlMunicipio').val(),
+                ddlLocalidade: $('#ddlLocalidade').val(),
+                ddlAluno: $('#ddlAluno').val(),
+                ddlTipoLaudo: $('#ddlTipoLaudo').val(),
+                possuiFoto: $('#possuiFoto').val(),
+                finalizado: $('#finalizado').val()
+            };
+
+            var queryString = Object.keys(filtros)
+                .filter(key => filtros[key])
+                .map(key => `${key}=${encodeURIComponent(filtros[key])}`)
+                .join('&');
+
+            var url = $(this).attr('href');
+            if (queryString) {
+                url += '?' + queryString;
+            }
+
+            window.open(url, '_blank');
         }
     }
 });
