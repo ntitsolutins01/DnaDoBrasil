@@ -41,10 +41,8 @@ namespace WebApp.Controllers
 
                 var usu = ApiClientFactory.Instance.GetUsuarioByEmail(usuario);
 
-                var listFomentos = ApiClientFactory.Instance.GetFomentoAll();
-                //.Where(x => x.MunicipioId == usuario.MunicipioId); 
 
-                var fomentos = new SelectList(listFomentos, "Id", "Nome");
+                var fomentos = new SelectList(ApiClientFactory.Instance.GetFomentoAll(), "Id", "Nome");
                 var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", usu.Uf);
 
                 SelectList municipios = null;
