@@ -34,9 +34,9 @@ namespace WebApp.Controllers
         {
             try
             {
-	            var usuario = User.Identity.Name;
+                var usuario = User.Identity.Name;
 
-				SetNotifyMessage(notify, message);
+                SetNotifyMessage(notify, message);
                 SetCrudMessage(crud);
 
                 var usu = ApiClientFactory.Instance.GetUsuarioByEmail(usuario);
@@ -87,9 +87,9 @@ namespace WebApp.Controllers
 
                 var response = await ApiClientFactory.Instance.GetLaudosByFilter(searchFilter);
 
-				
 
-                
+
+
                 var model = new LaudoModel()
                 {
                     Laudos = response.Laudos,
@@ -180,7 +180,7 @@ namespace WebApp.Controllers
                 var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
 
                 var questionarioVocacional =
-                    ApiClientFactory.Instance.GetQuestionarioByTipoLaudo((int)EnumTipoLaudo.Vocacional).OrderBy(o=>o.Questao).ToList();
+                    ApiClientFactory.Instance.GetQuestionarioByTipoLaudo((int)EnumTipoLaudo.Vocacional).OrderBy(o => o.Questao).ToList();
                 var questionarioQualidadeVida =
                     ApiClientFactory.Instance.GetQuestionarioByTipoLaudo((int)EnumTipoLaudo.QualidadeVida).OrderBy(o => o.Questao).ToList();
                 var questionarioConsumoAlimentar =
@@ -243,7 +243,7 @@ namespace WebApp.Controllers
                     command.VocacionalId = (int)await ApiClientFactory.Instance.CreateVocacional(
                         new VocacionalModel.CreateUpdateVocacionalCommand()
                         {
-                            Respostas = string.Join(",",listVocacional),
+                            Respostas = string.Join(",", listVocacional),
                             ProfissionalId = Convert.ToInt32(collection["ddlProfissional"].ToString()),
                             AlunoId = Convert.ToInt32(collection["ddlAluno"].ToString()),
                             StatusVocacional = listVocacional.Count == totalRespVocacional ? "F" : "A"
@@ -360,7 +360,7 @@ namespace WebApp.Controllers
                 return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = $"Erro ao executar esta ação. Favor entrar em contato com o administrador do sistema.{e.Message}" });
             }
         }
-        
+
         [HttpPost]
         [ClaimsAuthorize(ClaimType.Laudo, Claim.Alterar)]
         public async Task<ActionResult> Edit(int id, IFormCollection collection)
@@ -503,11 +503,14 @@ namespace WebApp.Controllers
         [ClaimsAuthorize(ClaimType.Laudo, Claim.Consultar)]
         public async Task<IActionResult> Print([FromQuery] string ddlFomento, [FromQuery] string ddlEstado,
             [FromQuery] string ddlMunicipio, [FromQuery] string ddlLocalidade,
-            [FromQuery] string ddlAluno, [FromQuery] string ddlTipoLaudo, [FromQuery] string possuiFoto, [FromQuery] string finalizado)
+            [FromQuery] string ddlAluno, [FromQuery] string ddlTipoLaudo,
+            [FromQuery] string possuiFoto, [FromQuery] string finalizado)
         {
             try
             {
                 var usuario = User.Identity.Name;
+                bool possuiFotoValue = bool.TryParse(possuiFoto, out var pfoto) ? pfoto : false;
+                bool finalizadoValue = bool.TryParse(finalizado, out var fin) ? fin : false;
 
                 var searchFilter = new LaudosFilterDto
                 {
@@ -518,13 +521,13 @@ namespace WebApp.Controllers
                     LocalidadeId = ddlLocalidade,
                     TipoLaudoId = ddlTipoLaudo,
                     AlunoId = ddlAluno,
-                    PossuiFoto = possuiFoto != "",
-                    Finalizado = finalizado != "",
+                    PossuiFoto = possuiFotoValue,
+                    Finalizado = finalizadoValue,
                     PageNumber = 1,
 #if DEBUG
                     PageSize = 10
 #else
-                    PageSize = 1000
+            PageSize = 1000
 #endif
                 };
 
@@ -573,7 +576,11 @@ namespace WebApp.Controllers
         }
 
         [ClaimsAuthorize(ClaimType.Laudo, Claim.Consultar)]
-        public async Task<IActionResult> ExportLaudo(int? crud, int? notify, IFormCollection collection, string message = null)
+        public async Task<IActionResult> ExportLaudo([FromQuery] string ddlFomento, [FromQuery] string ddlEstado,
+            [FromQuery] string ddlMunicipio, [FromQuery] string ddlLocalidade,
+            [FromQuery] string ddlAluno, [FromQuery] string ddlTipoLaudo,
+            [FromQuery] string possuiFoto, [FromQuery] string finalizado,
+            int? crud = null, int? notify = null, string message = null)
         {
             try
             {
@@ -582,15 +589,20 @@ namespace WebApp.Controllers
                 SetNotifyMessage(notify, message);
                 SetCrudMessage(crud);
 
+                bool possuiFotoValue = bool.TryParse(possuiFoto, out var pfoto) ? pfoto : false;
+                bool finalizadoValue = bool.TryParse(finalizado, out var fin) ? fin : false;
+
                 var searchFilter = new LaudosFilterDto
                 {
                     UsuarioEmail = usuario,
-                    FomentoId = collection["ddlFomento"].ToString(),
-                    Estado = collection["ddlEstado"].ToString(),
-                    MunicipioId = collection["ddlMunicipio"].ToString(),
-                    LocalidadeId = collection["ddlLocalidade"].ToString(),
-                    TipoLaudoId = collection["ddlTipoLaudo"].ToString(),
-                    AlunoId = collection["ddlAluno"].ToString(),
+                    FomentoId = ddlFomento,
+                    Estado = ddlEstado,
+                    MunicipioId = ddlMunicipio,
+                    LocalidadeId = ddlLocalidade,
+                    TipoLaudoId = ddlTipoLaudo,
+                    AlunoId = ddlAluno,
+                    PossuiFoto = possuiFotoValue,
+                    Finalizado = finalizadoValue,
                     PageNumber = 1,
                     PageSize = 1000
                 };
@@ -617,8 +629,8 @@ namespace WebApp.Controllers
                     ws.Cell("F" + row).Value = item.Celular;
                     row++;
                 }
-                var filePath = Path.Combine(_host.WebRootPath, "Exportacao/laudo.xlsx");
 
+                var filePath = Path.Combine(_host.WebRootPath, "Exportacao/laudo.xlsx");
                 if (!Directory.Exists(Path.Combine(_host.WebRootPath, "Exportacao")))
                     Directory.CreateDirectory(Path.Combine(_host.WebRootPath, "Exportacao"));
 
@@ -630,7 +642,6 @@ namespace WebApp.Controllers
                 }
 
                 var fileBytes = System.IO.File.ReadAllBytes(filePath);
-
                 var response = new FileContentResult(fileBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
                 {
                     FileDownloadName = DateTime.Now.ToString("ddMMyyyy") + "-laudo.xlsx"
@@ -642,10 +653,9 @@ namespace WebApp.Controllers
             {
                 Console.Write(e.StackTrace);
                 return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = e.Message });
-
             }
         }
 
-        
+
     }
 }

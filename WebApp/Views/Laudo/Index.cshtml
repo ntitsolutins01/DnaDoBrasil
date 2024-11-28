@@ -235,7 +235,7 @@
         $(document).ready(function() {
             $('#btnImprimirLaudo').click(function(e) {
                 e.preventDefault();
-        
+
                 var filtros = {
                     ddlFomento: $('#ddlFomento').val(),
                     ddlEstado: $('#ddlEstado').val(),
@@ -243,12 +243,12 @@
                     ddlLocalidade: $('#ddlLocalidade').val(),
                     ddlAluno: $('#ddlAluno').val(),
                     ddlTipoLaudo: $('#ddlTipoLaudo').val(),
-                    possuiFoto: $('#possuiFoto').val(),
-                    finalizado: $('#finalizado').val()
+                    possuiFoto: $('#possuiFoto').is(':checked').toString(),
+                    finalizado: $('#finalizado').is(':checked').toString()
                 };
 
                 var queryString = Object.keys(filtros)
-                    .filter(key => filtros[key])
+                    .filter(key => filtros[key] !== null && filtros[key] !== undefined)
                     .map(key => `${key}=${encodeURIComponent(filtros[key])}`)
                     .join('&');
 
@@ -256,9 +256,36 @@
                 if (queryString) {
                     url += '?' + queryString;
                 }
-        
+
                 window.open(url, '_blank');
             });
+        });
+
+                $('#btnExportarLaudo').click(function(e) {
+            e.preventDefault();
+
+            var filtros = {
+                ddlFomento: $('#ddlFomento').val(),
+                ddlEstado: $('#ddlEstado').val(),
+                ddlMunicipio: $('#ddlMunicipio').val(),
+                ddlLocalidade: $('#ddlLocalidade').val(),
+                ddlAluno: $('#ddlAluno').val(),
+                ddlTipoLaudo: $('#ddlTipoLaudo').val(),
+                possuiFoto: $('#possuiFoto').is(':checked').toString(),
+                finalizado: $('#finalizado').is(':checked').toString()
+            };
+
+            var queryString = Object.keys(filtros)
+                .filter(key => filtros[key] !== null && filtros[key] !== undefined)
+                .map(key => `${key}=${encodeURIComponent(filtros[key])}`)
+                .join('&');
+
+            var url = $(this).attr('href');
+            if (queryString) {
+                url += '?' + queryString;
+            }
+
+            window.location.href = url;
         });
 
         (function ($) {
