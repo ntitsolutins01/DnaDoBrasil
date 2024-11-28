@@ -12,6 +12,7 @@ using WebApp.Identity;
 using Microsoft.AspNetCore.Authorization;
 using WebApp.Dto;
 using ClosedXML.Excel;
+using System.Diagnostics;
 
 namespace WebApp.Controllers
 {
@@ -38,19 +39,46 @@ namespace WebApp.Controllers
 				SetNotifyMessage(notify, message);
                 SetCrudMessage(crud);
 
+                var usu = ApiClientFactory.Instance.GetUsuarioByEmail(usuario);
+
                 var listFomentos = ApiClientFactory.Instance.GetFomentoAll();
-					//.Where(x => x.MunicipioId == usuario.MunicipioId); 
+                //.Where(x => x.MunicipioId == usuario.MunicipioId); 
 
+                var fomentos = new SelectList(listFomentos, "Id", "Nome");
+                var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", usu.Uf);
 
-				var searchFilter = new LaudosFilterDto()
+                SelectList municipios = null;
+
+                if (!string.IsNullOrEmpty(usu.Uf))
+                {
+                    municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(usu.Uf), "Id", "Nome", usu.MunicipioId);
+                }
+                SelectList localidades = null;
+
+                if (usu.MunicipioId != null)
+                {
+                    var resultLocalidades = ApiClientFactory.Instance.GetLocalidadeByMunicipio(usu.MunicipioId.ToString());
+
+                    if (resultLocalidades != null)
+                        localidades = new SelectList(resultLocalidades, "Id", "Nome", usu.LocalidadeId);
+                }
+
+                var tiposLaudos = new SelectList(ApiClientFactory.Instance.GetTiposLaudoAll(), "Id", "Nome");
+
+                var possuiFoto = collection["possuiFoto"].ToString();
+                var finalizado = collection["finalizado"].ToString();
+
+                var searchFilter = new LaudosFilterDto()
                 {
                     UsuarioEmail = usuario,
                     FomentoId = collection["ddlFomento"].ToString(),
                     Estado = collection["ddlEstado"].ToString(),
                     MunicipioId = collection["ddlMunicipio"].ToString(),
-                    LocalidadeId = collection["ddlLocalidade"].ToString(),
+                    LocalidadeId = collection["ddlLocalidade"].ToString() == "" ? usu.LocalidadeId : collection["ddlLocalidade"].ToString(),
                     TipoLaudoId = collection["ddlTipoLaudo"].ToString(),
                     AlunoId = collection["ddlAluno"].ToString(),
+                    PossuiFoto = possuiFoto != "",
+                    Finalizado = finalizado != "",
                     PageNumber = 1,
 #if DEBUG
                     PageSize = 10
@@ -61,22 +89,9 @@ namespace WebApp.Controllers
 
                 var response = await ApiClientFactory.Instance.GetLaudosByFilter(searchFilter);
 
-				var fomentos = new SelectList(listFomentos, "Id", "Nome", response.FomentoId);
-                var tiposLaudos = new SelectList(ApiClientFactory.Instance.GetTiposLaudoAll(), "Id", "Nome", response.TipoLaudoId);
-                var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", response.Estado);
+				
 
-                SelectList municipios = null;
-
-                if (!string.IsNullOrEmpty(response.Estado))
-                {
-                    municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(response.Estado), "Id", "Nome", response.MunicipioId);
-                }
-                SelectList localidades = null;
-
-                if (!string.IsNullOrEmpty(response.LocalidadeId) || response.MunicipioId != null)
-                {
-                    localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeByMunicipio(response.MunicipioId), "Id", "Nome", response.LocalidadeId);
-                }
+                
                 var model = new LaudoModel()
                 {
                     Laudos = response.Laudos,
@@ -92,7 +107,7 @@ namespace WebApp.Controllers
             catch (Exception e)
             {
                 Console.Write(e.StackTrace);
-                return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = e.Message });
+                return RedirectToAction(nameof(Error), new { notify = (int)EnumNotify.Error, message = e.Message });
 
             }
         }
@@ -490,11 +505,12 @@ namespace WebApp.Controllers
         [ClaimsAuthorize(ClaimType.Laudo, Claim.Consultar)]
         public async Task<IActionResult> Print([FromQuery] string ddlFomento, [FromQuery] string ddlEstado,
             [FromQuery] string ddlMunicipio, [FromQuery] string ddlLocalidade,
-            [FromQuery] string ddlAluno, [FromQuery] string ddlTipoLaudo)
+            [FromQuery] string ddlAluno, [FromQuery] string ddlTipoLaudo, [FromQuery] string possuiFoto, [FromQuery] string finalizado)
         {
             try
             {
                 var usuario = User.Identity.Name;
+
                 var searchFilter = new LaudosFilterDto
                 {
                     UsuarioEmail = usuario,
@@ -504,8 +520,14 @@ namespace WebApp.Controllers
                     LocalidadeId = ddlLocalidade,
                     TipoLaudoId = ddlTipoLaudo,
                     AlunoId = ddlAluno,
+                    PossuiFoto = possuiFoto != "",
+                    Finalizado = finalizado != "",
                     PageNumber = 1,
-                    PageSize = 50
+#if DEBUG
+                    PageSize = 10
+#else
+                    PageSize = 1000
+#endif
                 };
 
                 var result = await ApiClientFactory.Instance.GetLaudosByFilter(searchFilter);
@@ -625,5 +647,7 @@ namespace WebApp.Controllers
 
             }
         }
+
+        
     }
 }
