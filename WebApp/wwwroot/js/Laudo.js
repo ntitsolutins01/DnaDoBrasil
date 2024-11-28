@@ -332,10 +332,12 @@ var vm = new Vue({
                 });
 
                 //mascara dos inputs
-                var $numAltura = $("#altura");
-                $numAltura.mask('000,00', { reverse: false });
-                var $numMassaCorporal = $("#massaCorporal");
-                $numMassaCorporal.mask('000,00', { reverse: false });
+                //var $numAltura = $("#alturaSaude");
+                //$numAltura.mask('#.##0,00', { reverse: false });
+                $('#massaCorporalSaude').maskMoney();
+
+
+
                 var $numPreensaoManual = $("#preensaoManual");
                 $numPreensaoManual.mask('000,00', { reverse: false });
                 var $numFlexibilidade = $("#flexibilidade");
