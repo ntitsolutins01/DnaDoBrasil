@@ -4,11 +4,14 @@
     {
         public string Id { get; set; }
         public int ProfissionalId { get; set; }
-        public string NomeProfissional { get; set; }
-        public int? Altura { get; set; }
-        public int Massa { get; set; }
-        public int? Envergadura { get; set; }
+        public string? NomeProfissional { get; set; }
+        public decimal? Altura { get; set; }
+        public decimal? Massa { get; set; }
+        public decimal? Envergadura { get; set; }
         public string? DataRealizacaoTeste { get; set; }
+        public DateTime DtNascimento { get; set; }
+        public string? Sexo { get; set; }
         public string? Imc { get; set; }
+        public int AlunoId { get; set; }
     }
 }

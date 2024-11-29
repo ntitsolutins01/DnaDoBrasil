@@ -62,6 +62,12 @@
                                     <option value="">Selecionar Aluno</option>
                                 </select>
                             </div>
+                            <div id="divIdade" style="display: none">
+                                <label class="col-sm-2 control-label text-sm-right pt-2">Idade </label>
+                                <div class="col-md-4" style="padding-top: 6px;">
+                                    <code style="font-size: 140%;"><span id="spanIdade"></span></code>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <br /><br />
@@ -93,13 +99,14 @@
                                         <span style="color: #5bc0de;">Saúde Bucal</span>
                                     </a>
                                 </li>
-                                <li class="">
+
+                                <li class="" id="liQualidade">
                                     <a href="#qualidade-vida" data-toggle="tab" aria-expanded="false">
                                         <i class="fa fa-star-o" style="color: #00a4a9;"></i>
                                         <span style="color: #00a4a9;">Qualidade de Vida</span>
                                     </a>
                                 </li>
-                                <li class="">
+                                <li class="" id="liVocacional">
                                     <a href="#vocacional"
                                        data-toggle="tab" aria-expanded="false">
                                         <i class="fa fa-star-half-o" style="color: #a787c0;"></i>
@@ -113,7 +120,7 @@
                                         <div>
                                             <label class="col-sm-2 control-label"><strong>Altura (cm) </strong></label>
                                             <div class="col-sm-4">
-                                                <input type="text" class="form-control" id="alturaSaude" name="alturaSaude" maxlength="6" />
+                                                <input type="text" class="form-control" id="alturaSaude" name="alturaSaude" maxlength="3" />
                                             </div>
                                         </div>
                                         <div>
@@ -127,7 +134,7 @@
                                         <div>
                                             <label class="col-sm-2 control-label"><strong>Envergadura (cm)</strong></label>
                                             <div class="col-sm-4">
-                                                <input type="text" class="form-control" id="envergaduraSaude" name="envergaduraSaude" maxlength="6" />
+                                                <input type="text" class="form-control" id="envergaduraSaude" name="envergaduraSaude" maxlength="3" />
                                             </div>
                                         </div>
                                     </div>
@@ -137,7 +144,7 @@
                                         <div>
                                             <label class="col-sm-2 control-label"><strong>Altura (cm) </strong></label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="altura" name="altura" maxlength="6" />
+                                                <input type="text" class="form-control" id="altura" name="altura" maxlength="3" />
                                             </div>
                                         </div>
                                         <div>
@@ -347,6 +354,7 @@
     <script src="~/assets/vendor/ios7-switch/ios7-switch.js"></script>
     <script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
     <script src="~/assets/vendor/select2/js/select2.js"></script>
+    <script src="~/assets/vendor/jquery-mask/jquery.maskMoney.js"></script>
     <script src="~/assets/vendor/jquery-mask/jquery.mask.js"></script>
     <script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
     <script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>

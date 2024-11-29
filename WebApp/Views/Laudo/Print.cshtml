@@ -244,7 +244,7 @@
                         @if (laudo.Laudo.EncaminhamentoConsumoAlimentarId != null)
                         {
                             await RenderMetricCardAsync("Consumo Alimentar", laudo.Desempenho.ScoreConsumoAlimentar, "#73dc69", "#deffdc",
-                            laudo.Desempenho.AvisoConsumoAlimentar, laudo.EncaminhamentoConsumoAlimentar.Descricao);
+                                laudo.Desempenho.AvisoConsumoAlimentar, laudo.EncaminhamentoConsumoAlimentar == null ? "" : laudo.EncaminhamentoConsumoAlimentar.Descricao);
                         }
 
                         @if (laudo.Laudo.VocacionalId != null)

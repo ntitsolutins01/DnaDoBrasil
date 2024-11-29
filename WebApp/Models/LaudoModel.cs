@@ -43,13 +43,13 @@ namespace WebApp.Models
 		{
 			public int Id { get; set; }
             public required int AlunoId { get; set; }
-            public int SaudeId { get; set; }
-            public int VocacionalId { get; set; }
-            public int ConsumoAlimentarId { get; set; }
-            public int QualidadeDeVidaId { get; set; }
-            public int SaudeBucalId { get; set; }
-            public int TalentoEsportivoId { get; set; }
-            public int StatusLaudo { get; set; }
+            public int? SaudeId { get; set; }
+            public int? VocacionalId { get; set; }
+            public int? ConsumoAlimentarId { get; set; }
+            public int? QualidadeDeVidaId { get; set; }
+            public int? SaudeBucalId { get; set; }
+            public int? TalentoEsportivoId { get; set; }
+            public string? StatusLaudo { get; set; }
             
             
         }

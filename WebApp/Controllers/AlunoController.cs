@@ -16,6 +16,7 @@ using QRCoder;
 using Claim = WebApp.Identity.Claim;
 using NuGet.Protocol.Core.Types;
 using WebApp.Views;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace WebApp.Controllers
 {
@@ -480,6 +481,28 @@ namespace WebApp.Controllers
                 var resultLocal = ApiClientFactory.Instance.GetNomeAlunosAll(id);
 
                 return Task.FromResult(Json(new SelectList(resultLocal, "Id", "Nome")));
+
+            }
+            catch (Exception ex)
+            {
+                return Task.FromResult(Json(ex));
+            }
+        }
+
+        /// <summary>
+        /// Busca de idade do Aluno por Id
+        /// </summary>
+        /// <param name="id">identificador do aluno</param>
+        /// <returns>retorna a idade do aluno</returns>
+        [ClaimsAuthorize(ClaimType.Aluno, Claim.Consultar)]
+        public Task<JsonResult> GetAlunoIdadeById(string id)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(id)) throw new Exception("Aluno não informado.");
+                var usu = ApiClientFactory.Instance.GetAlunoById(Convert.ToInt32(id));
+
+                return Task.FromResult(Json(usu.Idade));
 
             }
             catch (Exception ex)

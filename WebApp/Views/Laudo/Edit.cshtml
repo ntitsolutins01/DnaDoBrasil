@@ -132,11 +132,12 @@
                                         <div>
                                             <label class="col-sm-3 control-label"><strong>Massa Corporal (kg) </strong></label>
                                             <div class="col-sm-3">
-                                                @if (Model.Saude.Massa == null)
+                                                @if (Model.Saude.Massa != null)
                                                 {
+                                                    var peso = Model.Saude.Massa.ToString();
 
                                                     <input type="text" class="form-control" id="massaCorporalSaude" name="massaCorporalSaude" maxlength="6"
-                                                           value="@Model.Saude.Massa" />
+                                                           value="@peso" />
                                                 }
                                                 else
                                                 {
