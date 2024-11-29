@@ -597,8 +597,7 @@ namespace WebApp.Controllers
                             StatusSaude = statusSaude
                         };
 
-                        await ApiClientFactory.Instance.UpdateSaude((int)laudo.SaudeId, commandSaude);
-
+                        commandSaude.Id = (int)await ApiClientFactory.Instance.CreateSaude(commandSaude);
                     }
                     else
                     {
@@ -622,7 +621,7 @@ namespace WebApp.Controllers
                             StatusSaude = statusSaude
                         };
 
-                        commandSaude.Id = (int)await ApiClientFactory.Instance.CreateSaude(commandSaude);
+                        await ApiClientFactory.Instance.UpdateSaude((int)laudo.SaudeId, commandSaude);
                     }
                 }
 
@@ -641,9 +640,9 @@ namespace WebApp.Controllers
                     statusTalentoEsportivo = propTalentoEsportivo.Value == "" ? "A" : "F";
                 }
 
-                if (camposNaoPreenchidos > 0)
+                if (laudo.TalentoEsportivoId != null)
                 {
-                    if (laudo.TalentoEsportivoId != null)
+                    if (camposNaoPreenchidos == 0)
                     {
                         var commandTalentoEsportivo = new TalentoEsportivoModel.CreateUpdateTalentoEsportivoCommand()
                         {
@@ -661,8 +660,7 @@ namespace WebApp.Controllers
                             StatusTalentosEsportivos = statusTalentoEsportivo
                         };
 
-                        await ApiClientFactory.Instance.UpdateTalentoEsportivo((int)laudo.TalentoEsportivoId, commandTalentoEsportivo);
-
+                        command.TalentoEsportivoId = (int)await ApiClientFactory.Instance.CreateTalentoEsportivo(commandTalentoEsportivo);
                     }
                     else
                     {
@@ -682,8 +680,7 @@ namespace WebApp.Controllers
                             StatusTalentosEsportivos = statusTalentoEsportivo
                         };
 
-                        command.TalentoEsportivoId = (int)await ApiClientFactory.Instance.CreateTalentoEsportivo(commandTalentoEsportivo);
-
+                        await ApiClientFactory.Instance.UpdateTalentoEsportivo((int)laudo.TalentoEsportivoId, commandTalentoEsportivo);
                     }
                 }
 
