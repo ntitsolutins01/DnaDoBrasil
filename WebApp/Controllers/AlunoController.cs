@@ -55,19 +55,19 @@ namespace WebApp.Controllers
         {
             try
             {
-                var user = User.Identity.Name;
-
-                var usuario = ApiClientFactory.Instance.GetUsuarioByEmail(user);
+                var usuario = User.Identity.Name;
 
                 SetNotifyMessage(notify, message);
                 SetCrudMessage(crud);
+
+                var usu = ApiClientFactory.Instance.GetUsuarioByEmail(usuario);
 
                 var searchFilter = new AlunosFilterDto
                 {
                     FomentoId = collection["ddlFomento"].ToString(),
                     Estado = collection["ddlEstado"].ToString(),
                     MunicipioId = collection["ddlMunicipio"].ToString(),
-                    LocalidadeId = collection["ddlLocalidade"].ToString(),
+                    LocalidadeId = collection["ddlLocalidade"].ToString() == "" ? usu.LocalidadeId : collection["ddlLocalidade"].ToString(),
                     DeficienciaId = collection["ddlDeficiencia"].ToString(),
                     Etnia = collection["ddlEtnia"].ToString(),
                     Sexo = collection["ddlSexo"].ToString()
@@ -92,12 +92,13 @@ namespace WebApp.Controllers
                 if (filtroVazio)
                 {
                     result.Alunos = (List<AlunoIndexDto>?)result.Alunos.ToList()
-                        .Where(x => x.MunicipioId == usuario.MunicipioId.ToString()).ToList();
+                        .Where(x => x.MunicipioId == usu.MunicipioId.ToString()).ToList();
                 }
 
                 var fomentos = new SelectList(ApiClientFactory.Instance.GetFomentoAll(), "Id", "Nome", searchFilter.FomentoId);
                 var deficiencias = new SelectList(ApiClientFactory.Instance.GetDeficienciaAll().Where(x => x.Status), "Id", "Nome", searchFilter.DeficienciaId);
-                var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", searchFilter.Estado);
+                var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", usu.Uf);
+
 
                 List<SelectListDto> listSexo = new List<SelectListDto>
                 {
@@ -120,16 +121,21 @@ namespace WebApp.Controllers
 
                 SelectList municipios = null;
 
-                if (!string.IsNullOrEmpty(searchFilter.Estado))
+                if (!string.IsNullOrEmpty(usu.Uf))
                 {
-                    municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(searchFilter.Estado), "Id", "Nome", searchFilter.MunicipioId);
+                    municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(usu.Uf), "Id", "Nome", usu.MunicipioId);
                 }
+
                 SelectList localidades = null;
 
-                if (!string.IsNullOrEmpty(searchFilter.LocalidadeId))
+                if (usu.MunicipioId != null)
                 {
-                    localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeByMunicipio(searchFilter.MunicipioId), "Id", "Nome", searchFilter.LocalidadeId);
+                    var resultLocalidades = ApiClientFactory.Instance.GetLocalidadeByMunicipio(usu.MunicipioId.ToString());
+
+                    if (resultLocalidades != null)
+                        localidades = new SelectList(resultLocalidades, "Id", "Nome", usu.LocalidadeId);
                 }
+
 
                 var model = new AlunoModel
                 {
