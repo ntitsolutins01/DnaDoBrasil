@@ -394,8 +394,6 @@ namespace WebApp.Controllers
                     }
                 }
 
-                command.QrCode = GeraQrCode(id);
-
                 await ApiClientFactory.Instance.UpdateDados(id, command);
 
                 return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
