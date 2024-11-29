@@ -80,7 +80,9 @@ namespace WebApp.Controllers
                                 string.IsNullOrEmpty(searchFilter.Sexo) ?
                                     string.IsNullOrEmpty(searchFilter.DeficienciaId) ?
                                         string.IsNullOrEmpty(searchFilter.Estado) ?
-                                            string.IsNullOrEmpty(searchFilter.Etnia) : false
+                                            string.IsNullOrEmpty(searchFilter.Etnia) ?
+                                                string.IsNullOrEmpty(searchFilter.Sexo) : false
+                                            : false
                                         : false
                                     : false
                                 : false
@@ -99,8 +101,8 @@ namespace WebApp.Controllers
 
                 List<SelectListDto> listSexo = new List<SelectListDto>
                 {
-                    new() { IdNome = "MASCULINO", Nome = "MASCULINO" },
-                    new() { IdNome = "FEMININO", Nome = "FEMININO" }
+                    new() { IdNome = "M", Nome = "MASCULINO" },
+                    new() { IdNome = "F", Nome = "FEMININO" }
                 };
 
                 var sexos = new SelectList(listSexo, "IdNome", "Nome", searchFilter.Sexo);
@@ -136,6 +138,7 @@ namespace WebApp.Controllers
                     ListDeficiencias = deficiencias,
                     ListMunicipios = municipios!,
                     ListEtnias = etnias,
+                    ListSexos = sexos,
                     ListLocalidades = localidades!,
                     Alunos = result.Alunos,
                     SearchFilter = searchFilter
