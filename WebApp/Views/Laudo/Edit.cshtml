@@ -141,7 +141,7 @@
                                                 else
                                                 {
                                                     var peso = Model.TalentoEsportivo.Peso;
-                                                    peso = (decimal)peso;
+                                                    peso = peso == null ? null : (decimal)peso;
                                                     <input type="text" class="form-control" id="massaCorporalSaude" name="massaCorporalSaude" maxlength="6"
                                                            value="@peso" />
                                                 }
