@@ -307,22 +307,9 @@ namespace WebApp.Controllers
                         });
                 }
 
-                var statusSaude = String.Empty;
                 var listPropSaude = collection.Where(item => item.Key.Contains("Saude"));
 
-                var camposNaoPreenchidosSaude = 0;
-
-                foreach (var propSaude in listPropSaude)
-                {
-                    if (propSaude.Value == "")
-                    {
-                        camposNaoPreenchidosSaude++;
-                    }
-
-                    statusSaude = propSaude.Value == "" ? "A" : "F";
-                }
-
-                if (camposNaoPreenchidosSaude > 0)
+                if (listPropSaude.Any())
                 {
                     var commandSaude = new SaudeModel.CreateUpdateSaudeCommand()
                     {
@@ -341,29 +328,15 @@ namespace WebApp.Controllers
                         AlturaSaude = collection["alturaSaude"] == ""
                             ? null
                             : Convert.ToDecimal(collection["alturaSaude"].ToString()),
-                        StatusSaude = statusSaude
+                        StatusSaude = "F"
                     };
 
                     command.SaudeId = (int)await ApiClientFactory.Instance.CreateSaude(commandSaude);
                 }
 
-
-                var statusTalentoEsportivo = String.Empty;
                 var listPropTalentoEsportivo = collection.Where(item => item.Key.Contains("TalentoEsportivo"));
 
-                var camposNaoPreenchidos = 0;
-
-                foreach (var propTalentoEsportivo in listPropTalentoEsportivo)
-                {
-                    if (propTalentoEsportivo.Value == "")
-                    {
-                        camposNaoPreenchidos++;
-                    }
-
-                    statusTalentoEsportivo = propTalentoEsportivo.Value == "" ? "A" : "F";
-                }
-
-                if (camposNaoPreenchidos > 0)
+                if (listPropTalentoEsportivo.Any())
                 {
                     var commandTalentoEsportivo = new TalentoEsportivoModel.CreateUpdateTalentoEsportivoCommand()
                     {
@@ -378,10 +351,11 @@ namespace WebApp.Controllers
                         AptidaoFisica = collection["aptidaoFisica"] == "" ? null : Convert.ToDecimal(collection["aptidaoFisica"].ToString()),
                         Agilidade = collection["agilidade"] == "" ? null : Convert.ToDecimal(collection["agilidade"].ToString()),
                         Abdominal = Convert.ToBoolean(collection["rdbAbdominal"]),
-                        StatusTalentosEsportivos = statusTalentoEsportivo
+                        StatusTalentosEsportivos = "F"
                     };
 
                     command.TalentoEsportivoId = (int)await ApiClientFactory.Instance.CreateTalentoEsportivo(commandTalentoEsportivo);
+
                 }
 
                 await ApiClientFactory.Instance.CreateLaudo(command);
@@ -558,24 +532,36 @@ namespace WebApp.Controllers
                     }
                 }
 
-                var statusSaude = String.Empty;
                 var listPropSaude = collection.Where(item => item.Key.Contains("Saude"));
-
-                var camposNaoPreenchidosSaude = 0;
-
-                foreach (var propSaude in listPropSaude)
-                {
-                    if (propSaude.Value == "")
-                    {
-                        camposNaoPreenchidosSaude++;
-                    }
-
-                    statusSaude = propSaude.Value == "" ? "A" : "F";
-                }
-
+                
                 if (laudo.SaudeId != null)
                 {
-                    if (camposNaoPreenchidosSaude > 0)
+                    var commandSaude = new SaudeModel.CreateUpdateSaudeCommand()
+                    {
+                        Id = (int)laudo.SaudeId,
+                        ProfissionalId = collection["ddlProfissional"] == ""
+                            ? null
+                            : Convert.ToInt32(collection["ddlProfissional"].ToString()),
+                        AlunoId = collection["ddlAluno"] == ""
+                            ? null
+                            : Convert.ToInt32(collection["ddlAluno"].ToString()),
+                        EnvergaduraSaude = collection["envergaduraSaude"] == ""
+                            ? null
+                            : Convert.ToDecimal(collection["envergaduraSaude"].ToString()),
+                        MassaCorporalSaude = collection["massaCorporalSaude"] == ""
+                            ? null
+                            : Convert.ToDecimal(collection["massaCorporalSaude"].ToString()),
+                        AlturaSaude = collection["alturaSaude"] == ""
+                            ? null
+                            : Convert.ToDecimal(collection["alturaSaude"].ToString()),
+                        StatusSaude = "F"
+                    };
+
+                    await ApiClientFactory.Instance.UpdateSaude((int)laudo.SaudeId, commandSaude);
+                }
+                else
+                {
+                    if (listPropSaude.Any())
                     {
                         var commandSaude = new SaudeModel.CreateUpdateSaudeCommand()
                         {
@@ -594,56 +580,18 @@ namespace WebApp.Controllers
                             AlturaSaude = collection["alturaSaude"] == ""
                                 ? null
                                 : Convert.ToDecimal(collection["alturaSaude"].ToString()),
-                            StatusSaude = statusSaude
+                            StatusSaude = "F"
                         };
 
                         commandSaude.Id = (int)await ApiClientFactory.Instance.CreateSaude(commandSaude);
                     }
-                    else
-                    {
-                        var commandSaude = new SaudeModel.CreateUpdateSaudeCommand()
-                        {
-                            ProfissionalId = collection["ddlProfissional"] == ""
-                                ? null
-                                : Convert.ToInt32(collection["ddlProfissional"].ToString()),
-                            AlunoId = collection["ddlAluno"] == ""
-                                ? null
-                                : Convert.ToInt32(collection["ddlAluno"].ToString()),
-                            EnvergaduraSaude = collection["envergaduraSaude"] == ""
-                                ? null
-                                : Convert.ToDecimal(collection["envergaduraSaude"].ToString()),
-                            MassaCorporalSaude = collection["massaCorporalSaude"] == ""
-                                ? null
-                                : Convert.ToDecimal(collection["massaCorporalSaude"].ToString()),
-                            AlturaSaude = collection["alturaSaude"] == ""
-                                ? null
-                                : Convert.ToDecimal(collection["alturaSaude"].ToString()),
-                            StatusSaude = statusSaude
-                        };
-
-                        await ApiClientFactory.Instance.UpdateSaude((int)laudo.SaudeId, commandSaude);
-                    }
                 }
 
-                var statusTalentoEsportivo = String.Empty;
                 var listPropTalentoEsportivo = collection.Where(item => item.Key.Contains("TalentoEsportivo"));
 
-                var camposNaoPreenchidos = 0;
-
-                foreach (var propTalentoEsportivo in listPropTalentoEsportivo)
-                {
-                    if (propTalentoEsportivo.Value == "")
-                    {
-                        camposNaoPreenchidos++;
-                    }
-
-                    statusTalentoEsportivo = propTalentoEsportivo.Value == "" ? "A" : "F";
-                }
 
                 if (laudo.TalentoEsportivoId != null)
                 {
-                    if (camposNaoPreenchidos == 0)
-                    {
                         var commandTalentoEsportivo = new TalentoEsportivoModel.CreateUpdateTalentoEsportivoCommand()
                         {
                             ProfissionalId = collection["ddlProfissional"] == "" ? null : Convert.ToInt32(collection["ddlProfissional"].ToString()),
@@ -657,12 +605,14 @@ namespace WebApp.Controllers
                             AptidaoFisica = collection["aptidaoFisica"] == "" ? null : Convert.ToDecimal(collection["aptidaoFisica"].ToString()),
                             Agilidade = collection["agilidade"] == "" ? null : Convert.ToDecimal(collection["agilidade"].ToString()),
                             Abdominal = Convert.ToBoolean(collection["rdbAbdominal"]),
-                            StatusTalentosEsportivos = statusTalentoEsportivo
+                            StatusTalentosEsportivos = "F"
                         };
 
                         command.TalentoEsportivoId = (int)await ApiClientFactory.Instance.CreateTalentoEsportivo(commandTalentoEsportivo);
-                    }
-                    else
+                }
+                else
+                {
+                    if (listPropTalentoEsportivo.Any())
                     {
                         var commandTalentoEsportivo = new TalentoEsportivoModel.CreateUpdateTalentoEsportivoCommand()
                         {
@@ -677,7 +627,7 @@ namespace WebApp.Controllers
                             AptidaoFisica = collection["aptidaoFisica"] == "" ? null : Convert.ToDecimal(collection["aptidaoFisica"].ToString()),
                             Agilidade = collection["agilidade"] == "" ? null : Convert.ToDecimal(collection["agilidade"].ToString()),
                             Abdominal = Convert.ToBoolean(collection["rdbAbdominal"]),
-                            StatusTalentosEsportivos = statusTalentoEsportivo
+                            StatusTalentosEsportivos = "F"
                         };
 
                         await ApiClientFactory.Instance.UpdateTalentoEsportivo((int)laudo.TalentoEsportivoId, commandTalentoEsportivo);
