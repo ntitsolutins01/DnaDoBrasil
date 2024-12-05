@@ -16,6 +16,7 @@ namespace WebApp.Dto
         public int? SaudeBucalId { get; set; }
         public int? LocalidadeId { get; set; }
         public int? AlunoId { get; set; }
+        public int? ProfissionalId { get; set; }
         public int? EncaminhamentoVocacionalId { get; set; }
         //public int? EncaminhamentoQualidadeVidaId { get; set; }
         public int? EncaminhamentoConsumoAlimentarId { get; set; }

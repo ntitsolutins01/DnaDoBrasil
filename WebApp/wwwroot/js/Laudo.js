@@ -332,29 +332,20 @@ var vm = new Vue({
                 });
 
                 //mascara dos inputs
-                //var $numAltura = $("#alturaSaude");
-                //$numAltura.mask('#.##0,00', { reverse: false });
                 $('#massaCorporalSaude').maskMoney();
-                $("#massaCorporalSaude").maskMoney('mask')
+                $("#massaCorporalSaude").maskMoney('mask');
+                $('#massaCorporal').maskMoney();
+                $("#massaCorporal").maskMoney('mask');
+                $('#preensaoManual').maskMoney();
+                $("#preensaoManual").maskMoney('mask');
 
+                $('#aptidaoFisica').maskMoney();
+                $("#aptidaoFisica").maskMoney('mask');
+                $('#testeVelocidade').maskMoney();
+                $("#testeVelocidade").maskMoney('mask');
+                $('#agilidade').maskMoney();
+                $("#agilidade").maskMoney('mask');
 
-                var $numPreensaoManual = $("#preensaoManual");
-                $numPreensaoManual.mask('000,00', { reverse: false });
-                var $numFlexibilidade = $("#flexibilidade");
-                $numFlexibilidade.mask('000,00', { reverse: false });
-                var $numImpulsaoHorizontal = $("#impulsaoHorizontal");
-                $numImpulsaoHorizontal.mask('000,00', { reverse: false });
-                var $numAptidaoFisica = $("#aptidaoFisica");
-                $numAptidaoFisica.mask('000,00', { reverse: false });
-                var $numAlturaSaude = $("#alturaSaude");
-                $numAlturaSaude.mask('000,00', { reverse: false });
-
-                var $numEnvergaduraSaude = $("#envergaduraSaude");
-                $numEnvergaduraSaude.mask('000,00', { reverse: false });
-                var $numTesteVelocidade = $("#testeVelocidade");
-                $numTesteVelocidade.mask('000,00', { reverse: false });
-                var $numAgilidade = $("#agilidade");
-                $numAgilidade.mask('000,00', { reverse: false });
 
                 $("#formEditLaudo").validate({
                     highlight: function (label) {
@@ -539,13 +530,22 @@ var vm = new Vue({
                 });
 
                 //mascara dos inputs 
+                $('#massaCorporalSaude').maskMoney();
+                $("#massaCorporalSaude").maskMoney('mask');
+                $('#massaCorporal').maskMoney();
+                $("#massaCorporal").maskMoney('mask');
+                $('#preensaoManual').maskMoney();
+                $("#preensaoManual").maskMoney('mask');
 
-                $("#massaCorporalSaude").maskMoney();
+                $('#aptidaoFisica').maskMoney();
+                $("#aptidaoFisica").maskMoney('mask');
+                $('#testeVelocidade').maskMoney();
+                $("#testeVelocidade").maskMoney('mask');
+                $('#agilidade').maskMoney();
+                $("#agilidade").maskMoney('mask');
 
 
 
-                var $numMassaCorporal = $("#massaCorporal");
-                $numMassaCorporal.mask('000,00', { reverse: false });
                 var $numPreensaoManual = $("#preensaoManual");
                 $numPreensaoManual.mask('000,00', { reverse: false });
                 var $numFlexibilidade = $("#flexibilidade");
