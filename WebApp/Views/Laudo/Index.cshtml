@@ -59,6 +59,18 @@
                                 <option value="">Selecionar Tipo de Laudo</option>
                             </select>
                         </div>
+                        <label class="col-sm-2 control-label text-sm-right pt-2">Possui Foto: </label>
+                        <div class="col-md-1">
+                            <div class="switch switch-sm switch-primary">
+                                <input type="checkbox" id="possuiFoto" name="possuiFoto" data-plugin-ios-switch />
+                            </div>
+                        </div>
+                        <label class="col-sm-1 control-label text-sm-right pt-2">Finalizado: </label>
+                        <div class="col-md-1">
+                            <div class="switch switch-sm switch-primary">
+                                <input type="checkbox" id="finalizado" name="finalizado" data-plugin-ios-switch />
+                            </div>
+                        </div>
                     </div>
                     <footer class="panel-footer">
                         <div class="row">
@@ -96,7 +108,15 @@
                                 if (mostrarAlerta)
                                 {
                                     <div class="col-sm-6 pull-left">
-                                        <div class="alert alert-info" style="padding-bottom: 6px;padding-top: 6px; !important; margin-bottom: 10px; !important">
+                                        <div class="alert alert-warning" style="padding-bottom: 6px;padding-top: 6px; !important; margin-bottom: 0px; !important">
+                                            <strong>Atenção!</strong> Os laudos listados são referentes ao seu <a href="" class="alert-link">Estado/Município/Localidade</a> de cadastro.
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-8 pull-left">
+                                        &nbsp;&nbsp;
+                                    </div>
+                                    <div class="col-sm-6 pull-left">
+                                        <div class="alert alert-info" style="padding-bottom: 6px;padding-top: 6px; !important; margin-bottom: 0px; !important">
                                             <strong>Info:</strong> Para exportação / impressão de laudos selecione o filtro e clique em
                                             <a href="" class="alert-link">Exportar Laudos</a>.
                                         </div>
@@ -215,18 +235,20 @@
         $(document).ready(function() {
             $('#btnImprimirLaudo').click(function(e) {
                 e.preventDefault();
-        
+
                 var filtros = {
                     ddlFomento: $('#ddlFomento').val(),
                     ddlEstado: $('#ddlEstado').val(),
                     ddlMunicipio: $('#ddlMunicipio').val(),
                     ddlLocalidade: $('#ddlLocalidade').val(),
                     ddlAluno: $('#ddlAluno').val(),
-                    ddlTipoLaudo: $('#ddlTipoLaudo').val()
+                    ddlTipoLaudo: $('#ddlTipoLaudo').val(),
+                    possuiFoto: $('#possuiFoto').is(':checked').toString(),
+                    finalizado: $('#finalizado').is(':checked').toString()
                 };
 
                 var queryString = Object.keys(filtros)
-                    .filter(key => filtros[key])
+                    .filter(key => filtros[key] !== null && filtros[key] !== undefined)
                     .map(key => `${key}=${encodeURIComponent(filtros[key])}`)
                     .join('&');
 
@@ -234,9 +256,36 @@
                 if (queryString) {
                     url += '?' + queryString;
                 }
-        
+
                 window.open(url, '_blank');
             });
+        });
+
+                $('#btnExportarLaudo').click(function(e) {
+            e.preventDefault();
+
+            var filtros = {
+                ddlFomento: $('#ddlFomento').val(),
+                ddlEstado: $('#ddlEstado').val(),
+                ddlMunicipio: $('#ddlMunicipio').val(),
+                ddlLocalidade: $('#ddlLocalidade').val(),
+                ddlAluno: $('#ddlAluno').val(),
+                ddlTipoLaudo: $('#ddlTipoLaudo').val(),
+                possuiFoto: $('#possuiFoto').is(':checked').toString(),
+                finalizado: $('#finalizado').is(':checked').toString()
+            };
+
+            var queryString = Object.keys(filtros)
+                .filter(key => filtros[key] !== null && filtros[key] !== undefined)
+                .map(key => `${key}=${encodeURIComponent(filtros[key])}`)
+                .join('&');
+
+            var url = $(this).attr('href');
+            if (queryString) {
+                url += '?' + queryString;
+            }
+
+            window.location.href = url;
         });
 
         (function ($) {

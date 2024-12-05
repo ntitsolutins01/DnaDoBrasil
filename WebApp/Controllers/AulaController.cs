@@ -62,7 +62,7 @@ public class AulaController : BaseController
         {
             SetNotifyMessage(notify, message);
             SetCrudMessage(crud);
-            var professores = new SelectList(ApiClientFactory.Instance.GetUsuarioAll().Where(x => x.PerfilId == (int)EnumPerfil.Professor), "Id", "Nome");
+            var professores = new SelectList(ApiClientFactory.Instance.GetUsuarioAll().Where(x => x.Perfil.Id == (int)EnumPerfil.Professor), "Id", "Nome");
             var tipoCurso = new SelectList(ApiClientFactory.Instance.GetTipoCursosAll(), "Id", "Nome");
 
             return View(new AulaModel()
@@ -229,7 +229,7 @@ public class AulaController : BaseController
     public Task<AulaDto> GetAulaById(int id)
     {
         var result = ApiClientFactory.Instance.GetAulaById(id);
-        var professores = new SelectList(ApiClientFactory.Instance.GetUsuarioAll().Where(x => x.PerfilId == (int)EnumPerfil.Professor), "Id", "Nome", result.ProfessorId);
+        var professores = new SelectList(ApiClientFactory.Instance.GetUsuarioAll().Where(x => x.Perfil.Id == (int)EnumPerfil.Professor), "Id", "Nome", result.ProfessorId);
         result.ListProfessores = professores;
 
         return Task.FromResult(result);

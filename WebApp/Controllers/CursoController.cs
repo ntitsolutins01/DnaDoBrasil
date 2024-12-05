@@ -71,7 +71,7 @@ public class CursoController : BaseController
             SetNotifyMessage(notify, message);
             SetCrudMessage(crud);
             var tiposcursos = new SelectList(ApiClientFactory.Instance.GetTipoCursosAll(), "Id", "Nome");
-            var coordenadores = new SelectList(ApiClientFactory.Instance.GetUsuarioAll().Where(x=>x.PerfilId == (int)EnumPerfil.Coordenador), "Id", "Nome");
+            var coordenadores = new SelectList(ApiClientFactory.Instance.GetUsuarioAll().Where(x=>x.Perfil.Id == (int)EnumPerfil.Coordenador), "Id", "Nome");
 
 
             return View(new CursoModel()
@@ -242,7 +242,7 @@ public class CursoController : BaseController
     public Task<CursoDto> GetCursoById(int id)
     {
         var result = ApiClientFactory.Instance.GetCursoById(id);
-        var coordenadores = new SelectList(ApiClientFactory.Instance.GetUsuarioAll().Where(x => x.PerfilId == (int)EnumPerfil.Coordenador), "Id", "Nome", result.CoordenadorId);
+        var coordenadores = new SelectList(ApiClientFactory.Instance.GetUsuarioAll().Where(x => x.Perfil.Id == (int)EnumPerfil.Coordenador), "Id", "Nome", result.CoordenadorId);
         result.ListCoordenadores = coordenadores;
 
 		return Task.FromResult(result);

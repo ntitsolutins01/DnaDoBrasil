@@ -221,7 +221,8 @@
                 MunicipioId: $("#ddlMunicipio").val(),
                 LocalidadeId: $("#ddlLocalidade").val(),
                 DeficienciaId: $("#ddlDeficiencia").val(),
-                Etnia: $("#ddlEtnia").val()
+                Etnia: $("#ddlEtnia").val(),
+                Sexo: $("#ddlSexo").val()
             }
 
             let axiosConfig = {
@@ -232,7 +233,6 @@
             };
 
             axios.post("Aluno/GetAlunosByFilter", obj, axiosConfig).then(result => {
-
 
                 self.ShowLoad(false, "pResult");
             });
