@@ -45,7 +45,16 @@
             <div class="talent-info">
                 <div class="text-info">
                     <div class="talent-label">MEU TALENTO</div>
-                    <div class="talent-name">VOLEIBOL</div>
+                    <div class="talent-name">
+                        @if (@laudo.Laudo.Modalidade == null)
+                        {
+                            <text>Não Definido</text>
+                        }
+                        else
+                        {
+                            <text>@laudo.Laudo.Modalidade</text>
+                        }
+                    </div>
                 </div>
                 <img src="/assets/assets_Laudo/icon_info_esporte.png" alt="Voleibol" class="sport-icon" />
             </div>
