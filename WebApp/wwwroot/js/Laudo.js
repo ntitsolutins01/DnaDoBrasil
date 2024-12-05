@@ -1,5 +1,5 @@
 var vm = new Vue({
-    el: "#formLaudo",
+    el: "#vLaudo",
     data: {
         loading: false,
     },
@@ -543,24 +543,6 @@ var vm = new Vue({
                 $("#testeVelocidade").maskMoney('mask');
                 $('#agilidade').maskMoney();
                 $("#agilidade").maskMoney('mask');
-
-
-
-                var $numPreensaoManual = $("#preensaoManual");
-                $numPreensaoManual.mask('000,00', { reverse: false });
-                var $numFlexibilidade = $("#flexibilidade");
-                $numFlexibilidade.mask('000,00', { reverse: false });
-                var $numImpulsaoHorizontal = $("#impulsaoHorizontal");
-                $numImpulsaoHorizontal.mask('000,00', { reverse: false });
-                var $numAptidaoFisica = $("#aptidaoFisica");
-                $numAptidaoFisica.mask('000,00', { reverse: false });
-                var $numAlturaSaude = $("#alturaSaude");
-                $numAlturaSaude.mask('000,00', { reverse: false });
-
-                var $numTesteVelocidade = $("#testeVelocidade");
-                $numTesteVelocidade.mask('000,00', { reverse: false });
-                var $numAgilidade = $("#agilidade");
-                $numAgilidade.mask('000,00', { reverse: false });
 
                 $("#formLaudo").validate({
                     highlight: function (label) {

@@ -3,7 +3,7 @@
     ViewData["Title"] = "Alteração de Laudo";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="row">
+<div class="row" id="vLaudo">
     <div class="col-md-12">
         @using (@Html.BeginForm("Edit", "Laudo", FormMethod.Post, new { id = "formEditLaudo", @class = "form-horizontal" }))
         {
@@ -176,9 +176,13 @@
                                 <div id="talento-esportivo" class="tab-pane">
                                     <div class="row form-group">
                                         <div>
+                                            @{
+                                                var alturaTalentoEsportivo = Model.TalentoEsportivo.Altura;
+                                                var alturaFormatadaTalentoEsportivo = String.Format("{0:0.##}", alturaTalentoEsportivo);
+                                            }
                                             <label class="col-sm-2 control-label"><strong>Altura (cm) </strong> <span class="required">*</span></label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="altura" name="altura" maxlength="3" value="@Model.TalentoEsportivo.Altura" />
+                                                <input type="text" class="form-control" id="altura" name="altura" maxlength="3" value="@alturaFormatadaTalentoEsportivo" />
                                             </div>
                                         </div>
                                         <div>
@@ -196,17 +200,26 @@
                                             </div>
                                         </div>
                                         <div>
+                                            @{
+                                                var flexibilidadeTalentoEsportivo = Model.TalentoEsportivo.Flexibilidade;
+                                                var flexibilidadeFormatadaTalentoEsportivo = String.Format("{0:0.##}", flexibilidadeTalentoEsportivo);
+                                            }
                                             <label class="col-sm-3 control-label"><strong>Flexibilidade (cm)</strong> <span class="required">*</span></label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="flexibilidade" name="flexibilidade" maxlength="3" value="@Model.TalentoEsportivo.Flexibilidade" />
+                                                <input type="text" class="form-control" id="flexibilidade" name="flexibilidade" maxlength="3" value="@flexibilidadeFormatadaTalentoEsportivo" />
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row form-group">
                                         <div>
+
+                                            @{
+                                                var impulsaoHorizontalTalentoEsportivo = Model.TalentoEsportivo.ImpulsaoHorizontal;
+                                                var impulsaoHorizontalFormatadaTalentoEsportivo = String.Format("{0:0.##}", impulsaoHorizontalTalentoEsportivo);
+                                            }
                                             <label class="col-sm-2 control-label"><strong>Impulsão Horizontal (cm)</strong> <span class="required">*</span></label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="impulsaoHorizontal" name="impulsaoHorizontal" maxlength="6" value="@Model.TalentoEsportivo.ImpulsaoHorizontal" />
+                                                <input type="text" class="form-control" id="impulsaoHorizontal" name="impulsaoHorizontal" maxlength="3" value="@impulsaoHorizontalFormatadaTalentoEsportivo" />
                                             </div>
                                         </div>
                                         <div>

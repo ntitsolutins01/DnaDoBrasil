@@ -3,7 +3,7 @@
     ViewData["Title"] = "CreateLaudo";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="row">
+<div class="row" id="vLaudo">
     <div class="col-md-12">
         @using (@Html.BeginForm("Create", "Laudo", FormMethod.Post, new { id = "formLaudo", @class = "form-horizontal" }))
         {

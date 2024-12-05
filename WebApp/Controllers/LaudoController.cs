@@ -215,7 +215,7 @@ namespace WebApp.Controllers
             {
                 if (string.IsNullOrEmpty(collection["ddlAluno"].ToString()))
                 {
-                    return RedirectToAction(nameof(Create), new { notify = (int)EnumNotify.Error, message = "Erro ao executar esta ação. Favor Informar o Aluno." });
+                    return RedirectToAction(nameof(Create), new { notify = (int)EnumNotify.Error, message = "Favor Informar o Aluno." });
                 }
 
                 var command = new LaudoModel.CreateUpdateLaudoCommand
@@ -237,7 +237,7 @@ namespace WebApp.Controllers
 
                     if (listVocacional.Count != totalRespVocacional)
                     {
-                        return RedirectToAction(nameof(Create), new { notify = (int)EnumNotify.Error, message = "Erro ao executar esta ação. Favor responder todas as perguntas do questionário vocacional." });
+                        return RedirectToAction(nameof(Create), new { notify = (int)EnumNotify.Error, message = "Favor responder todas as perguntas do questionário vocacional." });
                     }
 
                     command.VocacionalId = (int)await ApiClientFactory.Instance.CreateVocacional(
@@ -256,7 +256,7 @@ namespace WebApp.Controllers
 
                     if (listQualidadeDeVida.Count != totalRespQualidadeDeVida)
                     {
-                        return RedirectToAction(nameof(Create), new { notify = (int)EnumNotify.Error, message = "Erro ao executar esta ação. Favor responder todas as perguntas do questionário de qualidade de vida." });
+                        return RedirectToAction(nameof(Create), new { notify = (int)EnumNotify.Error, message = "Favor responder todas as perguntas do questionário de qualidade de vida." });
                     }
 
                     command.QualidadeDeVidaId = (int)await ApiClientFactory.Instance.CreateQualidadeVida(
@@ -275,7 +275,7 @@ namespace WebApp.Controllers
 
                     if (listConsumoAlimentar.Count != totalRespConsumoAlimentar)
                     {
-                        return RedirectToAction(nameof(Create), new { notify = (int)EnumNotify.Error, message = "Erro ao executar esta ação. Favor responder todas as perguntas do questionário de consumo alimentar." });
+                        return RedirectToAction(nameof(Create), new { notify = (int)EnumNotify.Error, message = "Favor responder todas as perguntas do questionário de consumo alimentar." });
                     }
 
                     command.ConsumoAlimentarId = (int)await ApiClientFactory.Instance.CreateConsumoAlimentar(
@@ -294,7 +294,7 @@ namespace WebApp.Controllers
 
                     if (listSaudeBucal.Count != totalRespSaudeBucal)
                     {
-                        return RedirectToAction(nameof(Create), new { notify = (int)EnumNotify.Error, message = "Erro ao executar esta ação. Favor responder todas as perguntas do questionário de saúde bucal." });
+                        return RedirectToAction(nameof(Create), new { notify = (int)EnumNotify.Error, message = "Favor responder todas as perguntas do questionário de saúde bucal." });
                     }
 
                     command.SaudeBucalId = (int)await ApiClientFactory.Instance.CreateSaudeBucal(
@@ -397,7 +397,7 @@ namespace WebApp.Controllers
 
                     if (listVocacional.Count != totalRespVocacional)
                     {
-                        return RedirectToAction(nameof(Edit), new { notify = (int)EnumNotify.Error, message = "Erro ao executar esta ação. Favor responder todas as perguntas do questionário vocacional." });
+                        return RedirectToAction(nameof(Edit), new { notify = (int)EnumNotify.Error, message = "Favor responder todas as perguntas do questionário vocacional." });
                     }
 
                     if (laudo.VocacionalId != null)
@@ -430,7 +430,7 @@ namespace WebApp.Controllers
 
                     if (listQualidadeDeVida.Count != totalRespQualidadeDeVida)
                     {
-                        return RedirectToAction(nameof(Edit), new { notify = (int)EnumNotify.Error, message = "Erro ao executar esta ação. Favor responder todas as perguntas do questionário de qualidade de vida." });
+                        return RedirectToAction(nameof(Edit), new { notify = (int)EnumNotify.Error, message = "Favor responder todas as perguntas do questionário de qualidade de vida." });
                     }
 
                     if (laudo.QualidadeDeVidaId != null)
@@ -465,7 +465,7 @@ namespace WebApp.Controllers
 
                     if (listConsumoAlimentar.Count != totalRespConsumoAlimentar)
                     {
-                        return RedirectToAction(nameof(Edit), new { notify = (int)EnumNotify.Error, message = "Erro ao executar esta ação. Favor responder todas as perguntas do questionário de consumo alimentar." });
+                        return RedirectToAction(nameof(Edit), new { notify = (int)EnumNotify.Error, message = "Favor responder todas as perguntas do questionário de consumo alimentar." });
                     }
 
                     if (laudo.ConsumoAlimentarId != null)
@@ -500,7 +500,7 @@ namespace WebApp.Controllers
 
                     if (listSaudeBucal.Count != totalRespSaudeBucal)
                     {
-                        return RedirectToAction(nameof(Edit), new { notify = (int)EnumNotify.Error, message = "Erro ao executar esta ação. Favor responder todas as perguntas do questionário de saúde bucal." });
+                        return RedirectToAction(nameof(Edit), new { notify = (int)EnumNotify.Error, message = "Favor responder todas as perguntas do questionário de saúde bucal." });
                     }
 
                     if (laudo.SaudeBucalId != null)
