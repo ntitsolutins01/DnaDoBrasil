@@ -541,7 +541,7 @@ namespace WebApp.Controllers
                 if (result.QrCode == null)
                 {
                     result.QrCode = GeraQrCode(result.Id);
-                    await ApiClientFactory.Instance.UpdateDados(result.Id, new AlunoModel.CreateUpdateDadosAlunoCommand()
+                    await ApiClientFactory.Instance.UpdateQrCode(result.Id, new AlunoModel.CreateUpdateDadosAlunoCommand()
                     {
                         Id = result.Id,
                         QrCode = result.QrCode
@@ -836,7 +836,7 @@ namespace WebApp.Controllers
                         if (alunoCompleto.QrCode == null)
                         {
                             alunoCompleto.QrCode = GeraQrCode(alunoCompleto.Id);
-                            await ApiClientFactory.Instance.UpdateDados(alunoCompleto.Id, new AlunoModel.CreateUpdateDadosAlunoCommand
+                            await ApiClientFactory.Instance.UpdateQrCode(alunoCompleto.Id, new AlunoModel.CreateUpdateDadosAlunoCommand
                             {
                                 Id = alunoCompleto.Id,
                                 QrCode = alunoCompleto.QrCode
