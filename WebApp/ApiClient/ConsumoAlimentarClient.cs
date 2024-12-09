@@ -34,7 +34,7 @@ namespace WebApp.ApiClient
 
         #region Methods
 
-        public ConsumoAlimentarDto GetConsumoAlimentarById(string id)
+        public ConsumoAlimentarDto GetConsumoAlimentarById(int? id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 $"{ResourceConsumoAlimentar}/{id}"));

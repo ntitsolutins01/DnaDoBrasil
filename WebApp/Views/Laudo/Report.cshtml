@@ -229,13 +229,13 @@
                                 }
                             </span>
                         </div>
-                        @if (Model.QualidadeDeVida != null)
+                        @if (Model.ListQualidadeDeVida != null)
                         {
                             <div class="row-info">
                                 <span class="label-info">Qualidade de Vida </span>
                                 <span class="value-info" style="font-size: 9px;font-weight: 500;">
 
-                                    @foreach (var item in Model.QualidadeDeVida)
+                                    @foreach (var item in Model.ListQualidadeDeVida)
                                     {
                                         @item.Nome
                                         <br />
@@ -250,13 +250,13 @@
                                 </span>
                             </div>
                         }
-                        @if (Model.Vocacional != null)
+                        @if (Model.ListVocacional != null)
                         {
                             <div class="row-info">
                                 <span class="label-info">Vocacional </span>
                                 <span class="value-info">
                                     I
-                                    @foreach (var item in Model.Vocacional)
+                                    @foreach (var item in Model.ListVocacional)
                                     {
                                         if (item.Id == Model.Laudo.VocacionalId)
                                         {
@@ -784,7 +784,7 @@
                     Model.Desempenho.TextoContexto
                     };
                         }
-                        @foreach (var item in Model.QualidadeDeVida)
+                        @foreach (var item in Model.ListQualidadeDeVida)
                         {
                             <div class="row-vida">
                                 <div class="label-vida">
@@ -909,7 +909,7 @@
                                 var index = 1;
                             }
 
-                            @foreach (var item in Model.Vocacional)
+                            @foreach (var item in Model.ListVocacional)
                             {
                                 if (item.Id == Model.Laudo.VocacionalId)
                                 {

@@ -63,8 +63,8 @@ namespace WebApp.Models
             public string? NomeFoto { get; set; }
             public bool Status { get; set; }
             public bool Habilitado { get; set; }
-            public int? DeficienciaId { get; set; } = new();
-            public int? ProfissionalId { get; set; } = new();
+            public int? DeficienciaId { get; set; }
+            public int? ProfissionalId { get; set; }
             public int? ParceiroId { get; set; }
             public string? Etnia { get; set; }
             public int? ContratosId { get; set; }
@@ -86,6 +86,7 @@ namespace WebApp.Models
             public bool? UtilizacaoImagem { get; set; } = false;
             public bool? CopiaDocAlunoResponsavel { get; set; } = false;
             public int? FomentoId { get; set; }
+            public bool? Convidado { get; set; } = false;
         }
     }
 

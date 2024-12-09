@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div id="formLaudo">
+<div id="vLaudo">
     @using (@Html.BeginForm("Index", "Laudo", FormMethod.Post, new { id = "formPesquisarLaudo", @class = "form-horizontal" }))
     {
         <div class="row">
@@ -141,9 +141,10 @@
                         <table class="table table-bordered table-striped mb-0" id="datatable-default">
                             <thead>
                                 <tr>
-                                    <th class="text-center">Id</th>
+                                    <th class="text-center">Matrícula</th>
+                                    <th class="text-center">Idade</th>
                                     <th class="text-center">Nome Aluno</th>
-                                    <th class="text-center">Email</th>
+                                    <th class="text-center">Dimensões Realizadas</th>
                                     <th class="text-center">Localidade - Município / Uf</th>
                                     @* <th class="text-center">Encaminhamento</th> *@
                                     <th class="text-center">Status do Laudo</th>
@@ -155,8 +156,70 @@
                                 {
                                     <tr>
                                         <td class="text-center">@Html.DisplayFor(modelItem => item.Id)</td>
+                                        <td class="text-center">@Html.DisplayFor(modelItem => item.Idade)</td>
                                         <td class="text-center">@Html.DisplayFor(modelItem => item.NomeAluno)</td>
-                                        <td class="text-center">@Html.DisplayFor(modelItem => item.Email)</td>
+                                        <td class="text-center">
+                                            @if (item.SaudeId != null)
+                                            {
+                                                <i class="fa fa-heartbeat" style="color: #d2322d;margin-right: 10px;" data-toggle="tooltip" data-placement="top" title="Saúde"></i>
+                                            }
+                                            else
+                                            {
+                                                <i class="fa fa-heartbeat" style="color: #78909c;margin-right: 10px;" data-toggle="tooltip" data-placement="top" title="Saúde não realizado"></i>
+                                            }
+
+                                            @if (item.TalentoEsportivoId != null)
+                                            {
+                                                <i class="fa fa-trophy" style="color: #ed9c28;margin-right: 10px;" data-toggle="tooltip" data-placement="top" title="Talento Esportivo"></i>
+                                            }
+                                            else
+                                            {
+                                                <i class="fa fa-trophy" style="color: #78909c;margin-right: 10px;" data-toggle="tooltip" data-placement="top" title="Talento Esportivo não realizado"></i>
+                                            }
+
+                                            @if (item.ConsumoAlimentarId != null)
+                                            {
+                                                <i class="fa fa-cutlery" style="color: #47a447;margin-right: 10px;" data-toggle="tooltip" data-placement="top" title="Consumo Alimentar"></i>
+                                            }
+                                            else
+                                            {
+                                                <i class="fa fa-cutlery" style="color: #78909c;margin-right: 10px;" data-toggle="tooltip" data-placement="top" title="Consumo Alimentar não realizado"></i>
+                                            }
+
+                                            @if (item.SaudeBucalId != null)
+                                            {
+                                                <i class="fa fa-medkit" style="color: #5bc0de;margin-right: 10px;" data-toggle="tooltip" data-placement="top" title="Saúde Bucal"></i>
+                                            }
+                                            else
+                                            {
+                                                <i class="fa fa-medkit" style="color: #78909c;margin-right: 10px;" data-toggle="tooltip" data-placement="top" title="Saúde Bucal não realizado"></i>
+                                            }
+
+                                            @if (item.Idade >= 14)
+                                            {
+                                                if(item.QualidadeDeVidaId != null)
+                                                {
+                                                    <i class="fa fa-thumbs-up" style="color: #00a4a9;margin-right: 10px;" data-toggle="tooltip" data-placement="top" title="Qualidade de Vida"></i>
+                                                }
+                                                else
+                                                {
+                                                    <i class="fa fa-thumbs-up" style="color: #78909c;margin-right: 10px;" data-toggle="tooltip" data-placement="top" title="Qualidade de Vida não realizado"></i>
+                                                }
+                                            }
+                                            
+                                            @if (item.Idade >= 12)
+                                            {
+                                                    if (item.VocacionalId != null)
+                                                    {
+                                                    <i class="fa fa-star" style="color: #9c27b0;margin-right: 10px;" data-toggle="tooltip" data-placement="top" title="Vocacional"></i>
+                                                    }
+                                                    else
+                                                    {
+                                                    <i class="fa fa-star" style="color: #78909c;margin-right: 10px;" data-toggle="tooltip" data-placement="top" title="Vocacional não realizado"></i>
+                                                    }
+                                            }
+
+                                        </td>
                                         <td class="text-center">@Html.DisplayFor(modelItem => item.NomeLocalidade) - @Html.DisplayFor(modelItem => item.MunicipioEstado)</td>
                                         @* @if (string.IsNullOrEmpty(item.Encaminhamento))
                                 {
@@ -177,7 +240,7 @@
                                         <td class="actions text-center">
                                             <a data-toggle="tooltip" data-placement="top" title="Editar" asp-action="Edit" asp-controller="Laudo" asp-route-id="@item.Id" class="on-default edit-row" style='color: #FF9800'><i class="fa fa-pencil"></i></a>
 
-                                            <a data-toggle="tooltip" data-placement="top" title="Avaliação Completa" asp-action="ErrorPage" asp-controller="Laudo" asp-route-id="@item.AlunoId" class="on-default edit-row" style='color: #d2322d'><i class="fa fa-bar-chart"></i></a>
+                                            <a data-toggle="tooltip" data-placement="top" title="Avaliação Completa" asp-action="Details" asp-controller="Laudo" asp-route-id="@item.AlunoId" class="on-default edit-row" style='color: #d2322d'><i class="fa fa-bar-chart"></i></a>
                                             <a data-toggle="tooltip" data-placement="top" title="Relatório" asp-action="Report" asp-controller="Laudo" asp-route-id="@item.AlunoId" class="on-default edit-row" style='color: #47a447' target="_blank"><i class="fa fa-file-text"></i></a>
                                         </td>
                                     </tr>
@@ -232,10 +295,10 @@
 
     <script>
 
-        $(document).ready(function() {
-            $('#btnImprimirLaudo').click(function(e) {
+        $(document).ready(function () {
+            $('#btnImprimirLaudo').click(function (e) {
                 e.preventDefault();
-        
+
                 var filtros = {
                     ddlFomento: $('#ddlFomento').val(),
                     ddlEstado: $('#ddlEstado').val(),
@@ -243,12 +306,12 @@
                     ddlLocalidade: $('#ddlLocalidade').val(),
                     ddlAluno: $('#ddlAluno').val(),
                     ddlTipoLaudo: $('#ddlTipoLaudo').val(),
-                    possuiFoto: $('#possuiFoto').val(),
-                    finalizado: $('#finalizado').val()
+                    possuiFoto: $('#possuiFoto').is(':checked').toString(),
+                    finalizado: $('#finalizado').is(':checked').toString()
                 };
 
                 var queryString = Object.keys(filtros)
-                    .filter(key => filtros[key])
+                    .filter(key => filtros[key] !== null && filtros[key] !== undefined)
                     .map(key => `${key}=${encodeURIComponent(filtros[key])}`)
                     .join('&');
 
@@ -256,9 +319,36 @@
                 if (queryString) {
                     url += '?' + queryString;
                 }
-        
+
                 window.open(url, '_blank');
             });
+        });
+
+        $('#btnExportarLaudo').click(function (e) {
+            e.preventDefault();
+
+            var filtros = {
+                ddlFomento: $('#ddlFomento').val(),
+                ddlEstado: $('#ddlEstado').val(),
+                ddlMunicipio: $('#ddlMunicipio').val(),
+                ddlLocalidade: $('#ddlLocalidade').val(),
+                ddlAluno: $('#ddlAluno').val(),
+                ddlTipoLaudo: $('#ddlTipoLaudo').val(),
+                possuiFoto: $('#possuiFoto').is(':checked').toString(),
+                finalizado: $('#finalizado').is(':checked').toString()
+            };
+
+            var queryString = Object.keys(filtros)
+                .filter(key => filtros[key] !== null && filtros[key] !== undefined)
+                .map(key => `${key}=${encodeURIComponent(filtros[key])}`)
+                .join('&');
+
+            var url = $(this).attr('href');
+            if (queryString) {
+                url += '?' + queryString;
+            }
+
+            window.location.href = url;
         });
 
         (function ($) {

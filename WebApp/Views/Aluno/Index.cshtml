@@ -63,7 +63,7 @@
                         </div>
                         <label class="col-sm-2 control-label">Sexo:</label>
                         <div class="col-sm-4 form-group">
-                            <select class="form-control populate select2" name="ddlSexo" id="ddlSexo"
+                            <select class="form-control populate select2" name="ddlSexo" id="ddlSexo" style="width:100%"
                                     title="Por favor selecione um sexo."
                                     asp-for="SexoId" asp-items="Model.ListSexos">
                                 <option value="">Selecionar Sexo</option>
@@ -110,7 +110,7 @@
                     : false;
 
                 if (filtroVazio)
-                {
+                {}
                     <div class="col-sm-8 pull-left">
                         <div class="alert alert-warning" style="padding-bottom: 6px;padding-top: 6px; !important; margin-bottom: 10px; !important">
                             <strong>Atenção!</strong> Os alunos listados são referentes ao seu <a href="" class="alert-link">Estado/Município</a> de cadastro.
@@ -121,7 +121,7 @@
                             <strong>Info:</strong> Para impressão de carteirinha em lote selecione o filtro e clique em <a href="" class="alert-link">Impressão em Lote</a>.
                         </div>
                     </div>
-                }
+                
             }
             <div class="col-sm-2 pull-right">
                 <a href="@Url.Action("Create", "Aluno")" id="addToTable" class="btn btn-block btn-primary pull-right"><i class="fa fa-plus"></i>  &nbsp;&nbsp;Novo Aluno </a>
@@ -394,6 +394,37 @@
                     type: 'error',
                     icon: 'fa fa-trash-o'
                 });
+            }
+
+
+            var notify = @ViewBag.NotifyMessage;
+            var messagem = '@ViewBag.Notify';
+
+            if (notify === 0) {
+                new PNotify({
+                    title: 'Aluno',
+                    text: messagem,
+                    type: 'success'
+                });
+                crub = 0;
+            } else if (notify === 1) {
+                new PNotify({
+                    title: 'Aluno',
+                    text: messagem,
+                    type: 'warning'
+                });
+                crub = 0;
+            } else if (notify === 2) {
+                new PNotify({
+                    title: 'Aluno',
+                    text: messagem,
+                    type: 'error'
+                });
+                crub = 0;
+            }
+
+            if ($.isFunction($.fn['tooltip'])) {
+                $('[data-toggle=tooltip],[rel=tooltip]').tooltip({ container: 'body' });
             }
 
         }).apply(this, [jQuery]);

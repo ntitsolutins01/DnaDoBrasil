@@ -38,6 +38,12 @@ namespace WebApp.ApiClient
                 $"{ResourceFomento}/Fomento/{id}"));
             return Get<FomentoDto>(requestUrl);
         }
+        public FomentoDto GetFomentoByLocalidadeId(int id)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceFomento}/Localidade/{id}"));
+            return Get<FomentoDto>(requestUrl);
+        }
         public List<FomentoDto> GetFomentoAll()
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
