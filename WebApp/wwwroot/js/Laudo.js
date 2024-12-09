@@ -346,26 +346,6 @@ var vm = new Vue({
                 $('#agilidade').maskMoney();
                 $("#agilidade").maskMoney('mask');
 
-                $("#ddlAluno").change(function () {
-                    var id = $("#ddlAluno").val();
-
-                    var url = "../../Aluno/GetAlunoIdadeById?id=" + id;
-
-                    $.getJSON(url,
-                        { id: id },
-                        function (data) {
-                            $("#divIdade").show();
-                            $("#spanIdade").text(data + " anos");
-                            if (data < 12) {
-                                $("#liQualidade").hide();
-                            }
-                            if (data < 14) {
-                                $("#liVocacional").hide();
-                            }
-                        });
-                });
-
-
                 $("#formEditLaudo").validate({
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');

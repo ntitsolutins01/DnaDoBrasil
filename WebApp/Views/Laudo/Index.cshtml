@@ -141,7 +141,7 @@
                         <table class="table table-bordered table-striped mb-0" id="datatable-default">
                             <thead>
                                 <tr>
-                                    <th class="text-center">Id</th>
+                                    <th class="text-center">Matrícula</th>
                                     <th class="text-center">Idade</th>
                                     <th class="text-center">Nome Aluno</th>
                                     <th class="text-center">Dimensões Realizadas</th>
@@ -165,7 +165,7 @@
                                             }
                                             else
                                             {
-                                                <i class="fa fa-heartbeat" style="color: #b0bec5;margin-right: 10px;" data-toggle="tooltip" data-placement="top" title="Saúde"></i>
+                                                <i class="fa fa-heartbeat" style="color: #78909c;margin-right: 10px;" data-toggle="tooltip" data-placement="top" title="Saúde não realizado"></i>
                                             }
 
                                             @if (item.TalentoEsportivoId != null)
@@ -174,7 +174,7 @@
                                             }
                                             else
                                             {
-                                                <i class="fa fa-trophy" style="color: #b0bec5;margin-right: 10px;" data-toggle="tooltip" data-placement="top" title="Talento Esportivo"></i>
+                                                <i class="fa fa-trophy" style="color: #78909c;margin-right: 10px;" data-toggle="tooltip" data-placement="top" title="Talento Esportivo não realizado"></i>
                                             }
 
                                             @if (item.ConsumoAlimentarId != null)
@@ -183,7 +183,7 @@
                                             }
                                             else
                                             {
-                                                <i class="fa fa-cutlery" style="color: #b0bec5;margin-right: 10px;" data-toggle="tooltip" data-placement="top" title="Consumo Alimentar"></i>
+                                                <i class="fa fa-cutlery" style="color: #78909c;margin-right: 10px;" data-toggle="tooltip" data-placement="top" title="Consumo Alimentar não realizado"></i>
                                             }
 
                                             @if (item.SaudeBucalId != null)
@@ -192,18 +192,18 @@
                                             }
                                             else
                                             {
-                                                <i class="fa fa-medkit" style="color: #b0bec5;margin-right: 10px;" data-toggle="tooltip" data-placement="top" title="Saúde Bucal"></i>
+                                                <i class="fa fa-medkit" style="color: #78909c;margin-right: 10px;" data-toggle="tooltip" data-placement="top" title="Saúde Bucal não realizado"></i>
                                             }
 
                                             @if (item.Idade >= 14)
                                             {
                                                 if(item.QualidadeDeVidaId != null)
                                                 {
-                                                    <i class="fa fa-star-o" style="color: #00a4a9;margin-right: 10px;" data-toggle="tooltip" data-placement="top" title="Qualidade de Vida"></i>
+                                                    <i class="fa fa-thumbs-up" style="color: #00a4a9;margin-right: 10px;" data-toggle="tooltip" data-placement="top" title="Qualidade de Vida"></i>
                                                 }
                                                 else
                                                 {
-                                                    <i class="fa fa-star-o" style="color: #b0bec5;margin-right: 10px;" data-toggle="tooltip" data-placement="top" title="Qualidade de Vida"></i>
+                                                    <i class="fa fa-thumbs-up" style="color: #78909c;margin-right: 10px;" data-toggle="tooltip" data-placement="top" title="Qualidade de Vida não realizado"></i>
                                                 }
                                             }
                                             
@@ -211,11 +211,11 @@
                                             {
                                                     if (item.VocacionalId != null)
                                                     {
-                                                    <i class="fa fa-star" style="color: #a787c0;margin-right: 10px;" data-toggle="tooltip" data-placement="top" title="Vocacional"></i>
+                                                    <i class="fa fa-star" style="color: #9c27b0;margin-right: 10px;" data-toggle="tooltip" data-placement="top" title="Vocacional"></i>
                                                     }
                                                     else
                                                     {
-                                                    <i class="fa fa-star" style="color: #b0bec5;margin-right: 10px;" data-toggle="tooltip" data-placement="top" title="Vocacional"></i>
+                                                    <i class="fa fa-star" style="color: #78909c;margin-right: 10px;" data-toggle="tooltip" data-placement="top" title="Vocacional não realizado"></i>
                                                     }
                                             }
 
