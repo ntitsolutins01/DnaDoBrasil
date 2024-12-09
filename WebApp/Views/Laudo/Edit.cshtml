@@ -113,13 +113,38 @@
                                         <div>
                                             <label class="col-sm-2 control-label"><strong>Altura (cm) </strong></label>
                                             <div class="col-sm-4">
-                                                <input type="text" class="form-control" id="alturaSaude" name="alturaSaude" maxlength="3" />
+                                                @if (Model.Saude.Altura == null)
+                                                {
+                                                    var altura = Model.TalentoEsportivo.Altura;
+                                                    var alturaFormatada = String.Format("{0:0.##}", altura);
+                                                    <input type="text" class="form-control" id="alturaSaude" name="alturaSaude" maxlength="3"
+                                                           value="@alturaFormatada" />
+                                                }
+                                                else
+                                                {
+                                                    var altura = Model.Saude.Altura;
+                                                    var alturaFormatada = String.Format("{0:0.##}", altura);
+                                                    <input type="text" class="form-control" id="alturaSaude" name="alturaSaude" maxlength="3" value="@alturaFormatada" />
+                                                }
+
                                             </div>
                                         </div>
                                         <div>
                                             <label class="col-sm-3 control-label"><strong>Massa Corporal (kg) </strong></label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="massaCorporalSaude" name="massaCorporalSaude" maxlength="3" />
+                                                @if (Model.Saude.Massa == null)
+                                                {
+
+                                                    <input type="text" class="form-control" id="massaCorporalSaude" name="massaCorporalSaude" maxlength="6"
+                                                           value="@Model.Saude.Massa" />
+                                                }
+                                                else
+                                                {
+                                                    var peso = Model.TalentoEsportivo.Peso;
+                                                    peso = (decimal)peso;
+                                                    <input type="text" class="form-control" id="massaCorporalSaude" name="massaCorporalSaude" maxlength="6"
+                                                           value="@peso" />
+                                                }
                                             </div>
                                         </div>
                                     </div>
@@ -127,7 +152,21 @@
                                         <div>
                                             <label class="col-sm-2 control-label"><strong>Envergadura (cm)</strong></label>
                                             <div class="col-sm-4">
-                                                <input type="text" class="form-control" id="envergaduraSaude" name="envergaduraSaude" maxlength="3" />
+
+                                                @if (Model.Saude.Envergadura == null)
+                                                {
+                                                    var envergadura = Model.TalentoEsportivo.Envergadura;
+                                                    var envergaduraFormatado = String.Format("{0:0.##}", envergadura);
+                                                    <input type="text" class="form-control" id="envergaduraSaude" name="envergaduraSaude" maxlength="3"
+                                                           value="@envergaduraFormatado" />
+                                                }
+                                                else
+                                                {
+                                                    var envergadura = Model.Saude.Envergadura;
+                                                    var envergaduraFormatado = String.Format("{0:0.##}", envergadura);
+                                                    <input type="text" class="form-control" id="envergaduraSaude" name="envergaduraSaude" maxlength="3"
+                                                           value="@envergaduraFormatado" />
+                                                }
                                             </div>
                                         </div>
                                     </div>
@@ -137,13 +176,13 @@
                                         <div>
                                             <label class="col-sm-2 control-label"><strong>Altura (cm) </strong></label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="altura" name="altura" maxlength="3" value="@Model.TalentoEsportivo.Altura" />
+                                                <input type="text" class="form-control" id="altura" name="altura" maxlength="6" value="@Model.TalentoEsportivo.Altura" />
                                             </div>
                                         </div>
                                         <div>
                                             <label class="col-sm-3 control-label"><strong>Massa Corporal (kg)</strong></label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="massaCorporal" name="massaCorporal" maxlength="3" value="@Model.TalentoEsportivo.Peso" />
+                                                <input type="text" class="form-control" id="massaCorporal" name="massaCorporal" maxlength="6" value="@Model.TalentoEsportivo.Peso" />
                                             </div>
                                         </div>
                                     </div>
@@ -151,13 +190,13 @@
                                         <div>
                                             <label class="col-sm-2 control-label"><strong>Preensão Manual (kg)</strong></label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="preensaoManual" name="preensaoManual" maxlength="3" value="@Model.TalentoEsportivo.PreensaoManual" />
+                                                <input type="text" class="form-control" id="preensaoManual" name="preensaoManual" maxlength="6" value="@Model.TalentoEsportivo.PreensaoManual" />
                                             </div>
                                         </div>
                                         <div>
                                             <label class="col-sm-3 control-label"><strong>Flexibilidade (cm)</strong></label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="flexibilidade" name="flexibilidade" maxlength="3" value="@Model.TalentoEsportivo.Flexibilidade" />
+                                                <input type="text" class="form-control" id="flexibilidade" name="flexibilidade" maxlength="6" value="@Model.TalentoEsportivo.Flexibilidade" />
                                             </div>
                                         </div>
                                     </div>
@@ -165,7 +204,7 @@
                                         <div>
                                             <label class="col-sm-2 control-label"><strong>Impulsão Horizontal (cm)</strong></label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="impulsaoHorizontal" name="impulsaoHorizontal" maxlength="3" value="@Model.TalentoEsportivo.ImpulsaoHorizontal" />
+                                                <input type="text" class="form-control" id="impulsaoHorizontal" name="impulsaoHorizontal" maxlength="6" value="@Model.TalentoEsportivo.ImpulsaoHorizontal" />
                                             </div>
                                         </div>
                                         <div>
@@ -175,7 +214,7 @@
                                                     <span class="input-group-addon">
                                                         <i class="fa fa-clock-o"></i>
                                                     </span>
-                                                    <input type="text" class="form-control" id="testeVelocidade" name="testeVelocidade" maxlength="3" value="@Model.TalentoEsportivo.Velocidade" />
+                                                    <input type="text" class="form-control" id="testeVelocidade" name="testeVelocidade" maxlength="6" value="@Model.TalentoEsportivo.Velocidade" />
                                                 </div>
                                             </div>
                                         </div>
@@ -184,7 +223,7 @@
                                         <div>
                                             <label class="col-sm-2 control-label"><strong>Aptidão Física (mLO2/min)</strong></label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="aptidaoFisica" name="aptidaoFisica" maxlength="3" value="@Model.TalentoEsportivo.Vo2Max" />
+                                                <input type="text" class="form-control" id="aptidaoFisica" name="aptidaoFisica" maxlength="6" value="@Model.TalentoEsportivo.Vo2Max" />
                                             </div>
                                         </div>
                                         <div>
@@ -194,7 +233,7 @@
                                                     <span class="input-group-addon">
                                                         <i class="fa fa-clock-o"></i>
                                                     </span>
-                                                    <input type="text" class="form-control" id="agilidade" name="agilidade" maxlength="3" value="@Model.TalentoEsportivo.ShuttleRun" />
+                                                    <input type="text" class="form-control" id="agilidade" name="agilidade" maxlength="6" value="@Model.TalentoEsportivo.ShuttleRun" />
 
                                                 </div>
                                             </div>
@@ -207,11 +246,11 @@
                                                 @if (Model.TalentoEsportivo.Abdominal == 30)
                                                 {
                                                     <div class="radio-custom radio-success">
-                                                        <input id="abdominalSim" name="rdbAbdominal" checked type="radio" value="true" required title="Por favor selecione uma opção."/>
+                                                        <input id="abdominalSim" name="rdbAbdominal" checked type="radio" value="true" required title="Por favor selecione uma opção." />
                                                         <label for="abdominalSim">Sim</label>
                                                     </div>
                                                     <div class="radio-custom radio-danger">
-                                                        <input id="abdominalNao" name="rdbAbdominal" type="radio" value="false" required title="Por favor selecione uma opção."/>
+                                                        <input id="abdominalNao" name="rdbAbdominal" type="radio" value="false" required title="Por favor selecione uma opção." />
                                                         <label for="abdominalNao">Não</label>
                                                     </div>
                                                 }
@@ -227,7 +266,7 @@
                                                         <label for="abdominalNao">Não</label>
                                                     </div>
                                                 }
-                                                
+
                                                 <label class="error" for="rdbAbdominal"></label>
                                             </div>
                                         </div>
@@ -364,6 +403,7 @@
     <script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
     <script src="~/assets/vendor/select2/js/select2.js"></script>
     <script src="~/assets/vendor/jquery-mask/jquery.mask.js"></script>
+    <script src="~/assets/vendor/jquery-mask/jquery.maskMoney.js"></script>
     <script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
     <script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
     <script src="~/assets/vendor/bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR.min.js"></script>

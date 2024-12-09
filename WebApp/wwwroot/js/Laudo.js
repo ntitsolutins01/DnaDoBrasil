@@ -332,10 +332,12 @@ var vm = new Vue({
                 });
 
                 //mascara dos inputs
-                var $numAltura = $("#altura");
-                $numAltura.mask('000,00', { reverse: false });
-                var $numMassaCorporal = $("#massaCorporal");
-                $numMassaCorporal.mask('000,00', { reverse: false });
+                //var $numAltura = $("#alturaSaude");
+                //$numAltura.mask('#.##0,00', { reverse: false });
+                $('#massaCorporalSaude').maskMoney();
+
+
+
                 var $numPreensaoManual = $("#preensaoManual");
                 $numPreensaoManual.mask('000,00', { reverse: false });
                 var $numFlexibilidade = $("#flexibilidade");
@@ -581,6 +583,32 @@ var vm = new Vue({
                 $("#" + el).addClass("loading-overlay-showing");
                 self.loading = flag;
             }
+        },
+        Print: function () {
+            var self = this;
+
+            var filtros = {
+                ddlFomento: $('#ddlFomento').val(),
+                ddlEstado: $('#ddlEstado').val(),
+                ddlMunicipio: $('#ddlMunicipio').val(),
+                ddlLocalidade: $('#ddlLocalidade').val(),
+                ddlAluno: $('#ddlAluno').val(),
+                ddlTipoLaudo: $('#ddlTipoLaudo').val(),
+                possuiFoto: $('#possuiFoto').val(),
+                finalizado: $('#finalizado').val()
+            };
+
+            var queryString = Object.keys(filtros)
+                .filter(key => filtros[key])
+                .map(key => `${key}=${encodeURIComponent(filtros[key])}`)
+                .join('&');
+
+            var url = $(this).attr('href');
+            if (queryString) {
+                url += '?' + queryString;
+            }
+
+            window.open(url, '_blank');
         }
     }
 });
