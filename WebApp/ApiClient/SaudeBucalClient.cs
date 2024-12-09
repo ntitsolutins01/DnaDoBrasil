@@ -41,7 +41,7 @@ namespace WebApp.ApiClient
             return Get<List<SaudeBucalDto>>(requestUrl);
         }
 
-        public SaudeBucalDto GetSaudeBucalById(string id)
+        public SaudeBucalDto GetSaudeBucalById(int? id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 $"{ResourceSaudeBucal}/{id}"));

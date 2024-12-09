@@ -726,8 +726,8 @@
                                             </div> *@
                                                 <br />
                                                 @{
-                                                    var primeirosItens = Model.Vocacional.Take(3).ToList();
-                                                    var ultimosItens = Model.Vocacional.Skip(Math.Max(0, Model.Vocacional.Count() - 3)).Take(3).ToList();
+                                                    var primeirosItens = Model.ListVocacional.Take(3).ToList();
+                                                    var ultimosItens = Model.ListVocacional.Skip(Math.Max(0, Model.ListVocacional.Count() - 3)).Take(3).ToList();
                                                 }
 
                                                 <div class="row form-group">

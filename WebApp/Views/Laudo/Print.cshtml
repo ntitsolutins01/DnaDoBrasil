@@ -249,7 +249,7 @@
 
                         @if (laudo.Laudo.VocacionalId != null)
                         {
-                            foreach (var vocacional in laudo.Vocacional)
+                            foreach (var vocacional in laudo.ListVocacional)
                             {
                                 if (vocacional.Id == laudo.Laudo.VocacionalId)
                                 {
@@ -284,10 +284,10 @@
                                         laudo.Desempenho.TextoContexto
                                     };
 
-                                    for (var i = 0; i < laudo.QualidadeDeVida.Count; i++)
+                                    for (var i = 0; i < laudo.ListQualidadeDeVida.Count; i++)
                                     {
                                         <div class="quality-card">
-                                            <h3>@laudo.QualidadeDeVida[i].Nome</h3>
+                                            <h3>@laudo.ListQualidadeDeVida[i].Nome</h3>
                                             <p>@textosVida[i]</p>
                                         </div>
                                     }

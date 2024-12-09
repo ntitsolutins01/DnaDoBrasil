@@ -13,16 +13,14 @@ namespace WebApp.Models
         public EncaminhamentoDto EncaminhamentoImc { get; set; }
         public EncaminhamentoDto EncaminhamentoSaudeBucal { get; set; }
         public EncaminhamentoDto EncaminhamentoConsumoAlimentar { get; set; }
-        public List<EncaminhamentoDto> QualidadeDeVida { get; set; }
-        public List<EncaminhamentoDto> Vocacional { get; set; }
+        public List<EncaminhamentoDto> ListQualidadeDeVida { get; set; }
+        public List<EncaminhamentoDto> ListVocacional { get; set; }
         public TalentoEsportivoDto TalentoEsportivo { get; set; }
         public PaginatedListDto<LaudoDto> Laudos { get; set; }
-		public List<QuestionarioDto> QuestionarioVocacional { get; set; }
-		public List<QuestionarioDto> QuestionarioConsumoAlimentar { get; set; }
-		public List<QuestionarioDto> QuestionarioQualidadeVida { get; set; }
-		public List<QuestionarioDto> QuestionarioSaudeBucal { get; set; }
-		public string LaudoId { get; set; }
-		public SelectList ListLaudos { get; set; }
+		public List<QuestionarioDto> ListQuestionarioVocacional { get; set; }
+		public List<QuestionarioDto> ListQuestionarioConsumoAlimentar { get; set; }
+		public List<QuestionarioDto> ListQuestionarioQualidadeVida { get; set; }
+		public List<QuestionarioDto> ListQuestionarioSaudeBucal { get; set; }
 		public string FomentoId { get; set; }
 		public SelectList ListFomentos { get; set; }
 		public string LocalidadeId { get; set; }
@@ -38,7 +36,11 @@ namespace WebApp.Models
         public string TipoLaudoId { get; set; }
         public SelectList ListTiposLaudos { get; set; }
         public SaudeDto Saude { get; set; }
-        public SearchFilterDto SearchFilter { get; set; } = new SearchFilterDto();
+        public VocacionalDto Vocacional { get; set; }
+        public ConsumoAlimentarDto ConsumoAlimentar { get; set; }
+        public QualidadeVidaDto QualidadeVida { get; set; }
+        public SaudeBucalDto SaudeBucal { get; set; }
+
         public class CreateUpdateLaudoCommand
 		{
 			public int Id { get; set; }

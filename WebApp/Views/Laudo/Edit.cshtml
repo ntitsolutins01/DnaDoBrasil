@@ -62,6 +62,12 @@
                                     <option value="">Selecionar Aluno</option>
                                 </select>
                             </div>
+                            <div id="divIdade">
+                                <label class="col-sm-2 control-label text-sm-right pt-2">Idade </label>
+                                <div class="col-md-4" style="padding-top: 6px;">
+                                    <code style="font-size: 140%;"><span id="spanIdade">@Model.Aluno.Idade anos</span></code>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <br /><br />
@@ -93,19 +99,25 @@
                                         <span style="color: #5bc0de;">Saúde Bucal</span>
                                     </a>
                                 </li>
-                                <li class="">
-                                    <a href="#qualidade-vida" data-toggle="tab" aria-expanded="false">
-                                        <i class="fa fa-star-o" style="color: #00a4a9;"></i>
-                                        <span style="color: #00a4a9;">Qualidade de Vida</span>
-                                    </a>
-                                </li>
-                                <li class="">
-                                    <a href="#vocacional"
-                                       data-toggle="tab" aria-expanded="false">
-                                        <i class="fa fa-star-half-o" style="color: #a787c0;"></i>
-                                        <span style="color: #a787c0;">Vocacional</span>
-                                    </a>
-                                </li>
+                                @if (Model.Aluno.Idade >= 12)
+                                {
+                                    <li class="">
+                                        <a href="#qualidade-vida" data-toggle="tab" aria-expanded="false">
+                                            <i class="fa fa-star-o" style="color: #00a4a9;"></i>
+                                            <span style="color: #00a4a9;">Qualidade de Vida</span>
+                                        </a>
+                                    </li>
+                                }
+                                @if (Model.Aluno.Idade >= 14)
+                                {
+                                    <li class="">
+                                        <a href="#vocacional"
+                                           data-toggle="tab" aria-expanded="false">
+                                            <i class="fa fa-star-half-o" style="color: #a787c0;"></i>
+                                            <span style="color: #a787c0;">Vocacional</span>
+                                        </a>
+                                    </li>
+                                }
                             </ul>
                             <div class="tab-content">
                                 <div id="saude" class="tab-pane active">
@@ -287,61 +299,67 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div id="vocacional" class="tab-pane">
-                                    @for (var index = 0; index < Model.QuestionarioVocacional.Count; index++)
-                                    {
-                                        var item = Model.QuestionarioVocacional[index];
-                                        <div class="form-group">
-                                            <div class="col-sm-12">
-                                                <label class="control-label">
-                                                    <strong>@item.Questao - @item.Pergunta</strong>
-                                                </label>
-                                                <input type="hidden" id="perguntaVocacional_@item.Id" />
+                                @if (Model.Aluno.Idade >= 12)
+                                {
+                                    <div id="vocacional" class="tab-pane">
+                                        @for (var index = 0; index < Model.ListQuestionarioVocacional.Count; index++)
+                                        {
+                                            var item = Model.ListQuestionarioVocacional[index];
+                                            <div class="form-group">
+                                                <div class="col-sm-12">
+                                                    <label class="control-label">
+                                                        <strong>@item.Questao - @item.Pergunta</strong>
+                                                    </label>
+                                                    <input type="hidden" id="perguntaVocacional_@item.Id" />
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    @foreach (var resp in @item.Respostas)
+                                                    {
+                                                        <div class="radio-custom radio-danger col-sm-3">
+                                                            <input id="respVocacional_@resp.Id" name="nomeRespVocacional_@index" type="radio" value="@resp.Id"
+                                                            @(Model.Vocacional.Id != 0 && Model.Vocacional.Respostas.Contains(resp.Id.ToString()) ? "checked" : "") required title="Por favor selecione uma opção." />
+                                                            <label for="respVocacional_@resp.Id">@resp.RespostaQuestionario</label>
+                                                        </div>
+                                                    }
+                                                    <label class="error" for="nomeRespVocacional_@index"></label>
+                                                </div>
                                             </div>
-                                            <div class="col-sm-12">
-                                                @foreach (var resp in @item.Respostas)
-                                                {
-                                                    <div class="radio-custom radio-default col-sm-3">
-                                                        <input id="respVocacional_@resp.Id" name="nomeRespVocacional_@index" type="radio" value="@resp.Id"
-                                                               required title="Por favor selecione uma opção." />
-                                                        <label for="respVocacional_@resp.Id">@resp.RespostaQuestionario</label>
-                                                    </div>
-                                                }
-                                                <label class="error" for="nomeRespVocacional_@index"></label>
+                                        }
+                                    </div>
+                                }
+                                @if (Model.Aluno.Idade >= 14)
+                                {
+                                    <div id="qualidade-vida" class="tab-pane">
+                                        @for (var index = 0; index < Model.ListQuestionarioQualidadeVida.Count; index++)
+                                        {
+                                            var item = Model.ListQuestionarioQualidadeVida[index];
+                                            <div class="form-group">
+                                                <div class="col-sm-12">
+                                                    <label class="control-label">
+                                                        <strong>@item.Questao - @item.Pergunta</strong>
+                                                    </label>
+                                                    <input type="hidden" id="perguntaQualidadeVida_@item.Id" />
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    @foreach (var resp in @item.Respostas)
+                                                    {
+                                                        <div class="radio-custom radio-danger col-sm-2">
+                                                            <input id="respQualidadeVida_@resp.Id" name="nomeRespQualidadeVida_@index" type="radio" value="@resp.Id"
+                                                            @(Model.QualidadeVida.Id != 0 && Model.QualidadeVida.Respostas.Contains(resp.Id.ToString()) ? "checked" : "") required title="Por favor selecione uma opção." />
+                                                            <label for="respQualidadeVida_@resp.Id">@resp.RespostaQuestionario</label>
+                                                        </div>
+                                                    }
+                                                    <label class="error" for="nomeRespQualidadeVida_@index"></label>
+                                                </div>
                                             </div>
-                                        </div>
-                                    }
+                                        }
+                                    </div>
+                                }
 
-                                </div>
-                                <div id="qualidade-vida" class="tab-pane">
-                                    @for (var index = 0; index < Model.QuestionarioQualidadeVida.Count; index++)
-                                    {
-                                        var item = Model.QuestionarioQualidadeVida[index];
-                                        <div class="form-group">
-                                            <div class="col-sm-12">
-                                                <label class="control-label">
-                                                    <strong>@item.Questao - @item.Pergunta</strong>
-                                                </label>
-                                                <input type="hidden" id="perguntaQualidadeVida_@item.Id" />
-                                            </div>
-                                            <div class="col-sm-12">
-                                                @foreach (var resp in @item.Respostas)
-                                                {
-                                                    <div class="radio-custom radio-default col-sm-2">
-                                                        <input id="respQualidadeVida_@resp.Id" name="nomeRespQualidadeVida_@index" type="radio" value="@resp.Id"
-                                                               required title="Por favor selecione uma opção." />
-                                                        <label for="respQualidadeVida_@resp.Id">@resp.RespostaQuestionario</label>
-                                                    </div>
-                                                }
-                                                <label class="error" for="nomeRespQualidadeVida_@index"></label>
-                                            </div>
-                                        </div>
-                                    }
-                                </div>
                                 <div id="consumo-alimentar" class="tab-pane">
-                                    @for (var index = 0; index < Model.QuestionarioConsumoAlimentar.Count; index++)
+                                    @for (var index = 0; index < Model.ListQuestionarioConsumoAlimentar.Count; index++)
                                     {
-                                        var item = Model.QuestionarioConsumoAlimentar[index];
+                                        var item = Model.ListQuestionarioConsumoAlimentar[index];
                                         <div class="form-group">
                                             <div class="col-sm-12">
                                                 <label class="control-label">
@@ -352,9 +370,9 @@
                                             <div class="col-sm-12">
                                                 @foreach (var resp in @item.Respostas)
                                                 {
-                                                    <div class="radio-custom radio-default col-sm-3">
+                                                    <div class="radio-custom radio-danger col-sm-3">
                                                         <input id="respConsumoAlimentar_@resp.Id" name="nomeRespConsumoAlimentar_@index" type="radio" value="@resp.Id"
-                                                               required title="Por favor selecione uma opção." />
+                                                               @(Model.ConsumoAlimentar.Id != 0 && Model.ConsumoAlimentar.Respostas.Contains(resp.Id.ToString()) ? "checked" : "") required title="Por favor selecione uma opção." />
                                                         <label for="respConsumoAlimentar_@resp.Id">@resp.RespostaQuestionario</label>
                                                     </div>
                                                 }
@@ -364,9 +382,9 @@
                                     }
                                 </div>
                                 <div id="saude-bucal" class="tab-pane">
-                                    @for (var index = 0; index < Model.QuestionarioSaudeBucal.Count; index++)
+                                    @for (var index = 0; index < Model.ListQuestionarioSaudeBucal.Count; index++)
                                     {
-                                        var item = Model.QuestionarioSaudeBucal[index];
+                                        var item = Model.ListQuestionarioSaudeBucal[index];
                                         <div class="form-group">
                                             <div class="col-sm-12">
                                                 <label class="control-label">
@@ -376,9 +394,9 @@
                                             <div class="col-sm-12">
                                                 @foreach (var resp in @item.Respostas)
                                                 {
-                                                    <div class="radio-custom radio-default col-sm-3">
+                                                    <div class="radio-custom radio-danger col-sm-3">
                                                         <input id="respSaudeBucal_@resp.Id" name="nomeRespSaudeBucal_@index" type="radio" value="@resp.Id"
-                                                               required title="Por favor selecione uma opção." />
+                                                        @(Model.SaudeBucal.Id != 0 && Model.SaudeBucal.Respostas.Contains(resp.Id.ToString()) ? "checked" : "") required title="Por favor selecione uma opção." />
                                                         <label for="respSaudeBucal_@resp.Id">@resp.RespostaQuestionario</label>
                                                     </div>
                                                 }
@@ -426,6 +444,7 @@
     <script src="~/assets/vendor/fuelux/js/spinner.js"></script>
     <script src="~/js/formatTable.js"></script>
     <script src="~/js/laudo.js"></script>
+
 }
 
 

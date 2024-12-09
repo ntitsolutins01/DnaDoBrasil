@@ -131,8 +131,8 @@ namespace WebApp.Controllers
                 Profissional = profissional,
                 TalentoEsportivo = talentoEsportivo,
                 EncaminhamentoImc = encaminhamentoImc,
-                QualidadeDeVida = qualidadeDeVida,
-                Vocacional = vocacional,
+                ListQualidadeDeVida = qualidadeDeVida,
+                ListVocacional = vocacional,
                 EncaminhamentoSaudeBucal = encaminhamentoSaudeBucal,
                 EncaminhamentoConsumoAlimentar = encaminhamentoConsumoAlimentar,
                 Desempenho = desempenho
@@ -160,8 +160,8 @@ namespace WebApp.Controllers
                 Profissional = profissional,
                 TalentoEsportivo = talentoEsportivo,
                 EncaminhamentoImc = encaminhamentoImc,
-                QualidadeDeVida = qualidadeDeVida,
-                Vocacional = vocacional,
+                ListQualidadeDeVida = qualidadeDeVida,
+                ListVocacional = vocacional,
                 EncaminhamentoSaudeBucal = encaminhamentoSaudeBucal,
                 EncaminhamentoConsumoAlimentar = encaminhamentoConsumoAlimentar,
                 Desempenho = desempenho
@@ -191,10 +191,10 @@ namespace WebApp.Controllers
 
                 return View(new LaudoModel()
                 {
-                    QuestionarioVocacional = questionarioVocacional,
-                    QuestionarioQualidadeVida = questionarioQualidadeVida,
-                    QuestionarioConsumoAlimentar = questionarioConsumoAlimentar,
-                    QuestionarioSaudeBucal = questionarioSaudeBucal,
+                    ListQuestionarioVocacional = questionarioVocacional,
+                    ListQuestionarioQualidadeVida = questionarioQualidadeVida,
+                    ListQuestionarioConsumoAlimentar = questionarioConsumoAlimentar,
+                    ListQuestionarioSaudeBucal = questionarioSaudeBucal,
                     ListEstados = estados
                 });
 
@@ -675,22 +675,55 @@ namespace WebApp.Controllers
                     talentoEsportivo = ApiClientFactory.Instance.GetTalentoEsportivoById((int)laudo.TalentoEsportivoId);
                 }
 
+                var vocacional = new VocacionalDto();
+
+
+                if (laudo.VocacionalId != null)
+                {
+                    vocacional = ApiClientFactory.Instance.GetVocacionalById(laudo.VocacionalId);
+                }
+
+                var consumoAlimentar = new ConsumoAlimentarDto();
+
+                if (laudo.ConsumoAlimentarId != null)
+                {
+                    consumoAlimentar = ApiClientFactory.Instance.GetConsumoAlimentarById(laudo.ConsumoAlimentarId);
+                }
+
+                var qualidadeVida = new QualidadeVidaDto();
+
+                if (laudo.QualidadeDeVidaId != null)
+                {
+                    qualidadeVida = ApiClientFactory.Instance.GetQualidadeVidaById(laudo.QualidadeDeVidaId);
+                }
+
+                var saudeBucal = new SaudeBucalDto();
+
+                if (laudo.SaudeBucalId != null)
+                {
+                    saudeBucal = ApiClientFactory.Instance.GetSaudeBucalById(laudo.SaudeBucalId);
+                }
 
                 return View(new LaudoModel()
                 {
-                    QuestionarioVocacional = questionarioVocacional,
-                    QuestionarioQualidadeVida = questionarioQualidadeVida,
-                    QuestionarioConsumoAlimentar = questionarioConsumoAlimentar,
-                    QuestionarioSaudeBucal = questionarioSaudeBucal,
+                    ListQuestionarioVocacional = questionarioVocacional,
+                    ListQuestionarioQualidadeVida = questionarioQualidadeVida,
+                    ListQuestionarioConsumoAlimentar = questionarioConsumoAlimentar,
+                    ListQuestionarioSaudeBucal = questionarioSaudeBucal,
 
                     ListEstados = estados,
-                    Aluno = aluno,
                     ListMunicipios = municipios,
                     ListLocalidades = localidades,
                     ListProfissionais = profissionais,
                     ListAlunos = alunos,
+
+                    Aluno = aluno,
                     Saude = saude,
-                    TalentoEsportivo = talentoEsportivo
+                    TalentoEsportivo = talentoEsportivo,
+                    Vocacional = vocacional,
+                    ConsumoAlimentar = consumoAlimentar,
+                    QualidadeVida = qualidadeVida,
+                    SaudeBucal = saudeBucal
                 });
             }
             catch (Exception e)
@@ -761,8 +794,8 @@ namespace WebApp.Controllers
                         Profissional = profissional,
                         TalentoEsportivo = talentoEsportivo,
                         EncaminhamentoImc = encaminhamentoImc,
-                        QualidadeDeVida = qualidadeDeVida,
-                        Vocacional = vocacional,
+                        ListQualidadeDeVida = qualidadeDeVida,
+                        ListVocacional = vocacional,
                         EncaminhamentoSaudeBucal = encaminhamentoSaudeBucal,
                         EncaminhamentoConsumoAlimentar = encaminhamentoConsumoAlimentar,
                         Desempenho = desempenho
