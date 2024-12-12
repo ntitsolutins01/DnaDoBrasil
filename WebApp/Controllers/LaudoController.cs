@@ -405,6 +405,7 @@ namespace WebApp.Controllers
                         await ApiClientFactory.Instance.UpdateVocacional((int)laudo.VocacionalId,
                             new VocacionalModel.CreateUpdateVocacionalCommand()
                             {
+                                Id = (int)laudo.VocacionalId,
                                 Respostas = string.Join(",", listVocacional),
                                 ProfissionalId = (int)laudo.ProfissionalId,
                                 AlunoId = (int)laudo.AlunoId,
@@ -438,6 +439,7 @@ namespace WebApp.Controllers
                         await ApiClientFactory.Instance.UpdateQualidadeVida((int)laudo.QualidadeDeVidaId,
                             new QualidadeVidaModel.CreateUpdateQualidadeVidaCommand()
                             {
+                                Id = (int)laudo.QualidadeDeVidaId,
                                 Respostas = string.Join(",", listQualidadeDeVida),
                                 ProfissionalId = Convert.ToInt32(collection["ddlProfissional"].ToString()),
                                 AlunoId = (int)laudo.AlunoId,
@@ -473,6 +475,7 @@ namespace WebApp.Controllers
                         await ApiClientFactory.Instance.UpdateConsumoAlimentar((int)laudo.ConsumoAlimentarId,
                             new ConsumoAlimentarModel.CreateUpdateConsumoAlimentarCommand()
                             {
+                                Id =(int)laudo.ConsumoAlimentarId,
                                 Respostas = string.Join(",", listConsumoAlimentar),
                                 ProfissionalId = Convert.ToInt32(collection["ddlProfissional"].ToString()),
                                 AlunoId = (int)laudo.AlunoId,
@@ -508,6 +511,7 @@ namespace WebApp.Controllers
                         await ApiClientFactory.Instance.UpdateSaudeBucal((int)laudo.SaudeBucalId,
                             new SaudeBucalModel.CreateUpdateSaudeBucalCommand()
                             {
+                                Id = (int)laudo.SaudeBucalId,
                                 Respostas = string.Join(",", listSaudeBucal),
                                 ProfissionalId = Convert.ToInt32(collection["ddlProfissional"].ToString()),
                                 AlunoId = (int)laudo.AlunoId,
@@ -581,6 +585,7 @@ namespace WebApp.Controllers
 
                     var commandTalentoEsportivo = new TalentoEsportivoModel.CreateUpdateTalentoEsportivoCommand()
                     {
+                        Id = (int)laudo.TalentoEsportivoId,
                         ProfissionalId = talentoEsportivo.ProfissionalId,
                         AlunoId = (int)laudo.AlunoId,
                         Altura = collection["altura"] == "" ? null : Convert.ToDecimal(collection["altura"].ToString()),

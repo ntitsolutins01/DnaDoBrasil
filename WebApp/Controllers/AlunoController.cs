@@ -538,15 +538,13 @@ namespace WebApp.Controllers
                     result.Image = GetImage(Convert.ToBase64String(result.ByteImage!));
                 }
 
-                if (result.QrCode == null)
+                if (result.QrCode != null) return Json(result);
+                result.QrCode = GeraQrCode(result.Id);
+                await ApiClientFactory.Instance.UpdateQrCode(result.Id, new AlunoModel.CreateUpdateDadosAlunoCommand()
                 {
-                    result.QrCode = GeraQrCode(result.Id);
-                    await ApiClientFactory.Instance.UpdateQrCode(result.Id, new AlunoModel.CreateUpdateDadosAlunoCommand()
-                    {
-                        Id = result.Id,
-                        QrCode = result.QrCode
-                    });
-                }
+                    Id = result.Id,
+                    QrCode = result.QrCode
+                });
                 return Json(result);
 
             }

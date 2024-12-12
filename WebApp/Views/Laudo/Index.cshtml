@@ -141,9 +141,9 @@
                         <table class="table table-bordered table-striped mb-0" id="datatable-default">
                             <thead>
                                 <tr>
-                                    <th class="text-center">Matrícula</th>
+                                    <th class="text-center">Id</th>
                                     <th class="text-center">Idade</th>
-                                    <th class="text-center">Nome Aluno</th>
+                                    <th class="text-center">Matrícula - Nome Aluno</th>
                                     <th class="text-center">Dimensões Realizadas</th>
                                     <th class="text-center">Localidade - Município / Uf</th>
                                     @* <th class="text-center">Encaminhamento</th> *@
@@ -157,7 +157,7 @@
                                     <tr>
                                         <td class="text-center">@Html.DisplayFor(modelItem => item.Id)</td>
                                         <td class="text-center">@Html.DisplayFor(modelItem => item.Idade)</td>
-                                        <td class="text-center">@Html.DisplayFor(modelItem => item.NomeAluno)</td>
+                                        <td class="text-center">@Html.DisplayFor(modelItem => item.AlunoId) - @Html.DisplayFor(modelItem => item.NomeAluno)</td>
                                         <td class="text-center">
                                             @if (item.SaudeId != null)
                                             {
