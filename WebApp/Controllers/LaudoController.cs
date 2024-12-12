@@ -746,6 +746,7 @@ namespace WebApp.Controllers
         public async Task<IActionResult> Print([FromQuery] string ddlFomento, [FromQuery] string ddlEstado,
             [FromQuery] string ddlMunicipio, [FromQuery] string ddlLocalidade,
             [FromQuery] string ddlAluno, [FromQuery] string ddlTipoLaudo,
+            [FromQuery] string ddlDeficiencia,
             [FromQuery] string possuiFoto, [FromQuery] string finalizado)
         {
             try
@@ -763,6 +764,7 @@ namespace WebApp.Controllers
                     LocalidadeId = ddlLocalidade,
                     TipoLaudoId = ddlTipoLaudo,
                     AlunoId = ddlAluno,
+                    DeficienciaId = ddlDeficiencia,
                     PossuiFoto = possuiFotoValue,
                     Finalizado = finalizadoValue,
                     PageNumber = 1,
@@ -821,6 +823,7 @@ namespace WebApp.Controllers
         public async Task<IActionResult> ExportLaudo([FromQuery] string ddlFomento, [FromQuery] string ddlEstado,
             [FromQuery] string ddlMunicipio, [FromQuery] string ddlLocalidade,
             [FromQuery] string ddlAluno, [FromQuery] string ddlTipoLaudo,
+            [FromQuery] string ddlDeficiencia,
             [FromQuery] string possuiFoto, [FromQuery] string finalizado,
             int? crud = null, int? notify = null, string message = null)
         {
@@ -843,6 +846,7 @@ namespace WebApp.Controllers
                     LocalidadeId = ddlLocalidade,
                     TipoLaudoId = ddlTipoLaudo,
                     AlunoId = ddlAluno,
+                    DeficienciaId = ddlDeficiencia,
                     PossuiFoto = possuiFotoValue,
                     Finalizado = finalizadoValue,
                     PageNumber = 1,
