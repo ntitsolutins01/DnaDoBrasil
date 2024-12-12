@@ -114,7 +114,11 @@
                     string.IsNullOrEmpty(Model.SearchFilter.Sexo) ?
                     string.IsNullOrEmpty(Model.SearchFilter.DeficienciaId) ?
                     string.IsNullOrEmpty(Model.SearchFilter.Estado) ?
-                    string.IsNullOrEmpty(Model.SearchFilter.Etnia) : false
+                    string.IsNullOrEmpty(Model.SearchFilter.Etnia) ?
+                    string.IsNullOrEmpty(Model.SearchFilter.Nome) ?
+                    string.IsNullOrEmpty(Model.SearchFilter.Matricula) : false
+                    : false
+                    : false
                     : false
                     : false
                     : false

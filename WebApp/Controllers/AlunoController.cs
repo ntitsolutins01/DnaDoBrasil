@@ -75,22 +75,23 @@ namespace WebApp.Controllers
                 };
                 var result = await ApiClientFactory.Instance.GetAlunosByFilter(searchFilter);
 
-                bool filtroVazio = string.IsNullOrEmpty(searchFilter.MunicipioId) ?
-                        string.IsNullOrEmpty(searchFilter.FomentoId) ?
-                            string.IsNullOrEmpty(searchFilter.LocalidadeId) ?
-                                string.IsNullOrEmpty(searchFilter.Sexo) ?
-                                    string.IsNullOrEmpty(searchFilter.DeficienciaId) ?
-                                        string.IsNullOrEmpty(searchFilter.Estado) ?
-                                            string.IsNullOrEmpty(searchFilter.Etnia) ?
-                                                string.IsNullOrEmpty(searchFilter.Nome) ?
-                                                    string.IsNullOrEmpty(searchFilter.Matricula) : false
+                bool filtroVazio = string.IsNullOrEmpty(searchFilter.MunicipioId)
+                    ? string.IsNullOrEmpty(searchFilter.FomentoId)
+                        ? string.IsNullOrEmpty(searchFilter.LocalidadeId)
+                            ? string.IsNullOrEmpty(searchFilter.Sexo)
+                                ? string.IsNullOrEmpty(searchFilter.DeficienciaId)
+                                    ? string.IsNullOrEmpty(searchFilter.Estado)
+                                        ? string.IsNullOrEmpty(searchFilter.Etnia)
+                                            ? string.IsNullOrEmpty(searchFilter.Nome)
+                                                ? string.IsNullOrEmpty(searchFilter.Matricula)
                                                 : false
                                             : false
                                         : false
                                     : false
                                 : false
                             : false
-                        : false;
+                        : false
+                    : false;
 
                 if (filtroVazio)
                 {

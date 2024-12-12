@@ -219,8 +219,10 @@
                 FomentoId: $("#ddlFomento").val(),
                 Estado: $("#ddlEstado").val(),
                 MunicipioId: $("#ddlMunicipio").val(),
-                LocalidadeId: $("#ddlLocalidade").val(),
+                LocalidadeId: $("#ddlLocalidade").valS(),
                 DeficienciaId: $("#ddlDeficiencia").val(),
+                Nome: $("#nome").val(),
+                Matricula: $("#matricula").val(),
                 Etnia: $("#ddlEtnia").val()
             }
 
