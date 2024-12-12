@@ -75,6 +75,7 @@ namespace WebApp.Controllers
                     LocalidadeId = collection["ddlLocalidade"].ToString() == "" ? usu.LocalidadeId : collection["ddlLocalidade"].ToString(),
                     TipoLaudoId = collection["ddlTipoLaudo"].ToString(),
                     AlunoId = collection["ddlAluno"].ToString(),
+                    DeficienciaId = collection["ddlDeficiencia"].ToString(),
                     PossuiFoto = possuiFoto != "",
                     Finalizado = finalizado != "",
                     PageNumber = 1,
@@ -85,10 +86,9 @@ namespace WebApp.Controllers
 #endif
                 };
 
+                var deficiencias = new SelectList(ApiClientFactory.Instance.GetDeficienciaAll(), "Id", "Nome", searchFilter.DeficienciaId);
+
                 var response = await ApiClientFactory.Instance.GetLaudosByFilter(searchFilter);
-
-
-
 
                 var model = new LaudoModel()
                 {
@@ -98,6 +98,8 @@ namespace WebApp.Controllers
                     ListTiposLaudos = tiposLaudos,
                     ListMunicipios = municipios!,
                     ListLocalidades = localidades!,
+                    ListDeficiencias = deficiencias,
+                    SearchFilter = searchFilter
                 };
 
                 return View(model);

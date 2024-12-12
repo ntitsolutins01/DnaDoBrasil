@@ -40,6 +40,9 @@ namespace WebApp.Models
         public ConsumoAlimentarDto ConsumoAlimentar { get; set; }
         public QualidadeVidaDto QualidadeVida { get; set; }
         public SaudeBucalDto SaudeBucal { get; set; }
+        public SelectList ListDeficiencias { get; set; }
+        public string DeficienciaId { get; set; }
+        public LaudosFilterDto SearchFilter { get; set; }
 
         public class CreateUpdateLaudoCommand
 		{
