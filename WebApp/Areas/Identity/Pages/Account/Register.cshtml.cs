@@ -59,17 +59,15 @@ namespace WebApp.Areas.Identity.Pages.Account
         public int EstadoId { get; set; }
         public int MunicipioId { get; set; }
         public int LocalidadeId { get; set; }
-        public int ProfissionalId { get; set; }
         public int EtniaId { get; set; }
-        public int AreaId { get; set; }
+        public int ModalidadeId { get; set; }
         public int DeficienciaId { get; set; }
         public SelectList ListEstados { get; set; }
         public SelectList ListMunicipios { get; set; }
         public SelectList ListLocalidades { get; set; }
         public SelectList ListEtnias { get; set; }
-        public SelectList ListAreas { get; set; }
+        public SelectList ListModalidades { get; set; }
         public SelectList ListDeficiencia { get; set; }
-        public SelectList ListProfissionais { get; set; }
         public int NotifyMessage { get; set; }
         public string Notify { get; set; }
         public string FomentoId { get; set; }
@@ -115,7 +113,7 @@ namespace WebApp.Areas.Identity.Pages.Account
             ListEtnias = etnias;
 
             var linhasAcoes = new SelectList(ApiClientFactory.Instance.GetLinhasAcoesAll(), "Id", "Nome");
-            ListAreas = linhasAcoes;
+            ListModalidades = linhasAcoes;
 
             var deficiencias = new SelectList(ApiClientFactory.Instance.GetDeficienciaAll().Where(x => x.Status), "Id", "Nome");
             ListDeficiencia = deficiencias;
