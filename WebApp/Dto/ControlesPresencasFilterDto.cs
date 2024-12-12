@@ -14,6 +14,6 @@
 
         #endregion
 
-        public PaginatedListDto<ControlePresencaDto>? ControlesPresencas { get; set; }
+        public PaginatedListDto<ControlePresencaIndexDto>? ControlesPresencas { get; set; }
     }
 }

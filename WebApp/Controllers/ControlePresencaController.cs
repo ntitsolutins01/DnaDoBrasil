@@ -52,6 +52,10 @@ namespace WebApp.Controllers
         {
             try
             {
+                var user = User.Identity.Name;
+
+                var usuario = ApiClientFactory.Instance.GetUsuarioByEmail(user);
+
                 SetNotifyMessage(notify, message);
                 SetCrudMessage(crud);
 
@@ -68,6 +72,25 @@ namespace WebApp.Controllers
                 };
 
                 var result = await ApiClientFactory.Instance.GetControlesPresencasByFilter(searchFilter);
+
+                bool filtroVazio = string.IsNullOrEmpty(searchFilter.MunicipioId) ?
+                        string.IsNullOrEmpty(searchFilter.FomentoId) ?
+                            string.IsNullOrEmpty(searchFilter.LocalidadeId) ?
+                                string.IsNullOrEmpty(searchFilter.Sexo) ?
+                                    string.IsNullOrEmpty(searchFilter.DeficienciaId) ?
+                                        string.IsNullOrEmpty(searchFilter.Estado) ?
+                                            string.IsNullOrEmpty(searchFilter.Etnia) : false
+                                        : false
+                                    : false
+                                : false
+                            : false
+                        : false;
+
+                if (filtroVazio)
+                {
+                    result.ControlesPresencas = (List<ControlePresencaIndexDto>?)result.ControlesPresencas.ToList()
+                        .Where(x => x.MunicipioId == usuario.MunicipioId.ToString()).ToList();
+                }
 
                 var fomentos = new SelectList(ApiClientFactory.Instance.GetFomentoAll(), "Id", "Nome", searchFilter.FomentoId);
                 var deficiencias = new SelectList(ApiClientFactory.Instance.GetDeficienciaAll().Where(x => x.Status), "Id", "Nome", searchFilter.DeficienciaId);
@@ -225,5 +248,6 @@ namespace WebApp.Controllers
 
 			return Task.FromResult(result);
 		}
+
 	}
 }
