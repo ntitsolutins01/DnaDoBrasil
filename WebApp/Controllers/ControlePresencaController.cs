@@ -52,14 +52,13 @@ namespace WebApp.Controllers
         {
             try
             {
-                var user = User.Identity.Name;
-
-                var usuario = ApiClientFactory.Instance.GetUsuarioByEmail(user);
+                var usuario = User.Identity.Name;
 
                 SetNotifyMessage(notify, message);
                 SetCrudMessage(crud);
 
                 var result3 =  ApiClientFactory.Instance.GetControlesPresencasAll();
+                var listFomentos = ApiClientFactory.Instance.GetFomentoAll();
 
                 var searchFilter = new ControlesPresencasFilterDto()
                 {
@@ -68,33 +67,33 @@ namespace WebApp.Controllers
                     MunicipioId = collection["ddlMunicipio"].ToString(),
                     LocalidadeId = collection["ddlLocalidade"].ToString(),
                     DeficienciaId = collection["ddlDeficiencia"].ToString(),
-                    Etnia = collection["ddlEtnia"].ToString()
+                    Etnia = collection["ddlEtnia"].ToString(),
+                    PageNumber = 1,
+#if DEBUG
+                    PageSize = 10
+#else
+                    PageSize = 1000
+#endif
                 };
 
-                var result = await ApiClientFactory.Instance.GetControlesPresencasByFilter(searchFilter);
+                var response = await ApiClientFactory.Instance.GetControlesPresencasByFilter(searchFilter);
 
-                bool filtroVazio = string.IsNullOrEmpty(searchFilter.MunicipioId) ?
-                        string.IsNullOrEmpty(searchFilter.FomentoId) ?
-                            string.IsNullOrEmpty(searchFilter.LocalidadeId) ?
-                                string.IsNullOrEmpty(searchFilter.Sexo) ?
-                                    string.IsNullOrEmpty(searchFilter.DeficienciaId) ?
-                                        string.IsNullOrEmpty(searchFilter.Estado) ?
-                                            string.IsNullOrEmpty(searchFilter.Etnia) : false
-                                        : false
-                                    : false
-                                : false
-                            : false
-                        : false;
-
-                if (filtroVazio)
-                {
-                    result.ControlesPresencas = (List<ControlePresencaIndexDto>?)result.ControlesPresencas.ToList()
-                        .Where(x => x.MunicipioId == usuario.MunicipioId.ToString()).ToList();
-                }
-
-                var fomentos = new SelectList(ApiClientFactory.Instance.GetFomentoAll(), "Id", "Nome", searchFilter.FomentoId);
+                var fomentos = new SelectList(listFomentos, "Id", "Nome", response.FomentoId);
                 var deficiencias = new SelectList(ApiClientFactory.Instance.GetDeficienciaAll().Where(x => x.Status), "Id", "Nome", searchFilter.DeficienciaId);
-                var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", searchFilter.Estado);
+                var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", response.Estado);
+
+                SelectList municipios = null;
+
+                if (!string.IsNullOrEmpty(response.Estado))
+                {
+                    municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(response.Estado), "Id", "Nome", response.MunicipioId);
+                }
+                SelectList localidades = null;
+
+                if (!string.IsNullOrEmpty(response.LocalidadeId) || response.MunicipioId != null)
+                {
+                    localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeByMunicipio(response.MunicipioId), "Id", "Nome", response.LocalidadeId);
+                }
 
                 List<SelectListDto> list = new List<SelectListDto>
                 {
@@ -106,18 +105,6 @@ namespace WebApp.Controllers
                 };
 
                 var etnias = new SelectList(list, "IdNome", "Nome", searchFilter.Etnia);
-                SelectList municipios = null;
-
-                if (!string.IsNullOrEmpty(searchFilter.Estado))
-                {
-                    municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(searchFilter.Estado), "Id", "Nome", searchFilter.MunicipioId);
-                }
-                SelectList localidades = null;
-
-                if (!string.IsNullOrEmpty(searchFilter.LocalidadeId))
-                {
-                    localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeByMunicipio(searchFilter.MunicipioId), "Id", "Nome", searchFilter.LocalidadeId);
-                }
 
                 var model = new ControlePresencaModel()
                 {
@@ -127,7 +114,7 @@ namespace WebApp.Controllers
                     ListMunicipios = municipios!,
                     ListEtnias = etnias,
                     ListLocalidades = localidades!,
-                    ControlesPresencas = result.ControlesPresencas
+                    ControlesPresencas = response.ControlesPresencas
 
                 };
                 return View(model);
