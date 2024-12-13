@@ -95,7 +95,27 @@
                             }
                         </span>
                     </div>
-                    <div class="esporte-img-info" style="background-image: url('/assets/assets_Laudo/icon_info_esporte.png');"></div>
+                    @if (Model.Laudo.Modalidade.ByteImage != null)
+                    {
+                        <div class="img-qrcode-info"
+                             style=" background-size: cover;">
+                            @{
+                                var base64 = Convert.ToBase64String(Model.Laudo.Modalidade.ByteImage);
+                                var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                            }
+                            <img src="@imgSrc" />
+                        </div>
+
+                    }
+                    else
+                    {
+                        @* <div class="img-qrcode-info"
+                             style="background-image: url('/assets/assets_Laudo/qrCode.svg'); background-size: cover;">
+                        </div> *@
+                        <div class="img-qrcode-info"
+                             style="background-image: url('/assets/assets_Laudo/icon_info_esporte.png'); background-size: cover;">
+                        </div>
+                    }
                 </div>
                 <div class="container-qrcode-info">
                     <span>
@@ -158,8 +178,8 @@
                     }
                     <div class="turma-user-info">
                         <span>
-                            Série: 8º ano
-                            Turma: D
+                            Série: Não definido.
+                            Turma: Não definido.
                         </span>
                     </div>
                     <div class="container-2-info">

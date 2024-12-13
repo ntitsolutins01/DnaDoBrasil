@@ -56,8 +56,30 @@
                         }
                     </div>
                 </div>
-                
-                    <img src="/assets/assets_Laudo/icon_info_esporte.png" alt="Natação" class="sport-icon" />
+                @if (@laudo.Laudo.Modalidade.ByteImage != null)
+                {
+                    <div class="img-qrcode-info"
+                         style=" background-size: cover;">
+                        @{
+                            var base64 = Convert.ToBase64String(@laudo.Laudo.Modalidade.ByteImage);
+                            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                        }
+                        <img src="@imgSrc" />
+                    </div>
+
+                }
+                else
+                {
+                    @* <div class="img-qrcode-info"
+                             style="background-image: url('/assets/assets_Laudo/qrCode.svg'); background-size: cover;">
+                        </div> *@
+                    <div class="img-qrcode-info"
+                         style="background-image: url('/assets/assets_Laudo/icon_info_esporte.png'); background-size: cover;">
+
+                        @*<img src="/assets/assets_Laudo/icon_info_esporte.png" alt="Vamos colocar uma imagem padrão pra todas as modalidades por exemplo uma estrela sei la " class="sport-icon" />*@
+                    </div>
+                }
+                    
 
             </div>
         </header>

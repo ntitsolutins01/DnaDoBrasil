@@ -17,44 +17,37 @@
                         <h2 class="panel-title">Filtro de pesquisa</h2>
                     </header>
                     <div class="panel-body">
-                        <label class="col-sm-2 control-label">Aluno:</label>
-                        <div class="col-md-4 form-group">
-                            <select class="form-control populate select2" name="ddlDeficiencia" id="ddlDeficiencia"
-                                    asp-for="DeficienciaId" asp-items="Model.ListDeficiencias">
-                                <option value="">Selecionar Deficiência</option>
-                            </select>
-                        </div>
                         <label class="col-sm-2 control-label">Fomento:</label>
                         <div class="col-md-4 form-group">
-                            <select class="form-control populate select2" name="ddlFomento" id="ddlFomento" style="width: 100%"
+                            <select class="form-control populate select2" name="ddlFomento" id="ddlFomento" style="width:100%"
                                     asp-for="FomentoId" asp-items="Model.ListFomentos">
                                 <option value="">Selecionar Fomento</option>
                             </select>
                         </div>
                         <label class="col-sm-2 control-label">Estado:</label>
                         <div class="col-md-4 form-group">
-                            <select class="form-control populate select2" name="ddlEstado" id="ddlEstado" style="width: 100%"
+                            <select class="form-control populate select2" name="ddlEstado" id="ddlEstado" style="width:100%"
                                     asp-for="EstadoId" asp-items="Model.ListEstados">
                                 <option value="">Selecionar Estado</option>
                             </select>
                         </div>
                         <label class="col-sm-2 control-label">Municipio:</label>
                         <div class="col-md-4 form-group">
-                            <select class="form-control populate select2" name="ddlMunicipio" id="ddlMunicipio" style="width: 100%"
+                            <select class="form-control populate select2" name="ddlMunicipio" id="ddlMunicipio" style="width:100%"
                                     asp-for="MunicipioId" asp-items="Model.ListMunicipios">
                                 <option value="">Selecionar Municipio</option>
                             </select>
                         </div>
                         <label class="col-sm-2 control-label">Localidade:</label>
                         <div class="col-md-4 form-group">
-                            <select class="form-control populate select2" name="ddlLocalidade" id="ddlLocalidade" style="width: 100%"
+                            <select class="form-control populate select2" name="ddlLocalidade" id="ddlLocalidade" style="width:100%"
                                     asp-for="LocalidadeId" asp-items="Model.ListLocalidades">
                                 <option value="">Selecionar Localidade</option>
                             </select>
                         </div>
                         <label class="col-sm-2 control-label">Aluno:</label>
                         <div class="col-md-4 form-group">
-                            <select class="form-control populate select2" name="ddlAluno" id="ddlAluno" style="width: 100%"
+                            <select class="form-control populate select2" name="ddlAluno" id="ddlAluno" style="width:100%"
                                     asp-for="AlunoId" asp-items="Model.ListAlunos">
                                 <option value="">Selecionar Aluno</option>
                             </select>
@@ -69,24 +62,15 @@
                         <label class="col-sm-2 control-label text-sm-right pt-2">Possui Foto: </label>
                         <div class="col-md-1">
                             <div class="switch switch-sm switch-primary">
-                                <input type="checkbox" id="possuiFoto" name="possuiFoto" data-plugin-ios-switch/>
+                                <input type="checkbox" id="possuiFoto" name="possuiFoto" data-plugin-ios-switch />
                             </div>
                         </div>
                         <label class="col-sm-1 control-label text-sm-right pt-2">Finalizado: </label>
                         <div class="col-md-1">
                             <div class="switch switch-sm switch-primary">
-                                <input type="checkbox" id="finalizado" name="finalizado" data-plugin-ios-switch/>
+                                <input type="checkbox" id="finalizado" name="finalizado" data-plugin-ios-switch />
                             </div>
                         </div>
-
-
-                        @* <label class="col-sm-2 control-label">Aluno:</label>
-                        <div class="col-md-10 form-group">
-                            <input type="text" name="id" class="form-control"
-                                   maxlength="10" placeholder="Matrícula" />
-                            <input type="text" name="codigo" class="form-control"
-                                   maxlength="150" placeholder="Nome do aluno" />
-                        </div> *@
                     </div>
                     <footer class="panel-footer">
                         <div class="row">
@@ -111,12 +95,11 @@
                         <div class="form-group row">
                             @{
                                 bool nenhumFiltroSelecionado = string.IsNullOrEmpty(Model.FomentoId) &&
-                                string.IsNullOrEmpty(Model.SearchFilter.Estado) &&
-                                string.IsNullOrEmpty(Model.SearchFilter.MunicipioId) &&
-                                string.IsNullOrEmpty(Model.SearchFilter.LocalidadeId) &&
-                                string.IsNullOrEmpty(Model.SearchFilter.AlunoId) &&
-                                string.IsNullOrEmpty(Model.SearchFilter.TipoLaudoId) &&
-                                string.IsNullOrEmpty(Model.SearchFilter.DeficienciaId);
+                                string.IsNullOrEmpty(Model.EstadoId) &&
+                                string.IsNullOrEmpty(Model.MunicipioId) &&
+                                string.IsNullOrEmpty(Model.LocalidadeId) &&
+                                string.IsNullOrEmpty(Model.AlunoId) &&
+                                string.IsNullOrEmpty(Model.TipoLaudoId);
 
                                 bool semResultados = Model.Laudos?.Items == null || !Model.Laudos.Items.Any();
 
