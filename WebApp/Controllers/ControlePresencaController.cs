@@ -57,11 +57,11 @@ namespace WebApp.Controllers
                 SetNotifyMessage(notify, message);
                 SetCrudMessage(crud);
 
-                var result3 =  ApiClientFactory.Instance.GetControlesPresencasAll();
                 var listFomentos = ApiClientFactory.Instance.GetFomentoAll();
 
                 var searchFilter = new ControlesPresencasFilterDto()
                 {
+                    UsuarioEmail = usuario,
                     FomentoId = collection["ddlFomento"].ToString(),
                     Estado = collection["ddlEstado"].ToString(),
                     MunicipioId = collection["ddlMunicipio"].ToString(),
