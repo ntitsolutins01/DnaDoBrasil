@@ -34,7 +34,7 @@ namespace WebApp.ApiClient
 
         #region Methods
 
-        public VocacionalDto GetVocacionalById(string id)
+        public VocacionalDto GetVocacionalById(int? id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 $"{ResourceVocacional}/{id}"));

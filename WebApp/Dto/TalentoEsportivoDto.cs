@@ -3,7 +3,8 @@
     public class TalentoEsportivoDto
     {
         public int Id { get; init; }
-        public ProfissionalDto Profissional { get; set; }
+        public int AlunoId { get; set; }
+        public int ProfissionalId { get; set; }
         public decimal? Flexibilidade { get; set; }
         public decimal? PreensaoManual { get; set; }
         public decimal? Velocidade { get; set; }
@@ -16,6 +17,5 @@
         public decimal? Altura { get; set; }
         public decimal? Peso { get; set; }
         public decimal? Envergadura { get; set; }
-        public int AlunoId { get; set; }
     }
 }

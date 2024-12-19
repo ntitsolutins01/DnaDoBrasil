@@ -82,7 +82,7 @@ namespace WebApp.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = $"Erro ao executar esta ação {e.Message}" });
+                return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = $"Erro ao executar esta ação. {e.Message}" });
             }
         }
 

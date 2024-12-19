@@ -14,6 +14,7 @@ namespace WebApp.Models
         public List<FomentoDto> Fomentos { get; set; }
         public string LinhaAcaoId { get; set; }
         public SelectList ListLinhasAcoes { get; set; }
+        public FomentoDto Fomento { get; set; }
 
         public class CreateUpdateFomentoCommand
         {

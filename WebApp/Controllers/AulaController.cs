@@ -16,15 +16,17 @@ public class AulaController : BaseController
 {
     #region Constructor
     private readonly IOptions<UrlSettings> _appSettings;
+    private readonly IWebHostEnvironment _host;
 
     /// <summary>
     /// Construtor da página
     /// </summary>
     /// <param name="app">configurações de urls do sistema</param>
     /// <param name="host">informações da aplicação em execução</param>
-    public AulaController(IOptions<UrlSettings> appSettings)
+    public AulaController(IOptions<UrlSettings> appSettings, IWebHostEnvironment host)
     {
         _appSettings = appSettings;
+        _host = host;
         ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
     }
     #endregion
@@ -60,14 +62,14 @@ public class AulaController : BaseController
         {
             SetNotifyMessage(notify, message);
             SetCrudMessage(crud);
-            var professores = new SelectList(ApiClientFactory.Instance.GetUsuarioAll().Where(x=>x.PerfilId == (int)EnumPerfil.Professor), "Id", "Nome");
+            var professores = new SelectList(ApiClientFactory.Instance.GetUsuarioAll().Where(x => x.Perfil.Id == (int)EnumPerfil.Professor), "Id", "Nome");
             var tipoCurso = new SelectList(ApiClientFactory.Instance.GetTipoCursosAll(), "Id", "Nome");
 
-			return View(new AulaModel()
+            return View(new AulaModel()
             {
                 ListProfessores = professores,
                 ListTipoCursos = tipoCurso
-			});
+            });
         }
         catch (Exception e)
         {
@@ -87,19 +89,39 @@ public class AulaController : BaseController
     {
         try
         {
-            var command = new AulaModel.CreateUpdateAulaCommand
+	        var command = new AulaModel.CreateUpdateAulaCommand
+	        {
+		        CargaHoraria = Convert.ToInt32(collection["cargaHoraria"].ToString()),
+		        ProfessorId = Convert.ToInt32(collection["ddlProfessor"].ToString()),
+		        ModuloEadId = Convert.ToInt32(collection["ddlModuloEad"].ToString()),
+		        Titulo = collection["titulo"].ToString(),
+		        Descricao = collection["descricao"].ToString(),
+		        Video = collection["video"].ToString()
+	        };
+
+            string? filePath;
+            string? fileName;
+            string extension = ".jpg";
+            string newFileName = Path.ChangeExtension(
+	            Guid.NewGuid().ToString(),
+	            extension
+            );
+
+			foreach (var file in collection.Files)
             {
-	            CargaHoraria = Convert.ToInt32(collection["cargaHoraria"]
-		            .ToString()),
-	            ProfessorId = Convert.ToInt32(collection["ddlProfessor"]
-		            .ToString()),
-	            ModuloEadId = Convert.ToInt32(collection["ddlModuloEad"]
-		            .ToString()),
-	            Titulo = collection["titulo"]
-		            .ToString(),
-	            Descricao = collection["descricao"]
-		            .ToString()
-            };
+                if (file.Length <= 0) continue;
+                fileName = Path.GetFileName(collection.Files[0].FileName);
+                filePath = Path.Combine(_host.WebRootPath, $"Aulas\\{newFileName}");
+
+                if (!Directory.Exists(Path.Combine(_host.WebRootPath, $"Aulas")))
+                    Directory.CreateDirectory(Path.Combine(_host.WebRootPath, $"Aulas"));
+
+				command.Material = filePath;
+				command.NomeMaterial = fileName;
+
+				using Stream fileStream = new FileStream(filePath, FileMode.Create);
+                await file.CopyToAsync(fileStream);
+            }
 
             await ApiClientFactory.Instance.CreateAula(command);
 
@@ -124,21 +146,47 @@ public class AulaController : BaseController
         {
             var command = new AulaModel.CreateUpdateAulaCommand
             {
-	            Id = Convert.ToInt32(collection["editAulaId"]),
-	            CargaHoraria = Convert.ToInt32(collection["cargaHoraria"]
-		            .ToString()),
-	            Titulo = collection["nome"]
-		            .ToString(),
-	            Descricao = collection["descricao"]
-		            .ToString(),
-	            Status = collection["editStatus"]
-		                     .ToString() ==
-	                     ""
-		            ? false
-		            : true,
-                ProfessorId = Convert.ToInt32(collection["ddlProfessor"]
-                    .ToString())
+                Id = Convert.ToInt32(collection["editAulaId"]),
+                CargaHoraria = Convert.ToInt32(collection["cargaHoraria"].ToString()),
+                Titulo = collection["nome"].ToString(),
+                Descricao = collection["descricao"].ToString(),
+                Video = collection["video"].ToString(),
+                Status = collection["editStatus"].ToString() == "" ? false : true,
+                ProfessorId = Convert.ToInt32(collection["ddlProfessor"].ToString())
             };
+
+            foreach (var file in collection.Files)
+            {
+                if (file.Length <= 0) continue;
+
+                var currentAula = ApiClientFactory.Instance.GetAulaById(command.Id);
+
+                if (!string.IsNullOrEmpty(currentAula.Material) && System.IO.File.Exists(currentAula.Material))
+                {
+                    System.IO.File.Delete(currentAula.Material);
+                }
+
+                string extension = ".jpg";
+                string newFileName = Path.ChangeExtension(Guid.NewGuid().ToString(), extension);
+                string fileName = Path.GetFileName(file.FileName);
+                string filePath = Path.Combine(_host.WebRootPath, $"Aulas\\{newFileName}");
+
+                if (!Directory.Exists(Path.Combine(_host.WebRootPath, "Aulas")))
+                    Directory.CreateDirectory(Path.Combine(_host.WebRootPath, "Aulas"));
+
+                command.Material = filePath;
+                command.NomeMaterial = fileName;
+
+                using Stream fileStream = new FileStream(filePath, FileMode.Create);
+                await file.CopyToAsync(fileStream);
+            }
+
+            if (!collection.Files.Any())
+            {
+                var currentAula = ApiClientFactory.Instance.GetAulaById(command.Id);
+                command.Material = currentAula.Material;
+                command.NomeMaterial = currentAula.NomeMaterial;
+            }
 
             await ApiClientFactory.Instance.UpdateAula(command.Id, command);
 
@@ -161,7 +209,12 @@ public class AulaController : BaseController
     {
         try
         {
-            ApiClientFactory.Instance.DeleteAula(id);
+	        var material = ApiClientFactory.Instance.GetAulaById(id).Material!;
+
+	        if (material != null)
+		        System.IO.File.Delete(material);
+
+			ApiClientFactory.Instance.DeleteAula(id);
             return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
         }
         catch
@@ -176,10 +229,10 @@ public class AulaController : BaseController
     public Task<AulaDto> GetAulaById(int id)
     {
         var result = ApiClientFactory.Instance.GetAulaById(id);
-        var professores = new SelectList(ApiClientFactory.Instance.GetUsuarioAll().Where(x => x.PerfilId == (int)EnumPerfil.Professor), "Id", "Nome", result.ProfessorId);
+        var professores = new SelectList(ApiClientFactory.Instance.GetUsuarioAll().Where(x => x.Perfil.Id == (int)EnumPerfil.Professor), "Id", "Nome", result.ProfessorId);
         result.ListProfessores = professores;
 
-		return Task.FromResult(result);
+        return Task.FromResult(result);
     }
     #endregion
 }

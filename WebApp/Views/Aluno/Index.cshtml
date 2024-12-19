@@ -63,7 +63,7 @@
                         </div>
                         <label class="col-sm-2 control-label">Sexo:</label>
                         <div class="col-sm-4 form-group">
-                            <select class="form-control populate select2" name="ddlSexo" id="ddlSexo"
+                            <select class="form-control populate select2" name="ddlSexo" id="ddlSexo" style="width:100%"
                                     title="Por favor selecione um sexo."
                                     asp-for="SexoId" asp-items="Model.ListSexos">
                                 <option value="">Selecionar Sexo</option>
@@ -84,33 +84,33 @@
         </div>
     </div>
 
-<section class="panel">
-    <header class="panel-heading">
-        <div class="panel-actions">
-            <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
-        </div>
+    <section class="panel">
+        <header class="panel-heading">
+            <div class="panel-actions">
+                <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
+            </div>
 
-        <h2 class="panel-title">Listagem de Alunos</h2>
+            <h2 class="panel-title">Listagem de Alunos</h2>
 
-    </header>
-    <div class="panel-body" id="pResult">
-        <div class="form-group row">
-            @{
-                bool filtroVazio = string.IsNullOrEmpty(Model.SearchFilter.MunicipioId) ?
+        </header>
+        <div class="panel-body" id="pResult">
+            <div class="form-group row">
+                @{
+                    bool filtroVazio = string.IsNullOrEmpty(Model.SearchFilter.MunicipioId) ?
                     string.IsNullOrEmpty(Model.SearchFilter.FomentoId) ?
-                        string.IsNullOrEmpty(Model.SearchFilter.LocalidadeId) ?
-                            string.IsNullOrEmpty(Model.SearchFilter.Sexo) ?
-                                string.IsNullOrEmpty(Model.SearchFilter.DeficienciaId) ?
-                                    string.IsNullOrEmpty(Model.SearchFilter.Estado) ?
-                                        string.IsNullOrEmpty(Model.SearchFilter.Etnia) : false
-                                    : false
-                                : false
-                            : false
-                        : false
+                    string.IsNullOrEmpty(Model.SearchFilter.LocalidadeId) ?
+                    string.IsNullOrEmpty(Model.SearchFilter.Sexo) ?
+                    string.IsNullOrEmpty(Model.SearchFilter.DeficienciaId) ?
+                    string.IsNullOrEmpty(Model.SearchFilter.Estado) ?
+                    string.IsNullOrEmpty(Model.SearchFilter.Etnia) : false
+                    : false
+                    : false
+                    : false
+                    : false
                     : false;
 
-                if (filtroVazio)
-                {
+                    if (filtroVazio)
+                    { }
                     <div class="col-sm-8 pull-left">
                         <div class="alert alert-warning" style="padding-bottom: 6px;padding-top: 6px; !important; margin-bottom: 10px; !important">
                             <strong>Atenção!</strong> Os alunos listados são referentes ao seu <a href="" class="alert-link">Estado/Município</a> de cadastro.
@@ -118,70 +118,73 @@
                     </div>
                     <div class="col-sm-8 pull-left">
                         <div class="alert alert-info" style="padding-bottom: 6px;padding-top: 6px; !important; margin-bottom: 10px; !important">
-                            <strong>Info:</strong> Para impressão em lote selecione o filtro e clique em <a href="" class="alert-link">Impressão em Lote</a>.
+                            <strong>Info:</strong> Para impressão de carteirinha em lote selecione o filtro e clique em <a href="" class="alert-link">Impressão em Lote</a>.
                         </div>
                     </div>
+
                 }
-            }
-            <div class="col-sm-2 pull-right">
-                <a href="@Url.Action("Create", "Aluno")" id="addToTable" class="btn btn-block btn-primary pull-right"><i class="fa fa-plus"></i>  &nbsp;&nbsp;Novo Aluno </a>
+                <div class="col-sm-2 pull-right">
+                    <a href="@Url.Action("Create", "Aluno")" id="addToTable" class="btn btn-block btn-primary pull-right"><i class="fa fa-plus"></i>  &nbsp;&nbsp;Novo Aluno </a>
+                </div>
+                <div class="col-sm-2 pull-right">
+                    <a id="btnImprimirLote" class="btn btn-block btn-info pull-right">
+                        <i class="fa fa-print"></i> &nbsp;&nbsp;Impressão em Lote
+                    </a>
+                </div>
             </div>
-            <div class="col-sm-2 pull-right">
-                <a id="btnImprimirLote" class="btn btn-block btn-info pull-right">
-                    <i class="fa fa-print"></i> &nbsp;&nbsp;Impressão em Lote
-                </a>
-            </div>
+            <table class="table table-bordered table-striped mb-0" id="datatable-default">
+                <thead>
+                    <tr>
+                        @* <th class="text-center">Id</th> *@
+                        <th class="text-center">Matrícula - Nome do Aluno</th>
+                        <th class="text-center">Email</th>
+                        <th class="text-center">Data de Nascimento</th>
+                        <th class="text-center">Status</th>
+                        <th class="text-center">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Alunos)
+                    {
+                        <tr>
+                            @* <td class="text-center">@Html.DisplayFor(modelItem => item.Id)</td> *@
+                            <td class="text-center">@Html.DisplayFor(modelItem => item.Nome)</td>
+                            <td class="text-center">@Html.DisplayFor(modelItem => item.Email)</td>
+                            <td class="text-center">@Html.DisplayFor(modelItem => item.DtNascimento)</td>
+
+                            @if (item.Status)
+                            {
+                                <td class="text-center"><span class="label label-success" style="display: block;">ATIVO</span></td>
+                            }
+                            else
+                            {
+                                <td class="text-center"><span class="label label-danger" style="display: block;">INATIVO</span></td>
+                            }
+                            <td class="actions text-center">
+                                <a data-toggle="tooltip" data-placement="top" title="Editar" asp-action="Edit" asp-controller="Aluno" asp-route-Id="@item.Id" class="on-default edit-row" style='color: #FF9800'><i class="fa fa-pencil"></i></a>
+                                <a data-toggle="tooltip" data-placement="top" title="Carteirinha"
+                                   href='javascript:(crud.CarterinhaModal(@item.Id))'
+                                   class="on-default edit-row" style='color: #8E24AA'>
+                                    <i class="fa fa-address-card-o"></i>
+                                </a>
+
+                                <a href="#" data-id="@item.Id" data-toggle="modal" data-target="#mdUpload"
+                                   data-toggle="tooltip" data-placement="top" title="Upload Foto"
+                                   class="on-default edit-row" style='color: #303F9F'><i class="fa fa-upload"></i></a>
+                                @if (!item.Convidado)
+                                {
+                                    <a data-toggle="tooltip" data-placement="top" title="Excluir" href='javascript:(crud.DeleteModal(@item.Id))'
+                                       class="on-default remove-row" style="cursor: pointer; color: #F44336"><i class="fa fa-trash"></i></a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         </div>
-        <table class="table table-bordered table-striped mb-0" id="datatable-default">
-            <thead>
-            <tr>
-                <th class="text-center">Id</th>
-                <th class="text-center">Nome</th>
-                <th class="text-center">Email</th>
-                <th class="text-center">Data de Nascimento</th>
-                <th class="text-center">Status</th>
-                <th class="text-center">Ações</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach (var item in Model.Alunos)
-            {
-                <tr>
-                    <td class="text-center">@Html.DisplayFor(modelItem => item.Id)</td>
-                    <td class="text-center">@Html.DisplayFor(modelItem => item.Nome)</td>
-                    <td class="text-center">@Html.DisplayFor(modelItem => item.Email)</td>
-                    <td class="text-center">@Html.DisplayFor(modelItem => item.DtNascimento)</td>
-                    @if (item.Status)
-                    {
-                        <td class="text-center"><span class="label label-success" style="display: block;">ATIVO</span></td>
-                    }
-                    else
-                    {
-                        <td class="text-center"><span class="label label-danger" style="display: block;">INATIVO</span></td>
-                    }
-                    <td class="actions text-center">
-                        <a data-toggle="tooltip" data-placement="top" title="Editar" asp-action="Edit" asp-controller="Aluno" asp-route-Id="@item.Id" class="on-default edit-row" style='color: #FF9800'><i class="fa fa-pencil"></i></a>
-                        <a data-toggle="tooltip" data-placement="top" title="Carteirinha"
-                           href='javascript:(crud.CarterinhaModal(@item.Id))'
-                           class="on-default edit-row" style='color: #8E24AA'>
-                            <i class="fa fa-address-card-o"></i>
-                        </a>
+    </section>
 
-                        <a href="#" data-id="@item.Id" data-toggle="modal" data-target="#mdUpload"
-                           data-toggle="tooltip" data-placement="top" title="Upload Foto"
-                           class="on-default edit-row" style='color: #303F9F'><i class="fa fa-upload"></i></a>
-
-                        <a data-toggle="tooltip" data-placement="top" title="Excluir" href='javascript:(crud.DeleteModal(@item.Id))'
-                           class="on-default remove-row" style="cursor: pointer;color: #F44336"><i class="fa fa-trash"></i></a>
-                    </td>
-                </tr>
-            }
-            </tbody>
-        </table>
-    </div>
-</section>
-
-<link rel="stylesheet" href="~/assets/styles_Carteirinha/modal-carteirinha.css" />
+    <link rel="stylesheet" href="~/assets/styles_Carteirinha/modal-carteirinha.css" />
 
     <!-- Modal Carteirinha -->
     <div class="modal fade" id="mdCarteirinhaAluno" tabindex="-1" role="dialog" aria-labelledby="mdCarteirinhaAlunoLabel" aria-hidden="true">
@@ -394,6 +397,37 @@
                     type: 'error',
                     icon: 'fa fa-trash-o'
                 });
+            }
+
+
+            var notify = @ViewBag.NotifyMessage;
+            var messagem = '@ViewBag.Notify';
+
+            if (notify === 0) {
+                new PNotify({
+                    title: 'Aluno',
+                    text: messagem,
+                    type: 'success'
+                });
+                crub = 0;
+            } else if (notify === 1) {
+                new PNotify({
+                    title: 'Aluno',
+                    text: messagem,
+                    type: 'warning'
+                });
+                crub = 0;
+            } else if (notify === 2) {
+                new PNotify({
+                    title: 'Aluno',
+                    text: messagem,
+                    type: 'error'
+                });
+                crub = 0;
+            }
+
+            if ($.isFunction($.fn['tooltip'])) {
+                $('[data-toggle=tooltip],[rel=tooltip]').tooltip({ container: 'body' });
             }
 
         }).apply(this, [jQuery]);

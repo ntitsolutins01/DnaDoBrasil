@@ -12,6 +12,9 @@
 		public string LocalidadeId { get; set; }
 		public string AlunoId { get; set; }
         public string TipoLaudoId { get; set; }
+        public bool PossuiFoto { get; set; }
+        public bool Finalizado { get; set; }
+        public string DeficienciaId { get; set; }
 
         #endregion
 

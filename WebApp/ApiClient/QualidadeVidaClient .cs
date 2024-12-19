@@ -32,7 +32,7 @@ namespace WebApp.ApiClient
 
         #region Methods
 
-        public QualidadeVidaDto GetQualidadeVidaById(string id)
+        public QualidadeVidaDto GetQualidadeVidaById(int? id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 $"{ResourceQualidadeVida}/{id}"));
