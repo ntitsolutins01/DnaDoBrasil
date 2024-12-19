@@ -69,14 +69,23 @@ namespace WebApp.Controllers
                 {
                     municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(usu.Uf), "Id", "Nome", usu.MunicipioId);
                 }
+
                 SelectList localidades = null;
 
                 if (usu.MunicipioId != null)
                 {
                     var resultLocalidades = ApiClientFactory.Instance.GetLocalidadeByMunicipio(usu.MunicipioId.ToString());
 
-                    if (resultLocalidades != null)
-                        localidades = new SelectList(resultLocalidades, "Id", "Nome", usu.LocalidadeId);
+                    localidades = new SelectList(resultLocalidades, "Id", "Nome", usu.LocalidadeId);
+                }
+
+                SelectList alunos = null;
+
+                if (usu.LocalidadeId != null)
+                {
+                    var resultAlunos = ApiClientFactory.Instance.GetAlunosByLocalidade(Convert.ToInt32(usu.LocalidadeId));
+
+                    alunos =  new SelectList(resultAlunos, "Id", "Nome");
                 }
 
                 var searchFilter = new ControlesPresencasFilterDto()
@@ -86,8 +95,7 @@ namespace WebApp.Controllers
                     Estado = collection["ddlEstado"].ToString(),
                     MunicipioId = collection["ddlMunicipio"].ToString(),
                     LocalidadeId = collection["ddlLocalidade"].ToString() == "" ? usu.LocalidadeId : collection["ddlLocalidade"].ToString(),
-                    DeficienciaId = collection["ddlDeficiencia"].ToString(),
-                    Etnia = collection["ddlEtnia"].ToString(),
+
                     PageNumber = 1,
 #if DEBUG
                     PageSize = 10
@@ -96,30 +104,15 @@ namespace WebApp.Controllers
 #endif
                 };
 
-                var deficiencias = new SelectList(ApiClientFactory.Instance.GetDeficienciaAll().Where(x => x.Status), "Id", "Nome", searchFilter.DeficienciaId);
-
-                List<SelectListDto> list = new List<SelectListDto>
-                {
-                    new() { IdNome = "PARDO", Nome = "PARDO" },
-                    new() { IdNome = "BRANCO", Nome = "BRANCO" },
-                    new() { IdNome = "PRETO", Nome = "PRETO" },
-                    new() { IdNome = "INDIGENA", Nome = "INDIGENA" },
-                    new() { IdNome = "AMARELO", Nome = "AMARELO" }
-                };
-
-                var etnias = new SelectList(list, "IdNome", "Nome", searchFilter.Etnia);
-
                 var response = await ApiClientFactory.Instance.GetControlesPresencasByFilter(searchFilter);
-
 
                 var model = new ControlePresencaModel()
                 {
                     ListFomentos = fomentos,
                     ListEstados = estados,
-                    ListDeficiencias = deficiencias,
                     ListMunicipios = municipios!,
-                    ListEtnias = etnias,
                     ListLocalidades = localidades!,
+                    ListAlunos = alunos,
                     ControlesPresencas = response.ControlesPresencas
 
                 };
@@ -144,16 +137,45 @@ namespace WebApp.Controllers
 			    SetCrudMessage(crud);
 
                 var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var usuario = User.Identity.Name;
 
-                var usuario = ApiClientFactory.Instance.GetUsuarioByAspNetUserId(userId);
+                var usu = ApiClientFactory.Instance.GetUsuarioByEmail(usuario);
 
-                var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
+                var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", usu.Uf);
+
+                SelectList municipios = null;
+
+                if (!string.IsNullOrEmpty(usu.Uf))
+                {
+                    municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(usu.Uf), "Id", "Nome", usu.MunicipioId);
+                }
+
+                SelectList localidades = null;
+
+                if (usu.MunicipioId != null)
+                {
+                    var resultLocalidades = ApiClientFactory.Instance.GetLocalidadeByMunicipio(usu.MunicipioId.ToString());
+
+                    localidades = new SelectList(resultLocalidades, "Id", "Nome", usu.LocalidadeId);
+                }
+
+                SelectList alunos = null;
+
+                if (usu.LocalidadeId != null)
+                {
+                    var resultAlunos = ApiClientFactory.Instance.GetAlunosByLocalidade(Convert.ToInt32(usu.LocalidadeId));
+
+                    alunos = new SelectList(resultAlunos, "Id", "Nome");
+                }
 
 
-			    return View(new ControlePresencaModel()
+                return View(new ControlePresencaModel()
 			    {
-				    ListEstados = estados
-			    });
+                    ListEstados = estados,
+                    ListMunicipios = municipios!,
+                    ListLocalidades = localidades!,
+                    ListAlunos = alunos,
+                });
 
 			}
 			catch (Exception e)
