@@ -95,12 +95,12 @@
                             }
                         </span>
                     </div>
-                    @if (Model.Laudo.Modalidade.ByteImage != null)
+                    @if (Model.Laudo.ModalidadeByteImage != null)
                     {
                         <div class="img-qrcode-info"
                              style=" background-size: cover;">
                             @{
-                                var base64 = Convert.ToBase64String(Model.Laudo.Modalidade.ByteImage);
+                                var base64 = Convert.ToBase64String(Model.Laudo.ModalidadeByteImage);
                                 var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
                             }
                             <img src="@imgSrc" />

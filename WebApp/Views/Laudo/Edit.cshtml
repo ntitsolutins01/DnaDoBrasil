@@ -194,13 +194,14 @@
                                             }
                                             <label class="col-sm-2 control-label"><strong>Altura (cm) </strong> <span class="required">*</span></label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="altura" name="altura" maxlength="3" value="@alturaFormatadaTalentoEsportivo" />
+                                                <input type="text" class="form-control" id="altura" name="altura" maxlength="3" value="@alturaFormatadaTalentoEsportivo"
+                                                       required title="Favor informe Altura (cm)" />
                                             </div>
                                         </div>
                                         <div>
                                             <label class="col-sm-3 control-label"><strong>Massa Corporal (kg)</strong> <span class="required">*</span></label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="massaCorporal" name="massaCorporal" maxlength="6" value="@Model.TalentoEsportivo.Peso" />
+                                                <input type="text" class="form-control" id="massaCorporal" name="massaCorporal" maxlength="6" value="@Model.TalentoEsportivo.Peso" required title="Favor informe Massa Corporal (kg)" />
                                             </div>
                                         </div>
                                     </div>
@@ -208,7 +209,7 @@
                                         <div>
                                             <label class="col-sm-2 control-label"><strong>Preensão Manual (kg)</strong> <span class="required">*</span></label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="preensaoManual" name="preensaoManual" maxlength="6" value="@Model.TalentoEsportivo.PreensaoManual" />
+                                                <input type="text" class="form-control" id="preensaoManual" name="preensaoManual" maxlength="6" value="@Model.TalentoEsportivo.PreensaoManual" required title="Favor informe Preensão Manual (kg)" />
                                             </div>
                                         </div>
                                         <div>
@@ -218,7 +219,7 @@
                                             }
                                             <label class="col-sm-3 control-label"><strong>Flexibilidade (cm)</strong> <span class="required">*</span></label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="flexibilidade" name="flexibilidade" maxlength="3" value="@flexibilidadeFormatadaTalentoEsportivo" />
+                                                <input type="text" class="form-control" id="flexibilidade" name="flexibilidade" maxlength="3" value="@flexibilidadeFormatadaTalentoEsportivo" required title="Favor informe Flexibilidade (cm)" />
                                             </div>
                                         </div>
                                     </div>
@@ -231,7 +232,7 @@
                                             }
                                             <label class="col-sm-2 control-label"><strong>Impulsão Horizontal (cm)</strong> <span class="required">*</span></label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="impulsaoHorizontal" name="impulsaoHorizontal" maxlength="3" value="@impulsaoHorizontalFormatadaTalentoEsportivo" />
+                                                <input type="text" class="form-control" id="impulsaoHorizontal" name="impulsaoHorizontal" maxlength="3" value="@impulsaoHorizontalFormatadaTalentoEsportivo" required title="Favor informe Impulsão Horizontal (cm)" />
                                             </div>
                                         </div>
                                         <div>
@@ -241,7 +242,7 @@
                                                     <span class="input-group-addon">
                                                         <i class="fa fa-clock-o"></i>
                                                     </span>
-                                                    <input type="text" class="form-control" id="testeVelocidade" name="testeVelocidade" maxlength="6" value="@Model.TalentoEsportivo.Velocidade" />
+                                                    <input type="text" class="form-control" id="testeVelocidade" name="testeVelocidade" maxlength="6" value="@Model.TalentoEsportivo.Velocidade" required title="Favor informe Teste de Velocidade 20m (seg)" />
                                                 </div>
                                             </div>
                                         </div>
@@ -250,7 +251,7 @@
                                         <div>
                                             <label class="col-sm-2 control-label"><strong>Aptidão Física (mLO2/min)</strong> <span class="required">*</span></label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="aptidaoFisica" name="aptidaoFisica" maxlength="6" value="@Model.TalentoEsportivo.Vo2Max" />
+                                                <input type="text" class="form-control" id="aptidaoFisica" name="aptidaoFisica" maxlength="6" value="@Model.TalentoEsportivo.Vo2Max" required title="Favor informe Aptidão Física (mLO2/min)" />
                                             </div>
                                         </div>
                                         <div>
@@ -260,7 +261,7 @@
                                                     <span class="input-group-addon">
                                                         <i class="fa fa-clock-o"></i>
                                                     </span>
-                                                    <input type="text" class="form-control" id="agilidade" name="agilidade" maxlength="6" value="@Model.TalentoEsportivo.ShuttleRun" />
+                                                    <input type="text" class="form-control" id="agilidade" name="agilidade" maxlength="6" value="@Model.TalentoEsportivo.ShuttleRun" required title="Favor informe Agilidade (seg)" />
 
                                                 </div>
                                             </div>
@@ -444,7 +445,58 @@
     <script src="~/assets/vendor/fuelux/js/spinner.js"></script>
     <script src="~/js/formatTable.js"></script>
     <script src="~/js/laudo.js"></script>
+    <script>
 
+        (function ($) {
+
+            'use strict';
+            var crud = @ViewBag.CrudMessage;
+
+            if (crud === 1) {
+                new PNotify({
+                    title: 'Laudo',
+                    text: 'Cadastro realizado com sucesso!',
+                    type: 'success'
+                });
+            } else if (crud === 2) {
+                new PNotify({
+                    title: 'Laudo',
+                    text: 'Dados alterados com sucesso.',
+                    type: 'warning'
+                });
+            } else if (crud === 3) {
+                new PNotify({
+                    title: 'Laudo',
+                    text: 'Registro excluído com sucesso.',
+                    type: 'error'
+                });
+            }
+
+            var notify = @ViewBag.NotifyMessage;
+            var messagem = '@ViewBag.Notify';
+
+            if (notify === 0) {
+                new PNotify({
+                    title: 'Laudo',
+                    text: messagem,
+                    type: 'success'
+                });
+            } else if (notify === 1) {
+                new PNotify({
+                    title: 'Laudo',
+                    text: messagem,
+                    type: 'warning'
+                });
+            } else if (notify === 2) {
+                new PNotify({
+                    title: 'Laudo',
+                    text: messagem,
+                    type: 'error'
+                });
+            }
+
+        }).apply(this, [jQuery]);
+    </script>
 }
 
 
