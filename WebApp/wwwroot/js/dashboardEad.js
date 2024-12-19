@@ -1,5 +1,5 @@
 var vm = new Vue({
-    el: "#vDashboardEad", 
+    el: "#vDashboardEad",
     data: {
         loading: false
     },
@@ -209,6 +209,229 @@ var vm = new Vue({
             }
         },
         GetPesquisaDashboard: function () {
+
+            var self = this;
+            self.ShowLoad(true, "pTipoCursosConcluidos");
+
+            const obj = {
+                FomentoId: $("#ddlFomento").val(),
+                Estado: $("#ddlEstado").val(),
+                MunicipioId: $("#ddlMunicipio").val(),
+                LocalidadeId: $("#ddlLocalidade").val(),
+                TipoCursoId: $("#ddlTipoCurso").val(),
+                CursoId: $("#ddlCurso").val()
+            }
+
+            let axiosConfig = {
+                headers: {
+                    "Content-Type": 'application/json;charset=UTF-8',
+                    "Access-Control-Allow-Origin": "*"
+                }
+            };
+
+            //Busca indicadores de acordo com o filtro selecionado
+            //axios.post("DashboardEad/GetIndicadoresAlunosByFilter", obj, axiosConfig).then(result => {
+            //    var self = this;
+            //    self.ShowLoad(true, "pIndicadores");
+
+            //    $("#cadastrosMasculinos").text(result.data.dashboard.cadastrosMasculinos);
+            //    $("#avaliacoesDna").text(result.data.dashboard.avaliacoesDna);
+            //    $("#laudosAndamentos").text(result.data.dashboard.laudosAndamentos);
+            //    $("#laudosFinalizados").text(result.data.dashboard.laudosFinalizados);
+            //    $("#cadastrosFemininos").text(result.data.dashboard.cadastrosFemininos);
+            //    $("#alunosCadastrados").text(result.data.dashboard.alunosCadastrados);
+            //    $("#laudosMasculinos").text(result.data.dashboard.laudosMasculinos);
+            //    $("#laudosFemininos").text(result.data.dashboard.laudosFemininos);
+
+            //    self.ShowLoad(false, "pIndicadores");
+
+            //}).catch(error => {
+            //    Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
+
+            //    self.ShowLoad(false, "pIndicadores");
+            //});
+
+            //monta grafico de Tipo de cursos concluidos por sexo
+            //axios.post("DashboardEad/GetGraficosSaudeByFilter", obj, axiosConfig).then(result => {
+            //    var self = this;
+
+            self.ShowLoad(true, "pTipoCursosConcluidos");
+
+            self.SetGraficoTotalizadorTipoCursosConcluidos();// (result);
+
+            self.ShowLoad(false, "pTipoCursosConcluidos");
+
+            //}).catch(error => {
+            //    Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
+            //    self.ShowLoad(false, "pTipoCursosConcluidos");
+            //});
+
+            //monta grafico de notas por disciplina
+            //axios.post("DashboardEad/GetGraficosSaudeByFilter", obj, axiosConfig).then(result => {
+            //    var self = this;
+
+            self.ShowLoad(true, "pNotasDisciplinas");
+
+            self.SetGraficoNotasDisciplinas();// (result);
+
+            self.ShowLoad(false, "pNotasDisciplinas");
+
+            //}).catch(error => {
+            //    Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
+            //    self.ShowLoad(false, "pNotasDisciplinas");
+            //});
+        },
+        SetGraficoTotalizadorTipoCursosConcluidos: function (result) {
+
+            $(function () {
+
+                Highcharts.chart('containerTipoCursosConcluidos', {
+                    chart: {
+                        type: 'bar'
+                    },
+                    title: {
+                        text: undefined
+                    },
+                    xAxis: {
+                        categories: ['Oficinas Profissionalizantes',
+                            'Curso de Formação Inicial Continuada - Docentes',
+                            'Curso de Formação Inicial Continuada - Dicentes',
+                            'Pós-Graduação',
+                            'Cursos Preparatórios',
+                            'Reforço Escolar'],
+
+                        labels: {
+                            style: {
+                                fontSize: '12px'
+                            }
+                        }
+                    },
+                    yAxis: {
+                        min: 0,
+                        title: {
+                            text: 'Total',
+                            style: {
+                                fontSize: '12px'
+                            }
+                        },
+
+                        labels: {
+                            style: {
+                                fontSize: '12px'
+                            }
+                        }
+                    },
+                    legend: {
+                        reversed: true,
+                        itemStyle: {
+                            fontSize: '12px'
+                        }
+                    },
+                    tooltip: {
+                        style: {
+                            fontSize: '12px'
+                        }
+                    },
+                    plotOptions: {
+                        series: {
+                            stacking: 'normal',
+                            dataLabels: {
+                                enabled: true,
+                                style: {
+                                    fontSize: '12px',
+                                    fontWeight: '400'
+                                }
+                            }
+                        }
+                    },
+                    series: [{
+                        name: 'Feminino',
+                        color: '#EC407A',
+                        data: [
+                            12, 32, 45, 65, 45, 78
+                        ]
+                    }, {
+                        name: 'Masculino',
+                        data: [
+                            78, 98, 56, 15, 78, 45
+                        ]
+                    }]
+                });
+
+            });
+        },
+        SetGraficoNotasDisciplinas: function (result) {
+
+            $(function () {
+                Highcharts.chart('containerNotasDisciplinas', {
+                    chart: {
+                        type: 'column'
+                    },
+                    title: {
+                        text: undefined
+                    },
+                    xAxis: {
+                        categories: ['Matemática', 'Língua Portuguesa', 'História', 'Geografia', 'Química', 'Física'],
+                        crosshair: true,
+                        accessibility: {
+                            description: 'Disciplinas'
+                        },
+                        labels: {
+                            style: {
+                                fontSize: '12px'
+                            }
+                        }
+                    },
+                    yAxis: {
+                        min: 0,
+                        title: {
+                            text: 'Total de Alunos',
+                            style: {
+                                fontSize: '12px'
+                            }
+                        }
+                    },
+                    legend: {
+                        reversed: true,
+                        itemStyle: {
+                            fontSize: '12px'
+                        }
+                    },
+                    tooltip: {
+                        valueSuffix: ' alunos',
+                        style: {
+                            fontSize: '12px'
+                        }
+                    },
+                    plotOptions: {
+                        column: {
+                            pointPadding: 0.2,
+                            borderWidth: 0
+                        },
+                        series: {
+                            dataLabels: {
+                                enabled: true,
+                                style: {
+                                    fontSize: '12px',
+                                    fontWeight: '400'
+                                }
+                            }
+                        }
+                    },
+                    series: [
+                        {
+                            name: 'Acima da Média',
+                            data: [387, 280, 129, 643, 540, 343],
+                            color: '#3498db'
+                        },
+                        {
+                            name: 'Abaixo da Média',
+                            data: [453, 140, 100, 140, 195, 113],
+                            color: '#cd6155'
+                        }
+                    ]
+                });
+            });
         }
     }
 });
