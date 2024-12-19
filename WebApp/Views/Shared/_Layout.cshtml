@@ -5,6 +5,7 @@
 @using WebApp.Identity
 @using WebApp.Services
 @inject IAuthorizationService AuthorizationService
+
 <!doctype html>
 <html class="sidebar-light sidebar-left-big-icons">
 <head>
@@ -457,7 +458,7 @@
                                     </li>
                                 }
 
-                                @if ((await AuthorizationService.AuthorizeAsync(User, ModuloAccess.SistemaSocioeconomico)).Succeeded)
+                                @* @if ((await AuthorizationService.AuthorizeAsync(User, ModuloAccess.SistemaSocioeconomico)).Succeeded)
                                 {
                                     <li class="nav-parent">
                                         <a href="#">
@@ -477,7 +478,7 @@
                                             </li>
                                         </ul>
                                     </li>
-                                }
+                                } *@
 
                                 @if ((await AuthorizationService.AuthorizeAsync(User, ModuloAccess.Laudo)).Succeeded)
                                 {

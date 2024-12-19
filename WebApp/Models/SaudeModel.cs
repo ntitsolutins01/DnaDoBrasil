@@ -15,9 +15,9 @@ namespace WebApp.Models
 	        public int Id { get; set; }
             public int? ProfissionalId { get; set; }
             public int? AlunoId { get; set; }
-            public int? EnvergaduraSaude { get; set; }
-            public int? MassaCorporalSaude { get; set; }
-            public int? AlturaSaude { get; set; }
+            public decimal? EnvergaduraSaude { get; set; }
+            public decimal? MassaCorporalSaude { get; set; }
+            public decimal? AlturaSaude { get; set; }
             public string StatusSaude { get; set; }
         }
     }

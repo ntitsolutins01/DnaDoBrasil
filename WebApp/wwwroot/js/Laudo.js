@@ -1,5 +1,5 @@
 var vm = new Vue({
-    el: "#formLaudo",
+    el: "#vLaudo",
     data: {
         loading: false,
     },
@@ -332,30 +332,19 @@ var vm = new Vue({
                 });
 
                 //mascara dos inputs
-                //var $numAltura = $("#alturaSaude");
-                //$numAltura.mask('#.##0,00', { reverse: false });
                 $('#massaCorporalSaude').maskMoney();
+                $("#massaCorporalSaude").maskMoney('mask');
+                $('#massaCorporal').maskMoney();
+                $("#massaCorporal").maskMoney('mask');
+                $('#preensaoManual').maskMoney();
+                $("#preensaoManual").maskMoney('mask');
 
-
-
-                var $numPreensaoManual = $("#preensaoManual");
-                $numPreensaoManual.mask('000,00', { reverse: false });
-                var $numFlexibilidade = $("#flexibilidade");
-                $numFlexibilidade.mask('000,00', { reverse: false });
-                var $numImpulsaoHorizontal = $("#impulsaoHorizontal");
-                $numImpulsaoHorizontal.mask('000,00', { reverse: false });
-                var $numAptidaoFisica = $("#aptidaoFisica");
-                $numAptidaoFisica.mask('000,00', { reverse: false });
-                var $numAlturaSaude = $("#alturaSaude");
-                $numAlturaSaude.mask('000,00', { reverse: false });
-                var $numMassaCorporalSaude = $("#massaCorporalSaude");
-                $numMassaCorporalSaude.mask('000,00', { reverse: false });
-                var $numEnvergaduraSaude = $("#envergaduraSaude");
-                $numEnvergaduraSaude.mask('000,00', { reverse: false });
-                var $numTesteVelocidade = $("#testeVelocidade");
-                $numTesteVelocidade.mask('000,00', { reverse: false });
-                var $numAgilidade = $("#agilidade");
-                $numAgilidade.mask('000,00', { reverse: false });
+                $('#aptidaoFisica').maskMoney();
+                $("#aptidaoFisica").maskMoney('mask');
+                $('#testeVelocidade').maskMoney();
+                $("#testeVelocidade").maskMoney('mask');
+                $('#agilidade').maskMoney();
+                $("#agilidade").maskMoney('mask');
 
                 $("#formEditLaudo").validate({
                     highlight: function (label) {
@@ -378,6 +367,7 @@ var vm = new Vue({
             }
 
             if (formid === "formLaudo") {
+
 
                 //skin select
                 var $select = $(".select2").select2({
@@ -518,29 +508,40 @@ var vm = new Vue({
                         });
                 });
 
-                //mascara dos inputs
-                var $numAltura = $("#altura");
-                $numAltura.mask('000,00', { reverse: false });
-                var $numMassaCorporal = $("#massaCorporal");
-                $numMassaCorporal.mask('000,00', { reverse: false });
-                var $numPreensaoManual = $("#preensaoManual");
-                $numPreensaoManual.mask('000,00', { reverse: false });
-                var $numFlexibilidade = $("#flexibilidade");
-                $numFlexibilidade.mask('000,00', { reverse: false });
-                var $numImpulsaoHorizontal = $("#impulsaoHorizontal");
-                $numImpulsaoHorizontal.mask('000,00', { reverse: false });
-                var $numAptidaoFisica = $("#aptidaoFisica");
-                $numAptidaoFisica.mask('000,00', { reverse: false });
-                var $numAlturaSaude = $("#alturaSaude");
-                $numAlturaSaude.mask('000,00', { reverse: false });
-                var $numMassaCorporalSaude = $("#massaCorporalSaude");
-                $numMassaCorporalSaude.mask('000,00', { reverse: false });
-                var $numEnvergaduraSaude = $("#envergaduraSaude");
-                $numEnvergaduraSaude.mask('000,00', { reverse: false });
-                var $numTesteVelocidade = $("#testeVelocidade");
-                $numTesteVelocidade.mask('000,00', { reverse: false });
-                var $numAgilidade = $("#agilidade");
-                $numAgilidade.mask('000,00', { reverse: false });
+                //clique de escolha do select
+                $("#ddlAluno").change(function () {
+                    var id = $("#ddlAluno").val();
+
+                    var url = "../../Aluno/GetAlunoIdadeById?id=" + id;
+
+                    $.getJSON(url,
+                        { id: id },
+                        function (data) {
+                            $("#divIdade").show();
+                            $("#spanIdade").text(data + " anos");
+                            if (data < 12) {
+                                $("#liQualidade").hide();
+                            }
+                            if (data < 14) {
+                                $("#liVocacional").hide();
+                            }
+                        });
+                });
+
+                //mascara dos inputs 
+                $('#massaCorporalSaude').maskMoney();
+                //$("#massaCorporalSaude").maskMoney('mask');
+                $('#massaCorporal').maskMoney();
+                //$("#massaCorporal").maskMoney('mask');
+                $('#preensaoManual').maskMoney();
+                //$("#preensaoManual").maskMoney('mask');
+
+                $('#aptidaoFisica').maskMoney();
+                //$("#aptidaoFisica").maskMoney('mask');
+                $('#testeVelocidade').maskMoney();
+                //$("#testeVelocidade").maskMoney('mask');
+                $('#agilidade').maskMoney();
+                //$("#agilidade").maskMoney('mask');
 
                 $("#formLaudo").validate({
                     highlight: function (label) {

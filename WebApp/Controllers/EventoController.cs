@@ -14,7 +14,6 @@ using WebApp.Models;
 using WebApp.Utility;
 using IWebHostEnvironment = Microsoft.AspNetCore.Hosting.IWebHostEnvironment;
 using Microsoft.AspNetCore.Authorization;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace WebApp.Controllers;
 
@@ -293,17 +292,46 @@ public class EventoController : BaseController
     /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
     /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
     [ClaimsAuthorize(ClaimType.Evento, Identity.Claim.Incluir)]
-    public ActionResult CreateControlePresenca(int eventoId, int? crud, int? notify, string message = null)
+    public async Task<ActionResult> CreateControlePresenca(int eventoId, int? crud, int? notify, string message = null)
     {
         try
         {
             SetNotifyMessage(notify, message);
             SetCrudMessage(crud);
+
+            long alunoId = 0;
+
             var evento = ApiClientFactory.Instance.GetEventoById(eventoId);
+
             var listAlunos = ApiClientFactory.Instance.GetAlunosByLocalidade(Convert.ToInt32(evento.LocalidadeId));
 
-            var alunos = new SelectList(listAlunos, "Id", "Nome"); ;
-            var convidado = listAlunos.First(x => x.Nome.Contains("Convidado"));
+            var alunos = new SelectList(listAlunos, "Id", "Nome"); 
+
+            var convidado = listAlunos.FirstOrDefault(x => x.Convidado);
+
+
+            if (convidado == null)
+            {
+                var command = new AlunoModel.CreateUpdateDadosAlunoCommand
+                {
+                    MunicipioId = Convert.ToInt32(evento.MunicipioId),
+                    Nome = "Convidado",
+                    Email = "convidado@convidado.com",
+                    Sexo = "G",
+                    DtNascimento = DateTime.Now.ToString("dd/MM/yyyy"),
+                    LocalidadeId = Convert.ToInt32(evento.LocalidadeId),
+                    FomentoId = Convert.ToInt32(ApiClientFactory.Instance.GetFomentoByLocalidadeId(Convert.ToInt32(evento.LocalidadeId)).Id),
+                    Etnia = "NA",
+                    Convidado = true
+
+
+                };
+
+                await ApiClientFactory.Instance.CreateDados(command);
+
+                convidado = ApiClientFactory.Instance.GetAlunosByLocalidade(Convert.ToInt32(evento.LocalidadeId))
+                    .FirstOrDefault(x => x.Convidado);
+            }
 
             return View(new EventoModel()
             {
