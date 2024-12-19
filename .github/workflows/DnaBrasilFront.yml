@@ -2,7 +2,7 @@ name: Build and deploy .NET Core application to Web App DnaBrasilFront
 on:
   push:
     branches:
-    - feature/Card#164-ForcaTarefa
+    - develop
 env:
   AZURE_WEBAPP_NAME: DnaBrasilFront
   AZURE_WEBAPP_PACKAGE_PATH: WebApp\published
