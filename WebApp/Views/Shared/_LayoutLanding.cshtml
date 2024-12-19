@@ -1,166 +1,290 @@
 ﻿<!DOCTYPE html>
+
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <title>Dna do Brasil</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="" name="keywords">
-    <meta content="" name="description">
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>DNA do Brasil - Descubra seu potencial</title>
 
-    <!-- Favicon -->
-    <link href="~/assets/landing/img/favicon.ico" rel="icon">
+	<!-- Favicon -->
+	<link rel="icon" type="image/png" sizes="56x56" href="~/assets/assets_LP/images/new-resource/icon.png" />
+	<!-- bootstrap CSS -->
+	<link rel="stylesheet" href="~/assets/assets_LP/css/bootstrap.min.css" type="text/css" media="all" />
+	<!-- carousel CSS -->
+	<link rel="stylesheet" href="~/assets/assets_LP/css/owl.carousel.min.css" type="text/css" media="all" />
+	<!-- animate CSS -->
+	<link rel="stylesheet" href="~/assets/assets_LP/css/animate.css" type="text/css" media="all" />
+	<!-- animated-text CSS -->
+	<link rel="stylesheet" href="~/assets/assets_LP/css/animated-text.css" type="text/css" media="all" />
+	<!-- font-awesome CSS -->
+	<link rel="stylesheet" href="~/assets/assets_LP/css/all.min.css" type="text/css" media="all" />
+	<!-- font-flaticon CSS -->
+	<link rel="stylesheet" href="~/assets/assets_LP/css/flaticon.css" type="text/css" media="all" />
+	<!-- theme-default CSS -->
+	<link rel="stylesheet" href="~/assets/assets_LP/css/theme-default.css" type="text/css" media="all" />
+	<!-- meanmenu CSS -->
+	<link rel="stylesheet" href="~/assets/assets_LP/css/meanmenu.min.css" type="text/css" media="all" />
+	<!-- transitions CSS -->
+	<link rel="stylesheet" href="~/assets/assets_LP/css/owl.transitions.css" type="text/css" media="all" />
+	<!-- bootstrap icons -->
+	<link rel="stylesheet" href="~/assets/assets_LP/css/bootstrap-icons.css" type="text/css" media="all" />
+	<!-- Main Style CSS -->
+	<link rel="stylesheet" href="~/assets/assets_LP/css/style.css" type="text/css" media="all" />
+	<!-- responsive CSS -->
+	<link rel="stylesheet" href="~/assets/assets_LP/css/responsive.css" type="text/css" media="all" />
+	<!-- modernizr js -->
 
-    <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Roboto:wght@500;700&display=swap" rel="stylesheet">
-
-    <!-- Icon Font Stylesheet -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-
-    <!-- Libraries Stylesheet -->
-    <link href="~/assets/landing/lib/animate/animate.min.css" rel="stylesheet">
-    <link href="~/assets/landing/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="~/assets/landing/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
-
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="~/assets/landing/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Template Stylesheet -->
-    <link href="~/assets/landing/css/style.css" rel="stylesheet">
+	<script src="~/assets/assets_LP/js/vendor/modernizr-3.5.0.min.js"></script>
+	<link href="https://fonts.cdnfonts.com/css/clash-display" rel="stylesheet" />
 </head>
 
 <body>
-    <!-- Spinner Start -->
-    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
-            <span class="sr-only">Loading...</span>
-        </div>
-    </div>
-    <!-- Spinner End -->
-    <!-- Navbar Start -->
-    <div class="container-fluid nav-bar">
-        <nav class="navbar navbar-expand-lg navbar-light bg-white p-3 py-lg-0 px-lg-4">
-            <a href="" class="navbar-brand d-flex align-items-center m-0 p-0 d-lg-none">
-                <h1 class="text-primary m-0">Dna do Brasil</h1>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                <span class="fa fa-bars"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <div class="navbar-nav me-auto">
-                    <a href="index.html" class="nav-item nav-link active" style="width: 100px;"><img src="~/assets/landing/img/logo_black@2x.png" style="width: 103%;position: relative;" /></a>
-                    <a href="#oprograma" class="nav-item nav-link" style="margin-top: 25px;">O Programa</a>
-                    <a href="#passoapasso" class="nav-item nav-link" style="margin-top: 25px;">Passo-a-Passo</a>
-                    <a href="#sobreapp" class="nav-item nav-link" style="margin-top: 25px;">O App</a>
-                    <a href="#profissionais" class="nav-item nav-link" style="margin-top: 25px;">Profissionais</a>
-                    @* <a href="service.html" class="nav-item nav-link" style="margin-top: 25px;">Instituições</a> *@
-                    <a href="#depoimentos" class="nav-item nav-link" style="margin-top: 25px;">Depoimentos</a>
-                    @* <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                    <div class="dropdown-menu fade-up m-0">
-                    <a href="booking.html" class="dropdown-item">Booking</a>
-                    <a href="team.html" class="dropdown-item">Technicians</a>
-                    <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                    <a href="404.html" class="dropdown-item">404 Page</a>
-                    </div>
-                    </div>*@
-                    <a href="https://ceudasartes.eadplataforma.app" class="nav-item nav-link" style="margin-top: 25px;">EAD</a>
-                </div>
-                <div class="mt-4 mt-lg-0 me-lg-n4 py-3 d-flex align-items-center">
-                    <a href="@Url.Action("Index2", "Home")">
-                        <img src="~/assets/landing/img/entrar.png" style="width: 58%;" />
-                    </a>
-                    @* <div class="d-flex flex-shrink-0 align-items-center justify-content-center bg-white" style="width: 96px; height: 45px;background-image: url('assets/landing/img/bg_primary.png');background-size: 100%;background-repeat: no-repeat; color:#fff;background-color: #ffffff4d;border-color:#fff !important;border: solid;color:#fff;; font-weight:bold">
-                    <a href="@Url.Action("Index2", "Home")" style="color:#fff; font-weight:bold">ENTRAR</a>
-                    </div> *@
-                </div>
-                @*<div class="mt-4 mt-lg-0 me-lg-n4 py-3 d-flex align-items-center">
-                <a href="https://ceudasartes.eadplataforma.app">
-                <img src="~/assets/landing/img/ead.png" style="width: 58%;" />
-                </a>
-                <div class="d-flex flex-shrink-0 align-items-center justify-content-center bg-white" style="width: 96px; height: 45px;background-image: url('assets/landing/img/bg_primary.png');background-size: 100%;background-repeat: no-repeat; color:#fff;background-color: #ffffff4d;border-color:#fff !important;border: solid;color:#fff;; font-weight:bold">
-                <a href="https://ceudasartes.eadplataforma.app" style="color:#fff; font-weight:bold">EAD</a>
-                </div>
-                </div>*@
-            </div>
-        </nav>
-    </div>
-    <!-- Navbar End -->
-@RenderBody()
-<!-- Footer Start -->
-<div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
-    <div class="container py-5">
-        <div class="row g-5">
-            <div class="col-lg-3 col-md-6">
-                <h4 class="text-light mb-4">Endereço</h4>
-                <p class="mb-2">
-                    <i class="fa fa-map-marker-alt me-3"></i>SCES Trecho 2 - Conjunto 1 - Lote 10 Clube Asseb - Asa Sul, Brasília – DF
-                </p>
-                <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+55 61 3386-7087</p>
-                <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+55 61 98625-8065</p>
-                <p class="mb-2"><i class="fa fa-envelope me-3"></i>contato@idecace.org.br</p>
-                <div class="d-flex pt-2">
-                    <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-twitter"></i></a>
-                    <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>
-                    <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-youtube"></i></a>
-                    <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-linkedin-in"></i></a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <h4 class="text-light mb-4">Horários</h4>
-                <h6 class="text-light">Segunda - Sexta:</h6>
-                <p class="mb-4">09:00 - 18:00</p>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <h4 class="text-light mb-4">Serviços</h4>
-                <a class="btn btn-link" href="">Avaliação de Aluno</a>
-                <a class="btn btn-link" href="">Especialização de Profissional</a>
-                <a class="btn btn-link" href="">Cadastro de Parceria</a>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <h4 class="text-light mb-4">Mais sobre nós</h4>
-                <p>
-                    "Existe um trabalho muito maior do que detectar que é encaminhar, que é acompanhar, e isso só se faz a través do professor e com entendimento e a participação da família. Para isso trabalhamos."
-                    <br/>Wilson Cardoso - Presidente IDECACE
-                </p>
-            </div>
-        </div>
-    </div>
-    <div class="container">
-        <div class="copyright">
-            <div class="row">
-                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                    &copy; <a class="border-bottom" href="#">Dna do Brasil</a>, Todos os direitos reservados.
-                </div>
-                <div class="col-md-6 text-center text-md-end">
-                    Designed By <a class="border-bottom" href="ntitsolutions01@gmail.com">Ntit Solutions</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Footer End -->
-<!-- Back to Top -->
-<a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-0 back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+	<!-- ==========header-top-area-start===============-->
+
+	<div class="header-top-area">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="header-top-info">
+						<ul>
+							<li>
+								<a>
+									<span><i class="fas fa-phone"></i></span>+55 61
+									98625-8065
+								</a>
+							</li>
+							<li><a href="#Contato">Contato</a></li>
+							<li><a href="#">Suporte</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-6">
+					<div class="header-top-social">
+						<ul>
+							<li>
+								<a href="https://www.facebook.com/idecace/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+							</li>
+							<li>
+								<a href="https://www.youtube.com/channel/UCxoZjSX8ZFMX6t1b9nXjtZA" target="_blank"><i class="fab fa-youtube"></i></a>
+							</li>
+							<li>
+								<a href="https://www.instagram.com/institutoidecace/" target="_blank"><i class="fab fa-instagram"></i></a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- ==========header-top-area-end ===============-->
+	<!--==================================================-->
+	<!-- Start dreamhub Main Menu  -->
+	<!--==================================================-->
+	<div id="sticky-header" class="dreamhub_nav_manu">
+		<div class="container-fluid">
+			<div class="row align-items-center">
+				<div class="col-lg-3">
+					<div class="logo">
+						<a class="logo_img" href="index.html" title="DNAdoBrasil">
+							<img src="~/assets/assets_LP/images/new-resource/logo.png" alt="logo"
+								 style="height: 60px" />
+						</a>
+						<a class="main_sticky" href="index.html" title="DNAdoBrasil">
+							<img src="~/assets/assets_LP/images/new-resource/logo.png" alt="logo"
+								 style="height: 60px" />
+						</a>
+					</div>
+				</div>
+				<div class="col-lg-9">
+					<nav class="dreamhub_menu">
+						<ul class="nav_scroll">
+							<li><a href="#Home">Home </a></li>
+							<li><a href="#Features">O Programa</a></li>
+							<li><a href="#About">O App</a></li>
+							<li><a href="#Pricing">Profissionais</a></li>
+							<li><a href="#Reviews">Avaliações</a></li>
+							<li>
+								<a href="https://ceudasartes.eadplataforma.app/"
+								   target="_blank">EAD</a>
+							</li>
+						</ul>
+						<!-- header button -->
+
+						<div class="header-signup-button">
+							<a style="width: auto" href="@Url.Action("Index2", "Home")">
+								Entrar
+							</a>
+						</div>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- dreamhub Mobile Menu  -->
+
+	<div class="mobile-menu-area sticky d-sm-block d-md-block d-lg-none">
+		<div class="mobile-menu">
+			<nav class="dreamhub_menu">
+				<ul class="nav_scroll">
+					<li><a href="#Home">Home </a></li>
+					<li><a href="#Features">O Programa</a></li>
+					<li><a href="#About">O App</a></li>
+					<li><a href="#Pricing">Profissionais</a></li>
+					<li><a href="#Reviews">Avaliações</a></li>
+					<li><a href="#Contato">Contato</a></li>
+					<li>
+						<a href="https://ceudasartes.eadplataforma.app/" target="_blank">EAD</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+
+	<!--==================================================-->
+	<!-- End dreamhub Main Menu  -->
+	<!--==================================================-->
+    
+    
+	@RenderBody()
 
 
-<!-- JavaScript Libraries -->
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="~/assets/landing/lib/wow/wow.min.js"></script>
-<script src="~/assets/landing/lib/easing/easing.min.js"></script>
-<script src="~/assets/landing/lib/waypoints/waypoints.min.js"></script>
-<script src="~/assets/landing/lib/counterup/counterup.min.js"></script>
-<script src="~/assets/landing/lib/owlcarousel/owl.carousel.min.js"></script>
-<script src="~/assets/landing/lib/tempusdominus/js/moment.min.js"></script>
-<script src="~/assets/landing/lib/tempusdominus/js/moment-timezone.min.js"></script>
-<script src="~/assets/landing/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+    <!--==================================================-->
+	<!-- Start polytia Footer Section  -->
+	<!--==================================================-->
 
-<!-- Template Javascript -->
-<script src="~/assets/landing/js/main.js"></script>
-</body>
+	<footer class="footer-section">
+		<div class="container">
+			<div class="row">
+				<!-- Coluna de Informações -->
+				<div class="col-lg-4 col-md-6">
+					<div class="widgets-company-info wow fadeInUp animated">
+						<div class="footer-logo mb-4">
+							<img src="~/assets/assets_LP/images/new-resource/logo_1.png" alt="DNA do Brasil" class="img-fluid" style="max-width: 200px;">
+						</div>
+						<ul class="footer-info">
+							<li><i class="fas fa-map-marker-alt me-2"></i> SCES Trecho 2 - Conjunto 1 - Lote 10 Clube Asseb - Asa Sul, Brasília – DF</li>
+							<li><i class="fas fa-mobile-alt me-2"></i> +55 (61) 98625-8065</li>
+							<li><i class="fas fa-phone me-2"></i> +55 (61) 3386-7087</li>
+							<li><i class="fas fa-envelope me-2"></i> contato@idecace.org.br</li>
+						</ul>
+						<div class="social-icons mt-4">
+							<a href="https://www.instagram.com/institutoidecace/" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+							<a href="https://www.facebook.com/idecace/" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+							<a href="https://www.youtube.com/channel/UCxoZjSX8ZFMX6t1b9nXjtZA" target="_blank" class="social-icon"><i class="fab fa-youtube"></i></a>
+							<a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+						</div>
+					</div>
+				</div>
+
+				<!-- Coluna de Serviços -->
+				<div class="col-lg-4 col-md-6">
+					<div class="widget-nav-menu wow fadeInUp animated" data-wow-delay="0.2s">
+						<h4 class="widget-title">Serviços</h4>
+						<ul class="footer-menu">
+							<li><a href="#"><i class="fas fa-chevron-right me-2"></i>Avaliação do aluno</a></li>
+							<li><a href="#"><i class="fas fa-chevron-right me-2"></i>Especialização de profissional</a></li>
+							<li><a href="#"><i class="fas fa-chevron-right me-2"></i>Cadastro de parceria</a></li>
+						</ul>
+					</div>
+				</div>
+
+				<!-- Coluna de Horários -->
+				<div class="col-lg-4 col-md-6">
+					<div class="widget-nav-menu wow fadeInUp animated" data-wow-delay="0.4s">
+						<h4 class="widget-title">Horários</h4>
+						<div class="schedule-box">
+							<div class="schedule-item">
+								<span class="day">Segunda - Sexta</span>
+								<span class="time">09:00 - 18:00</span>
+							</div>
+						</div>
+					</div>
+					<div class="footer-logo-2 mb-1">
+						<img src="~/assets/assets_LP/images/new-resource/logo_idecace.png" alt="Idecace" class="img-fluid" style="max-width: 200px;">
+					</div>
+				</div>
+			</div>
+
+			<!-- Copyright -->
+			<div class="footer-bottom mt-5">
+				<div class="row align-items-center">
+					<div class="col-12">
+						<div class="copyright text-center">
+							<p>&copy; 2024 <span class="text-gradient">DNA do Brasil</span>. Todos os direitos reservados.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+	<!--==================================================-->
+	<!-- End polytia Footer Section  -->
+	<!--==================================================-->
+	<!--==================================================-->
+	<!-- Start Search Popup Area -->
+	<!--==================================================-->
+	<div class="search-popup">
+		<button class="close-search style-two">
+			<i class="fas fa-times"></i>
+		</button>
+		<button class="close-search">
+			<i class="fas fa-arrow-up"></i>
+		</button>
+		<form method="post" action="#">
+			<div class="form-group">
+				<input type="search" name="search-field" value placeholder="Search Here" required />
+				<button type="submit"><i class="fas fa-search"></i></button>
+			</div>
+		</form>
+	</div>
+	<!--==================================================-->
+	<!-- End Search Popup Area -->
+	<!--==================================================-->
+	<!--==================================================-->
+	<!-- Start scrollup section Section -->
+	<!--==================================================-->
+
+	<div class="prgoress_indicator active-progress">
+		<svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+			<path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" style="
+                        transition: stroke-dashoffset 10ms linear 0s;
+                        stroke-dasharray: 307.919, 307.919;
+                        stroke-dashoffset: 270.456;
+					"></path>
+		</svg>
+	</div>
+
+	<!--==================================================-->
+	<!-- Start scrollup section Section -->
+	<!--==================================================-->
+	<!-- Bootstrap CSS -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- jQuery (se necessário) -->
+	<script src="~/assets/assets_LP/js/vendor/jquery-3.6.2.min.js"></script>
+
+	<!-- Bootstrap Bundle (inclui Popper) -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+	<!-- Scripts antigos do template -->
+	<script src="~/assets/assets_LP/js/vendor/jquery-3.6.2.min.js"></script>
+	<script src="~/assets/assets_LP/js/popper.min.js"></script>
+	<script src="~/assets/assets_LP/js/owl.carousel.min.js"></script>
+	<script src="~/assets/assets_LP/js/jquery.counterup.min.js"></script>
+	<script src="~/assets/assets_LP/js/waypoints.min.js"></script>
+	<script src="~/assets/assets_LP/js/wow.js"></script>
+	<script src="~/assets/assets_LP/js/jquery.meanmenu.js"></script>
+	<script src="~/assets/assets_LP/js/jquery.scrollUp.js"></script>
+
+	<!-- Outros scripts JS -->
+	<script src="~/assets/assets_LP/js/theme.js"></script>
+    <script src="~/assets/assets_LP/js/carrossel.js"></script>
+
+    </body>
 
 </html>
