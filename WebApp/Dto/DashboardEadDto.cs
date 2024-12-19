@@ -10,8 +10,8 @@ namespace WebApp.Dto
 		public string Estado { get; set; }
 		public string MunicipioId { get; set; }
 		public string LocalidadeId { get; set; }
-        public string DeficienciaId { get; set; }
-        public string Etnia { get; set; }
+        public string TipoCursoId { get; set; }
+        public string CursoId { get; set; }
 
         #endregion
 	}

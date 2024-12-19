@@ -41,8 +41,8 @@ namespace WebApp.Controllers
                 Estado = collection["ddlEstado"].ToString(),
                 MunicipioId = collection["ddlMunicipio"].ToString(),
                 LocalidadeId = collection["ddlLocalidade"].ToString(),
-                DeficienciaId = collection["ddlDeficiencia"].ToString(),
-                Etnia = collection["ddlEtnia"].ToString()
+                TipoCursoId = collection["ddlTipoCurso"].ToString(),
+                CursoId = collection["ddlCurso"].ToString()
             };
 
             var dashboardEad = new DashboardEadDto();
@@ -73,8 +73,6 @@ namespace WebApp.Controllers
                 ListTipoCursos = tipoCurso,
                 ListLocalidades = localidades!
             };
-
-
 
             return View(model);
         }
