@@ -1,11 +1,11 @@
-@model DashboardModel
+@model DashboardEadModel
 @{
     ViewData["Title"] = "Dashboard EAD";
 }
-<div id="vDashboard">
-    @* <div class="col-md-6 col-lg-12 col-xl-6">
+<div id="vDashboardEad">
+    <div class="col-md-6 col-lg-12 col-xl-6">
         <div class="row">
-            <form id="formDashboard" class="form-horizontal">
+            <form id="formDashboardEad" class="form-horizontal">
                 <section class="panel">
                     <header class="panel-heading">
                         <div class="panel-actions">
@@ -14,7 +14,50 @@
                         <h2 class="panel-title">Filtro de pesquisa</h2>
                     </header>
                     <div class="panel-body" id="pFiltro">
-                        
+                        <label class="col-sm-2 control-label text-right">Fomento:</label>
+                        <div class="col-md-4 form-group">
+                            <select class="form-control populate select2" name="ddlFomento" id="ddlFomento" style="width:100%"
+                                    asp-for="FomentoId" asp-items="Model.ListFomentos">
+                                <option value="">Selecionar Fomento</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-2 control-label text-right">Estado:</label>
+                        <div class="col-md-4 form-group">
+                            <select class="form-control populate select2" name="ddlEstado" id="ddlEstado" style="width:100%"
+                                    asp-for="EstadoId" asp-items="Model.ListEstados">
+                                <option value="">Selecionar Estado</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-2 control-label text-right">Municipio:</label>
+                        <div class="col-md-4 form-group">
+                            <select class="form-control populate select2" name="ddlMunicipio" id="ddlMunicipio" style="width:100%"
+                                    asp-for="MunicipioId" asp-items="Model.ListMunicipios">
+                                <option value="">Selecionar Municipio</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-2 control-label text-right">Localidade:</label>
+                        <div class="col-md-4 form-group">
+                            <select class="form-control populate select2" name="ddlLocalidade" id="ddlLocalidade" style="width:100%"
+                                    asp-for="LocalidadeId" asp-items="Model.ListLocalidades">
+                                <option value="">Selecionar Localidade</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-2 control-label text-sm-right pt-2">Tipo de Curso <span class="required">*</span></label>
+                        <div class="col-sm-4">
+                            <select class="form-control populate select2" name="ddlTipoCurso" id="ddlTipoCurso" style="width:100%"
+                                    required title="Por favor selecione o tipo de curso"
+                                    asp-for="TipoCursosId" asp-items="Model.ListTipoCursos">
+                                <option value="">Selecionar Tipo de Curso</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-2 control-label text-sm-right pt-2">Curso <span class="required">*</span></label>
+                        <div class="col-sm-4">
+                            <select class="form-control populate select2" name="ddlCurso" id="ddlCurso" style="width:100%"
+                                    required title="Por favor selecione o curso"
+                                    asp-for="CursoId" asp-items="Model.ListCursos">
+                                <option value="">Selecionar Curso</option>
+                            </select>
+                        </div>
                     </div>
                     <footer class="panel-footer">
                         <div class="row">
@@ -41,193 +84,191 @@
                 </header>
                 <div class="panel-body" id="pIndicadores">
 
-                </div>
-                <div class="col-md-4 col-xl-12">
-                    <section class="panel">
-                        <div class="panel-body bg-primary" style="background-color: #F44336 !important">
-                            <div class="widget-summary">
-                                <div class="widget-summary-col widget-summary-col-icon">
-                                    <div class="summary-icon">
-                                        <i class="fa fa-file-text"></i>
+                    <div class="col-md-4 col-xl-12">
+                        <section class="panel">
+                            <div class="panel-body bg-primary" style="background-color: #f44336 !important">
+                                <div class="widget-summary">
+                                    <div class="widget-summary-col widget-summary-col-icon">
+                                        <div class="summary-icon">
+                                            <i class="fa fa-file-code-o"></i>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="widget-summary-col">
-                                    <div class="summary">
-                                        <h4 class="title">Cursos em andamento</h4>
-                                        <div class="info">
-                                            @* <strong class="amount"><label id="CursosAndamentos">@Model.Dashboard.CursosAndamentos</label></strong> *@
+                                    <div class="widget-summary-col">
+                                        <div class="summary">
+                                            <h4 class="title">Cursos Ead</h4>
+                                            <div class="info">
+                                                <strong class="amount"><label id="avaliacoesDna">0</label></strong>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </section>
-                </div>
-                <div class="col-md-4 col-xl-12">
-                    <section class="panel">
-                        <div class="panel-body bg-primary" style="background-color: #4CAF50 !important">
-                            <div class="widget-summary">
-                                <div class="widget-summary-col widget-summary-col-icon">
-                                    <div class="summary-icon">
-                                        <i class="fa fa-check-square"></i>
+                        </section>
+                    </div>
+                    <div class="col-md-4 col-xl-12">
+                        <section class="panel">
+                            <div class="panel-body bg-primary" style="background-color: #fb8c00!important">
+                                <div class="widget-summary">
+                                    <div class="widget-summary-col widget-summary-col-icon">
+                                        <div class="summary-icon">
+                                            <i class="fa fa-file-text"></i>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="widget-summary-col">
-                                    <div class="summary">
-                                        <h4 class="title">Cursos Finalizados</h4>
-                                        <div class="info">
-                                            @* <strong class="amount"><label id="CursosFinalizados">@Model.Dashboard.CursosFinalizados</label></strong> *@
+                                    <div class="widget-summary-col">
+                                        <div class="summary">
+                                            <h4 class="title">Cursos em andamento</h4>
+                                            <div class="info">
+                                                <strong class="amount"><label id="laudosAndamentos">0</label></strong>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </section>
-                </div>
-                <div class="col-md-4 col-xl-12">
-                    <section class="panel">
-                        <div class="panel-body bg-primary" style="background-color: #3F51B5 !important">
-                            <div class="widget-summary">
-                                <div class="widget-summary-col widget-summary-col-icon">
-                                    <div class="summary-icon">
-                                        <i class="fa fa-male"></i>
+                        </section>
+                    </div>
+                    <div class="col-md-4 col-xl-12">
+                        <section class="panel">
+                            <div class="panel-body bg-primary" style="background-color: #4CAF50 !important">
+                                <div class="widget-summary">
+                                    <div class="widget-summary-col widget-summary-col-icon">
+                                        <div class="summary-icon">
+                                            <i class="fa fa-file-archive-o"></i>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="widget-summary-col">
-                                    <div class="summary">
-                                        <h4 class="title">Cadastros masculino</h4>
-                                        <div class="info">
-                                            @* <strong class="amount"><label id="cadastrosMasculinos">@Model.Dashboard.CadastrosMasculinos</label></strong> *@
+                                    <div class="widget-summary-col">
+                                        <div class="summary">
+                                            <h4 class="title">Cursos Finalizados</h4>
+                                            <div class="info">
+                                                <strong class="amount"><label id="laudosFinalizados">0</label></strong>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </section>
-                </div>
-                <div class="col-md-4 col-xl-12">
-                    <section class="panel">
-                        <div class="panel-body bg-primary" style="background-color: #E91E63 !important">
-                            <div class="widget-summary">
-                                <div class="widget-summary-col widget-summary-col-icon">
-                                    <div class="summary-icon">
-                                        <i class="fa fa-female"></i>
+                        </section>
+                    </div>
+                    <div class="col-md-4 col-xl-12">
+                        <section class="panel">
+                            <div class="panel-body bg-primary" style="background-color: #3F51B5 !important">
+                                <div class="widget-summary">
+                                    <div class="widget-summary-col widget-summary-col-icon">
+                                        <div class="summary-icon">
+                                            <i class="fa fa-male"></i>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="widget-summary-col">
-                                    <div class="summary">
-                                        <h4 class="title">Cadastros feminino</h4>
-                                        <div class="info">
-                                            @* <strong class="amount"><label id="cadastrosFemininos">@Model.Dashboard.CadastrosFemininos</label></></strong> *@
+                                    <div class="widget-summary-col">
+                                        <div class="summary">
+                                            <h4 class="title">Alunos masculino</h4>
+                                            <div class="info">
+                                                <strong class="amount"><label id="cadastrosMasculinos">0</label></strong>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </section>
-                </div>
-                <div class="col-md-4 col-xl-12">
-                    <section class="panel">
-                        <div class="panel-body bg-primary" style="background-color: #2196F3 !important">
-                            <div class="widget-summary">
-                                <div class="widget-summary-col widget-summary-col-icon">
-                                    <div class="summary-icon">
-                                        <i class="fa fa-users"></i>
+                        </section>
+                    </div>
+                    <div class="col-md-4 col-xl-12">
+                        <section class="panel">
+                            <div class="panel-body bg-primary" style="background-color: #E91E63 !important">
+                                <div class="widget-summary">
+                                    <div class="widget-summary-col widget-summary-col-icon">
+                                        <div class="summary-icon">
+                                            <i class="fa fa-female"></i>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="widget-summary-col">
-                                    <div class="summary">
-                                        <h4 class="title">Alunos Cadastrados</h4>
-                                        <div class="info">
-                                            @* <strong class="amount"><label id="alunosCadastrados">@Model.Dashboard.AlunosCadastrados</label></></strong> *@
+                                    <div class="widget-summary-col">
+                                        <div class="summary">
+                                            <h4 class="title">Alunos feminino</h4>
+                                            <div class="info">
+                                                <strong class="amount"><label id="cadastrosFemininos">0</label></></strong>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </section>
-                </div>
-                <div class="col-md-4 col-xl-12">
-                    <section class="panel">
-                        <div class="panel-body bg-primary" style="background-color: #3F51B5 !important">
-                            <div class="widget-summary">
-                                <div class="widget-summary-col widget-summary-col-icon">
-                                    <div class="summary-icon">
-                                        <i class="fa fa-id-card"></i>
+                        </section>
+                    </div>
+                    <div class="col-md-4 col-xl-12">
+                        <section class="panel">
+                            <div class="panel-body bg-primary" style="background-color: #2196F3 !important">
+                                <div class="widget-summary">
+                                    <div class="widget-summary-col widget-summary-col-icon">
+                                        <div class="summary-icon">
+                                            <i class="fa fa-users"></i>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="widget-summary-col">
-                                    <div class="summary">
-                                        <h4 class="title">Cursos Masculino</h4>
-                                        <div class="info">
-                                            @* <strong class="amount"><label id="CursosMasculinos">@Model.Dashboard.CursosMasculinos</label></strong> *@
+                                    <div class="widget-summary-col">
+                                        <div class="summary">
+                                            <h4 class="title">Alunos Cadastrados</h4>
+                                            <div class="info">
+                                                <strong class="amount"><label id="alunosCadastrados">0</label></></strong>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </section>
-                </div>
-                <div class="col-md-4 col-xl-12">
-                    <section class="panel">
-                        <div class="panel-body bg-primary" style="background-color: #E91E63 !important">
-                            <div class="widget-summary">
-                                <div class="widget-summary-col widget-summary-col-icon">
-                                    <div class="summary-icon">
-                                        <i class="fa fa-id-card-o"></i>
+                        </section>
+                    </div>
+                    @* <div class="col-md-4 col-xl-12">
+                        <section class="panel">
+                            <div class="panel-body bg-primary" style="background-color: #3F51B5 !important">
+                                <div class="widget-summary">
+                                    <div class="widget-summary-col widget-summary-col-icon">
+                                        <div class="summary-icon">
+                                            <i class="fa fa-id-card"></i>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="widget-summary-col">
-                                    <div class="summary">
-                                        <h4 class="title">Cursos Feminino</h4>
-                                        <div class="info">
-                                            @* <strong class="amount"><label id="CursosFemininos">@Model.Dashboard.CursosFemininos</label></strong> *@
+                                    <div class="widget-summary-col">
+                                        <div class="summary">
+                                            <h4 class="title">Laudos Masculino</h4>
+                                            <div class="info">
+                                                <strong class="amount"><label id="laudosMasculinos">0</label></strong>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </section>
+                        </section>
+                    </div>
+                    <div class="col-md-4 col-xl-12">
+                        <section class="panel">
+                            <div class="panel-body bg-primary" style="background-color: #E91E63 !important">
+                                <div class="widget-summary">
+                                    <div class="widget-summary-col widget-summary-col-icon">
+                                        <div class="summary-icon">
+                                            <i class="fa fa-id-card-o"></i>
+                                        </div>
+                                    </div>
+                                    <div class="widget-summary-col">
+                                        <div class="summary">
+                                            <h4 class="title">Laudos Feminino</h4>
+                                            <div class="info">
+                                                <strong class="amount"><label id="laudosFemininos">0</label></strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div> *@
                 </div>
-            </div>
-        </section>
+            </section>
+        </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-lg-5 col-md-12">
-        <section class="panel">
-            <header class="panel-heading">
-                <div class="panel-actions">
-                    <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
-                </div>
-
-                <h2 class="panel-title">Cursos</h2>
-            </header>
-            <div class="panel-body" id="pLaudosPeriodo">
-                <div id="containerLaudos"></div>
-            </div>
-        </section>
-    </div>
-
-    <figure class="highcharts-figure">
-        <div id="container"></div>
-        <p class="highcharts-description">
-            Demonstrating a basic area chart, also known as a mountain chart.
-            Area charts are similar to line charts, but commonly used to visualize
-            volumes.
-        </p>
-    </figure>
-</div>
-
-
 
 @section CssSpecificVendor {
     <link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css" />
     <link rel="stylesheet" href="~/assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
+    <link href="~/assets/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.css" rel="stylesheet" />
 }
 @section Scripts {
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/variable-pie.js"></script>
     <script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
     <script src="~/assets/vendor/select2/js/select2.js"></script>
+    <script src="~/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    <script src="~/assets/vendor/bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+    <script src="~/js/dashboardEad.js"></script>
 }
