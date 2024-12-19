@@ -62,6 +62,15 @@ namespace WebApp.Controllers
                         localidades = new SelectList(resultLocalidades, "Id", "Nome", usu.LocalidadeId);
                 }
 
+                SelectList alunos = null;
+
+                if (usu.LocalidadeId != null)
+                {
+                    var resultAlunos = ApiClientFactory.Instance.GetAlunosByLocalidade(Convert.ToInt32(usu.LocalidadeId));
+
+                    alunos = new SelectList(resultAlunos, "Id", "Nome");
+                }
+
                 var tiposLaudos = new SelectList(ApiClientFactory.Instance.GetTiposLaudoAll(), "Id", "Nome");
 
                 var possuiFoto = collection["possuiFoto"].ToString();
@@ -100,6 +109,7 @@ namespace WebApp.Controllers
                     ListMunicipios = municipios!,
                     ListLocalidades = localidades!,
                     ListDeficiencias = deficiencias,
+                    ListAlunos = alunos,
                     SearchFilter = searchFilter
                 };
 
@@ -188,7 +198,9 @@ namespace WebApp.Controllers
                 SetNotifyMessage(notify, message);
                 SetCrudMessage(crud);
 
-                var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
+                var usuario = User.Identity.Name;
+
+                var usu = ApiClientFactory.Instance.GetUsuarioByEmail(usuario);
 
                 var questionarioVocacional =
                     ApiClientFactory.Instance.GetQuestionarioByTipoLaudo((int)EnumTipoLaudo.Vocacional).OrderBy(o => o.Questao).ToList();
@@ -199,6 +211,39 @@ namespace WebApp.Controllers
                 var questionarioSaudeBucal =
                     ApiClientFactory.Instance.GetQuestionarioByTipoLaudo((int)EnumTipoLaudo.SaudeBucal).OrderBy(o => o.Questao).ToList();
 
+                var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", usu.Uf);
+
+                SelectList municipios = null;
+
+                if (!string.IsNullOrEmpty(usu.Uf))
+                {
+                    municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(usu.Uf), "Id", "Nome", usu.MunicipioId);
+                }
+
+                SelectList localidades = null;
+
+                if (usu.MunicipioId != null)
+                {
+                    var resultLocalidades = ApiClientFactory.Instance.GetLocalidadeByMunicipio(usu.MunicipioId.ToString());
+
+                    localidades = new SelectList(resultLocalidades, "Id", "Nome", usu.LocalidadeId);
+                }
+
+                SelectList alunos = null;
+
+                SelectList profissionais = null;
+
+                if (usu.LocalidadeId != null)
+                {
+                    var resultAlunos = ApiClientFactory.Instance.GetAlunosByLocalidade(Convert.ToInt32(usu.LocalidadeId));
+
+                    alunos = new SelectList(resultAlunos, "Id", "Nome");
+
+                    var resultProfissionais =
+                        ApiClientFactory.Instance.GetProfissionaisByLocalidade(Convert.ToInt32(usu.LocalidadeId));
+
+                    profissionais = new SelectList(resultProfissionais, "Id", "Nome");
+                }
 
                 return View(new LaudoModel()
                 {
@@ -206,7 +251,11 @@ namespace WebApp.Controllers
                     ListQuestionarioQualidadeVida = questionarioQualidadeVida,
                     ListQuestionarioConsumoAlimentar = questionarioConsumoAlimentar,
                     ListQuestionarioSaudeBucal = questionarioSaudeBucal,
-                    ListEstados = estados
+                    ListEstados = estados,
+                    ListMunicipios = municipios!,
+                    ListLocalidades = localidades!,
+                    ListAlunos = alunos!,
+                    ListProfissionais = profissionais!
                 });
 
             }

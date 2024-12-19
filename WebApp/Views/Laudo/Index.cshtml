@@ -59,6 +59,13 @@
                                 <option value="">Selecionar Tipo de Laudo</option>
                             </select>
                         </div>
+                        <label class="col-sm-2 control-label">Deficiencia:</label>
+                        <div class="col-md-4 form-group">
+                            <select class="form-control populate select2" name="ddlDeficiencia" id="ddlDeficiencia"
+                                    asp-for="DeficienciaId" asp-items="Model.ListDeficiencias">
+                                <option value="">Selecionar Deficiência</option>
+                            </select>
+                        </div>
                         <label class="col-sm-2 control-label text-sm-right pt-2">Possui Foto: </label>
                         <div class="col-md-1">
                             <div class="switch switch-sm switch-primary">
