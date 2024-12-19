@@ -26,6 +26,7 @@
                                 <th class="text-center">Id</th>
                                 <th class="text-center">Código do Fomento</th>
                                 <th class="text-center">Fomento</th>
+                                <th class="text-center">Localidade - Municipio/UF</th>
 	                            <th class="text-center">Data Inicío</th>
 	                            <th class="text-center">Data fim</th>
 	                            <th class="text-center">Status</th>
@@ -39,6 +40,8 @@
                                     <td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Id)</td>
                                     <td class="text-center">@Html.DisplayFor(modelItem => item.Codigo)</td>
                                     <td class="text-center">@Html.DisplayFor(modelItem => item.Nome)</td>
+                                    <td class="text-center">@Html.DisplayFor(modelItem => item.Localidade) - 
+                                        @Html.DisplayFor(modelItem => item.MunicipioEstado)</td>
 	                                <td class="text-center">@Html.DisplayFor(modelItem => item.DtIni)</td>
 	                                <td class="text-center">@Html.DisplayFor(modelItem => item.DtFim)</td>
 	                                @if (item.Status)
@@ -50,11 +53,12 @@
 		                                <td class="text-center"><span class="label label-danger">INATIVO</span></td>
 	                                }
                                     <td class="actions text-center">
-                                        <a data-toggle="tooltip" data-placement="top" title="Editar"
+                                        @* <a data-toggle="tooltip" data-placement="top" title="Editar"
                                            href='javascript:(crud.EditModal(@item.Id))'
                                            class="on-default edit-row" style='color: #FF9800'>
                                             <i class="fa fa-pencil"></i>
-                                        </a>
+                                        </a> *@
+                                        <a data-toggle="tooltip" data-placement="top" title="Editar" asp-action="Edit" asp-controller="Fomento" asp-route-Id="@item.Id" class="on-default edit-row" style='color: #FF9800'><i class="fa fa-pencil"></i></a>
                                         <a data-toggle="tooltip" data-placement="top" title="Excluir" href='javascript:(crud.DeleteModal(@item.Id))'
                                            class="on-default remove-row" style="cursor: pointer;color: #F44336"><i class="fa fa-trash"></i></a>
                                     </td>
@@ -93,16 +97,16 @@
             </div>
         </div>
     </div>
-    <!-- Modal -->
+    <!-- Modal 
     <div class="modal fade" id="mdEditFomento" tabindex="-1" role="dialog" aria-labelledby="mdEditFomentoLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="mdEditFomentoLabel">
-                        <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Alterar Fomento</strong>
+                        <i class="fa fa-pencil"></i> &nbsp;&nbsp;<strong>Alterar Fomento</strong>
                     </h5>
                 </div>
-                @using (@Html.BeginForm("Edit", "Fomento", FormMethod.Post, new { id = "formEditFomento", @class = "form-horizontal" }))
+                using (Html.BeginForm("Edit", "Fomento", FormMethod.Post, new { id = "formEditFomento", class = "form-horizontal" }))
                 {
                     <input type="hidden" name="editFomentoId" :value="editDto.Id" />
 
@@ -180,34 +184,6 @@
                                 </div>
                             </div>
                         </div>
-                        @* <div class="form-group row">
-                            <label class="col-sm-3 control-label text-sm-right pt-2">Estado</label>
-                            <div class="col-md-3">
-                                <select class="form-control populate select2" name="ddlEstado" id="ddlEstado"
-                                        title="estadoSelect" required
-                                        asp-for="EstadoId" asp-items="Model.ListEstados">
-                                    <option value="">Selecionar Estado</option>
-                                </select>
-                            </div>
-                            <label class="col-sm-1 control-label text-sm-right pt-2">Cidade</label>
-                            <div class="col-md-5">
-                                <select class="form-control populate select2" name="ddlMunicipio" id="ddlMunicipio"
-                                        title="cidadeSelect" required
-                                        asp-for="CidadeId" asp-items="Model.ListCidades">
-                                    <option value="">Selecionar Cidade</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-3 control-label text-sm-right pt-2">Localidade</label>
-                            <div class="col-md-4">
-                                <select class="form-control populate select2" name="ddlLocalidade" id="ddlLocalidade"
-                                        title="localidadeSelect" required
-                                        asp-for="LocalidadeId" asp-items="Model.ListLocalidades">
-                                    <option value="">Selecionar Localidade</option>
-                                </select>
-                            </div>
-                        </div> *@
                     </div>
                     <div class="modal-footer">
                         <button type="reset" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
@@ -216,7 +192,7 @@
                 }
             </div>
         </div>
-    </div>
+    </div>-->
 </div>
 @section CssSpecificVendor {
     <link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css" />

@@ -79,12 +79,12 @@ namespace WebApp.Controllers
 			{
 				ApiClientFactory.Instance.DeleteModulo(id);
 				return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
-			}
-			catch
-			{
-				return RedirectToAction(nameof(Index));
-			}
-		}
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = $"Erro ao executar esta ação. {e.Message}" });
+            }
+        }
 
 		public Task<ModuloDto> GetModuloById(int id)
 		{

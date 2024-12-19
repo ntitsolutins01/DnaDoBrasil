@@ -1,4 +1,4 @@
-﻿using System.Drawing.Printing;
+using System.Drawing.Printing;
 using WebApp.Dto;
 using WebApp.Models;
 
@@ -32,7 +32,12 @@ namespace WebApp.ApiClient
         #endregion
 
         #region Methods
-
+        public LaudoDto GetLaudoById(int id)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceLaudo}/{id}"));
+            return Get<LaudoDto>(requestUrl);
+        }
         public LaudoDto GetLaudoByAluno(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
@@ -63,6 +68,12 @@ namespace WebApp.ApiClient
                 $"{ResourceLaudo}/Encaminhamentos/Vocacional"));
             return Get<List<EncaminhamentoDto>>(requestUrl);
         }
+        public DesempenhoDto GetDesempenhoByAluno(int id)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceLaudo}/Desempenho/{id}"));
+            return Get<DesempenhoDto>(requestUrl);
+        }
         public Task<LaudosFilterDto?> GetLaudosByFilter(LaudosFilterDto searchFilter)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
@@ -71,5 +82,6 @@ namespace WebApp.ApiClient
         }
 
         #endregion
+
     }
 }

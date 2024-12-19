@@ -12,7 +12,7 @@ using WebApp.Factory;
 using WebApp.Identity;
 using WebApp.Models;
 using WebApp.Utility;
-using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
+using IWebHostEnvironment = Microsoft.AspNetCore.Hosting.IWebHostEnvironment;
 using Microsoft.AspNetCore.Authorization;
 
 namespace WebApp.Controllers;
@@ -25,14 +25,14 @@ public class EventoController : BaseController
 {
     #region Constructor
 
-    private readonly IHostingEnvironment _host;
+    private readonly IWebHostEnvironment _host;
 
 	/// <summary>
 	/// Construtor da página
 	/// </summary>
 	/// <param name="app">configurações de urls do sistema</param>
 	/// <param name="host">informações da aplicação em execução</param>
-	public EventoController(IOptions<UrlSettings> appSettings, IHostingEnvironment host)
+	public EventoController(IOptions<UrlSettings> appSettings, IWebHostEnvironment host)
     {
 	    _host = host;
         ApplicationSettings.WebApiUrl = appSettings.Value.WebApiBaseUrl;
@@ -191,8 +191,8 @@ public class EventoController : BaseController
 			{
 				var file = t;
 				if (file.Length <= 0) continue;
-				fileName = $"{collection["eventoId"]}-{Path.GetFileName(t.FileName)}";
-				filePath = Path.Combine(_host.WebRootPath, $"Eventos\\{collection["eventoId"]}-{fileName}");
+				fileName = $"{collection["eventoId"]}-{Guid.NewGuid()}.jpg";
+				filePath = Path.Combine(_host.WebRootPath, $"Eventos\\{fileName}");
 
 				if (!Directory.Exists(Path.Combine(_host.WebRootPath, $"Eventos")))
 					Directory.CreateDirectory(Path.Combine(_host.WebRootPath, $"Eventos"));
@@ -207,10 +207,9 @@ public class EventoController : BaseController
 					Url = filePath
 				});
 			}
-            
-			await ApiClientFactory.Instance.CreateFotoEvento(list);
+            await ApiClientFactory.Instance.CreateFotoEvento(list);
 
-			return RedirectToAction(nameof(Index), new { notify = EnumNotify.Success, mesage = "Upload realizado com sucesso." });
+			return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Success, message = "Upload de foto realizado com sucesso." });
 		}
 		catch (Exception e)
 		{
@@ -293,17 +292,46 @@ public class EventoController : BaseController
     /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
     /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
     [ClaimsAuthorize(ClaimType.Evento, Identity.Claim.Incluir)]
-    public ActionResult CreateControlePresenca(int eventoId, int? crud, int? notify, string message = null)
+    public async Task<ActionResult> CreateControlePresenca(int eventoId, int? crud, int? notify, string message = null)
     {
         try
         {
             SetNotifyMessage(notify, message);
             SetCrudMessage(crud);
+
+            long alunoId = 0;
+
             var evento = ApiClientFactory.Instance.GetEventoById(eventoId);
+
             var listAlunos = ApiClientFactory.Instance.GetAlunosByLocalidade(Convert.ToInt32(evento.LocalidadeId));
 
-            var alunos = new SelectList(listAlunos, "Id", "Nome"); ;
-            var convidado = listAlunos.First(x => x.Nome.Contains("Convidado"));
+            var alunos = new SelectList(listAlunos, "Id", "Nome"); 
+
+            var convidado = listAlunos.FirstOrDefault(x => x.Convidado);
+
+
+            if (convidado == null)
+            {
+                var command = new AlunoModel.CreateUpdateDadosAlunoCommand
+                {
+                    MunicipioId = Convert.ToInt32(evento.MunicipioId),
+                    Nome = "Convidado",
+                    Email = "convidado@convidado.com",
+                    Sexo = "G",
+                    DtNascimento = DateTime.Now.ToString("dd/MM/yyyy"),
+                    LocalidadeId = Convert.ToInt32(evento.LocalidadeId),
+                    FomentoId = Convert.ToInt32(ApiClientFactory.Instance.GetFomentoByLocalidadeId(Convert.ToInt32(evento.LocalidadeId)).Id),
+                    Etnia = "NA",
+                    Convidado = true
+
+
+                };
+
+                await ApiClientFactory.Instance.CreateDados(command);
+
+                convidado = ApiClientFactory.Instance.GetAlunosByLocalidade(Convert.ToInt32(evento.LocalidadeId))
+                    .FirstOrDefault(x => x.Convidado);
+            }
 
             return View(new EventoModel()
             {

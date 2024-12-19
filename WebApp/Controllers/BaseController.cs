@@ -1,6 +1,11 @@
 ﻿using Infraero.Relprev.CrossCutting.Enumerators;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
+using WebApp.Authorization;
 using WebApp.Enumerators;
+using WebApp.Factory;
+using WebApp.Identity;
+using WebApp.Models;
 
 namespace WebApp.Controllers
 {
@@ -56,6 +61,12 @@ namespace WebApp.Controllers
                     ViewBag.Notify = "null";
                     break;
             }
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

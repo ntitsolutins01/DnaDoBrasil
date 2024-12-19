@@ -75,7 +75,8 @@ namespace WebApp.Controllers
 
 				var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
 				var modalidades = new SelectList(ApiClientFactory.Instance.GetModalidadeAll(), "Id", "Nome");
-                var resultPerfil = ApiClientFactory.Instance.GetPerfilAll();
+                var perfis = new[] { (int)EnumPerfil.Profissional, (int)EnumPerfil.GestorPedagogico, (int)EnumPerfil.GestorProjeto };
+                var resultPerfil = ApiClientFactory.Instance.GetPerfilAll().Where(x=>perfis.Contains(x.Id));
 
 
                 return View(new ProfissionalModel()
@@ -408,7 +409,7 @@ namespace WebApp.Controllers
 				var newUser = new IdentityUser { UserName = command.Email, Email = command.Email };
 				await _userManager.CreateAsync(newUser, "12345678");
 
-				command.PerfilId = result2.PerfilId;
+				command.PerfilId = result2.Perfil.Id;
 				var perfil = ApiClientFactory.Instance.GetPerfilById(command.PerfilId);
 
 				var includedUserId = _userManager.Users.FirstOrDefault(x => x.Email == newUser.Email).Id;

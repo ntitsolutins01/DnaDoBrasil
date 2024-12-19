@@ -1,4 +1,6 @@
-﻿namespace WebApp.Dto
+﻿using ClosedXML.Excel;
+
+namespace WebApp.Dto
 {
     public class LaudoDto
     {
@@ -14,6 +16,7 @@
         public int? SaudeBucalId { get; set; }
         public int? LocalidadeId { get; set; }
         public int? AlunoId { get; set; }
+        public int? ProfissionalId { get; set; }
         public int? EncaminhamentoVocacionalId { get; set; }
         //public int? EncaminhamentoQualidadeVidaId { get; set; }
         public int? EncaminhamentoConsumoAlimentarId { get; set; }
@@ -28,6 +31,7 @@
         public required string NomeLocalidade { get; set; }
         public string? MunicipioEstado { get; set; }
         public string? Sexo { get; set; }
+        public string? Etnia { get; set; }
         public string? StatusLaudo { get; set; }
         public DateTime? DtNascimento { get; set; }
         public int? Idade { get; set; }
@@ -38,6 +42,7 @@
         public byte[]? ByteImage { get; set; }
         public string? NomeFoto { get; set; }
         public string? Modalidade { get; set; }
+        public byte[]? ModalidadeByteImage { get; set; }
         //public string? Serie { get; set; }
         //public string? Turma { get; set; }
         //public int? MunicipioId { get; set; }
@@ -48,6 +53,17 @@
         #region Saude
 
         public string? ImcSaude { get; set; }
+
+        #endregion
+
+        #region Edição de Laudo
+        public string? Uf { get; init; }
+
+        #endregion
+
+        #region Exportacao
+        public string Telefone { get; set; }
+        public string Celular { get; set; }
 
         #endregion
     }

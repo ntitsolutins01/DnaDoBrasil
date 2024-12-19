@@ -2,7 +2,7 @@ var vm = new Vue({
     el: "#vCurso ",
     data: {
         loading: false,
-        editDto: { Id: "", Titulo: "", Descricao: "", CargaHoraria: "", Status: true }
+        editDto: { Id: "", Titulo: "", Descricao: "", CargaHoraria: "", Status: true, Imagem: "", NomeImagem:"" }
     },
     mounted: function () {
         var self = this;
@@ -125,13 +125,27 @@ var vm = new Vue({
         EditCurso: function (id) {
             var self = this;
 
+            self.editDto = { Id: "", Titulo: "", Descricao: "", CargaHoraria: "", Status: true, Imagem: "", NomeImagem: "" };
+
             axios.get("Curso/GetCursoById/?id=" + id).then(result => {
 
-                self.editDto.Id = result.data.id;
-                self.editDto.Titulo = result.data.titulo;
-                self.editDto.Descricao = result.data.descricao;
-                self.editDto.CargaHoraria = result.data.cargaHoraria;
-                self.editDto.Status = result.data.status;
+                self.$nextTick(() => {
+                    self.editDto = {
+                        Id: result.data.id,
+                        Titulo: result.data.titulo,
+                        Descricao: result.data.descricao,
+                        CargaHoraria: result.data.cargaHoraria,
+                        Status: result.data.status,
+                        Imagem: result.data.imagem,
+                        NomeImagem: result.data.nomeImagem
+                    };
+                });
+
+                self.$nextTick(() => {
+                    $("#descricao").val(result.data.descricao || '');
+
+                    $("#descricao")[0].dispatchEvent(new Event('input'));
+                });
 
                 if (result.data.listCoordenadores.length > 0) {
                     var items = '<option value="">Selecionar o Coordenador</option>';
@@ -155,6 +169,7 @@ var vm = new Vue({
                 }
 
             }).catch(error => {
+                console.error('Erro ao carregar dados:', error);
                 Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
             });
         }

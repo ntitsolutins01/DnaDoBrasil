@@ -1,5 +1,5 @@
-﻿var vm = new Vue({
-    el: "#formLaudo",
+var vm = new Vue({
+    el: "#vLaudo",
     data: {
         loading: false,
     },
@@ -20,101 +20,6 @@
                             var $this = $(this);
 
                             $this.themePluginIOS7Switch();
-                        });
-                    });
-
-                }
-
-            }).apply(this, [jQuery]);
-
-            // TimePicker
-            (function (theme, $) {
-
-                theme = theme || {};
-
-                var instanceName = '__timepicker';
-
-                var PluginTimePicker = function ($el, opts) {
-                    return this.initialize($el, opts);
-                };
-
-                PluginTimePicker.defaults = {
-                    disableMousewheel: true
-                };
-
-                PluginTimePicker.prototype = {
-                    initialize: function ($el, opts) {
-                        if ($el.data(instanceName)) {
-                            return this;
-                        }
-
-                        this.$el = $el;
-
-                        this
-                            .setData()
-                            .setOptions(opts)
-                            .build();
-
-                        return this;
-                    },
-
-                    setData: function () {
-                        this.$el.data(instanceName, this);
-
-                        return this;
-                    },
-
-                    setOptions: function (opts) {
-                        this.options = $.extend(true, {}, PluginTimePicker.defaults, opts);
-
-                        return this;
-                    },
-
-                    build: function () {
-                        this.$el.timepicker(this.options);
-
-                        return this;
-                    }
-                };
-
-                // expose to scope
-                $.extend(theme, {
-                    PluginTimePicker: PluginTimePicker
-                });
-
-                // jquery plugin
-                $.fn.themePluginTimePicker = function (opts) {
-                    return this.each(function () {
-                        var $this = $(this);
-
-                        if ($this.data(instanceName)) {
-                            return $this.data(instanceName);
-                        } else {
-                            return new PluginTimePicker($this, opts);
-                        }
-
-                    });
-                }
-
-            }).apply(this, [window.theme, jQuery]);
-
-            // TimePicker
-            (function ($) {
-
-                'use strict';
-
-                if ($.isFunction($.fn['timepicker'])) {
-
-                    $(function () {
-                        $('[data-plugin-timepicker]').each(function () {
-                            var $this = $(this),
-                                opts = {};
-
-                            var pluginOptions = $this.data('plugin-options');
-                            if (pluginOptions)
-                                opts = pluginOptions;
-
-                            $this.themePluginTimePicker(opts);
                         });
                     });
 
@@ -287,28 +192,6 @@
 
             if (formid === "formEditLaudo") {
 
-                $("#formEditLaudo").validate({
-                    highlight: function (label) {
-                        $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
-                    },
-                    success: function (label) {
-                        $(label).closest('.form-group').removeClass('has-error');
-                        label.remove();
-                    },
-                    errorPlacement: function (error, element) {
-                        var placement = element.closest('.input-group');
-                        if (!placement.get(0)) {
-                            placement = element;
-                        }
-                        if (error.text() !== '') {
-                            placement.after(error);
-                        }
-                    }
-                });
-            }
-
-            if (formid === "formLaudo") {
-
                 //skin select
                 var $select = $(".select2").select2({
                     allowClear: true
@@ -449,28 +332,216 @@
                 });
 
                 //mascara dos inputs
-                var $numAltura = $("#altura");
-                $numAltura.mask('000', { reverse: false });
-                var $numMassaCorporal = $("#massaCorporal");
-                $numMassaCorporal.mask('000', { reverse: false });
-                var $numPreensaoManual = $("#preensaoManual");
-                $numPreensaoManual.mask('000', { reverse: false });
-                var $numFlexibilidade = $("#flexibilidade");
-                $numFlexibilidade.mask('000', { reverse: false });
-                var $numImpulsaoHorizontal = $("#impulsaoHorizontal");
-                $numImpulsaoHorizontal.mask('000', { reverse: false });
-                var $numAptidaoFisica = $("#aptidaoFisica");
-                $numAptidaoFisica.mask('000', { reverse: false });
-                var $numAlturaSaude = $("#alturaSaude");
-                $numAlturaSaude.mask('000', { reverse: false });
-                var $numMassaCorporalSaude = $("#massaCorporalSaude");
-                $numMassaCorporalSaude.mask('000', { reverse: false });
-                var $numEnvergaduraSaude = $("#envergaduraSaude");
-                $numEnvergaduraSaude.mask('000', { reverse: false });
-                var $numTesteVelocidade = $("#testeVelocidade");
-                $numTesteVelocidade.mask('00', { reverse: false });
-                var $numAgilidade = $("#agilidade");
-                $numAgilidade.mask('00', { reverse: false });
+                $('#massaCorporalSaude').maskMoney();
+                $("#massaCorporalSaude").maskMoney('mask');
+                $('#massaCorporal').maskMoney();
+                $("#massaCorporal").maskMoney('mask');
+                $('#preensaoManual').maskMoney();
+                $("#preensaoManual").maskMoney('mask');
+
+                $('#aptidaoFisica').maskMoney();
+                $("#aptidaoFisica").maskMoney('mask');
+                $('#testeVelocidade').maskMoney();
+                $("#testeVelocidade").maskMoney('mask');
+                $('#agilidade').maskMoney();
+                $("#agilidade").maskMoney('mask');
+
+                $("#formEditLaudo").validate({
+                    highlight: function (label) {
+                        $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
+                    },
+                    success: function (label) {
+                        $(label).closest('.form-group').removeClass('has-error');
+                        label.remove();
+                    },
+                    errorPlacement: function (error, element) {
+                        var placement = element.closest('.input-group');
+                        if (!placement.get(0)) {
+                            placement = element;
+                        }
+                        if (error.text() !== '') {
+                            placement.after(error);
+                        }
+                    }
+                });
+            }
+
+            if (formid === "formLaudo") {
+
+
+                //skin select
+                var $select = $(".select2").select2({
+                    allowClear: true
+                });
+
+                $(".select2").each(function () {
+                    var $this = $(this),
+                        opts = {};
+
+                    var pluginOptions = $this.data('plugin-options');
+                    if (pluginOptions)
+                        opts = pluginOptions;
+
+                    $this.themePluginSelect2(opts);
+                });
+
+                /*
+                 * When you change the value the select via select2, it triggers
+                 * a 'change' event, but the jquery validation plugin
+                 * only re-validates on 'blur'*/
+
+                $select.on('change', function () {
+                    $(this).trigger('blur');
+                });
+
+                $("#ddlEstado").change(function () {
+                    var sigla = $("#ddlEstado").val();
+
+                    var url = "../DivisaoAdministrativa/GetMunicipioByUf?uf=" + sigla;
+
+                    var ddlSource = "#ddlMunicipio";
+
+                    $.getJSON(url,
+                        { id: $(ddlSource).val() },
+                        function (data) {
+                            if (data.length > 0) {
+                                var items = '<option value="">Selecionar Municipio</option>';
+                                $("#ddlMunicipio").empty;
+                                $.each(data,
+                                    function (i, row) {
+                                        items += "<option value='" + row.value + "'>" + row.text + "</option>";
+                                    });
+                                $("#ddlMunicipio").html(items);
+                            }
+                            else {
+                                new PNotify({
+                                    title: 'Fomento',
+                                    text: 'Municípios não encontrados.',
+                                    type: 'warning'
+                                });
+                            }
+                        });
+                });
+
+                //clique de escolha do select
+                $("#ddlMunicipio").change(function () {
+                    var id = $("#ddlMunicipio").val();
+
+                    var url = "../../Localidade/GetLocalidadeByMunicipio?id=" + id;
+
+                    var ddlSource = "#ddlLocalidade";
+
+                    $.getJSON(url,
+                        { id: $(ddlSource).val() },
+                        function (data) {
+                            if (data.length > 0) {
+                                var items = '<option value="">Selecionar Localidade</option>';
+                                $("#ddlLocalidade").empty;
+                                $.each(data,
+                                    function (i, row) {
+                                        items += "<option value='" + row.value + "'>" + row.text + "</option>";
+                                    });
+                                $("#ddlLocalidade").html(items);
+                            }
+                            else {
+                                new PNotify({
+                                    title: 'Localidades',
+                                    text: 'Localidades não encontradas.',
+                                    type: 'warning'
+                                });
+                            }
+                        });
+                });
+
+                //clique de escolha do select
+                $("#ddlLocalidade").change(function () {
+                    var id = $("#ddlLocalidade").val();
+
+                    var url = "../../Aluno/GetAlunosByLocalidade?id=" + id;
+
+                    var ddlSource = "#ddlAluno";
+
+                    $.getJSON(url,
+                        { id: $(ddlSource).val() },
+                        function (data) {
+                            if (data.length > 0) {
+                                var items = '<option value="">Selecionar Aluno</option>';
+                                $("#ddlAluno").empty;
+                                $.each(data,
+                                    function (i, row) {
+                                        items += "<option value='" + row.value + "'>" + row.text + "</option>";
+                                    });
+                                $("#ddlAluno").html(items);
+                            }
+                            else {
+                                new PNotify({
+                                    title: 'Alunos',
+                                    text: 'Alunos não encontrados.',
+                                    type: 'warning'
+                                });
+                            }
+                        });
+
+                    var urlProfissional = "../../Profissional/GetProfissionaisByLocalidade/?id=" + id;
+
+                    var ddlSource = "#ddlProfissional";
+
+                    $.getJSON(urlProfissional,
+                        { id: $(ddlSource).val() },
+                        function (data) {
+                            if (data.length > 0) {
+                                var items = '<option value="">Selecionar Profissional</option>';
+                                $("#ddlProfissional").empty;
+                                $.each(data,
+                                    function (i, row) {
+                                        items += "<option value='" + row.value + "'>" + row.text + "</option>";
+                                    });
+                                $("#ddlProfissional").html(items);
+                            }
+                            else {
+                                new PNotify({
+                                    title: 'Profissional',
+                                    text: 'Profissional não encontrados.',
+                                    type: 'warning'
+                                });
+                            }
+                        });
+                });
+
+                //clique de escolha do select
+                $("#ddlAluno").change(function () {
+                    var id = $("#ddlAluno").val();
+
+                    var url = "../../Aluno/GetAlunoIdadeById?id=" + id;
+
+                    $.getJSON(url,
+                        { id: id },
+                        function (data) {
+                            $("#divIdade").show();
+                            $("#spanIdade").text(data + " anos");
+                            if (data < 12) {
+                                $("#liQualidade").hide();
+                            }
+                            if (data < 14) {
+                                $("#liVocacional").hide();
+                            }
+                        });
+                });
+
+                //mascara dos inputs 
+                $('#massaCorporalSaude').maskMoney();
+                //$("#massaCorporalSaude").maskMoney('mask');
+                $('#massaCorporal').maskMoney();
+                //$("#massaCorporal").maskMoney('mask');
+                $('#preensaoManual').maskMoney();
+                //$("#preensaoManual").maskMoney('mask');
+
+                $('#aptidaoFisica').maskMoney();
+                //$("#aptidaoFisica").maskMoney('mask');
+                $('#testeVelocidade').maskMoney();
+                //$("#testeVelocidade").maskMoney('mask');
+                $('#agilidade').maskMoney();
+                //$("#agilidade").maskMoney('mask');
 
                 $("#formLaudo").validate({
                     highlight: function (label) {
@@ -513,6 +584,32 @@
                 $("#" + el).addClass("loading-overlay-showing");
                 self.loading = flag;
             }
+        },
+        Print: function () {
+            var self = this;
+
+            var filtros = {
+                ddlFomento: $('#ddlFomento').val(),
+                ddlEstado: $('#ddlEstado').val(),
+                ddlMunicipio: $('#ddlMunicipio').val(),
+                ddlLocalidade: $('#ddlLocalidade').val(),
+                ddlAluno: $('#ddlAluno').val(),
+                ddlTipoLaudo: $('#ddlTipoLaudo').val(),
+                possuiFoto: $('#possuiFoto').val(),
+                finalizado: $('#finalizado').val()
+            };
+
+            var queryString = Object.keys(filtros)
+                .filter(key => filtros[key])
+                .map(key => `${key}=${encodeURIComponent(filtros[key])}`)
+                .join('&');
+
+            var url = $(this).attr('href');
+            if (queryString) {
+                url += '?' + queryString;
+            }
+
+            window.open(url, '_blank');
         }
     }
 });

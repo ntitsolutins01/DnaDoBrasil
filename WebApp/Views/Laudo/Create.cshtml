@@ -1,9 +1,9 @@
-﻿@model LaudoModel
+@model LaudoModel
 @{
     ViewData["Title"] = "CreateLaudo";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="row">
+<div class="row" id="vLaudo">
     <div class="col-md-12">
         @using (@Html.BeginForm("Create", "Laudo", FormMethod.Post, new { id = "formLaudo", @class = "form-horizontal" }))
         {
@@ -62,6 +62,12 @@
                                     <option value="">Selecionar Aluno</option>
                                 </select>
                             </div>
+                            <div id="divIdade" style="display: none">
+                                <label class="col-sm-2 control-label text-sm-right pt-2">Idade </label>
+                                <div class="col-md-4" style="padding-top: 6px;">
+                                    <code style="font-size: 140%;"><span id="spanIdade"></span></code>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <br /><br />
@@ -93,19 +99,21 @@
                                         <span style="color: #5bc0de;">Saúde Bucal</span>
                                     </a>
                                 </li>
-                                <li class="">
-                                    <a href="#qualidade-vida" data-toggle="tab" aria-expanded="false">
-                                        <i class="fa fa-star-o" style="color: #00a4a9;"></i>
-                                        <span style="color: #00a4a9;">Qualidade de Vida</span>
-                                    </a>
-                                </li>
-                                <li class="">
-                                    <a href="#vocacional"
-                                       data-toggle="tab" aria-expanded="false">
-                                        <i class="fa fa-star-half-o" style="color: #a787c0;"></i>
-                                        <span style="color: #a787c0;">Vocacional</span>
-                                    </a>
-                                </li>
+                                
+                                    <li class="" id="liQualidade">
+                                        <a href="#qualidade-vida" data-toggle="tab" aria-expanded="false">
+                                            <i class="fa fa-thumbs-up" style="color: #00a4a9;"></i>
+                                            <span style="color: #00a4a9;">Qualidade de Vida</span>
+                                        </a>
+                                    </li>
+                                
+                                    <li class="" id="liVocacional">
+                                        <a href="#vocacional"
+                                           data-toggle="tab" aria-expanded="false">
+                                            <i class="fa fa-star" style="color: #9c27b0;"></i>
+                                            <span style="color: #9c27b0;">Vocacional</span>
+                                        </a>
+                                    </li>
                             </ul>
                             <div class="tab-content">
                                 <div id="saude" class="tab-pane active">
@@ -113,13 +121,15 @@
                                         <div>
                                             <label class="col-sm-2 control-label"><strong>Altura (cm) </strong></label>
                                             <div class="col-sm-4">
-                                                <input type="text" class="form-control" id="alturaSaude" name="alturaSaude" maxlength="3" />
+                                                <input type="text" class="form-control" id="alturaSaude" name="alturaSaude" maxlength="3"
+                                                       required title="Favor informe Altura (cm)" />
                                             </div>
                                         </div>
                                         <div>
                                             <label class="col-sm-3 control-label"><strong>Massa Corporal (kg) </strong></label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="massaCorporalSaude" name="massaCorporalSaude" maxlength="3" />
+                                                <input type="text" class="form-control" id="massaCorporalSaude" name="massaCorporalSaude" maxlength="6"
+                                                       required title="Favor informe Massa Corporal (kg)" />
                                             </div>
                                         </div>
                                     </div>
@@ -127,7 +137,8 @@
                                         <div>
                                             <label class="col-sm-2 control-label"><strong>Envergadura (cm)</strong></label>
                                             <div class="col-sm-4">
-                                                <input type="text" class="form-control" id="envergaduraSaude" name="envergaduraSaude" maxlength="3" />
+                                                <input type="text" class="form-control" id="envergaduraSaude" name="envergaduraSaude" maxlength="3"
+                                                       required title="Favor informe Envergadura (cm)" />
                                             </div>
                                         </div>
                                     </div>
@@ -137,13 +148,15 @@
                                         <div>
                                             <label class="col-sm-2 control-label"><strong>Altura (cm) </strong></label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="altura" name="altura" maxlength="3" />
+                                                <input type="text" class="form-control" id="altura" name="altura" maxlength="3"
+                                                       required title="Favor informe Altura (cm)" />
                                             </div>
                                         </div>
                                         <div>
                                             <label class="col-sm-3 control-label"><strong>Massa Corporal (kg)</strong></label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="massaCorporal" name="massaCorporal" maxlength="3" />
+                                                <input type="text" class="form-control" id="massaCorporal" name="massaCorporal" maxlength="6"
+                                                       required title="Favor informe Massa Corporal (kg)" />
                                             </div>
                                         </div>
                                     </div>
@@ -151,13 +164,15 @@
                                         <div>
                                             <label class="col-sm-2 control-label"><strong>Preensão Manual (kg)</strong></label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="preensaoManual" name="preensaoManual" maxlength="3" />
+                                                <input type="text" class="form-control" id="preensaoManual" name="preensaoManual" maxlength="6"
+                                                       required title="Favor informe Preensão Manual (kg)" />
                                             </div>
                                         </div>
                                         <div>
                                             <label class="col-sm-3 control-label"><strong>Flexibilidade (cm)</strong></label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="flexibilidade" name="flexibilidade" maxlength="3" />
+                                                <input type="text" class="form-control" id="flexibilidade" name="flexibilidade" maxlength="6"
+                                                       required title="Favor informe Flexibilidade (cm)" />
                                             </div>
                                         </div>
                                     </div>
@@ -165,7 +180,8 @@
                                         <div>
                                             <label class="col-sm-2 control-label"><strong>Impulsão Horizontal (cm)</strong></label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="impulsaoHorizontal" name="impulsaoHorizontal" maxlength="3" />
+                                                <input type="text" class="form-control" id="impulsaoHorizontal" name="impulsaoHorizontal" maxlength="6"
+                                                       required title="Favor informe Impulsão Horizontal (cm)" />
                                             </div>
                                         </div>
                                         <div>
@@ -176,7 +192,8 @@
                                                         <i class="fa fa-clock-o"></i>
                                                     </span>
                                                     @* <input type="text" id="testeVelocidade" name="testeVelocidade" value="00:00" data-plugin-timepicker class="form-control" data-plugin-options='{ "showMeridian": false, "explicitMode": true, "setDefaultTime": false }'> *@
-                                                    <input type="text" class="form-control" id="testeVelocidade" name="testeVelocidade" maxlength="2" />
+                                                    <input type="text" class="form-control" id="testeVelocidade" name="testeVelocidade" maxlength="6"
+                                                           required title="Favor informe Teste de Velocidade 20m (seg)" />
                                                 </div>
                                             </div>
                                         </div>
@@ -185,7 +202,8 @@
                                         <div>
                                             <label class="col-sm-2 control-label"><strong>Aptidão Física (mLO2/min)</strong></label>
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control" id="aptidaoFisica" name="aptidaoFisica" maxlength="6" />
+                                                <input type="text" class="form-control" id="aptidaoFisica" name="aptidaoFisica" maxlength="6"
+                                                       required title="Favor informe Aptidão Física (mLO2/min)" />
                                             </div>
                                         </div>
                                         <div>
@@ -196,7 +214,8 @@
                                                         <i class="fa fa-clock-o"></i>
                                                     </span>
                                                     @* <input type="text" id="agilidade" name="agilidade" value="00:00" data-plugin-timepicker class="form-control" data-plugin-options='{ "showMeridian": false, "explicitMode": true , "setDefaultTime": false }'> *@
-                                                    <input type="text" class="form-control" id="agilidade" name="agilidade" maxlength="2" />
+                                                    <input type="text" class="form-control" id="agilidade" name="agilidade" maxlength="6"
+                                                           required title="Favor informe Agilidade (seg)" />
 
                                                 </div>
                                             </div>
@@ -219,61 +238,63 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div id="vocacional" class="tab-pane">
-                                    @for (var index = 0; index < Model.QuestionarioVocacional.Count; index++)
-                                    {
-                                        var item = Model.QuestionarioVocacional[index];
-                                        <div class="form-group">
-                                            <div class="col-sm-12">
-                                                <label class="control-label">
-                                                    <strong>@item.Questao - @item.Pergunta</strong>
-                                                </label>
-                                                <input type="hidden" id="perguntaVocacional_@item.Id" />
+                                
+                                    <div id="vocacional" class="tab-pane">
+                                        @for (var index = 0; index < Model.ListQuestionarioVocacional.Count; index++)
+                                        {
+                                            var item = Model.ListQuestionarioVocacional[index];
+                                            <div class="form-group">
+                                                <div class="col-sm-12">
+                                                    <label class="control-label">
+                                                        <strong>@item.Questao - @item.Pergunta</strong>
+                                                    </label>
+                                                    <input type="hidden" id="perguntaVocacional_@item.Id" />
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    @foreach (var resp in @item.Respostas)
+                                                    {
+                                                        <div class="radio-custom radio-default col-sm-3">
+                                                            <input id="respVocacional_@resp.Id" name="nomeRespVocacional_@index" type="radio" value="@resp.Id"
+                                                                   required title="Por favor selecione uma opção." />
+                                                            <label for="respVocacional_@resp.Id">@resp.RespostaQuestionario</label>
+                                                        </div>
+                                                    }
+                                                    <label class="error" for="nomeRespVocacional_@index"></label>
+                                                </div>
                                             </div>
-                                            <div class="col-sm-12">
-                                                @foreach (var resp in @item.Respostas)
-                                                {
-                                                    <div class="radio-custom radio-default col-sm-3">
-                                                        <input id="respVocacional_@resp.Id" name="nomeRespVocacional_@index" type="radio" value="@resp.Id"
-                                                               required title="Por favor selecione uma opção." />
-                                                        <label for="respVocacional_@resp.Id">@resp.RespostaQuestionario</label>
-                                                    </div>
-                                                }
-                                                <label class="error" for="nomeRespVocacional_@index"></label>
-                                            </div>
-                                        </div>
-                                    }
+                                        }
 
-                                </div>
-                                <div id="qualidade-vida" class="tab-pane">
-                                    @for (var index = 0; index < Model.QuestionarioQualidadeVida.Count; index++)
-                                    {
-                                        var item = Model.QuestionarioQualidadeVida[index];
-                                        <div class="form-group">
-                                            <div class="col-sm-12">
-                                                <label class="control-label">
-                                                    <strong>@item.Questao - @item.Pergunta</strong>
-                                                </label>
-                                                <input type="hidden" id="perguntaQualidadeVida_@item.Id" />
+                                    </div>
+                                
+                                    <div id="qualidade-vida" class="tab-pane">
+                                        @for (var index = 0; index < Model.ListQuestionarioQualidadeVida.Count; index++)
+                                        {
+                                            var item = Model.ListQuestionarioQualidadeVida[index];
+                                            <div class="form-group">
+                                                <div class="col-sm-12">
+                                                    <label class="control-label">
+                                                        <strong>@item.Questao - @item.Pergunta</strong>
+                                                    </label>
+                                                    <input type="hidden" id="perguntaQualidadeVida_@item.Id" />
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    @foreach (var resp in @item.Respostas)
+                                                    {
+                                                        <div class="radio-custom radio-default col-sm-2">
+                                                            <input id="respQualidadeVida_@resp.Id" name="nomeRespQualidadeVida_@index" type="radio" value="@resp.Id"
+                                                                   required title="Por favor selecione uma opção." />
+                                                            <label for="respQualidadeVida_@resp.Id">@resp.RespostaQuestionario</label>
+                                                        </div>
+                                                    }
+                                                    <label class="error" for="nomeRespQualidadeVida_@index"></label>
+                                                </div>
                                             </div>
-                                            <div class="col-sm-12">
-                                                @foreach (var resp in @item.Respostas)
-                                                {
-                                                    <div class="radio-custom radio-default col-sm-2">
-                                                        <input id="respQualidadeVida_@resp.Id" name="nomeRespQualidadeVida_@index" type="radio" value="@resp.Id"
-                                                               required title="Por favor selecione uma opção." />
-                                                        <label for="respQualidadeVida_@resp.Id">@resp.RespostaQuestionario</label>
-                                                    </div>
-                                                }
-                                                <label class="error" for="nomeRespQualidadeVida_@index"></label>
-                                            </div>
-                                        </div>
-                                    }
-                                </div>
+                                        }
+                                    </div>
                                 <div id="consumo-alimentar" class="tab-pane">
-                                    @for (var index = 0; index < Model.QuestionarioConsumoAlimentar.Count; index++)
+                                    @for (var index = 0; index < Model.ListQuestionarioConsumoAlimentar.Count; index++)
                                     {
-                                        var item = Model.QuestionarioConsumoAlimentar[index];
+                                        var item = Model.ListQuestionarioConsumoAlimentar[index];
                                         <div class="form-group">
                                             <div class="col-sm-12">
                                                 <label class="control-label">
@@ -296,9 +317,9 @@
                                     }
                                 </div>
                                 <div id="saude-bucal" class="tab-pane">
-                                    @for (var index = 0; index < Model.QuestionarioSaudeBucal.Count; index++)
+                                    @for (var index = 0; index < Model.ListQuestionarioSaudeBucal.Count; index++)
                                     {
-                                        var item = Model.QuestionarioSaudeBucal[index];
+                                        var item = Model.ListQuestionarioSaudeBucal[index];
                                         <div class="form-group">
                                             <div class="col-sm-12">
                                                 <label class="control-label">
@@ -342,21 +363,69 @@
     <link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css" />
     <link rel="stylesheet" href="~/assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
     <link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />
-    <link href="~/assets/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.css" rel="stylesheet" />
-    <link rel="stylesheet" href="~/assets/vendor/bootstrap-timepicker/css/bootstrap-timepicker.css" />
 }
 @section Scripts {
     <script src="~/assets/vendor/ios7-switch/ios7-switch.js"></script>
     <script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
     <script src="~/assets/vendor/select2/js/select2.js"></script>
+    <script src="~/assets/vendor/jquery-mask/jquery.maskMoney.js"></script>
     <script src="~/assets/vendor/jquery-mask/jquery.mask.js"></script>
     <script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
     <script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
-    <script src="~/assets/vendor/bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR.min.js"></script>
-    <script src="~/assets/vendor/bootstrap-timepicker/bootstrap-timepicker.js"></script>
-    <script src="~/assets/vendor/fuelux/js/spinner.js"></script>
     <script src="~/js/formatTable.js"></script>
     <script src="~/js/laudo.js"></script>
+    <script>
+
+        (function ($) {
+
+            'use strict';
+            var crud = @ViewBag.CrudMessage;
+
+            if (crud === 1) {
+                new PNotify({
+                    title: 'Laudo',
+                    text: 'Cadastro realizado com sucesso!',
+                    type: 'success'
+                });
+            } else if (crud === 2) {
+                new PNotify({
+                    title: 'Laudo',
+                    text: 'Dados alterados com sucesso.',
+                    type: 'warning'
+                });
+            } else if (crud === 3) {
+                new PNotify({
+                    title: 'Laudo',
+                    text: 'Registro excluído com sucesso.',
+                    type: 'error'
+                });
+            }
+
+            var notify = @ViewBag.NotifyMessage;
+            var messagem = '@ViewBag.Notify';
+
+            if (notify === 0) {
+                new PNotify({
+                    title: 'Laudo',
+                    text: messagem,
+                    type: 'success'
+                });
+            } else if (notify === 1) {
+                new PNotify({
+                    title: 'Laudo',
+                    text: messagem,
+                    type: 'warning'
+                });
+            } else if (notify === 2) {
+                new PNotify({
+                    title: 'Laudo',
+                    text: messagem,
+                    type: 'error'
+                });
+            }
+
+        }).apply(this, [jQuery]);
+    </script>
 }
 
 

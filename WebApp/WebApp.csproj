@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="ClosedXML" Version="0.104.1" />
     <PackageReference Include="MailKit" Version="4.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="7.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.17" />
@@ -174,7 +175,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Views\Base\" />
     <Folder Include="Views\BemVindo\" />
+    <Folder Include="wwwroot\assets\styles_Carteirinha\images\" />
+    <Folder Include="wwwroot\Exportacao\" />
   </ItemGroup>
 
   <ItemGroup>

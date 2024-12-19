@@ -6,6 +6,7 @@ namespace WebApp.ApiClient
     public partial class DnaApiClient
     {
         private const string ResourceTalentoEsportivo = "TalentosEsportivos";
+
         #region Main Methods
 
         public Task<long> CreateTalentoEsportivo(TalentoEsportivoModel.CreateUpdateTalentoEsportivoCommand command)
@@ -33,10 +34,11 @@ namespace WebApp.ApiClient
 
         #region Methods
 
-        public TalentoEsportivoDto GetTalentoEsportivoByAluno(string id)
+        
+        public TalentoEsportivoDto GetTalentoEsportivoByAluno(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"Laudos/TalentoEsportivo/Aluno/{id}"));
+                $"{ResourceTalentoEsportivo}/Aluno/{id}"));
             return Get<TalentoEsportivoDto>(requestUrl);
         }
         public List<TalentoEsportivoDto> GetTalentoEsportivoAll()
@@ -45,7 +47,13 @@ namespace WebApp.ApiClient
                 $"{ResourceTalentoEsportivo}"));
             return Get<List<TalentoEsportivoDto>>(requestUrl);
         }
-
+        public TalentoEsportivoDto GetTalentoEsportivoById(int id)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceTalentoEsportivo}/{id}"));
+            return Get<TalentoEsportivoDto>(requestUrl);
+        }
         #endregion
+
     }
 }

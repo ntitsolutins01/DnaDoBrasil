@@ -88,9 +88,9 @@ namespace WebApp.Controllers
                 ApiClientFactory.Instance.DeleteLocalidade(id);
                 return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
             }
-            catch
+            catch (Exception e)
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = $"Erro ao executar esta ação {e.Message}" });
             }
         }
 
