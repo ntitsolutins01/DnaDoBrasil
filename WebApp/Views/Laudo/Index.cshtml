@@ -17,37 +17,45 @@
                         <h2 class="panel-title">Filtro de pesquisa</h2>
                     </header>
                     <div class="panel-body">
+                        <label class="col-sm-2 control-label">Matrícula do Aluno:</label>
+                        <div class="col-md-4 form-group">
+                            <input type="number" name="matricula" id="matricula" maxlength="10" class="form-control" />
+                        </div>
+                        <label class="col-sm-2 control-label">Nome do Aluno:</label>
+                        <div class="col-md-4 form-group">
+                            <input type="text" name="nome" id="nome" maxlength="150" class="form-control" oninput="this.value = this.value.toUpperCase()" />
+                        </div>
                         <label class="col-sm-2 control-label">Fomento:</label>
                         <div class="col-md-4 form-group">
-                            <select class="form-control populate select2" name="ddlFomento" id="ddlFomento" style="width:100%"
+                            <select class="form-control populate select2" name="ddlFomento" id="ddlFomento" style="width: 100%"
                                     asp-for="FomentoId" asp-items="Model.ListFomentos">
                                 <option value="">Selecionar Fomento</option>
                             </select>
                         </div>
                         <label class="col-sm-2 control-label">Estado:</label>
                         <div class="col-md-4 form-group">
-                            <select class="form-control populate select2" name="ddlEstado" id="ddlEstado" style="width:100%"
+                            <select class="form-control populate select2" name="ddlEstado" id="ddlEstado" style="width: 100%"
                                     asp-for="EstadoId" asp-items="Model.ListEstados">
                                 <option value="">Selecionar Estado</option>
                             </select>
                         </div>
                         <label class="col-sm-2 control-label">Municipio:</label>
                         <div class="col-md-4 form-group">
-                            <select class="form-control populate select2" name="ddlMunicipio" id="ddlMunicipio" style="width:100%"
+                            <select class="form-control populate select2" name="ddlMunicipio" id="ddlMunicipio" style="width: 100%"
                                     asp-for="MunicipioId" asp-items="Model.ListMunicipios">
                                 <option value="">Selecionar Municipio</option>
                             </select>
                         </div>
                         <label class="col-sm-2 control-label">Localidade:</label>
                         <div class="col-md-4 form-group">
-                            <select class="form-control populate select2" name="ddlLocalidade" id="ddlLocalidade" style="width:100%"
+                            <select class="form-control populate select2" name="ddlLocalidade" id="ddlLocalidade" style="width: 100%"
                                     asp-for="LocalidadeId" asp-items="Model.ListLocalidades">
                                 <option value="">Selecionar Localidade</option>
                             </select>
                         </div>
                         <label class="col-sm-2 control-label">Aluno:</label>
                         <div class="col-md-4 form-group">
-                            <select class="form-control populate select2" name="ddlAluno" id="ddlAluno" style="width:100%"
+                            <select class="form-control populate select2" name="ddlAluno" id="ddlAluno" style="width: 100%"
                                     asp-for="AlunoId" asp-items="Model.ListAlunos">
                                 <option value="">Selecionar Aluno</option>
                             </select>
@@ -66,6 +74,7 @@
                                 <option value="">Selecionar Deficiência</option>
                             </select>
                         </div>
+
                         <label class="col-sm-2 control-label text-sm-right pt-2">Possui Foto: </label>
                         <div class="col-md-1">
                             <div class="switch switch-sm switch-primary">
@@ -204,7 +213,7 @@
 
                                             @if (item.Idade >= 14)
                                             {
-                                                if(item.QualidadeDeVidaId != null)
+                                                if (item.QualidadeDeVidaId != null)
                                                 {
                                                     <i class="fa fa-thumbs-up" style="color: #00a4a9;margin-right: 10px;" data-toggle="tooltip" data-placement="top" title="Qualidade de Vida"></i>
                                                 }
@@ -213,17 +222,17 @@
                                                     <i class="fa fa-thumbs-up" style="color: #78909c;margin-right: 10px;" data-toggle="tooltip" data-placement="top" title="Qualidade de Vida não realizado"></i>
                                                 }
                                             }
-                                            
+
                                             @if (item.Idade >= 12)
                                             {
-                                                    if (item.VocacionalId != null)
-                                                    {
+                                                if (item.VocacionalId != null)
+                                                {
                                                     <i class="fa fa-star" style="color: #9c27b0;margin-right: 10px;" data-toggle="tooltip" data-placement="top" title="Vocacional"></i>
-                                                    }
-                                                    else
-                                                    {
+                                                }
+                                                else
+                                                {
                                                     <i class="fa fa-star" style="color: #78909c;margin-right: 10px;" data-toggle="tooltip" data-placement="top" title="Vocacional não realizado"></i>
-                                                    }
+                                                }
                                             }
 
                                         </td>
