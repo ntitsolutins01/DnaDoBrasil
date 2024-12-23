@@ -13,7 +13,7 @@
 
     // Mobile Menu
     $('.mobile-menu nav').meanmenu({
-        meanScreenWidth: "1142",
+        meanScreenWidth: "991",
         meanMenuContainer: ".mobile-menu",
         meanMenuOpen: "<span></span> <span></span> <span></span>",
         onePage: true,
