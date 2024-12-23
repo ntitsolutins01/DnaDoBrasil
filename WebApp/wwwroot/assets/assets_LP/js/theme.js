@@ -2,30 +2,52 @@
     'use strict';
 
     //Header Search
-    if($('.search-box-outer').length) {
-        $('.search-box-outer').on('click', function() {
+    if ($('.search-box-outer').length) {
+        $('.search-box-outer').on('click', function () {
             $('body').addClass('search-active');
         });
-        $('.close-search').on('click', function() {
+        $('.close-search').on('click', function () {
             $('body').removeClass('search-active');
         });
     }
 
     // Mobile Menu
     $('.mobile-menu nav').meanmenu({
-        meanScreenWidth: "991",
+        meanScreenWidth: "1142",
         meanMenuContainer: ".mobile-menu",
         meanMenuOpen: "<span></span> <span></span> <span></span>",
-        onePage: false,
+        onePage: true,
     });
 
-    // Fechar o menu móvel ao clicar em um item
-    $('.mobile-menu nav .nav_scroll li a').on('click', function() {
-        $('.meanmenu-reveal').click(); // Simula o clique no botão de fechar
-        setTimeout(function() {
-            $('.mean-nav ul').hide(); // Esconde o menu móvel
-            $('.meanmenu-reveal').removeClass('meanclose').addClass('meanmenu-reveal'); // Restaura o estado do botão
-        }, 500); // Aguarda 500ms para garantir que o menu seja fechado corretamente
+    // Manipulador de clique para links do menu móvel
+    $(document).on('click', '.mean-nav ul li a', function (e) {
+        // Verifica se o link clicado não é um submenu toggle
+        if (!$(this).hasClass('mean-expand')) {
+            // Previne múltiplos cliques
+            if (e.originalEvent !== undefined) {
+                // Fecha o menu diretamente sem toggle
+                $('.mean-nav ul:first').slideUp();
+                $('.meanmenu-reveal').removeClass('meanclose');
+                menuOn = false; // Reseta o estado do menu
+
+                // Se for um link de âncora (hash), previne o comportamento padrão
+                if (this.hash !== "") {
+                    e.preventDefault();
+
+                    // Scroll suave até a âncora
+                    $('html, body').animate({
+                        scrollTop: $(this.hash).offset().top - 50
+                    }, 800);
+                }
+            }
+        }
+    });
+
+    // Previne que o menu reabra ao terminar a animação
+    $(document).on('click', '.meanmenu-reveal', function (e) {
+        if (!$(this).hasClass('meanclose')) {
+            e.stopPropagation();
+        }
     });
 
     // sticky
@@ -33,7 +55,7 @@
     var sticky = $('#sticky-header');
     wind.on('scroll', function () {
         var scroll = wind.scrollTop();
-        if (scroll < 100) {
+        if (scroll < 50) {
             sticky.removeClass('sticky');
         } else {
             sticky.addClass('sticky');
@@ -112,7 +134,7 @@
 
     /*  Cart Plus Minus Button
     /*----------------------------------------*/
-    
+
     $('.ctnbutton').on('click', function () {
         var $button = $(this);
         var oldValue = $button.parent().find('input').val();
@@ -196,7 +218,7 @@
 
     // scroll up
 
-    if($('.prgoress_indicator path').length){
+    if ($('.prgoress_indicator path').length) {
         var progressPath = document.querySelector('.prgoress_indicator path');
         var pathLength = progressPath.getTotalLength();
         progressPath.style.transition = progressPath.style.WebkitTransition = 'none';
@@ -205,69 +227,69 @@
         progressPath.getBoundingClientRect();
         progressPath.style.transition = progressPath.style.WebkitTransition = 'stroke-dashoffset 10ms linear';
         var updateProgress = function () {
-          var scroll = $(window).scrollTop();
-          var height = $(document).height() - $(window).height();
-          var progress = pathLength - (scroll * pathLength / height);
-          progressPath.style.strokeDashoffset = progress;
+            var scroll = $(window).scrollTop();
+            var height = $(document).height() - $(window).height();
+            var progress = pathLength - (scroll * pathLength / height);
+            progressPath.style.strokeDashoffset = progress;
         }
         updateProgress();
         $(window).on('scroll', updateProgress);
         var offset = 250;
         var duration = 550;
         jQuery(window).on('scroll', function () {
-          if (jQuery(this).scrollTop() > offset) {
-            jQuery('.prgoress_indicator').addClass('active-progress');
-          } else {
-            jQuery('.prgoress_indicator').removeClass('active-progress');
-          }
+            if (jQuery(this).scrollTop() > offset) {
+                jQuery('.prgoress_indicator').addClass('active-progress');
+            } else {
+                jQuery('.prgoress_indicator').removeClass('active-progress');
+            }
         });
         jQuery('.prgoress_indicator').on('click', function (event) {
-          event.preventDefault();
-          jQuery('html, body').animate({ scrollTop: 0 }, duration);
-          return false;
+            event.preventDefault();
+            jQuery('html, body').animate({ scrollTop: 0 }, duration);
+            return false;
         });
     }
 
     // Sidebar
-    
+
     "use strict";
-        jQuery(document).ready(function (o) {
-            0 < o(".offset-side-bar").length &&
-                o(".offset-side-bar").on("click", function (e) {
-                    e.preventDefault(), e.stopPropagation(), o(".cart-group").addClass("isActive");
-                }),
-                0 < o(".close-side-widget").length &&
-                    o(".close-side-widget").on("click", function (e) {
-                        e.preventDefault(), o(".cart-group").removeClass("isActive");
-                    }),
-                0 < o(".navSidebar-button").length &&
-                    o(".navSidebar-button").on("click", function (e) {
-                        e.preventDefault(), e.stopPropagation(), o(".info-group").addClass("isActive");
-                    }),
-                0 < o(".close-side-widget").length &&
-                    o(".close-side-widget").on("click", function (e) {
-                        e.preventDefault(), o(".info-group").removeClass("isActive");
-                    }),
-                o("body").on("click", function (e) {
-                    o(".info-group").removeClass("isActive"), o(".cart-group").removeClass("isActive");
-                }),
-                o(".xs-sidebar-widget").on("click", function (e) {
-                    e.stopPropagation();
-                }),
-                0 < o(".xs-modal-popup").length &&
-                    o(".xs-modal-popup").magnificPopup({
-                        type: "inline",
-                        fixedContentPos: !2,
-                        fixedBgPos: !0,
-                        overflowY: "auto",
-                        closeBtnInside: !2,
-                        callbacks: {
-                            beforeOpen: function () {
-                                this.st.mainClass = "my-mfp-slide-bottom xs-promo-popup";
-                            },
-                        },
-                    });
+    jQuery(document).ready(function (o) {
+        0 < o(".offset-side-bar").length &&
+            o(".offset-side-bar").on("click", function (e) {
+                e.preventDefault(), e.stopPropagation(), o(".cart-group").addClass("isActive");
+            }),
+            0 < o(".close-side-widget").length &&
+            o(".close-side-widget").on("click", function (e) {
+                e.preventDefault(), o(".cart-group").removeClass("isActive");
+            }),
+            0 < o(".navSidebar-button").length &&
+            o(".navSidebar-button").on("click", function (e) {
+                e.preventDefault(), e.stopPropagation(), o(".info-group").addClass("isActive");
+            }),
+            0 < o(".close-side-widget").length &&
+            o(".close-side-widget").on("click", function (e) {
+                e.preventDefault(), o(".info-group").removeClass("isActive");
+            }),
+            o("body").on("click", function (e) {
+                o(".info-group").removeClass("isActive"), o(".cart-group").removeClass("isActive");
+            }),
+            o(".xs-sidebar-widget").on("click", function (e) {
+                e.stopPropagation();
+            }),
+            0 < o(".xs-modal-popup").length &&
+            o(".xs-modal-popup").magnificPopup({
+                type: "inline",
+                fixedContentPos: !2,
+                fixedBgPos: !0,
+                overflowY: "auto",
+                closeBtnInside: !2,
+                callbacks: {
+                    beforeOpen: function () {
+                        this.st.mainClass = "my-mfp-slide-bottom xs-promo-popup";
+                    },
+                },
             });
+    });
 
 
 })(jQuery);
