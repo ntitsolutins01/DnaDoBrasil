@@ -1,148 +1,123 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
-using WebApp.Authorization;
 using WebApp.Configuration;
 using WebApp.Dto;
 using WebApp.Enumerators;
 using WebApp.Factory;
-using WebApp.Identity;
 using WebApp.Models;
 using WebApp.Utility;
-using Claim = System.Security.Claims.Claim;
 
-namespace WebApp.Controllers;
-
-public class CertificadoController : BaseController
+namespace WebApp.Controllers
 {
-    #region Constructor
-    private readonly IOptions<UrlSettings> _appSettings;
-
-    /// <summary>
-    /// Construtor da página
-    /// </summary>
-    /// <param name="app">configurações de urls do sistema</param>
-    /// <param name="host">informações da aplicação em execução</param>
-    public CertificadoController(IOptions<UrlSettings> appSettings)
+    public class CertificadoController : BaseController
     {
-        _appSettings = appSettings;
-        ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
-    }
-    #endregion
+        private readonly IOptions<UrlSettings> _appSettings;
 
-    #region Crud Methods
-    /// <summary>
-    /// Listagem de Certificado
-    /// </summary>
-    /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
-    /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
-    /// <param name="collection">lista de filtros selecionados para pesquisa de alunos</param>
-    /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
-    [ClaimsAuthorize(ClaimType.Certificado, Identity.Claim.Consultar)]
-    public IActionResult Index(int? crud, int? notify, string message = null)
-    {
-        SetNotifyMessage(notify, message);
-        SetCrudMessage(crud);
-        //var response = ApiClientFactory.Instance.GetCertificadosAll();
+        public CertificadoController(IOptions<UrlSettings> appSettings)
+        {
+            _appSettings = appSettings;
+            ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
+        }
 
-        return View();//new CertificadoModel() { Certificados = response }
-    }
+        public IActionResult Index(int? crud, int? notify, string message = null)
+        {
+            ViewBag.Status = true;
+            SetNotifyMessage(notify, message);
+            SetCrudMessage(crud);
+            var response = ApiClientFactory.Instance.GetCertificadosAll() ?? new List<CertificadoDto>();
 
-    /// <summary>
-    /// Tela para inclusão de aluno
-    /// </summary>
-    /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
-    /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
-    /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
-    [ClaimsAuthorize(ClaimType.Certificado, Identity.Claim.Incluir)]
+            return View(new CertificadoModel()
+            {
+                Certificados = response
+            });
+        }
 
-    public ActionResult Create(int? crud, int? notify, string message = null)
-    {
-        try
+        public ActionResult Create(int? crud, int? notify, string message = null)
         {
             SetNotifyMessage(notify, message);
-           SetCrudMessage(crud);
-            //var metricas = new SelectList(ApiClientFactory.Instance.GetCertificadosAll(), "Id", "Nome");
+            SetCrudMessage(crud);
 
-            return View(); //(new CertificadoModel() { ListCertificados = metricas });
+            return View(new CertificadoModel());
         }
-        catch (Exception e)
-        {
-         Console.Write(e.StackTrace);
-           return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = e.Message });
 
+        [HttpPost]
+        public async Task<ActionResult> Create(IFormCollection collection)
+        {
+            try
+            {
+                var command = new CertificadoModel.CreateUpdateCertificadoCommand
+                {
+                    CursoId = Convert.ToInt32(collection["CursoId"].ToString()),
+                    ImagemFrente = Convert.FromBase64String(collection["ImagemFrente"].ToString()),
+                    ImagemVerso = string.IsNullOrEmpty(collection["ImagemVerso"]) ? null : Convert.FromBase64String(collection["ImagemVerso"].ToString()),
+                    HtmlFrente = collection["HtmlFrente"].ToString(),
+                    HtmlVerso = collection["HtmlVerso"].ToString(),
+                    Status = collection["Status"].ToString() == "" ? false : true
+                };
+
+                await ApiClientFactory.Instance.CreateCertificado(command);
+
+                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
+        public ActionResult Edit(int id, int? crud, int? notify, string message = null)
+        {
+            SetNotifyMessage(notify, message);
+            SetCrudMessage(crud);
+
+            var certificado = ApiClientFactory.Instance.GetCertificadoById(id);
+
+            var model = new CertificadoModel
+            {
+                Certificado = certificado
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Edit(int id, IFormCollection collection)
+        {
+            var command = new CertificadoModel.CreateUpdateCertificadoCommand
+            {
+                Id = id,
+                CursoId = Convert.ToInt32(collection["CursoId"].ToString()),
+                ImagemFrente = Convert.FromBase64String(collection["ImagemFrente"].ToString()),
+                ImagemVerso = string.IsNullOrEmpty(collection["ImagemVerso"]) ? null : Convert.FromBase64String(collection["ImagemVerso"].ToString()),
+                HtmlFrente = collection["HtmlFrente"].ToString(),
+                HtmlVerso = collection["HtmlVerso"].ToString(),
+                Status = collection["Status"].ToString() == "" ? false : true
+            };
+
+            await ApiClientFactory.Instance.UpdateCertificado(command.Id, command);
+
+            return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+        }
+
+        public ActionResult Delete(int id)
+        {
+            try
+            {
+                ApiClientFactory.Instance.DeleteCertificado(id);
+                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
+            }
+            catch
+            {
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
+        public Task<CertificadoDto> GetCertificadoById(int id)
+        {
+            var result = ApiClientFactory.Instance.GetCertificadoById(id);
+
+            return Task.FromResult(result);
         }
     }
-    #endregion
-
-    ////[ClaimsAuthorize("Usuario", "Incluir")]
-    //[HttpPost]
-    //public async Task<ActionResult> Create(IFormCollection collection)
-    //{
-    //    try
-    //    {
-    //        var command = new CertificadoModel.CreateUpdateCertificadoCommand
-    //        {
-    //            Classificacao = collection["classificacao"].ToString(),
-    //            Idade = Convert.ToInt32(collection["idade"].ToString()),
-    //            ValorInicial = Convert.ToDecimal(collection["valorInicial"].ToString()),
-    //            ValorFinal = Convert.ToDecimal(collection["valorFinal"].ToString()),
-    //            Sexo = collection["ddlSexo"].ToString()
-    //        };
-
-    //        await ApiClientFactory.Instance.CreateCertificado(command);
-
-    //        return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
-    //    }
-    //    catch (Exception e)
-    //    {
-    //        return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = "Erro ao executar esta ação. Favor entrar em contato com o administrador do sistema." });
-    //    }
-    //}
-
-    ////[ClaimsAuthorize("Usuario", "Alterar")]
-    //public async Task<ActionResult> Edit(IFormCollection collection)
-    //{
-    //    try
-    //    {
-    //        var command = new CertificadoModel.CreateUpdateCertificadoCommand
-    //        {
-    //            Id = Convert.ToInt32(collection["editCertificadoId"]),
-    //            Classificacao = collection["classificacao"].ToString(),
-    //            Idade = Convert.ToInt32(collection["idade"].ToString()),
-    //            ValorInicial = Convert.ToDecimal(collection["valorInicial"].ToString()),
-    //            ValorFinal = Convert.ToDecimal(collection["valorFinal"].ToString()),
-    //            Status = collection["editStatus"].ToString() == "" ? false : true
-    //        };
-
-    //        await ApiClientFactory.Instance.UpdateCertificado(command.Id, command);
-
-    //        return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
-    //    }
-    //    catch (Exception e)
-    //    {
-    //        return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = "Erro ao executar esta ação. Favor entrar em contato com o administrador do sistema." });
-    //    }
-    //}
-
-    ////[ClaimsAuthorize("Usuario", "Excluir")]
-    //public ActionResult Delete(int id)
-    //{
-    //    try
-    //    {
-    //        ApiClientFactory.Instance.DeleteCertificado(id);
-    //        return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
-    //    }
-    //    catch
-    //    {
-    //        return RedirectToAction(nameof(Index));
-    //    }
-    //}
-
-    //public Task<CertificadoDto> GetCertificadoById(int id)
-    //{
-    //    var result = ApiClientFactory.Instance.GetCertificadoById(id);
-
-    //    return Task.FromResult(result);
-    //}
 }
+
+
