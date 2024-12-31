@@ -24,5 +24,6 @@ namespace WebApp.Identity
         public const string Usuario = "Usuario";
         public const string Perfil = "Perfil";
         public const string GrupoMaterial = "GrupoMaterial";
+        public const string TipoMaterial = "TipoMaterial";
     }
 }
