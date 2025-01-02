@@ -45,7 +45,14 @@
                                     <option value="">Selecionar Localidade</option>
                                 </select>
                             </div>
-
+                            <label class="col-sm-3 control-label text-sm-right pt-2">Tipo Perfil<span class="required">*</span></label>
+                            <div class="col-md-3">
+                                <select class="form-control populate select2" name="ddlPerfis" id="ddlPerfis"
+                                        title="Por favor informe um perfil." required
+                                        asp-for="PerfilEditId" asp-items="Model.ListPerfis">
+                                    <option value="">Selecionar Perfil</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-3 control-label text-sm-right pt-2">Nome <span class="required">*</span></label>
@@ -93,21 +100,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="form-group row">
-                            
-                            <label class="col-lg-3 control-label text-sm-right pt-2">Tipo Perfil<span class="required">*</span></label>
-
-                            <div class="col-md-3">
-                                <select class="form-control populate select2" name="ddlPerfis" id="ddlPerfis"
-                                        title="Por favor informe um perfil." required
-                                        asp-for="PerfilEditId" asp-items="Model.ListPerfis">
-                                    <option value="">Selecionar Perfil</option>
-                                </select>
-                            </div>
-
-                        </div>
-
                     </div>
                 </div>
                 <footer class="panel-footer">
