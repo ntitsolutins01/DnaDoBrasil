@@ -122,9 +122,9 @@ namespace WebApp.Controllers
 					LocalidadeId = collection["ddlLocalidade"] == "" ? null : Convert.ToInt32(collection["ddlLocalidade"].ToString()),
 					Habilitado = habilitado != "",
 					Status = status != "",
-					ModalidadesIds = collection["arrModalidades"] == "" ? null : collection["arrModalidades"].ToString()
+					ModalidadesIds = collection["ddlModalidades"].ToString()
 
-				};
+                };
 
                 var newUser = new IdentityUser { UserName = command.Email, Email = command.Email };
                 var aspNetUser = await _userManager.CreateAsync(newUser, "12345678");

@@ -92,6 +92,10 @@ builder.Services.AddAuthorization(o =>
 {
     #region Sistema DNA
 
+    o.AddPolicy(ModuloAccess.Atividade, policy =>
+        policy.RequireAssertion(context =>
+            context.User.IsInRole(UserRoles.Administrador)));
+
     o.AddPolicy(ModuloAccess.ConfiguracaoSistema, policy =>
         policy.RequireAssertion(context =>
             context.User.IsInRole(UserRoles.Administrador)));
