@@ -103,7 +103,7 @@ namespace WebApp.Areas.Identity.Pages.Account
 		{
 
 #if DEBUG
-			returnUrl = Url.Content("~/DashboardEad");
+			returnUrl = Url.Content("~/Dashboard");
 #else
 			returnUrl = Url.Content("~/Dashboard");
 #endif
