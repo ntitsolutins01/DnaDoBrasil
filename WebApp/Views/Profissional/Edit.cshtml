@@ -69,19 +69,22 @@
                                     <option value="">Selecionar Localidade</option>
                                 </select>
                             </div>
-                            <label class="col-sm-1 control-label text-sm-right pt-2">Perfil</label>
-                            <div class="col-md-3">
-                                <input id="perfil" name="perfil" type="text" class="form-control" value="@Model.Profissional.Perfil" readonly />
+                            <label class="col-sm-2 control-label text-sm-right pt-2">Modalidades <span class="required">*</span> </label>
+                            <div class="col-md-5">
+                                <select class="form-control populate" multiple="multiple" multiple="multiple" data-plugin-multiselect data-plugin-options='{ "maxHeight": 200, "enableCaseInsensitiveFiltering": true }' 
+                                        id="ddlModalidades" name="ddlModalidades" style="width:100%" asp-for="ModalidadeId" asp-items="Model.ListModalidades" required
+                                        title="Por favor selecione ao menos uma modalidade.">
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Data Nascimento </label>
+                            <label class="col-sm-2 control-label">Data Nascimento <span class="required">*</span> </label>
                             <div class="col-sm-3">
                                 <div class="input-group">
                                     <span class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                     </span>
-                                    <input id="DtNascimento" name="DtNascimento"
+                                    <input id="DtNascimento" name="DtNascimento" required
                                            title="Por favor informe a data de nascimento."
                                            style="z-index: auto;" value="@Model.Profissional.DtNascimento"
                                            data-plugin-datepicker data-date-format="dd/mm/yyyy" data-plugin-options='{"language": "pt-BR"}'
@@ -89,9 +92,9 @@
                                            class="form-control">
                                 </div>
                             </div>
-                            <label class="col-sm-1 control-label">Sexo</label>
+                            <label class="col-sm-1 control-label">Sexo <span class="required">*</span></label>
                             <div class="col-sm-3">
-                                <select class="form-control populate select2" name="ddlSexo" id="ddlSexo"
+                                <select class="form-control populate select2" name="ddlSexo" id="ddlSexo" required
                                         title="Por favor selecione um sexo.">
                                     <option value="">Selecionar Sexo</option>
                                     @if (Model.Profissional.Sexo == "M")
@@ -207,7 +210,7 @@
 @section CssSpecificVendor {
     <link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css" />
     <link rel="stylesheet" href="~/assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
-    <link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />
+    <link rel="stylesheet" href="~/assets/vendor/bootstrap-multiselect/bootstrap-multiselect.css" />
     <link href="~/assets/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.css" rel="stylesheet" />
 }
 @section Scripts {
@@ -215,11 +218,8 @@
     <script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
     <script src="~/assets/vendor/select2/js/select2.js"></script>
     <script src="~/assets/vendor/jquery-mask/jquery.mask.js"></script>
-    <script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
-    <script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
     <script src="~/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
     <script src="~/assets/vendor/bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR.min.js"></script>
-    <script src="~/js/formatTable.js"></script>
     <script src="~/js/profissional.js"></script>
 
 }
