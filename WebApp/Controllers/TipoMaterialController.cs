@@ -136,20 +136,6 @@ public class TipoMaterialController : BaseController
                 Nome = collection["nome"].ToString(),
             };
 
-            //foreach (var file in collection.Files)
-            //{
-            //    if (file.Length <= 0) continue;
-
-            //    command.Imagem = Path.GetFileName(collection.Files[0].FileName);
-
-            //    using (var ms = new MemoryStream())
-            //    {
-            //        file.CopyToAsync(ms);
-            //        var byteIMage = ms.ToArray();
-            //        command.ByteImage = byteIMage;
-            //    }
-            //}
-
             await ApiClientFactory.Instance.UpdateTipoMaterial(command.Id, command);
 
             return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });

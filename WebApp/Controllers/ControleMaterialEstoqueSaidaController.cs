@@ -14,7 +14,7 @@ using WebApp.Utility;
 namespace WebApp.Controllers;
 
 [Authorize(Policy = ModuloAccess.ConfiguracaoSistemaEad)]
-public class MaterialController : BaseController
+public class ControleMaterialEstoqueSaidaController : BaseController
 {
     #region Constructor
     private readonly IOptions<UrlSettings> _appSettings;
@@ -24,7 +24,7 @@ public class MaterialController : BaseController
     /// </summary>
     /// <param name="app">configurações de urls do sistema</param>
     /// <param name="host">informações da aplicação em execução</param>
-    public MaterialController(IOptions<UrlSettings> appSettings)
+    public ControleMaterialEstoqueSaidaController(IOptions<UrlSettings> appSettings)
     {
         _appSettings = appSettings;
         ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
@@ -33,20 +33,20 @@ public class MaterialController : BaseController
 
     #region Crud Methods
     /// <summary>
-    /// Listagem de Material
+    /// Listagem de ControleMaterialEstoqueSaida
     /// </summary>
     /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
     /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
     /// <param name="collection">lista de filtros selecionados para pesquisa de alunos</param>
     /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
-    [ClaimsAuthorize(ClaimType.Material, Identity.Claim.Consultar)]
+    [ClaimsAuthorize(ClaimType.ControleMaterialEstoqueSaida, Identity.Claim.Consultar)]
     public IActionResult Index(int? crud, int? notify, string message = null)
     {
         SetNotifyMessage(notify, message);
         SetCrudMessage(crud);
-        var response = ApiClientFactory.Instance.GetMateriaisAll();
+        var response = ApiClientFactory.Instance.GetControlesMateriaisEstoquesSaidasAll();
 
-        return View(new MaterialModel() { Materiais = response });
+        return View(new ControleMaterialEstoqueSaidaModel() { ControlesMateriaisEstoquesSaidas = response });
     }
 
     /// <summary>
@@ -55,18 +55,18 @@ public class MaterialController : BaseController
     /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
     /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
     /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
-    [ClaimsAuthorize(ClaimType.Material, Identity.Claim.Incluir)]
+    [ClaimsAuthorize(ClaimType.ControleMaterialEstoqueSaida, Identity.Claim.Incluir)]
     public ActionResult Create(int? crud, int? notify, string message = null)
     {
         try
         {
             SetNotifyMessage(notify, message);
             SetCrudMessage(crud);
-            var tipoMateriais = new SelectList(ApiClientFactory.Instance.GetTiposMateriaisAll(), "Id", "Nome");
+            var materiais = new SelectList(ApiClientFactory.Instance.GetMateriaisAll(), "Id", "Descricao");
 
-            return View(new MaterialModel()
+            return View(new ControleMaterialEstoqueSaidaModel()
             {
-                ListTiposMateriais = tipoMateriais
+                ListControlesMateriaisEstoquesSaidas = materiais
             });
         }
         catch (Exception e)
@@ -78,25 +78,38 @@ public class MaterialController : BaseController
     }
 
     /// <summary>
-    /// Ação de inclusão do Material
+    /// Ação de inclusão do ControleMaterialEstoqueSaida
     /// </summary>
-    /// <param name="collection">coleção de dados para inclusao de Material</param>
+    /// <param name="collection">coleção de dados para inclusao de ControleMaterialEstoqueSaida</param>
     /// <returns>retorna mensagem de inclusao através do parametro crud</returns>
-    [ClaimsAuthorize(ClaimType.Material, Identity.Claim.Incluir)]
+    [ClaimsAuthorize(ClaimType.ControleMaterialEstoqueSaida, Identity.Claim.Incluir)]
     [HttpPost]
     public async Task<ActionResult> Create(IFormCollection collection)
     {
         try
         {
-            var command = new MaterialModel.CreateUpdateMaterialCommand
+            var command = new ControleMaterialEstoqueSaidaModel.CreateUpdateControleMaterialEstoqueSaidaCommand
             {
-                TipoMaterialId = Convert.ToInt32(collection["ddlTipoMaterial"].ToString()),
-                UnidadeMedida = collection["unidadeMedida"].ToString(),
-                QtdAdquirida = Convert.ToInt32(collection["qtdAdquirida"]),
-                Descricao = collection["descricao"].ToString()
+                MaterialId = Convert.ToInt32(collection["ddlMaterialId"].ToString()),
+                Quantidade = Convert.ToInt32(collection["Quantidade"]),
+                Solicitante = collection["solicitante"].ToString()
             };
 
-            await ApiClientFactory.Instance.CreateMaterial(command);
+            //foreach (var file in collection.Files)
+            //{
+            //    if (file.Length <= 0) continue;
+
+            //    command.Imagem = Path.GetFileName(collection.Files[0].FileName);
+
+            //    using (var ms = new MemoryStream())
+            //    {
+            //        file.CopyToAsync(ms);
+            //        var byteIMage = ms.ToArray();
+            //        command.ByteImage = byteIMage;
+            //    }
+            //}
+
+            await ApiClientFactory.Instance.CreateControleMaterialEstoqueSaida(command);
 
             return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
         }
@@ -108,25 +121,24 @@ public class MaterialController : BaseController
 
 
     /// <summary>
-    /// Ação de alteração do Material
+    /// Ação de alteração do ControleMaterialEstoqueSaida
     /// </summary>
-    /// <param name="id">identificador do Material</param>
-    /// <param name="collection">coleção de dados para alteração de Material</param>
+    /// <param name="id">identificador do ControleMaterialEstoqueSaida</param>
+    /// <param name="collection">coleção de dados para alteração de ControleMaterialEstoqueSaida</param>
     /// <returns>retorna mensagem de alteração através do parametro crud</returns>
-    [ClaimsAuthorize(ClaimType.Material, Identity.Claim.Alterar)]
+    [ClaimsAuthorize(ClaimType.ControleMaterialEstoqueSaida, Identity.Claim.Alterar)]
     public async Task<ActionResult> Edit(IFormCollection collection)
     {
         try
         {
-            var command = new MaterialModel.CreateUpdateMaterialCommand
+            var command = new ControleMaterialEstoqueSaidaModel.CreateUpdateControleMaterialEstoqueSaidaCommand
             {
-                Id = Convert.ToInt32(collection["editMaterialId"]),
-                UnidadeMedida = collection["unidadeMedida"].ToString(),
-                QtdAdquirida = Convert.ToInt32(collection["qtdAdquirida"]),
-                Descricao = collection["descricao"].ToString()
+                Id = Convert.ToInt32(collection["editControleMaterialEstoqueSaidaId"]),
+                Quantidade = Convert.ToInt32(collection["Quantidade"]),
+                Solicitante = collection["solicitante"].ToString()
             };
 
-            await ApiClientFactory.Instance.UpdateMaterial(command.Id, command);
+            await ApiClientFactory.Instance.UpdateControleMaterialEstoqueSaida(command.Id, command);
 
             return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
         }
@@ -137,17 +149,17 @@ public class MaterialController : BaseController
     }
 
     /// <summary>
-    /// Ação de exclusão do Material
+    /// Ação de exclusão do ControleMaterialEstoqueSaida
     /// </summary>
-    /// <param name="id">identificador do Material</param>
-    /// <param name="collection">coleção de dados para exclusão de Material</param>
+    /// <param name="id">identificador do ControleMaterialEstoqueSaida</param>
+    /// <param name="collection">coleção de dados para exclusão de ControleMaterialEstoqueSaida</param>
     /// <returns>retorna mensagem de exclusão através do parametro crud</returns>
-    [ClaimsAuthorize(ClaimType.Material, Identity.Claim.Excluir)]
+    [ClaimsAuthorize(ClaimType.ControleMaterialEstoqueSaida, Identity.Claim.Excluir)]
     public ActionResult Delete(int id)
     {
         try
         {
-            ApiClientFactory.Instance.DeleteMaterial(id);
+            ApiClientFactory.Instance.DeleteControleMaterialEstoqueSaida(id);
             return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
         }
         catch (Exception e)
@@ -156,12 +168,12 @@ public class MaterialController : BaseController
         }
     }
 
-    public Task<JsonResult> GetMateriaisAllByTipoMaterialId(string id)
+    public Task<JsonResult> GetMateriaisAllByTipoControleMaterialEstoqueSaidaId(string id)
     {
         try
         {
-            if (string.IsNullOrEmpty(id)) throw new Exception("Material não informado.");
-            var resultLocal = ApiClientFactory.Instance.GetMateriaisAllByTipoMaterialId(Convert.ToInt32(id));
+            if (string.IsNullOrEmpty(id)) throw new Exception("ControleMaterialEstoqueSaida não informado.");
+            var resultLocal = ApiClientFactory.Instance.GetControlesMateriaisEstoquesSaidasAllByMaterialId(Convert.ToInt32(id));
 
             return Task.FromResult(Json(new SelectList(resultLocal, "Id", "Nome")));
 
@@ -175,9 +187,9 @@ public class MaterialController : BaseController
 
     #region Get Methods
 
-    public Task<MaterialDto> GetMaterialById(int id)
+    public Task<ControleMaterialEstoqueSaidaDto> GetControleMaterialEstoqueSaidaById(int id)
     {
-        var result = ApiClientFactory.Instance.GetMaterialById(id);
+        var result = ApiClientFactory.Instance.GetControleMaterialEstoqueSaidaById(id);
 
         return Task.FromResult(result);
     }

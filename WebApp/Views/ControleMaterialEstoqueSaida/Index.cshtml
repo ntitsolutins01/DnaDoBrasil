@@ -1,10 +1,10 @@
-﻿@model WebApp.Models.GrupoMaterialModel
+﻿@model ControleMaterialEstoqueSaidaModel
 @{
-    ViewData["Title"] = "Listagem de Grupos de Materiais";
+    ViewData["Title"] = "Listagem de Controles de Saida";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div id="vGrupoMaterial">
+<div id="vControleMaterialEstoqueSaida">
     <div class="row">
         <div class="col-lg-12">
             <section class="panel">
@@ -12,28 +12,32 @@
                     <div class="panel-actions">
                         <a href="#" class="card-action card-action-toggle" data-card-toggle></a>
                     </div>
-                    <h2 class="panel-title">Listagem de Grupos de Materiais</h2>
+                    <h2 class="panel-title">Listagem de Controle de Saida</h2>
                 </header>
                 <div class="panel-body">
                     <div class="form-group row">
                         <div class="col-sm-12 pull-right">
-                            <a href="@Url.Action("Create", "GrupoMaterial")" id="addToTable" class="btn btn-primary pull-right"><i class="fa fa-plus"></i>&nbsp;&nbsp;Novo Grupo de Material </a>
+                            <a href="@Url.Action("Create", "ControleMaterialEstoqueSaida")" id="addToTable" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Novo ControleMaterialEstoqueSaida </a>
                         </div>
                     </div>
                     <table class="table table-bordered table-striped mb-0" id="datatable-default">
                         <thead>
                             <tr>
                                 <th class="text-center">Id</th>
-                                <th class="text-center">Nome</th>
+                                <th class="text-center">Material</th>
+                                <th class="text-center">Solicitante</th>
+                                <th class="text-center">Quantidade</th>
                                 <th class="text-center">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var item in Model.GruposMateriais)
+                            @foreach (var item in Model.ControlesMateriaisEstoquesSaidas)
                             {
                                 <tr>
                                     <td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Id)</td>
-                                    <td class="text-center">@Html.DisplayFor(modelItem => item.Nome)</td>
+                                    <td class="text-center">@Html.DisplayFor(modelItem => item.TituloMaterial)</td>
+                                    <td class="text-center">@Html.DisplayFor(modelItem => item.Solicitante)</td>
+                                    <td class="text-center">@Html.DisplayFor(modelItem => item.Quantidade)</td>
 
                                     <td class="actions text-center">
                                         <a data-toggle="tooltip" data-placement="top" title="Editar"
@@ -42,7 +46,7 @@
                                             <i class="fa fa-pencil"></i>
                                         </a>
                                         <a data-toggle="tooltip" data-placement="top" title="Excluir" href='javascript:(crud.DeleteModal(@item.Id))'
-                                           class="on-default remove-row" style="GrupoMaterialr: pointer;color: #F44336"><i class="fa fa-trash"></i></a>
+                                           class="on-default remove-row" style="ControleMaterialEstoqueSaidar: pointer;color: #F44336"><i class="fa fa-trash"></i></a>
                                     </td>
                                 </tr>
                             }
@@ -53,12 +57,12 @@
         </div>
     </div>
     <!-- Modal -->
-    <div class="modal fade" id="mdDeleteGrupoMaterial" tabindex="-1" role="dialog" aria-labelledby="mdDeleteGrupoMaterialLabel" aria-hidden="true">
+    <div class="modal fade" id="mdDeleteControleMaterialEstoqueSaida" tabindex="-1" role="dialog" aria-labelledby="mdDeleteControleMaterialEstoqueSaidaLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="mdDeleteGrupoMaterialLabel">
-                        <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Exclusão de GrupoMaterial</strong>
+                    <h5 class="modal-title" id="mdDeleteControleMaterialEstoqueSaidaLabel">
+                        <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Exclusão de ControleMaterialEstoqueSaida</strong>
                     </h5>
                 </div>
                 <div class="modal-body">
@@ -66,7 +70,7 @@
                         <i class="fa fa-question-circle"></i>
                     </div>
                     <div class="modal-text">
-                        <input type="hidden" id="deleteGrupoMaterialId" />
+                        <input type="hidden" id="deleteControleMaterialEstoqueSaidaId" />
                         <p class="mb-0">Tem certeza que deseja <b>excluir</b> esse registro?</p>
                     </div>
                     <div class="modal-wrapper">
@@ -74,30 +78,44 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-thumbs-o-down"></i> &nbsp;&nbsp;Não</button>
-                    <a id="deleteGrupoMaterialHref" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</a>
+                    <a id="deleteControleMaterialEstoqueSaidaHref" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</a>
                 </div>
             </div>
         </div>
     </div>
     <!-- Modal -->
-    <div class="modal fade" id="mdEditGrupoMaterial" tabindex="-1" role="dialog" aria-labelledby="mdEditGrupoMaterialLabel" aria-hidden="true">
+    <div class="modal fade" id="mdEditControleMaterialEstoqueSaida" tabindex="-1" role="dialog" aria-labelledby="mdEditControleMaterialEstoqueSaidaLabel" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="mdEditGrupoMaterialLabel">
-                        <i class="fa fa-pencil"></i> &nbsp;&nbsp;<strong>Alterar GrupoMaterial</strong>
+                    <h5 class="modal-title" id="mdEditControleMaterialEstoqueSaidaLabel">
+                        <i class="fa fa-pencil"></i> &nbsp;&nbsp;<strong>Alterar ControleMaterialEstoqueSaida</strong>
                     </h5>
                 </div>
-                @using (@Html.BeginForm("Edit", "GrupoMaterial", FormMethod.Post, new { id = "formEditGrupoMaterial", @class = "form-horizontal", @enctype = "multipart/form-data" }))
+                @using (@Html.BeginForm("Edit", "ControleMaterialEstoqueSaida", FormMethod.Post, new { id = "formEditControleMaterialEstoqueSaida", @class = "form-horizontal" }))
                 {
                     <div class="modal-body">
-                        <input type="hidden" name="editGrupoMaterialId" :value="editDto.Id" />
+                        <input type="hidden" name="editControleMaterialEstoqueSaidaId" :value="editDto.Id" />
                         <div class="form-group row">
-                            <label class="col-sm-3 control-label text-sm-right pt-2">Nome <span class="required">*</span></label>
+                            <label class="col-sm-3 control-label text-sm-right pt-2">Descrição </label>
                             <div class="col-sm-9">
-                                <input type="text" name="nome" :value="editDto.Nome" class="form-control"
-                                       maxlength="150"
-                                       title="Por favor informe o nome do Tipo de Material." required/>
+                                <input type="text" name="descricao" id="descricao" class="form-control"
+                                       maxlength="150" :value="editDto.Descricao"
+                                       title="Por favor informe a descrição." required />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label text-sm-right pt-2">Unidade de Medida </label>
+                            <div class="col-sm-4">
+                                <input type="text" name="unidademedida" id="unidademedida" class="form-control"
+                                       maxlength="150" :value="editDto.UnidadeMedida"
+                                       title="Por favor informe a unidade de medida." required />
+                            </div>
+                            <label class="col-sm-2 control-label text-sm-right pt-2">Quantidade </label>
+                            <div class="col-sm-2">
+                                <input type="text" name="qtdAdquirida" id="qtdAdquirida" class="form-control"
+                                       maxlength="10" :value="editDto.QtdAqdquirida"
+                                       title="Por favor informe a quantidade." required />
                             </div>
                         </div>
                     </div>
@@ -112,13 +130,11 @@
 </div>
 
 @section CssSpecificVendor {
-    <link rel="stylesheet" href="~/assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.css" />
     <link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css" />
     <link rel="stylesheet" href="~/assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
     <link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />
 }
 @section Scripts {
-    <script src="~/assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.js"></script>
     <script src="~/assets/vendor/select2/js/select2.js"></script>
     <script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
     <script src="~/assets/vendor/jquery-mask/jquery.mask.js"></script>
@@ -126,7 +142,7 @@
     <script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
     <script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
     <script src="~/js/formatTable.js"></script>
-    <script src="~/js/GrupoMaterial.js"></script>
+    <script src="~/js/ControleMaterialEstoqueSaida.js"></script>
 
     <script>
 
@@ -137,14 +153,14 @@
 
             if (crub === 1) {
                 new PNotify({
-                    title: 'Métrica',
+                    title: 'Controle de Saida',
                     text: 'Cadastro realizado com sucesso!',
                     type: 'success'
                 });
                 crub = 0;
             } else if (crub === 2) {
                 new PNotify({
-                    title: 'Métrica',
+                    title: 'Controle de Saida',
                     text: 'Dados alterados com sucesso.',
                     type: 'warning',
                     icon: 'fa fa-pencil'
@@ -152,7 +168,7 @@
                 crub = 0;
             } else if (crub === 3) {
                 new PNotify({
-                    title: 'Métrica',
+                    title: 'Controle de Saida',
                     text: 'Registro excluído com sucesso.',
                     type: 'error',
                     icon: 'fa fa-trash-o'
@@ -166,21 +182,21 @@
 
             if (notify === 0) {
                 new PNotify({
-                    title: 'Métrica',
+                    title: 'Controle de Saida',
                     text: messagem,
                     type: 'success'
                 });
                 crub = 0;
             } else if (notify === 1) {
                 new PNotify({
-                    title: 'Métrica',
+                    title: 'Controle de Saida',
                     text: messagem,
                     type: 'warning'
                 });
                 crub = 0;
             } else if (notify === 2) {
                 new PNotify({
-                    title: 'Métrica',
+                    title: 'Controle de Saida',
                     text: messagem,
                     type: 'error'
                 });

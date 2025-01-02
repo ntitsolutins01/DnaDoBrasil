@@ -10,6 +10,7 @@ namespace WebApp.Models
         public TipoMaterialDto TipoMaterial { get; set; }
         public List<TipoMaterialDto> TiposMateriais { get; set; }
         public SelectList ListTiposMateriais { get; set; }
+        public int GrupoMaterialId { get; set; }
         public TipoMaterialDto GrupoMaterial { get; set; }
         public List<TipoMaterialDto> GruposMateriais { get; set; }
         public SelectList ListGruposMateriais { get; set; }

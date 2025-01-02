@@ -13,13 +13,14 @@ namespace WebApp.Models
         public TipoMaterialDto TipoMaterial { get; set; }
         public List<TipoMaterialDto> TiposMateriais { get; set; }
         public SelectList ListTiposMateriais { get; set; }
+        public int TipoMaterialId { get; set; }
 
         public class CreateUpdateMaterialCommand
         {
             public int Id { get; set; }
             public int TipoMaterialId { get; set; }
             public string UnidadeMedida { get; set; }
-            public string? Descricao { get; set; }
+            public string Descricao { get; set; }
             public int? QtdAdquirida { get; set; }
         }
     }
