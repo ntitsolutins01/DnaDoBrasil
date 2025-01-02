@@ -81,11 +81,12 @@ namespace WebApp.Controllers
 
                 return View(new ProfissionalModel()
                 {
-                    ListEstados = estados, ListModalidades = modalidades,
+                    ListEstados = estados, 
+                    ListModalidades = modalidades,
                     ListPerfis = new SelectList(resultPerfil, "Id", "Nome")
                 });
 
-			}
+            }
 			catch (Exception e)
 			{
 				Console.Write(e.StackTrace);
@@ -230,7 +231,6 @@ namespace WebApp.Controllers
 			{
 				var status = collection["status"].ToString();
 				var habilitado = collection["habilitado"].ToString();
-				var modalidadesIds = collection["arrModalidades"];
 
 				var command = new ProfissionalModel.CreateUpdateProfissionalCommand
 				{
@@ -251,7 +251,7 @@ namespace WebApp.Controllers
                     LocalidadeId = collection["ddlLocalidade"] == "" ? null : Convert.ToInt32(collection["ddlLocalidade"].ToString()),
                     Habilitado = habilitado != "",
                     Status = status != "",
-                    ModalidadesIds = collection["arrModalidades"] == "" ? null : collection["arrModalidades"].ToString()
+                    ModalidadesIds = collection["ddlModalidades"].ToString()
                 };
 
 				await ApiClientFactory.Instance.UpdateProfissional(command.Id, command);

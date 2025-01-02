@@ -86,9 +86,6 @@
 
                 }).apply(this, [window.theme, jQuery]);
 
-
-
-
                 var $select = $(".select2").select2({
                     allowClear: true
                 });
@@ -165,21 +162,19 @@
                 $("#ddlMunicipio").change(function () {
                     var id = $("#ddlMunicipio").val();
 
-                    var url = "../../Localidade/GetLocalidadeByMunicipio?id=" + id;
-
-                    var ddlSource = "#ddlLocalidade";
+                    var url = "../../Localidade/GetLocalidadeByMunicipio";
 
                     $.getJSON(url,
-                        { id: $(ddlSource).val() },
+                        { id: id },
                         function (data) {
                             if (data.length > 0) {
                                 var items = '<option value="">Selecionar Localidade</option>';
-                                $("#ddlLocalidade").empty;
-                                $.each(data,
-                                    function (i, row) {
-                                        items += "<option value='" + row.value + "'>" + row.text + "</option>";
-                                    });
-                                $("#ddlLocalidade").html(items);
+                                
+                                for (var i = 0; i != data.length; i++) {
+                                    $('select#ddlLocalidade').append('<option value="' + data[i].value + '">' + data[i].text + '</option>');
+                                }
+
+                                $('select#ddlLocalidade').multiselect('rebuild');
                             }
                             else {
                                 new PNotify({
@@ -188,7 +183,8 @@
                                     type: 'warning'
                                 });
                             }
-                        });
+                        }
+                    );
                 });
 
 
