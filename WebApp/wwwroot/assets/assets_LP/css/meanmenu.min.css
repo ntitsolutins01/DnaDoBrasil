@@ -129,3 +129,21 @@ a.meanmenu-reveal{display:none}
     top: 18px;
 }
 
+/* Estilo para o item de menu "Entrar" no menu móvel */
+.mobile-menu-button {
+	color: white !important;
+	text-align: center !important;
+}
+
+	.mobile-menu-button a {
+		color: white !important;
+		background-color: #0B2545 !important;
+		text-decoration: none !important;
+		display: block !important;
+		font-weight: 600 !important;
+	}
+
+		.mobile-menu-button a:hover {
+			background-color: #134074 !important;
+			color: white !important;
+		}

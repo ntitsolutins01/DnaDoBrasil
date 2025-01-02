@@ -2224,7 +2224,7 @@ span.rcomment {
 }
 
 /* Centralizar conteúdo em dispositivos móveis */
-@media (max-width: 767px) {
+@media (max-width: 992px) {
     .footer-section .row {
         text-align: center;
     }
