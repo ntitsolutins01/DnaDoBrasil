@@ -246,7 +246,7 @@ namespace WebApp.Controllers
         {
             try
             {
-                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
                 var usuario = ApiClientFactory.Instance.GetUsuarioById(id.ToString());
 
@@ -268,7 +268,7 @@ namespace WebApp.Controllers
                     TipoPessoa = collection["tipoPessoa"].ToString(),
                     CpfCnpj = collection["cpf"].ToString() == "" ? collection["cnpj"].ToString() : collection["cpf"].ToString(),
                     PerfilId = perfil.Id,
-                    AspNetUserId = userId,
+                    AspNetUserId = usuario.AspNetUserId,
                     AspNetRoleId = perfil.AspNetRoleId,
                     MunicipioId = Convert.ToInt32(collection["ddlMunicipio"].ToString()),
                     LocalidadeId = Convert.ToInt32(collection["ddlLocalidade"].ToString())

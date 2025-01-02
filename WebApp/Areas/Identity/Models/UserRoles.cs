@@ -10,6 +10,6 @@
         public const string Gestor = "Gestor Pedagógico";
         public const string ProfessorEad = "ProfessorEad";
         public const string CoordenadorEad = "CoordenadorEad";
-        public const string Coordenador = "Coordenador  Pedagógico";
+        public const string Coordenador = "Coordenador Pedagógico";
     }
 }
