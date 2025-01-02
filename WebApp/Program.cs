@@ -175,8 +175,6 @@ builder.Services.AddAuthorization(o =>
 
     o.AddPolicy(ModuloAccess.ControleMaterial, policy =>
         policy.RequireAssertion(context =>
-            context.User.IsInRole(UserRoles.Coordenador) ||
-            context.User.IsInRole(UserRoles.Gestor) ||
             context.User.IsInRole(UserRoles.Administrador)));
 
 
