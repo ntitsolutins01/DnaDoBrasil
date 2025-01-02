@@ -92,8 +92,8 @@ public class CategoriaController : BaseController
             {
                 Codigo = collection["codigo"].ToString(),
                 Nome = collection["nome"].ToString(),
-                IdadeFinal = Convert.ToInt32(collection["idadeFim"]),
-                IdadeInicial = Convert.ToInt32(collection["idadeIni"]),
+                IdadeFinal = Convert.ToInt32(collection["idadeFinal"]),
+                IdadeInicial = Convert.ToInt32(collection["idadeInicial"]),
                 Descricao = collection["descricao"].ToString(),
             };
 
@@ -123,8 +123,8 @@ public class CategoriaController : BaseController
                 Id = Convert.ToInt32(collection["editCategoriaId"]),
 				Codigo = collection["codigo"].ToString(),
 				Nome = collection["nome"].ToString(),
-				IdadeFinal = Convert.ToInt32(collection["idadeFim"]),
-				IdadeInicial = Convert.ToInt32(collection["idadeIni"]),
+				IdadeFinal = Convert.ToInt32(collection["idadeFinal"]),
+				IdadeInicial = Convert.ToInt32(collection["idadeInicial"]),
 				Descricao = collection["descricao"].ToString(),
 				Status = collection["editStatus"].ToString() == "" ? false : true,
             };

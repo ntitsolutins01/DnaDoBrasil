@@ -1,10 +1,10 @@
-﻿@model WebApp.Models.CategoriaModel
+﻿@model WebApp.Models.AtividadeModel
 @{
-	ViewData["Title"] = "Listagem de Categorias";
+	ViewData["Title"] = "Listagem de Atividades";
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div id="vCategoria">
+<div id="vAtividade">
 	<div class="row">
 		<div class="col-lg-12">
 			<section class="panel">
@@ -12,37 +12,41 @@
 					<div class="panel-actions">
 						<a href="#" class="card-action card-action-toggle" data-card-toggle></a>
 					</div>
-					<h2 class="panel-title">Listagem de Categorias</h2>
+					<h2 class="panel-title">Listagem de Atividades</h2>
 				</header>
 				<div class="panel-body">
 					<div class="form-group row">
 						<div class="col-sm-12 pull-right">
-							<a href="@Url.Action("Create", "Categoria")" id="addToTable" class="btn btn-primary pull-right"><i class="fa fa-plus"></i>&nbsp;&nbsp;Nova Categoria </a>
+							<a href="@Url.Action("Create", "Atividade")" id="addToTable" class="btn btn-primary pull-right"><i class="fa fa-plus"></i>&nbsp;&nbsp;Nova Atividade </a>
 						</div>
 					</div>
 					<table class="table table-bordered table-striped mb-0" id="datatable-default">
 						<thead>
 							<tr>
 								<th class="text-center">Id</th>
-								<th class="text-center">Código</th>
-								<th class="text-center">Nome</th>
-								<th class="text-center">Descrição</th>
-								<th class="text-center">Idade Inicial</th>
-								<th class="text-center">Idade Final</th>
+								<th class="text-center">Estrutura</th>
+								<th class="text-center">LinhaAcao</th>
+								<th class="text-center">Categoria</th>
+								<th class="text-center">Atividade / Modalidade</th>
+								<th class="text-center">Turma</th>
+								<th class="text-center">Dia da Semana</th>
+								<th class="text-center">Horário</th>
 								<th class="text-center">Status</th>
 								<th class="text-center">Ações</th>
 							</tr>
 						</thead>
                         <tbody>
-                        @foreach (var item in Model.Categorias)
+                        @foreach (var item in Model.Atividades)
 							{ 
 								<tr>
 									<td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Id)</td>
-									<td class="text-center">@Html.DisplayFor(modelItem => item.Codigo)</td>
-									<td class="text-center">@Html.DisplayFor(modelItem => item.Nome)</td>
-                                    <td class="text-center">@Html.DisplayFor(modelItem => item.Descricao)</td>
-                                    <td class="text-center">@Html.DisplayFor(modelItem => item.IdadeInicial)</td>
-                                    <td class="text-center">@Html.DisplayFor(modelItem => item.IdadeFinal)</td>
+									<td class="text-center">@Html.DisplayFor(modelItem => item.NomeEstrutura)</td>
+									<td class="text-center">@Html.DisplayFor(modelItem => item.NomeLinhaAcao)</td>
+                                    <td class="text-center">@Html.DisplayFor(modelItem => item.NomeCategoria)</td>
+                                    <td class="text-center">@Html.DisplayFor(modelItem => item.NomeModalidade)</td>
+                                    <td class="text-center">@Html.DisplayFor(modelItem => item.Turma)</td>
+                                    <td class="text-center">@Html.DisplayFor(modelItem => item.DiaSemana)</td>
+									<td class="text-center">@Html.DisplayFor(modelItem => item.HrInicial) - @Html.DisplayFor(modelItem => item.HrFinal)</td>
 									@if (item.Status)
 									{
 										<td class="text-center"><span class="label label-success" style="display: block;">ATIVO</span></td>
@@ -69,12 +73,12 @@
 		</div>
 	</div>
 	<!-- Modal -->
-	<div class="modal fade" id="mdDeleteCategoria" tabindex="-1" role="dialog" aria-labelledby="mdDeleteCategoriaLabel" aria-hidden="true">
+	<div class="modal fade" id="mdDeleteAtividade" tabindex="-1" role="dialog" aria-labelledby="mdDeleteAtividadeLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="mdDeleteCategoriaLabel">
-						<i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Exclusão de Categoria</strong>
+					<h5 class="modal-title" id="mdDeleteAtividadeLabel">
+						<i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Exclusão de Atividade</strong>
 					</h5>
 				</div>
 				<div class="modal-body">
@@ -82,7 +86,7 @@
 						<i class="fa fa-question-circle"></i>
 					</div>
 					<div class="modal-text">
-						<input type="hidden" id="deleteCategoriaId" />
+						<input type="hidden" id="deleteAtividadeId" />
 						<p class="mb-0">Tem certeza que deseja <b>excluir</b> esse registro?</p>
 					</div>
 					<div class="modal-wrapper">
@@ -90,37 +94,37 @@
 				</div>
 				<div class="modal-footer">
 					<button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-thumbs-o-down"></i> &nbsp;&nbsp;Não</button>
-					<a id="deleteCategoriaHref" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</a>
+					<a id="deleteAtividadeHref" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</a>
 				</div>
 			</div>
 		</div>
 	</div>
 	<!-- Modal -->
-	<div class="modal fade" id="mdEditCategoria" tabindex="-1" role="dialog" aria-labelledby="mdEditCategoriaLabel" aria-hidden="true">
+	<div class="modal fade" id="mdEditAtividade" tabindex="-1" role="dialog" aria-labelledby="mdEditAtividadeLabel" aria-hidden="true">
 		<div class="modal-dialog modal-md" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="mdEditCategoriaLabel">
-						<i class="fa fa-pencil"></i> &nbsp;&nbsp;<strong>Alterar Categoria</strong>
+					<h5 class="modal-title" id="mdEditAtividadeLabel">
+						<i class="fa fa-pencil"></i> &nbsp;&nbsp;<strong>Alterar Atividade</strong>
 					</h5>
 				</div>
-				@using (@Html.BeginForm("Edit", "Categoria", FormMethod.Post, new { id = "formEditCategoria", @class = "form-horizontal", @enctype = "multipart/form-data" }))
+				@using (@Html.BeginForm("Edit", "Atividade", FormMethod.Post, new { id = "formEditAtividade", @class = "form-horizontal", @enctype = "multipart/form-data" }))
 				{
                     <div class="modal-body">
-                        <input type="hidden" name="editCategoriaId" :value="editDto.Id"/>
+                        <input type="hidden" name="editAtividadeId" :value="editDto.Id"/>
                         
                         <div class="form-group row">
-                            <label class="col-sm-2 control-label text-sm-right pt-2">Código da Categoria <span class="required">*</span></label>
+                            <label class="col-sm-2 control-label text-sm-right pt-2">Código da Atividade <span class="required">*</span></label>
                             <div class="col-sm-4">
                                 <input type="text" name="codigo" :value="editDto.Codigo" class="form-control"
                                        maxlength="10" 
-                                       title="Por favor informe o código da Categoria." required />
+                                       title="Por favor informe o código da Atividade." required />
                             </div>
-                            <label class="col-sm-2 control-label text-sm-right pt-2">Nome da Categoria <span class="required">*</span></label>
+                            <label class="col-sm-2 control-label text-sm-right pt-2">Nome da Atividade <span class="required">*</span></label>
                             <div class="col-sm-4">
                                 <input type="text" name="nome" :value="editDto.Nome" class="form-control"
                                        maxlength="50" oninput="this.value = this.value.toUpperCase()"
-                                       title="Por favor informe o Nome da Categoria." required />
+                                       title="Por favor informe o Nome da Atividade." required />
                             </div>
                         </div>
                         <div class="form-group row">
@@ -177,7 +181,7 @@
 	<script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
 	<script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
 	<script src="~/js/formatTable.js"></script>
-	<script src="~/js/Categoria.js"></script>
+	<script src="~/js/Atividade.js"></script>
 
 	<script>
 
@@ -188,14 +192,14 @@
 
 			if (crub === 1) {
 				new PNotify({
-					title: 'Categoria',
+					title: 'Atividade',
 					text: 'Cadastro realizado com sucesso!',
 					type: 'success'
 				});
 				crub = 0;
 			} else if (crub === 2) {
 				new PNotify({
-					title: 'Categoria',
+					title: 'Atividade',
 					text: 'Dados alterados com sucesso.',
 					type: 'warning',
 					icon: 'fa fa-pencil'
@@ -203,7 +207,7 @@
 				crub = 0;
 			} else if (crub === 3) {
 				new PNotify({
-					title: 'Categoria',
+					title: 'Atividade',
 					text: 'Registro excluído com sucesso.',
 					type: 'error',
 					icon: 'fa fa-trash-o'
@@ -217,21 +221,21 @@
 
 			if (notify === 0) {
 				new PNotify({
-					title: 'Categoria',
+					title: 'Atividade',
 					text: messagem,
 					type: 'success'
 				});
 				crub = 0;
 			} else if (notify === 1) {
 				new PNotify({
-					title: 'Categoria',
+					title: 'Atividade',
 					text: messagem,
 					type: 'warning'
 				});
 				crub = 0;
 			} else if (notify === 2) {
 				new PNotify({
-					title: 'Categoria',
+					title: 'Atividade',
 					text: messagem,
 					type: 'error'
 				});

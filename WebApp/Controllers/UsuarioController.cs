@@ -144,6 +144,7 @@ namespace WebApp.Controllers
                     CpfCnpj = collection["cpf"].ToString(),
                     TipoPessoa = collection["tipoPessoa"].ToString(),
                     MunicipioId = Convert.ToInt32(collection["ddlMunicipio"].ToString()),
+                    LocalidadeId = Convert.ToInt32(collection["ddlLocalidade"].ToString())
                 };
 
 
@@ -211,13 +212,15 @@ namespace WebApp.Controllers
 
                 var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", obj.Uf);
                 var municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(obj.Uf!), "Id", "Nome", obj.MunicipioId);
+                var localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeByMunicipio(obj.MunicipioId.ToString()), "Id", "Nome", obj.LocalidadeId);
 
                 model = new UsuarioModel
                 {
                     ListPerfis = new SelectList(resultPerfil, "Id", "Nome", obj.Perfil.Id),
                     Usuario = obj,
                     ListMunicipios = municipios,
-                    ListEstados = estados
+                    ListEstados = estados,
+                    ListLocalidades = localidades
                 };
 
                 return View(model);
@@ -270,6 +273,7 @@ namespace WebApp.Controllers
                     AspNetUserId = userId,
                     AspNetRoleId = perfil.AspNetRoleId,
                     MunicipioId = Convert.ToInt32(collection["ddlMunicipio"].ToString()),
+                    LocalidadeId = Convert.ToInt32(collection["ddlLocalidade"].ToString())
                 };
 
                 await ApiClientFactory.Instance.UpdateUsuario(id, command);

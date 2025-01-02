@@ -17,10 +17,10 @@ using Claim = WebApp.Identity.Claim;
 namespace WebApp.Controllers;
 
 /// <summary>
-/// Controller de Estrutura
+/// Controller de Atividade
 /// </summary>
-[Authorize(Policy = ModuloAccess.ConfiguracaoSistema)]
-public class EstruturaController : BaseController
+[Authorize(Policy = ModuloAccess.Atividade)]
+public class AtividadeController : BaseController
 {
     #region Constructor
     private readonly IOptions<UrlSettings> _appSettings;
@@ -29,7 +29,7 @@ public class EstruturaController : BaseController
     /// Construtor da página
     /// </summary>
     /// <param name="app">configurações de urls do sistema</param>
-    public EstruturaController(IOptions<UrlSettings> appSettings)
+    public AtividadeController(IOptions<UrlSettings> appSettings)
     {
         _appSettings = appSettings;
         ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
@@ -38,29 +38,29 @@ public class EstruturaController : BaseController
 
     #region Crud Methods
     /// <summary>
-    /// Listagem de Estrutura
+    /// Listagem de Atividade
     /// </summary>
     /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
     /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
     /// <param name="collection">lista de filtros selecionados para pesquisa de alunos</param>
     /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
-    [ClaimsAuthorize(ClaimType.Estrutura, Claim.Consultar)]
+    [ClaimsAuthorize(ClaimType.Atividade, Claim.Consultar)]
     public IActionResult Index(int? crud, int? notify, string message = null)
     {
         SetNotifyMessage(notify, message);
         SetCrudMessage(crud);
-        var response = ApiClientFactory.Instance.GetEstruturasAll();
+        var response = ApiClientFactory.Instance.GetAtividadesAll();
 
-        return View(new EstruturaModel() { Estruturas = response });
+        return View(new AtividadeModel() { Atividades = response });
     }
 
     /// <summary>
-    /// Tela para inclusão de Estrutura
+    /// Tela para inclusão de Atividade
     /// </summary>
     /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
     /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
     /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
-    [ClaimsAuthorize(ClaimType.Estrutura, Claim.Incluir)]
+    [ClaimsAuthorize(ClaimType.Atividade, Claim.Incluir)]
     public ActionResult Create(int? crud, int? notify, string message = null)
     {
         try
@@ -70,10 +70,18 @@ public class EstruturaController : BaseController
 
             var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
 
-            return View(new EstruturaModel()
+            var linhasAcoes = new SelectList(ApiClientFactory.Instance.GetLinhasAcoesAll(), "Id", "Nome");
+
+            var categorias = new SelectList(ApiClientFactory.Instance.GetCategoriasAll(), "Id", "Nome");
+
+            var model = new AtividadeModel()
             {
-                ListEstados = estados
-            });
+                ListEstados = estados,
+                ListLinhasAcoes = linhasAcoes,
+                ListCategorias = categorias
+            };
+
+            return View(model);
         }
         catch (Exception e)
         {
@@ -83,24 +91,27 @@ public class EstruturaController : BaseController
     }
 
     /// <summary>
-    /// Ação de inclusão do Estrutura
+    /// Ação de inclusão do Atividade
     /// </summary>
-    /// <param name="collection">coleção de dados para inclusao de Estrutura</param>
+    /// <param name="collection">coleção de dados para inclusao de Atividade</param>
     /// <returns>retorna mensagem de inclusao através do parametro crud</returns>
-    [ClaimsAuthorize(ClaimType.Estrutura, Claim.Incluir)]
+    [ClaimsAuthorize(ClaimType.Atividade, Claim.Incluir)]
     [HttpPost]
     public async Task<ActionResult> Create(IFormCollection collection)
     {
         try
         {
-            var command = new EstruturaModel.CreateUpdateEstruturaCommand
+            var command = new AtividadeModel.CreateUpdateAtividadeCommand
             {
-                LocalidadeId = Convert.ToInt32(collection["ddlLocalidade"].ToString()),
-                Nome = collection["nome"].ToString(),
-                Descricao = collection["descricao"].ToString(),
+                EstruturaId = 0,
+                LinhaAcaoId = 0,
+                CategoriaId = 0,
+                ModalidadeId = 0,
+                ProfissionalId = 0,
+                LocalidadeId = 0
             };
 
-            await ApiClientFactory.Instance.CreateEstrutura(command);
+            await ApiClientFactory.Instance.CreateAtividade(command);
 
             return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
         }
@@ -111,26 +122,41 @@ public class EstruturaController : BaseController
     }
 
     /// <summary>
-    /// Ação de alteração do Estrutura
+    /// Ação de alteração do Atividade
     /// </summary>
-    /// <param name="id">identificador do Estrutura</param>
-    /// <param name="collection">coleção de dados para alteração de Estrutura</param>
+    /// <param name="id">identificador do Atividade</param>
+    /// <param name="collection">coleção de dados para alteração de Atividade</param>
     /// <returns>retorna mensagem de alteração através do parametro crud</returns>
-    [ClaimsAuthorize(ClaimType.Estrutura, Claim.Alterar)]
+    [ClaimsAuthorize(ClaimType.Atividade, Claim.Alterar)]
     public async Task<ActionResult> Edit(IFormCollection collection)
     {
         try
         {
-            var command = new EstruturaModel.CreateUpdateEstruturaCommand
+            var command = new AtividadeModel.CreateUpdateAtividadeCommand
             {
-                Id = Convert.ToInt32(collection["editEstruturaId"]),
-                LocalidadeId = Convert.ToInt32(collection["ddlLocalidade"].ToString()),
-                Nome = collection["nome"].ToString(),
-                Descricao = collection["descricao"].ToString(),
-                Status = collection["editStatus"].ToString() == "" ? false : true,
+                Id = Convert.ToInt32(collection["editAtividadeId"]),
+                //Codigo = collection["codigo"]
+                //    .ToString(),
+                //Nome = collection["nome"]
+                //    .ToString(),
+                //IdadeFinal = Convert.ToInt32(collection["idadeFinal"]),
+                //IdadeInicial = Convert.ToInt32(collection["idadeInicial"]),
+                //Descricao = collection["descricao"]
+                //    .ToString(),
+                Status = collection["editStatus"]
+                             .ToString() ==
+                         ""
+                    ? false
+                    : true,
+                EstruturaId = 0,
+                LinhaAcaoId = 0,
+                CategoriaId = 0,
+                ModalidadeId = 0,
+                ProfissionalId = 0,
+                LocalidadeId = 0,
             };
 
-            await ApiClientFactory.Instance.UpdateEstrutura(command.Id, command);
+            await ApiClientFactory.Instance.UpdateAtividade(command.Id, command);
 
             return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
         }
@@ -141,21 +167,21 @@ public class EstruturaController : BaseController
     }
 
     /// <summary>
-    /// Ação de exclusão do Estrutura
+    /// Ação de exclusão do Atividade
     /// </summary>
-    /// <param name="id">identificador do Estrutura</param>
-    /// <param name="collection">coleção de dados para exclusão de Estrutura</param>
+    /// <param name="id">identificador do Atividade</param>
+    /// <param name="collection">coleção de dados para exclusão de Atividade</param>
     /// <returns>retorna mensagem de exclusão através do parametro crud</returns>
-    [ClaimsAuthorize(ClaimType.Estrutura, Claim.Excluir)]
+    [ClaimsAuthorize(ClaimType.Atividade, Claim.Excluir)]
     public ActionResult Delete(int id)
     {
         try
         {
-            //if (ApiClientFactory.Instance.GetEstruturaById(id).Any())
+            //if (ApiClientFactory.Instance.GetAtividadeById(id).Any())
             //{
-            //	return RedirectToAction(nameof(Index), new { EstruturaId = id, notify = (int)EnumNotify.Error, message = "O Estrutura não pode ser excluído pois existem presenças registradas para o mesmo." });
+            //	return RedirectToAction(nameof(Index), new { AtividadeId = id, notify = (int)EnumNotify.Error, message = "O Atividade não pode ser excluído pois existem presenças registradas para o mesmo." });
             //}
-            ApiClientFactory.Instance.DeleteEstrutura(id);
+            ApiClientFactory.Instance.DeleteAtividade(id);
             return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
         }
         catch
@@ -167,40 +193,11 @@ public class EstruturaController : BaseController
 
     #region Get Methods
 
-    public Task<EstruturaDto> GetEstruturaById(int id)
+    public Task<AtividadeDto> GetAtividadeById(int id)
     {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        var usuario = User.Identity.Name;
-
-        var usu = ApiClientFactory.Instance.GetUsuarioByEmail(usuario);
-
-        var result = ApiClientFactory.Instance.GetEstruturaById(id);
-        var localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeByMunicipio(result.Localidade.MunicipioId.ToString()), "Id", "Nome", result.Localidade.Id);
-        result.ListLocalidades = localidades;
+        var result = ApiClientFactory.Instance.GetAtividadeById(id);
 
         return Task.FromResult(result);
-    }
-
-    /// <summary>
-    /// Busca de estruturas por localidade
-    /// </summary>
-    /// <param name="id">identificador da localidade</param>
-    /// <returns>retorna a lista de estruturas</returns>
-    [ClaimsAuthorize(ClaimType.Estrutura, Claim.Consultar)]
-    public Task<JsonResult> GetEstruturasByLocalidade(string id)
-    {
-        try
-        {
-            if (string.IsNullOrEmpty(id)) throw new Exception("Localidade não informada.");
-            var resultLocal = ApiClientFactory.Instance.GetEstruturasByLocalidade(id);
-
-            return Task.FromResult(Json(new SelectList(resultLocal, "Id", "Nome")));
-
-        }
-        catch (Exception ex)
-        {
-            return Task.FromResult(Json(ex));
-        }
     }
     #endregion
 }

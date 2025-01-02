@@ -11,7 +11,7 @@ namespace WebApp.Models
         public SelectList ListEstados { get; set; }
         public string MunicipioId { get; set; }
         public SelectList ListMunicipios { get; set; }
-        public int LocalidadeId { get; set; }
+        public string LocalidadeId { get; set; }
         public SelectList ListLocalidades { get; set; }
 
 		public class CreateUpdateEstruturaCommand

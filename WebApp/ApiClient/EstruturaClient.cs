@@ -1,4 +1,5 @@
-﻿using WebApp.Dto;
+﻿using System.Collections;
+using WebApp.Dto;
 using WebApp.Models;
 
 namespace WebApp.ApiClient
@@ -45,7 +46,14 @@ namespace WebApp.ApiClient
                 $"{ResourceEstrutura }"));
             return Get<List<EstruturaDto>>(requestUrl);
         }
-
+        public List<EstruturaDto> GetEstruturasByLocalidade(string id)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceEstrutura}/Localidade/{id}"));
+            return Get<List<EstruturaDto>>(requestUrl);
+        }
         #endregion
+
+
     }
 }

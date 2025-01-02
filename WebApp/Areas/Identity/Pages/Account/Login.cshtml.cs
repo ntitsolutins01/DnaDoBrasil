@@ -114,16 +114,13 @@ namespace WebApp.Areas.Identity.Pages.Account
 
 			var user = await _userManager.FindByEmailAsync(Login.Email);
 
-			var roles = await _userManager.GetRolesAsync(user);
+            if (user == null)
+            {
+                ModelState.AddModelError(string.Empty, "Usuário não cadastrado ou não encontrado.");
+                return Page();
+            }
 
-
-
-
-			if (user == null)
-			{
-				ModelState.AddModelError(string.Empty, "Usuário não cadastrado.");
-				return Page();
-			}
+            var roles = await _userManager.GetRolesAsync(user);
 
 			switch (result.Succeeded)
 			{
