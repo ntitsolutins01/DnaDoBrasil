@@ -26,7 +26,8 @@ namespace WebApp.Models
             public string DtFim { get; set; }
 			public int MunicipioId { get; set; }
             public int LocalidadeId { get; set; }
-            public string LinhaAcoes { get; set; }
+            public string LinhasAcoesIds { get; set; }
+            public string LocalidadesIds { get; set; }
         }
     }
 

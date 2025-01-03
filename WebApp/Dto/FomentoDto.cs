@@ -15,5 +15,8 @@
         public string? Localidade { get; set; }
         public string Sigla { get; set; }
         public string? LinhaAcoes { get; set; }
-    }
+        public string? Localidades { get; set; }
+        public string? LocalidadesIds { get; set; }
+        public string? LinhasAcoesIds { get; set; }
+	}
 }

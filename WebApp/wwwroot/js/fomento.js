@@ -1,5 +1,5 @@
 ﻿var vm = new Vue({
-    el: "#formFomento",
+    el: "#vFomento",
     data: {
         loading: false,
         editDto: { Nome: "", Codigo: "", Status: "", DtIni: "", DtFim: "" }
