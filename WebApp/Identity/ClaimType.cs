@@ -23,6 +23,9 @@ namespace WebApp.Identity
         public const string Encaminhamento = "Encaminhamento";
         public const string Usuario = "Usuario";
         public const string Perfil = "Perfil";
+        public const string Estrutura = "Estrutura";
+        public const string Categoria = "Categoria";
+        public const string Atividade = "Atividade";
         public const string GrupoMaterial = "GrupoMaterial";
         public const string TipoMaterial = "TipoMaterial";
         public const string Material = "Material";
