@@ -62,8 +62,9 @@ namespace WebApp.Controllers
             {
                 var command = new FomentoModel.CreateUpdateFomentoCommand
                 {
-                    LocalidadeId = Convert.ToInt32(collection["ddlLocalidade"].ToString()),
-                    MunicipioId = Convert.ToInt32(collection["ddlMunicipio"].ToString()),
+	                Localidades = collection["ddlLocalidade"].ToString(),
+	                LocalidadeId=53,
+					MunicipioId = Convert.ToInt32(collection["ddlMunicipio"].ToString()),
                     Codigo = collection["codigo"].ToString(),
                     DtIni = collection["dtIni"].ToString(),
                     DtFim = collection["dtFim"].ToString(),
