@@ -4,7 +4,7 @@
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row">
+<div class="row" id="vFomento">
 	<div class="col-md-12">
 		@using (@Html.BeginForm("Edit", "Fomento", FormMethod.Post, new { id = "formEditFomento", @class = "form-horizontal" }))
 		{
@@ -176,21 +176,31 @@
 			'use strict';
 
 			// Set the value
-			$("#ddlLinhaAcao").val(@Model.Fomento.LinhaAcoes);
+			var data="@Model.Fomento.LinhasAcoesIds";
+
+			//Make an array
+			var dataarray=data.split(",");
+
+			// Set the value
+			$("#ddlLinhaAcao").val(dataarray);
 
 			// Then refresh
 			$("#ddlLinhaAcao").multiselect("refresh");
 
+			//========================================================
+
 			// Set the value
-			var data=@Model.Fomento.LocalidadesId;
+			var data="@Model.Fomento.LocalidadesIds";
 
 			//Make an array
 			var dataarray=data.split(",");
 
 			$("#ddlLocalidade").val(dataarray);
-			console.log(dataarray);
+
 			// Then refresh
 			$("#ddlLocalidade").multiselect("refresh");
+
+			//========================================================
 
 			var crud = @ViewBag.CrudMessage;
 

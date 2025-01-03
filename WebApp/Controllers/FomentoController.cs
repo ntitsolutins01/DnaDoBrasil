@@ -62,14 +62,14 @@ namespace WebApp.Controllers
             {
                 var command = new FomentoModel.CreateUpdateFomentoCommand
                 {
-	                Localidades = collection["ddlLocalidade"].ToString(),
-	                LocalidadeId=53,
+	                LocalidadesIds = collection["ddlLocalidade"].ToString(),
+	                LinhasAcoesIds = collection["ddlLinhaAcao"].ToString(),
+					LocalidadeId =53,
 					MunicipioId = Convert.ToInt32(collection["ddlMunicipio"].ToString()),
                     Codigo = collection["codigo"].ToString(),
                     DtIni = collection["dtIni"].ToString(),
                     DtFim = collection["dtFim"].ToString(),
-                    Nome = collection["Nome"].ToString(),
-                    LinhaAcoes = collection["ddlLinhaAcao"].ToString()
+                    Nome = collection["Nome"].ToString()
                 };
 
                 await ApiClientFactory.Instance.CreateFomento(command);
@@ -92,7 +92,7 @@ namespace WebApp.Controllers
             var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", fomento.Sigla);
 			var municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(fomento.Sigla), "Id", "Nome", fomento.MunicipioId);
 			var localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeByMunicipio(fomento.MunicipioId.ToString()), "Id", "Nome", fomento.LocalidadeId);
-			var linhasAcoes = new SelectList(ApiClientFactory.Instance.GetLinhasAcoesAll(), "Id", "Nome", fomento.LinhaAcoes);
+			var linhasAcoes = new SelectList(ApiClientFactory.Instance.GetLinhasAcoesAll(), "Id", "Nome", fomento.LinhasAcoesIds);
 
             var model = new FomentoModel
             {
@@ -116,8 +116,9 @@ namespace WebApp.Controllers
                 Nome = collection["Nome"].ToString(),
                 DtIni = collection["dtIni"].ToString(),
                 DtFim = collection["dtFim"].ToString(),
-                LinhaAcoes = collection["ddlLinhaAcao"].ToString(),
-                LocalidadeId = Convert.ToInt32(collection["ddlLocalidade"].ToString()),
+                LinhasAcoesIds = collection["ddlLinhaAcao"].ToString(),
+                LocalidadesIds = collection["ddlLocalidade"].ToString(),
+                LocalidadeId = 53,
                 MunicipioId = Convert.ToInt32(collection["ddlMunicipio"].ToString()),
                 Status = collection["status"].ToString() == "" ? false : true
             };
