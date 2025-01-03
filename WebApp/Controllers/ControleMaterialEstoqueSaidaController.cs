@@ -62,11 +62,13 @@ public class ControleMaterialEstoqueSaidaController : BaseController
         {
             SetNotifyMessage(notify, message);
             SetCrudMessage(crud);
+            var tipoMateriais = new SelectList(ApiClientFactory.Instance.GetTiposMateriaisAll(), "Id", "Nome");
             var materiais = new SelectList(ApiClientFactory.Instance.GetMateriaisAll(), "Id", "Descricao");
 
             return View(new ControleMaterialEstoqueSaidaModel()
             {
-                ListControlesMateriaisEstoquesSaidas = materiais
+                ListTiposMateriais = tipoMateriais,
+                ListMateriais = materiais
             });
         }
         catch (Exception e)
@@ -91,23 +93,9 @@ public class ControleMaterialEstoqueSaidaController : BaseController
             var command = new ControleMaterialEstoqueSaidaModel.CreateUpdateControleMaterialEstoqueSaidaCommand
             {
                 MaterialId = Convert.ToInt32(collection["ddlMaterialId"].ToString()),
-                Quantidade = Convert.ToInt32(collection["Quantidade"]),
+                Quantidade = Convert.ToInt32(collection["quantidade"]),
                 Solicitante = collection["solicitante"].ToString()
             };
-
-            //foreach (var file in collection.Files)
-            //{
-            //    if (file.Length <= 0) continue;
-
-            //    command.Imagem = Path.GetFileName(collection.Files[0].FileName);
-
-            //    using (var ms = new MemoryStream())
-            //    {
-            //        file.CopyToAsync(ms);
-            //        var byteIMage = ms.ToArray();
-            //        command.ByteImage = byteIMage;
-            //    }
-            //}
 
             await ApiClientFactory.Instance.CreateControleMaterialEstoqueSaida(command);
 
@@ -134,7 +122,6 @@ public class ControleMaterialEstoqueSaidaController : BaseController
             var command = new ControleMaterialEstoqueSaidaModel.CreateUpdateControleMaterialEstoqueSaidaCommand
             {
                 Id = Convert.ToInt32(collection["editControleMaterialEstoqueSaidaId"]),
-                Quantidade = Convert.ToInt32(collection["Quantidade"]),
                 Solicitante = collection["solicitante"].ToString()
             };
 
@@ -168,11 +155,11 @@ public class ControleMaterialEstoqueSaidaController : BaseController
         }
     }
 
-    public Task<JsonResult> GetMateriaisAllByTipoControleMaterialEstoqueSaidaId(string id)
+    public Task<JsonResult> GetControlesMateriaisEstoquesSaidasAllByMaterialId(string id)
     {
         try
         {
-            if (string.IsNullOrEmpty(id)) throw new Exception("ControleMaterialEstoqueSaida não informado.");
+            if (string.IsNullOrEmpty(id)) throw new Exception("Material não informado.");
             var resultLocal = ApiClientFactory.Instance.GetControlesMateriaisEstoquesSaidasAllByMaterialId(Convert.ToInt32(id));
 
             return Task.FromResult(Json(new SelectList(resultLocal, "Id", "Nome")));

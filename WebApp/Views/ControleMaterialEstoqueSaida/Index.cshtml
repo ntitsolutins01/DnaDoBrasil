@@ -17,7 +17,7 @@
                 <div class="panel-body">
                     <div class="form-group row">
                         <div class="col-sm-12 pull-right">
-                            <a href="@Url.Action("Create", "ControleMaterialEstoqueSaida")" id="addToTable" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Novo ControleMaterialEstoqueSaida </a>
+                            <a href="@Url.Action("Create", "ControleMaterialEstoqueSaida")" id="addToTable" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Novo Controle de Saida </a>
                         </div>
                     </div>
                     <table class="table table-bordered table-striped mb-0" id="datatable-default">
@@ -97,25 +97,11 @@
                     <div class="modal-body">
                         <input type="hidden" name="editControleMaterialEstoqueSaidaId" :value="editDto.Id" />
                         <div class="form-group row">
-                            <label class="col-sm-3 control-label text-sm-right pt-2">Descrição </label>
+                            <label class="col-sm-3 control-label text-sm-right pt-2">Solicitante </label>
                             <div class="col-sm-9">
-                                <input type="text" name="descricao" id="descricao" class="form-control"
-                                       maxlength="150" :value="editDto.Descricao"
-                                       title="Por favor informe a descrição." required />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label text-sm-right pt-2">Unidade de Medida </label>
-                            <div class="col-sm-4">
-                                <input type="text" name="unidademedida" id="unidademedida" class="form-control"
-                                       maxlength="150" :value="editDto.UnidadeMedida"
-                                       title="Por favor informe a unidade de medida." required />
-                            </div>
-                            <label class="col-sm-2 control-label text-sm-right pt-2">Quantidade </label>
-                            <div class="col-sm-2">
-                                <input type="text" name="qtdAdquirida" id="qtdAdquirida" class="form-control"
-                                       maxlength="10" :value="editDto.QtdAqdquirida"
-                                       title="Por favor informe a quantidade." required />
+                                <input type="text" name="solicitante" id="solicitante" class="form-control"
+                                       maxlength="150" :value="editDto.Solicitante"
+                                       title="Por favor informe o solicitante." />
                             </div>
                         </div>
                     </div>

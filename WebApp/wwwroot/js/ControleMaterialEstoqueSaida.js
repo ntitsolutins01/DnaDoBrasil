@@ -1,8 +1,8 @@
-var vm = new Vue({
-    el: "#vModuloEad ",
+﻿var vm = new Vue({
+    el: "#vControleMaterialEstoqueSaida",
     data: {
         loading: false,
-        editDto: { Id: "", Titulo: "", Descricao: "", CargaHoraria: "", Status: true }
+        editDto: { Id: "", Quantidade: "", Solicitante: "" }
     },
     mounted: function () {
         var self = this;
@@ -28,9 +28,9 @@ var vm = new Vue({
 
             var formid = $('form')[1].id;
 
-            if (formid === "formEditModuloEad") {
+            if (formid === "formEditControleMaterialEstoqueSaida") {
 
-                $("#formEditModuloEad ").validate({
+                $("#formEditControleMaterialEstoqueSaida ").validate({
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
                     },
@@ -50,7 +50,7 @@ var vm = new Vue({
                 });
             }
 
-            if (formid === "formModuloEad") {
+            if (formid === "formControleMaterialEstoqueSaida") {
 
                 //skin select
                 var $select = $(".select2").select2({
@@ -78,36 +78,36 @@ var vm = new Vue({
                 });
 
                 //Açao de seleçao de valor na combo primaria para preencher a combo secundára
-                $("#ddlTipoCurso").change(function () {
-                    var tipoCursoId = $("#ddlTipoCurso").val();
+                $("#ddlTipoMaterial").change(function () {
+                    var tipoMaterialId = $("#ddlTipoMaterial").val();
 
-                    var url = "../Curso/GetCursosAllByTipoCursoId";
+                    var url = "../Material/GetMateriaisAllByTipoMaterialId";
 
-                    var ddlSource = "#ddlCurso";
+                    var ddlSource = "#ddlMaterial";
 
                     $.getJSON(url,
-                        { id: tipoCursoId },
+                        { id: tipoMaterialId },
                         function (data) {
                             if (data.length > 0) {
-                                var items = '<option value="">Selecionar Curso</option>';
-                                $("#ddlCurso").empty;
+                                var items = '<option value="">Selecionar Material</option>';
+                                $("#ddlMaterial").empty;
                                 $.each(data,
                                     function (i, row) {
                                         items += "<option value='" + row.value + "'>" + row.text + "</option>";
                                     });
-                                $("#ddlCurso").html(items);
+                                $("#ddlMaterial").html(items);
                             }
                             else {
                                 new PNotify({
-                                    title: 'Curso',
-                                    text: 'Cursos não encontrados.',
+                                    title: 'Material',
+                                    text: 'Materiais não encontrados.',
                                     type: 'warning'
                                 });
                             }
                         });
                 });
 
-                $("#formModuloEad").validate({
+                $("#formControleMaterialEstoqueSaida").validate({
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
                     },
@@ -148,20 +148,18 @@ var vm = new Vue({
                 self.loading = flag;
             }
         },
-        DeleteModuloEad: function (id) {
-            var url = "ModuloEad/Delete/" + id;
-            $("#deleteModuloEadHref").prop("href", url);
+        DeleteControleMaterialEstoqueSaida: function (id) {
+            var url = "ControleMaterialEstoqueSaida/Delete/" + id;
+            $("#deleteControleMaterialEstoqueSaidaHref").prop("href", url);
         },
-        EditModuloEad: function (id) {
+        EditControleMaterialEstoqueSaida: function (id) {
             var self = this;
 
-            axios.get("ModuloEad/GetModuloEadById/?id=" + id).then(result => {
+            axios.get("ControleMaterialEstoqueSaida/GetControleMaterialEstoqueSaidaById/?id=" + id).then(result => {
 
                 self.editDto.Id = result.data.id;
-                self.editDto.Titulo = result.data.titulo;
-                self.editDto.Descricao = result.data.descricao;
-                self.editDto.CargaHoraria = result.data.cargaHoraria;
-                self.editDto.Status = result.data.status;
+                self.editDto.Quantidade = result.data.quantidade;
+                self.editDto.Solicitante = result.data.solicitante;
 
             }).catch(error => {
                 Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
@@ -172,13 +170,13 @@ var vm = new Vue({
 
 var crud = {
     DeleteModal: function (id) {
-        $('input[name="deleteModuloEadId"]').attr('value', id);
-        $('#mdDeleteModuloEad').modal('show');
-        vm.DeleteModuloEad(id)
+        $('input[name="deleteControleMaterialEstoqueSaidaId"]').attr('value', id);
+        $('#mdDeleteControleMaterialEstoqueSaida').modal('show');
+        vm.DeleteControleMaterialEstoqueSaida(id)
     },
     EditModal: function (id) {
-        $('input[name="editModuloEadId"]').attr('value', id);
-        $('#mdEditModuloEad').modal('show');
-        vm.EditModuloEad(id)
+        $('input[name="editControleMaterialEstoqueSaidaId"]').attr('value', id);
+        $('#mdEditControleMaterialEstoqueSaida').modal('show');
+        vm.EditControleMaterialEstoqueSaida(id)
     }
 };
