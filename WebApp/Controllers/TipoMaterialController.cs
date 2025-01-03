@@ -171,7 +171,7 @@ public class TipoMaterialController : BaseController
         try
         {
             if (string.IsNullOrEmpty(id)) throw new Exception("Tipo de Material não informado.");
-            var resultLocal = ApiClientFactory.Instance.GetTiposMateriaisAllByGrupoMaterialId(Convert.ToInt32(id));
+            var resultLocal = ApiClientFactory.Instance.GetTiposMateriaisByGrupoMaterialId(Convert.ToInt32(id));
 
             return Task.FromResult(Json(new SelectList(resultLocal, "Id", "Nome")));
 

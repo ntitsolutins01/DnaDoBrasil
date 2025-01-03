@@ -45,7 +45,7 @@ namespace WebApp.ApiClient
                 $"{ResourceControleMaterialEstoqueSaida}"));
             return Get<List<ControleMaterialEstoqueSaidaDto>>(requestUrl);
         }
-        public List<ControleMaterialEstoqueSaidaDto> GetControlesMateriaisEstoquesSaidasAllByMaterialId(int materialId)
+        public List<ControleMaterialEstoqueSaidaDto> GetControlesMateriaisEstoquesSaidasByMaterialId(int materialId)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 $"{ResourceControleMaterialEstoqueSaida}/ControleMaterialEstoqueSaida/{materialId}"));

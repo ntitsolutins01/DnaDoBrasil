@@ -45,7 +45,7 @@ namespace WebApp.ApiClient
                 $"{ResourceTipoMaterial}"));
             return Get<List<TipoMaterialDto>>(requestUrl);
         }
-        public List<TipoMaterialDto> GetTiposMateriaisAllByGrupoMaterialId(int grupoMaterialId)
+        public List<TipoMaterialDto> GetTiposMateriaisByGrupoMaterialId(int grupoMaterialId)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 $"{ResourceTipoMaterial}/GrupoMaterial/{grupoMaterialId}"));

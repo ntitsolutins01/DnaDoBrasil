@@ -81,9 +81,7 @@
                 $("#ddlTipoMaterial").change(function () {
                     var tipoMaterialId = $("#ddlTipoMaterial").val();
 
-                    var url = "../Material/GetMateriaisAllByTipoMaterialId";
-
-                    var ddlSource = "#ddlMaterial";
+                    var url = "../Material/GetMateriaisByTipoMaterialId";
 
                     $.getJSON(url,
                         { id: tipoMaterialId },

@@ -63,12 +63,10 @@ public class ControleMaterialEstoqueSaidaController : BaseController
             SetNotifyMessage(notify, message);
             SetCrudMessage(crud);
             var tipoMateriais = new SelectList(ApiClientFactory.Instance.GetTiposMateriaisAll(), "Id", "Nome");
-            var materiais = new SelectList(ApiClientFactory.Instance.GetMateriaisAll(), "Id", "Descricao");
 
             return View(new ControleMaterialEstoqueSaidaModel()
             {
-                ListTiposMateriais = tipoMateriais,
-                ListMateriais = materiais
+                ListTiposMateriais = tipoMateriais
             });
         }
         catch (Exception e)
@@ -92,8 +90,8 @@ public class ControleMaterialEstoqueSaidaController : BaseController
         {
             var command = new ControleMaterialEstoqueSaidaModel.CreateUpdateControleMaterialEstoqueSaidaCommand
             {
-                MaterialId = Convert.ToInt32(collection["ddlMaterialId"].ToString()),
-                Quantidade = Convert.ToInt32(collection["quantidade"]),
+                MaterialId = Convert.ToInt32(collection["ddlMaterial"].ToString()),
+                Quantidade = Convert.ToInt32(collection["quantidade"].ToString()),
                 Solicitante = collection["solicitante"].ToString()
             };
 
@@ -155,21 +153,21 @@ public class ControleMaterialEstoqueSaidaController : BaseController
         }
     }
 
-    public Task<JsonResult> GetControlesMateriaisEstoquesSaidasAllByMaterialId(string id)
-    {
-        try
-        {
-            if (string.IsNullOrEmpty(id)) throw new Exception("Material não informado.");
-            var resultLocal = ApiClientFactory.Instance.GetControlesMateriaisEstoquesSaidasAllByMaterialId(Convert.ToInt32(id));
+    //public Task<JsonResult> GetControlesMateriaisEstoquesSaidasByMaterialId(string id)
+    //{
+    //    try
+    //    {
+    //        if (string.IsNullOrEmpty(id)) throw new Exception("Material não informado.");
+    //        var resultLocal = ApiClientFactory.Instance.GetControlesMateriaisEstoquesSaidasByMaterialId(Convert.ToInt32(id));
 
-            return Task.FromResult(Json(new SelectList(resultLocal, "Id", "Nome")));
+    //        return Task.FromResult(Json(new SelectList(resultLocal, "Id", "Descricao")));
 
-        }
-        catch (Exception ex)
-        {
-            return Task.FromResult(Json(ex.Message));
-        }
-    }
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        return Task.FromResult(Json(ex.Message));
+    //    }
+    //}
     #endregion
 
     #region Get Methods
