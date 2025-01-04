@@ -72,36 +72,6 @@
                     $(this).trigger('blur');
                 });
 
-                //Açao de seleçao de valor na combo primaria para preencher a combo secundára
-                $("#ddlTipoMaterial").change(function () {
-                    var tipoMaterialId = $("#ddlTipoMaterial").val();
-
-                    var url = "../Material/GetMateriaisAllByTipoMaterialId";
-
-                    var ddlSource = "#ddlMaterial";
-
-                    $.getJSON(url,
-                        { id: tipoMaterialId },
-                        function (data) {
-                            if (data.length > 0) {
-                                var items = '<option value="">Selecionar Material</option>';
-                                $("#ddlTipoMaterial").empty;
-                                $.each(data,
-                                    function (i, row) {
-                                        items += "<option value='" + row.value + "'>" + row.text + "</option>";
-                                    });
-                                $("#ddlTipoMaterial").html(items);
-                            }
-                            else {
-                                new PNotify({
-                                    title: 'Material',
-                                    text: 'Material não encontrados.',
-                                    type: 'warning'
-                                });
-                            }
-                        });
-                });
-
                 $("#formMaterial").validate({
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');

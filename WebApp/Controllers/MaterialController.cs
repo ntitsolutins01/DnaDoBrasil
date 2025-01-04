@@ -46,7 +46,25 @@ public class MaterialController : BaseController
         SetCrudMessage(crud);
         var response = ApiClientFactory.Instance.GetMateriaisAll();
 
-        return View(new MaterialModel() { Materiais = response });
+        List<SelectListDto> list = new List<SelectListDto>
+        {
+            new() { IdNome = "CAIXA", Nome = "CAIXA" },
+            new() { IdNome = "DIARIA", Nome = "DIARIA" },
+            new() { IdNome = "KIT", Nome = "KIT" },
+            new() { IdNome = "PACOTE", Nome = "PACOTE" },
+            new() { IdNome = "SERVICOS", Nome = "SERVICOS" },
+            new() { IdNome = "UNIDADE", Nome = "UNIDADE" },
+            new() { IdNome = "UNIDADE KIT", Nome = "UNIDADE KIT" },
+            new() { IdNome = "UNIDADE-PAR", Nome = "UNIDADE-PAR" }
+        };
+
+        var undMedidas = new SelectList(list, "IdNome", "Nome");
+
+        return View(new MaterialModel()
+        {
+            Materiais = response,
+            ListUnidadesMedidas = undMedidas
+        });
     }
 
     /// <summary>
@@ -64,9 +82,24 @@ public class MaterialController : BaseController
             SetCrudMessage(crud);
             var tipoMateriais = new SelectList(ApiClientFactory.Instance.GetTiposMateriaisAll(), "Id", "Nome");
 
+            List<SelectListDto> list = new List<SelectListDto>
+            {
+                new() { IdNome = "CAIXA", Nome = "CAIXA" },
+                new() { IdNome = "DIARIA", Nome = "DIARIA" },
+                new() { IdNome = "KIT", Nome = "KIT" },
+                new() { IdNome = "PACOTE", Nome = "PACOTE" },
+                new() { IdNome = "SERVICOS", Nome = "SERVICOS" },
+                new() { IdNome = "UNIDADE", Nome = "UNIDADE" },
+                new() { IdNome = "UNIDADE KIT", Nome = "UNIDADE KIT" },
+                new() { IdNome = "UNIDADE-PAR", Nome = "UNIDADE-PAR" }
+            };
+
+            var undMedidas = new SelectList(list, "IdNome", "Nome");
+
             return View(new MaterialModel()
             {
-                ListTiposMateriais = tipoMateriais
+                ListTiposMateriais = tipoMateriais,
+                ListUnidadesMedidas = undMedidas
             });
         }
         catch (Exception e)
@@ -91,7 +124,7 @@ public class MaterialController : BaseController
             var command = new MaterialModel.CreateUpdateMaterialCommand
             {
                 TipoMaterialId = Convert.ToInt32(collection["ddlTipoMaterial"].ToString()),
-                UnidadeMedida = collection["unidadeMedida"].ToString(),
+                UnidadeMedida = collection["ddlUnidadeMedida"].ToString(),
                 QtdAdquirida = Convert.ToInt32(collection["qtdAdquirida"]),
                 Descricao = collection["descricao"].ToString()
             };
@@ -121,7 +154,7 @@ public class MaterialController : BaseController
             var command = new MaterialModel.CreateUpdateMaterialCommand
             {
                 Id = Convert.ToInt32(collection["editMaterialId"]),
-                UnidadeMedida = collection["unidadeMedida"].ToString(),
+                UnidadeMedida = collection["ddlUnidadeMedida"].ToString(),
                 QtdAdquirida = Convert.ToInt32(collection["qtdAdquirida"]),
                 Descricao = collection["descricao"].ToString()
             };
