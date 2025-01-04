@@ -49,7 +49,7 @@
                         <div class="form-group">
                             <label class="col-sm-1 control-label">Nome <span class="required">*</span></label>
                             <div class="col-sm-5">
-                                <input type="text" name="nome" id="nome" maxlength="200" class="form-control" required title="Por favor informe um nome." value="@Model.Aluno.Nome" />
+                                <input type="text" name="nome" id="nome" maxlength="200" class="form-control" required title="Por favor informe um nome." value="@Model.Aluno.Nome" oninput="this.value = this.value.toUpperCase()" />
                             </div>
                             <label class="col-sm-1 control-label">Email <span class="required">*</span></label>
                             <div class="col-sm-5">
@@ -57,7 +57,7 @@
                                     <span class="input-group-addon">
                                         <i class="fa fa-envelope"></i>
                                     </span>
-                                    <input type="text" name="email" maxlength="100" class="form-control" required title="Por favor informe o email." value="@Model.Aluno.Email" />
+                                    <input type="text" name="email" maxlength="100" class="form-control" required title="Por favor informe o email." value="@Model.Aluno.Email" oninput="this.value = this.value.toUpperCase()" />
                                 </div>
                             </div>
                         </div>

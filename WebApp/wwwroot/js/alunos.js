@@ -1,4 +1,4 @@
-﻿var vm = new Vue({
+var vm = new Vue({
     el: "#vPesquisarAluno",
     data: {
         loading: false,
@@ -234,7 +234,6 @@
             };
 
             axios.post("Aluno/GetAlunosByFilter", obj, axiosConfig).then(result => {
-
 
                 self.ShowLoad(false, "pResult");
             });

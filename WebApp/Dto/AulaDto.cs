@@ -1,6 +1,4 @@
-﻿
-
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace WebApp.Dto
 {
@@ -15,5 +13,8 @@ namespace WebApp.Dto
 		public string? Descricao { get; set; }
 		public bool Status { get; set; }
         public SelectList? ListProfessores { get; set; }
+        public string? Material { get; set; }
+        public string? NomeMaterial { get; set; }
+		public string? Video { get; set; }
     }
 }

@@ -24,7 +24,9 @@ namespace WebApp.Models
 			public required int CargaHoraria { get; set; }
 			public string? Descricao { get; set; }
 			public bool Status { get; set; }
-		}
+            public string? Imagem { get; set; }
+            public string? NomeImagem { get; set; }
+        }
 	}
 
 }

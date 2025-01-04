@@ -16,6 +16,7 @@ using QRCoder;
 using Claim = WebApp.Identity.Claim;
 using NuGet.Protocol.Core.Types;
 using WebApp.Views;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace WebApp.Controllers
 {
@@ -54,19 +55,19 @@ namespace WebApp.Controllers
         {
             try
             {
-                var user = User.Identity.Name;
-
-                var usuario = ApiClientFactory.Instance.GetUsuarioByEmail(user);
+                var usuario = User.Identity.Name;
 
                 SetNotifyMessage(notify, message);
                 SetCrudMessage(crud);
+
+                var usu = ApiClientFactory.Instance.GetUsuarioByEmail(usuario);
 
                 var searchFilter = new AlunosFilterDto
                 {
                     FomentoId = collection["ddlFomento"].ToString(),
                     Estado = collection["ddlEstado"].ToString(),
                     MunicipioId = collection["ddlMunicipio"].ToString(),
-                    LocalidadeId = collection["ddlLocalidade"].ToString(),
+                    LocalidadeId = collection["ddlLocalidade"].ToString() == "" ? usu.LocalidadeId : collection["ddlLocalidade"].ToString(),
                     DeficienciaId = collection["ddlDeficiencia"].ToString(),
                     Etnia = collection["ddlEtnia"].ToString(),
                     Sexo = collection["ddlSexo"].ToString(),
@@ -96,12 +97,13 @@ namespace WebApp.Controllers
                 if (filtroVazio)
                 {
                     result.Alunos = (List<AlunoIndexDto>?)result.Alunos.ToList()
-                        .Where(x => x.MunicipioId == usuario.MunicipioId.ToString()).ToList();
+                        .Where(x => x.MunicipioId == usu.MunicipioId.ToString()).ToList();
                 }
 
                 var fomentos = new SelectList(ApiClientFactory.Instance.GetFomentoAll(), "Id", "Nome", searchFilter.FomentoId);
                 var deficiencias = new SelectList(ApiClientFactory.Instance.GetDeficienciaAll().Where(x => x.Status), "Id", "Nome", searchFilter.DeficienciaId);
-                var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", searchFilter.Estado);
+                var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", usu.Uf);
+
 
                 List<SelectListDto> listSexo = new List<SelectListDto>
                 {
@@ -124,16 +126,21 @@ namespace WebApp.Controllers
 
                 SelectList municipios = null;
 
-                if (!string.IsNullOrEmpty(searchFilter.Estado))
+                if (!string.IsNullOrEmpty(usu.Uf))
                 {
-                    municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(searchFilter.Estado), "Id", "Nome", searchFilter.MunicipioId);
+                    municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(usu.Uf), "Id", "Nome", usu.MunicipioId);
                 }
+
                 SelectList localidades = null;
 
-                if (!string.IsNullOrEmpty(searchFilter.LocalidadeId))
+                if (usu.MunicipioId != null)
                 {
-                    localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeByMunicipio(searchFilter.MunicipioId), "Id", "Nome", searchFilter.LocalidadeId);
+                    var resultLocalidades = ApiClientFactory.Instance.GetLocalidadeByMunicipio(usu.MunicipioId.ToString());
+
+                    if (resultLocalidades != null)
+                        localidades = new SelectList(resultLocalidades, "Id", "Nome", usu.LocalidadeId);
                 }
+
 
                 var model = new AlunoModel
                 {
@@ -142,6 +149,7 @@ namespace WebApp.Controllers
                     ListDeficiencias = deficiencias,
                     ListMunicipios = municipios!,
                     ListEtnias = etnias,
+                    ListSexos = sexos,
                     ListLocalidades = localidades!,
                     ListSexos = sexos,
                     Alunos = result.Alunos,
@@ -402,8 +410,6 @@ namespace WebApp.Controllers
                     }
                 }
 
-                command.QrCode = GeraQrCode(id);
-
                 await ApiClientFactory.Instance.UpdateDados(id, command);
 
                 return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
@@ -499,6 +505,28 @@ namespace WebApp.Controllers
         }
 
         /// <summary>
+        /// Busca de idade do Aluno por Id
+        /// </summary>
+        /// <param name="id">identificador do aluno</param>
+        /// <returns>retorna a idade do aluno</returns>
+        [ClaimsAuthorize(ClaimType.Aluno, Claim.Consultar)]
+        public Task<JsonResult> GetAlunoIdadeById(string id)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(id)) throw new Exception("Aluno não informado.");
+                var usu = ApiClientFactory.Instance.GetAlunoById(Convert.ToInt32(id));
+
+                return Task.FromResult(Json(usu.Idade));
+
+            }
+            catch (Exception ex)
+            {
+                return Task.FromResult(Json(ex));
+            }
+        }
+
+        /// <summary>
         /// Busca de aluno por id
         /// </summary>
         /// <param name="id">identificador do aluno</param>
@@ -516,15 +544,13 @@ namespace WebApp.Controllers
                     result.Image = GetImage(Convert.ToBase64String(result.ByteImage!));
                 }
 
-                if (result.QrCode == null)
+                if (result.QrCode != null) return Json(result);
+                result.QrCode = GeraQrCode(result.Id);
+                await ApiClientFactory.Instance.UpdateQrCode(result.Id, new AlunoModel.CreateUpdateDadosAlunoCommand()
                 {
-                    result.QrCode = GeraQrCode(result.Id);
-                    await ApiClientFactory.Instance.UpdateDados(result.Id, new AlunoModel.CreateUpdateDadosAlunoCommand()
-                    {
-                        Id = result.Id,
-                        QrCode = result.QrCode
-                    });
-                }
+                    Id = result.Id,
+                    QrCode = result.QrCode
+                });
                 return Json(result);
 
             }
@@ -814,7 +840,7 @@ namespace WebApp.Controllers
                         if (alunoCompleto.QrCode == null)
                         {
                             alunoCompleto.QrCode = GeraQrCode(alunoCompleto.Id);
-                            await ApiClientFactory.Instance.UpdateDados(alunoCompleto.Id, new AlunoModel.CreateUpdateDadosAlunoCommand
+                            await ApiClientFactory.Instance.UpdateQrCode(alunoCompleto.Id, new AlunoModel.CreateUpdateDadosAlunoCommand
                             {
                                 Id = alunoCompleto.Id,
                                 QrCode = alunoCompleto.QrCode

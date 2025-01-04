@@ -81,11 +81,12 @@ namespace WebApp.Controllers
 
                 return View(new ProfissionalModel()
                 {
-                    ListEstados = estados, ListModalidades = modalidades,
+                    ListEstados = estados, 
+                    ListModalidades = modalidades,
                     ListPerfis = new SelectList(resultPerfil, "Id", "Nome")
                 });
 
-			}
+            }
 			catch (Exception e)
 			{
 				Console.Write(e.StackTrace);
@@ -122,9 +123,9 @@ namespace WebApp.Controllers
 					LocalidadeId = collection["ddlLocalidade"] == "" ? null : Convert.ToInt32(collection["ddlLocalidade"].ToString()),
 					Habilitado = habilitado != "",
 					Status = status != "",
-					ModalidadesIds = collection["arrModalidades"] == "" ? null : collection["arrModalidades"].ToString()
+					ModalidadesIds = collection["ddlModalidades"].ToString()
 
-				};
+                };
 
                 var newUser = new IdentityUser { UserName = command.Email, Email = command.Email };
                 var aspNetUser = await _userManager.CreateAsync(newUser, "12345678");
@@ -230,7 +231,6 @@ namespace WebApp.Controllers
 			{
 				var status = collection["status"].ToString();
 				var habilitado = collection["habilitado"].ToString();
-				var modalidadesIds = collection["arrModalidades"];
 
 				var command = new ProfissionalModel.CreateUpdateProfissionalCommand
 				{
@@ -251,7 +251,7 @@ namespace WebApp.Controllers
                     LocalidadeId = collection["ddlLocalidade"] == "" ? null : Convert.ToInt32(collection["ddlLocalidade"].ToString()),
                     Habilitado = habilitado != "",
                     Status = status != "",
-                    ModalidadesIds = collection["arrModalidades"] == "" ? null : collection["arrModalidades"].ToString()
+                    ModalidadesIds = collection["ddlModalidades"].ToString()
                 };
 
 				await ApiClientFactory.Instance.UpdateProfissional(command.Id, command);
@@ -409,7 +409,7 @@ namespace WebApp.Controllers
 				var newUser = new IdentityUser { UserName = command.Email, Email = command.Email };
 				await _userManager.CreateAsync(newUser, "12345678");
 
-				command.PerfilId = result2.PerfilId;
+				command.PerfilId = result2.Perfil.Id;
 				var perfil = ApiClientFactory.Instance.GetPerfilById(command.PerfilId);
 
 				var includedUserId = _userManager.Users.FirstOrDefault(x => x.Email == newUser.Email).Id;

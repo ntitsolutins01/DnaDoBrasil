@@ -164,6 +164,10 @@
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+    <Content Update="wwwroot\js\Categoria.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -175,6 +179,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Views\Base\" />
     <Folder Include="Views\BemVindo\" />
     <Folder Include="wwwroot\assets\styles_Carteirinha\images\" />
     <Folder Include="wwwroot\Exportacao\" />
