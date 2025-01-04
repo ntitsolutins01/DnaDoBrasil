@@ -151,7 +151,6 @@ namespace WebApp.Controllers
                     ListEtnias = etnias,
                     ListSexos = sexos,
                     ListLocalidades = localidades!,
-                    ListSexos = sexos,
                     Alunos = result.Alunos,
                     SearchFilter = searchFilter
 
