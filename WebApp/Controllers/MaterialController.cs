@@ -155,7 +155,6 @@ public class MaterialController : BaseController
             {
                 Id = Convert.ToInt32(collection["editMaterialId"]),
                 UnidadeMedida = collection["ddlUnidadeMedida"].ToString(),
-                QtdAdquirida = Convert.ToInt32(collection["qtdAdquirida"]),
                 Descricao = collection["descricao"].ToString()
             };
 
