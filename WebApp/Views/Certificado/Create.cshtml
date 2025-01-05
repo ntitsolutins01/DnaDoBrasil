@@ -1,4 +1,5 @@
-﻿@{
+﻿@model CertificadoModel
+@{
     ViewData["Title"] = "Inclusão de Certificado";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -6,9 +7,6 @@
 <div id="vCertificado">
     <div class="row">
         <div class="col-md-12">
-            @using (@Html.BeginForm("Create", "Certificado", FormMethod.Post, new { id = "formCertificado", @class = "form-horizontal" }))
-
-            {
                 <section class="panel">
                     <header class="panel-heading">
                         <div class="panel-actions">
@@ -17,7 +15,24 @@
 
                         <h2 class="panel-title">Cadastro de Certificado</h2>
                     </header>
+
+
                     <div class="panel-body">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <section class="panel">
+                                    <div class="panel-body">
+                                        <form class="form-horizontal form-bordered">
+                                            <div class="form-group">
+                                                <div class="col-md-9">
+                                                    <div class="summernote" data-plugin-summernote data-plugin-options='{ "height": 180, "codemirror": { "theme": "ambiance" } }'>Digite...</div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
                     </div>
                     <footer class="panel-footer">
                         <div class="row">
@@ -29,20 +44,36 @@
                         </div>
                     </footer>
                 </section>
-            }
         </div>
     </div>
 </div>
+
 @section CssSpecificVendor {
     <link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css" />
     <link rel="stylesheet" href="~/assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
+    <link rel="stylesheet" href="~/assets/vendor/summernote/summernote.css">
 }
 @section Scripts {
     <script src="~/assets/vendor/select2/js/select2.js"></script>
     <script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
-    <script src="~/assets/vendor/jquery-mask/jquery.mask.js"></script>
-    <script src="~/js/Certificado.js"></script>
+
+    <!-- Vendor -->
+    <script src="~/assets/vendor/jquery/jquery.js"></script>
+    <script src="~/assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
+    <script src="~/assets/vendor/bootstrap/js/bootstrap.js"></script>
+    <script src="~/assets/vendor/nanoscroller/nanoscroller.js"></script>
+
+    <!-- Summernote -->
+    <script src="~/assets/vendor/summernote/summernote.js"></script>
+
+    <!-- Theme Base, Components and Settings -->
+    <script src="~/assets/vendor/modernizr/modernizr.js"></script>
+    <script src="~/assets/javascripts/theme.js"></script>
+    <script src="~/assets/javascripts/theme.init.js"></script>
+
     <script>
+        var markup = $('.summernote').summernote('code');
+        console.log(markup);
 
         (function ($) {
 

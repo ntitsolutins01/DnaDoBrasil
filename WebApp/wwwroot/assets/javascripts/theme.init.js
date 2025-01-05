@@ -359,7 +359,14 @@
 		});
 
 	}
-
+	$(document).ready(function () {
+		$('.summernote').summernote({
+			height: 180,
+			codemirror: {
+				theme: 'ambiance'
+			}
+		});
+	});
 }).apply(this, [jQuery]);
 
 // TextArea AutoSize
