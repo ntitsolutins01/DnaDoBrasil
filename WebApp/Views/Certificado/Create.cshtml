@@ -1,4 +1,4 @@
-﻿@model CertificadoModel
+@model CertificadoModel
 @{
     ViewData["Title"] = "Inclusão de Certificado";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -71,10 +71,7 @@
     <link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css" />
     <link rel="stylesheet" href="~/assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
     <link rel="stylesheet" href="~/assets/vendor/summernote/summernote.css" />
-
-    <link rel="stylesheet" href="~/assets/stylesheets/theme.css" />
-    <link rel="stylesheet" href="~/assets/stylesheets/skins/default.css" />
-    <link rel="stylesheet" href="~/assets/stylesheets/theme-custom.css" />
+    <link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css" />
 
     <style>
         .note-editor {
@@ -84,17 +81,21 @@
         .note-editable {
             min-height: 300px;
         }
+
+        .note-btn-group {
+            position: relative;
+        }
+
+        .note-dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            z-index: 1000;
+        }
     </style>
 }
 
 @section Scripts {
-    <script src="~/assets/vendor/modernizr/modernizr.js"></script>
-    <!-- Vendor base -->
-    <script src="~/assets/vendor/jquery/jquery.js"></script>
-    <script src="~/assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
-    <script src="~/assets/vendor/bootstrap/js/bootstrap.js"></script>
-    <script src="~/assets/vendor/nanoscroller/nanoscroller.js"></script>
-
     <!-- Form plugins -->
     <script src="~/assets/vendor/select2/js/select2.js"></script>
     <script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
@@ -104,10 +105,6 @@
     <!-- Summernote -->
     <script src="~/assets/vendor/summernote/summernote.js"></script>
     <script src="~/assets/vendor/summernote/lang/summernote-pt-BR.js"></script>
-
-    <!-- Theme Base -->
-    <script src="~/assets/javascripts/theme.js"></script>
-    <script src="~/assets/javascripts/theme.init.js"></script>
 
     <script>
         $(document).ready(function () {
@@ -127,34 +124,42 @@
             });
 
             // Inicialização do Summernote
-            $('.summernote').summernote({
-                lang: 'pt-BR',
-                height: 300,
-                toolbar: [
-                    ['style', ['style']],
-                    ['font', ['bold', 'italic', 'underline', 'clear']],
-                    ['fontsize', ['fontsize']],
-                    ['color', ['color']],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['table', ['table']],
-                    ['insert', ['link', 'picture']],
-                    ['view', ['fullscreen', 'codeview']]
-                ],
-                fontSizes: ['8', '9', '10', '11', '12', '14', '18', '24', '36'],
-                callbacks: {
-                    onImageUpload: function(files) {
-                        for (let file of files) {
-                            var reader = new FileReader();
-                            reader.onloadend = function() {
-                                var imgNode = document.createElement('img');
-                                imgNode.src = reader.result;
-                                $('.summernote').summernote('insertNode', imgNode);
+            if ($.fn.summernote) {
+                $('.summernote').summernote({
+                    lang: 'pt-BR',
+                    height: 300,
+                    toolbar: [
+                        ['style', ['style']],
+                        ['font', ['bold', 'italic', 'underline', 'clear']],
+                        ['fontname', ['fontname']],
+                        ['fontsize', ['fontsize']],
+                        ['color', ['color']],
+                        ['para', ['ul', 'ol', 'paragraph']],
+                        ['table', ['table']],
+                        ['insert', ['link', 'picture']],
+                        ['view', ['fullscreen', 'codeview']]
+                    ],
+                    fontSizes: ['8', '9', '10', '11', '12', '14', '18', '24', '36'],
+                    callbacks: {
+                        onInit: function() {
+                            console.log('Summernote initialized');
+                        },
+                        onImageUpload: function(files) {
+                            for (let file of files) {
+                                var reader = new FileReader();
+                                reader.onloadend = function() {
+                                    var imgNode = document.createElement('img');
+                                    imgNode.src = reader.result;
+                                    $('.summernote').summernote('insertNode', imgNode);
+                                }
+                                reader.readAsDataURL(file);
                             }
-                            reader.readAsDataURL(file);
                         }
                     }
-                }
-            });
+                });
+            } else {
+                console.error('Summernote não está disponível');
+            }
 
             // Notificações
             var crud = @ViewBag.CrudMessage;
