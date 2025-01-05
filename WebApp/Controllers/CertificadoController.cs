@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
 using WebApp.Configuration;
 using WebApp.Dto;
@@ -34,10 +35,21 @@ namespace WebApp.Controllers
 
         public ActionResult Create(int? crud, int? notify, string message = null)
         {
-            SetNotifyMessage(notify, message);
-            SetCrudMessage(crud);
+            try
+            {
+                SetNotifyMessage(notify, message);
+                SetCrudMessage(crud);
+                var tipoCurso = new SelectList(ApiClientFactory.Instance.GetTipoCursosAll(), "Id", "Nome");
 
-            return View(new CertificadoModel());
+                return View(new CertificadoModel()
+                {
+                    ListTipoCursos = tipoCurso
+                });
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = e.Message });
+            }
         }
 
         [HttpPost]
@@ -47,12 +59,12 @@ namespace WebApp.Controllers
             {
                 var command = new CertificadoModel.CreateUpdateCertificadoCommand
                 {
-                    CursoId = Convert.ToInt32(collection["CursoId"].ToString()),
+                    CursoId = Convert.ToInt32(collection["ddlCurso"].ToString()),
                     ImagemFrente = Convert.FromBase64String(collection["ImagemFrente"].ToString()),
                     ImagemVerso = string.IsNullOrEmpty(collection["ImagemVerso"]) ? null : Convert.FromBase64String(collection["ImagemVerso"].ToString()),
                     HtmlFrente = collection["HtmlFrente"].ToString(),
                     HtmlVerso = collection["HtmlVerso"].ToString(),
-                    Status = collection["Status"].ToString() == "" ? false : true
+                    Status = collection["Status"].ToString().ToLower() == "on"
                 };
 
                 await ApiClientFactory.Instance.CreateCertificado(command);
@@ -61,7 +73,7 @@ namespace WebApp.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = e.Message });
             }
         }
 
@@ -116,6 +128,12 @@ namespace WebApp.Controllers
             var result = ApiClientFactory.Instance.GetCertificadoById(id);
 
             return Task.FromResult(result);
+        }
+
+        public JsonResult GetCursosByTipoCursoId(int id)
+        {
+            var cursos = ApiClientFactory.Instance.GetCursosAllByTipoCursoId(id);
+            return Json(cursos);
         }
     }
 }
