@@ -466,11 +466,11 @@ namespace WebApp.Controllers
                 ApiClientFactory.Instance.DeleteDados(id);
                 return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
             }
-            catch
-            {
-                return RedirectToAction(nameof(Index));
-            }
-        }
+			catch (Exception e)
+			{
+				return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = $"ATENÇÃO. {e.Message}" });
+			}
+		}
 
         #endregion
 
