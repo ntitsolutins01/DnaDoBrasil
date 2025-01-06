@@ -7,7 +7,7 @@
 <div id="vCertificado">
     <div class="row">
         <div class="col-md-12">
-            @using (@Html.BeginForm("Create", "Certificado", FormMethod.Post, new { id = "formCertificado", @class = "form-horizontal" }))
+            @using (@Html.BeginForm("Create", "Certificado", FormMethod.Post, new { id = "formCertificado", @class = "form-horizontal", enctype = "multipart/form-data" }))
             {
                 <section class="panel">
                     <header class="panel-heading">
@@ -45,13 +45,49 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-3 control-label text-sm-right pt-2">Conteúdo</label>
+                            <label class="col-sm-3 control-label text-sm-right pt-2">Certificado</label>
                             <div class="col-sm-9">
-                                <div class="mb-3">
-                                    <button type="button" id="btnAddBackground" class="btn btn-default"><i class="fa fa-image"></i> Adicionar Imagem de Fundo</button>
-                                    <input type="file" id="bgImageInput" style="display: none" accept="image/*">
+                                <!-- Tabs de navegação -->
+                                <div class="tabs">
+                                    <ul class="nav nav-tabs">
+                                        <li class="nav-item active">
+                                            <a class="nav-link" href="#tabFrente" data-toggle="tab">Frente do Certificado</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#tabVerso" data-toggle="tab">Verso do Certificado</a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <!-- Tab Frente -->
+                                        <div id="tabFrente" class="tab-pane active">
+                                            <div class="form-group mt-3">
+                                                <div class="mb-3">
+                                                    <button type="button" id="btnAddBackgroundFrente" class="btn btn-default">
+                                                        <i class="fa fa-image"></i> Adicionar Imagem de Fundo (Frente)
+                                                    </button>
+                                                    <input type="file" id="bgImageInputFrente" name="ImagemFrente" style="display: none" accept="image/*">
+                                                </div>
+                                                <div class="summernote" id="summernoteFrente" name="HtmlFrente" data-plugin-summernote data-plugin-options='{ "height": 180, "codemirror": { "theme": "ambiance" } }'>
+                                                    Digite o conteúdo da frente do certificado...
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Tab Verso -->
+                                        <div id="tabVerso" class="tab-pane">
+                                            <div class="form-group mt-3">
+                                                <div class="mb-3">
+                                                    <button type="button" id="btnAddBackgroundVerso" class="btn btn-default">
+                                                        <i class="fa fa-image"></i> Adicionar Imagem de Fundo (Verso)
+                                                    </button>
+                                                    <input type="file" id="bgImageInputVerso" name="ImagemVerso" style="display: none" accept="image/*">
+                                                </div>
+                                                <div class="summernote" id="summernoteVerso" name="HtmlVerso" data-plugin-summernote data-plugin-options='{ "height": 180, "codemirror": { "theme": "ambiance" } }'>
+                                                    Digite o conteúdo do verso do certificado...
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="summernote" data-plugin-summernote data-plugin-options='{ "height": 180, "codemirror": { "theme": "ambiance" } }'>Start typing...</div>
                             </div>
                         </div>
                     </div>
@@ -116,6 +152,17 @@
             z-index: 0;
             pointer-events: none;
         }
+
+        .nav-tabs {
+            margin-bottom: 15px;
+        }
+
+        .tab-content {
+            background: #FFF;
+            padding: 15px;
+            border: 1px solid #DDD;
+            border-top: none;
+        }
     </style>
 }
 
@@ -133,6 +180,67 @@
     <script src="~/assets/javascripts/theme.init.js"></script>
 
     <script>
+        // Função para inicializar o Summernote com configurações específicas
+        function initializeSummernote(elementId, bgInputId, bgButtonId) {
+            $(`#${elementId}`).summernote({
+                lang: 'pt-BR',
+                height: 300,
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'italic', 'underline', 'clear']],
+                    ['fontname', ['fontname']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['insert', ['link', 'picture']],
+                    ['view', ['fullscreen', 'codeview']]
+                ],
+                fontSizes: ['8', '9', '10', '11', '12', '14', '18', '24', '36']
+            });
+
+            $(`#${bgButtonId}`).click(function() {
+                $(`#${bgInputId}`).click();
+            });
+
+            $(`#${bgInputId}`).change(function(e) {
+                if (this.files && this.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        var $editor = $(`#${elementId}`).siblings('.note-editor').find('.note-editing-area');
+                        var $editable = $editor.find('.note-editable');
+
+                        $editor.find('.background-overlay').remove();
+
+                        var $bgContainer = $('<div>').addClass('background-overlay').css({
+                            'position': 'absolute',
+                            'top': '0',
+                            'left': '0',
+                            'right': '0',
+                            'bottom': '0',
+                            'background-image': `url(${e.target.result})`,
+                            'background-size': 'cover',
+                            'background-position': 'center',
+                            'background-repeat': 'no-repeat',
+                            'opacity': '1',
+                            'pointer-events': 'none',
+                            'z-index': '0'
+                        });
+
+                        $editor.css('position', 'relative');
+                        $editable.css({
+                            'position': 'relative',
+                            'background': 'transparent',
+                            'z-index': '1'
+                        });
+
+                        $editor.prepend($bgContainer);
+                    }
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
+        }
+
         $(document).ready(function () {
             // Select2 com Tipo de Curso
             $("#ddlTipoCurso").change(function () {
@@ -149,92 +257,27 @@
                 }
             });
 
-                // Lógica para imagem de fundo
-        $('#btnAddBackground').click(function() {
-            $('#bgImageInput').click();
-        });
-$('#bgImageInput').change(function(e) {
-    if (this.files && this.files[0]) {
-        var reader = new FileReader();
-        reader.onload = function(e) {
-            // Seleciona o container do editor
-            var $editor = $('.note-editing-area');
-            var $editable = $('.note-editable');
+            // Inicializa os editores
+            initializeSummernote('summernoteFrente', 'bgImageInputFrente', 'btnAddBackgroundFrente');
+            initializeSummernote('summernoteVerso', 'bgImageInputVerso', 'btnAddBackgroundVerso');
 
-            // Remove background anterior se existir
-            $editor.find('.background-overlay').remove();
+            // Handler para o submit do formulário
+            $('#formCertificado').on('submit', function(e) {
+                var htmlFrente = $('#summernoteFrente').summernote('code');
+                var htmlVerso = $('#summernoteVerso').summernote('code');
 
-            // Cria um container para o background com overlay
-            var $bgContainer = $('<div>').addClass('background-overlay').css({
-                'position': 'absolute',
-                'top': '0',
-                'left': '0',
-                'right': '0',
-                'bottom': '0',
-                'background-image': `url(${e.target.result})`,
-                'background-size': 'cover',
-                'background-position': 'center',
-                'background-repeat': 'no-repeat',
-                'opacity': '1',  // Ajustar conforme necessário
-                'pointer-events': 'none',
-                'z-index': '0'
+                $('<input>').attr({
+                    type: 'hidden',
+                    name: 'HtmlFrente',
+                    value: htmlFrente
+                }).appendTo($(this));
+
+                $('<input>').attr({
+                    type: 'hidden',
+                    name: 'HtmlVerso',
+                    value: htmlVerso
+                }).appendTo($(this));
             });
-
-            // Ajusta o container do editor para posicionamento relativo
-            $editor.css({
-                'position': 'relative'
-            });
-
-            // Ajusta a área editável para ficar acima do background
-            $editable.css({
-                'position': 'relative',
-                'background': 'transparent',
-                'z-index': '1'
-            });
-
-            // Insere o container de background antes da área editável
-            $editor.prepend($bgContainer);
-        }
-        reader.readAsDataURL(this.files[0]);
-    }
-        });
-
-        // Inicialização do Summernote modificada
-        if ($.fn.summernote) {
-            $('.summernote').summernote({
-                lang: 'pt-BR',
-                height: 300,
-                toolbar: [
-                    ['style', ['style']],
-                    ['font', ['bold', 'italic', 'underline', 'clear']],
-                    ['fontname', ['fontname']],
-                    ['fontsize', ['fontsize']],
-                    ['color', ['color']],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['table', ['table']],
-                    ['insert', ['link', 'picture']],
-                    ['view', ['fullscreen', 'codeview']]
-                ],
-                fontSizes: ['8', '9', '10', '11', '12', '14', '18', '24', '36'],
-                callbacks: {
-                    onInit: function() {
-                        console.log('Summernote initialized');
-                    },
-                    // Mantemos o callback de upload normal para imagens inseridas pelo editor
-                    onImageUpload: function(files) {
-                        for (let file of files) {
-                            var reader = new FileReader();
-                            reader.onloadend = function() {
-                                var imgNode = document.createElement('img');
-                                imgNode.src = reader.result;
-                                $('.summernote').summernote('insertNode', imgNode);
-                            }
-                            reader.readAsDataURL(file);
-                        }
-                    }
-                }
-            });
-        }
 
             // Notificações
             var crud = @ViewBag.CrudMessage;
