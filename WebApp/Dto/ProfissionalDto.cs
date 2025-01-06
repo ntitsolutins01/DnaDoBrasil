@@ -23,5 +23,6 @@
         public bool Habilitado { get; set; }
         public List<ModalidadeDto>? Modalidades { get; set; }
         public string? Perfil { get; set; }
+        public string? Cargo { get; set; }
     }
 }

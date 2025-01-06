@@ -103,7 +103,6 @@ namespace WebApp.Controllers
 			{
 				var status = collection["status"].ToString();
 				var habilitado = collection["habilitado"].ToString();
-				var modalidadesIds = collection["arrModalidades"];
 
 				var command = new ProfissionalModel.CreateUpdateProfissionalCommand
 				{
@@ -115,7 +114,7 @@ namespace WebApp.Controllers
 					Cep = collection["cep"] == "" ? null : collection["cep"].ToString(),
 					Celular = collection["numCelular"] == "" ? null : collection["numCelular"].ToString(),
 					Cpf = collection["cpf"] == "" ? null : collection["cpf"].ToString(),
-                    PerfilId = Convert.ToInt32(collection["ddlPerfil"].ToString()),
+                    PerfilId = Convert.ToInt32(EnumPerfil.Profissional),
 					Numero = collection["numero"] == "" ? null : Convert.ToInt32(collection["numero"].ToString()),
 					Bairro = collection["bairro"] == "" ? null : collection["bairro"].ToString(),
 					Endereco = collection["endereco"] == "" ? null : collection["endereco"].ToString(),
@@ -123,7 +122,8 @@ namespace WebApp.Controllers
 					LocalidadeId = collection["ddlLocalidade"] == "" ? null : Convert.ToInt32(collection["ddlLocalidade"].ToString()),
 					Habilitado = habilitado != "",
 					Status = status != "",
-					ModalidadesIds = collection["ddlModalidades"].ToString()
+					ModalidadesIds = collection["ddlModalidades"].ToString(),
+					Cargo = collection["cargo"].ToString()
 
                 };
 
@@ -155,7 +155,7 @@ namespace WebApp.Controllers
                     MunicipioId = collection["ddlMunicipio"] == "" ? 0 : Convert.ToInt32(collection["ddlMunicipio"].ToString()),
                 };
 
-                var perfil = ApiClientFactory.Instance.GetPerfilById(Convert.ToInt32(collection["ddlPerfil"].ToString()));
+                var perfil = ApiClientFactory.Instance.GetPerfilById(Convert.ToInt32(EnumPerfil.Profissional));
 
                 var includedUserId = _userManager.Users.FirstOrDefault(x => x.Email == newUser.Email).Id;
 
@@ -251,7 +251,8 @@ namespace WebApp.Controllers
                     LocalidadeId = collection["ddlLocalidade"] == "" ? null : Convert.ToInt32(collection["ddlLocalidade"].ToString()),
                     Habilitado = habilitado != "",
                     Status = status != "",
-                    ModalidadesIds = collection["ddlModalidades"].ToString()
+                    ModalidadesIds = collection["ddlModalidades"].ToString(),
+                    Cargo = collection["cargo"].ToString()
                 };
 
 				await ApiClientFactory.Instance.UpdateProfissional(command.Id, command);

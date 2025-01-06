@@ -43,6 +43,7 @@ namespace WebApp.Models
             public bool Habilitado { get; set; }
             public string? ModalidadesIds { get; set; }
             public int? PerfilId { get; set; }
+            public string? Cargo { get; set; }
         }
     }
 
