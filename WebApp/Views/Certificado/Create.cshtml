@@ -47,6 +47,10 @@
                         <div class="form-group row">
                             <label class="col-sm-3 control-label text-sm-right pt-2">Conteúdo</label>
                             <div class="col-sm-9">
+                                <div class="mb-3">
+                                    <button type="button" id="btnAddBackground" class="btn btn-default"><i class="fa fa-image"></i> Adicionar Imagem de Fundo</button>
+                                    <input type="file" id="bgImageInput" style="display: none" accept="image/*">
+                                </div>
                                 <div class="summernote" data-plugin-summernote data-plugin-options='{ "height": 180, "codemirror": { "theme": "ambiance" } }'>Start typing...</div>
                             </div>
                         </div>
@@ -71,9 +75,9 @@
     <link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css" />
     <link rel="stylesheet" href="~/assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
     <link rel="stylesheet" href="~/assets/vendor/summernote/summernote.css" />
-    <link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css" />
 
     <style>
+        /* Estilos do Editor */
         .note-editor {
             margin-bottom: 0;
         }
@@ -92,6 +96,26 @@
             left: 0;
             z-index: 1000;
         }
+
+        .note-editing-area {
+            position: relative !important;
+            min-height: 300px;
+        }
+
+        .note-editable {
+            position: relative !important;
+            z-index: 1;
+        }
+
+        .background-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
     </style>
 }
 
@@ -105,6 +129,8 @@
     <!-- Summernote -->
     <script src="~/assets/vendor/summernote/summernote.js"></script>
     <script src="~/assets/vendor/summernote/lang/summernote-pt-BR.js"></script>
+
+    <script src="~/assets/javascripts/theme.init.js"></script>
 
     <script>
         $(document).ready(function () {
@@ -123,43 +149,92 @@
                 }
             });
 
-            // Inicialização do Summernote
-            if ($.fn.summernote) {
-                $('.summernote').summernote({
-                    lang: 'pt-BR',
-                    height: 300,
-                    toolbar: [
-                        ['style', ['style']],
-                        ['font', ['bold', 'italic', 'underline', 'clear']],
-                        ['fontname', ['fontname']],
-                        ['fontsize', ['fontsize']],
-                        ['color', ['color']],
-                        ['para', ['ul', 'ol', 'paragraph']],
-                        ['table', ['table']],
-                        ['insert', ['link', 'picture']],
-                        ['view', ['fullscreen', 'codeview']]
-                    ],
-                    fontSizes: ['8', '9', '10', '11', '12', '14', '18', '24', '36'],
-                    callbacks: {
-                        onInit: function() {
-                            console.log('Summernote initialized');
-                        },
-                        onImageUpload: function(files) {
-                            for (let file of files) {
-                                var reader = new FileReader();
-                                reader.onloadend = function() {
-                                    var imgNode = document.createElement('img');
-                                    imgNode.src = reader.result;
-                                    $('.summernote').summernote('insertNode', imgNode);
-                                }
-                                reader.readAsDataURL(file);
+                // Lógica para imagem de fundo
+        $('#btnAddBackground').click(function() {
+            $('#bgImageInput').click();
+        });
+$('#bgImageInput').change(function(e) {
+    if (this.files && this.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            // Seleciona o container do editor
+            var $editor = $('.note-editing-area');
+            var $editable = $('.note-editable');
+
+            // Remove background anterior se existir
+            $editor.find('.background-overlay').remove();
+
+            // Cria um container para o background com overlay
+            var $bgContainer = $('<div>').addClass('background-overlay').css({
+                'position': 'absolute',
+                'top': '0',
+                'left': '0',
+                'right': '0',
+                'bottom': '0',
+                'background-image': `url(${e.target.result})`,
+                'background-size': 'cover',
+                'background-position': 'center',
+                'background-repeat': 'no-repeat',
+                'opacity': '1',  // Ajustar conforme necessário
+                'pointer-events': 'none',
+                'z-index': '0'
+            });
+
+            // Ajusta o container do editor para posicionamento relativo
+            $editor.css({
+                'position': 'relative'
+            });
+
+            // Ajusta a área editável para ficar acima do background
+            $editable.css({
+                'position': 'relative',
+                'background': 'transparent',
+                'z-index': '1'
+            });
+
+            // Insere o container de background antes da área editável
+            $editor.prepend($bgContainer);
+        }
+        reader.readAsDataURL(this.files[0]);
+    }
+        });
+
+        // Inicialização do Summernote modificada
+        if ($.fn.summernote) {
+            $('.summernote').summernote({
+                lang: 'pt-BR',
+                height: 300,
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'italic', 'underline', 'clear']],
+                    ['fontname', ['fontname']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['insert', ['link', 'picture']],
+                    ['view', ['fullscreen', 'codeview']]
+                ],
+                fontSizes: ['8', '9', '10', '11', '12', '14', '18', '24', '36'],
+                callbacks: {
+                    onInit: function() {
+                        console.log('Summernote initialized');
+                    },
+                    // Mantemos o callback de upload normal para imagens inseridas pelo editor
+                    onImageUpload: function(files) {
+                        for (let file of files) {
+                            var reader = new FileReader();
+                            reader.onloadend = function() {
+                                var imgNode = document.createElement('img');
+                                imgNode.src = reader.result;
+                                $('.summernote').summernote('insertNode', imgNode);
                             }
+                            reader.readAsDataURL(file);
                         }
                     }
-                });
-            } else {
-                console.error('Summernote não está disponível');
-            }
+                }
+            });
+        }
 
             // Notificações
             var crud = @ViewBag.CrudMessage;
