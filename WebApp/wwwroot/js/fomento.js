@@ -447,67 +447,67 @@
                 });
 
                 //clique de escolha do select
-                $("#ddlLocalidade").change(function () {
-                    var id = $("#ddlLocalidade").val();
+                //$("#ddlLocalidade").change(function () {
+                //    var id = $("#ddlLocalidade").val();
 
-                    //axios.get("../Profissional/GetProfissionaisByLocalidade/?id=" + id).then(result => {
+                //    //axios.get("../Profissional/GetProfissionaisByLocalidade/?id=" + id).then(result => {
 
-                    //    var profissionais = result.data;
+                //    //    var profissionais = result.data;
 
-                    //    $('#profissionalDataTable').DataTable().destroy();
+                //    //    $('#profissionalDataTable').DataTable().destroy();
 
-                    //    $('#profissionalDataTable').DataTable({
-                    //        data: profissionais,
-                    //        "columns": [
-                    //            { "data": "id" },
-                    //            { "data": "nome" }
-                    //        ],
-                    //        columnDefs: [
-                    //            { "className": "text-center", "targets": "_all" }
-                    //        ],
-                    //        order: [[1, 'asc']],
-                    //        "paging": true,
-                    //        "searching": true,
-                    //        "language": {
-                    //            "sEmptyTable": "Nenhum registro encontrado",
-                    //            "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
-                    //            "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
-                    //            "sInfoFiltered": "(Filtrados de _MAX_ registros)",
-                    //            "sInfoPostFix": "",
-                    //            "sInfoThousands": ".",
-                    //            "sLengthMenu": "_MENU_ resultados por página",
-                    //            "sLoadingRecords": "Carregando...",
-                    //            "sProcessing": "Processando...",
-                    //            "sZeroRecords": "Nenhum registro encontrado",
-                    //            "sSearch": "Pesquisar: ",
-                    //            "select": {
-                    //                "rows": {
-                    //                    "_": "Você selecionou %d linhas",
-                    //                    "0": "Clique em uma linha para selecioná-la",
-                    //                    "1": "Apenas 1 linha selecionada"
-                    //                }
-                    //            },
-                    //            "oPaginate": {
-                    //                "sNext": "Próximo →" +
-                    //                    "" +
-                    //                    "",
-                    //                "sPrevious": "← Anterior",
-                    //                "sFirst": "Primeiro",
-                    //                "sLast": "Último"
-                    //            },
-                    //            "oAria": {
-                    //                "sSortAscending": ": Ordenar colunas de forma ascendente",
-                    //                "sSortDescending": ": Ordenar colunas de forma descendente"
-                    //            }
-                    //        }
-                    //    });
+                //    //    $('#profissionalDataTable').DataTable({
+                //    //        data: profissionais,
+                //    //        "columns": [
+                //    //            { "data": "id" },
+                //    //            { "data": "nome" }
+                //    //        ],
+                //    //        columnDefs: [
+                //    //            { "className": "text-center", "targets": "_all" }
+                //    //        ],
+                //    //        order: [[1, 'asc']],
+                //    //        "paging": true,
+                //    //        "searching": true,
+                //    //        "language": {
+                //    //            "sEmptyTable": "Nenhum registro encontrado",
+                //    //            "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                //    //            "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+                //    //            "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+                //    //            "sInfoPostFix": "",
+                //    //            "sInfoThousands": ".",
+                //    //            "sLengthMenu": "_MENU_ resultados por página",
+                //    //            "sLoadingRecords": "Carregando...",
+                //    //            "sProcessing": "Processando...",
+                //    //            "sZeroRecords": "Nenhum registro encontrado",
+                //    //            "sSearch": "Pesquisar: ",
+                //    //            "select": {
+                //    //                "rows": {
+                //    //                    "_": "Você selecionou %d linhas",
+                //    //                    "0": "Clique em uma linha para selecioná-la",
+                //    //                    "1": "Apenas 1 linha selecionada"
+                //    //                }
+                //    //            },
+                //    //            "oPaginate": {
+                //    //                "sNext": "Próximo →" +
+                //    //                    "" +
+                //    //                    "",
+                //    //                "sPrevious": "← Anterior",
+                //    //                "sFirst": "Primeiro",
+                //    //                "sLast": "Último"
+                //    //            },
+                //    //            "oAria": {
+                //    //                "sSortAscending": ": Ordenar colunas de forma ascendente",
+                //    //                "sSortDescending": ": Ordenar colunas de forma descendente"
+                //    //            }
+                //    //        }
+                //    //    });
 
-                    //    $('#profissionalDataTable').DataTable().draw();
+                //    //    $('#profissionalDataTable').DataTable().draw();
 
-                    //}).catch(error => {
-                    //    Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
-                    //});
-                });
+                //    //}).catch(error => {
+                //    //    Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
+                //    //});
+                //});
             }
         }).apply(this, [jQuery]);
     },

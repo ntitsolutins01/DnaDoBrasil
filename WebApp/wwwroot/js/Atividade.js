@@ -143,6 +143,8 @@ var vm = new Vue({
 
                     var url = "../../Estrutura/GetEstruturasByLocalidade";
 
+                    var urlProf = "../../Profissional/GetProfissionaisByLocalidade"
+
                     $.getJSON(url,
                         { id: id },
                         function (data) {
@@ -159,6 +161,27 @@ var vm = new Vue({
                                 new PNotify({
                                     title: 'Estruturas',
                                     text: 'Estruturas não encontradas.',
+                                    type: 'warning'
+                                });
+                            }
+                        });
+
+                    $.getJSON(urlProf,
+                        { id: id },
+                        function (data) {
+                            if (data.length > 0) {
+                                var items = '<option value="">Selecionar Localidade</option>';
+                                $("#ddlLocalidade").empty;
+                                $.each(data,
+                                    function (i, row) {
+                                        items += "<option value='" + row.value + "'>" + row.text + "</option>";
+                                    });
+                                $("#ddlLocalidade").html(items);
+                            }
+                            else {
+                                new PNotify({
+                                    title: 'Localidades',
+                                    text: 'Localidades não encontradas.',
                                     type: 'warning'
                                 });
                             }
