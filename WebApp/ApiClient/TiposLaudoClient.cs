@@ -36,7 +36,7 @@ namespace WebApp.ApiClient
         public TiposLaudoDto GetTiposLaudoById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceTiposLaudo}/TipoLaudo/{id}"));
+                $"{ResourceTiposLaudo}{id}"));
             return Get<TiposLaudoDto>(requestUrl);
         }
         public List<TiposLaudoDto> GetTiposLaudoAll()
