@@ -36,13 +36,13 @@ namespace WebApp.ApiClient
         public TiposCursoDto GetTipoCursoById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceTipoCurso }{id}"));
+                $"{ResourceTipoCurso}/{id}"));
             return Get<TiposCursoDto>(requestUrl);
         }
         public List<TiposCursoDto> GetTipoCursosAll()
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceTipoCurso }"));
+                $"{ResourceTipoCurso}"));
             return Get<List<TiposCursoDto>>(requestUrl);
         }
 

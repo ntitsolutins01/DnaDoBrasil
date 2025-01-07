@@ -37,7 +37,7 @@ namespace WebApp.ApiClient
         public async Task<ParceiroDto> GetParceiroById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceParceiro}{id}"));
+                $"{ResourceParceiro}/{id}"));
             return Get<ParceiroDto>(requestUrl);
         }
         public List<ParceiroDto> GetParceiroAll()

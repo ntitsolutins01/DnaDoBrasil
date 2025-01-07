@@ -40,7 +40,7 @@ namespace WebApp.ApiClient
         public DisciplinaDto GetDisciplinaById(int id)
         {
 	        var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-		        $"{ResourceDisciplina}{id}"));
+		        $"{ResourceDisciplina}/{id}"));
 	        return Get<DisciplinaDto>(requestUrl);
         }
 		#endregion

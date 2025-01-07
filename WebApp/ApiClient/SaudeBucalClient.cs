@@ -47,7 +47,7 @@ namespace WebApp.ApiClient
                 $"{ResourceSaudeBucal}/{id}"));
             return Get<SaudeBucalDto>(requestUrl);
 
-            #endregion
         }
+        #endregion
     }
 }

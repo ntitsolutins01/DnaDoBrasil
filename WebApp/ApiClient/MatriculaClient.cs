@@ -36,7 +36,7 @@ namespace WebApp.ApiClient
         public MatriculaDto GetMatriculaById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceMatricula}{id}"));
+                $"{ResourceMatricula}/{id}"));
             return Get<MatriculaDto>(requestUrl);
         }
         public List<MatriculaDto> GetMatriculaAll()

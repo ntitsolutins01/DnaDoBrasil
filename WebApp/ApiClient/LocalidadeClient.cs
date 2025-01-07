@@ -42,7 +42,7 @@ namespace WebApp.ApiClient
         public LocalidadeDto GetLocalidadeById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceLocalidade}{id}"));
+                $"{ResourceLocalidade}/{id}"));
             return Get<LocalidadeDto>(requestUrl);
         }
         public List<LocalidadeDto> GetLocalidadeByMunicipio(string id)

@@ -36,13 +36,13 @@ namespace WebApp.ApiClient
         public ControleAcessoAulaDto GetControleAcessoAulaById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceControleAcessoAula }{id}"));
+                $"{ResourceControleAcessoAula}/{id}"));
             return Get<ControleAcessoAulaDto>(requestUrl);
         }
         public List<ControleAcessoAulaDto> GetControlesAcessosAulasAll()
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceControleAcessoAula }"));
+                $"{ResourceControleAcessoAula}"));
             return Get<List<ControleAcessoAulaDto>>(requestUrl);
         }
 

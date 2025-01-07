@@ -47,13 +47,13 @@ namespace WebApp.ApiClient
         public UsuarioDto GetUsuarioById(string id)
 		{
 			var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-				$"{ResourceUsuario}/Usuario/{id}"));
+				$"{ResourceUsuario}/{id}"));
 			return Get<UsuarioDto>(requestUrl);
 		}
         public UsuarioDto GetUsuarioByAspNetUserId(string aspNetUserId)
 		{
 			var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-				$"{ResourceUsuario}/Usuario/AspNetUser/{aspNetUserId}"));
+				$"{ResourceUsuario}/AspNetUser/{aspNetUserId}"));
 			return Get<UsuarioDto>(requestUrl);
 		}
 		

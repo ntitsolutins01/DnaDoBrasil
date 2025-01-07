@@ -35,7 +35,7 @@ namespace WebApp.ApiClient
         public RespostaDto GetRespostaById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceResposta}{id}"));
+                $"{ResourceResposta}/{id}"));
             return Get<RespostaDto>(requestUrl);
         }
         public List<RespostaDto> GetRespostaAll()

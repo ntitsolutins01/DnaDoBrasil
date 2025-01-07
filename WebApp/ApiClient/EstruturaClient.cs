@@ -37,13 +37,13 @@ namespace WebApp.ApiClient
         public EstruturaDto GetEstruturaById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceEstrutura }{id}"));
+                $"{ResourceEstrutura}/{id}"));
             return Get<EstruturaDto>(requestUrl);
         }
         public List<EstruturaDto> GetEstruturasAll()
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceEstrutura }"));
+                $"{ResourceEstrutura}"));
             return Get<List<EstruturaDto>>(requestUrl);
         }
         public List<EstruturaDto> GetEstruturasByLocalidade(string id)
