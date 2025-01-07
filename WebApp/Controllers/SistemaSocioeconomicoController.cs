@@ -107,6 +107,8 @@ namespace WebApp.Controllers
                 {
 
                     Nome =  collection["nome"].ToString(),
+                    RazaoSocial =  collection["razaoSocial"].ToString(),
+                    NomeContato =  collection["nomeContato"].ToString(),
                     TipoPessoa =  collection["tipoPessoa"].ToString(),
                     CpfCnpj = collection["tipoPessoa"].ToString() == "pf" ? collection["cpf"].ToString() : collection["cnpj"].ToString(),
                     Telefone = collection["numTelefone"].ToString() == "" ? null : collection["numTelefone"].ToString(),

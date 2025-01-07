@@ -490,7 +490,7 @@ namespace WebApp.Controllers
         }
 		private async Task SendNewUserEmail(IdentityUser user, string email, string nome)
 		{
-			var code = await _userManager.GeneratePasswordResetTokenAsync(new IdentityUser(user.Email));
+			var code = await _userManager.GeneratePasswordResetTokenAsync(user);
 
 			var callbackUrl = Url.ActionLink("ResetPassword",
 				"Identity/Account", new { code, email });
