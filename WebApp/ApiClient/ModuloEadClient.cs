@@ -36,7 +36,7 @@ namespace WebApp.ApiClient
         public ModuloEadDto GetModuloEadById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceModuloEad}/ModuloEad/{id}"));
+                $"{ResourceModuloEad}{id}"));
             return Get<ModuloEadDto>(requestUrl);
         }
         public List<ModuloEadDto> GetModulosEadAll()

@@ -38,7 +38,7 @@ namespace WebApp.ApiClient
         public PlanoAulaDto GetPlanoAulaById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourcePlanoAula}/PlanoAula/{id}"));
+                $"{ResourcePlanoAula}{id}"));
             return Get<PlanoAulaDto>(requestUrl);
         }
         public List<PlanoAulaDto> GetPlanosAulasAll()
