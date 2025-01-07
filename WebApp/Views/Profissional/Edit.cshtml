@@ -79,7 +79,7 @@
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Data Nascimento <span class="required">*</span> </label>
-                            <div class="col-sm-3">
+                            <div class="col-sm-2">
                                 <div class="input-group">
                                     <span class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
@@ -93,7 +93,7 @@
                                 </div>
                             </div>
                             <label class="col-sm-1 control-label">Sexo <span class="required">*</span></label>
-                            <div class="col-sm-3">
+                            <div class="col-sm-2">
                                 <select class="form-control populate select2" name="ddlSexo" id="ddlSexo" required
                                         title="Por favor selecione um sexo.">
                                     <option value="">Selecionar Sexo</option>
@@ -109,6 +109,14 @@
                                         <option value="F" selected>FEMININO</option>
 
                                     }
+                                </select>
+                            </div>
+                            <label class="col-sm-1 control-label">Cargo</label>
+                            <div class="col-sm-4">
+                                <select class="form-control populate select2" name="ddlCargo" id="ddlCargo" style="width:100%"
+                                        title="Por favor selecione um etnia." required
+                                        asp-for="CargoId" asp-items="Model.ListCargos">
+                                    <option value="">Selecionar Cargo</option>
                                 </select>
                             </div>
                         </div>
@@ -221,7 +229,74 @@
     <script src="~/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
     <script src="~/assets/vendor/bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR.min.js"></script>
     <script src="~/js/profissional.js"></script>
+    <script>
 
+        (function ($) {
+
+            'use strict';
+
+            // Set the value
+            var data = "@Model.Profissional.ModalidadesIds";
+
+            //Make an array
+            var dataarray = data.split(",");
+
+            // Set the value
+            $("#ddlModalidades").val(dataarray);
+
+            // Then refresh
+            $("#ddlModalidades").multiselect("refresh");
+
+            //========================================================
+
+            var crud = @ViewBag.CrudMessage;
+
+            if (crud === 1) {
+                new PNotify({
+                    title: 'Profissional',
+                    text: 'Cadastro realizado com sucesso!',
+                    type: 'success'
+                });
+            } else if (crud === 2) {
+                new PNotify({
+                    title: 'Profissional',
+                    text: 'Dados alterados com sucesso.',
+                    type: 'warning'
+                });
+            } else if (crud === 3) {
+                new PNotify({
+                    title: 'Profissional',
+                    text: 'Registro excluído com sucesso.',
+                    type: 'error'
+                });
+            }
+
+            var notify = @ViewBag.NotifyMessage;
+            var messagem = '@ViewBag.Notify';
+
+            if (notify === 0) {
+                new PNotify({
+                    title: 'Profissional',
+                    text: messagem,
+                    type: 'success'
+                });
+            } else if (notify === 1) {
+                new PNotify({
+                    title: 'Profissional',
+                    text: messagem,
+                    type: 'warning'
+                });
+            } else if (notify === 2) {
+                new PNotify({
+                    title: 'Profissional',
+                    text: messagem,
+                    type: 'error'
+                });
+            }
+
+        }).apply(this, [jQuery]);
+
+    </script>
 }
 
 
