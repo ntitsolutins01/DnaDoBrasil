@@ -36,13 +36,13 @@ namespace WebApp.ApiClient
         public ComunidadeDto GetComunidadeById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceComunidade }{id}"));
+                $"{ResourceComunidade}/{id}"));
             return Get<ComunidadeDto>(requestUrl);
         }
         public List<ComunidadeDto> GetComunidadesAll()
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceComunidade }"));
+                $"{ResourceComunidade}"));
             return Get<List<ComunidadeDto>>(requestUrl);
         }
 

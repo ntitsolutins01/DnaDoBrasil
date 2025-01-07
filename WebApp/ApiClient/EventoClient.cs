@@ -44,7 +44,7 @@ namespace WebApp.ApiClient
 		public EventoDto GetEventoById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceEvento}{id}"));
+                $"{ResourceEvento}/{id}"));
             return Get<EventoDto>(requestUrl);
         }
         public List<FotoEventoDto> GetFotosAllByEventoId(int eventoId)
