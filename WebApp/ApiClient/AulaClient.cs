@@ -36,7 +36,7 @@ namespace WebApp.ApiClient
         public AulaDto GetAulaById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceAula}{id}"));
+                $"{ResourceAula}/{id}"));
             return Get<AulaDto>(requestUrl);
         }
         public List<AulaDto> GetAulasAll()

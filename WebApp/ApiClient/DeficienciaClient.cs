@@ -45,10 +45,10 @@ namespace WebApp.ApiClient
         public DeficienciaDto GetDeficienciaById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceDeficiencia}{id}"));
+                $"{ResourceDeficiencia}/{id}"));
             return Get<DeficienciaDto>(requestUrl);
 
-            #endregion
         }
+        #endregion
     }
 }
