@@ -21,25 +21,12 @@
                     <div class="panel-body">
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Nome <span class="required">*</span></label>
-                            <div class="col-sm-6">
+                            <div class="col-sm-5">
                                 <input type="text" name="nome" id="nome"
                                        maxlength="200" class="form-control" required title="Por favor informe o nome." />
                             </div>
-
-                            <label class="col-lg-1 control-label text-sm-right pt-2">Perfil<span class="required">*</span></label>
-
-                            <div class="col-lg-3">
-                                <select class="form-control populate select2" name="ddlPerfil" id="ddlPerfil"
-                                        title="Por favor selecione um perfil." required
-                                        asp-for="PerfilId" asp-items="Model.ListPerfis">
-                                    <option value="">Selecionar Perfil</option>
-                                </select>
-                            </div>
-
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Email <span class="required">*</span></label>
-                            <div class="col-sm-6">
+                            <label class="col-sm-1 control-label">Email <span class="required">*</span></label>
+                            <div class="col-sm-4">
                                 <div class="input-group">
                                     <span class="input-group-addon">
                                         <i class="fa fa-envelope"></i>
@@ -75,7 +62,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label text-sm-right pt-2">Localidade </label>
+                            <label class="col-sm-2 control-label text-sm-right pt-2">Localidade <span class="required">*</span> </label>
                             <div class="col-md-3">
                                 <select class="form-control populate select2" name="ddlLocalidade" id="ddlLocalidade"
                                         title="Por favor informe a localidade."
@@ -83,36 +70,45 @@
                                     <option value="">Selecionar Localidade</option>
                                 </select>
                             </div>
-                            <label class="col-sm-2 control-label text-sm-right pt-2">Modalidades </label>
+                            <label class="col-sm-2 control-label text-sm-right pt-2">Modalidades <span class="required">*</span> </label>
                             <div class="col-md-5">
-                                <select class="form-control populate" multiple="multiple" data-plugin-multiselect data-plugin-options='{ "maxHeight": 200 }' id="ddlModalidades" name="ddlModalidades" style="width:100%" asp-for="ModalidadeId" asp-items="Model.ListModalidades" required
+                                <select class="form-control populate" multiple="multiple" data-plugin-multiselect data-plugin-options='{ "maxHeight": 200, "enableCaseInsensitiveFiltering": true }' 
+                                        id="ddlModalidades" name="ddlModalidades" style="width:100%" asp-for="ModalidadeId" asp-items="Model.ListModalidades" required
                                         title="Por favor selecione ao menos uma modalidade.">
                                 </select>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Data Nascimento </label>
-                            <div class="col-sm-3">
+                            <label class="col-sm-2 control-label">Data Nascimento <span class="required">*</span> </label>
+                            <div class="col-sm-1">
                                 <div class="input-group">
                                     <span class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                     </span>
                                     <input id="DtNascimento" name="DtNascimento"
-                                           title="Por favor informe a data de nascimento."
+                                           title="Por favor informe a data de nascimento." required
                                            style="z-index: auto;"
                                            data-plugin-datepicker data-date-format="dd/mm/yyyy" data-plugin-options='{"language": "pt-BR"}'
                                            placeholder="__/__/____" class="form-control startdate"
                                            class="form-control">
                                 </div>
                             </div>
-                            <label class="col-sm-1 control-label">Sexo</label>
-                            <div class="col-sm-3">
-                                <select class="form-control populate select2" name="ddlSexo" id="ddlSexo"
+                            <label class="col-sm-1 control-label">Sexo <span class="required">*</span></label>
+                            <div class="col-sm-2">
+                                <select class="form-control populate select2" name="ddlSexo" id="ddlSexo" required
                                         title="Por favor selecione um sexo.">
                                     <option value="">Selecionar Sexo</option>
                                     <option value="M">MASCULINO</option>
                                     <option value="F">FEMININO</option>
+                                </select>
+                            </div>
+                            <label class="col-sm-1 control-label">Cargo</label>
+                            <div class="col-sm-4">
+                                <select class="form-control populate select2" name="ddlCargo" id="ddlCargo" style="width:100%"
+                                        title="Por favor selecione um etnia." required
+                                        asp-for="CargoId" asp-items="Model.ListCargos">
+                                    <option value="">Selecionar Cargo</option>
                                 </select>
                             </div>
                         </div>
@@ -341,21 +337,15 @@
     <link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css" />
     <link rel="stylesheet" href="~/assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
     <link rel="stylesheet" href="~/assets/vendor/bootstrap-multiselect/bootstrap-multiselect.css" />
-    <link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />
     <link href="~/assets/vendor/bootstrap-datepicker/css/bootstrap-datepicker3.css" rel="stylesheet" />
-    <link rel="stylesheet" href="~/assets/vendor/bootstrap-timepicker/css/bootstrap-timepicker.css" />
 }
 @section Scripts {
     <script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
     <script src="~/assets/vendor/select2/js/select2.js"></script>
     <script src="~/assets/vendor/jquery-mask/jquery.mask.js"></script>
     <script src="~/assets/vendor/ios7-switch/ios7-switch.js"></script>
-    <script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
-    <script src="~/assets/vendor/datatables/media/js/dataTables.bootstrap4.min.js"></script>
-    @* <script src="~/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script> *@
+    <script src="~/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
     <script src="~/assets/vendor/bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR.min.js"></script>
-    <script src="~/assets/vendor/bootstrap-timepicker/bootstrap-timepicker.js"></script>
-    <script src="~/js/formatTable.js"></script>
     <script src="~/js/profissional.js"></script>
     <script>
 

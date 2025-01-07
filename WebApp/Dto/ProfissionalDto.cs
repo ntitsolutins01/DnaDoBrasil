@@ -18,9 +18,12 @@
         public string? Uf { get; set; }
         public int? MunicipioId { get; set; }
         public int? LocalidadeId { get; set; }
+        public string? Localidade { get; set; }
         public bool Status { get; set; }
         public bool Habilitado { get; set; }
         public List<ModalidadeDto>? Modalidades { get; set; }
         public string? Perfil { get; set; }
+        public string? Cargo { get; set; }
+        public string? ModalidadesIds { get; set; }
     }
 }

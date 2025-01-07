@@ -1,4 +1,5 @@
-﻿@{
+@model CertificadoModel
+@{
     ViewData["Title"] = "Inclusão de Certificado";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -6,19 +7,91 @@
 <div id="vCertificado">
     <div class="row">
         <div class="col-md-12">
-            @using (@Html.BeginForm("Create", "Certificado", FormMethod.Post, new { id = "formCertificado", @class = "form-horizontal" }))
-
+            @using (@Html.BeginForm("Create", "Certificado", FormMethod.Post, new { id = "formCertificado", @class = "form-horizontal", enctype = "multipart/form-data" }))
             {
                 <section class="panel">
                     <header class="panel-heading">
                         <div class="panel-actions">
                             <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
                         </div>
-
                         <h2 class="panel-title">Cadastro de Certificado</h2>
                     </header>
+
                     <div class="panel-body">
+                        <div class="form-group row">
+                            <label class="col-sm-3 control-label text-sm-right pt-2">Tipo de Curso <span class="required">*</span></label>
+                            <div class="col-sm-4">
+                                <select class="form-control populate select2" name="ddlTipoCurso" id="ddlTipoCurso" style="width:100%"
+                                        required title="Por favor selecione o tipo de curso"
+                                        asp-for="TipoCursosId" asp-items="Model.ListTipoCursos">
+                                    <option value="">Selecionar Tipo de Curso</option>
+                                </select>
+                            </div>
+                            <label class="col-sm-1 control-label text-sm-right pt-2">Curso <span class="required">*</span></label>
+                            <div class="col-sm-4">
+                                <select class="form-control populate select2" name="ddlCurso" id="ddlCurso" style="width:100%"
+                                        required title="Por favor selecione o curso"
+                                        asp-for="CursoId" asp-items="Model.ListCursos">
+                                    <option value="">Selecionar Curso</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 control-label text-sm-right pt-2">Status</label>
+                            <div class="col-sm-9">
+                                <div class="switch switch-sm switch-primary">
+                                    <input type="checkbox" name="Status" id="Status" data-plugin-ios-switch checked="checked" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 control-label text-sm-right pt-2">Certificado</label>
+                            <div class="col-sm-9">
+                                <!-- Tabs de navegação -->
+                                <div class="tabs">
+                                    <ul class="nav nav-tabs">
+                                        <li class="nav-item active">
+                                            <a class="nav-link" href="#tabFrente" data-toggle="tab">Frente do Certificado</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#tabVerso" data-toggle="tab">Verso do Certificado</a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <!-- Tab Frente -->
+                                        <div id="tabFrente" class="tab-pane active">
+                                            <div class="form-group mt-3">
+                                                <div class="mb-3">
+                                                    <button type="button" id="btnAddBackgroundFrente" class="btn btn-default">
+                                                        <i class="fa fa-image"></i> Adicionar Imagem de Fundo (Frente)
+                                                    </button>
+                                                    <input type="file" id="bgImageInputFrente" name="ImagemFrente" style="display: none" accept="image/*">
+                                                </div>
+                                                <div class="summernote" id="summernoteFrente" name="HtmlFrente" data-plugin-summernote data-plugin-options='{ "height": 180, "codemirror": { "theme": "ambiance" } }'>
+                                                    Digite o conteúdo da frente do certificado...
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Tab Verso -->
+                                        <div id="tabVerso" class="tab-pane">
+                                            <div class="form-group mt-3">
+                                                <div class="mb-3">
+                                                    <button type="button" id="btnAddBackgroundVerso" class="btn btn-default">
+                                                        <i class="fa fa-image"></i> Adicionar Imagem de Fundo (Verso)
+                                                    </button>
+                                                    <input type="file" id="bgImageInputVerso" name="ImagemVerso" style="display: none" accept="image/*">
+                                                </div>
+                                                <div class="summernote" id="summernoteVerso" name="HtmlVerso" data-plugin-summernote data-plugin-options='{ "height": 180, "codemirror": { "theme": "ambiance" } }'>
+                                                    Digite o conteúdo do verso do certificado...
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
                     <footer class="panel-footer">
                         <div class="row">
                             <div class="col-md-9 col-md-offset-3">
@@ -33,22 +106,181 @@
         </div>
     </div>
 </div>
+
 @section CssSpecificVendor {
     <link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css" />
     <link rel="stylesheet" href="~/assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
+    <link rel="stylesheet" href="~/assets/vendor/summernote/summernote.css" />
+
+    <style>
+        /* Estilos do Editor */
+        .note-editor {
+            margin-bottom: 0;
+        }
+
+        .note-editable {
+            min-height: 300px;
+        }
+
+        .note-btn-group {
+            position: relative;
+        }
+
+        .note-dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .note-editing-area {
+            position: relative !important;
+            min-height: 300px;
+        }
+
+        .note-editable {
+            position: relative !important;
+            z-index: 1;
+        }
+
+        .background-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .nav-tabs {
+            margin-bottom: 15px;
+        }
+
+        .tab-content {
+            background: #FFF;
+            padding: 15px;
+            border: 1px solid #DDD;
+            border-top: none;
+        }
+    </style>
 }
+
 @section Scripts {
+    <!-- Form plugins -->
     <script src="~/assets/vendor/select2/js/select2.js"></script>
     <script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
     <script src="~/assets/vendor/jquery-mask/jquery.mask.js"></script>
-    <script src="~/js/Certificado.js"></script>
+    <script src="~/assets/vendor/ios7-switch/ios7-switch.js"></script>
+
+    <!-- Summernote -->
+    <script src="~/assets/vendor/summernote/summernote.js"></script>
+    <script src="~/assets/vendor/summernote/lang/summernote-pt-BR.js"></script>
+
+    <script src="~/assets/javascripts/theme.init.js"></script>
+
     <script>
+        // Função para inicializar o Summernote com configurações específicas
+        function initializeSummernote(elementId, bgInputId, bgButtonId) {
+            $(`#${elementId}`).summernote({
+                lang: 'pt-BR',
+                height: 300,
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'italic', 'underline', 'clear']],
+                    ['fontname', ['fontname']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['insert', ['link', 'picture']],
+                    ['view', ['fullscreen', 'codeview']]
+                ],
+                fontSizes: ['8', '9', '10', '11', '12', '14', '18', '24', '36']
+            });
 
-        (function ($) {
+            $(`#${bgButtonId}`).click(function() {
+                $(`#${bgInputId}`).click();
+            });
 
-            'use strict';
+            $(`#${bgInputId}`).change(function(e) {
+                if (this.files && this.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        var $editor = $(`#${elementId}`).siblings('.note-editor').find('.note-editing-area');
+                        var $editable = $editor.find('.note-editable');
+
+                        $editor.find('.background-overlay').remove();
+
+                        var $bgContainer = $('<div>').addClass('background-overlay').css({
+                            'position': 'absolute',
+                            'top': '0',
+                            'left': '0',
+                            'right': '0',
+                            'bottom': '0',
+                            'background-image': `url(${e.target.result})`,
+                            'background-size': 'cover',
+                            'background-position': 'center',
+                            'background-repeat': 'no-repeat',
+                            'opacity': '1',
+                            'pointer-events': 'none',
+                            'z-index': '0'
+                        });
+
+                        $editor.css('position', 'relative');
+                        $editable.css({
+                            'position': 'relative',
+                            'background': 'transparent',
+                            'z-index': '1'
+                        });
+
+                        $editor.prepend($bgContainer);
+                    }
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            // Select2 com Tipo de Curso
+            $("#ddlTipoCurso").change(function () {
+                var tipoCursoId = $(this).val();
+                $("#ddlCurso").empty();
+                $("#ddlCurso").append('<option value="">Selecionar Curso</option>');
+
+                if (tipoCursoId !== "") {
+                    $.getJSON(`/Certificado/GetCursosByTipoCursoId/${tipoCursoId}`, function (data) {
+                        $.each(data, function (i, item) {
+                            $("#ddlCurso").append(`<option value="${item.id}">${item.titulo}</option>`);
+                        });
+                    });
+                }
+            });
+
+            // Inicializa os editores
+            initializeSummernote('summernoteFrente', 'bgImageInputFrente', 'btnAddBackgroundFrente');
+            initializeSummernote('summernoteVerso', 'bgImageInputVerso', 'btnAddBackgroundVerso');
+
+            // Handler para o submit do formulário
+            $('#formCertificado').on('submit', function(e) {
+                var htmlFrente = $('#summernoteFrente').summernote('code');
+                var htmlVerso = $('#summernoteVerso').summernote('code');
+
+                $('<input>').attr({
+                    type: 'hidden',
+                    name: 'HtmlFrente',
+                    value: htmlFrente
+                }).appendTo($(this));
+
+                $('<input>').attr({
+                    type: 'hidden',
+                    name: 'HtmlVerso',
+                    value: htmlVerso
+                }).appendTo($(this));
+            });
+
+            // Notificações
             var crud = @ViewBag.CrudMessage;
-
             if (crud === 1) {
                 new PNotify({
                     title: 'Certificado',
@@ -91,8 +323,6 @@
                     type: 'error'
                 });
             }
-
-        }).apply(this, [jQuery]);
-
+        });
     </script>
 }
