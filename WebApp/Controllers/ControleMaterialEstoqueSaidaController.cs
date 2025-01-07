@@ -100,6 +100,7 @@ public class ControleMaterialEstoqueSaidaController : BaseController
 
             var command1 = new MaterialModel.CreateUpdateMaterialCommand
             {
+                Id = material.Id,
                 UnidadeMedida = material.UnidadeMedida,
                 Descricao = material.Descricao,
                 QtdAdquirida = material.QtdAdquirida + Convert.ToInt32(collection["quantidade"].ToString())
