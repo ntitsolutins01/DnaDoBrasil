@@ -88,14 +88,25 @@ public class ControleMaterialEstoqueSaidaController : BaseController
     {
         try
         {
-            var command = new ControleMaterialEstoqueSaidaModel.CreateUpdateControleMaterialEstoqueSaidaCommand
+            var command0 = new ControleMaterialEstoqueSaidaModel.CreateUpdateControleMaterialEstoqueSaidaCommand
             {
                 MaterialId = Convert.ToInt32(collection["ddlMaterial"].ToString()),
                 Quantidade = Convert.ToInt32(collection["quantidade"].ToString()),
                 Solicitante = collection["solicitante"].ToString()
             };
 
-            await ApiClientFactory.Instance.CreateControleMaterialEstoqueSaida(command);
+            var material = 
+                ApiClientFactory.Instance.GetMaterialById(Convert.ToInt32(collection["ddlMaterial"].ToString()));
+
+            var command1 = new MaterialModel.CreateUpdateMaterialCommand
+            {
+                UnidadeMedida = material.UnidadeMedida,
+                Descricao = material.Descricao,
+                QtdAdquirida = material.QtdAdquirida + Convert.ToInt32(collection["quantidade"].ToString())
+            };
+
+            await ApiClientFactory.Instance.CreateControleMaterialEstoqueSaida(command0);
+            await ApiClientFactory.Instance.UpdateMaterial(material.Id ,command1);
 
             return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
         }

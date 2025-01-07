@@ -151,11 +151,15 @@ public class MaterialController : BaseController
     {
         try
         {
+            var material =
+                ApiClientFactory.Instance.GetMaterialById(Convert.ToInt32(collection["editMaterialId"]));
+
             var command = new MaterialModel.CreateUpdateMaterialCommand
             {
                 Id = Convert.ToInt32(collection["editMaterialId"]),
                 UnidadeMedida = collection["ddlUnidadeMedida"].ToString(),
-                Descricao = collection["descricao"].ToString()
+                Descricao = collection["descricao"].ToString(),
+                QtdAdquirida = material.QtdAdquirida
             };
 
             await ApiClientFactory.Instance.UpdateMaterial(command.Id, command);
