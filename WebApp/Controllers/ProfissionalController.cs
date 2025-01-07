@@ -16,6 +16,7 @@ using WebApp.Utility;
 using WebApp.Authorization;
 using WebApp.Identity;
 using Microsoft.AspNetCore.Authorization;
+using NuGet.Protocol.Core.Types;
 
 namespace WebApp.Controllers
 {
@@ -76,14 +77,31 @@ namespace WebApp.Controllers
 				var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
 				var modalidades = new SelectList(ApiClientFactory.Instance.GetModalidadeAll(), "Id", "Nome");
                 var perfis = new[] { (int)EnumPerfil.Profissional, (int)EnumPerfil.GestorPedagogico, (int)EnumPerfil.GestorProjeto };
-                var resultPerfil = ApiClientFactory.Instance.GetPerfilAll().Where(x=>perfis.Contains(x.Id));
+                //var resultPerfil = ApiClientFactory.Instance.GetPerfilAll().Where(x=>perfis.Contains(x.Id));
+                List<SelectListDto> list = new List<SelectListDto>
+                {
+                    new() { IdNome = "Professor Ed. Física", Nome = "Professor Ed. Física" },
+                    new() { IdNome = "Instrutor Ativ. Diversas", Nome = "Instrutor Ativ. Diversas" },
+                    new() { IdNome = "Instrutor Artes", Nome = "Instrutor Artes" },
+                    new() { IdNome = "Professor Reforço", Nome = "Professor Reforço" },
+                    new() { IdNome = "Professor Disc. Diversas", Nome = "Professor Disc. Diversas" },
+                    new() { IdNome = "Monitor Regular", Nome = "Monitor Regular" },
+                    new() { IdNome = "Monitor A. Especializado", Nome = "Monitor A. Especializado" },
+                    new() { IdNome = "Professor Informática", Nome = "Professor Informática" },
+                    new() { IdNome = "Psicólogo", Nome = "Psicólogo" },
+                    new() { IdNome = "Assistente Social", Nome = "Assistente Social" },
+                    new() { IdNome = "Estagiário", Nome = "Estagiário" }
+                };
+
+                var cargos = new SelectList(list, "IdNome", "Nome");
 
 
                 return View(new ProfissionalModel()
                 {
                     ListEstados = estados, 
                     ListModalidades = modalidades,
-                    ListPerfis = new SelectList(resultPerfil, "Id", "Nome")
+                    ListCargos = cargos,
+                    //ListPerfis = new SelectList(resultPerfil, "Id", "Nome")
                 });
 
             }
@@ -103,7 +121,6 @@ namespace WebApp.Controllers
 			{
 				var status = collection["status"].ToString();
 				var habilitado = collection["habilitado"].ToString();
-				var modalidadesIds = collection["arrModalidades"];
 
 				var command = new ProfissionalModel.CreateUpdateProfissionalCommand
 				{
@@ -115,7 +132,7 @@ namespace WebApp.Controllers
 					Cep = collection["cep"] == "" ? null : collection["cep"].ToString(),
 					Celular = collection["numCelular"] == "" ? null : collection["numCelular"].ToString(),
 					Cpf = collection["cpf"] == "" ? null : collection["cpf"].ToString(),
-                    PerfilId = Convert.ToInt32(collection["ddlPerfil"].ToString()),
+                    PerfilId = Convert.ToInt32(EnumPerfil.Profissional),
 					Numero = collection["numero"] == "" ? null : Convert.ToInt32(collection["numero"].ToString()),
 					Bairro = collection["bairro"] == "" ? null : collection["bairro"].ToString(),
 					Endereco = collection["endereco"] == "" ? null : collection["endereco"].ToString(),
@@ -123,7 +140,8 @@ namespace WebApp.Controllers
 					LocalidadeId = collection["ddlLocalidade"] == "" ? null : Convert.ToInt32(collection["ddlLocalidade"].ToString()),
 					Habilitado = habilitado != "",
 					Status = status != "",
-					ModalidadesIds = collection["ddlModalidades"].ToString()
+					ModalidadesIds = collection["ddlModalidades"].ToString(),
+                    Cargo = collection["ddlCargo"].ToString()
 
                 };
 
@@ -153,9 +171,10 @@ namespace WebApp.Controllers
                     CpfCnpj = collection["cpf"].ToString(),
                     TipoPessoa = "pf",
                     MunicipioId = collection["ddlMunicipio"] == "" ? 0 : Convert.ToInt32(collection["ddlMunicipio"].ToString()),
+					LocalidadeId = Convert.ToInt32(collection["ddlLocalidade"].ToString())
                 };
 
-                var perfil = ApiClientFactory.Instance.GetPerfilById(Convert.ToInt32(collection["ddlPerfil"].ToString()));
+                var perfil = ApiClientFactory.Instance.GetPerfilById(Convert.ToInt32(EnumPerfil.Profissional));
 
                 var includedUserId = _userManager.Users.FirstOrDefault(x => x.Email == newUser.Email).Id;
 
@@ -197,10 +216,27 @@ namespace WebApp.Controllers
 				var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", profissional.Uf);
 				var municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(profissional.Uf!), "Id", "Nome", profissional.MunicipioId);
 				var localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeByMunicipio(profissional.MunicipioId.ToString()), "Id", "Nome", profissional.LocalidadeId);
-				var listModalidades = new SelectList(ApiClientFactory.Instance.GetModalidadeAll(), "Id", "Nome");
+				var listModalidades = new SelectList(ApiClientFactory.Instance.GetModalidadeAll(), "Id", "Nome", profissional.ModalidadesIds);
                 var resultPerfil = ApiClientFactory.Instance.GetPerfilAll();
 
                 var usu = ApiClientFactory.Instance.GetUsuarioByEmail(profissional.Email);
+
+                List<SelectListDto> list = new List<SelectListDto>
+                {
+                    new() { IdNome = "Professor Ed. Física", Nome = "Professor Ed. Física" },
+                    new() { IdNome = "Instrutor Ativ. Diversas", Nome = "Instrutor Ativ. Diversas" },
+                    new() { IdNome = "Instrutor Artes", Nome = "Instrutor Artes" },
+                    new() { IdNome = "Professor Reforço", Nome = "Professor Reforço" },
+                    new() { IdNome = "Professor Disc. Diversas", Nome = "Professor Disc. Diversas" },
+                    new() { IdNome = "Monitor Regular", Nome = "Monitor Regular" },
+                    new() { IdNome = "Monitor A. Especializado", Nome = "Monitor A. Especializado" },
+                    new() { IdNome = "Professor Informática", Nome = "Professor Informática" },
+                    new() { IdNome = "Psicólogo", Nome = "Psicólogo" },
+                    new() { IdNome = "Assistente Social", Nome = "Assistente Social" },
+                    new() { IdNome = "Estagiário", Nome = "Estagiário" }
+                };
+
+                var cargos = new SelectList(list, "IdNome", "Nome", profissional.Cargo);
 
                 return View(new ProfissionalModel()
 				{
@@ -210,7 +246,8 @@ namespace WebApp.Controllers
 					Profissional = profissional,
 					ListMunicipios = municipios, 
 					Modalidades = profissional.Modalidades,
-					ListLocalidades = localidades
+					ListLocalidades = localidades,
+					ListCargos = cargos
 
 				});
 
@@ -251,7 +288,8 @@ namespace WebApp.Controllers
                     LocalidadeId = collection["ddlLocalidade"] == "" ? null : Convert.ToInt32(collection["ddlLocalidade"].ToString()),
                     Habilitado = habilitado != "",
                     Status = status != "",
-                    ModalidadesIds = collection["ddlModalidades"].ToString()
+                    ModalidadesIds = collection["ddlModalidades"].ToString(),
+                    Cargo = collection["ddlCargo"].ToString()
                 };
 
 				await ApiClientFactory.Instance.UpdateProfissional(command.Id, command);

@@ -1,4 +1,4 @@
-﻿var vm = new Vue({
+var vm = new Vue({
     el: "#vPesquisarAluno",
     data: {
         loading: false,
@@ -219,10 +219,11 @@
                 FomentoId: $("#ddlFomento").val(),
                 Estado: $("#ddlEstado").val(),
                 MunicipioId: $("#ddlMunicipio").val(),
-                LocalidadeId: $("#ddlLocalidade").val(),
+                LocalidadeId: $("#ddlLocalidade").valS(),
                 DeficienciaId: $("#ddlDeficiencia").val(),
-                Etnia: $("#ddlEtnia").val(),
-                Sexo: $("#ddlSexo").val()
+                Nome: $("#nome").val(),
+                Matricula: $("#matricula").val(),
+                Etnia: $("#ddlEtnia").val()
             }
 
             let axiosConfig = {

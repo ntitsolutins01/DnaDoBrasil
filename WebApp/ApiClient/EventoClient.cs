@@ -44,13 +44,13 @@ namespace WebApp.ApiClient
 		public EventoDto GetEventoById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceEvento}/Evento/{id}"));
+                $"{ResourceEvento}/{id}"));
             return Get<EventoDto>(requestUrl);
         }
         public List<FotoEventoDto> GetFotosAllByEventoId(int eventoId)
         {
 			var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-				$"{ResourceFotoEvento}/Evento/{eventoId}"));
+				$"{ResourceFotoEvento}/Fotos/{eventoId}"));
 			return Get<List<FotoEventoDto>>(requestUrl);
 		}
         public List<EventoDto> GetEventosAll()

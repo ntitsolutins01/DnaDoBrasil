@@ -70,24 +70,29 @@ namespace WebApp.Controllers
                     LocalidadeId = collection["ddlLocalidade"].ToString() == "" ? usu.LocalidadeId : collection["ddlLocalidade"].ToString(),
                     DeficienciaId = collection["ddlDeficiencia"].ToString(),
                     Etnia = collection["ddlEtnia"].ToString(),
-                    Sexo = collection["ddlSexo"].ToString()
+                    Sexo = collection["ddlSexo"].ToString(),
+                    Nome = collection["nome"].ToString(),
+                    Matricula = collection["matricula"].ToString()
                 };
                 var result = await ApiClientFactory.Instance.GetAlunosByFilter(searchFilter);
 
-                bool filtroVazio = string.IsNullOrEmpty(searchFilter.MunicipioId) ?
-                        string.IsNullOrEmpty(searchFilter.FomentoId) ?
-                            string.IsNullOrEmpty(searchFilter.LocalidadeId) ?
-                                string.IsNullOrEmpty(searchFilter.Sexo) ?
-                                    string.IsNullOrEmpty(searchFilter.DeficienciaId) ?
-                                        string.IsNullOrEmpty(searchFilter.Estado) ?
-                                            string.IsNullOrEmpty(searchFilter.Etnia) ?
-                                                string.IsNullOrEmpty(searchFilter.Sexo) : false
+                bool filtroVazio = string.IsNullOrEmpty(searchFilter.MunicipioId)
+                    ? string.IsNullOrEmpty(searchFilter.FomentoId)
+                        ? string.IsNullOrEmpty(searchFilter.LocalidadeId)
+                            ? string.IsNullOrEmpty(searchFilter.Sexo)
+                                ? string.IsNullOrEmpty(searchFilter.DeficienciaId)
+                                    ? string.IsNullOrEmpty(searchFilter.Estado)
+                                        ? string.IsNullOrEmpty(searchFilter.Etnia)
+                                            ? string.IsNullOrEmpty(searchFilter.Nome)
+                                                ? string.IsNullOrEmpty(searchFilter.Matricula)
+                                                : false
                                             : false
                                         : false
                                     : false
                                 : false
                             : false
-                        : false;
+                        : false
+                    : false;
 
                 if (filtroVazio)
                 {

@@ -36,13 +36,13 @@ namespace WebApp.ApiClient
         public ControlePresencaDto GetControlePresencaById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceControlesPresencas}/ControlePresenca/{id}"));
+                $"{ResourceControlesPresencas}/{id}"));
             return Get<ControlePresencaDto>(requestUrl);
         }
         public List<ControlePresencaDto> GetControlePresencaByAlunoId(int alunoId)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceControlesPresencas}/ControlePresenca/Aluno/{alunoId}"));
+                $"{ResourceControlesPresencas}/Aluno/{alunoId}"));
             return Get<List<ControlePresencaDto>>(requestUrl);
         }
         public PaginatedListDto<ControlePresencaDto> GetControlesPresencasAll(int pageNumber = 1, int pageSize = 10)
@@ -54,7 +54,7 @@ namespace WebApp.ApiClient
         public List<ControlePresencaDto> GetControlesPresencasByEventoId(int eventoId)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceControlesPresencas}/ControlePresenca/Evento/{eventoId}"));
+                $"{ResourceControlesPresencas}/Evento/{eventoId}"));
             return Get<List<ControlePresencaDto>>(requestUrl);
         }
         public Task<ControlesPresencasFilterDto?> GetControlesPresencasByFilter(ControlesPresencasFilterDto searchFilter)

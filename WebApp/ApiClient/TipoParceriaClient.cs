@@ -36,7 +36,7 @@ namespace WebApp.ApiClient
         public TipoParceriaDto GetTipoParceriaById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceTipoParceria}/TipoParceria/{id}"));
+                $"{ResourceTipoParceria}/{id}"));
             return Get<TipoParceriaDto>(requestUrl);
         }
         public List<TipoParceriaDto> GetTipoParceriaAll()

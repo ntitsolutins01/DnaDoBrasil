@@ -69,6 +69,18 @@
                                 <option value="">Selecionar Sexo</option>
                             </select>
                         </div>
+                        <label class="col-sm-2 control-label text-sm-right pt-2">Nome:</label>
+                        <div class="col-sm-4 form-group">
+                            <input type="text" name="nome" id="nome" class="form-control" placeholder="Insira Nome"
+                                   maxlength="60"
+                                   title="Por favor informe um nome." />
+                        </div>
+                        <label class="col-sm-2 control-label text-sm-right pt-2">Matricula:</label>
+                        <div class="col-sm-4 form-group">
+                            <input type="text" name="matricula" id="matricula" class="form-control" placeholder="Insira Matricula"
+                                   maxlength="60"
+                                   title="Por favor informe a matricula." />
+                        </div>
                     </div>
                     <footer class="panel-footer">
                         <div class="row">
@@ -102,7 +114,11 @@
                     string.IsNullOrEmpty(Model.SearchFilter.Sexo) ?
                     string.IsNullOrEmpty(Model.SearchFilter.DeficienciaId) ?
                     string.IsNullOrEmpty(Model.SearchFilter.Estado) ?
-                    string.IsNullOrEmpty(Model.SearchFilter.Etnia) : false
+                    string.IsNullOrEmpty(Model.SearchFilter.Etnia) ?
+                    string.IsNullOrEmpty(Model.SearchFilter.Nome) ?
+                    string.IsNullOrEmpty(Model.SearchFilter.Matricula) : false
+                    : false
+                    : false
                     : false
                     : false
                     : false
@@ -110,18 +126,18 @@
                     : false;
 
                     if (filtroVazio)
-                    { }
-                    <div class="col-sm-8 pull-left">
-                        <div class="alert alert-warning" style="padding-bottom: 6px;padding-top: 6px; !important; margin-bottom: 10px; !important">
-                            <strong>Atenção!</strong> Os alunos listados são referentes ao seu <a href="" class="alert-link">Estado/Município</a> de cadastro.
+                    {
+                        <div class="col-sm-8 pull-left">
+                            <div class="alert alert-warning" style="padding-bottom: 6px;padding-top: 6px; !important; margin-bottom: 10px; !important">
+                                <strong>Atenção!</strong> Os alunos listados são referentes ao seu <a href="" class="alert-link">Estado/Município</a> de cadastro.
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-sm-8 pull-left">
-                        <div class="alert alert-info" style="padding-bottom: 6px;padding-top: 6px; !important; margin-bottom: 10px; !important">
-                            <strong>Info:</strong> Para impressão de carteirinha em lote selecione o filtro e clique em <a href="" class="alert-link">Impressão em Lote</a>.
+                        <div class="col-sm-8 pull-left">
+                            <div class="alert alert-info" style="padding-bottom: 6px;padding-top: 6px; !important; margin-bottom: 10px; !important">
+                                <strong>Info:</strong> Para impressão em lote selecione o filtro e clique em <a href="" class="alert-link">Impressão em Lote</a>.
+                            </div>
                         </div>
-                    </div>
-
+                    }
                 }
                 <div class="col-sm-2 pull-right">
                     <a href="@Url.Action("Create", "Aluno")" id="addToTable" class="btn btn-block btn-primary pull-right"><i class="fa fa-plus"></i>  &nbsp;&nbsp;Novo Aluno </a>
@@ -135,8 +151,8 @@
             <table class="table table-bordered table-striped mb-0" id="datatable-default">
                 <thead>
                     <tr>
-                        @* <th class="text-center">Id</th> *@
-                        <th class="text-center">Matrícula - Nome do Aluno</th>
+                        <th class="text-center">Id</th>
+                        <th class="text-center">Nome</th>
                         <th class="text-center">Email</th>
                         <th class="text-center">Data de Nascimento</th>
                         <th class="text-center">Status</th>
@@ -147,11 +163,10 @@
                     @foreach (var item in Model.Alunos)
                     {
                         <tr>
-                            @* <td class="text-center">@Html.DisplayFor(modelItem => item.Id)</td> *@
+                            <td class="text-center">@Html.DisplayFor(modelItem => item.Id)</td>
                             <td class="text-center">@Html.DisplayFor(modelItem => item.Nome)</td>
                             <td class="text-center">@Html.DisplayFor(modelItem => item.Email)</td>
                             <td class="text-center">@Html.DisplayFor(modelItem => item.DtNascimento)</td>
-
                             @if (item.Status)
                             {
                                 <td class="text-center"><span class="label label-success" style="display: block;">ATIVO</span></td>
@@ -160,7 +175,7 @@
                             {
                                 <td class="text-center"><span class="label label-danger" style="display: block;">INATIVO</span></td>
                             }
-                            <td class="actions text-center" style="width:50px;">
+                            <td class="actions text-center">
                                 <a data-toggle="tooltip" data-placement="top" title="Editar" asp-action="Edit" asp-controller="Aluno" asp-route-Id="@item.Id" class="on-default edit-row" style='color: #FF9800'><i class="fa fa-pencil"></i></a>
                                 <a data-toggle="tooltip" data-placement="top" title="Carteirinha"
                                    href='javascript:(crud.CarterinhaModal(@item.Id))'
@@ -171,11 +186,9 @@
                                 <a href="#" data-id="@item.Id" data-toggle="modal" data-target="#mdUpload"
                                    data-toggle="tooltip" data-placement="top" title="Upload Foto"
                                    class="on-default edit-row" style='color: #303F9F'><i class="fa fa-upload"></i></a>
-                                @if (!item.Convidado)
-                                {
-                                    <a data-toggle="tooltip" data-placement="top" title="Excluir" href='javascript:(crud.DeleteModal(@item.Id))'
-                                       class="on-default remove-row" style="cursor: pointer; color: #F44336"><i class="fa fa-trash"></i></a>
-                                }
+
+                                <a data-toggle="tooltip" data-placement="top" title="Excluir" href='javascript:(crud.DeleteModal(@item.Id))'
+                                   class="on-default remove-row" style="cursor: pointer;color: #F44336"><i class="fa fa-trash"></i></a>
                             </td>
                         </tr>
                     }

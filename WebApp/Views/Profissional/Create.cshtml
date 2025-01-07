@@ -81,7 +81,7 @@
 
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Data Nascimento <span class="required">*</span> </label>
-                            <div class="col-sm-3">
+                            <div class="col-sm-1">
                                 <div class="input-group">
                                     <span class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
@@ -95,12 +95,20 @@
                                 </div>
                             </div>
                             <label class="col-sm-1 control-label">Sexo <span class="required">*</span></label>
-                            <div class="col-sm-3">
+                            <div class="col-sm-2">
                                 <select class="form-control populate select2" name="ddlSexo" id="ddlSexo" required
                                         title="Por favor selecione um sexo.">
                                     <option value="">Selecionar Sexo</option>
                                     <option value="M">MASCULINO</option>
                                     <option value="F">FEMININO</option>
+                                </select>
+                            </div>
+                            <label class="col-sm-1 control-label">Cargo</label>
+                            <div class="col-sm-4">
+                                <select class="form-control populate select2" name="ddlCargo" id="ddlCargo" style="width:100%"
+                                        title="Por favor selecione um etnia." required
+                                        asp-for="CargoId" asp-items="Model.ListCargos">
+                                    <option value="">Selecionar Cargo</option>
                                 </select>
                             </div>
                         </div>
