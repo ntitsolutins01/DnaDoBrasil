@@ -35,6 +35,8 @@ namespace WebApp.Models
             public string? Bairro { get; set; }
             public bool Status { get; set; } = true;
             public bool Habilitado { get; set; }
+            public string RazaoSocial { get; set; }
+            public string NomeContato { get; set; }
         }
     }
 
