@@ -156,6 +156,21 @@ public class ControleMaterialEstoqueSaidaController : BaseController
     {
         try
         {
+            var controleSaida =
+                ApiClientFactory.Instance.GetControleMaterialEstoqueSaidaById(id);
+
+            var material = 
+                ApiClientFactory.Instance.GetMaterialById(controleSaida.MaterialId);
+
+            var command = new MaterialModel.CreateUpdateMaterialCommand
+            {
+                Id = material.Id,
+                UnidadeMedida = material.UnidadeMedida,
+                Descricao = material.Descricao,
+                QtdAdquirida = material.QtdAdquirida - controleSaida.Quantidade
+            };
+
+            ApiClientFactory.Instance.UpdateMaterial(material.Id, command);
             ApiClientFactory.Instance.DeleteControleMaterialEstoqueSaida(id);
             return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
         }
