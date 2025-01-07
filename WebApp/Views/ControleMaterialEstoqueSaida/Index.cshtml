@@ -27,6 +27,7 @@
                                 <th class="text-center">Material</th>
                                 <th class="text-center">Solicitante</th>
                                 <th class="text-center">Quantidade</th>
+                                <th class="text-center">Data de Criação</th>
                                 <th class="text-center">Ações</th>
                             </tr>
                         </thead>
@@ -38,6 +39,7 @@
                                     <td class="text-center">@Html.DisplayFor(modelItem => item.TituloMaterial)</td>
                                     <td class="text-center">@Html.DisplayFor(modelItem => item.Solicitante)</td>
                                     <td class="text-center">@Html.DisplayFor(modelItem => item.Quantidade)</td>
+                                    <td class="text-center">@Html.DisplayFor(modelItem => item.Created)</td>
 
                                     <td class="actions text-center">
                                         <a data-toggle="tooltip" data-placement="top" title="Editar"
