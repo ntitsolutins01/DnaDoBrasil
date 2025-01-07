@@ -101,7 +101,6 @@ namespace WebApp.Controllers
                     ListEstados = estados, 
                     ListModalidades = modalidades,
                     ListCargos = cargos,
-                    //ListPerfis = new SelectList(resultPerfil, "Id", "Nome")
                 });
 
             }
@@ -240,12 +239,10 @@ namespace WebApp.Controllers
 
                 return View(new ProfissionalModel()
 				{
-                    ListPerfis = new SelectList(resultPerfil, "Id", "Nome", usu.Perfil.Id),
                     ListEstados = estados, 
 					ListModalidades = listModalidades, 
 					Profissional = profissional,
 					ListMunicipios = municipios, 
-					Modalidades = profissional.Modalidades,
 					ListLocalidades = localidades,
 					ListCargos = cargos
 
