@@ -35,7 +35,7 @@ namespace WebApp.ApiClient
         public QuestionarioDto GetQuestionarioById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceQuestionario}/Questionario/{id}"));
+                $"{ResourceQuestionario}{id}"));
             return Get<QuestionarioDto>(requestUrl);
         }
         public List<QuestionarioDto> GetQuestionarioAll()
