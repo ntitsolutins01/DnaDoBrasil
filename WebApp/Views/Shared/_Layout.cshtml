@@ -482,7 +482,7 @@
                                     </li>
                                 }
 
-                                @* @if ((await AuthorizationService.AuthorizeAsync(User, ModuloAccess.SistemaSocioeconomico)).Succeeded)
+                                @if ((await AuthorizationService.AuthorizeAsync(User, ModuloAccess.SistemaSocioeconomico)).Succeeded)
                                 {
                                     <li class="nav-parent">
                                         <a href="#">
@@ -495,14 +495,14 @@
                                                     Parceiros
                                                 </a>
                                             </li>
-                                            <li>
+                                            @* <li>
                                                 <a href="@Url.Action("SolicitacaoContato", "SistemaSocioeconomico")">
                                                     Solicitações de contato
                                                 </a>
-                                            </li>
+                                            </li> *@
                                         </ul>
                                     </li>
-                                } *@
+                                }
 
                                 @if ((await AuthorizationService.AuthorizeAsync(User, ModuloAccess.Laudo)).Succeeded)
                                 {
