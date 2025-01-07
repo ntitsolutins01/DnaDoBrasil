@@ -36,7 +36,7 @@ namespace WebApp.ApiClient
 		public NotaDto GetNotaById(int id)
 		{
 			var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-				$"{ResourceNota}/Nota/{id}"));
+				$"{ResourceNota}/{id}"));
 			return Get<NotaDto>(requestUrl);
 		}
 		public List<NotaDto> GetNotasAll()

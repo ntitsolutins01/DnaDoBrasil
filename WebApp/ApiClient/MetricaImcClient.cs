@@ -36,13 +36,13 @@ namespace WebApp.ApiClient
         public MetricaImcDto GetMetricaImcById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceMetricaImc }/MetricaImc/{id}"));
+                $"{ResourceMetricaImc}/{id}"));
             return Get<MetricaImcDto>(requestUrl);
         }
         public List<MetricaImcDto> GetMetricasImcAll()
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceMetricaImc }"));
+                $"{ResourceMetricaImc}"));
             return Get<List<MetricaImcDto>>(requestUrl);
         }
 

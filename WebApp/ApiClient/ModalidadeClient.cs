@@ -36,7 +36,7 @@ namespace WebApp.ApiClient
         public ModalidadeDto GetModalidadeById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceModalidade}/Modalidade/{id}"));
+                $"{ResourceModalidade}/{id}"));
             return Get<ModalidadeDto>(requestUrl);
         }
         public List<ModalidadeDto> GetModalidadeAll()

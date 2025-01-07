@@ -36,13 +36,13 @@ namespace WebApp.ApiClient
         public CategoriaDto GetCategoriaById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceCategoria }/Categoria/{id}"));
+                $"{ResourceCategoria}/{id}"));
             return Get<CategoriaDto>(requestUrl);
         }
         public List<CategoriaDto> GetCategoriasAll()
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceCategoria }"));
+                $"{ResourceCategoria}"));
             return Get<List<CategoriaDto>>(requestUrl);
         }
 

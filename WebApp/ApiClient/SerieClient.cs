@@ -35,7 +35,7 @@ namespace WebApp.ApiClient
         public SerieDto GetSerieById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceSerie}/Serie/{id}"));
+                $"{ResourceSerie}/{id}"));
             return Get<SerieDto>(requestUrl);
         }
         public List<SerieDto> GetSerieAll()

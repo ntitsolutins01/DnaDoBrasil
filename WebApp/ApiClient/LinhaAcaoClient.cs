@@ -36,7 +36,7 @@ namespace WebApp.ApiClient
         public LinhaAcaoDto GetLinhaAcaoById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceLinhaAcao}/LinhaAcao/{id}"));
+                $"{ResourceLinhaAcao}/{id}"));
             return Get<LinhaAcaoDto>(requestUrl);
         }
         public List<LinhaAcaoDto> GetLinhasAcoesAll()

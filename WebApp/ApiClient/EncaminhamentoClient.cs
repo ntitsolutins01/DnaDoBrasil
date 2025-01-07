@@ -36,7 +36,7 @@ namespace WebApp.ApiClient
 		public EncaminhamentoDto GetEncaminhamentoById(int id)
 		{
 			var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-				$"{ResourceEncaminhamento}/Encaminhamento/{id}"));
+				$"{ResourceEncaminhamento}/{id}"));
 			return Get<EncaminhamentoDto>(requestUrl);
 		}
 		public List<EncaminhamentoDto> GetEncaminhamentosAll()
@@ -48,7 +48,7 @@ namespace WebApp.ApiClient
 		public List<EncaminhamentoDto> GetEncaminhamentosByTipoLaudoId(int id)
 		{
 			var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-				$"{ResourceEncaminhamento}/Encaminhamento/TipoLaudo/{id}"));
+				$"{ResourceEncaminhamento}/TipoLaudo/{id}"));
 			return Get<List<EncaminhamentoDto>>(requestUrl);
 		}
 

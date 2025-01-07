@@ -36,13 +36,13 @@ namespace WebApp.ApiClient
         public RankingDto GetRankingById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceRanking }/Ranking/{id}"));
+                $"{ResourceRanking}/Ranking/{id}"));
             return Get<RankingDto>(requestUrl);
         }
         public List<RankingDto> GetRankingsAll()
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceRanking }"));
+                $"{ResourceRanking}"));
             return Get<List<RankingDto>>(requestUrl);
         }
 
