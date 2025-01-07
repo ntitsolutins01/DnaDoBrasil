@@ -36,7 +36,7 @@ namespace WebApp.ApiClient
         public AtividadeDto GetAtividadeById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceAtividade }/Atividade/{id}"));
+                $"{ResourceAtividade }{id}"));
             return Get<AtividadeDto>(requestUrl);
         }
         public List<AtividadeDto> GetAtividadesAll()
