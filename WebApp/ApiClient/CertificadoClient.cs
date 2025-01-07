@@ -36,7 +36,7 @@ namespace WebApp.ApiClient
         public CertificadoDto GetCertificadoById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceCertificado }/Certificado/{id}"));
+                $"{ResourceCertificado}/{id}"));
             return Get<CertificadoDto>(requestUrl);
         }
         public List<CertificadoDto> GetCertificadosAll()

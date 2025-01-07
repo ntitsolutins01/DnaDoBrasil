@@ -286,23 +286,18 @@
                                         </a>
                                         <ul class="nav nav-children">
                                             <li>
-                                                <a href="@Url.Action("Index", "TiposLaudo")">
-                                                    Tipos de Laudo
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="@Url.Action("Index", "LinhaAcao")">
-                                                    Linha de Ação
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="@Url.Action("Index", "Modalidade")">
-                                                    Modalidade
-                                                </a>
-                                            </li>
-                                            <li>
                                                 <a href="@Url.Action("Index", "Deficiencia")">
                                                     Deficiencia
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("Index", "Disciplina")">
+                                                    Disciplinas
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("Index", "Encaminhamento")">
+                                                    Encaminhamento
                                                 </a>
                                             </li>
                                             <li>
@@ -311,13 +306,33 @@
                                                 </a>
                                             </li>
                                             <li>
+                                                <a href="@Url.Action("Index", "Funcionalidade")">
+                                                    Funcionalidade
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("Index", "LinhaAcao")">
+                                                    Linha de Ação
+                                                </a>
+                                            </li>
+                                            <li>
                                                 <a href="@Url.Action("Index", "Localidade")">
                                                     Localidade
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="@Url.Action("Index", "TipoParceria")">
-                                                    Tipo Parceria
+                                                <a href="@Url.Action("Index", "MetricaImc")">
+                                                    Métrica Imc
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("Index", "Modalidade")">
+                                                    Modalidade
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("Index", "Modulo")">
+                                                    Módulo
                                                 </a>
                                             </li>
                                             <li>
@@ -336,29 +351,13 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="@Url.Action("Index", "MetricaImc")">
-                                                    Métrica Imc
-                                                </a>
-                                            </li>
-
-                                            <li>
-                                                <a href="@Url.Action("Index", "Disciplina")">
-                                                    Disciplinas
+                                                <a href="@Url.Action("Index", "TiposLaudo")">
+                                                    Tipos de Laudo
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="@Url.Action("Index", "Modulo")">
-                                                    Módulo
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="@Url.Action("Index", "Funcionalidade")">
-                                                    Funcionalidade
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="@Url.Action("Index", "Encaminhamento")">
-                                                    Encaminhamento
+                                                <a href="@Url.Action("Index", "TipoParceria")">
+                                                    Tipo Parceria
                                                 </a>
                                             </li>
                                             <li>
@@ -385,6 +384,11 @@
                                             <li>
                                                 <a href="@Url.Action("Index", "TipoCurso")">
                                                     Tipos de Curso
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("Index", "Certificado")">
+                                                    Certificados
                                                 </a>
                                             </li>
                                             <li>
@@ -511,7 +515,7 @@
                                     </li>
                                 }
 
-                                @* @if ((await AuthorizationService.AuthorizeAsync(User, ModuloAccess.SistemaSocioeconomico)).Succeeded)
+                                @if ((await AuthorizationService.AuthorizeAsync(User, ModuloAccess.SistemaSocioeconomico)).Succeeded)
                                 {
                                     <li class="nav-parent">
                                         <a href="#">
@@ -524,14 +528,14 @@
                                                     Parceiros
                                                 </a>
                                             </li>
-                                            <li>
+                                            @* <li>
                                                 <a href="@Url.Action("SolicitacaoContato", "SistemaSocioeconomico")">
                                                     Solicitações de contato
                                                 </a>
-                                            </li>
+                                            </li> *@
                                         </ul>
                                     </li>
-                                } *@
+                                }
 
                                 @if ((await AuthorizationService.AuthorizeAsync(User, ModuloAccess.Laudo)).Succeeded)
                                 {

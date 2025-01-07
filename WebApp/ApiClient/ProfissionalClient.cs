@@ -37,7 +37,7 @@ namespace WebApp.ApiClient
         public ProfissionalDto GetProfissionalById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceProfissional}/Profissional/{id}"));
+                $"{ResourceProfissional}/{id}"));
             return Get<ProfissionalDto>(requestUrl);
         }
         public List<ProfissionalDto> GetProfissionalAll()
