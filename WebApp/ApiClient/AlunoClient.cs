@@ -58,13 +58,13 @@ namespace WebApp.ApiClient
         public AlunoDto GetAlunoById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceAlunos}/Aluno/{id}"));
+                $"{ResourceAlunos}{id}"));
             return Get<AlunoDto>(requestUrl);
         }
         public AlunoDto GetAlunoByEmail(string email)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceAlunos}/Aluno/Email/{email}"));
+                $"{ResourceAlunos}Email/{email}"));
             return Get<AlunoDto>(requestUrl);
         }
         public AlunoDto GetAlunoByAspNetUser(string aspNetUserId)

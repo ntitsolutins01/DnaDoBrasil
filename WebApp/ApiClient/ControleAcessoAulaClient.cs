@@ -36,7 +36,7 @@ namespace WebApp.ApiClient
         public ControleAcessoAulaDto GetControleAcessoAulaById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceControleAcessoAula }/ControleAcessoAula/{id}"));
+                $"{ResourceControleAcessoAula }{id}"));
             return Get<ControleAcessoAulaDto>(requestUrl);
         }
         public List<ControleAcessoAulaDto> GetControlesAcessosAulasAll()
