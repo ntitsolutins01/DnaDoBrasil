@@ -1,11 +1,8 @@
 @model ProfissionalModel
-
 @{
     ViewData["Title"] = "Alteração de Profissionais";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-
 <div id="vProfissional">
     <div class="row">
         <div class="col-md-12">
@@ -22,12 +19,12 @@
                     <div class="panel-body">
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Nome <span class="required">*</span></label>
-                            <div class="col-sm-4">
+                            <div class="col-sm-5">
                                 <input type="text" name="nome" id="nome" value="@Model.Profissional.Nome"
                                        maxlength="200" class="form-control" required title="Por favor informe o nome."/>
                             </div>
                             <label class="col-sm-1 control-label">Email <span class="required">*</span></label>
-                            <div class="col-sm-5">
+                            <div class="col-sm-4">
                                 <div class="input-group">
                                     <span class="input-group-addon">
                                         <i class="fa fa-envelope"></i>
@@ -51,8 +48,8 @@
                                     <option value="">Selecionar Estado</option>
                                 </select>
                             </div>
-                            <label class="col-sm-2 control-label text-sm-right pt-2">Município <span class="required">*</span></label>
-                            <div class="col-md-3">
+                            <label class="col-sm-1 control-label text-sm-right pt-2">Município <span class="required">*</span></label>
+                            <div class="col-md-4">
                                 <select class="form-control populate select2" name="ddlMunicipio" id="ddlMunicipio"
                                         title="Por favor informe um Municipio." required
                                         asp-for="MunicipioId" asp-items="Model.ListMunicipios">
@@ -62,14 +59,14 @@
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label text-sm-right pt-2">Localidade <span class="required">*</span></label>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <select class="form-control populate select2" name="ddlLocalidade" id="ddlLocalidade"
                                         title="Por favor informe a localidade." required
                                         asp-for="LocalidadeId" asp-items="Model.ListLocalidades">
                                     <option value="">Selecionar Localidade</option>
                                 </select>
                             </div>
-                            <label class="col-sm-2 control-label text-sm-right pt-2">Modalidades <span class="required">*</span> </label>
+                            <label class="col-sm-1 control-label text-sm-right pt-2">Modalidades<span class="required">*</span></label>
                             <div class="col-md-5">
                                 <select class="form-control populate" multiple="multiple" multiple="multiple" data-plugin-multiselect data-plugin-options='{ "maxHeight": 200, "enableCaseInsensitiveFiltering": true }' 
                                         id="ddlModalidades" name="ddlModalidades" style="width:100%" asp-for="ModalidadeId" asp-items="Model.ListModalidades" required
@@ -181,7 +178,7 @@
                     <footer class="panel-footer">
                         <div class="row">
                             <div class="col-md-9 col-md-offset-3">
-                                <button type="submit" class="btn btn-dark pull-right" style="margin-left: 5px;margin-right: 5px;"><i class="fa fa-reply"></i> &nbsp;&nbsp;Voltar</button>
+                                <a href="@Url.Action("Index", "Profissional")" class="btn btn-dark pull-right" style="margin-left: 5px;margin-right: 5px;"><i class="fa fa-reply"></i> &nbsp;&nbsp;Voltar</a>
                                 <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
                                 <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
                             </div>
