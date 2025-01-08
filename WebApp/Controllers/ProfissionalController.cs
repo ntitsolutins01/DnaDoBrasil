@@ -1,6 +1,5 @@
 ﻿using System.Text;
 using System.Text.Encodings.Web;
-using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Identity;
@@ -16,29 +15,26 @@ using WebApp.Utility;
 using WebApp.Authorization;
 using WebApp.Identity;
 using Microsoft.AspNetCore.Authorization;
-using NuGet.Protocol.Core.Types;
 
 namespace WebApp.Controllers
 {
     [Authorize(Policy = ModuloAccess.Profissional)]
     public class ProfissionalController : BaseController
 	{
-		private readonly IOptions<UrlSettings> _appSettings;
-		private readonly IEmailSender _emailSender;
+        private readonly IEmailSender _emailSender;
 		private readonly UserManager<IdentityUser> _userManager;
 		private readonly RoleManager<IdentityRole> _roleManager;
-		private readonly IHostingEnvironment _host;
+		private readonly IWebHostEnvironment _host;
 
 		public ProfissionalController(IOptions<UrlSettings> appSettings,
 			IEmailSender emailSender,
-			UserManager<IdentityUser> userManager, IHostingEnvironment host, RoleManager<IdentityRole> roleManager)
+			UserManager<IdentityUser> userManager, IWebHostEnvironment host, RoleManager<IdentityRole> roleManager)
 		{
-			_appSettings = appSettings;
-			_emailSender = emailSender;
+            _emailSender = emailSender;
 			_userManager = userManager;
 			_host = host;
 			_roleManager = roleManager;
-			ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
+			ApplicationSettings.WebApiUrl = appSettings.Value.WebApiBaseUrl;
 		}
 
         [ClaimsAuthorize(ClaimType.Profissional, Claim.Consultar)]
@@ -334,12 +330,35 @@ namespace WebApp.Controllers
 		}
 
 		[ClaimsAuthorize(ClaimType.Profissional, Claim.Excluir)]
-        public ActionResult Delete(int id)
-		{
+        public async Task<ActionResult> Delete(int id)
+        {
             try
             {
+                //select* delete from Profissionais where email like '%thaislmoliveira2@gmail.com%'
                 ApiClientFactory.Instance.DeleteProfissional(id);
-                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
+
+                var profissional = ApiClientFactory.Instance.GetProfissionalById(id);
+
+                //select* delete from[dbo].[AspNetUsers] where email like '%thaislmoliveira2@gmail.com'
+                var user = _userManager.Users.FirstOrDefault(x => x.Email == profissional.Email);
+                if (user != null)
+                {
+                    var result = await _userManager.DeleteAsync(user);
+
+                    if (result.Succeeded)
+                    {
+                        //select* delete from[dbo].[AspNetUserRoles] where userid = '1c9e9c35-7ef3-478d-aba1-b8ec72a8400c'
+                        var name = _roleManager.Roles.FirstOrDefault(x => x.Id == profissional.AspNetRoleId)?.Name;
+                        if (name != null)
+                            await _userManager.RemoveFromRoleAsync(user, name);
+
+                        //select* delete from Usuarios where email like '%amaralsakarina@gmail.com%'
+                        var usuario = ApiClientFactory.Instance.GetUsuarioByEmail(profissional.Email);
+                        ApiClientFactory.Instance.DeleteUsuario(usuario.Id);
+                        
+                        return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
+                    }
+                }
             }
             catch (ApplicationException e)
             {
@@ -360,6 +379,8 @@ namespace WebApp.Controllers
                             $"Erro ao excluir Profissional. Favor entrar em contato com o administrador do sistema. {e.Message}"
                     });
             }
+
+            return null;
         }
 
         [ClaimsAuthorize(ClaimType.Profissional, Claim.Consultar)]
@@ -495,6 +516,22 @@ namespace WebApp.Controllers
 			await _emailSender.SendEmailAsync(user.Email, "Primeiro acesso sistema Dna Brasil",
 				message);
 		}
-	}
+
+        public Task<JsonResult> GetProfissionaisByLocalidadeId(string id)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(id)) throw new Exception("Localidade não informada.");
+                var resultLocal = ApiClientFactory.Instance.GetProfissionaisByLocalidade(Convert.ToInt32(id));
+
+                return Task.FromResult(Json(new SelectList(resultLocal, "Id", "Titulo")));
+
+            }
+            catch (Exception ex)
+            {
+                return Task.FromResult(Json(ex.Message));
+            }
+        }
+    }
 
 }

@@ -15,6 +15,35 @@
 
             'use strict';
 
+            //skin select
+            var $select = $(".select2").select2({
+                allowClear: true
+            });
+
+            $(".select2").each(function () {
+                var $this = $(this),
+                    opts = {};
+
+                var pluginOptions = $this.data('plugin-options');
+                if (pluginOptions)
+                    opts = pluginOptions;
+
+                $this.themePluginSelect2(opts);
+            });
+
+            /*
+             * When you change the value the select via select2, it triggers
+             * a 'change' event, but the jquery validation plugin
+             * only re-validates on 'blur'*/
+
+            $select.on('change', function () {
+                $(this).trigger('blur');
+            });
+
+            //skin tooltip
+            if ($.isFunction($.fn['tooltip'])) {
+                $('[data-toggle=tooltip],[rel=tooltip]').tooltip({ container: 'body' });
+            }
 
             var formid = $('form')[1].id;
 
@@ -709,52 +738,81 @@
                 self.ShowLoad(false, "vUsuario");
             });
         },
-        AddAmbiente: function () {
-            var self = this;
-            self.ShowLoad(true, "vProfissional");
+        DesvincularAlunos: function () {
+            axios.get("Curso/GetProfissionaisById/?id=" + id).then(result => {
 
-            var mapped = $("#ddlAmbiente").select2('data');
+                if (result.data.listProfissionais.length > 0) {
+                    var items = '<option value="">Selecionar o Profissional</option>';
+                    $("#ddlProfissional").empty;
+                    $.each(result.data.listProfissionais,
+                        function (i, row) {
+                            if (row.selected) {
+                                items += "<option selected value='" + row.value + "'>" + row.text + "</option>";
+                            } else {
+                                items += "<option value='" + row.value + "'>" + row.text + "</option>";
+                            }
+                        });
+                    $("#ddlProfissional").html(items);
+                }
+                else {
+                    new PNotify({
+                        title: 'Profissional',
+                        text: 'Profissionais não encontrados.',
+                        type: 'warning'
+                    });
+                }
 
-            if (self.params.ambientes.indexOf(mapped[0].id) !== -1) {
-
-                new PNotify({
-                    title: 'Ambiente',
-                    text: 'Ambiente já foi adicionado anteriormente.',
-                    type: 'warning'
-                });
-                return;
-            }
-
-            $('#ambienteDataTable').DataTable().destroy();
-
-            var table = $('#ambienteDataTable').DataTable({
-                columnDefs: [
-                    { "className": "text-center", "targets": "_all" }
-                ]
+            }).catch(error => {
+                console.error('Erro ao carregar dados:', error);
+                Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
             });
-
-            table.row.add([mapped[0].id, mapped[0].text,
-            "<a style='color:#F44336' href='javascript:(crud.DeleteAmbiente(\"" + mapped[0].id + "\"))'><i class='fa fa-trash'></i></a>"])
-                .draw();
-
-            self.params.ambientes.push(mapped[0].id);
-
-            $('input[name="arrAmbientes"]').attr('value', self.params.ambientes);
-
-            $("#ddlAmbiente").select2("val", "0");
-
-            self.ShowLoad(false, "vProfissional");
-        },
-        DeleteAmbiente: function (index) {
-            var table = $('#ambienteDataTable').DataTable();
-            table.rows(function (idx, data, node) {
-                return data[0] === id;
-            })
-                .remove()
-                .draw();
-
-            $("#ddlAmbiente").select2("val", "0");
         }
+        //AddAmbiente: function () {
+        //    var self = this;
+        //    self.ShowLoad(true, "vProfissional");
+
+        //    var mapped = $("#ddlAmbiente").select2('data');
+
+        //    if (self.params.ambientes.indexOf(mapped[0].id) !== -1) {
+
+        //        new PNotify({
+        //            title: 'Ambiente',
+        //            text: 'Ambiente já foi adicionado anteriormente.',
+        //            type: 'warning'
+        //        });
+        //        return;
+        //    }
+
+        //    $('#ambienteDataTable').DataTable().destroy();
+
+        //    var table = $('#ambienteDataTable').DataTable({
+        //        columnDefs: [
+        //            { "className": "text-center", "targets": "_all" }
+        //        ]
+        //    });
+
+        //    table.row.add([mapped[0].id, mapped[0].text,
+        //    "<a style='color:#F44336' href='javascript:(crud.DeleteAmbiente(\"" + mapped[0].id + "\"))'><i class='fa fa-trash'></i></a>"])
+        //        .draw();
+
+        //    self.params.ambientes.push(mapped[0].id);
+
+        //    $('input[name="arrAmbientes"]').attr('value', self.params.ambientes);
+
+        //    $("#ddlAmbiente").select2("val", "0");
+
+        //    self.ShowLoad(false, "vProfissional");
+        //},
+        //DeleteAmbiente: function (index) {
+        //    var table = $('#ambienteDataTable').DataTable();
+        //    table.rows(function (idx, data, node) {
+        //        return data[0] === id;
+        //    })
+        //        .remove()
+        //        .draw();
+
+        //    $("#ddlAmbiente").select2("val", "0");
+        //}
     }
 });
 var crud = {
@@ -763,9 +821,10 @@ var crud = {
         $('#mdDeleteProfissional').modal('show');
         vm.DeleteProfissional(id)
     },
-    HabilitarModal: function (id) {
-        $('input[name="habilitarProfissionalId"]').attr('value', id);
-        $('#mdHabilitarProfissional').modal('show');
+    DesvincularAlunoModal: function (id) {
+        $('input[name="profissionalId"]').attr('value', id);
+        $('#mdDesvincularAlunos').modal('show');
+        vm.DesvincularAlunos(id)
     },
     AddAmbiente: function () {
         vm.AddAmbiente()
