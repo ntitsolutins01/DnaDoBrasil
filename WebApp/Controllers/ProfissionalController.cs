@@ -101,7 +101,6 @@ namespace WebApp.Controllers
                     ListEstados = estados, 
                     ListModalidades = modalidades,
                     ListCargos = cargos,
-                    //ListPerfis = new SelectList(resultPerfil, "Id", "Nome")
                 });
 
             }
@@ -217,9 +216,6 @@ namespace WebApp.Controllers
 				var municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(profissional.Uf!), "Id", "Nome", profissional.MunicipioId);
 				var localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeByMunicipio(profissional.MunicipioId.ToString()), "Id", "Nome", profissional.LocalidadeId);
 				var listModalidades = new SelectList(ApiClientFactory.Instance.GetModalidadeAll(), "Id", "Nome", profissional.ModalidadesIds);
-                var resultPerfil = ApiClientFactory.Instance.GetPerfilAll();
-
-                var usu = ApiClientFactory.Instance.GetUsuarioByEmail(profissional.Email);
 
                 List<SelectListDto> list = new List<SelectListDto>
                 {
@@ -240,15 +236,12 @@ namespace WebApp.Controllers
 
                 return View(new ProfissionalModel()
 				{
-                    ListPerfis = new SelectList(resultPerfil, "Id", "Nome", usu.Perfil.Id),
                     ListEstados = estados, 
 					ListModalidades = listModalidades, 
 					Profissional = profissional,
 					ListMunicipios = municipios, 
-					Modalidades = profissional.Modalidades,
 					ListLocalidades = localidades,
 					ListCargos = cargos
-
 				});
 
 			}
@@ -256,7 +249,6 @@ namespace WebApp.Controllers
 			{
 				Console.Write(e.StackTrace);
 				return RedirectToAction(nameof(Edit), new { notify = (int)EnumNotify.Error, message = e.Message });
-
 			}
 		}
 
@@ -490,7 +482,7 @@ namespace WebApp.Controllers
         }
 		private async Task SendNewUserEmail(IdentityUser user, string email, string nome)
 		{
-			var code = await _userManager.GeneratePasswordResetTokenAsync(new IdentityUser(user.Email));
+			var code = await _userManager.GeneratePasswordResetTokenAsync(user);
 
 			var callbackUrl = Url.ActionLink("ResetPassword",
 				"Identity/Account", new { code, email });
