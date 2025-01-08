@@ -709,52 +709,54 @@
                 self.ShowLoad(false, "vUsuario");
             });
         },
-        AddAmbiente: function () {
-            var self = this;
-            self.ShowLoad(true, "vProfissional");
-
-            var mapped = $("#ddlAmbiente").select2('data');
-
-            if (self.params.ambientes.indexOf(mapped[0].id) !== -1) {
-
-                new PNotify({
-                    title: 'Ambiente',
-                    text: 'Ambiente já foi adicionado anteriormente.',
-                    type: 'warning'
-                });
-                return;
-            }
-
-            $('#ambienteDataTable').DataTable().destroy();
-
-            var table = $('#ambienteDataTable').DataTable({
-                columnDefs: [
-                    { "className": "text-center", "targets": "_all" }
-                ]
-            });
-
-            table.row.add([mapped[0].id, mapped[0].text,
-            "<a style='color:#F44336' href='javascript:(crud.DeleteAmbiente(\"" + mapped[0].id + "\"))'><i class='fa fa-trash'></i></a>"])
-                .draw();
-
-            self.params.ambientes.push(mapped[0].id);
-
-            $('input[name="arrAmbientes"]').attr('value', self.params.ambientes);
-
-            $("#ddlAmbiente").select2("val", "0");
-
-            self.ShowLoad(false, "vProfissional");
-        },
-        DeleteAmbiente: function (index) {
-            var table = $('#ambienteDataTable').DataTable();
-            table.rows(function (idx, data, node) {
-                return data[0] === id;
-            })
-                .remove()
-                .draw();
-
-            $("#ddlAmbiente").select2("val", "0");
+        DesvincularAlunos: function () {
         }
+        //AddAmbiente: function () {
+        //    var self = this;
+        //    self.ShowLoad(true, "vProfissional");
+
+        //    var mapped = $("#ddlAmbiente").select2('data');
+
+        //    if (self.params.ambientes.indexOf(mapped[0].id) !== -1) {
+
+        //        new PNotify({
+        //            title: 'Ambiente',
+        //            text: 'Ambiente já foi adicionado anteriormente.',
+        //            type: 'warning'
+        //        });
+        //        return;
+        //    }
+
+        //    $('#ambienteDataTable').DataTable().destroy();
+
+        //    var table = $('#ambienteDataTable').DataTable({
+        //        columnDefs: [
+        //            { "className": "text-center", "targets": "_all" }
+        //        ]
+        //    });
+
+        //    table.row.add([mapped[0].id, mapped[0].text,
+        //    "<a style='color:#F44336' href='javascript:(crud.DeleteAmbiente(\"" + mapped[0].id + "\"))'><i class='fa fa-trash'></i></a>"])
+        //        .draw();
+
+        //    self.params.ambientes.push(mapped[0].id);
+
+        //    $('input[name="arrAmbientes"]').attr('value', self.params.ambientes);
+
+        //    $("#ddlAmbiente").select2("val", "0");
+
+        //    self.ShowLoad(false, "vProfissional");
+        //},
+        //DeleteAmbiente: function (index) {
+        //    var table = $('#ambienteDataTable').DataTable();
+        //    table.rows(function (idx, data, node) {
+        //        return data[0] === id;
+        //    })
+        //        .remove()
+        //        .draw();
+
+        //    $("#ddlAmbiente").select2("val", "0");
+        //}
     }
 });
 var crud = {
@@ -763,9 +765,10 @@ var crud = {
         $('#mdDeleteProfissional').modal('show');
         vm.DeleteProfissional(id)
     },
-    HabilitarModal: function (id) {
-        $('input[name="habilitarProfissionalId"]').attr('value', id);
-        $('#mdHabilitarProfissional').modal('show');
+    DesvincularAlunoModal: function (id) {
+        $('input[name="profissionalId"]').attr('value', id);
+        $('#mdDesvincularAlunos').modal('show');
+        vm.DesvincularAlunos(id)
     },
     AddAmbiente: function () {
         vm.AddAmbiente()

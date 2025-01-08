@@ -4,6 +4,7 @@
     {
         public int Id { get; set; }
         public string? AspNetUserId { get; set; }
+        public string? AspNetRoleId { get; set; }
         public required string Nome { get; set; }
         public string? DtNascimento { get; set; }
         public required string Email { get; set; }
@@ -25,5 +26,6 @@
         public string? Perfil { get; set; }
         public string? Cargo { get; set; }
         public string? ModalidadesIds { get; set; }
+        public bool PossuiAlunosVinculados { get; set; }
     }
 }
