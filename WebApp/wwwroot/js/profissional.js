@@ -15,6 +15,35 @@
 
             'use strict';
 
+            //skin select
+            var $select = $(".select2").select2({
+                allowClear: true
+            });
+
+            $(".select2").each(function () {
+                var $this = $(this),
+                    opts = {};
+
+                var pluginOptions = $this.data('plugin-options');
+                if (pluginOptions)
+                    opts = pluginOptions;
+
+                $this.themePluginSelect2(opts);
+            });
+
+            /*
+             * When you change the value the select via select2, it triggers
+             * a 'change' event, but the jquery validation plugin
+             * only re-validates on 'blur'*/
+
+            $select.on('change', function () {
+                $(this).trigger('blur');
+            });
+
+            //skin tooltip
+            if ($.isFunction($.fn['tooltip'])) {
+                $('[data-toggle=tooltip],[rel=tooltip]').tooltip({ container: 'body' });
+            }
 
             var formid = $('form')[1].id;
 
@@ -710,6 +739,33 @@
             });
         },
         DesvincularAlunos: function () {
+            axios.get("Curso/GetProfissionaisById/?id=" + id).then(result => {
+
+                if (result.data.listProfissionais.length > 0) {
+                    var items = '<option value="">Selecionar o Profissional</option>';
+                    $("#ddlProfissional").empty;
+                    $.each(result.data.listProfissionais,
+                        function (i, row) {
+                            if (row.selected) {
+                                items += "<option selected value='" + row.value + "'>" + row.text + "</option>";
+                            } else {
+                                items += "<option value='" + row.value + "'>" + row.text + "</option>";
+                            }
+                        });
+                    $("#ddlProfissional").html(items);
+                }
+                else {
+                    new PNotify({
+                        title: 'Profissional',
+                        text: 'Profissionais não encontrados.',
+                        type: 'warning'
+                    });
+                }
+
+            }).catch(error => {
+                console.error('Erro ao carregar dados:', error);
+                Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
+            });
         }
         //AddAmbiente: function () {
         //    var self = this;

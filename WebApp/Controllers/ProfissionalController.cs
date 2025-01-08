@@ -516,6 +516,22 @@ namespace WebApp.Controllers
 			await _emailSender.SendEmailAsync(user.Email, "Primeiro acesso sistema Dna Brasil",
 				message);
 		}
-	}
+
+        public Task<JsonResult> GetProfissionaisByLocalidadeId(string id)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(id)) throw new Exception("Localidade não informada.");
+                var resultLocal = ApiClientFactory.Instance.GetProfissionaisByLocalidade(Convert.ToInt32(id));
+
+                return Task.FromResult(Json(new SelectList(resultLocal, "Id", "Titulo")));
+
+            }
+            catch (Exception ex)
+            {
+                return Task.FromResult(Json(ex.Message));
+            }
+        }
+    }
 
 }

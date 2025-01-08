@@ -116,7 +116,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="mdDesvincularAlunosLabel">
-                        <i class="fa fa-check-circle"></i> &nbsp;&nbsp;<strong>Habilitar Profissional</strong>
+                        <i class="fa fa-check-circle"></i> &nbsp;&nbsp;<strong>DesvincularAlunos</strong>&nbsp;&nbsp;<strong style="color: #f44336">EM DESENVOLVIMENTO</strong>
                     </h5>
                 </div>
                 @using (@Html.BeginForm("DesvincularAlunos", "Profissional", FormMethod.Post, new { id = "formDesvincularAlunos", @class = "form-horizontal" }))
@@ -126,18 +126,25 @@
                     <div class="modal-body">
                         <div class="form-group row">
                             <label class="col-sm-3 control-label text-sm-right pt-2">Novo Profissional <span class="required">*</span></label>
-                            <div class="col-sm-5">
-                                <select class="form-control populate select2" name="ddlProfissional" id="ddlProfissional" style="width:100%"
+                            <div class="col-sm-9">
+                                <select class="form-control populate select2" name="ddlNovoProfissional" id="ddlNovoProfissional" style="width:100%"
                                         required title="Por favor selecione o coordenador"
                                         asp-for="ProfissionalId" asp-items="Model.ListProfissionals">
                                     <option value="">Selecionar Profissional</option>
                                 </select>
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <div class="alert alert-success">
+                                    <strong>Quantidade de alunos</strong> {{editDto.QuantidadeAlunos}}.
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-thumbs-o-down"></i> &nbsp;&nbsp;Não</button>
-                        <a id="desvincularAlunosHref" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</a>
+                        <button type="reset" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
+                        <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
                     </div>
                 }
             </div>
@@ -146,9 +153,12 @@
 </div>
 
 @section CssSpecificVendor {
+    <link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css" />
+    <link rel="stylesheet" href="~/assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
     <link rel="stylesheet" href="~/assets/vendor/datatables/media/css/dataTables.bootstrap4.css" />
 }
 @section Scripts {
+    <script src="~/assets/vendor/select2/js/select2.js"></script>
     <script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
     <script src="~/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
     <script src="~/assets/vendor/ios7-switch/ios7-switch.js"></script>

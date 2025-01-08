@@ -27,5 +27,6 @@
         public string? Cargo { get; set; }
         public string? ModalidadesIds { get; set; }
         public bool PossuiAlunosVinculados { get; set; }
+        public int? QuantidadeAlunosVinculados { get; set; }
     }
 }
