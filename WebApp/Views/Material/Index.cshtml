@@ -6,6 +6,53 @@
 
 <div id="vMaterial">
     <div class="row">
+        <div class="col-md-12">
+            @using (@Html.BeginForm("Index", "Material", FormMethod.Post, new { id = "formPesquisarMaterial", @class = "form-horizontal" }))
+            {
+                <section class="panel">
+                    <header class="panel-heading">
+                        <div class="panel-actions">
+                            <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
+                        </div>
+                        <h2 class="panel-title">Filtro de pesquisa</h2>
+                    </header>
+                    <div class="panel-body" id="pFiltro">
+                        <label class="col-sm-2 control-label text-sm-right pt-2">Id:</label>
+                        <div class="col-sm-4 form-group">
+                            <input type="text" name="material" id="material" class="form-control" placeholder="Insira Material"
+                                   maxlength="60"
+                                   title="Por favor informe o material." />
+                        </div>
+                        <label class="col-sm-2 control-label text-sm-right pt-2">Descrição:</label>
+                        <div class="col-sm-4 form-group">
+                            <input type="text" name="nomeMaterial" id="nomeMaterial" class="form-control" placeholder="Insira Descrição"
+                                   maxlength="60"
+                                   title="Por favor informe o material." />
+                        </div>
+                        <label class="col-sm-2 control-label">Tipo Material:</label>
+                        <div class="col-sm-4 form-group">
+                            <select class="form-control populate select2" name="ddlTipoMaterial" id="ddlTipoMaterial" style="width:100%"
+                                    title="Por favor selecione um tipo de material."
+                                    asp-for="TipoMaterialId" asp-items="Model.ListTiposMateriais">
+                                <option value="">Selecionar Tipo de Material</option>
+                            </select>
+                        </div>
+                    </div>
+                    <footer class="panel-footer">
+                        <div class="row">
+                            <div class="col-sm-2 pull-right">
+                                <button type="submit" class="btn btn-block btn-info pull-right">
+                                    <i class="fa fa-search"></i> &nbsp;&nbsp;Pesquisar
+                                </button>
+                            </div>
+                        </div>
+                    </footer>
+                </section>
+            }
+        </div>
+    </div>
+
+    <div class="row">
         <div class="col-lg-12">
             <section class="panel">
                 <header class="panel-heading">

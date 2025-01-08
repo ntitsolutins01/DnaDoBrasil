@@ -8,7 +8,7 @@ namespace WebApp.Models
     public class MaterialModel
     {
         public MaterialDto Material { get; set; }
-        public List<MaterialDto> Materiais { get; set; }
+        public List<MaterialIndexDto> Materiais { get; set; }
         public SelectList ListMateriais { get; set; }
         public TipoMaterialDto TipoMaterial { get; set; }
         public List<TipoMaterialDto> TiposMateriais { get; set; }
@@ -16,6 +16,7 @@ namespace WebApp.Models
         public int TipoMaterialId { get; set; }
         public SelectList ListUnidadesMedidas { get; set; }
         public int UnidadeId { get; set; }
+        public MateriaisFilterDto SearchFilter { get; set; }
 
         public class CreateUpdateMaterialCommand
         {

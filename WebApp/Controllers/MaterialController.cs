@@ -37,14 +37,23 @@ public class MaterialController : BaseController
     /// </summary>
     /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
     /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
-    /// <param name="collection">lista de filtros selecionados para pesquisa de alunos</param>
+    /// <param name="collection">lista de filtros selecionados para pesquisa de materiais</param>
     /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
     [ClaimsAuthorize(ClaimType.Material, Identity.Claim.Consultar)]
-    public IActionResult Index(int? crud, int? notify, string message = null)
+    public async Task<ActionResult> Index(int? crud, int? notify, IFormCollection collection, string message = null)
     {
         SetNotifyMessage(notify, message);
         SetCrudMessage(crud);
-        var response = ApiClientFactory.Instance.GetMateriaisAll();
+
+        var searchFilter = new MateriaisFilterDto
+        {
+            Id = collection["material"].ToString(),
+            NomeMaterial = collection["nomeMaterial"].ToString(),
+            TipoMaterialId = collection["ddlTipoMaterial"].ToString(),
+        };
+        var result = await ApiClientFactory.Instance.GetMateriaisByFilter(searchFilter);
+
+        var tiposMateriais = new SelectList(ApiClientFactory.Instance.GetTiposMateriaisAll(), "Id", "Nome");
 
         List<SelectListDto> list = new List<SelectListDto>
         {
@@ -60,11 +69,15 @@ public class MaterialController : BaseController
 
         var undMedidas = new SelectList(list, "IdNome", "Nome");
 
-        return View(new MaterialModel()
+        var model = new MaterialModel
         {
-            Materiais = response,
-            ListUnidadesMedidas = undMedidas
-        });
+            ListTiposMateriais = tiposMateriais,
+            ListUnidadesMedidas = undMedidas,
+            Materiais = result.Materiais,
+            SearchFilter = searchFilter
+
+        };
+        return View(model);
     }
 
     /// <summary>

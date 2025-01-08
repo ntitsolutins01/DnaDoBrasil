@@ -51,6 +51,12 @@ namespace WebApp.ApiClient
                 $"{ResourceMaterial}/TipoMaterial/{tipoMaterialId}"));
             return Get<List<MaterialDto>>(requestUrl);
         }
+        public Task<MateriaisFilterDto?> GetMateriaisByFilter(MateriaisFilterDto searchFilter)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceMaterial}/Filter"));
+            return GetFiltro(requestUrl, searchFilter);
+        }
         #endregion
     }
 }
