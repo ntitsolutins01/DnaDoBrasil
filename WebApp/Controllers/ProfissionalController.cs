@@ -217,9 +217,6 @@ namespace WebApp.Controllers
 				var municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(profissional.Uf!), "Id", "Nome", profissional.MunicipioId);
 				var localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeByMunicipio(profissional.MunicipioId.ToString()), "Id", "Nome", profissional.LocalidadeId);
 				var listModalidades = new SelectList(ApiClientFactory.Instance.GetModalidadeAll(), "Id", "Nome", profissional.ModalidadesIds);
-                var resultPerfil = ApiClientFactory.Instance.GetPerfilAll();
-
-                var usu = ApiClientFactory.Instance.GetUsuarioByEmail(profissional.Email);
 
                 List<SelectListDto> list = new List<SelectListDto>
                 {
@@ -240,12 +237,10 @@ namespace WebApp.Controllers
 
                 return View(new ProfissionalModel()
 				{
-                    ListPerfis = new SelectList(resultPerfil, "Id", "Nome", usu.Perfil.Id),
                     ListEstados = estados, 
 					ListModalidades = listModalidades, 
 					Profissional = profissional,
 					ListMunicipios = municipios, 
-					Modalidades = profissional.Modalidades,
 					ListLocalidades = localidades,
 					ListCargos = cargos
 
