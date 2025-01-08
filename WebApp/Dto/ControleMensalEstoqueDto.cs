@@ -1,6 +1,6 @@
 ﻿namespace WebApp.Dto
 {
-    public class ControleMensalEstoque
+    public class ControleMensalEstoqueDto
     {
         public required int Id { get; set; }
         public required int MaterialId { get; set; }
