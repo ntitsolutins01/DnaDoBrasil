@@ -14,7 +14,7 @@ namespace WebApp.ApiClient
         /// <summary>
         /// Inclusão de Curso
         /// </summary>
-        /// <param name="command">Objeto para inclusão</param>
+        /// <param name="command">Objeto para inclusão do Curso</param>
         /// <returns>Id do curso inserido</returns>
         public Task<long> CreateCurso (CursoModel.CreateUpdateCursoCommand command)
         {
