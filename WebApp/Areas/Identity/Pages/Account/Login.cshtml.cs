@@ -101,101 +101,111 @@ namespace WebApp.Areas.Identity.Pages.Account
 
 		public async Task<IActionResult> OnPostAsync(string? returnUrl = null)
 		{
-
+            try
+            {
 #if DEBUG
-			returnUrl = Url.Content("~/DashboardEad");
+                returnUrl = Url.Content("~/DashboardEad");
 #else
 			returnUrl = Url.Content("~/Dashboard");
 #endif
 
-			if (!ModelState.IsValid) return Page();
-			var result =
-				await _signInManager.PasswordSignInAsync(Login.Email, Login.Password, Login.RememberMe, true);
+                if (!ModelState.IsValid) return Page();
+                var result =
+                    await _signInManager.PasswordSignInAsync(Login.Email, Login.Password, Login.RememberMe, true);
 
-			var user = await _userManager.FindByEmailAsync(Login.Email);
+                var user = await _userManager.FindByEmailAsync(Login.Email);
 
-            if (user == null)
+                if (user == null)
+                {
+                    ModelState.AddModelError(string.Empty, "Usuário não cadastrado ou não encontrado.");
+                    return Page();
+                }
+
+                var roles = await _userManager.GetRolesAsync(user);
+
+                switch (result.Succeeded)
+                {
+                    case false when result.IsLockedOut:
+                        _logger.LogWarning("A sua conta foi bloqueada.");
+                        ModelState.AddModelError(string.Empty, "A sua conta foi bloqueada.");
+                        return RedirectToPage("./ForgotPassword");
+                    case false:
+                        ModelState.AddModelError(string.Empty, "Senha inválida.");
+                        return Page();
+                    case true when !user.EmailConfirmed:
+                        {
+                            _logger.LogInformation("Primeiro acesso do usuário.");
+
+                            var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+                            var email = Login.Email;
+                            var callbackUrl = Url.Page(
+                                "/Account/FirstAccessPassword",
+                                null,
+                                new { email, code },
+                                Request.Scheme);
+
+                            return Redirect($"/Identity/Account/Manage/FirstAccessPassword?email={email}&code={code}");
+                        }
+                    case true:
+                        _logger.LogInformation("User logged in.");
+
+                        var userRole = roles.First();
+                        //var userRole = ((ClaimsIdentity)user.Identity).FindFirst(ClaimTypes.Role).Value;
+
+                        switch (userRole)
+                        {
+                            case UserRoles.Aluno:
+                                return RedirectToPage("Login", new
+                                {
+                                    notify = (int)EnumNotify.Success,
+                                    message = $"Este usuário não possui permissão de acesso ao sistema DNA."
+                                });
+                            case UserRoles.AdministradorEad:
+                                returnUrl = Url.Content("~/DashboardEad");
+                                break;
+                        }
+                        // append cookie with token to the http response
+                        //CookieOptions? cookieOptions = new()
+                        //{
+                        //    HttpOnly = true,
+                        //    SameSite = SameSiteMode.Strict,
+                        //    Secure = true,
+                        //    Expires = DateTime.Now.AddDays(1)
+                        //};
+
+                        //var request = new UsuarioModel.LoginUsuarioRequest()
+                        //{
+                        //    Email = user.Email!,
+                        //    Password = Login.Password
+                        //};
+
+                        //var token = await ApiClientFactory.Instance.LoginUsuario(request);
+
+                        //Response.Cookies.Append("token", token.AccessToken, cookieOptions);
+
+                        //if (user != null && await _userManager.CheckPasswordAsync(user, Login.Password))
+                        //{
+                        //    // append cookie with token to the http response
+                        //    CookieOptions? cookieOptions = new()
+                        //    {
+                        //        HttpOnly = true,
+                        //        SameSite = SameSiteMode.Strict,
+                        //        Secure = true,
+                        //        Expires = DateTime.Now.AddDays(1) 
+                        //    };
+                        //    Response.Cookies.Append("token", "token", cookieOptions);
+                        //}
+
+                        return LocalRedirect(returnUrl);
+                    default:
+                        // If we got this far, something failed, redisplay form
+                        return Page();
+                }
+            }
+            catch (Exception e)
             {
-                ModelState.AddModelError(string.Empty, "Usuário não cadastrado ou não encontrado.");
                 return Page();
             }
-
-            var roles = await _userManager.GetRolesAsync(user);
-
-			switch (result.Succeeded)
-			{
-				case false when result.IsLockedOut:
-					_logger.LogWarning("A sua conta foi bloqueada.");
-					ModelState.AddModelError(string.Empty, "A sua conta foi bloqueada.");
-					return RedirectToPage("./ForgotPassword");
-				case false:
-					ModelState.AddModelError(string.Empty, "Senha inválida.");
-					return Page();
-				case true when !user.EmailConfirmed:
-					{
-						_logger.LogInformation("Primeiro acesso do usuário.");
-
-						var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-						var email = Login.Email;
-						var callbackUrl = Url.Page(
-							"/Account/FirstAccessPassword",
-							null,
-							new { email, code },
-							Request.Scheme);
-
-						return Redirect($"/Identity/Account/Manage/FirstAccessPassword?email={email}&code={code}");
-					}
-				case true:
-					_logger.LogInformation("User logged in.");
-					
-                    var userRole = roles.First();
-					//var userRole = ((ClaimsIdentity)user.Identity).FindFirst(ClaimTypes.Role).Value;
-					
-                    if (userRole == UserRoles.Aluno)
-					{
-                        return RedirectToPage("Login", new { notify = (int)EnumNotify.Success, message = $"Este usuário não possui permissão de acesso ao sistema DNA." });
-                    }
-					if (userRole == UserRoles.AdministradorEad)
-					{
-                        returnUrl = Url.Content("~/DashboardEad");
-                    }
-                    // append cookie with token to the http response
-                    //CookieOptions? cookieOptions = new()
-                    //{
-                    //    HttpOnly = true,
-                    //    SameSite = SameSiteMode.Strict,
-                    //    Secure = true,
-                    //    Expires = DateTime.Now.AddDays(1)
-                    //};
-
-                    //var request = new UsuarioModel.LoginUsuarioRequest()
-                    //{
-                    //    Email = user.Email!,
-                    //    Password = Login.Password
-                    //};
-
-                    //var token = await ApiClientFactory.Instance.LoginUsuario(request);
-
-                    //Response.Cookies.Append("token", token.AccessToken, cookieOptions);
-
-                    //if (user != null && await _userManager.CheckPasswordAsync(user, Login.Password))
-                    //{
-                    //    // append cookie with token to the http response
-                    //    CookieOptions? cookieOptions = new()
-                    //    {
-                    //        HttpOnly = true,
-                    //        SameSite = SameSiteMode.Strict,
-                    //        Secure = true,
-                    //        Expires = DateTime.Now.AddDays(1) 
-                    //    };
-                    //    Response.Cookies.Append("token", "token", cookieOptions);
-                    //}
-
-                    return LocalRedirect(returnUrl);
-				default:
-					// If we got this far, something failed, redisplay form
-					return Page();
-			}
 		}
 	}
 }
