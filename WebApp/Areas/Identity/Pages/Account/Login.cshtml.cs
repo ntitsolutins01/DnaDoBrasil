@@ -160,23 +160,23 @@ namespace WebApp.Areas.Identity.Pages.Account
                         returnUrl = Url.Content("~/DashboardEad");
                     }
                     // append cookie with token to the http response
-                    CookieOptions? cookieOptions = new()
-                    {
-                        HttpOnly = true,
-                        SameSite = SameSiteMode.Strict,
-                        Secure = true,
-                        Expires = DateTime.Now.AddDays(1)
-                    };
+                    //CookieOptions? cookieOptions = new()
+                    //{
+                    //    HttpOnly = true,
+                    //    SameSite = SameSiteMode.Strict,
+                    //    Secure = true,
+                    //    Expires = DateTime.Now.AddDays(1)
+                    //};
 
-                    var request = new UsuarioModel.LoginUsuarioRequest()
-                    {
-                        Email = user.Email!,
-                        Password = Login.Password
-                    };
+                    //var request = new UsuarioModel.LoginUsuarioRequest()
+                    //{
+                    //    Email = user.Email!,
+                    //    Password = Login.Password
+                    //};
 
-                    var token = await ApiClientFactory.Instance.LoginUsuario(request);
+                    //var token = await ApiClientFactory.Instance.LoginUsuario(request);
 
-                    Response.Cookies.Append("token", token.AccessToken, cookieOptions);
+                    //Response.Cookies.Append("token", token.AccessToken, cookieOptions);
 
                     //if (user != null && await _userManager.CheckPasswordAsync(user, Login.Password))
                     //{
