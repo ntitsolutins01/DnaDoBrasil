@@ -3,6 +3,9 @@ using WebApp.Models;
 
 namespace WebApp.ApiClient
 {
+    /// <summary>
+    /// Curso Client
+    /// </summary>
     public partial class DnaApiClient
     {
 	    private const string ResourceCurso = "Cursos";
