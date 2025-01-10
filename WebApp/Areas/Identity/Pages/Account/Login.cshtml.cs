@@ -104,9 +104,9 @@ namespace WebApp.Areas.Identity.Pages.Account
             try
             {
 #if DEBUG
-                returnUrl = Url.Content("~/DashboardEad");
+                returnUrl = Url.Content("~/Usuario/Profile");
 #else
-			returnUrl = Url.Content("~/Dashboard");
+			returnUrl = Url.Content("~/Usuario/Profile");
 #endif
 
                 if (!ModelState.IsValid) return Page();
