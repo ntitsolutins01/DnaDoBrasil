@@ -44,7 +44,7 @@
 					<hr class="dotted short">
 
 					<h6 class="text-muted">Sobre mim</h6>
-					<p>Sou @Model.Usuario.Perfil.Nome, @Model.Usuario.Perfil.Descricao, meu email é @Model.Usuario.Email</p>
+                    <p>Eu, @Model.Usuario.Nome tenho o perfil de @Model.Usuario.Perfil.Nome, @Model.Usuario.Perfil.Descricao, meu email é @Model.Usuario.Email</p>
 					<div class="clearfix">
 						<a class="text-uppercase text-muted pull-right" href="#">(View All)</a>
 					</div>
@@ -103,8 +103,8 @@
 								<div class="row">
 									<div class="col-md-9 col-md-offset-3">
 										<button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
-										<button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>
-									</div>
+										@* <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button>*@
+									</div> 
 								</div>
 							</div>
 						}
