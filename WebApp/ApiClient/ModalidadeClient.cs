@@ -2,19 +2,34 @@
 using WebApp.Models;
 
 namespace WebApp.ApiClient
-{
+{ 
+    /// <summary>
+    /// Modalidade Client
+    /// </summary>
     public partial class DnaApiClient
     {
 	    private const string ResourceModalidade = "Modalidades";
 
-		#region Main Methods
+        #region Main Methods
 
-		public Task<long> CreateModalidade(ModalidadeModel.CreateUpdateModalidadeCommand command)
+        /// <summary>
+        /// Inclusão de Modalidade
+        /// </summary>
+        /// <param name="command">Objeto de inclusão da Modalidad</param>
+        /// <returns>Id de Modalidade inserido</returns>
+        public Task<long> CreateModalidade(ModalidadeModel.CreateUpdateModalidadeCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 $"{ResourceModalidade}"));
             return Post(requestUrl, command);
         }
+
+        /// <summary>
+        /// Alteração de Modalidade
+        /// </summary>
+        /// <param name="id">Id de alteração da Modalidade</param>
+        /// <param name="command">Objeto de alteração da Modalidade</param>
+        /// <returns>Retorna true ou false</returns>
         public Task<bool> UpdateModalidade(int id, ModalidadeModel.CreateUpdateModalidadeCommand command)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
@@ -22,6 +37,11 @@ namespace WebApp.ApiClient
             return Put(requestUrl, command);
         }
 
+        /// <summary>
+        /// Exclusão de Modalidade
+        /// </summary>
+        /// <param name="id">Id de exclusao da Modalidade</param>
+        /// <returns>Retorna true ou false</returns>
         public Task<bool> DeleteModalidade(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
@@ -33,12 +53,22 @@ namespace WebApp.ApiClient
 
         #region Methods
 
+        /// <summary>
+        /// Busca uma única Modalidade
+        /// </summary>
+        /// <param name="id">Id da Modalidade a ser buscada</param>
+        /// <returns>Retorna o objeto da Modalidade</returns>
         public ModalidadeDto GetModalidadeById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 $"{ResourceModalidade}/{id}"));
             return Get<ModalidadeDto>(requestUrl);
         }
+
+        /// <summary>
+        /// Busca todas as Modalidade cadastradas
+        /// </summary>
+        /// <returns>Retorna a Lista de Modalidade</returns>
         public List<ModalidadeDto> GetModalidadeAll()
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
