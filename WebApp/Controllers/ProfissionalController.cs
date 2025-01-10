@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Security.Claims;
+using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -15,6 +16,8 @@ using WebApp.Utility;
 using WebApp.Authorization;
 using WebApp.Identity;
 using Microsoft.AspNetCore.Authorization;
+using Claim = WebApp.Identity.Claim;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace WebApp.Controllers
 {
@@ -530,6 +533,124 @@ namespace WebApp.Controllers
             catch (Exception ex)
             {
                 return Task.FromResult(Json(ex.Message));
+            }
+        }
+
+        /// <summary>
+        /// Tela de Visualização do Profile do Profissional Logado
+        /// </summary>
+        /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
+        /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
+        /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
+        [ClaimsAuthorize(ClaimType.Profissional, Claim.Consultar)]
+        public ActionResult Profile(int? crud, int? notify, string message = null)
+        {
+	        SetNotifyMessage(notify, message);
+	        SetCrudMessage(crud);
+
+	        //usuario logado
+	        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+	        var usuario = User.Identity.Name;
+
+	        var usu = ApiClientFactory.Instance.GetUsuarioByEmail(usuario);
+
+	        var profissional = ApiClientFactory.Instance.GetProfissionalByEmail(usuario);
+
+            var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", profissional.Uf);
+            var municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(profissional.Uf!), "Id", "Nome", profissional.MunicipioId);
+            var localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeByMunicipio(profissional.MunicipioId.ToString()), "Id", "Nome", profissional.LocalidadeId);
+            var listModalidades = new SelectList(ApiClientFactory.Instance.GetModalidadeAll(), "Id", "Nome", profissional.ModalidadesIds);
+
+            List<SelectListDto> list = new List<SelectListDto>
+            {
+                new() { IdNome = "Professor Ed. Física", Nome = "Professor Ed. Física" },
+                new() { IdNome = "Instrutor Ativ. Diversas", Nome = "Instrutor Ativ. Diversas" },
+                new() { IdNome = "Instrutor Artes", Nome = "Instrutor Artes" },
+                new() { IdNome = "Professor Reforço", Nome = "Professor Reforço" },
+                new() { IdNome = "Professor Disc. Diversas", Nome = "Professor Disc. Diversas" },
+                new() { IdNome = "Monitor Regular", Nome = "Monitor Regular" },
+                new() { IdNome = "Monitor A. Especializado", Nome = "Monitor A. Especializado" },
+                new() { IdNome = "Professor Informática", Nome = "Professor Informática" },
+                new() { IdNome = "Psicólogo", Nome = "Psicólogo" },
+                new() { IdNome = "Assistente Social", Nome = "Assistente Social" },
+                new() { IdNome = "Estagiário", Nome = "Estagiário" }
+            };
+
+            var cargos = new SelectList(list, "IdNome", "Nome", profissional.Cargo);
+
+            return View(new ProfissionalModel()
+            {
+                ListEstados = estados,
+                ListModalidades = listModalidades,
+                Profissional = profissional,
+		        Usuario = usu,
+                ListMunicipios = municipios,
+                ListLocalidades = localidades,
+                ListCargos = cargos
+            });
+        }
+
+
+
+        [HttpPost]
+        [ClaimsAuthorize(ClaimType.Profissional, Claim.AlterarProfile)]
+        public async Task<ActionResult> Profile(IFormCollection collection)
+        {
+            try
+            {
+                var status = collection["status"].ToString();
+                var habilitado = collection["habilitado"].ToString();
+
+                var command = new ProfissionalModel.CreateUpdateProfissionalCommand
+                {
+                    Id = Convert.ToInt32(collection["ProfissionalId"].ToString()),
+                    Nome = collection["nome"] == "" ? null : collection["nome"].ToString(),
+                    DtNascimento = collection["DtNascimento"] == "" ? null : collection["DtNascimento"].ToString(),
+                    Email = collection["email"] == "" ? null : collection["email"].ToString(),
+                    Sexo = collection["ddlSexo"] == "" ? null : collection["ddlSexo"].ToString(),
+                    Telefone = collection["numTelefone"] == "" ? null : collection["numTelefone"].ToString(),
+                    Cep = collection["cep"] == "" ? null : collection["cep"].ToString(),
+                    Celular = collection["numCelular"] == "" ? null : collection["numCelular"].ToString(),
+                    Cpf = collection["cpf"] == "" ? null : collection["cpf"].ToString(),
+                    //AspNetUserId = collection["aspnetuserId"].ToString(),
+                    Numero = collection["numero"] == "" ? null : Convert.ToInt32(collection["numero"].ToString()),
+                    Bairro = collection["bairro"] == "" ? null : collection["bairro"].ToString(),
+                    Endereco = collection["endereco"] == "" ? null : collection["endereco"].ToString(),
+                    MunicipioId = collection["ddlMunicipio"] == "" ? null : Convert.ToInt32(collection["ddlMunicipio"].ToString()),
+                    LocalidadeId = collection["ddlLocalidade"] == "" ? null : Convert.ToInt32(collection["ddlLocalidade"].ToString()),
+                    Habilitado = habilitado != "",
+                    Status = status != "",
+                    ModalidadesIds = collection["ddlModalidades"].ToString(),
+                    Cargo =  collection["ddlCargo"].ToString()
+                };
+
+                await ApiClientFactory.Instance.UpdateProfissional(command.Id, command);
+
+                var user = await _userManager.FindByEmailAsync(command.Email);
+
+                var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+                
+                await _userManager.ResetPasswordAsync(user, token, collection["perfilNovaSenha"].ToString());
+
+                // var profissional = ApiClientFactory.Instance.GetProfissionalById(id);
+
+                //           if (profissional.Email.Trim()!=command.Email.Trim())
+                //           {
+                //               //atualiza email na aspnetuser e o username
+
+                ////atualiza o email na tabela usuários
+                //               var usuario = ApiClientFactory.Instance.GetUsuarioByEmail(profissional.Email);
+
+                //usuario.Email = command.Email
+                //           }
+
+                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+            }
+            catch (Exception e)
+            {
+                Console.Write(e.StackTrace);
+                return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = e.Message });
+
             }
         }
     }
