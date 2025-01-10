@@ -160,8 +160,17 @@ namespace WebApp.Areas.Identity.Pages.Account
                                     notify = (int)EnumNotify.Success,
                                     message = $"Este usuário não possui permissão de acesso ao sistema DNA."
                                 });
+                            //returnUrl = Url.Content("~/Aluno/Profile");
                             case UserRoles.AdministradorEad:
                                 returnUrl = Url.Content("~/DashboardEad");
+                                break;
+                            case UserRoles.Administrador:
+                                returnUrl = Url.Content("~/Usuario/Profile");
+                                break;
+                            case UserRoles.Profissional:
+                            case UserRoles.Coordenador:
+                            case UserRoles.Gestor:
+                                returnUrl = Url.Content("~/Profissional/Profile");
                                 break;
                         }
                         // append cookie with token to the http response

@@ -23,6 +23,7 @@ namespace WebApp.Models
         public SelectList ListPerfis { get; set; }
         public SelectList ListCargos { get; set; }
         public string CargoId { get; set; }
+        public UsuarioDto Usuario { get; set; }
 
         public class CreateUpdateProfissionalCommand
         {
