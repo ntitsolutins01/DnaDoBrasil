@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using WebApp.Configuration;
 using WebApp.Dto;
 using WebApp.Enumerators;
@@ -57,15 +58,49 @@ namespace WebApp.Controllers
         {
             try
             {
+                string filePathFrente = null;
+                string filePathVerso = null;
+
                 var command = new CertificadoModel.CreateUpdateCertificadoCommand
                 {
                     CursoId = Convert.ToInt32(collection["ddlCurso"].ToString()),
-                    ImagemFrente = Convert.FromBase64String(collection["ImagemFrente"].ToString()),
-                    ImagemVerso = string.IsNullOrEmpty(collection["ImagemVerso"]) ? null : Convert.FromBase64String(collection["ImagemVerso"].ToString()),
+                    NomeFotoFrente = filePathFrente,
+                    NomeFotoVerso = filePathVerso,
                     HtmlFrente = collection["HtmlFrente"].ToString(),
                     HtmlVerso = collection["HtmlVerso"].ToString(),
                     Status = collection["Status"].ToString().ToLower() == "on"
                 };
+
+                foreach (var file in collection.Files)
+                {
+                    if (file.Length <= 0) continue;
+
+                    command.NomeFotoFrente = Path.GetFileName(collection.Files[0].FileName);
+
+                    using (var ms = new MemoryStream())
+                    {
+                        file.CopyToAsync(ms);
+                        var byteIMage = ms.ToArray();
+                        command.ImagemFrente = byteIMage;
+                    }
+                }
+
+                if (!collection["ImagemVerso"].ToString().IsNullOrEmpty())
+                {
+                    foreach (var file in collection.Files)
+                    {
+                        if (file.Length <= 0) continue;
+
+                        command.NomeFotoVerso = Path.GetFileName(collection.Files[1].FileName);
+
+                        using (var ms = new MemoryStream())
+                        {
+                            file.CopyToAsync(ms);
+                            var byteIMage = ms.ToArray();
+                            command.ImagemVerso = byteIMage;
+                        }
+                    }
+                }
 
                 await ApiClientFactory.Instance.CreateCertificado(command);
 
