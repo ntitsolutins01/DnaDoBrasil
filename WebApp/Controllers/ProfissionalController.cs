@@ -1,6 +1,6 @@
-﻿using System.Text;
+﻿using System.Security.Claims;
+using System.Text;
 using System.Text.Encodings.Web;
-using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Identity;
@@ -16,29 +16,28 @@ using WebApp.Utility;
 using WebApp.Authorization;
 using WebApp.Identity;
 using Microsoft.AspNetCore.Authorization;
-using NuGet.Protocol.Core.Types;
+using Claim = WebApp.Identity.Claim;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace WebApp.Controllers
 {
     [Authorize(Policy = ModuloAccess.Profissional)]
     public class ProfissionalController : BaseController
 	{
-		private readonly IOptions<UrlSettings> _appSettings;
-		private readonly IEmailSender _emailSender;
+        private readonly IEmailSender _emailSender;
 		private readonly UserManager<IdentityUser> _userManager;
 		private readonly RoleManager<IdentityRole> _roleManager;
-		private readonly IHostingEnvironment _host;
+		private readonly IWebHostEnvironment _host;
 
 		public ProfissionalController(IOptions<UrlSettings> appSettings,
 			IEmailSender emailSender,
-			UserManager<IdentityUser> userManager, IHostingEnvironment host, RoleManager<IdentityRole> roleManager)
+			UserManager<IdentityUser> userManager, IWebHostEnvironment host, RoleManager<IdentityRole> roleManager)
 		{
-			_appSettings = appSettings;
-			_emailSender = emailSender;
+            _emailSender = emailSender;
 			_userManager = userManager;
 			_host = host;
 			_roleManager = roleManager;
-			ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
+			ApplicationSettings.WebApiUrl = appSettings.Value.WebApiBaseUrl;
 		}
 
         [ClaimsAuthorize(ClaimType.Profissional, Claim.Consultar)]
@@ -334,12 +333,35 @@ namespace WebApp.Controllers
 		}
 
 		[ClaimsAuthorize(ClaimType.Profissional, Claim.Excluir)]
-        public ActionResult Delete(int id)
-		{
+        public async Task<ActionResult> Delete(int id)
+        {
             try
             {
+                //select* delete from Profissionais where email like '%thaislmoliveira2@gmail.com%'
                 ApiClientFactory.Instance.DeleteProfissional(id);
-                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
+
+                var profissional = ApiClientFactory.Instance.GetProfissionalById(id);
+
+                //select* delete from[dbo].[AspNetUsers] where email like '%thaislmoliveira2@gmail.com'
+                var user = _userManager.Users.FirstOrDefault(x => x.Email == profissional.Email);
+                if (user != null)
+                {
+                    var result = await _userManager.DeleteAsync(user);
+
+                    if (result.Succeeded)
+                    {
+                        //select* delete from[dbo].[AspNetUserRoles] where userid = '1c9e9c35-7ef3-478d-aba1-b8ec72a8400c'
+                        var name = _roleManager.Roles.FirstOrDefault(x => x.Id == profissional.AspNetRoleId)?.Name;
+                        if (name != null)
+                            await _userManager.RemoveFromRoleAsync(user, name);
+
+                        //select* delete from Usuarios where email like '%amaralsakarina@gmail.com%'
+                        var usuario = ApiClientFactory.Instance.GetUsuarioByEmail(profissional.Email);
+                        ApiClientFactory.Instance.DeleteUsuario(usuario.Id);
+                        
+                        return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
+                    }
+                }
             }
             catch (ApplicationException e)
             {
@@ -360,6 +382,8 @@ namespace WebApp.Controllers
                             $"Erro ao excluir Profissional. Favor entrar em contato com o administrador do sistema. {e.Message}"
                     });
             }
+
+            return null;
         }
 
         [ClaimsAuthorize(ClaimType.Profissional, Claim.Consultar)]
@@ -495,6 +519,140 @@ namespace WebApp.Controllers
 			await _emailSender.SendEmailAsync(user.Email, "Primeiro acesso sistema Dna Brasil",
 				message);
 		}
-	}
+
+        public Task<JsonResult> GetProfissionaisByLocalidadeId(string id)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(id)) throw new Exception("Localidade não informada.");
+                var resultLocal = ApiClientFactory.Instance.GetProfissionaisByLocalidade(Convert.ToInt32(id));
+
+                return Task.FromResult(Json(new SelectList(resultLocal, "Id", "Titulo")));
+
+            }
+            catch (Exception ex)
+            {
+                return Task.FromResult(Json(ex.Message));
+            }
+        }
+
+        /// <summary>
+        /// Tela de Visualização do Profile do Profissional Logado
+        /// </summary>
+        /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
+        /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
+        /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
+        [ClaimsAuthorize(ClaimType.Profissional, Claim.Consultar)]
+        public ActionResult Profile(int? crud, int? notify, string message = null)
+        {
+	        SetNotifyMessage(notify, message);
+	        SetCrudMessage(crud);
+
+	        //usuario logado
+	        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+	        var usuario = User.Identity.Name;
+
+	        var usu = ApiClientFactory.Instance.GetUsuarioByEmail(usuario);
+
+	        var profissional = ApiClientFactory.Instance.GetProfissionalByEmail(usuario);
+
+            var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", profissional.Uf);
+            var municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(profissional.Uf!), "Id", "Nome", profissional.MunicipioId);
+            var localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeByMunicipio(profissional.MunicipioId.ToString()), "Id", "Nome", profissional.LocalidadeId);
+            var listModalidades = new SelectList(ApiClientFactory.Instance.GetModalidadeAll(), "Id", "Nome", profissional.ModalidadesIds);
+
+            List<SelectListDto> list = new List<SelectListDto>
+            {
+                new() { IdNome = "Professor Ed. Física", Nome = "Professor Ed. Física" },
+                new() { IdNome = "Instrutor Ativ. Diversas", Nome = "Instrutor Ativ. Diversas" },
+                new() { IdNome = "Instrutor Artes", Nome = "Instrutor Artes" },
+                new() { IdNome = "Professor Reforço", Nome = "Professor Reforço" },
+                new() { IdNome = "Professor Disc. Diversas", Nome = "Professor Disc. Diversas" },
+                new() { IdNome = "Monitor Regular", Nome = "Monitor Regular" },
+                new() { IdNome = "Monitor A. Especializado", Nome = "Monitor A. Especializado" },
+                new() { IdNome = "Professor Informática", Nome = "Professor Informática" },
+                new() { IdNome = "Psicólogo", Nome = "Psicólogo" },
+                new() { IdNome = "Assistente Social", Nome = "Assistente Social" },
+                new() { IdNome = "Estagiário", Nome = "Estagiário" }
+            };
+
+            var cargos = new SelectList(list, "IdNome", "Nome", profissional.Cargo);
+
+            return View(new ProfissionalModel()
+            {
+                ListEstados = estados,
+                ListModalidades = listModalidades,
+                Profissional = profissional,
+		        Usuario = usu,
+                ListMunicipios = municipios,
+                ListLocalidades = localidades,
+                ListCargos = cargos
+            });
+        }
+
+
+
+        [HttpPost]
+        [ClaimsAuthorize(ClaimType.Profissional, Claim.AlterarProfile)]
+        public async Task<ActionResult> Profile(IFormCollection collection)
+        {
+            try
+            {
+                var status = collection["status"].ToString();
+                var habilitado = collection["habilitado"].ToString();
+
+                var command = new ProfissionalModel.CreateUpdateProfissionalCommand
+                {
+                    Id = Convert.ToInt32(collection["ProfissionalId"].ToString()),
+                    Nome = collection["nome"] == "" ? null : collection["nome"].ToString(),
+                    DtNascimento = collection["DtNascimento"] == "" ? null : collection["DtNascimento"].ToString(),
+                    Email = collection["email"] == "" ? null : collection["email"].ToString(),
+                    Sexo = collection["ddlSexo"] == "" ? null : collection["ddlSexo"].ToString(),
+                    Telefone = collection["numTelefone"] == "" ? null : collection["numTelefone"].ToString(),
+                    Cep = collection["cep"] == "" ? null : collection["cep"].ToString(),
+                    Celular = collection["numCelular"] == "" ? null : collection["numCelular"].ToString(),
+                    Cpf = collection["cpf"] == "" ? null : collection["cpf"].ToString(),
+                    //AspNetUserId = collection["aspnetuserId"].ToString(),
+                    Numero = collection["numero"] == "" ? null : Convert.ToInt32(collection["numero"].ToString()),
+                    Bairro = collection["bairro"] == "" ? null : collection["bairro"].ToString(),
+                    Endereco = collection["endereco"] == "" ? null : collection["endereco"].ToString(),
+                    MunicipioId = collection["ddlMunicipio"] == "" ? null : Convert.ToInt32(collection["ddlMunicipio"].ToString()),
+                    LocalidadeId = collection["ddlLocalidade"] == "" ? null : Convert.ToInt32(collection["ddlLocalidade"].ToString()),
+                    Habilitado = habilitado != "",
+                    Status = status != "",
+                    ModalidadesIds = collection["ddlModalidades"].ToString(),
+                    Cargo =  collection["ddlCargo"].ToString()
+                };
+
+                await ApiClientFactory.Instance.UpdateProfissional(command.Id, command);
+
+                var user = await _userManager.FindByEmailAsync(command.Email);
+
+                var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+                
+                await _userManager.ResetPasswordAsync(user, token, collection["perfilNovaSenha"].ToString());
+
+                // var profissional = ApiClientFactory.Instance.GetProfissionalById(id);
+
+                //           if (profissional.Email.Trim()!=command.Email.Trim())
+                //           {
+                //               //atualiza email na aspnetuser e o username
+
+                ////atualiza o email na tabela usuários
+                //               var usuario = ApiClientFactory.Instance.GetUsuarioByEmail(profissional.Email);
+
+                //usuario.Email = command.Email
+                //           }
+
+                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+            }
+            catch (Exception e)
+            {
+                Console.Write(e.StackTrace);
+                return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = e.Message });
+
+            }
+        }
+    }
 
 }
