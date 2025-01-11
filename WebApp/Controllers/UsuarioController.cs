@@ -354,17 +354,23 @@ namespace WebApp.Controllers
 
             //usuario logado
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var usuario = User.Identity.Name;
-
-            var usu = ApiClientFactory.Instance.GetUsuarioByEmail(usuario);
-
-
-			var model = new UsuarioModel
+            if (User.Identity != null)
             {
-                Usuario = usu
-            };
-            return View(model);
+                var usuario = User.Identity.Name;
+
+                var usu = ApiClientFactory.Instance.GetUsuarioByEmail(usuario);
+
+
+                var model = new UsuarioModel
+                {
+                    Usuario = usu
+                };
+                return View(model);
+            }
+
+            return Redirect("/Account/Logout");
         }
+
 
         #endregion
 
