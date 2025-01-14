@@ -169,10 +169,10 @@ public class EstruturaController : BaseController
 
     public Task<EstruturaDto> GetEstruturaById(int id)
     {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        var usuario = User.Identity.Name;
+        //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        //var usuario = User.Identity.Name;
 
-        var usu = ApiClientFactory.Instance.GetUsuarioByEmail(usuario);
+        //var usu = ApiClientFactory.Instance.GetUsuarioByEmail(usuario);
 
         var result = ApiClientFactory.Instance.GetEstruturaById(id);
         var localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeByMunicipio(result.Localidade.MunicipioId.ToString()), "Id", "Nome", result.Localidade.Id);
