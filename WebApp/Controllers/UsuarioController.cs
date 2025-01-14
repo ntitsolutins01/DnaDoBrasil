@@ -357,6 +357,7 @@ namespace WebApp.Controllers
             if (User.Identity == null) return Redirect("/Account/Logout");
             var usuario = User.Identity.Name;
 
+            if (usuario == null) return Redirect("/Account/Logout");
             var usu = ApiClientFactory.Instance.GetUsuarioByEmail(usuario);
 
             var model = new UsuarioModel
