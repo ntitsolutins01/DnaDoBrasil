@@ -127,8 +127,8 @@ namespace WebApp.ApiClient
 
         private void addHeaders()
         {
-            _httpClient.DefaultRequestHeaders.Remove("userIP");
-            _httpClient.DefaultRequestHeaders.Add("userIP", "192.168.1.1");
+            _httpClient.DefaultRequestHeaders.Accept
+                .Add(new MediaTypeWithQualityHeaderValue("application/json"));//ACCEPT header
 
             //_httpClient.DefaultRequestHeaders.Authorization =
             //    new AuthenticationHeaderValue("Bearer", "Your Oauth token");

@@ -166,11 +166,11 @@ namespace WebApp.Areas.Identity.Pages.Account
                                 returnUrl = Url.Content("~/DashboardEad");
                                 break;
                             case UserRoles.Administrador:
+                            case UserRoles.Coordenador:
+                            case UserRoles.Gestor:
                                 returnUrl = Url.Content("~/Usuario/Profile");
                                 break;
                             case UserRoles.Profissional:
-                            case UserRoles.Coordenador:
-                            case UserRoles.Gestor:
                                 returnUrl = Url.Content("~/Profissional/Profile");
                                 break;
                         }
