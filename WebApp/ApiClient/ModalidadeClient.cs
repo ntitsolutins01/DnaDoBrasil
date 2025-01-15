@@ -1,4 +1,5 @@
-﻿using WebApp.Dto;
+﻿using System.Collections;
+using WebApp.Dto;
 using WebApp.Models;
 
 namespace WebApp.ApiClient
@@ -76,6 +77,18 @@ namespace WebApp.ApiClient
             return Get<List<ModalidadeDto>>(requestUrl);
         }
 
+        /// <summary>
+        /// Busca todas as modalidades por linha de ação
+        /// </summary>
+        /// <param name="id">Id da linha de ação a ser buscada</param>
+        /// <returns>Retorna a Lista de Modalidades</returns>
+        public List<ModalidadeDto> GetModalidadesByLinhaAcaoId(int id)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceModalidade}/LinhaAcao/{id}"));
+            return Get<List<ModalidadeDto>>(requestUrl);
+        }
         #endregion
+
     }
 }

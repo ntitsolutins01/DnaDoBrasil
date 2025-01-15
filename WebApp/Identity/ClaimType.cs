@@ -26,5 +26,6 @@ namespace WebApp.Identity
         public const string Estrutura = "Estrutura";
         public const string Categoria = "Categoria";
         public const string Atividade = "Atividade";
+        public const string Modalidade = "Modalidade";
     }
 }
