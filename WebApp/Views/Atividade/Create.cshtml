@@ -65,27 +65,27 @@
                             </div>
                             <label class="col-sm-2 control-label">Atividade / Modalidade <span class="required">*</span></label>
                             <div class="col-md-4">
-                                @* <select class="form-control" multiple="multiple" data-plugin-multiselect data-plugin-options='{ "maxHeight": 300, "enableCaseInsensitiveFiltering": true }'
-                                        name="ddlModalidade" id="ddlModalidade"
-                                        title="Por favor informe a Modalidade." required style="width:100%"
-                                        asp-for="AtividadeModalidadeId" asp-items="Model.ListAtividadesModalidades">
-                                </select> *@
-                                <select class="form-control populate select2" name="ddlEstrutura" id="ddlEstrutura"
-                                        title="Por favor informe a Estrutura." required
-                                        asp-for="EstruturaId" asp-items="Model.ListEstruturas">
-                                    <option value="">Selecionar Estrutura</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 control-label">Atividade / Modalidade <span class="required">*</span></label>
-                            <div class="col-md-4">
                                 <select class="form-control populate select2" name="ddlModalidade" id="ddlModalidade"
                                         title="Por favor informe a Atividade / Modalidade." required
                                         asp-for="AtividadeModalidadeId" asp-items="Model.ListAtividadesModalidades">
                                     <option value="">Selecionar Categoria</option>
                                 </select>
                             </div>
+                            @*<label class="col-sm-2 control-label">Estrutura <span class="required">*</span></label>
+                            <div class="col-md-4">
+                                 <select class="form-control" multiple="multiple" data-plugin-multiselect data-plugin-options='{ "maxHeight": 300, "enableCaseInsensitiveFiltering": true }'
+                                        name="ddlModalidade" id="ddlModalidade"
+                                        title="Por favor informe a Modalidade." required style="width:100%"
+                                        asp-for="AtividadeModalidadeId" asp-items="Model.ListAtividadesModalidades">
+                                </select> 
+                                <select class="form-control populate select2" name="ddlEstrutura" id="ddlEstrutura"
+                                        title="Por favor informe a Estrutura." required
+                                        asp-for="EstruturaId" asp-items="Model.ListEstruturas">
+                                    <option value="">Selecionar Estrutura</option>
+                                </select>
+                            </div>*@
+                        </div>
+                        <div class="form-group row">
                             <label class="col-sm-2 control-label">Estrutura <span class="required">*</span></label>
                             <div class="col-md-4">
                                 <select class="form-control populate select2" name="ddlEstrutura" id="ddlEstrutura"
@@ -152,8 +152,8 @@
 
                             <label class="col-sm-2 control-label">Turma <span class="required">*</span></label>
                             <div class="col-sm-2">
-                                <select class="form-control populate select2" name="ddlSexo" id="ddlSexo"
-                                        title="Por favor selecione um sexo." required style="width:100%">
+                                <select class="form-control populate select2" name="ddlTurma" id="ddlTurma"
+                                        title="Por favor selecione uma turma." required style="width:100%">
                                     <option value="">Selecionar Turma</option>
                                     <option value="T1">T1</option>
                                     <option value="T2">T2</option>
