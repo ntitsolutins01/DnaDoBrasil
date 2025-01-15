@@ -389,7 +389,7 @@ namespace WebApp.Controllers
                     Habilitado = habilitado != "",
                     Status = status != "",
                     NomeFoto = filePath,
-
+                    ModalidadesIds = collection["ddlModalidades"].ToString(),
                 };
 
                 foreach (var file in collection.Files)
