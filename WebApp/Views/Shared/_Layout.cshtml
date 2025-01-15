@@ -549,7 +549,7 @@
             <section role="main" class="content-body">
                 <header class="page-header">
                     @{
-                        var userRole = ((ClaimsIdentity)User.Identity).FindFirst(ClaimTypes.Role).Value;
+                        var userRole = (User.Identity as ClaimsIdentity)?.FindFirst(ClaimTypes.Role)?.Value;
 
                         if (userRole == UserRoles.AdministradorEad)
                         {
