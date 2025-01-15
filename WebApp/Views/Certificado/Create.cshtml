@@ -65,6 +65,9 @@
                                                     <button type="button" id="btnAddBackgroundFrente" class="btn btn-default">
                                                         <i class="fa fa-image"></i> Adicionar Imagem de Fundo (Frente)
                                                     </button>
+                                                    <button type="button" id="btnRemoveBackgroundFrente" class="btn btn-danger" style="display: none;">
+                                                        <i class="fa fa-trash"></i> Remover Imagem de Fundo (Frente)
+                                                    </button>
                                                     <input type="file" id="bgImageInputFrente" name="ImagemFrente" style="display: none" accept="image/*">
                                                 </div>
                                                 <div class="summernote" id="summernoteFrente" name="HtmlFrente" data-plugin-summernote data-plugin-options='{ "height": 180, "codemirror": { "theme": "ambiance" } }'>
@@ -78,6 +81,9 @@
                                                 <div class="mb-3">
                                                     <button type="button" id="btnAddBackgroundVerso" class="btn btn-default">
                                                         <i class="fa fa-image"></i> Adicionar Imagem de Fundo (Verso)
+                                                    </button>
+                                                    <button type="button" id="btnRemoveBackgroundVerso" class="btn btn-danger" style="display: none;">
+                                                        <i class="fa fa-trash"></i> Remover Imagem de Fundo (Verso)
                                                     </button>
                                                     <input type="file" id="bgImageInputVerso" name="ImagemVerso" style="display: none" accept="image/*">
                                                 </div>
@@ -181,7 +187,7 @@
 
     <script>
         // Função para inicializar o Summernote com configurações específicas
-        function initializeSummernote(elementId, bgInputId, bgButtonId) {
+        function initializeSummernote(elementId, bgInputId, bgButtonId, removeButtonId) {
             $(`#${elementId}`).summernote({
                 lang: 'pt-BR',
                 height: 300,
@@ -199,11 +205,21 @@
                 fontSizes: ['8', '9', '10', '11', '12', '14', '18', '24', '36']
             });
 
+        // Adicionar imagem
             $(`#${bgButtonId}`).click(function() {
                 $(`#${bgInputId}`).click();
             });
 
-            $(`#${bgInputId}`).change(function(e) {
+        // Remover imagem
+            $(`#${removeButtonId}`).click(function() {
+                var $editor = $(`#${elementId}`).siblings('.note-editor').find('.note-editing-area');
+                $editor.find('.background-overlay').remove();
+                $(`#${bgInputId}`).val(''); // Limpa o input file
+                $(this).hide(); // Esconde o botão de remover
+                $(`#${bgButtonId}`).show(); // Mostra o botão de adicionar
+            });
+
+        $(`#${bgInputId}`).change(function(e) {
                 if (this.files && this.files[0]) {
                     var reader = new FileReader();
                     reader.onload = function(e) {
@@ -235,6 +251,10 @@
                         });
 
                         $editor.prepend($bgContainer);
+
+                        // Mostra o botão de remover e esconde o de adicionar
+                        $(`#${removeButtonId}`).show();
+                        $(`#${bgButtonId}`).hide();
                     }
                     reader.readAsDataURL(this.files[0]);
                 }
@@ -258,8 +278,8 @@
             });
 
             // Inicializa os editores
-            initializeSummernote('summernoteFrente', 'bgImageInputFrente', 'btnAddBackgroundFrente');
-            initializeSummernote('summernoteVerso', 'bgImageInputVerso', 'btnAddBackgroundVerso');
+            initializeSummernote('summernoteFrente', 'bgImageInputFrente', 'btnAddBackgroundFrente', 'btnRemoveBackgroundFrente');
+            initializeSummernote('summernoteVerso', 'bgImageInputVerso', 'btnAddBackgroundVerso', 'btnRemoveBackgroundVerso');
 
             // Handler para o submit do formulário
             $('#formCertificado').on('submit', function(e) {
