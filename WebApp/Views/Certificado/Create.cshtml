@@ -154,7 +154,7 @@
             height: 813px !important;
         }
 
-        /* Adicione um container para centralizar o editor */
+        /* Container para o editor */
         .certificate-container {
             width: 100%;
             overflow-x: auto;
@@ -234,6 +234,69 @@
             height: 813px !important;
             margin: 0 auto;
         }
+
+        /* Estilos do popover de ajuda */
+        .popover {
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            max-width: 500px;
+            transition: none !important;
+            animation: none !important;
+        }
+
+        .note-editor.fullscreen .popover {
+            z-index: 1050;
+        }
+
+        .popover-content {
+            padding: 0;
+        }
+
+        .help-category {
+            border-bottom: 1px solid #eee;
+        }
+
+            .help-category:last-child {
+                border-bottom: none;
+            }
+
+            .help-category h6 {
+                background-color: #f8f9fa;
+                padding: 8px;
+                margin: 0;
+                font-weight: bold;
+            }
+
+            .help-category code {
+                background-color: #f8f9fa;
+                color: #e83e8c;
+                padding: 2px 4px;
+                border-radius: 3px;
+                font-family: monospace;
+            }
+
+        .table-sm td {
+            padding: 4px 8px;
+            border-top: 1px solid #eee;
+        }
+
+        /* Estilização dos botões do editor */
+        .note-btn {
+            border: 1px solid #ddd;
+            background-color: #fff;
+            border-radius: 3px;
+            padding: 5px 10px;
+            margin: 2px;
+        }
+
+            .note-btn:hover {
+                background-color: #f8f9fa;
+            }
+
+            .note-btn i {
+                font-size: 14px;
+                color: #666;
+            }
     </style>
 }
 
@@ -251,7 +314,158 @@
     <script src="~/assets/javascripts/theme.init.js"></script>
 
     <script>
-        // Função para inicializar o Summernote com configurações específicas
+        // Plugin personalizado do Summernote
+        $.extend($.summernote.plugins, {
+            'customHelp': function (context) {
+                var ui = $.summernote.ui;
+                var isPopoverOpen = false;
+                var activeButton = null;
+
+                // Função auxiliar para fechar o popover
+                function closePopover() {
+                    if (activeButton) {
+                        $(activeButton).popover('hide');
+                        isPopoverOpen = false;
+                        activeButton = null;
+                        $(document).off('mousedown.customHelp');
+                    }
+                }
+
+                context.memo('button.customHelp', function () {
+                    var button = ui.button({
+                        className: 'note-btn',
+                        contents: '<i class="fa fa-question-circle"></i>',
+                        tooltip: 'Variáveis Disponíveis',
+                        click: function (e) {
+                            e.preventDefault();
+                            e.stopPropagation();
+
+                            var $button = $(this);
+
+                            // Fecha se clicar no mesmo botão que está aberto
+                            if (isPopoverOpen && activeButton === this) {
+                                closePopover();
+                                return;
+                            }
+
+                            // Fecha outros popovers abertos
+                            if (activeButton) {
+                                closePopover();
+                            }
+
+                            activeButton = this;
+
+                            var content = '<div style="max-height: 400px; overflow-y: auto; padding: 10px;">';
+                            var helpGuide = {
+                                'Aluno': {
+                                    'aluno_nome': 'Nome do aluno',
+                                    'aluno_email': 'E-mail do aluno',
+                                    'aluno_cpf': 'CPF do aluno',
+                                    'aluno_data_nascimento': 'Data de nascimento do aluno',
+                                    'aluno_telefone': 'Telefone do aluno',
+                                    'aluno_cidade': 'Cidade do aluno',
+                                    'aluno_uf': 'Estado do aluno',
+                                    'aluno_frequencia': 'Frequência do aluno',
+                                    'aluno_progresso': 'Porcentagem de conclusão do aluno no curso'
+                                },
+                                'Certificado': {
+                                    'cert': 'Código do certificado',
+                                    'certificado_nota': 'Média final do aluno',
+                                    'certificado_dia_inicio': 'Data de início do curso',
+                                    'certificado_dia_fim': 'Data de conclusão do curso',
+                                    'certificado_data_validade': 'Data de validade do certificado',
+                                    'matricula_dia_cadastro': 'Data da matrícula',
+                                    'certificado_carga_horaria': 'Carga horária do curso',
+                                    'qrcode_frente': 'QR Code da frente (150px)',
+                                    'qrcode_verso': 'QR Code do verso (200px)'
+                                },
+                                'Curso': {
+                                    'curso_titulo': 'Curso',
+                                    'curso_professor': 'Nome do professor coordenador do curso',
+                                    'curso_modulos': 'Lista de módulos do curso',
+                                    'curso_modulos_carga_horaria': 'Lista de módulos do curso com carga horária'
+                                },
+                                'Escola': {
+                                    'seal_name': 'Nome da escola',
+                                    'seal_cnpj': 'CNPJ da escola',
+                                    'seal_dominio': 'Domínio da escola'
+                                }
+                            };
+
+                            for (let category in helpGuide) {
+                                content += `<div class="help-category" style="margin-bottom: 15px;">
+                                    <h6 style="color: #333; font-weight: bold; margin-bottom: 8px;">${category}</h6>
+                                    <table class="table table-sm" style="font-size: 12px;">
+                                        <tbody>`;
+
+                                for (let variable in helpGuide[category]) {
+                                    content += `<tr>
+                                        <td style="padding: 4px;"><code>[[${variable}]]</code></td>
+                                        <td style="padding: 4px;">${helpGuide[category][variable]}</td>
+                                    </tr>`;
+                                }
+
+                                content += `</tbody></table></div>`;
+                            }
+                            content += '</div>';
+
+                            // Configura e mostra o popover
+                            $button.popover({
+                        html: true,
+                        content: content,
+                        placement: 'bottom',
+                        trigger: 'manual',
+                        container: 'body',
+                        animation: false, // Desativa animação
+                        template: '<div class="popover" role="tooltip" style="max-width: 500px;"><div class="arrow"></div><div class="popover-content"></div></div>'
+                    }).popover('show');
+
+
+                            isPopoverOpen = true;
+
+                            // Remove manipulador de eventos antigo antes de adicionar um novo
+                            $(document).off('mousedown.customHelp');
+
+                            // Adiciona novo manipulador de eventos para fechar
+                            $(document).on('mousedown.customHelp', function(event) {
+                        var $target = $(event.target);
+                        if (!$target.closest('.popover').length &&
+                            !$target.is($button)) {
+                            closePopover();
+                        }
+                    });
+                        }
+                    });
+
+                    return button.render();
+                });
+                // Fecha o popover ao entrar em tela cheia
+        context.memo('fullscreen.enter', function() {
+            closePopover();
+        });
+
+        // Fecha o popover ao sair da tela cheia
+        context.memo('fullscreen.exit', function() {
+            closePopover();
+        });
+
+        // Adiciona manipulador para tecla ESC
+        $(document).on('keydown', function(e) {
+            if (e.key === 'Escape' && isPopoverOpen) {
+                closePopover();
+            }
+        });
+                // Limpa os popovers quando entrar em fullscreen
+                context.memo('fullscreen.enter', function() {
+                    if (activeButton) {
+                        $(activeButton).popover('hide');
+                        isPopoverOpen = false;
+                        activeButton = null;
+                    }
+                });
+            }
+        });
+
         function initializeSummernote(elementId, bgInputId, bgButtonId, removeButtonId) {
             $(`#${elementId}`).summernote({
                 lang: 'pt-BR',
@@ -266,8 +480,10 @@
                     ['para', ['ul', 'ol', 'paragraph']],
                     ['table', ['table']],
                     ['insert', ['link', 'picture']],
+                    ['customHelp', ['customHelp']], // Nosso botão personalizado
                     ['view', ['fullscreen', 'codeview']]
                 ],
+                plugins: ['customHelp'],
                 fontSizes: ['8', '9', '10', '11', '12', '14', '18', '24', '36'],
                 callbacks: {
                     onInit: function() {
@@ -283,7 +499,6 @@
                             'margin': '20px auto'
                         });
 
-                        // Centraliza a área de edição verticalmente
                         setTimeout(() => {
                             const windowHeight = window.innerHeight;
                             const editorHeight = 813;
@@ -305,21 +520,22 @@
                 }
             });
 
-        // Adicionar imagem
+            // Adicionar imagem
             $(`#${bgButtonId}`).click(function() {
                 $(`#${bgInputId}`).click();
             });
 
-        // Remover imagem
+            // Remover imagem
             $(`#${removeButtonId}`).click(function() {
                 var $editor = $(`#${elementId}`).siblings('.note-editor').find('.note-editing-area');
                 $editor.find('.background-overlay').remove();
-                $(`#${bgInputId}`).val(''); // Limpa o input file
-                $(this).hide(); // Esconde o botão de remover
-                $(`#${bgButtonId}`).show(); // Mostra o botão de adicionar
+                $(`#${bgInputId}`).val('');
+                $(this).hide();
+                $(`#${bgButtonId}`).show();
             });
 
-        $(`#${bgInputId}`).change(function(e) {
+            // Manipular mudança de imagem
+            $(`#${bgInputId}`).change(function(e) {
                 if (this.files && this.files[0]) {
                     var reader = new FileReader();
                     reader.onload = function(e) {
@@ -354,7 +570,6 @@
 
                         $editor.prepend($bgContainer);
 
-                        // Mostra o botão de remover e esconde o de adicionar
                         $(`#${removeButtonId}`).show();
                         $(`#${bgButtonId}`).hide();
                     }
