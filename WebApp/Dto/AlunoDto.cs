@@ -45,6 +45,9 @@
         public string ProfissionalId { get; set; }
         public string ModalidadeLinhaAcao { get; set; }
         public string LinhaAcaoId { get; set; }
+        public string NomePerfil { get; set; }
+        public string DescricaoPerfil { get; set; }
+
         #endregion
     }
 }

@@ -910,5 +910,144 @@ namespace WebApp.Controllers
                 });
             }
         }
+        /// <summary>
+        /// Tela para alteração de perfil aluno
+        /// </summary>
+        /// <param name="id">identificador do aluno</param>
+        /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
+        /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
+        /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
+        [ClaimsAuthorize(ClaimType.Aluno, Claim.Alterar)]
+        public ActionResult Profile(int id, int? crud, int? notify, string message = null)
+        {
+            try
+            {
+                SetNotifyMessage(notify, message);
+                SetCrudMessage(crud);
+                var aluno = ApiClientFactory.Instance.GetAlunoById(id);
+                var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", aluno.Estado);
+                var municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(aluno.Estado!), "Id", "Nome", aluno.MunicipioId);
+                var localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeByMunicipio(aluno.MunicipioId.ToString()), "Id", "Nome", aluno.LocalidadeId);
+                var profissionais = new SelectList(ApiClientFactory.Instance.GetProfissionaisByLocalidade(Convert.ToInt32(aluno.LocalidadeId)), "Id", "Nome", aluno.ProfissionalId);
+                var fomentos = new SelectList(ApiClientFactory.Instance.GetFomentoAll(), "Id", "Nome", aluno.FomentoId);
+                var deficiencias = new SelectList(ApiClientFactory.Instance.GetDeficienciaAll(), "Id", "Nome", aluno.DeficienciaId);
+                var linhasAcoes = new SelectList(ApiClientFactory.Instance.GetLinhasAcoesAll(), "Id", "Nome", aluno.LinhaAcaoId);
+
+                List<SelectListDto> list = new List<SelectListDto>
+                {
+                    new() { IdNome = "PARDO", Nome = "PARDO" },
+                    new() { IdNome = "BRANCO", Nome = "BRANCO" },
+                    new() { IdNome = "PRETO", Nome = "PRETO" },
+                    new() { IdNome = "INDIGENA", Nome = "INDIGENA" },
+                    new() { IdNome = "AMARELO", Nome = "AMARELO" }
+                };
+
+                var etnias = new SelectList(list, "IdNome", "Nome", aluno.Etnia);
+
+
+                var model = new AlunoModel()
+                {
+                    ListEstados = estados,
+                    Modalidades = aluno.Modalidades,
+                    Aluno = aluno,
+                    ListMunicipios = municipios,
+                    ListLocalidades = localidades,
+                    ListProfissionais = profissionais,
+                    ListEtnias = etnias,
+                    ListFomentos = fomentos,
+                    ListDeficiencias = deficiencias,
+                    ListLinhasAcoes = linhasAcoes
+                };
+                return View(model);
+
+            }
+            catch (Exception e)
+            {
+                Console.Write(e.StackTrace);
+                return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = e.Message });
+
+            }
+        }
+        /// <summary>
+        /// Ação de inclusao do perfil aluno
+        /// </summary>
+        /// <param name="collection">coleção de dados para inclusao de aluno</param>
+        /// <returns>retorna mensagem de inclusao através do parametro crud</returns>
+        [HttpPost]
+        [ClaimsAuthorize(ClaimType.Aluno, Claim.Incluir)]
+        public async Task<ActionResult> Profile(IFormCollection collection)
+        {
+            try
+            {
+                string filePath = null;
+
+                var status = collection["status"].ToString();
+                var habilitado = collection["habilitado"].ToString();
+
+                var command = new AlunoModel.CreateUpdateDadosAlunoCommand()
+                {
+                    Etnia = collection["ddlEtnia"] == "" ? null : collection["ddlEtnia"].ToString(),
+                    MunicipioId = collection["ddlMunicipio"] == "" ? null : Convert.ToInt32(collection["ddlMunicipio"].ToString()),
+                    ProfissionalId = collection["ddlProfissionalAluno"] == "" ? null : Convert.ToInt32(collection["ddlProfissionalAluno"].ToString()),
+                    FomentoId = collection["ddlFomento"] == "" ? null : Convert.ToInt32(collection["ddlFomento"].ToString()),
+                    DeficienciaId = collection["ddlDeficiencia"] == "" ? null : Convert.ToInt32(collection["ddlDeficiencia"].ToString()),
+                    LocalidadeId = collection["ddlLocalidade"] == "" ? null : Convert.ToInt32(collection["ddlLocalidade"].ToString()),
+                    LinhaAcaoId = collection["ddlLinhaAcao"] == "" ? null : Convert.ToInt32(collection["ddlLinhaAcao"].ToString()),
+                    Nome = collection["nome"] == "" ? null : collection["nome"].ToString(),
+                    DtNascimento = collection["DtNascimento"] == "" ? null : collection["DtNascimento"].ToString(),
+                    Email = collection["email"] == "" ? null : collection["email"].ToString(),
+                    Sexo = collection["ddlSexo"] == "" ? null : collection["ddlSexo"].ToString(),
+                    NomeMae = collection["nomeMae"] == "" ? null : collection["nomeMae"].ToString(),
+                    NomePai = collection["nomePai"] == "" ? null : collection["nomePai"].ToString(),
+                    Telefone = collection["numTelefone"] == "" ? null : collection["numTelefone"].ToString(),
+                    Cep = collection["cep"] == "" ? null : collection["cep"].ToString(),
+                    Celular = collection["numCelular"] == "" ? null : collection["numCelular"].ToString(),
+                    Cpf = collection["cpf"] == "" ? null : collection["cpf"].ToString(),
+                    Endereco = collection["endereco"] == "" ? null : collection["endereco"].ToString(),
+                    Numero = collection["numero"] == "" ? null : collection["numero"].ToString(),
+                    Bairro = collection["bairro"] == "" ? null : collection["bairro"].ToString(),
+                    DeficienciasIds = collection["arrDeficiencias"] == "" ? null : collection["arrDeficiencias"].ToString(),
+                    Habilitado = habilitado != "",
+                    Status = status != "",
+                    NomeFoto = filePath,
+                    AutorizacaoSaida = Convert.ToBoolean(collection["autorizado"].ToString()),
+                    UtilizacaoImagem = Convert.ToBoolean(collection["utilizacaoImagem"].ToString()),
+                    ParticipacaoProgramaCompartilhamentoDados = Convert.ToBoolean(collection["participacao"].ToString()),
+                    CopiaDocAlunoResponsavel = Convert.ToBoolean(collection["copiaDoc"].ToString()),
+                    AutorizacaoConsentimentoAssentimento = collection["agreeterms"].ToString() != ""
+
+                };
+
+                foreach (var file in collection.Files)
+                {
+                    if (file.Length <= 0) continue;
+
+                    command.NomeFoto = Path.GetFileName(collection.Files[0].FileName);
+
+                    using (var ms = new MemoryStream())
+                    {
+                        file.CopyToAsync(ms);
+                        var byteIMage = ms.ToArray();
+                        command.ByteImage = byteIMage;
+                    }
+                }
+
+                var alunoId = await ApiClientFactory.Instance.CreateDados(command);
+
+                var updateCommand = command;
+
+                updateCommand.Id = (int)alunoId;
+                command.QrCode = GeraQrCode(alunoId);
+
+                await ApiClientFactory.Instance.UpdateDados((int)alunoId, updateCommand);
+
+                return RedirectToAction(nameof(Index), new { id = alunoId, crud = (int)EnumCrud.Created });
+            }
+            catch (Exception e)
+            {
+                Console.Write(e.StackTrace);
+                return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = e.Message });
+            }
+        }
     }
 }

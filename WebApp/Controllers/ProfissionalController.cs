@@ -23,58 +23,59 @@ namespace WebApp.Controllers
 {
     [Authorize(Policy = ModuloAccess.Profissional)]
     public class ProfissionalController : BaseController
-	{
+    {
         private readonly IEmailSender _emailSender;
-		private readonly UserManager<IdentityUser> _userManager;
-		private readonly RoleManager<IdentityRole> _roleManager;
-		private readonly IWebHostEnvironment _host;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IWebHostEnvironment _host;
 
-		public ProfissionalController(IOptions<UrlSettings> appSettings,
-			IEmailSender emailSender,
-			UserManager<IdentityUser> userManager, IWebHostEnvironment host, RoleManager<IdentityRole> roleManager)
-		{
+        public ProfissionalController(IOptions<UrlSettings> appSettings,
+            IEmailSender emailSender,
+            UserManager<IdentityUser> userManager, IWebHostEnvironment host, RoleManager<IdentityRole> roleManager)
+        {
             _emailSender = emailSender;
-			_userManager = userManager;
-			_host = host;
-			_roleManager = roleManager;
-			ApplicationSettings.WebApiUrl = appSettings.Value.WebApiBaseUrl;
-		}
+            _userManager = userManager;
+            _host = host;
+            _roleManager = roleManager;
+            ApplicationSettings.WebApiUrl = appSettings.Value.WebApiBaseUrl;
+        }
 
         [ClaimsAuthorize(ClaimType.Profissional, Claim.Consultar)]
         public IActionResult Index(int? crud, int? notify, string message = null)
-		{
+        {
 
-			try
-			{
-				SetNotifyMessage(notify, message);
-				SetCrudMessage(crud); var response = ApiClientFactory.Instance.GetProfissionalAll();
-				var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
+            try
+            {
+                SetNotifyMessage(notify, message);
+                SetCrudMessage(crud); var response = ApiClientFactory.Instance.GetProfissionalAll();
+                var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
 
                 return View(new ProfissionalModel()
                 {
-                    Profissionais = response, ListEstados = estados,
+                    Profissionais = response,
+                    ListEstados = estados,
                 });
 
             }
-			catch (Exception e)
-			{
-				Console.Write(e.StackTrace);
-				return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = e.Message });
+            catch (Exception e)
+            {
+                Console.Write(e.StackTrace);
+                return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = e.Message });
 
-			}
-		}
+            }
+        }
 
 
         [ClaimsAuthorize(ClaimType.Profissional, Claim.Incluir)]
         public ActionResult Create(int? crud, int? notify, string message = null)
-		{
-			try
-			{
-				SetNotifyMessage(notify, message);
-				SetCrudMessage(crud);
+        {
+            try
+            {
+                SetNotifyMessage(notify, message);
+                SetCrudMessage(crud);
 
-				var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
-				var modalidades = new SelectList(ApiClientFactory.Instance.GetModalidadeAll(), "Id", "Nome");
+                var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
+                var modalidades = new SelectList(ApiClientFactory.Instance.GetModalidadeAll(), "Id", "Nome");
                 var perfis = new[] { (int)EnumPerfil.Profissional, (int)EnumPerfil.GestorPedagogico, (int)EnumPerfil.GestorProjeto };
                 //var resultPerfil = ApiClientFactory.Instance.GetPerfilAll().Where(x=>perfis.Contains(x.Id));
                 List<SelectListDto> list = new List<SelectListDto>
@@ -97,48 +98,48 @@ namespace WebApp.Controllers
 
                 return View(new ProfissionalModel()
                 {
-                    ListEstados = estados, 
+                    ListEstados = estados,
                     ListModalidades = modalidades,
                     ListCargos = cargos,
                 });
 
             }
-			catch (Exception e)
-			{
-				Console.Write(e.StackTrace);
-				return RedirectToAction(nameof(Create), new { notify = (int)EnumNotify.Error, message = e.Message });
+            catch (Exception e)
+            {
+                Console.Write(e.StackTrace);
+                return RedirectToAction(nameof(Create), new { notify = (int)EnumNotify.Error, message = e.Message });
 
-			}
-		}
+            }
+        }
 
-		[HttpPost]
+        [HttpPost]
         [ClaimsAuthorize(ClaimType.Profissional, Claim.Incluir)]
         public async Task<ActionResult> Create(IFormCollection collection)
-		{
-			try
-			{
-				var status = collection["status"].ToString();
-				var habilitado = collection["habilitado"].ToString();
+        {
+            try
+            {
+                var status = collection["status"].ToString();
+                var habilitado = collection["habilitado"].ToString();
 
-				var command = new ProfissionalModel.CreateUpdateProfissionalCommand
-				{
-					Nome = collection["nome"] == "" ? null : collection["nome"].ToString(),
-					DtNascimento = collection["DtNascimento"] == "" ? null : collection["DtNascimento"].ToString(),
-					Email = collection["email"] == "" ? null : collection["email"].ToString(),
-					Sexo = collection["ddlSexo"] == "" ? null : collection["ddlSexo"].ToString(),
-					Telefone = collection["numTelefone"] == "" ? null : collection["numTelefone"].ToString(),
-					Cep = collection["cep"] == "" ? null : collection["cep"].ToString(),
-					Celular = collection["numCelular"] == "" ? null : collection["numCelular"].ToString(),
-					Cpf = collection["cpf"] == "" ? null : collection["cpf"].ToString(),
+                var command = new ProfissionalModel.CreateUpdateProfissionalCommand
+                {
+                    Nome = collection["nome"] == "" ? null : collection["nome"].ToString(),
+                    DtNascimento = collection["DtNascimento"] == "" ? null : collection["DtNascimento"].ToString(),
+                    Email = collection["email"] == "" ? null : collection["email"].ToString(),
+                    Sexo = collection["ddlSexo"] == "" ? null : collection["ddlSexo"].ToString(),
+                    Telefone = collection["numTelefone"] == "" ? null : collection["numTelefone"].ToString(),
+                    Cep = collection["cep"] == "" ? null : collection["cep"].ToString(),
+                    Celular = collection["numCelular"] == "" ? null : collection["numCelular"].ToString(),
+                    Cpf = collection["cpf"] == "" ? null : collection["cpf"].ToString(),
                     PerfilId = Convert.ToInt32(EnumPerfil.Profissional),
-					Numero = collection["numero"] == "" ? null : Convert.ToInt32(collection["numero"].ToString()),
-					Bairro = collection["bairro"] == "" ? null : collection["bairro"].ToString(),
-					Endereco = collection["endereco"] == "" ? null : collection["endereco"].ToString(),
-					MunicipioId = collection["ddlMunicipio"] == "" ? null : Convert.ToInt32(collection["ddlMunicipio"].ToString()),
-					LocalidadeId = collection["ddlLocalidade"] == "" ? null : Convert.ToInt32(collection["ddlLocalidade"].ToString()),
-					Habilitado = habilitado != "",
-					Status = status != "",
-					ModalidadesIds = collection["ddlModalidades"].ToString(),
+                    Numero = collection["numero"] == "" ? null : Convert.ToInt32(collection["numero"].ToString()),
+                    Bairro = collection["bairro"] == "" ? null : collection["bairro"].ToString(),
+                    Endereco = collection["endereco"] == "" ? null : collection["endereco"].ToString(),
+                    MunicipioId = collection["ddlMunicipio"] == "" ? null : Convert.ToInt32(collection["ddlMunicipio"].ToString()),
+                    LocalidadeId = collection["ddlLocalidade"] == "" ? null : Convert.ToInt32(collection["ddlLocalidade"].ToString()),
+                    Habilitado = habilitado != "",
+                    Status = status != "",
+                    ModalidadesIds = collection["ddlModalidades"].ToString(),
                     Cargo = collection["ddlCargo"].ToString()
 
                 };
@@ -169,7 +170,7 @@ namespace WebApp.Controllers
                     CpfCnpj = collection["cpf"].ToString(),
                     TipoPessoa = "pf",
                     MunicipioId = collection["ddlMunicipio"] == "" ? 0 : Convert.ToInt32(collection["ddlMunicipio"].ToString()),
-					LocalidadeId = Convert.ToInt32(collection["ddlLocalidade"].ToString())
+                    LocalidadeId = Convert.ToInt32(collection["ddlLocalidade"].ToString())
                 };
 
                 var perfil = ApiClientFactory.Instance.GetPerfilById(Convert.ToInt32(EnumPerfil.Profissional));
@@ -192,29 +193,29 @@ namespace WebApp.Controllers
                 await SendNewUserEmail(newUser, commandUsuario.Email, commandUsuario.Nome);
 
                 return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
-			}
-			catch (Exception e)
-			{
-				Console.Write(e.StackTrace);
-				return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = e.Message });
+            }
+            catch (Exception e)
+            {
+                Console.Write(e.StackTrace);
+                return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = e.Message });
 
-			}
-		}
+            }
+        }
 
 
         [ClaimsAuthorize(ClaimType.Profissional, Claim.Alterar)]
         public ActionResult Edit(int id, int? crud, int? notify, string message = null)
-		{
-			try
-			{
-				SetNotifyMessage(notify, message);
-				SetCrudMessage(crud);
+        {
+            try
+            {
+                SetNotifyMessage(notify, message);
+                SetCrudMessage(crud);
 
-				var profissional = ApiClientFactory.Instance.GetProfissionalById(id);
-				var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", profissional.Uf);
-				var municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(profissional.Uf!), "Id", "Nome", profissional.MunicipioId);
-				var localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeByMunicipio(profissional.MunicipioId.ToString()), "Id", "Nome", profissional.LocalidadeId);
-				var listModalidades = new SelectList(ApiClientFactory.Instance.GetModalidadeAll(), "Id", "Nome", profissional.ModalidadesIds);
+                var profissional = ApiClientFactory.Instance.GetProfissionalById(id);
+                var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", profissional.Uf);
+                var municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(profissional.Uf!), "Id", "Nome", profissional.MunicipioId);
+                var localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeByMunicipio(profissional.MunicipioId.ToString()), "Id", "Nome", profissional.LocalidadeId);
+                var listModalidades = new SelectList(ApiClientFactory.Instance.GetModalidadeAll(), "Id", "Nome", profissional.ModalidadesIds);
 
                 List<SelectListDto> list = new List<SelectListDto>
                 {
@@ -234,35 +235,35 @@ namespace WebApp.Controllers
                 var cargos = new SelectList(list, "IdNome", "Nome", profissional.Cargo);
 
                 return View(new ProfissionalModel()
-				{
-                    ListEstados = estados, 
-					ListModalidades = listModalidades, 
-					Profissional = profissional,
-					ListMunicipios = municipios, 
-					ListLocalidades = localidades,
-					ListCargos = cargos
-				});
+                {
+                    ListEstados = estados,
+                    ListModalidades = listModalidades,
+                    Profissional = profissional,
+                    ListMunicipios = municipios,
+                    ListLocalidades = localidades,
+                    ListCargos = cargos
+                });
 
-			}
-			catch (Exception e)
-			{
-				Console.Write(e.StackTrace);
-				return RedirectToAction(nameof(Edit), new { notify = (int)EnumNotify.Error, message = e.Message });
-			}
-		}
+            }
+            catch (Exception e)
+            {
+                Console.Write(e.StackTrace);
+                return RedirectToAction(nameof(Edit), new { notify = (int)EnumNotify.Error, message = e.Message });
+            }
+        }
 
-		[HttpPost]
+        [HttpPost]
         [ClaimsAuthorize(ClaimType.Profissional, Claim.Alterar)]
         public async Task<ActionResult> Edit(int id, IFormCollection collection)
-		{
-			try
-			{
-				var status = collection["status"].ToString();
-				var habilitado = collection["habilitado"].ToString();
+        {
+            try
+            {
+                var status = collection["status"].ToString();
+                var habilitado = collection["habilitado"].ToString();
 
-				var command = new ProfissionalModel.CreateUpdateProfissionalCommand
-				{
-					Id = id,
+                var command = new ProfissionalModel.CreateUpdateProfissionalCommand
+                {
+                    Id = id,
                     Nome = collection["nome"] == "" ? null : collection["nome"].ToString(),
                     DtNascimento = collection["DtNascimento"] == "" ? null : collection["DtNascimento"].ToString(),
                     Email = collection["email"] == "" ? null : collection["email"].ToString(),
@@ -283,56 +284,56 @@ namespace WebApp.Controllers
                     Cargo = collection["ddlCargo"].ToString()
                 };
 
-				await ApiClientFactory.Instance.UpdateProfissional(command.Id, command);
+                await ApiClientFactory.Instance.UpdateProfissional(command.Id, command);
 
-               // var profissional = ApiClientFactory.Instance.GetProfissionalById(id);
+                // var profissional = ApiClientFactory.Instance.GetProfissionalById(id);
 
-     //           if (profissional.Email.Trim()!=command.Email.Trim())
-     //           {
-     //               //atualiza email na aspnetuser e o username
+                //           if (profissional.Email.Trim()!=command.Email.Trim())
+                //           {
+                //               //atualiza email na aspnetuser e o username
 
-					////atualiza o email na tabela usuários
-     //               var usuario = ApiClientFactory.Instance.GetUsuarioByEmail(profissional.Email);
+                ////atualiza o email na tabela usuários
+                //               var usuario = ApiClientFactory.Instance.GetUsuarioByEmail(profissional.Email);
 
-					//usuario.Email = command.Email
-     //           }
+                //usuario.Email = command.Email
+                //           }
 
                 return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
-			}
-			catch (Exception e)
-			{
-				Console.Write(e.StackTrace);
-				return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = e.Message });
+            }
+            catch (Exception e)
+            {
+                Console.Write(e.StackTrace);
+                return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = e.Message });
 
-			}
-		}
+            }
+        }
 
-		[HttpPost]
+        [HttpPost]
         [ClaimsAuthorize(ClaimType.Profissional, Claim.Incluir)]
         public async Task<ActionResult> CreateModalidade(IFormCollection collection)
-		{
-			try
-			{
-				var modalidade = collection["modalidade"].ToString();
+        {
+            try
+            {
+                var modalidade = collection["modalidade"].ToString();
 
-				var command = new ModalidadeModel.CreateUpdateModalidadeCommand
-				{
-					Nome = modalidade
-				};
+                var command = new ModalidadeModel.CreateUpdateModalidadeCommand
+                {
+                    Nome = modalidade
+                };
 
-				await ApiClientFactory.Instance.CreateModalidade(command);
+                await ApiClientFactory.Instance.CreateModalidade(command);
 
-				return RedirectToAction(nameof(Create), new { crud = (int)EnumCrud.Created });
-			}
-			catch (Exception e)
-			{
-				Console.Write(e.StackTrace);
-				return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = e.Message });
+                return RedirectToAction(nameof(Create), new { crud = (int)EnumCrud.Created });
+            }
+            catch (Exception e)
+            {
+                Console.Write(e.StackTrace);
+                return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = e.Message });
 
-			}
-		}
+            }
+        }
 
-		[ClaimsAuthorize(ClaimType.Profissional, Claim.Excluir)]
+        [ClaimsAuthorize(ClaimType.Profissional, Claim.Excluir)]
         public async Task<ActionResult> Delete(int id)
         {
             try
@@ -358,7 +359,7 @@ namespace WebApp.Controllers
                         //select* delete from Usuarios where email like '%amaralsakarina@gmail.com%'
                         var usuario = ApiClientFactory.Instance.GetUsuarioByEmail(profissional.Email);
                         ApiClientFactory.Instance.DeleteUsuario(usuario.Id);
-                        
+
                         return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Deleted });
                     }
                 }
@@ -388,109 +389,109 @@ namespace WebApp.Controllers
 
         [ClaimsAuthorize(ClaimType.Profissional, Claim.Consultar)]
         public Task<ProfissionalDto> GetProfissionalById(int id)
-		{
-			var result = ApiClientFactory.Instance.GetProfissionalById(id);
+        {
+            var result = ApiClientFactory.Instance.GetProfissionalById(id);
 
-			return Task.FromResult(result);
-		}
+            return Task.FromResult(result);
+        }
 
-		[ClaimsAuthorize(ClaimType.Profissional, Claim.Consultar)]
+        [ClaimsAuthorize(ClaimType.Profissional, Claim.Consultar)]
         public Task<bool> GetProfissionalByEmail(string email)
-		{
-			if (string.IsNullOrEmpty(email)) throw new Exception("Email não informado.");
-			var result = ApiClientFactory.Instance.GetProfissionalByEmail(email);
+        {
+            if (string.IsNullOrEmpty(email)) throw new Exception("Email não informado.");
+            var result = ApiClientFactory.Instance.GetProfissionalByEmail(email);
 
-			if (result == null)
-			{
-				return Task.FromResult(true);
-			}
+            if (result == null)
+            {
+                return Task.FromResult(true);
+            }
 
-			return Task.FromResult(false);
-		}
+            return Task.FromResult(false);
+        }
 
         [ClaimsAuthorize(ClaimType.Profissional, Claim.Consultar)]
         public Task<bool> GetProfissionalByCpf(string cpf)
-		{
-			if (string.IsNullOrEmpty(cpf)) throw new Exception("Cpf não informado.");
-			var result = ApiClientFactory.Instance.GetProfissionalByCpf(Regex.Replace(cpf, "[^0-9a-zA-Z]+", ""));
+        {
+            if (string.IsNullOrEmpty(cpf)) throw new Exception("Cpf não informado.");
+            var result = ApiClientFactory.Instance.GetProfissionalByCpf(Regex.Replace(cpf, "[^0-9a-zA-Z]+", ""));
 
-			if (result == null)
-			{
-				return Task.FromResult(true);
-			}
+            if (result == null)
+            {
+                return Task.FromResult(true);
+            }
 
-			return Task.FromResult(false);
-		}
+            return Task.FromResult(false);
+        }
 
-		[HttpPost]
+        [HttpPost]
         [ClaimsAuthorize(ClaimType.Profissional, Claim.Habilitar)]
         public async Task<ActionResult> Habilitar(IFormCollection collection)
-		{
-			try
-			{
-				var profissionalId = collection["habilitarProfissionalId"].ToString();
+        {
+            try
+            {
+                var profissionalId = collection["habilitarProfissionalId"].ToString();
 
-				var result = ApiClientFactory.Instance.GetProfissionalById(Convert.ToInt32(profissionalId));
+                var result = ApiClientFactory.Instance.GetProfissionalById(Convert.ToInt32(profissionalId));
 
-				if (result.Email != null && result.Email.Equals(collection["email"].ToString().Trim()))
-				{
-					return RedirectToAction(nameof(Index),
-						new
-						{
-							notify = (int)EnumNotify.Error,
-							message = "Já existe um profissional cadastrado com esse email."
-						});
-				}
+                if (result.Email != null && result.Email.Equals(collection["email"].ToString().Trim()))
+                {
+                    return RedirectToAction(nameof(Index),
+                        new
+                        {
+                            notify = (int)EnumNotify.Error,
+                            message = "Já existe um profissional cadastrado com esse email."
+                        });
+                }
 
-				var result2 = ApiClientFactory.Instance.GetUsuarioByEmail(collection["email"].ToString().Trim());
+                var result2 = ApiClientFactory.Instance.GetUsuarioByEmail(collection["email"].ToString().Trim());
 
-				if (result2 != null)
-				{
-					return RedirectToAction(nameof(Create),
-						new
-						{
-							notify = (int)EnumNotify.Error,
-							message = "Já existe profissional com o E-mail cadastrado na base de dados!"
-						});
-				}
+                if (result2 != null)
+                {
+                    return RedirectToAction(nameof(Create),
+                        new
+                        {
+                            notify = (int)EnumNotify.Error,
+                            message = "Já existe profissional com o E-mail cadastrado na base de dados!"
+                        });
+                }
 
-				var command = new UsuarioModel.CreateUpdateUsuarioCommand
-				{
-					Email = collection["email"].ToString(),
-					Nome = collection["nome"].ToString()
-				};
+                var command = new UsuarioModel.CreateUpdateUsuarioCommand
+                {
+                    Email = collection["email"].ToString(),
+                    Nome = collection["nome"].ToString()
+                };
 
-				var newUser = new IdentityUser { UserName = command.Email, Email = command.Email };
-				await _userManager.CreateAsync(newUser, "12345678");
+                var newUser = new IdentityUser { UserName = command.Email, Email = command.Email };
+                await _userManager.CreateAsync(newUser, "12345678");
 
-				command.PerfilId = result2.Perfil.Id;
-				var perfil = ApiClientFactory.Instance.GetPerfilById(command.PerfilId);
+                command.PerfilId = result2.Perfil.Id;
+                var perfil = ApiClientFactory.Instance.GetPerfilById(command.PerfilId);
 
-				var includedUserId = _userManager.Users.FirstOrDefault(x => x.Email == newUser.Email).Id;
+                var includedUserId = _userManager.Users.FirstOrDefault(x => x.Email == newUser.Email).Id;
 
-				command.AspNetUserId = includedUserId;
-				command.AspNetRoleId = perfil.AspNetRoleId;
+                command.AspNetUserId = includedUserId;
+                command.AspNetRoleId = perfil.AspNetRoleId;
 
-				ApiClientFactory.Instance.CreateUsuario(command);
+                ApiClientFactory.Instance.CreateUsuario(command);
 
-				SendNewUserEmail(newUser, command.Email, command.Nome);
+                SendNewUserEmail(newUser, command.Email, command.Nome);
 
-				return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
-			}
-			catch (Exception e)
-			{
-				return RedirectToAction(nameof(Index),
-					new
-					{
-						notify = (int)EnumNotify.Error,
-						message = "Erro ao criar usuário. Favor entrar em contato com o administrador do sistema."
-					});
-			}
-		}
+                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction(nameof(Index),
+                    new
+                    {
+                        notify = (int)EnumNotify.Error,
+                        message = "Erro ao criar usuário. Favor entrar em contato com o administrador do sistema."
+                    });
+            }
+        }
 
         [ClaimsAuthorize(ClaimType.Profissional, Claim.Consultar)]
         public Task<JsonResult> GetProfissionaisByLocalidade(string id)
-		{
+        {
             try
             {
                 if (string.IsNullOrEmpty(id)) throw new Exception("Localidadee não informada.");
@@ -504,21 +505,21 @@ namespace WebApp.Controllers
                 return Task.FromResult(Json(ex));
             }
         }
-		private async Task SendNewUserEmail(IdentityUser user, string email, string nome)
-		{
-			var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+        private async Task SendNewUserEmail(IdentityUser user, string email, string nome)
+        {
+            var code = await _userManager.GeneratePasswordResetTokenAsync(user);
 
-			var callbackUrl = Url.ActionLink("ResetPassword",
-				"Identity/Account", new { code, email });
+            var callbackUrl = Url.ActionLink("ResetPassword",
+                "Identity/Account", new { code, email });
 
-			var message =
-				System.IO.File.ReadAllText(Path.Combine(_host.WebRootPath, "emailtemplates/ConfirmEmail.html"));
-			message = message.Replace("%NAME%", nome);
-			message = message.Replace("%CALLBACK%", HtmlEncoder.Default.Encode(callbackUrl.Replace("%2FAccount", "/Account")));
+            var message =
+                System.IO.File.ReadAllText(Path.Combine(_host.WebRootPath, "emailtemplates/ConfirmEmail.html"));
+            message = message.Replace("%NAME%", nome);
+            message = message.Replace("%CALLBACK%", HtmlEncoder.Default.Encode(callbackUrl.Replace("%2FAccount", "/Account")));
 
-			await _emailSender.SendEmailAsync(user.Email, "Primeiro acesso sistema Dna Brasil",
-				message);
-		}
+            await _emailSender.SendEmailAsync(user.Email, "Primeiro acesso sistema Dna Brasil",
+                message);
+        }
 
         public Task<JsonResult> GetProfissionaisByLocalidadeId(string id)
         {
@@ -545,49 +546,65 @@ namespace WebApp.Controllers
         [ClaimsAuthorize(ClaimType.Profissional, Claim.Consultar)]
         public ActionResult Profile(int? crud, int? notify, string message = null)
         {
-	        SetNotifyMessage(notify, message);
-	        SetCrudMessage(crud);
-
-	        //usuario logado
-	        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-	        var usuario = User.Identity.Name;
-
-	        var usu = ApiClientFactory.Instance.GetUsuarioByEmail(usuario);
-
-	        var profissional = ApiClientFactory.Instance.GetProfissionalByEmail(usuario);
-
-            var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", profissional.Uf);
-            var municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(profissional.Uf!), "Id", "Nome", profissional.MunicipioId);
-            var localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeByMunicipio(profissional.MunicipioId.ToString()), "Id", "Nome", profissional.LocalidadeId);
-            var listModalidades = new SelectList(ApiClientFactory.Instance.GetModalidadeAll(), "Id", "Nome", profissional.ModalidadesIds);
-
-            List<SelectListDto> list = new List<SelectListDto>
+            try
             {
-                new() { IdNome = "Professor Ed. Física", Nome = "Professor Ed. Física" },
-                new() { IdNome = "Instrutor Ativ. Diversas", Nome = "Instrutor Ativ. Diversas" },
-                new() { IdNome = "Instrutor Artes", Nome = "Instrutor Artes" },
-                new() { IdNome = "Professor Reforço", Nome = "Professor Reforço" },
-                new() { IdNome = "Professor Disc. Diversas", Nome = "Professor Disc. Diversas" },
-                new() { IdNome = "Monitor Regular", Nome = "Monitor Regular" },
-                new() { IdNome = "Monitor A. Especializado", Nome = "Monitor A. Especializado" },
-                new() { IdNome = "Professor Informática", Nome = "Professor Informática" },
-                new() { IdNome = "Psicólogo", Nome = "Psicólogo" },
-                new() { IdNome = "Assistente Social", Nome = "Assistente Social" },
-                new() { IdNome = "Estagiário", Nome = "Estagiário" }
-            };
+                SetNotifyMessage(notify, message);
+                SetCrudMessage(crud);
 
-            var cargos = new SelectList(list, "IdNome", "Nome", profissional.Cargo);
+                //usuario logado
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                if (User.Identity == null) return Redirect("/Identity/Account/Login");
+                var usuario = User.Identity.Name;
 
-            return View(new ProfissionalModel()
+                var usu = ApiClientFactory.Instance.GetUsuarioByEmail(usuario);
+
+                var profissional = ApiClientFactory.Instance.GetProfissionalByEmail(usuario);
+
+                var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome",
+                    profissional.Uf);
+                var municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(profissional.Uf!), "Id",
+                    "Nome", profissional.MunicipioId);
+                var localidades =
+                    new SelectList(
+                        ApiClientFactory.Instance.GetLocalidadeByMunicipio(profissional.MunicipioId.ToString()),
+                        "Id", "Nome", profissional.LocalidadeId);
+                var listModalidades = new SelectList(ApiClientFactory.Instance.GetModalidadeAll(), "Id", "Nome",
+                    profissional.ModalidadesIds);
+
+                List<SelectListDto> list = new List<SelectListDto>
+                {
+                    new() { IdNome = "Professor Ed. Física", Nome = "Professor Ed. Física" },
+                    new() { IdNome = "Instrutor Ativ. Diversas", Nome = "Instrutor Ativ. Diversas" },
+                    new() { IdNome = "Instrutor Artes", Nome = "Instrutor Artes" },
+                    new() { IdNome = "Professor Reforço", Nome = "Professor Reforço" },
+                    new() { IdNome = "Professor Disc. Diversas", Nome = "Professor Disc. Diversas" },
+                    new() { IdNome = "Monitor Regular", Nome = "Monitor Regular" },
+                    new() { IdNome = "Monitor A. Especializado", Nome = "Monitor A. Especializado" },
+                    new() { IdNome = "Professor Informática", Nome = "Professor Informática" },
+                    new() { IdNome = "Psicólogo", Nome = "Psicólogo" },
+                    new() { IdNome = "Assistente Social", Nome = "Assistente Social" },
+                    new() { IdNome = "Estagiário", Nome = "Estagiário" }
+                };
+
+                var cargos = new SelectList(list, "IdNome", "Nome", profissional.Cargo);
+
+                return View(new ProfissionalModel()
+                {
+                    ListEstados = estados,
+                    ListModalidades = listModalidades,
+                    Profissional = profissional,
+                    Usuario = usu,
+                    ListMunicipios = municipios,
+                    ListLocalidades = localidades,
+                    ListCargos = cargos
+                });
+
+            }
+            catch (Exception e)
             {
-                ListEstados = estados,
-                ListModalidades = listModalidades,
-                Profissional = profissional,
-		        Usuario = usu,
-                ListMunicipios = municipios,
-                ListLocalidades = localidades,
-                ListCargos = cargos
-            });
+                return Redirect("/Identity/Account/Login");
+
+            }
         }
 
 
@@ -621,7 +638,7 @@ namespace WebApp.Controllers
                     Habilitado = habilitado != "",
                     Status = status != "",
                     ModalidadesIds = collection["ddlModalidades"].ToString(),
-                    Cargo =  collection["ddlCargo"].ToString()
+                    Cargo = collection["ddlCargo"].ToString()
                 };
 
                 await ApiClientFactory.Instance.UpdateProfissional(command.Id, command);
@@ -629,7 +646,7 @@ namespace WebApp.Controllers
                 var user = await _userManager.FindByEmailAsync(command.Email);
 
                 var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-                
+
                 await _userManager.ResetPasswordAsync(user, token, collection["perfilNovaSenha"].ToString());
 
                 // var profissional = ApiClientFactory.Instance.GetProfissionalById(id);
@@ -644,12 +661,12 @@ namespace WebApp.Controllers
                 //usuario.Email = command.Email
                 //           }
 
-                return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
+                return RedirectToAction(nameof(Profile), new { crud = (int)EnumCrud.Updated });
             }
             catch (Exception e)
             {
                 Console.Write(e.StackTrace);
-                return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, message = e.Message });
+                return RedirectToAction(nameof(Profile), new { notify = (int)EnumNotify.Error, message = e.Message });
 
             }
         }
