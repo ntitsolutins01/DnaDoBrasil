@@ -21,7 +21,7 @@ namespace WebApp.Controllers
     /// <summary>
     /// Controler de Usuário
     /// </summary>
-    [Authorize(Policy = ModuloAccess.ControleAcesso)]
+    //[Authorize(Policy = ModuloAccess.ControleAcesso)]
     public class UsuarioController : BaseController
     {
         #region Constructor

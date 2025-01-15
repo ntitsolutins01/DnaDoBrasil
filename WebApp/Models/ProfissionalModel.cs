@@ -24,6 +24,8 @@ namespace WebApp.Models
         public SelectList ListCargos { get; set; }
         public string CargoId { get; set; }
         public UsuarioDto Usuario { get; set; }
+        public int LinhaAcaoId { get; set; }
+        public SelectList ListLinhasAcoes { get; set; }
 
         public class CreateUpdateProfissionalCommand
         {

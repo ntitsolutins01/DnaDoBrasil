@@ -571,6 +571,10 @@ namespace WebApp.Controllers
                 var listModalidades = new SelectList(ApiClientFactory.Instance.GetModalidadeAll(), "Id", "Nome",
                     profissional.ModalidadesIds);
 
+                var linhasAcoes = new SelectList(ApiClientFactory.Instance.GetLinhasAcoesAll(), "Id", "Nome");
+
+                var categorias = new SelectList(ApiClientFactory.Instance.GetCategoriasAll(), "Id", "Nome");
+
                 List<SelectListDto> list = new List<SelectListDto>
                 {
                     new() { IdNome = "Professor Ed. Física", Nome = "Professor Ed. Física" },
@@ -596,7 +600,8 @@ namespace WebApp.Controllers
                     Usuario = usu,
                     ListMunicipios = municipios,
                     ListLocalidades = localidades,
-                    ListCargos = cargos
+                    ListCargos = cargos,
+                    ListLinhasAcoes = linhasAcoes
                 });
 
             }
@@ -615,6 +620,7 @@ namespace WebApp.Controllers
         {
             try
             {
+
                 var status = collection["status"].ToString();
                 var habilitado = collection["habilitado"].ToString();
 
