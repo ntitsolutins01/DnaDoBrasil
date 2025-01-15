@@ -267,6 +267,21 @@
         (function ($) {
 
             'use strict';
+
+            // Set the value
+            var data = "@Model.Aluno.ModalidadesIds";
+
+            //Make an array
+            var dataarray = data.split(",");
+
+            // Set the value
+            $("#ddlModalidades").val(dataarray);
+
+            // Then refresh
+            $("#ddlModalidades").multiselect("refresh");
+
+            //========================================================
+
             var crud = @ViewBag.CrudMessage;
 
             if (crud === 1) {
