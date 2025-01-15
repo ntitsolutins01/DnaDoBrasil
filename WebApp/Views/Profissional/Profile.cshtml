@@ -58,200 +58,162 @@
                     <li class="active">
                         <a href="#overview" data-toggle="tab">Alterar</a>
                     </li>
-                   @*  <li>
+                    @* *@
+                    <li>
                         <a href="#minhasTurmas" data-toggle="tab">Minhas Turmas</a>
-                    </li> *@
+                    </li>
                 </ul>
                 <div class="tab-content">
                     <div id="overview" class="tab-pane active">
                         @using (@Html.BeginForm("Profile", "Profissional", FormMethod.Post, new { id = "formProfile", @class = "form-horizontal" }))
                         {
                             <h4 class="mb-xlg">Meus Dados</h4>
-                            @if (Model.Usuario.Perfil.Id == (int)EnumPerfil.Profissional)
-                            {
-                                <input hidden="ProfissionalId" value="@Model.Profissional.Id" id="profissionalId" name="profissionalId" />
-                                <fieldset>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label">Nome <span class="required">*</span></label>
-                                        <div class="col-sm-5">
-                                            <input type="text" name="nome" id="nome" value="@Model.Profissional.Nome"
-                                                   maxlength="200" class="form-control" required title="Por favor informe o nome." />
-                                        </div>
-                                        <label class="col-sm-1 control-label">Email <span class="required">*</span></label>
-                                        <div class="col-sm-4">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <i class="fa fa-envelope"></i>
-                                                </span>
-                                                <input type="text" name="email" id="email" maxlength="100" readonly
-                                                       class="form-control" value="@Model.Profissional.Email" />
-                                            </div>
+                            <input hidden="ProfissionalId" value="@Model.Profissional.Id" id="profissionalId" name="profissionalId" />
+                            <fieldset>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Nome <span class="required">*</span></label>
+                                    <div class="col-sm-5">
+                                        <input type="text" name="nome" id="nome" value="@Model.Profissional.Nome"
+                                               maxlength="200" class="form-control" required title="Por favor informe o nome." />
+                                    </div>
+                                    <label class="col-sm-1 control-label">Email <span class="required">*</span></label>
+                                    <div class="col-sm-4">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-envelope"></i>
+                                            </span>
+                                            <input type="text" name="email" id="email" maxlength="100" readonly
+                                                   class="form-control" value="@Model.Profissional.Email" />
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label">Cpf <span class="required">*</span></label>
-                                        <div class="col-sm-2">
-                                            <input id="cpf" name="cpf"
-                                                   type="text" class="form-control" value="@Model.Profissional.CpfCnpj"
-                                                   maxlength="14" />
-                                        </div>
-                                        <label class="col-sm-1 control-label text-sm-right pt-2">Estado <span class="required">*</span></label>
-                                        <div class="col-md-2">
-                                            <select class="form-control populate select2" name="ddlEstado" id="ddlEstado"
-                                                    title="Por favor informe um Estado." required disabled
-                                                    asp-for="EstadoId" asp-items="Model.ListEstados">
-                                                <option value="">Selecionar Estado</option>
-                                            </select>
-                                        </div>
-                                        <label class="col-sm-1 control-label text-sm-right pt-2">Município <span class="required">*</span></label>
-                                        <div class="col-md-4">
-                                            <select class="form-control populate select2" name="ddlMunicipio" id="ddlMunicipio"
-                                                    title="Por favor informe um Municipio." required disabled
-                                                    asp-for="MunicipioId" asp-items="Model.ListMunicipios">
-                                                <option value="">Selecionar Município</option>
-                                            </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Cpf <span class="required">*</span></label>
+                                    <div class="col-sm-2">
+                                        <input id="cpf" name="cpf"
+                                               type="text" class="form-control" value="@Model.Profissional.CpfCnpj"
+                                               maxlength="14" />
+                                    </div>
+                                    <label class="col-sm-1 control-label text-sm-right pt-2">Estado <span class="required">*</span></label>
+                                    <div class="col-md-2">
+                                        <select class="form-control populate select2" name="ddlEstado" id="ddlEstado"
+                                                title="Por favor informe um Estado." required disabled
+                                                asp-for="EstadoId" asp-items="Model.ListEstados">
+                                            <option value="">Selecionar Estado</option>
+                                        </select>
+                                    </div>
+                                    <label class="col-sm-1 control-label text-sm-right pt-2">Município <span class="required">*</span></label>
+                                    <div class="col-md-4">
+                                        <select class="form-control populate select2" name="ddlMunicipio" id="ddlMunicipio"
+                                                title="Por favor informe um Municipio." required disabled
+                                                asp-for="MunicipioId" asp-items="Model.ListMunicipios">
+                                            <option value="">Selecionar Município</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label text-sm-right pt-2">Localidade <span class="required">*</span></label>
+                                    <div class="col-md-4">
+                                        <select class="form-control populate select2" name="ddlLocalidade" id="ddlLocalidade"
+                                                title="Por favor informe a localidade." required disabled
+                                                asp-for="LocalidadeId" asp-items="Model.ListLocalidades">
+                                            <option value="">Selecionar Localidade</option>
+                                        </select>
+                                    </div>
+                                    <label class="col-sm-1 control-label text-sm-right pt-2">Modalidades<span class="required">*</span></label>
+                                    <div class="col-md-5">
+                                        <select class="form-control populate" multiple="multiple" multiple="multiple" data-plugin-multiselect data-plugin-options='{ "maxHeight": 200, "enableCaseInsensitiveFiltering": true }'
+                                                id="ddlModalidades" name="ddlModalidades" style="width: 100%" asp-for="ModalidadeId" asp-items="Model.ListModalidades" required
+                                                title="Por favor selecione ao menos uma modalidade.">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Data Nascimento <span class="required">*</span> </label>
+                                    <div class="col-sm-2">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </span>
+                                            <input id="DtNascimento" name="DtNascimento" required
+                                                   title="Por favor informe a data de nascimento."
+                                                   style="z-index: auto;" value="@Model.Profissional.DtNascimento"
+                                                   data-plugin-datepicker data-date-format="dd/mm/yyyy" data-plugin-options='{"language": "pt-BR"}'
+                                                   placeholder="__/__/____" class="form-control startdate"
+                                                   class="form-control">
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label text-sm-right pt-2">Localidade <span class="required">*</span></label>
-                                        <div class="col-md-4">
-                                            <select class="form-control populate select2" name="ddlLocalidade" id="ddlLocalidade"
-                                                    title="Por favor informe a localidade." required disabled
-                                                    asp-for="LocalidadeId" asp-items="Model.ListLocalidades">
-                                                <option value="">Selecionar Localidade</option>
-                                            </select>
-                                        </div>
-                                        <label class="col-sm-1 control-label text-sm-right pt-2">Modalidades<span class="required">*</span></label>
-                                        <div class="col-md-5">
-                                            <select class="form-control populate" multiple="multiple" multiple="multiple" data-plugin-multiselect data-plugin-options='{ "maxHeight": 200, "enableCaseInsensitiveFiltering": true }'
-                                                    id="ddlModalidades" name="ddlModalidades" style="width: 100%" asp-for="ModalidadeId" asp-items="Model.ListModalidades" required
-                                                    title="Por favor selecione ao menos uma modalidade.">
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label">Data Nascimento <span class="required">*</span> </label>
-                                        <div class="col-sm-2">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <i class="fa fa-calendar"></i>
-                                                </span>
-                                                <input id="DtNascimento" name="DtNascimento" required
-                                                       title="Por favor informe a data de nascimento."
-                                                       style="z-index: auto;" value="@Model.Profissional.DtNascimento"
-                                                       data-plugin-datepicker data-date-format="dd/mm/yyyy" data-plugin-options='{"language": "pt-BR"}'
-                                                       placeholder="__/__/____" class="form-control startdate"
-                                                       class="form-control">
-                                            </div>
-                                        </div>
-                                        <label class="col-sm-1 control-label">Sexo <span class="required">*</span></label>
-                                        <div class="col-sm-2">
-                                            <select class="form-control populate select2" name="ddlSexo" id="ddlSexo" required
-                                                    title="Por favor selecione um sexo.">
-                                                <option value="">Selecionar Sexo</option>
-                                                @if (Model.Profissional.Sexo == "M")
-                                                {
+                                    <label class="col-sm-1 control-label">Sexo <span class="required">*</span></label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control populate select2" name="ddlSexo" id="ddlSexo" required
+                                                title="Por favor selecione um sexo.">
+                                            <option value="">Selecionar Sexo</option>
+                                            @if (Model.Profissional.Sexo == "M")
+                                            {
 
-                                                    <option value="M" selected>MASCULINO</option>
-                                                    <option value="F">FEMININO</option>
-                                                }
-                                                else
-                                                {
-                                                    <option value="M">MASCULINO</option>
-                                                    <option value="F" selected>FEMININO</option>
+                                                <option value="M" selected>MASCULINO</option>
+                                                <option value="F">FEMININO</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="M">MASCULINO</option>
+                                                <option value="F" selected>FEMININO</option>
 
-                                                }
-                                            </select>
-                                        </div>
-                                        <label class="col-sm-1 control-label">Cargo</label>
-                                        <div class="col-sm-4">
-                                            <select class="form-control populate select2" name="ddlCargo" id="ddlCargo" style="width: 100%"
-                                                    title="Por favor selecione um etnia." required
-                                                    asp-for="CargoId" asp-items="Model.ListCargos">
-                                                <option value="">Selecionar Cargo</option>
-                                            </select>
+                                            }
+                                        </select>
+                                    </div>
+                                    <label class="col-sm-1 control-label">Cargo</label>
+                                    <div class="col-sm-4">
+                                        <select class="form-control populate select2" name="ddlCargo" id="ddlCargo" style="width: 100%"
+                                                title="Por favor selecione um etnia." required
+                                                asp-for="CargoId" asp-items="Model.ListCargos">
+                                            <option value="">Selecionar Cargo</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Endereço</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" id="endereco" name="endereco" maxlength="200" class="form-control" value="@Model.Profissional.Endereco" />
+                                    </div>
+                                    <label class="col-sm-1 control-label">Número</label>
+                                    <div class="col-sm-2">
+                                        <input type="number" id="numero" name="numero" maxlength="4" class="form-control" value="@Model.Profissional.Numero" />
+                                    </div>
+                                    <label class="col-sm-1 control-label">Cep</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" id="cep" name="cep" maxlength="9" class="form-control" value="@Model.Profissional.Cep" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Bairro </label>
+                                    <div class="col-sm-2">
+                                        <input type="bairro" name="bairro" maxlength="50" class="form-control" value="@Model.Profissional.Bairro" />
+                                    </div>
+                                    <label class="col-lg-1 control-label text-lg-right pt-2">Telefone</label>
+                                    <div class="col-lg-3">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-phone"></i>
+                                            </span>
+                                            <input id="numTelefone" name="numTelefone" class="form-control"
+                                                   maxlength="14" value="@Model.Profissional.Telefone"
+                                                   title="Por favor informe o telefone ">
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label">Endereço</label>
-                                        <div class="col-sm-4">
-                                            <input type="text" id="endereco" name="endereco" maxlength="200" class="form-control" value="@Model.Profissional.Endereco" />
-                                        </div>
-                                        <label class="col-sm-1 control-label">Número</label>
-                                        <div class="col-sm-2">
-                                            <input type="number" id="numero" name="numero" maxlength="4" class="form-control" value="@Model.Profissional.Numero" />
-                                        </div>
-                                        <label class="col-sm-1 control-label">Cep</label>
-                                        <div class="col-sm-2">
-                                            <input type="text" id="cep" name="cep" maxlength="9" class="form-control" value="@Model.Profissional.Cep" />
+                                    <label class="col-sm-1 control-label">Celular </label>
+                                    <div class="col-sm-3">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-phone"></i>
+                                            </span>
+                                            <input id="numCelular" name="numCelular" class="form-control"
+                                                   maxlength="14" value="@Model.Profissional.Celular"
+                                                   title="Por favor informe o celular">
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label">Bairro </label>
-                                        <div class="col-sm-2">
-                                            <input type="bairro" name="bairro" maxlength="50" class="form-control" value="@Model.Profissional.Bairro" />
-                                        </div>
-                                        <label class="col-lg-1 control-label text-lg-right pt-2">Telefone</label>
-                                        <div class="col-lg-3">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <i class="fa fa-phone"></i>
-                                                </span>
-                                                <input id="numTelefone" name="numTelefone" class="form-control"
-                                                       maxlength="14" value="@Model.Profissional.Telefone"
-                                                       title="Por favor informe o telefone ">
-                                            </div>
-                                        </div>
-                                        <label class="col-sm-1 control-label">Celular </label>
-                                        <div class="col-sm-3">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <i class="fa fa-phone"></i>
-                                                </span>
-                                                <input id="numCelular" name="numCelular" class="form-control"
-                                                       maxlength="14" value="@Model.Profissional.Celular"
-                                                       title="Por favor informe o celular">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label pull-left">Cadastro ativo para login?</label>
-                                        <div class="col-sm-1">
-                                            <div class="switch switch-sm switch-success">
-                                                <input type="checkbox" id="status" name="status" data-plugin-ios-switch @(Model.Profissional.Status == true ? "checked" : "") />
-                                            </div>
-                                        </div>
-                                        <label class="col-sm-2 control-label">Cadastro habilitado a operar?</label>
-                                        <div class="col-sm-1">
-                                            <div class="switch switch-sm switch-success">
-                                                <input type="checkbox" id="habilitado" name="habilitado" data-plugin-ios-switch @(Model.Profissional.Habilitado == true ? "checked" : "") />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </fieldset>
-                            }
-                            else
-                            {
-                                <fieldset>
-                                    <div class="form-group">
-                                        <label class="col-md-3 control-label" for="nome">Nome <span class="required">*</span></label>
-                                        <div class="col-md-8">
-                                            <input type="text" name="nome" class="form-control"
-                                                   maxlength="60" value="@Model.Usuario.Nome"
-                                                   title="Por favor informe o nome completo do nome do usuário." required />
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-3 control-label" for="profileLastName">Cpf/Cnpj <span class="required">*</span></label>
-                                        <div class="col-md-3">
-                                            <input id="cpfCnpj" name="cpfCnpj" value="@Model.Usuario.CpfCnpj"
-                                                   type="text" value="" class="form-control"
-                                                   title="Por favor informe o cpf do parceiro."
-                                                   maxlength="19" />
-                                        </div>
-                                    </div>
-                                </fieldset>
-                            }
+                                </div>
+                            </fieldset>
 
                             <hr class="dotted tall">
                             <h4 class="mb-xlg">Alterar Senha</h4>
@@ -280,51 +242,159 @@
                         }
                     </div>
                     <div id="minhasTurmas" class="tab-pane">
-                        <h4 class="mb-xlg">Minhas Turmas</h4>
-                        <fieldset class="mb-xl">
-                            
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">LinhaAcao <span class="required">*</span></label>
-                                <div class="col-md-4">
-                                    <select class="form-control populate select2" name="ddlLinhaAcao" id="ddlLinhaAcao"
-                                            title="Por favor informe a LinhaAcao." required
-                                            asp-for="LinhaAcaoId" asp-items="Model.ListLinhasAcoes">
-                                        <option value="">Selecionar LinhaAcao</option>
-                                    </select>
+                        @using (@Html.BeginForm("MinhasTurmas", "Profissional", FormMethod.Post, new { id = "formMinhasTurmas", @class = "form-horizontal" }))
+                        {
+                            <h4 class="mb-xlg">Meus Dados</h4>
+                            <input hidden="ProfissionalId" value="@Model.Profissional.Id" id="profissionalId" name="profissionalId" />
+                            <fieldset>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Linha de Ação <span class="required">*</span></label>
+                                    <div class="col-sm-4">
+                                        <select class="form-control populate select2" name="ddlLinhaAcao" id="ddlLinhaAcao"
+                                                title="Por favor informe a linha de ação." required style="width:100%"
+                                                asp-for="LinhaAcaoId" asp-items="Model.ListLinhasAcoes">
+                                            <option value="">Selecionar Linha de Ação</option>
+                                        </select>
+                                    </div>
+                                    <label class="col-sm-3 control-label">Atividade / Modalidade <span class="required">*</span></label>
+                                    <div class="col-sm-3">
+                                        <select class="form-control populate select2" name="ddlModalidade" id="ddlModalidade"
+                                                title="Por favor informe a Atividade / Modalidade." required style="width:100%"
+                                                asp-for="AtividadeModalidadeId" asp-items="Model.ListAtividadesModalidades">
+                                            <option value="">Selecionar Atividade / Modalidade</option>
+                                        </select>
+                                    </div>
                                 </div>
-                                <label class="col-sm-2 control-label">Atividade / Modalidade <span class="required">*</span></label>
-                                <div class="col-md-4">
-                                    
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label text-sm-right pt-2">Turma <span class="required">*</span></label>
+                                    <div class="col-md-3">
+                                        <select class="form-control populate select2" name="ddlTurma" id="ddlTurma"
+                                                title="Por favor selecione uma turma." required style="width:100%">
+                                            <option value="">Selecionar Turma</option>
+                                            <option value="T1">T1</option>
+                                            <option value="T2">T2</option>
+                                            <option value="T3">T3</option>
+                                            <option value="T4">T4</option>
+                                        </select>
+                                    </div>
+                                    <label class="col-sm-2 control-label">Categoria </label>
+                                    <div class="col-sm-2">
+                                        <input id="categoria" name="categoria"
+                                               type="text" class="form-control" disabled
+                                               maxlength="14" />
+                                    </div>
+                                    <label class="col-sm-2 control-label">Estrutura </label>
+                                    <div class="col-sm-1">
+                                        <input id="estrutura" name="estrutura" disabled
+                                               type="text" class="form-control" 
+                                               maxlength="14" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Dia da Semana </label>
+                                    <div class="col-sm-3">
+                                        <input id="diaSemana" name="diaSemana" disabled
+                                               type="text" class="form-control" 
+                                               maxlength="14" />
+                                    </div>
+                                    <label class="col-sm-2 control-label">Horário </label>
+                                    <div class="col-sm-2">
+                                        <input id="horario" name="horario" disabled
+                                               type="text" class="form-control" 
+                                               maxlength="14" />
+                                    </div>
+                                </div>
+                                <div id="divDeficiencia" name="divDeficiencia">
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label">&nbsp;&nbsp; </label>
+                                        <div class="col-sm-12">
+                                            <blockquote class="info">
+                                                <strong>Listagem de Alunos</strong>
+                                            </blockquote>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Deficiência</label>
+                                        <div class="col-sm-4">
+                                            <select class="form-control populate select2" name="ddlDeficiencia" id="ddlDeficiencia"
+                                                    title="Por favor selecione uma deficiência.">
+                                                <option value="">Selecionar Deficiência</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <a type="button" class="ml-xs btn btn-success" href='javascript:(crud.AddDeficiencia())'>
+                                                <i class="fa fa-plus"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="hidden" name="arrDeficiencias"/>
+                                        <label class="col-sm-2 control-label">Adicionados</label>
+                                        <div class="col-sm-10">
+                                            <table class="table table-bordered table-striped mb-0" id="deficienciaDataTable">
+                                                <thead>
+                                                <tr>
+                                                    <th>Id</th>
+                                                    <th>Nome Deficiência</th>
+                                                    <th>Ação</th>
+                                                </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-1 control-label">&nbsp;&nbsp; </label>
+                                    <div class="col-sm-12">
+                                        <blockquote class="info">
+                                            <strong>Listagem de Alunos</strong>
+                                        </blockquote>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Modalidade</label>
+                                    <div class="col-sm-4">
+                                        <select class="form-control populate select2" name="ddlModalidade" id="ddlModalidade"
+                                                style="width: 100%" title="Por favor selecione o turno."
+                                                asp-for="ModalidadeId" asp-items="Model.ListModalidades">
+                                            <option value="0">Selecionar Modalidade</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <a type="button" class="ml-xs btn btn-success" href='javascript:(crud.AddModalidade())'>
+                                            <i class="fa fa-plus"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input type="hidden" name="arrModalidades" />
+                                    <label class="col-sm-2 control-label">Adicionados</label>
+                                    <div class="col-sm-10">
+                                        <table class="adicionados table table-bordered table-striped mb-0" id="modalidadeDataTable">
+                                            <thead>
+                                            <tr>
+                                                <th>Id</th>
+                                                <th>Nome Modalidade</th>
+                                                <th>Deficiência</th>
+                                                <th>Ação</th>
+                                            </tr>
+                                            </thead>
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                            <div class="panel-footer">
+                                <div class="row">
+                                    <div class="col-md-9 col-md-offset-3">
+                                        <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
+                                        @* <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button> *@
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-md-3 control-label" for="perfilNovaSenha">Turma <span class="required">*</span></label>
-                                <div class="col-md-3">
-                                    <select class="form-control populate select2" name="ddlTurma" id="ddlTurma"
-                                            title="Por favor selecione uma turma." required style="width: 100%">
-                                        <option value="">Selecionar Turma</option>
-                                        <option value="T1">T1</option>
-                                        <option value="T2">T2</option>
-                                        <option value="T3">T3</option>
-                                        <option value="T4">T4</option>
-                                    </select>q
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-3 control-label" for="perfilConfirmaNovaSenha">Confirmar Nova Senha <span class="required">*</span></label>
-                                <div class="col-md-3">
-                                    <input type="text" class="form-control" id="perfilConfirmaNovaSenha" name="perfilConfirmaNovaSenha">
-                                </div>
-                            </div>
-                        </fieldset>
-                        <div class="panel-footer">
-                            <div class="row">
-                                <div class="col-md-9 col-md-offset-3">
-                                    <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
-                                    @* <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button> *@
-                                </div>
-                            </div>
-                        </div>
+                        }
                     </div>
                 </div>
             </div>

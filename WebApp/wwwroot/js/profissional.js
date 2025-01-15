@@ -541,17 +541,6 @@
             //Profile
             if (formid === "formProfile") {
 
-                if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
-
-                    $(function () {
-                        $('[data-plugin-ios-switch]').each(function () {
-                            var $this = $(this);
-
-                            $this.themePluginIOS7Switch();
-                        });
-                    });
-                }
-
                 //skin select
                 // MultiSelect
                 (function (theme, $) {
@@ -832,6 +821,81 @@
                     }
                 });
             }
+            //MinhasTurmas
+            if (formid === "formMinhasTurmas") { 
+
+                //skin select
+                var $select = $(".select2").select2({
+                    allowClear: true
+                });
+
+                $(".select2").each(function () {
+                    var $this = $(this),
+                        opts = {};
+
+                    var pluginOptions = $this.data('plugin-options');
+                    if (pluginOptions)
+                        opts = pluginOptions;
+
+                    $this.themePluginSelect2(opts);
+                });
+
+                /*
+                 * When you change the value the select via select2, it triggers
+                 * a 'change' event, but the jquery validation plugin
+                 * only re-validates on 'blur'*/
+
+                $select.on('change', function () {
+                    $(this).trigger('blur');
+                });
+
+                //clique de escolha do select
+                $("#ddlLinhaAcao").change(function () {
+                    var id = $("#ddlLinhaAcao").val();
+
+                    var url = "../../Modalidade/GetModalidadesByLinhaAcaoId";
+
+                    $.getJSON(url,
+                        { id: id },
+                        function (data) {
+                            if (data.length > 0) {
+                                var items = '<option value="">Selecionar Modalidade</option>';
+                                $("#ddlModalidade").empty;
+                                $.each(data,
+                                    function (i, row) {
+                                        items += "<option value='" + row.value + "'>" + row.text + "</option>";
+                                    });
+                                $("#ddlModalidade").html(items);
+                            }
+                            else {
+                                new PNotify({
+                                    title: 'Modalidade',
+                                    text: 'Modalidades não encontradas.',
+                                    type: 'warning'
+                                });
+                            }
+                        });
+                });
+
+                $("#formMinhasTurmas").validate({
+                    highlight: function (label) {
+                        $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
+                    },
+                    success: function (label) {
+                        $(label).closest('.form-group').removeClass('has-error');
+                        label.remove();
+                    },
+                    errorPlacement: function (error, element) {
+                        var placement = element.closest('.input-group');
+                        if (!placement.get(0)) {
+                            placement = element;
+                        }
+                        if (error.text() !== '') {
+                            placement.after(error);
+                        }
+                    }
+                });
+            }
 
             //var datatableInit = function () {
 
@@ -996,6 +1060,49 @@
                 Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
             });
         }
+        ,
+        AddDeficiencia: function () {
+            var self = this;
+            self.ShowLoad(true, "formDadosAluno");
+
+            var mapped = $("#ddlDeficiencia").select2('data');
+
+            $('#deficienciaDataTable').DataTable().destroy();
+
+            var table = $('#deficienciaDataTable').DataTable({
+                columnDefs: [
+                    { "className": "text-center", "targets": "_all" }
+                ]
+            });
+
+            table.row.add([mapped[0].id, mapped[0].text,
+            "<a style='color:#F44336' href='javascript:(crud.DeleteDeficiencia(\"" + mapped[0].id + "\"))'><i class='fa fa-trash'></i></a>"])
+                .draw();
+
+            self.params.deficiencias.push(mapped[0].id);
+
+            $('input[name="arrDeficiencias"]').attr('value', self.params.deficiencias);
+
+            $("#ddlDeficiencia").select2("val", "0");
+
+            self.ShowLoad(false, "formDadosAluno");
+        },
+        DeleteDeficiencia: function (index) {
+            var self = this;
+            self.ShowLoad(true, "formDadosAluno");
+
+            var table = $('#deficienciaDataTable').DataTable();
+
+            table.row(index).remove().draw();
+
+            $('#deficienciaDataTable tbody').on('click', 'tr', function () {
+                //alert('Row index: ' + table.row(this).index());
+                var index = table.row(this).index();
+                table.row(index).remove().draw();
+
+                self.ShowLoad(false, "formDadosAluno");
+            });
+        }
         //AddAmbiente: function () {
         //    var self = this;
         //    self.ShowLoad(true, "vProfissional");
@@ -1045,6 +1152,12 @@
     }
 });
 var crud = {
+    AddDeficiencia: function () {
+        vm.AddDeficiencia()
+    },
+    DeleteDeficiencia: function (index) {
+        vm.DeleteDeficiencia(index)
+    },
     DeleteModal: function (id) {
         $('input[name="deleteProfissionalId"]').attr('value', id);
         $('#mdDeleteProfissional').modal('show');
