@@ -14,5 +14,7 @@ namespace WebApp.Dto
         public string? Uf { get; set; }
         public int? MunicipioId { get; set; }
         public string? LocalidadeId { get; set; }
-    }
+        public string Localidade { get; set; }
+        public string? MunicipioEstado { get; set; }
+	}
 }
