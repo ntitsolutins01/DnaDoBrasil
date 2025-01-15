@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
+using WebApp.Authorization;
 using WebApp.Configuration;
 using WebApp.Dto;
 using WebApp.Enumerators;
 using WebApp.Factory;
+using WebApp.Identity;
 using WebApp.Models;
 using WebApp.Utility;
 
@@ -163,6 +165,23 @@ namespace WebApp.Controllers
             var result = ApiClientFactory.Instance.GetModalidadeById(id);
 
             return Task.FromResult(result);
+        }
+
+        [ClaimsAuthorize(ClaimType.Modalidade, Claim.Consultar)]
+        public Task<JsonResult> GetModalidadesByLinhaAcaoId(string id)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(id)) throw new Exception("Linha de ação não informada.");
+                var resultLocal = ApiClientFactory.Instance.GetModalidadesByLinhaAcaoId(Convert.ToInt32(id));
+
+                return Task.FromResult(Json(new SelectList(resultLocal, "Id", "Nome")));
+
+            }
+            catch (Exception ex)
+            {
+                return Task.FromResult(Json(ex));
+            }
         }
     }
 }
