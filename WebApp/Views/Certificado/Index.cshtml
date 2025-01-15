@@ -24,9 +24,9 @@
                         <thead>
                             <tr>
                                 <th class="text-center">Id</th>
-                                <th class="text-center">Curso Id</th>
-                                <th class="text-center">Imagem Frente</th>
-                                <th class="text-center">Imagem Verso</th>
+                                <th class="text-center">Nome do Curso</th>
+                                @* <th class="text-center">Imagem Frente</th>
+                                <th class="text-center">Imagem Verso</th> *@
                                 <th class="text-center">Html Frente</th>
                                 <th class="text-center">Html Verso</th>
                                 <th class="text-center">Status</th>
@@ -38,8 +38,8 @@
                             {
                                 <tr>
                                     <td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Id)</td>
-                                    <td class="text-center">@Html.DisplayFor(modelItem => item.CursoId)</td>
-                                    <td class="text-center">
+                                    <td class="text-center">@Html.DisplayFor(modelItem => item.TituloCurso)</td>
+                                    @* <td class="text-center">
                                         <img src="data:image/png;base64,@Convert.ToBase64String(item.ImagemFrente)" alt="Imagem Frente" style="width: 50px; height: 50px;" />
                                     </td>
                                     <td class="text-center">
@@ -47,7 +47,7 @@
                                         {
                                             <img src="data:image/png;base64,@Convert.ToBase64String(item.ImagemVerso)" alt="Imagem Verso" style="width: 50px; height: 50px;" />
                                         }
-                                    </td>
+                                    </td> *@
                                     <td class="text-center">@Html.DisplayFor(modelItem => item.HtmlFrente)</td>
                                     <td class="text-center">@Html.DisplayFor(modelItem => item.HtmlVerso)</td>
                                     @if (item.Status)

@@ -4,6 +4,7 @@
     {
         public required int Id { get; set; }
         public required int CursoId { get; set; }
+        public string? TituloCurso { get; set; }
         public required byte[] ImagemFrente { get; set; }
         public byte[]? ImagemVerso { get; set; }
         public string? NomeFotoFrente { get; set; }
