@@ -25,6 +25,7 @@
         public int AlturaIni { get; set; }
         public int AlturaFim { get; set; }
         public bool Status { get; set; }
-        public LinhaAcaoDto LinhaAcao { get; set; }
+        public int? LinhaAcaoId { get; set; }
+        public string? LinhaAcao { get; set; }
     }
 }
