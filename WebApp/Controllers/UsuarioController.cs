@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -339,6 +340,35 @@ namespace WebApp.Controllers
                     });
             }
         }
+
+        /// <summary>
+        /// Tela de Visualização do Profile do Usuário Logado
+        /// </summary>
+        /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
+        /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
+        /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
+        public ActionResult Profile(int? crud, int? notify, string message = null)
+        {
+            SetNotifyMessage(notify, message);
+            SetCrudMessage(crud);
+
+            //usuario logado
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (User.Identity == null) return Redirect("/Account/Logout");
+            var usuario = User.Identity.Name;
+
+            if (usuario == null) return Redirect("/Account/Logout");
+            var usu = ApiClientFactory.Instance.GetUsuarioByEmail(usuario);
+
+            var model = new UsuarioModel
+            {
+                Usuario = usu
+            };
+            return View(model);
+
+        }
+
+
         #endregion
 
         #region Get Methods
