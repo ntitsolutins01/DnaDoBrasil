@@ -1,8 +1,8 @@
-var vm = new Vue({
-    el: "#vModuloEad ",
+﻿var vm = new Vue({
+    el: "#vTipoMaterial",
     data: {
         loading: false,
-        editDto: { Id: "", Titulo: "", Descricao: "", CargaHoraria: "", Status: true }
+        editDto: { Id: "", Nome: "" }
     },
     mounted: function () {
         var self = this;
@@ -28,9 +28,9 @@ var vm = new Vue({
 
             var formid = $('form')[1].id;
 
-            if (formid === "formEditModuloEad") {
+            if (formid === "formEditTipoMaterial") {
 
-                $("#formEditModuloEad ").validate({
+                $("#formEditTipoMaterial ").validate({
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
                     },
@@ -50,7 +50,7 @@ var vm = new Vue({
                 });
             }
 
-            if (formid === "formModuloEad") {
+            if (formid === "formTipoMaterial") {
 
                 //skin select
                 var $select = $(".select2").select2({
@@ -100,14 +100,14 @@ var vm = new Vue({
                             else {
                                 new PNotify({
                                     title: 'Curso',
-                                    text: 'Cursos não encontrados.',
+                                    text: 'Curso não encontrados.',
                                     type: 'warning'
                                 });
                             }
                         });
                 });
 
-                $("#formModuloEad").validate({
+                $("#formTipoMaterial").validate({
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
                     },
@@ -148,21 +148,18 @@ var vm = new Vue({
                 self.loading = flag;
             }
         },
-        DeleteModuloEad: function (id) {
-            var url = "ModuloEad/Delete/" + id;
-            $("#deleteModuloEadHref").prop("href", url);
+        DeleteTipoMaterial: function (id) {
+            var url = "TipoMaterial/Delete/" + id;
+            $("#deleteTipoMaterialHref").prop("href", url);
         },
-        EditModuloEad: function (id) {
+        EditTipoMaterial: function (id) {
             var self = this;
 
-            axios.get("ModuloEad/GetModuloEadById/?id=" + id).then(result => {
+            axios.get("TipoMaterial/GetTipoMaterialById/?id=" + id).then(result => {
 
                 self.editDto.Id = result.data.id;
-                self.editDto.Titulo = result.data.titulo;
-                self.editDto.Descricao = result.data.descricao;
-                self.editDto.CargaHoraria = result.data.cargaHoraria;
-                self.editDto.Status = result.data.status;
-
+                self.editDto.Nome = result.data.nome;
+              
             }).catch(error => {
                 Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
             });
@@ -172,13 +169,13 @@ var vm = new Vue({
 
 var crud = {
     DeleteModal: function (id) {
-        $('input[name="deleteModuloEadId"]').attr('value', id);
-        $('#mdDeleteModuloEad').modal('show');
-        vm.DeleteModuloEad(id)
+        $('input[name="deleteTipoMaterialId"]').attr('value', id);
+        $('#mdDeleteTipoMaterial').modal('show');
+        vm.DeleteTipoMaterial(id)
     },
     EditModal: function (id) {
-        $('input[name="editModuloEadId"]').attr('value', id);
-        $('#mdEditModuloEad').modal('show');
-        vm.EditModuloEad(id)
+        $('input[name="editTipoMaterialId"]').attr('value', id);
+        $('#mdEditTipoMaterial').modal('show');
+        vm.EditTipoMaterial(id)
     }
 };
