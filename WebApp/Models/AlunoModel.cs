@@ -23,22 +23,15 @@ namespace WebApp.Models
         public SelectList ListFomentos { get; set; }
         public string? LocalidadeId { get; set; }
         public SelectList ListLocalidades { get; set; }
-        public string SerieId { get; set; }
-        public SelectList ListSeries { get; set; }
         public SelectList ListProfissionais { get; set; }
         public string ProfissionalId { get; set; }
-        public DependenciaDto Dependecia { get; set; }
         public List<ModalidadeDto>? Modalidades { get; set; }
-        public MatriculaDto Matricula { get; set; }
         public SelectList ListEtnias { get; set; }
         public string EtniaId { get; set; }
         public SelectList ListSexos { get; set; }
         public string SexoId { get; set; }
         public string? NomePerfil { get; set; }
         public AlunosFilterDto SearchFilter { get; set; }
-        public LaudoDto Laudo { get; set; }
-        public string LinhaAcaoId { get; set; }
-        public SelectList ListLinhasAcoes { get; set; }
 
 
         public class CreateUpdateDadosAlunoCommand
@@ -59,24 +52,15 @@ namespace WebApp.Models
             public string? Endereco { get; set; }
             public string? Numero { get; set; }
             public string? Bairro { get; set; }
-            public string? RedeSocial { get; set; }
             public string? NomeFoto { get; set; }
             public bool Status { get; set; }
             public bool Habilitado { get; set; }
             public int? DeficienciaId { get; set; }
             public int? ProfissionalId { get; set; }
-            public int? ParceiroId { get; set; }
             public string? Etnia { get; set; }
-            public int? ContratosId { get; set; }
-            public int MatriculaId { get; set; }
-            public int VoucherId { get; set; }
-            public int DependenciaId { get; set; }
-            public int LaudosId { get; set; }
             public string? ModalidadesIds { get; set; }
             public string? DeficienciasIds { get; set; }
             public int? LocalidadeId { get; set; }
-            public int? LinhaAcaoId { get; set; }
-            public string? AreasDesejadas { get; set; }
             public string? NomeResponsavel { get; set; }
             public byte[]? ByteImage { get; set; }
             public byte[]? QrCode { get; set; }
