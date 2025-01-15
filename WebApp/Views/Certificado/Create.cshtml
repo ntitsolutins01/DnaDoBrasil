@@ -70,8 +70,10 @@
                                                     </button>
                                                     <input type="file" id="bgImageInputFrente" name="ImagemFrente" style="display: none" accept="image/*">
                                                 </div>
-                                                <div class="summernote" id="summernoteFrente" name="HtmlFrente" data-plugin-summernote data-plugin-options='{ "height": 180, "codemirror": { "theme": "ambiance" } }'>
-                                                    Digite o conteúdo da frente do certificado...
+                                                <div class="certificate-container">
+                                                    <div class="summernote" id="summernoteFrente" name="HtmlFrente" data-plugin-summernote>
+                                                        Digite o conteúdo da frente do certificado...
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -87,8 +89,10 @@
                                                     </button>
                                                     <input type="file" id="bgImageInputVerso" name="ImagemVerso" style="display: none" accept="image/*">
                                                 </div>
-                                                <div class="summernote" id="summernoteVerso" name="HtmlVerso" data-plugin-summernote data-plugin-options='{ "height": 180, "codemirror": { "theme": "ambiance" } }'>
-                                                    Digite o conteúdo do verso do certificado...
+                                                <div class="certificate-container">
+                                                    <div class="summernote" id="summernoteVerso" name="HtmlVerso" data-plugin-summernote>
+                                                        Digite o conteúdo do verso do certificado...
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -122,10 +126,49 @@
         /* Estilos do Editor */
         .note-editor {
             margin-bottom: 0;
+            width: 1140px !important; /* Largura fixa do certificado */
         }
 
         .note-editable {
-            min-height: 300px;
+            min-height: 813px !important; /* Altura fixa do certificado */
+            height: 813px !important;
+            max-height: 813px !important;
+            width: 1140px !important;
+        }
+
+        .note-editing-area {
+            position: relative !important;
+            height: 813px !important;
+            width: 1140px !important;
+        }
+
+        .background-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 0;
+            pointer-events: none;
+            width: 1140px !important;
+            height: 813px !important;
+        }
+
+        /* Adicione um container para centralizar o editor */
+        .certificate-container {
+            width: 100%;
+            overflow-x: auto;
+            padding: 20px 0;
+        }
+
+        /* Ajuste para as tabs */
+        .tab-content {
+            background: #FFF;
+            padding: 15px;
+            border: 1px solid #DDD;
+            border-top: none;
+            width: 100%;
+            overflow-x: auto;
         }
 
         .note-btn-group {
@@ -139,35 +182,57 @@
             z-index: 1000;
         }
 
-        .note-editing-area {
-            position: relative !important;
-            min-height: 300px;
-        }
-
-        .note-editable {
-            position: relative !important;
-            z-index: 1;
-        }
-
-        .background-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: 0;
-            pointer-events: none;
-        }
-
         .nav-tabs {
             margin-bottom: 15px;
         }
 
-        .tab-content {
-            background: #FFF;
-            padding: 15px;
-            border: 1px solid #DDD;
-            border-top: none;
+        /* Estilos para o modo fullscreen */
+        .note-editor.note-frame.fullscreen {
+            background-color: rgba(0, 0, 0, 0.85) !important; /* Fundo escuro com transparência */
+            display: flex !important;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .note-editor.fullscreen .note-editing-area {
+            background-color: white;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            margin: 20px auto !important;
+        }
+
+        .note-editor.fullscreen .note-toolbar {
+            background-color: #f5f5f5 !important;
+            border-bottom: 1px solid #ddd;
+            width: 100%;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+            .note-editor.fullscreen .note-toolbar .note-btn-group {
+                background-color: white;
+                border-radius: 4px;
+            }
+
+        .note-editor.fullscreen .note-statusbar {
+            background-color: #f5f5f5;
+            border-top: 1px solid #ddd;
+            width: 100%;
+        }
+
+        /* Ajuste para a área de edição em tela cheia */
+        .note-editor.fullscreen .note-editable {
+            margin: 0 auto !important;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .note-editor.fullscreen .note-editing-area .background-overlay {
+            width: 1140px !important;
+            height: 813px !important;
+            margin: 0 auto;
         }
     </style>
 }
@@ -190,7 +255,8 @@
         function initializeSummernote(elementId, bgInputId, bgButtonId, removeButtonId) {
             $(`#${elementId}`).summernote({
                 lang: 'pt-BR',
-                height: 300,
+                height: 813,
+                width: 1140,
                 toolbar: [
                     ['style', ['style']],
                     ['font', ['bold', 'italic', 'underline', 'clear']],
@@ -202,7 +268,41 @@
                     ['insert', ['link', 'picture']],
                     ['view', ['fullscreen', 'codeview']]
                 ],
-                fontSizes: ['8', '9', '10', '11', '12', '14', '18', '24', '36']
+                fontSizes: ['8', '9', '10', '11', '12', '14', '18', '24', '36'],
+                callbacks: {
+                    onInit: function() {
+                        $(this).next('.note-editor').find('.note-editing-area').css({
+                            'width': '1140px',
+                            'height': '813px'
+                        });
+                    },
+                    onEnterFullscreen: function() {
+                        const $editor = $(this).next('.note-editor');
+                        $editor.find('.note-editable').css({
+                            'background-color': 'white',
+                            'margin': '20px auto'
+                        });
+
+                        // Centraliza a área de edição verticalmente
+                        setTimeout(() => {
+                            const windowHeight = window.innerHeight;
+                            const editorHeight = 813;
+                            const toolbarHeight = $editor.find('.note-toolbar').outerHeight();
+                            const statusbarHeight = $editor.find('.note-statusbar').outerHeight();
+                            const topMargin = Math.max(20, (windowHeight - editorHeight - toolbarHeight - statusbarHeight) / 2);
+
+                            $editor.find('.note-editing-area').css({
+                                'margin-top': `${topMargin}px`
+                            });
+                        }, 0);
+                    },
+                    onExitFullscreen: function() {
+                        const $editor = $(this).next('.note-editor');
+                        $editor.find('.note-editing-area').css({
+                            'margin-top': '0'
+                        });
+                    }
+                }
             });
 
         // Adicionar imagem
@@ -234,6 +334,8 @@
                             'left': '0',
                             'right': '0',
                             'bottom': '0',
+                            'width': '1140px',
+                            'height': '813px',
                             'background-image': `url(${e.target.result})`,
                             'background-size': 'cover',
                             'background-position': 'center',
