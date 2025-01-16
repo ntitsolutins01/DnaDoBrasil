@@ -24,6 +24,7 @@ public class CursoController : BaseController
     private readonly IWebHostEnvironment _host;
 
     #endregion
+
     #region Constructor
 
     /// <summary>
@@ -130,7 +131,6 @@ public class CursoController : BaseController
                 using Stream fileStream = new FileStream(filePath, FileMode.Create);
                 await file.CopyToAsync(fileStream);
             }
-
 
             await ApiClientFactory.Instance.CreateCurso(command);
 

@@ -13,13 +13,27 @@ namespace WebApp.Controllers
 {
     public class CertificadoController : BaseController
     {
-        private readonly IOptions<UrlSettings> _appSettings;
+        #region Parametros
 
-        public CertificadoController(IOptions<UrlSettings> appSettings)
+        private readonly IOptions<UrlSettings> _appSettings;
+        private readonly IWebHostEnvironment _host;
+
+        #endregion
+
+        #region Constructor
+
+        /// <summary>
+        /// Contrutor da página
+        /// </summary>
+        /// <param name="appSettings">Configurações da aplicação</param>
+        /// <param name="host">Informação do ambiente em que a aplicação está rodando</param>
+        public CertificadoController(IOptions<UrlSettings> appSettings, IWebHostEnvironment host)
         {
             _appSettings = appSettings;
             ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
+            _host = host;
         }
+        #endregion
 
         public IActionResult Index(int? crud, int? notify, string message = null)
         {
@@ -58,48 +72,62 @@ namespace WebApp.Controllers
         {
             try
             {
-                string filePathFrente = null;
-                string filePathVerso = null;
-
                 var command = new CertificadoModel.CreateUpdateCertificadoCommand
                 {
                     CursoId = Convert.ToInt32(collection["ddlCurso"].ToString()),
-                    NomeFotoFrente = filePathFrente,
-                    NomeFotoVerso = filePathVerso,
                     HtmlFrente = collection["HtmlFrente"].ToString(),
                     HtmlVerso = collection["HtmlVerso"].ToString(),
                     Status = collection["Status"].ToString().ToLower() == "on"
                 };
 
+                // Imagem da Frente
+                string? filePathFrente;
+                string? fileNameFrente;
+                string extension0 = ".jpg";
+                string newFileName0 = Path.ChangeExtension(
+                    Guid.NewGuid().ToString(),
+                    extension0
+                );
+
                 foreach (var file in collection.Files)
                 {
                     if (file.Length <= 0) continue;
+                    filePathFrente = Path.GetFileName(collection.Files[0].FileName);
+                    fileNameFrente = Path.Combine(_host.WebRootPath, $"Certificados\\{newFileName0}");
 
-                    command.NomeFotoFrente = Path.GetFileName(collection.Files[0].FileName);
+                    if (!Directory.Exists(Path.Combine(_host.WebRootPath, $"Certificados")))
+                        Directory.CreateDirectory(Path.Combine(_host.WebRootPath, $"Certificados"));
 
-                    using (var ms = new MemoryStream())
-                    {
-                        file.CopyToAsync(ms);
-                        var byteIMage = ms.ToArray();
-                        command.ImagemFrente = byteIMage;
-                    }
+                    command.ImagemFrente = filePathFrente;
+                    command.NomeImagemFrente = fileNameFrente;
+
+                    using Stream fileStream = new FileStream(filePathFrente, FileMode.Create);
+                    await file.CopyToAsync(fileStream);
                 }
 
-                if (!collection["ImagemVerso"].ToString().IsNullOrEmpty())
+                // Imagem do verso
+                string? filePathVerso;
+                string? fileNameVerso;
+                string extension1 = ".jpg";
+                string newFileName1 = Path.ChangeExtension(
+                    Guid.NewGuid().ToString(),
+                    extension1
+                );
+
+                foreach (var file in collection.Files)
                 {
-                    foreach (var file in collection.Files)
-                    {
-                        if (file.Length <= 0) continue;
+                    if (file.Length <= 0) continue;
+                    filePathVerso = Path.GetFileName(collection.Files[0].FileName);
+                    fileNameVerso = Path.Combine(_host.WebRootPath, $"Certificados\\{newFileName1}");
 
-                        command.NomeFotoVerso = Path.GetFileName(collection.Files[1].FileName);
+                    if (!Directory.Exists(Path.Combine(_host.WebRootPath, $"Certificados")))
+                        Directory.CreateDirectory(Path.Combine(_host.WebRootPath, $"Certificados"));
 
-                        using (var ms = new MemoryStream())
-                        {
-                            file.CopyToAsync(ms);
-                            var byteIMage = ms.ToArray();
-                            command.ImagemVerso = byteIMage;
-                        }
-                    }
+                    command.ImagemVerso = filePathVerso;
+                    command.NomeImagemVerso = fileNameVerso;
+
+                    using Stream fileStream = new FileStream(filePathVerso, FileMode.Create);
+                    await file.CopyToAsync(fileStream);
                 }
 
                 await ApiClientFactory.Instance.CreateCertificado(command);
@@ -133,8 +161,8 @@ namespace WebApp.Controllers
             {
                 Id = id,
                 CursoId = Convert.ToInt32(collection["CursoId"].ToString()),
-                ImagemFrente = Convert.FromBase64String(collection["ImagemFrente"].ToString()),
-                ImagemVerso = string.IsNullOrEmpty(collection["ImagemVerso"]) ? null : Convert.FromBase64String(collection["ImagemVerso"].ToString()),
+                ImagemFrente = collection["ImagemFrente"].ToString(),
+                ImagemVerso = collection["ImagemVerso"].ToString(),
                 HtmlFrente = collection["HtmlFrente"].ToString(),
                 HtmlVerso = collection["HtmlVerso"].ToString(),
                 Status = collection["Status"].ToString() == "" ? false : true
