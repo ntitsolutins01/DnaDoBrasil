@@ -2,7 +2,7 @@ var vm = new Vue({
     el: "#vCertificado ",
     data: {
         loading: false,
-        editDto: { Id: "", NomeCertificado: "", Status: true }
+        editDto: { Id: "", TipoCurso: "", Curso: "", ImagemFrente: "", HtmlFrente: "", ImagemVerso: "", HtmlVerso: "", Status: true }
     },
     mounted: function () {
         var self = this;
@@ -125,7 +125,12 @@ var vm = new Vue({
             axios.get("Certificado/GetCertificadoById/?id=" + id).then(result => {
 
                 self.editDto.Id = result.data.id;
-                self.editDto.NomeCertificado = result.data.nomeCertificado;
+                self.editDto.TipoCurso = result.data.tipoCurso;
+                self.editDto.Curso = result.data.curso;
+                self.editDto.ImagemFrente = result.data.imagemFrente;
+                self.editDto.HtmlFrente = result.data.htmlFrente;
+                self.editDto.ImagemVerso = result.data.imagemVerso;
+                self.editDto.HtmlVerso= result.data.htmlVerso;
                 self.editDto.Status = result.data.status;
 
             }).catch(error => {

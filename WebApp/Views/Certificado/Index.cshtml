@@ -22,24 +22,24 @@
                     </div>
                     <table class="table table-bordered table-striped mb-0" id="datatable-default">
                         <thead>
-                            <tr>
-                                <th class="text-center">Id</th>
-                                <th class="text-center">Nome do Curso</th>
-                                @* <th class="text-center">Imagem Frente</th>
+                        <tr>
+                            <th class="text-center">Id</th>
+                            <th class="text-center">Nome do Curso</th>
+                            @* <th class="text-center">Imagem Frente</th>
                                 <th class="text-center">Imagem Verso</th> *@
-                                <th class="text-center">Html Frente</th>
-                                <th class="text-center">Html Verso</th>
-                                <th class="text-center">Status</th>
-                                <th class="text-center">Ações</th>
-                            </tr>
+                            <th class="text-center">Html Frente</th>
+                            <th class="text-center">Html Verso</th>
+                            <th class="text-center">Status</th>
+                            <th class="text-center">Ações</th>
+                        </tr>
                         </thead>
                         <tbody>
-                            @foreach (var item in Model.Certificados)
-                            {
-                                <tr>
-                                    <td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Id)</td>
-                                    <td class="text-center">@Html.DisplayFor(modelItem => item.TituloCurso)</td>
-                                    @* <td class="text-center">
+                        @foreach (var item in Model.Certificados)
+                        {
+                            <tr>
+                                <td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Id)</td>
+                                <td class="text-center">@Html.DisplayFor(modelItem => item.TituloCurso)</td>
+                                @* <td class="text-center">
                                         <img src="data:image/png;base64,@Convert.ToBase64String(item.ImagemFrente)" alt="Imagem Frente" style="width: 50px; height: 50px;" />
                                     </td>
                                     <td class="text-center">
@@ -48,31 +48,58 @@
                                             <img src="data:image/png;base64,@Convert.ToBase64String(item.ImagemVerso)" alt="Imagem Verso" style="width: 50px; height: 50px;" />
                                         }
                                     </td> *@
-                                    <td class="text-center">@Html.DisplayFor(modelItem => item.HtmlFrente)</td>
-                                    <td class="text-center">@Html.DisplayFor(modelItem => item.HtmlVerso)</td>
-                                    @if (item.Status)
-                                    {
-                                        <td class="text-center"><span class="label label-success">ATIVO</span></td>
-                                    }
-                                    else
-                                    {
-                                        <td class="text-center"><span class="label label-danger">INATIVO</span></td>
-                                    }
-                                    <td class="actions text-center">
-                                        <a data-toggle="tooltip" data-placement="top" title="Editar"
-                                           href='@Url.Action("Edit", "Certificado", new { id = item.Id })'
-                                           class="on-default edit-row" style='color: #FF9800'>
-                                            <i class="fa fa-pencil"></i>
-                                        </a>
-                                        <a data-toggle="tooltip" data-placement="top" title="Excluir" href='@Url.Action("Delete", "Certificado", new { id = item.Id })'
-                                           class="on-default remove-row" style="cursor: pointer;color: #F44336"><i class="fa fa-trash"></i></a>
-                                    </td>
-                                </tr>
-                            }
+                                <td class="text-center">@Html.DisplayFor(modelItem => item.HtmlFrente)</td>
+                                <td class="text-center">@Html.DisplayFor(modelItem => item.HtmlVerso)</td>
+                                @if (item.Status)
+                                {
+                                    <td class="text-center"><span class="label label-success">ATIVO</span></td>
+                                }
+                                else
+                                {
+                                    <td class="text-center"><span class="label label-danger">INATIVO</span></td>
+                                }
+                                <td class="actions text-center">
+                                    <a data-toggle="tooltip" data-placement="top" title="Editar"
+                                       href='@Url.Action("Edit", "Certificado", new { id = item.Id })'
+                                       class="on-default edit-row" style='color: #FF9800'>
+                                        <i class="fa fa-pencil"></i>
+                                    </a>
+                                    <a data-toggle="tooltip" data-placement="top" title="Excluir" href='javascript:(crud.DeleteModal(@item.Id))'
+                                       class="on-default remove-row" style="Certificador: pointer;color: #F44336"><i class="fa fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        }
                         </tbody>
                     </table>
                 </div>
             </section>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="mdDeleteCertificado" tabindex="-1" role="dialog" aria-labelledby="mdDeleteCertificadoLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mdDeleteCertificadoLabel">
+                        <i class="fa fa-trash"></i> &nbsp;&nbsp;<strong>Exclusão de Certificado</strong>
+                    </h5>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-icon">
+                        <i class="fa fa-question-circle"></i>
+                    </div>
+                    <div class="modal-text">
+                        <input type="hidden" id="deleteCertificadoId" />
+                        <p class="mb-0">Tem certeza que deseja <b>excluir</b> esse registro?</p>
+                    </div>
+                    <div class="modal-wrapper">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-thumbs-o-down"></i> &nbsp;&nbsp;Não</button>
+                    <a id="deleteCertificadoHref" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-thumbs-o-up"></i> &nbsp;&nbsp;Sim</a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
