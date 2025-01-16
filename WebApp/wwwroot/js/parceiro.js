@@ -792,6 +792,7 @@ var vm = new Vue({
 
                 self.editDto.Id = result.data.id;
                 self.editDto.Nome = result.data.nome;
+                self.editDto.Habilitado = result.data.habilitado;
                 self.editDto.Status = result.data.status;
                 self.editDto.DtNascimento = result.data.dtnascimento;
                 self.editDto.Email = result.data.email;
