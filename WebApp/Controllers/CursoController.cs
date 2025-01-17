@@ -24,6 +24,7 @@ public class CursoController : BaseController
     private readonly IWebHostEnvironment _host;
 
     #endregion
+
     #region Constructor
 
     /// <summary>
