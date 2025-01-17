@@ -132,7 +132,6 @@ public class CursoController : BaseController
                 await file.CopyToAsync(fileStream);
             }
 
-
             await ApiClientFactory.Instance.CreateCurso(command);
 
             return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Created });
