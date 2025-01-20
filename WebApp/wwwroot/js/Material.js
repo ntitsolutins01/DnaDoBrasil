@@ -1,28 +1,31 @@
-var vm = new Vue({
-    el: "#vTextoLaudo",
+﻿var vm = new Vue({
+    el: "#vMaterial",
     data: {
         loading: false,
-        editDto: { Id: "", Classificacao: "", PontoInicial: "", PontoFinal: "", Aviso: "", Txto: "", NomeTipoLaudo:"", Idade:"", Sexo: "" }
+        editDto: { Id: "", Descricao: "", UnidadeMedida: "", QtdAdquirida: "" }
     },
     mounted: function () {
         var self = this;
         (function ($) {
             'use strict';
 
+            //skin checkbox
+            if (typeof Switch !== 'undefined' && $.isFunction(Switch)) {
 
-            var formid = $('form').attr('id');
+                $(function () {
+                    $('[data-plugin-ios-switch]').each(function () {
+                        var $this = $(this);
 
-            if (formid === "formEditTextoLaudo") {
+                        $this.themePluginIOS7Switch();
+                    });
+                });
+            }
 
+            var formid = $('form')[1].id;
 
-                //mascara dos inputs
-                var $pontoInicial = $("#pontoInicial");
-                $pontoInicial.mask('00.00', { reverse: true });
+            if (formid === "formEditMaterial") {
 
-                var $pontoFinal = $("#pontoFinal");
-                $pontoFinal.mask('00.00', { reverse: true });
-
-                $("#formEditTextoLaudo").validate({
+                $("#formEditMaterial ").validate({
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
                     },
@@ -40,9 +43,11 @@ var vm = new Vue({
                         }
                     }
                 });
-            } 
+            }
 
-            if (formid === "formTextoLaudo") {
+            if (formid === "formMaterial") {
+
+                //skin select
                 var $select = $(".select2").select2({
                     allowClear: true
                 });
@@ -67,14 +72,7 @@ var vm = new Vue({
                     $(this).trigger('blur');
                 });
 
-                //mascara dos inputs
-                var $pontoInicial = $("#pontoInicial");
-                $pontoInicial.mask('00.00', { reverse: true });
-
-                var $pontoFinal = $("#pontoFinal");
-                $pontoFinal.mask('00.00', { reverse: true });
-
-                $("#formTextoLaudo").validate({
+                $("#formMaterial").validate({
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
                     },
@@ -92,7 +90,7 @@ var vm = new Vue({
                         }
                     }
                 });
-            } 
+            }
         }).apply(this, [jQuery]);
     },
     methods: {
@@ -115,24 +113,19 @@ var vm = new Vue({
                 self.loading = flag;
             }
         },
-        DeleteTextoLaudo: function (id) {
-            var url = "TextoLaudo/Delete/" + id;
-            $("#deleteTextoLaudoHref").prop("href", url);
+        DeleteMaterial: function (id) {
+            var url = "Material/Delete/" + id;
+            $("#deleteMaterialHref").prop("href", url);
         },
-        EditTextoLaudo: function (id) {
+        EditMaterial: function (id) {
             var self = this;
 
-            axios.get("TextoLaudo/GetTextoLaudoById/?id=" + id).then(result => {
+            axios.get("Material/GetMaterialById/?id=" + id).then(result => {
 
                 self.editDto.Id = result.data.id;
-                self.editDto.Classificacao = result.data.classificacao;
-                self.editDto.PontoInicial = result.data.pontoInicial;
-                self.editDto.PontoFinal = result.data.pontoFinal;
-                self.editDto.Aviso = result.data.aviso;
-                self.editDto.Texto = result.data.texto;
-                self.editDto.NomeTipoLaudo = result.data.nomeTipoLaudo;
-                self.editDto.Idade = result.data.idade;
-                self.editDto.Sexo = result.data.sexo;
+                self.editDto.Descricao = result.data.descricao;
+                self.editDto.UnidadeMedida = result.data.unidadeMedida;
+                self.editDto.QtdAdquirida = result.data.qtdAdquirida;
 
             }).catch(error => {
                 Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
@@ -143,13 +136,13 @@ var vm = new Vue({
 
 var crud = {
     DeleteModal: function (id) {
-        $('input[name="deleteTextoLaudoId"]').attr('value', id);
-        $('#mdDeleteTextoLaudo').modal('show');
-        vm.DeleteTextoLaudo(id)
+        $('input[name="deleteMaterialId"]').attr('value', id);
+        $('#mdDeleteMaterial').modal('show');
+        vm.DeleteMaterial(id)
     },
     EditModal: function (id) {
-        $('input[name="editTextoLaudoId"]').attr('value', id);
-        $('#mdEditTextoLaudo').modal('show');
-        vm.EditTextoLaudo(id)
+        $('input[name="editMaterialId"]').attr('value', id);
+        $('#mdEditMaterial').modal('show');
+        vm.EditMaterial(id)
     }
 };
