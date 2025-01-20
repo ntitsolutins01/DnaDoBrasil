@@ -36,7 +36,7 @@ namespace WebApp.ApiClient
         public ControleMensalEstoqueDto GetControleMensalEstoqueById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceControleMensalEstoque}/ControleMensalEstoque/{id}"));
+                $"{ResourceControleMensalEstoque}/{id}"));
             return Get<ControleMensalEstoqueDto>(requestUrl);
         }
         public List<ControleMensalEstoqueDto> GetControlesMensaisEstoqueAll()
