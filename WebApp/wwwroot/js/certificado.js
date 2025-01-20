@@ -2,7 +2,7 @@ var vm = new Vue({
     el: "#vCertificado ",
     data: {
         loading: false,
-        editDto: { Id: "", TipoCurso: "", Curso: "", ImagemFrente: "", HtmlFrente: "", ImagemVerso: "", HtmlVerso: "", Status: true }
+        editDto: { Id: "", TipoCurso: "", Curso: "", ImagemFrente: "", HtmlFrente: "", ImagemVerso: "", HtmlVerso: "", NomeImagemFrente: "", NomeImagemVerso: "", Status: true }
     },
     mounted: function () {
         var self = this;
@@ -47,7 +47,7 @@ var vm = new Vue({
                 });
             }
 
-            var formid = $('form')[1].id;
+            var formid = $('form')[0].id;
 
             if (formid === "formEditCertificado") {
 
@@ -143,43 +143,42 @@ var vm = new Vue({
             axios.get("Certificado/GetCertificadoById/?id=" + id).then(result => {
 
                 self.editDto.Id = result.data.id;
+                self.editDto.TipoCurso = result.data.tipoCurso;
                 self.editDto.Curso = result.data.curso;
+                self.editDto.ImagemFrente = result.data.imagemFrente;
+                self.editDto.HtmlFrente = result.data.htmlFrente;
+                self.editDto.ImagemVerso = result.data.imagemVerso;
+                self.editDto.HtmlVerso = result.data.htmlVerso;
+                self.editDto.NomeImagemFrente = result.data.nomeImagemFrente;
+                self.editDto.NomeImagemVerso = result.data.nomeImagemVerso;
                 self.editDto.Status = result.data.status;
-                self.editDto.Email = result.data.email;
-                self.editDto.Sexo = result.data.sexo;
-                self.editDto.Cpf = result.data.cpf;
-                self.editDto.Cep = result.data.cep;
-                self.editDto.DtNascimento = result.data.dtNascimento;
-                self.editDto.MunicipioEstado = result.data.municipioEstado;
-                self.editDto.NomeLocalidade = result.data.nomeLocalidade;
-                self.editDto.Telefone = result.data.celular;
 
-                if (result.data.celular === "0" || result.data.celular === "" || result.data.celular === null) {
-                    self.editDto.Telefone = "Não informado";
-                }
-                else {
-                    self.editDto.Telefone = result.data.celular;
-                }
-                if (result.data.image == null && result.data.sexo == "Feminino") {
-                    self.editDto.Image = 'assets/images/menina.jpg';
-                } else if (result.data.image == null && result.data.sexo == "Masculino") {
-                    self.editDto.Image = 'assets/images/menino.jpg';
-                } else {
-                    self.editDto.Image = 'data:image/jpeg;base64,' + result.data.image;
-                }
-                if (result.data.cpf === "0" || result.data.cpf === "" || result.data.cpf === null) {
-                    self.editDto.Cpf = "Não informado";
-                }
-                else {
-                    self.editDto.Cpf = result.data.cpf;
-                }
-                if (result.data.modalidadeLinhaAcao === "0" || result.data.modalidadeLinhaAcao === "" || result.data.modalidadeLinhaAcao === null) {
-                    self.editDto.ModalidadeLinhaAcao = "Modalidade / Linha de Ação (não informado)";
-                }
-                else {
-                    self.editDto.ModalidadeLinhaAcao = result.data.modalidadeLinhaAcao;
-                }
-                self.editDto.QRCode = 'data:image/jpeg;base64,' + result.data.qrCode;
+                //if (result.data.celular === "0" || result.data.celular === "" || result.data.celular === null) {
+                //    self.editDto.Telefone = "Não informado";
+                //}
+                //else {
+                //    self.editDto.Telefone = result.data.celular;
+                //}
+                //if (result.data.image == null && result.data.sexo == "Feminino") {
+                //    self.editDto.Image = 'assets/images/menina.jpg';
+                //} else if (result.data.image == null && result.data.sexo == "Masculino") {
+                //    self.editDto.Image = 'assets/images/menino.jpg';
+                //} else {
+                //    self.editDto.Image = 'data:image/jpeg;base64,' + result.data.image;
+                //}
+                //if (result.data.cpf === "0" || result.data.cpf === "" || result.data.cpf === null) {
+                //    self.editDto.Cpf = "Não informado";
+                //}
+                //else {
+                //    self.editDto.Cpf = result.data.cpf;
+                //}
+                //if (result.data.modalidadeLinhaAcao === "0" || result.data.modalidadeLinhaAcao === "" || result.data.modalidadeLinhaAcao === null) {
+                //    self.editDto.ModalidadeLinhaAcao = "Modalidade / Linha de Ação (não informado)";
+                //}
+                //else {
+                //    self.editDto.ModalidadeLinhaAcao = result.data.modalidadeLinhaAcao;
+                //}
+                //self.editDto.QRCode = 'data:image/jpeg;base64,' + result.data.qrCode;
 
 
 
