@@ -36,7 +36,7 @@ namespace WebApp.ApiClient
         public GrupoMaterialDto GetGrupoMaterialById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceGrupoMaterial }/GrupoMaterial/{id}"));
+                $"{ResourceGrupoMaterial }/{id}"));
             return Get<GrupoMaterialDto>(requestUrl);
         }
         public List<GrupoMaterialDto> GetGruposMateriaisAll()
