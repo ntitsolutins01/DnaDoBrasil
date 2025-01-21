@@ -94,43 +94,8 @@
                                                type="text" class="form-control" value="@Model.Profissional.CpfCnpj"
                                                maxlength="14" />
                                     </div>
-                                    <label class="col-sm-1 control-label text-sm-right pt-2">Estado <span class="required">*</span></label>
-                                    <div class="col-md-2">
-                                        <select class="form-control populate select2" name="ddlEstado" id="ddlEstado"
-                                                title="Por favor informe um Estado." required disabled
-                                                asp-for="EstadoId" asp-items="Model.ListEstados">
-                                            <option value="">Selecionar Estado</option>
-                                        </select>
-                                    </div>
-                                    <label class="col-sm-1 control-label text-sm-right pt-2">Município <span class="required">*</span></label>
-                                    <div class="col-md-4">
-                                        <select class="form-control populate select2" name="ddlMunicipio" id="ddlMunicipio"
-                                                title="Por favor informe um Municipio." required disabled
-                                                asp-for="MunicipioId" asp-items="Model.ListMunicipios">
-                                            <option value="">Selecionar Município</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label text-sm-right pt-2">Localidade <span class="required">*</span></label>
-                                    <div class="col-md-4">
-                                        <select class="form-control populate select2" name="ddlLocalidade" id="ddlLocalidade"
-                                                title="Por favor informe a localidade." required disabled
-                                                asp-for="LocalidadeId" asp-items="Model.ListLocalidades">
-                                            <option value="">Selecionar Localidade</option>
-                                        </select>
-                                    </div>
-                                    <label class="col-sm-1 control-label text-sm-right pt-2">Modalidades<span class="required">*</span></label>
-                                    <div class="col-md-5">
-                                        <select class="form-control populate" multiple="multiple" multiple="multiple" data-plugin-multiselect data-plugin-options='{ "maxHeight": 200, "enableCaseInsensitiveFiltering": true }'
-                                                id="ddlModalidades" name="ddlModalidades" style="width: 100%" asp-for="ModalidadeId" asp-items="Model.ListModalidades" required
-                                                title="Por favor selecione ao menos uma modalidade.">
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
                                     <label class="col-sm-2 control-label">Data Nascimento <span class="required">*</span> </label>
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-3">
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <i class="fa fa-calendar"></i>
@@ -160,14 +125,6 @@
                                                 <option value="F" selected>FEMININO</option>
 
                                             }
-                                        </select>
-                                    </div>
-                                    <label class="col-sm-1 control-label">Cargo</label>
-                                    <div class="col-sm-4">
-                                        <select class="form-control populate select2" name="ddlCargo" id="ddlCargo" style="width: 100%"
-                                                title="Por favor selecione um etnia." required
-                                                asp-for="CargoId" asp-items="Model.ListCargos">
-                                            <option value="">Selecionar Cargo</option>
                                         </select>
                                     </div>
                                 </div>
@@ -245,19 +202,11 @@
                         @using (@Html.BeginForm("MinhasTurmas", "Profissional", FormMethod.Post, new { id = "formMinhasTurmas", @class = "form-horizontal" }))
                         {
                             <h4 class="mb-xlg">Meus Dados</h4>
-                            <input hidden="ProfissionalId" value="@Model.Profissional.Id" id="profissionalId" name="profissionalId" />
+                            <input hidden="ProfissionalId" value="@Model.Profissional.Id" id="profissionalIdMinhasTurmas" name="profissionalIdMinhasTurmas" />
                             <fieldset>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">Linha de Ação <span class="required">*</span></label>
+                                    <label class="col-sm-2 control-label">Atividade / Modalidade <span class="required">*</span></label>
                                     <div class="col-sm-4">
-                                        <select class="form-control populate select2" name="ddlLinhaAcao" id="ddlLinhaAcao"
-                                                title="Por favor informe a linha de ação." required style="width:100%"
-                                                asp-for="LinhaAcaoId" asp-items="Model.ListLinhasAcoes">
-                                            <option value="">Selecionar Linha de Ação</option>
-                                        </select>
-                                    </div>
-                                    <label class="col-sm-3 control-label">Atividade / Modalidade <span class="required">*</span></label>
-                                    <div class="col-sm-3">
                                         <select class="form-control populate select2" name="ddlModalidade" id="ddlModalidade"
                                                 title="Por favor informe a Atividade / Modalidade." required style="width:100%"
                                                 asp-for="AtividadeModalidadeId" asp-items="Model.ListAtividadesModalidades">
@@ -277,14 +226,14 @@
                                             <option value="T4">T4</option>
                                         </select>
                                     </div>
-                                    <label class="col-sm-2 control-label">Categoria </label>
-                                    <div class="col-sm-2">
+                                    <label class="col-sm-1 control-label">Categoria </label>
+                                    <div class="col-sm-3">
                                         <input id="categoria" name="categoria"
                                                type="text" class="form-control" disabled
                                                maxlength="14" />
                                     </div>
-                                    <label class="col-sm-2 control-label">Estrutura </label>
-                                    <div class="col-sm-1">
+                                    <label class="col-sm-1 control-label">Estrutura </label>
+                                    <div class="col-sm-2">
                                         <input id="estrutura" name="estrutura" disabled
                                                type="text" class="form-control" 
                                                maxlength="14" />
@@ -297,7 +246,7 @@
                                                type="text" class="form-control" 
                                                maxlength="14" />
                                     </div>
-                                    <label class="col-sm-2 control-label">Horário </label>
+                                    <label class="col-sm-1 control-label">Horário </label>
                                     <div class="col-sm-2">
                                         <input id="horario" name="horario" disabled
                                                type="text" class="form-control" 
@@ -353,14 +302,14 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">Modalidade</label>
+                                    @* <label class="col-sm-2 control-label">Modalidade</label>
                                     <div class="col-sm-4">
                                         <select class="form-control populate select2" name="ddlModalidade" id="ddlModalidade"
                                                 style="width: 100%" title="Por favor selecione o turno."
                                                 asp-for="ModalidadeId" asp-items="Model.ListModalidades">
                                             <option value="0">Selecionar Modalidade</option>
                                         </select>
-                                    </div>
+                                    </div> *@
                                     <div class="col-sm-1">
                                         <a type="button" class="ml-xs btn btn-success" href='javascript:(crud.AddModalidade())'>
                                             <i class="fa fa-plus"></i>

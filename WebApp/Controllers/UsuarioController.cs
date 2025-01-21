@@ -12,7 +12,6 @@ using WebApp.Utility;
 using System.Text;
 using System.Text.RegularExpressions;
 using WebApp.Configuration;
-using Microsoft.AspNetCore.Authorization;
 using WebApp.Identity;
 using WebApp.Authorization;
 
