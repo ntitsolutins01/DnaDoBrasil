@@ -36,7 +36,7 @@ namespace WebApp.ApiClient
         public MaterialDto GetMaterialById(int id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceMaterial}/Material/{id}"));
+                $"{ResourceMaterial}/{id}"));
             return Get<MaterialDto>(requestUrl);
         }
         public List<MaterialDto> GetMateriaisAll()

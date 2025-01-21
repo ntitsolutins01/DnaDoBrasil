@@ -136,7 +136,65 @@ var vm = new Vue({
             }).catch(error => {
                 Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
             });
-        }
+        },
+        Certificado: function (id) {
+            var self = this;
+
+            axios.get("Certificado/GetCertificadoById/?id=" + id).then(result => {
+
+                self.editDto.Id = result.data.id;
+                self.editDto.Curso = result.data.curso;
+                self.editDto.Status = result.data.status;
+                self.editDto.Email = result.data.email;
+                self.editDto.Sexo = result.data.sexo;
+                self.editDto.Cpf = result.data.cpf;
+                self.editDto.Cep = result.data.cep;
+                self.editDto.DtNascimento = result.data.dtNascimento;
+                self.editDto.MunicipioEstado = result.data.municipioEstado;
+                self.editDto.NomeLocalidade = result.data.nomeLocalidade;
+                self.editDto.Telefone = result.data.celular;
+
+                if (result.data.celular === "0" || result.data.celular === "" || result.data.celular === null) {
+                    self.editDto.Telefone = "Não informado";
+                }
+                else {
+                    self.editDto.Telefone = result.data.celular;
+                }
+                if (result.data.image == null && result.data.sexo == "Feminino") {
+                    self.editDto.Image = 'assets/images/menina.jpg';
+                } else if (result.data.image == null && result.data.sexo == "Masculino") {
+                    self.editDto.Image = 'assets/images/menino.jpg';
+                } else {
+                    self.editDto.Image = 'data:image/jpeg;base64,' + result.data.image;
+                }
+                if (result.data.cpf === "0" || result.data.cpf === "" || result.data.cpf === null) {
+                    self.editDto.Cpf = "Não informado";
+                }
+                else {
+                    self.editDto.Cpf = result.data.cpf;
+                }
+                if (result.data.modalidadeLinhaAcao === "0" || result.data.modalidadeLinhaAcao === "" || result.data.modalidadeLinhaAcao === null) {
+                    self.editDto.ModalidadeLinhaAcao = "Modalidade / Linha de Ação (não informado)";
+                }
+                else {
+                    self.editDto.ModalidadeLinhaAcao = result.data.modalidadeLinhaAcao;
+                }
+                self.editDto.QRCode = 'data:image/jpeg;base64,' + result.data.qrCode;
+
+
+
+                //var text = 'http://front.hml.dnadobrasil.org.br/Identity/Account/ControlePresenca?alunoId=' + self.editDto.Id;
+
+                //$('#qr').ClassyQR({
+                //    create: true,// signals the library to create the image tag inside the container div.
+                //    type: 'text',// text/url/sms/email/call/locatithe text to encode in the QR. on/wifi/contact, default is TEXT
+                //    text: text// the text to encode in the QR.
+                //});
+
+            }).catch(error => {
+                Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
+            });
+        },
     }
 });
 
@@ -150,5 +208,10 @@ var crud = {
         $('input[name="editCertificadoId"]').attr('value', id);
         $('#mdEditCertificado').modal('show');
         vm.EditCertificado(id)
+    },
+    CertificadoModal: function (id) {
+        $('input[name="certificadoId"]').attr('value', id);
+        $('#mdCertificado').modal('show');
+        vm.Certificado(id);
     }
 };
