@@ -97,6 +97,36 @@ var vm = new Vue({
                             }
                         });
                 });
+
+                //clique de escolha do select
+                $("#ddlLocalidade").change(function () {
+                    var id = $("#ddlLocalidade").val();
+
+                    var url = "../../Aluno/GetAlunosByLocalidade?id=" + id;
+
+                    var ddlSource = "#ddlAluno";
+
+                    $.getJSON(url,
+                        { id: $(ddlSource).val() },
+                        function (data) {
+                            if (data.length > 0) {
+                                var items = '<option value="">Selecionar Aluno</option>';
+                                $("#ddlAluno").empty;
+                                $.each(data,
+                                    function (i, row) {
+                                        items += "<option value='" + row.value + "'>" + row.text + "</option>";
+                                    });
+                                $("#ddlAluno").html(items);
+                            }
+                            else {
+                                new PNotify({
+                                    title: 'Alunos',
+                                    text: 'Alunos não encontrados.',
+                                    type: 'warning'
+                                });
+                            }
+                        });
+                });
             }
             if (formid === "formEditControlePresenca") {
 

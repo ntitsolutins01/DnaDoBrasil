@@ -1,4 +1,4 @@
-﻿using System.Security.Claims;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -52,59 +52,68 @@ namespace WebApp.Controllers
         {
             try
             {
+                var usuario = User.Identity.Name;
+
                 SetNotifyMessage(notify, message);
                 SetCrudMessage(crud);
 
-                var result3 =  ApiClientFactory.Instance.GetControlesPresencasAll();
+                var usu = ApiClientFactory.Instance.GetUsuarioByEmail(usuario);
+
+
+                var fomentos = new SelectList(ApiClientFactory.Instance.GetFomentoAll(), "Id", "Nome");
+                var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", usu.Uf);
+
+                SelectList municipios = null;
+
+                if (!string.IsNullOrEmpty(usu.Uf))
+                {
+                    municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(usu.Uf), "Id", "Nome", usu.MunicipioId);
+                }
+
+                SelectList localidades = null;
+
+                if (usu.MunicipioId != null)
+                {
+                    var resultLocalidades = ApiClientFactory.Instance.GetLocalidadeByMunicipio(usu.MunicipioId.ToString());
+
+                    localidades = new SelectList(resultLocalidades, "Id", "Nome", usu.LocalidadeId);
+                }
+
+                SelectList alunos = null;
+
+                if (usu.LocalidadeId != null)
+                {
+                    var resultAlunos = ApiClientFactory.Instance.GetAlunosByLocalidade(Convert.ToInt32(usu.LocalidadeId));
+
+                    alunos =  new SelectList(resultAlunos, "Id", "Nome");
+                }
 
                 var searchFilter = new ControlesPresencasFilterDto()
                 {
+                    UsuarioEmail = usuario,
                     FomentoId = collection["ddlFomento"].ToString(),
                     Estado = collection["ddlEstado"].ToString(),
                     MunicipioId = collection["ddlMunicipio"].ToString(),
-                    LocalidadeId = collection["ddlLocalidade"].ToString(),
-                    DeficienciaId = collection["ddlDeficiencia"].ToString(),
-                    Etnia = collection["ddlEtnia"].ToString()
+                    LocalidadeId = collection["ddlLocalidade"].ToString() == "" ? usu.LocalidadeId : collection["ddlLocalidade"].ToString(),
+
+                    PageNumber = 1,
+#if DEBUG
+                    PageSize = 10
+#else
+                    PageSize = 1000
+#endif
                 };
 
-                var result = await ApiClientFactory.Instance.GetControlesPresencasByFilter(searchFilter);
-
-                var fomentos = new SelectList(ApiClientFactory.Instance.GetFomentoAll(), "Id", "Nome", searchFilter.FomentoId);
-                var deficiencias = new SelectList(ApiClientFactory.Instance.GetDeficienciaAll().Where(x => x.Status), "Id", "Nome", searchFilter.DeficienciaId);
-                var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", searchFilter.Estado);
-
-                List<SelectListDto> list = new List<SelectListDto>
-                {
-                    new() { IdNome = "PARDO", Nome = "PARDO" },
-                    new() { IdNome = "BRANCO", Nome = "BRANCO" },
-                    new() { IdNome = "PRETO", Nome = "PRETO" },
-                    new() { IdNome = "INDIGENA", Nome = "INDIGENA" },
-                    new() { IdNome = "AMARELO", Nome = "AMARELO" }
-                };
-
-                var etnias = new SelectList(list, "IdNome", "Nome", searchFilter.Etnia);
-                SelectList municipios = null;
-
-                if (!string.IsNullOrEmpty(searchFilter.Estado))
-                {
-                    municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(searchFilter.Estado), "Id", "Nome", searchFilter.MunicipioId);
-                }
-                SelectList localidades = null;
-
-                if (!string.IsNullOrEmpty(searchFilter.LocalidadeId))
-                {
-                    localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeByMunicipio(searchFilter.MunicipioId), "Id", "Nome", searchFilter.LocalidadeId);
-                }
+                var response = await ApiClientFactory.Instance.GetControlesPresencasByFilter(searchFilter);
 
                 var model = new ControlePresencaModel()
                 {
                     ListFomentos = fomentos,
                     ListEstados = estados,
-                    ListDeficiencias = deficiencias,
                     ListMunicipios = municipios!,
-                    ListEtnias = etnias,
                     ListLocalidades = localidades!,
-                    ControlesPresencas = result.ControlesPresencas
+                    ListAlunos = alunos,
+                    ControlesPresencas = response.ControlesPresencas
 
                 };
                 return View(model);
@@ -128,18 +137,53 @@ namespace WebApp.Controllers
 			    SetCrudMessage(crud);
 
                 var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                if (User.Identity == null) return Redirect("/Identity/Account/Login");
+                var usuario = User.Identity.Name;
 
-                var usuario = ApiClientFactory.Instance.GetUsuarioByAspNetUserId(userId);
+                if (usuario == null) return Redirect("/Identity/Account/Login");
+                var usu = ApiClientFactory.Instance.GetUsuarioByEmail(usuario);
 
-                var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome");
+                var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", usu.Uf);
 
+                SelectList municipios = null;
 
-			    return View(new ControlePresencaModel()
-			    {
-				    ListEstados = estados
-			    });
+                if (!string.IsNullOrEmpty(usu.Uf))
+                {
+                    municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(usu.Uf), "Id", "Nome", usu.MunicipioId);
+                }
 
-			}
+                SelectList localidades = null;
+
+                if (usu.MunicipioId != null)
+                {
+                    var resultLocalidades = ApiClientFactory.Instance.GetLocalidadeByMunicipio(usu.MunicipioId.ToString());
+
+                    localidades = new SelectList(resultLocalidades, "Id", "Nome", usu.LocalidadeId);
+                }
+
+                SelectList alunos = null;
+
+                if (usu.LocalidadeId == null)
+                    return View(new ControlePresencaModel()
+                    {
+                        ListEstados = estados,
+                        ListMunicipios = municipios!,
+                        ListLocalidades = localidades!,
+                        ListAlunos = alunos,
+                    });
+                var resultAlunos = ApiClientFactory.Instance.GetAlunosByLocalidade(Convert.ToInt32(usu.LocalidadeId));
+
+                alunos = new SelectList(resultAlunos, "Id", "Nome");
+
+                return View(new ControlePresencaModel()
+                {
+                    ListEstados = estados,
+                    ListMunicipios = municipios!,
+                    ListLocalidades = localidades!,
+                    ListAlunos = alunos,
+                });
+
+            }
 			catch (Exception e)
 			{
 				Console.Write(e.StackTrace);
@@ -225,5 +269,6 @@ namespace WebApp.Controllers
 
 			return Task.FromResult(result);
 		}
+
 	}
 }

@@ -107,6 +107,8 @@ namespace WebApp.Controllers
                 {
 
                     Nome =  collection["nome"].ToString(),
+                    RazaoSocial =  collection["razaoSocial"].ToString(),
+                    NomeContato =  collection["nomeContato"].ToString(),
                     TipoPessoa =  collection["tipoPessoa"].ToString(),
                     CpfCnpj = collection["tipoPessoa"].ToString() == "pf" ? collection["cpf"].ToString() : collection["cnpj"].ToString(),
                     Telefone = collection["numTelefone"].ToString() == "" ? null : collection["numTelefone"].ToString(),
@@ -164,15 +166,38 @@ namespace WebApp.Controllers
         {
             try
             {
-                var status = collection["status"].ToString();
-                var habilitado = collection["habilitado"].ToString();
+                // Verifica se os campos existem no form
+                bool status = false;
+                bool habilitado = false;
+
+                // Verifica se as chaves existem e têm valor
+                if (collection.ContainsKey("status"))
+                {
+                    status = !string.IsNullOrEmpty(collection["status"].ToString());
+                }
+
+                if (collection.ContainsKey("habilitado"))
+                {
+                    habilitado = !string.IsNullOrEmpty(collection["habilitado"].ToString());
+                }
+
+                string cpfCnpj;
+                if (collection["tipoPessoa"] == "pf")
+                {
+                    cpfCnpj = collection["cpf"].ToString();
+                }
+                else
+                {
+                    cpfCnpj = collection["cnpj"].ToString();
+                }
 
                 var command = new ParceiroModel.CreateUpdateParceiroCommand
                 {
                     Id = id,
                     Nome = collection["nome"].ToString(),
+                    RazaoSocial = collection["razaoSocial"].ToString(),
                     TipoPessoa = collection["tipoPessoa"].ToString(),
-                    CpfCnpj = collection["tipoPessoa"] == "pj" ? collection["cpf"].ToString() : collection["cnpj"].ToString(),
+                    CpfCnpj = cpfCnpj,
                     Telefone = collection["numTelefone"] == "" ? null : collection["numTelefone"].ToString(),
                     Celular = collection["numCelular"] == "" ? null : collection["numCelular"].ToString(),
                     Cep = collection["cep"] == "" ? null : collection["cep"].ToString(),
@@ -180,8 +205,8 @@ namespace WebApp.Controllers
                     Numero = collection["numero"] == "" ? null : Convert.ToInt32(collection["numero"].ToString()),
                     Bairro = collection["bairro"] == "" ? null : collection["bairro"].ToString(),
                     MunicipioId = Convert.ToInt32(collection["ddlMunicipio"].ToString()),
-                    Habilitado = habilitado != "",
-                    Status = status != "",
+                    Habilitado = habilitado,
+                    Status = status,
                     Email = collection["email"].ToString()
                 };
 

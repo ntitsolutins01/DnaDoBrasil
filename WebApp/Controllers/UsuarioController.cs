@@ -1,18 +1,14 @@
-using Infraero.Relprev.CrossCutting.Enumerators;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
 using System.Text.Encodings.Web;
-using WebApp.Areas.Identity.Models;
-using WebApp.Dto;
 using WebApp.Enumerators;
 using WebApp.Factory;
 using WebApp.Models;
 using WebApp.Utility;
-using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
-using System.Security.Claims;
 using System.Text;
 using System.Text.RegularExpressions;
 using WebApp.Configuration;
@@ -25,7 +21,7 @@ namespace WebApp.Controllers
     /// <summary>
     /// Controler de Usuário
     /// </summary>
-    [Authorize(Policy = ModuloAccess.ControleAcesso)]
+    //[Authorize(Policy = ModuloAccess.ControleAcesso)]
     public class UsuarioController : BaseController
     {
         #region Constructor
@@ -33,7 +29,7 @@ namespace WebApp.Controllers
         private readonly IEmailSender _emailSender;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly IHostingEnvironment _host;
+        private readonly IWebHostEnvironment _host;
 
         /// <summary>
         /// Construtor da página
@@ -44,7 +40,7 @@ namespace WebApp.Controllers
         /// <param name="host">informações da aplicação em execução</param>
         /// <param name="roleManager">gerenciador de regras de permissoes</param>
         public UsuarioController(IOptions<UrlSettings> app, IEmailSender emailSender,
-            UserManager<IdentityUser> userManager, IHostingEnvironment host, RoleManager<IdentityRole> roleManager)
+            UserManager<IdentityUser> userManager, IWebHostEnvironment host, RoleManager<IdentityRole> roleManager)
         {
             _emailSender = emailSender;
             _userManager = userManager;
@@ -144,6 +140,7 @@ namespace WebApp.Controllers
                     CpfCnpj = collection["cpf"].ToString(),
                     TipoPessoa = collection["tipoPessoa"].ToString(),
                     MunicipioId = Convert.ToInt32(collection["ddlMunicipio"].ToString()),
+                    LocalidadeId = Convert.ToInt32(collection["ddlLocalidade"].ToString())
                 };
 
 
@@ -198,10 +195,12 @@ namespace WebApp.Controllers
         /// <param name="id">id do usuario</param>
         /// <exception cref="ArgumentNullException">Mensagem de erro ao alterar o tentar acessar tela de alteração do Usuario</exception>
         [ClaimsAuthorize(ClaimType.Usuario, Identity.Claim.Alterar)]
-        public ActionResult Edit(string id)
+        public ActionResult Edit(string id, int? crud, int? notify, string message = null)
         {
             try
             {
+                SetNotifyMessage(notify, message);
+                SetCrudMessage(crud);
 
                 UsuarioModel model = new UsuarioModel();
 
@@ -211,13 +210,15 @@ namespace WebApp.Controllers
 
                 var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", obj.Uf);
                 var municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(obj.Uf!), "Id", "Nome", obj.MunicipioId);
+                var localidades = new SelectList(ApiClientFactory.Instance.GetLocalidadeByMunicipio(obj.MunicipioId.ToString()), "Id", "Nome", obj.LocalidadeId);
 
                 model = new UsuarioModel
                 {
                     ListPerfis = new SelectList(resultPerfil, "Id", "Nome", obj.Perfil.Id),
                     Usuario = obj,
                     ListMunicipios = municipios,
-                    ListEstados = estados
+                    ListEstados = estados,
+                    ListLocalidades = localidades
                 };
 
                 return View(model);
@@ -245,7 +246,7 @@ namespace WebApp.Controllers
         {
             try
             {
-                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
                 var usuario = ApiClientFactory.Instance.GetUsuarioById(id.ToString());
 
@@ -267,9 +268,10 @@ namespace WebApp.Controllers
                     TipoPessoa = collection["tipoPessoa"].ToString(),
                     CpfCnpj = collection["cpf"].ToString() == "" ? collection["cnpj"].ToString() : collection["cpf"].ToString(),
                     PerfilId = perfil.Id,
-                    AspNetUserId = userId,
+                    AspNetUserId = usuario.AspNetUserId,
                     AspNetRoleId = perfil.AspNetRoleId,
                     MunicipioId = Convert.ToInt32(collection["ddlMunicipio"].ToString()),
+                    LocalidadeId = Convert.ToInt32(collection["ddlLocalidade"].ToString())
                 };
 
                 await ApiClientFactory.Instance.UpdateUsuario(id, command);
@@ -338,6 +340,35 @@ namespace WebApp.Controllers
                     });
             }
         }
+
+        /// <summary>
+        /// Tela de Visualização do Profile do Usuário Logado
+        /// </summary>
+        /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
+        /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
+        /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
+        public ActionResult Profile(int? crud, int? notify, string message = null)
+        {
+            SetNotifyMessage(notify, message);
+            SetCrudMessage(crud);
+
+            //usuario logado
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (User.Identity == null) return Redirect("/Account/Logout");
+            var usuario = User.Identity.Name;
+
+            if (usuario == null) return Redirect("/Account/Logout");
+            var usu = ApiClientFactory.Instance.GetUsuarioByEmail(usuario);
+
+            var model = new UsuarioModel
+            {
+                Usuario = usu
+            };
+            return View(model);
+
+        }
+
+
         #endregion
 
         #region Get Methods
@@ -353,8 +384,7 @@ namespace WebApp.Controllers
         {
             var code = await _userManager.GeneratePasswordResetTokenAsync(user);
 
-            var callbackUrl = Url.ActionLink("ResetPassword",
-                "Identity/Account", new { code, email });
+            var callbackUrl = Url.ActionLink("ResetPassword", "Identity/Account", new { code, email });
 
             var message =
                 System.IO.File.ReadAllText(Path.Combine(_host.WebRootPath, "emailtemplates/ConfirmEmail.html"));

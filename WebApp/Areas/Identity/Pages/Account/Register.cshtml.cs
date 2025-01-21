@@ -59,17 +59,15 @@ namespace WebApp.Areas.Identity.Pages.Account
         public int EstadoId { get; set; }
         public int MunicipioId { get; set; }
         public int LocalidadeId { get; set; }
-        public int ProfissionalId { get; set; }
         public int EtniaId { get; set; }
-        public int AreaId { get; set; }
+        public int ModalidadeId { get; set; }
         public int DeficienciaId { get; set; }
         public SelectList ListEstados { get; set; }
         public SelectList ListMunicipios { get; set; }
         public SelectList ListLocalidades { get; set; }
         public SelectList ListEtnias { get; set; }
-        public SelectList ListAreas { get; set; }
+        public SelectList ListModalidades { get; set; }
         public SelectList ListDeficiencia { get; set; }
-        public SelectList ListProfissionais { get; set; }
         public int NotifyMessage { get; set; }
         public string Notify { get; set; }
         public string FomentoId { get; set; }
@@ -115,7 +113,7 @@ namespace WebApp.Areas.Identity.Pages.Account
             ListEtnias = etnias;
 
             var linhasAcoes = new SelectList(ApiClientFactory.Instance.GetLinhasAcoesAll(), "Id", "Nome");
-            ListAreas = linhasAcoes;
+            ListModalidades = linhasAcoes;
 
             var deficiencias = new SelectList(ApiClientFactory.Instance.GetDeficienciaAll().Where(x => x.Status), "Id", "Nome");
             ListDeficiencia = deficiencias;
@@ -129,10 +127,8 @@ namespace WebApp.Areas.Identity.Pages.Account
                 MunicipioId = collection["ddlMunicipio"] == "" ? null : Convert.ToInt32(collection["ddlMunicipio"].ToString()),
                 FomentoId = collection["ddlFomento"] == "" ? null : Convert.ToInt32(collection["ddlFomento"].ToString()),
                 LocalidadeId = collection["ddlLocalidade"] == "" ? null : Convert.ToInt32(collection["ddlLocalidade"].ToString()),
-                LinhaAcaoId = collection["ddlAreaDesejada"] == "" ? null : Convert.ToInt32(collection["ddlAreaDesejada"].ToString()),
                 DeficienciaId = collection["ddlDeficiencia"] == "" ? null : Convert.ToInt32(collection["ddlDeficiencia"].ToString()),
                 Endereco = collection["endereco"] == "" ? null : collection["endereco"].ToString(),
-                AreasDesejadas = collection["ddlAreaDesejada"] == "" ? null : collection["ddlAreaDesejada"].ToString(),
                 Nome = collection["nome"] == "" ? null : collection["nome"].ToString(),
                 Cpf = collection["cpf"] == "" ? null : collection["cpf"].ToString(),
                 Sexo = collection["ddlSexo"] == "" ? null : collection["ddlSexo"].ToString(),

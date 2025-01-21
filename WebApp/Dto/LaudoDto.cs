@@ -42,6 +42,7 @@ namespace WebApp.Dto
         public byte[]? ByteImage { get; set; }
         public string? NomeFoto { get; set; }
         public string? Modalidade { get; set; }
+        public byte[]? ModalidadeByteImage { get; set; }
         //public string? Serie { get; set; }
         //public string? Turma { get; set; }
         //public int? MunicipioId { get; set; }

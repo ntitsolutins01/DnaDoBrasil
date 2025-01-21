@@ -3,43 +3,73 @@ using WebApp.Models;
 
 namespace WebApp.ApiClient
 {
+	/// <summary>
+	/// Nota Client
+	/// </summary>
 	public partial class DnaApiClient
 	{
 		private const string ResourceNota = "Notas";
 
-		#region Main Methods
+        #region Main Methods
 
-		public Task<long> CreateNota(NotaModel.CreateUpdateNotaCommand command)
+        /// <summary>
+        /// Inclusão de Nota
+        /// </summary>
+        /// <param name="command">Objeto de inclusão da Nota</param>
+        /// <returns>Id de Nota inserido</returns>
+        public Task<long> CreateNota(NotaModel.CreateUpdateNotaCommand command)
 		{
 			var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
 				$"{ResourceNota}"));
 			return Post(requestUrl, command);
 		}
-		public Task<bool> UpdateNota(int id, NotaModel.CreateUpdateNotaCommand command)
+
+        /// <summary>
+        /// Alteração de Nota
+        /// </summary>
+        /// <param name="id">Id de alteração da Nota</param>
+        /// <param name="command">Objeto de alteração da Nota</param>
+        /// <returns>Retorna true ou false</returns>
+        public Task<bool> UpdateNota(int id, NotaModel.CreateUpdateNotaCommand command)
 		{
 			var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
 				$"{ResourceNota}/{id}"));
 			return Put(requestUrl, command);
 		}
 
-		public Task<bool> DeleteNota(int id)
+        /// <summary>
+        /// Exclusão de Nota
+        /// </summary>
+        /// <param name="id">Id de exclusao da Nota</param>
+        /// <returns>Retorna true ou false</returns>
+        public Task<bool> DeleteNota(int id)
 		{
 			var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
 				$"{ResourceNota}/{id}"));
 			return Delete<bool>(requestUrl);
 		}
 
-		#endregion
+        #endregion
 
-		#region Methods
+        #region Methods
 
-		public NotaDto GetNotaById(int id)
+        /// <summary>
+        /// Busca uma única Nota
+        /// </summary>
+        /// <param name="id">Id da Nota a ser buscada</param>
+        /// <returns>Retorna o objeto da Nota</returns>
+        public NotaDto GetNotaById(int id)
 		{
 			var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-				$"{ResourceNota}/Nota/{id}"));
+				$"{ResourceNota}/{id}"));
 			return Get<NotaDto>(requestUrl);
 		}
-		public List<NotaDto> GetNotasAll()
+
+        /// <summary>
+        /// Busca todas as Notas cadastradas
+        /// </summary>
+        /// <returns>Retorna a lista de Nota</returns>
+        public List<NotaDto> GetNotasAll()
 		{
 			var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
 				$"{ResourceNota}"));

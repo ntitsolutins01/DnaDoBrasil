@@ -346,7 +346,6 @@ var vm = new Vue({
                 $('#agilidade').maskMoney();
                 $("#agilidade").maskMoney('mask');
 
-
                 $("#formEditLaudo").validate({
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
@@ -531,18 +530,18 @@ var vm = new Vue({
 
                 //mascara dos inputs 
                 $('#massaCorporalSaude').maskMoney();
-                $("#massaCorporalSaude").maskMoney('mask');
+                //$("#massaCorporalSaude").maskMoney('mask');
                 $('#massaCorporal').maskMoney();
-                $("#massaCorporal").maskMoney('mask');
+                //$("#massaCorporal").maskMoney('mask');
                 $('#preensaoManual').maskMoney();
-                $("#preensaoManual").maskMoney('mask');
+                //$("#preensaoManual").maskMoney('mask');
 
                 $('#aptidaoFisica').maskMoney();
-                $("#aptidaoFisica").maskMoney('mask');
+                //$("#aptidaoFisica").maskMoney('mask');
                 $('#testeVelocidade').maskMoney();
-                $("#testeVelocidade").maskMoney('mask');
+                //$("#testeVelocidade").maskMoney('mask');
                 $('#agilidade').maskMoney();
-                $("#agilidade").maskMoney('mask');
+                //$("#agilidade").maskMoney('mask');
 
                 $("#formLaudo").validate({
                     highlight: function (label) {
