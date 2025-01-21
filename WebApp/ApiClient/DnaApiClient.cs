@@ -23,14 +23,13 @@ namespace WebApp.ApiClient
             var data = response.Result.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<T>(data.Result)!;
         }
+
         public Task<T?> GetFiltro<T>(Uri requestUrl, T content)
         {
             addHeaders();
             var response = _httpClient.PostAsync(requestUrl, CreateHttpContent<T>(content));
             var data = response.Result.Content.ReadAsStringAsync();
             return Task.FromResult(JsonConvert.DeserializeObject<T>(data.Result));
-
-
         }
 
 
@@ -127,8 +126,8 @@ namespace WebApp.ApiClient
 
         private void addHeaders()
         {
-            _httpClient.DefaultRequestHeaders.Remove("userIP");
-            _httpClient.DefaultRequestHeaders.Add("userIP", "192.168.1.1");
+            _httpClient.DefaultRequestHeaders.Accept
+                .Add(new MediaTypeWithQualityHeaderValue("application/json"));//ACCEPT header
 
             //_httpClient.DefaultRequestHeaders.Authorization =
             //    new AuthenticationHeaderValue("Bearer", "Your Oauth token");

@@ -1,4 +1,4 @@
-﻿var vm = new Vue({
+var vm = new Vue({
     el: "#vPesquisarAluno",
     data: {
         loading: false,
@@ -175,11 +175,24 @@
                 else {
                     self.editDto.Telefone = result.data.celular;
                 }
-                if (result.data.image == null && result.data.sexo == "Feminino") {
-                    self.editDto.Image = 'assets/images/menina.jpg';
-                } else if (result.data.image == null && result.data.sexo == "Masculino") {
-                    self.editDto.Image = 'assets/images/menino.jpg';
-                } else {
+                if (result.data.image == null && result.data.sexo === "Feminino") {
+                    const studentPhoto = document.querySelector('.student-photo');
+                    if (studentPhoto) {
+                        studentPhoto.style.objectFit = "inherit";
+                    }
+                    self.editDto.Image = 'assets/images/menina.png';
+                } else if (result.data.image == null && result.data.sexo === "Masculino") {
+                    const studentPhoto = document.querySelector('.student-photo');
+                    if (studentPhoto) {
+                        studentPhoto.style.objectFit = "inherit";
+                    }
+                    self.editDto.Image = 'assets/images/menino.png';
+                }
+                else {
+                    const studentPhoto = document.querySelector('.student-photo');
+                    if (studentPhoto) {
+                        studentPhoto.style.objectFit = "cover";
+                    }
                     self.editDto.Image = 'data:image/jpeg;base64,' + result.data.image;
                 }
                 if (result.data.cpf === "0" || result.data.cpf === "" || result.data.cpf === null) {
@@ -195,7 +208,7 @@
                     self.editDto.ModalidadeLinhaAcao = result.data.modalidadeLinhaAcao;
                 }
                 self.editDto.QRCode = 'data:image/jpeg;base64,' + result.data.qrCode;
-                
+
 
 
                 //var text = 'http://front.hml.dnadobrasil.org.br/Identity/Account/ControlePresenca?alunoId=' + self.editDto.Id;
@@ -219,10 +232,11 @@
                 FomentoId: $("#ddlFomento").val(),
                 Estado: $("#ddlEstado").val(),
                 MunicipioId: $("#ddlMunicipio").val(),
-                LocalidadeId: $("#ddlLocalidade").val(),
+                LocalidadeId: $("#ddlLocalidade").valS(),
                 DeficienciaId: $("#ddlDeficiencia").val(),
-                Etnia: $("#ddlEtnia").val(),
-                Sexo: $("#ddlSexo").val()
+                Nome: $("#nome").val(),
+                Matricula: $("#matricula").val(),
+                Etnia: $("#ddlEtnia").val()
             }
 
             let axiosConfig = {

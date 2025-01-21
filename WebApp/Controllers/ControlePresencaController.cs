@@ -137,8 +137,10 @@ namespace WebApp.Controllers
 			    SetCrudMessage(crud);
 
                 var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                if (User.Identity == null) return Redirect("/Identity/Account/Login");
                 var usuario = User.Identity.Name;
 
+                if (usuario == null) return Redirect("/Identity/Account/Login");
                 var usu = ApiClientFactory.Instance.GetUsuarioByEmail(usuario);
 
                 var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome", usu.Uf);
@@ -161,23 +163,27 @@ namespace WebApp.Controllers
 
                 SelectList alunos = null;
 
-                if (usu.LocalidadeId != null)
-                {
-                    var resultAlunos = ApiClientFactory.Instance.GetAlunosByLocalidade(Convert.ToInt32(usu.LocalidadeId));
+                if (usu.LocalidadeId == null)
+                    return View(new ControlePresencaModel()
+                    {
+                        ListEstados = estados,
+                        ListMunicipios = municipios!,
+                        ListLocalidades = localidades!,
+                        ListAlunos = alunos,
+                    });
+                var resultAlunos = ApiClientFactory.Instance.GetAlunosByLocalidade(Convert.ToInt32(usu.LocalidadeId));
 
-                    alunos = new SelectList(resultAlunos, "Id", "Nome");
-                }
-
+                alunos = new SelectList(resultAlunos, "Id", "Nome");
 
                 return View(new ControlePresencaModel()
-			    {
+                {
                     ListEstados = estados,
                     ListMunicipios = municipios!,
                     ListLocalidades = localidades!,
                     ListAlunos = alunos,
                 });
 
-			}
+            }
 			catch (Exception e)
 			{
 				Console.Write(e.StackTrace);

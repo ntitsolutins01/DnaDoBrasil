@@ -21,6 +21,13 @@ namespace WebApp.Models
         public SelectList ListLocalidades { get; set; }
         public int PerfilId { get; set; }
         public SelectList ListPerfis { get; set; }
+        public SelectList ListCargos { get; set; }
+        public string CargoId { get; set; }
+        public UsuarioDto Usuario { get; set; }
+        public int LinhaAcaoId { get; set; }
+        public SelectList ListLinhasAcoes { get; set; }
+        public int AtividadeModalidadeId { get; set; }
+        public SelectList ListAtividadesModalidades { get; set; }
 
         public class CreateUpdateProfissionalCommand
         {
@@ -43,6 +50,7 @@ namespace WebApp.Models
             public bool Habilitado { get; set; }
             public string? ModalidadesIds { get; set; }
             public int? PerfilId { get; set; }
+            public string? Cargo { get; set; }
         }
     }
 
