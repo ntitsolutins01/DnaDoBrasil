@@ -68,7 +68,7 @@
                                 <select class="form-control populate select2" name="ddlModalidade" id="ddlModalidade"
                                         title="Por favor informe a Atividade / Modalidade." required
                                         asp-for="AtividadeModalidadeId" asp-items="Model.ListAtividadesModalidades">
-                                    <option value="">Selecionar Categoria</option>
+                                    <option value="">Selecionar Modalidade</option>
                                 </select>
                             </div>
                             @*<label class="col-sm-2 control-label">Estrutura <span class="required">*</span></label>
@@ -94,39 +94,47 @@
                                     <option value="">Selecionar Estrutura</option>
                                 </select>
                             </div>
+                            <label class="col-sm-2 control-label">Categoria <span class="required">*</span></label>
+                            <div class="col-md-4">
+                                <select class="form-control populate select2" name="ddlCategoria" id="ddlCategoria"
+                                        title="Por favor informe a Categoria." required
+                                        asp-for="CategoriaId" asp-items="Model.ListCategorias">
+                                    <option value="">Selecionar Categoria</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 control-label">Dias da Semana</label>
 						
                             <div class="col-sm-2">
                                 <div class="checkbox-custom checkbox-default">
-                                    <input type="checkbox" id="checkboxExample1">
-                                    <label for="checkboxExample1">Segunda-Feira</label>
+                                    <input type="checkbox" id="segunda" name="segunda">
+                                    <label for="segunda">Segunda-Feira</label>
                                 </div>
 						
                                 <div class="checkbox-custom checkbox-primary">
-                                    <input type="checkbox" id="checkboxExample2">
-                                    <label for="checkboxExample2">Terça-Feira</label>
+                                    <input type="checkbox" id="terca" name="terca">
+                                    <label for="terca">Terça-Feira</label>
                                 </div>
 						
                                 <div class="checkbox-custom checkbox-success">
-                                    <input type="checkbox" id="checkboxExample3">
-                                    <label for="checkboxExample3">Quarta-Feira</label>
+                                    <input type="checkbox" id="quarta" name="quarta">
+                                    <label for="quarta">Quarta-Feira</label>
                                 </div>
 						
                                 <div class="checkbox-custom checkbox-warning">
-                                    <input type="checkbox" id="checkboxExample4">
-                                    <label for="checkboxExample4">Quinta-Feira</label>
+                                    <input type="checkbox" id="quinta" name="quinta">
+                                    <label for="quinta">Quinta-Feira</label>
                                 </div>
 						
                                 <div class="checkbox-custom checkbox-danger">
-                                    <input type="checkbox" id="checkboxExample5">
-                                    <label for="checkboxExample5">Sexta-Feira</label>
+                                    <input type="checkbox" id="sexta" name="sexta">
+                                    <label for="sexta">Sexta-Feira</label>
                                 </div>
 						
                                 <div class="checkbox-custom checkbox-dark">
-                                    <input type="checkbox" id="checkboxExample6">
-                                    <label for="checkboxExample6">Sábado</label>
+                                    <input type="checkbox" id="sabado" name="sabado">
+                                    <label for="sabado">Sábado</label>
                                 </div>
                             </div>
                             <label class="col-sm-2 control-label">Horário Início<span class="required">*</span></label>
@@ -135,7 +143,7 @@
                                     <span class="input-group-addon">
                                         <i class="fa fa-clock-o"></i>
                                     </span>
-                                    <input type="text" data-plugin-timepicker class="form-control" data-plugin-options='{ "showMeridian": false }'>
+                                    <input type="text" id="hrInicial" name="hrInicial" data-plugin-timepicker class="form-control" data-plugin-options='{ "showMeridian": false }'>
                                 </div>
                             </div>
                             <label class="col-sm-2 control-label">Horário Fim <span class="required">*</span></label>
@@ -144,7 +152,7 @@
                                     <span class="input-group-addon">
                                         <i class="fa fa-clock-o"></i>
                                     </span>
-                                    <input type="text" data-plugin-timepicker class="form-control" data-plugin-options='{ "showMeridian": false }'>
+                                    <input type="text" id="hrFinal" name="hrFinal" data-plugin-timepicker class="form-control" data-plugin-options='{ "showMeridian": false }'>
                                 </div>
                             </div>
                         </div>
@@ -163,7 +171,7 @@
                             </div>
                             <label class="col-sm-2 control-label">Quantidade Alunos</label>
                             <div class="col-sm-1">
-                                <input type="number" id="numero" name="numero" maxlength="2" class="form-control" />
+                                    <input type="number" id="qtAluno" name="qtAluno" maxlength="2" class="form-control" />
                             </div>
                         </div>
                     </div>

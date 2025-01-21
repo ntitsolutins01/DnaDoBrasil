@@ -1,17 +1,13 @@
-var vm = new Vue({
-    el: "#vModuloEad ",
+﻿var vm = new Vue({
+    el: "#vGrupoMaterial",
     data: {
         loading: false,
-        editDto: { Id: "", Titulo: "", Descricao: "", CargaHoraria: "", Status: true }
+        editDto: { Id: "", Nome: "" }
     },
     mounted: function () {
         var self = this;
         (function ($) {
             'use strict';
-
-            //mascara dos inputs
-            var cargaHoraria = $("#cargaHoraria");
-            cargaHoraria.mask('000', { reverse: false });
 
 
             //skin checkbox
@@ -28,9 +24,9 @@ var vm = new Vue({
 
             var formid = $('form')[1].id;
 
-            if (formid === "formEditModuloEad") {
+            if (formid === "formEditGrupoMaterial") {
 
-                $("#formEditModuloEad ").validate({
+                $("#formEditGrupoMaterial ").validate({
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
                     },
@@ -50,8 +46,7 @@ var vm = new Vue({
                 });
             }
 
-            if (formid === "formModuloEad") {
-
+            if (formid === "formGrupoMaterial") {
                 //skin select
                 var $select = $(".select2").select2({
                     allowClear: true
@@ -77,37 +72,7 @@ var vm = new Vue({
                     $(this).trigger('blur');
                 });
 
-                //Açao de seleçao de valor na combo primaria para preencher a combo secundára
-                $("#ddlTipoCurso").change(function () {
-                    var tipoCursoId = $("#ddlTipoCurso").val();
-
-                    var url = "../Curso/GetCursosAllByTipoCursoId";
-
-                    var ddlSource = "#ddlCurso";
-
-                    $.getJSON(url,
-                        { id: tipoCursoId },
-                        function (data) {
-                            if (data.length > 0) {
-                                var items = '<option value="">Selecionar Curso</option>';
-                                $("#ddlCurso").empty;
-                                $.each(data,
-                                    function (i, row) {
-                                        items += "<option value='" + row.value + "'>" + row.text + "</option>";
-                                    });
-                                $("#ddlCurso").html(items);
-                            }
-                            else {
-                                new PNotify({
-                                    title: 'Curso',
-                                    text: 'Cursos não encontrados.',
-                                    type: 'warning'
-                                });
-                            }
-                        });
-                });
-
-                $("#formModuloEad").validate({
+                $("#formGrupoMaterial").validate({
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
                     },
@@ -148,20 +113,17 @@ var vm = new Vue({
                 self.loading = flag;
             }
         },
-        DeleteModuloEad: function (id) {
-            var url = "ModuloEad/Delete/" + id;
-            $("#deleteModuloEadHref").prop("href", url);
+        DeleteGrupoMaterial: function (id) {
+            var url = "GrupoMaterial/Delete/" + id;
+            $("#deleteGrupoMaterialHref").prop("href", url);
         },
-        EditModuloEad: function (id) {
+        EditGrupoMaterial: function (id) {
             var self = this;
 
-            axios.get("ModuloEad/GetModuloEadById/?id=" + id).then(result => {
+            axios.get("GrupoMaterial/GetGrupoMaterialById/?id=" + id).then(result => {
 
                 self.editDto.Id = result.data.id;
-                self.editDto.Titulo = result.data.titulo;
-                self.editDto.Descricao = result.data.descricao;
-                self.editDto.CargaHoraria = result.data.cargaHoraria;
-                self.editDto.Status = result.data.status;
+                self.editDto.Nome = result.data.nome;
 
             }).catch(error => {
                 Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
@@ -172,13 +134,13 @@ var vm = new Vue({
 
 var crud = {
     DeleteModal: function (id) {
-        $('input[name="deleteModuloEadId"]').attr('value', id);
-        $('#mdDeleteModuloEad').modal('show');
-        vm.DeleteModuloEad(id)
+        $('input[name="deleteGrupoMaterialId"]').attr('value', id);
+        $('#mdDeleteGrupoMaterial').modal('show');
+        vm.DeleteGrupoMaterial(id)
     },
     EditModal: function (id) {
-        $('input[name="editModuloEadId"]').attr('value', id);
-        $('#mdEditModuloEad').modal('show');
-        vm.EditModuloEad(id)
+        $('input[name="editGrupoMaterialId"]').attr('value', id);
+        $('#mdEditGrupoMaterial').modal('show');
+        vm.EditGrupoMaterial(id)
     }
 };

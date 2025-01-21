@@ -26,6 +26,8 @@ namespace WebApp.Models
         public UsuarioDto Usuario { get; set; }
         public int LinhaAcaoId { get; set; }
         public SelectList ListLinhasAcoes { get; set; }
+        public int AtividadeModalidadeId { get; set; }
+        public SelectList ListAtividadesModalidades { get; set; }
 
         public class CreateUpdateProfissionalCommand
         {

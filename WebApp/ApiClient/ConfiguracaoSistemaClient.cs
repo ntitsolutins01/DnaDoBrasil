@@ -108,7 +108,7 @@ namespace WebApp.ApiClient
         public ModuloDto GetModuloById(int id)
         {
 	        var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-		        $"{ResourceConfiguracaoSistema}/Modulo/{id}"));
+		        $"{ResourceConfiguracaoSistema}/{id}"));
 	        return Get<ModuloDto>(requestUrl);
         }
 
