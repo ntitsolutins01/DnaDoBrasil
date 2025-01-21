@@ -175,11 +175,24 @@ var vm = new Vue({
                 else {
                     self.editDto.Telefone = result.data.celular;
                 }
-                if (result.data.image == null && result.data.sexo == "Feminino") {
-                    self.editDto.Image = 'assets/images/menina.jpg';
-                } else if (result.data.image == null && result.data.sexo == "Masculino") {
-                    self.editDto.Image = 'assets/images/menino.jpg';
-                } else {
+                if (result.data.image == null && result.data.sexo === "Feminino") {
+                    const studentPhoto = document.querySelector('.student-photo');
+                    if (studentPhoto) {
+                        studentPhoto.style.objectFit = "inherit";
+                    }
+                    self.editDto.Image = 'assets/images/menina.png';
+                } else if (result.data.image == null && result.data.sexo === "Masculino") {
+                    const studentPhoto = document.querySelector('.student-photo');
+                    if (studentPhoto) {
+                        studentPhoto.style.objectFit = "inherit";
+                    }
+                    self.editDto.Image = 'assets/images/menino.png';
+                }
+                else {
+                    const studentPhoto = document.querySelector('.student-photo');
+                    if (studentPhoto) {
+                        studentPhoto.style.objectFit = "cover";
+                    }
                     self.editDto.Image = 'data:image/jpeg;base64,' + result.data.image;
                 }
                 if (result.data.cpf === "0" || result.data.cpf === "" || result.data.cpf === null) {
@@ -195,7 +208,7 @@ var vm = new Vue({
                     self.editDto.ModalidadeLinhaAcao = result.data.modalidadeLinhaAcao;
                 }
                 self.editDto.QRCode = 'data:image/jpeg;base64,' + result.data.qrCode;
-                
+
 
 
                 //var text = 'http://front.hml.dnadobrasil.org.br/Identity/Account/ControlePresenca?alunoId=' + self.editDto.Id;

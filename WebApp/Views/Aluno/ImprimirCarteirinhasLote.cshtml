@@ -62,12 +62,12 @@
                         {
                             var base64 = Convert.ToBase64String(aluno.ByteImage);
                             var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-                            <img src="@imgSrc" alt="Foto do estudante" class="student-photo">
+                            <img src="@imgSrc" alt="Foto do estudante" class="student-photo" style="object-fit: inherit!important;">
                         }
                         else
                         {
-                            <img src="@(aluno.Sexo == "Feminino" ? "/assets/images/menina.jpg" : "/assets/images/menino.jpg")"
-                                 alt="Foto do estudante" class="student-photo">
+                            <img src="@(aluno.Sexo == "Feminino" ? "/assets/images/menina.png" : "/assets/images/menino.png")"
+                                 alt="Foto do estudante" class="student-photo" style="object-fit: inherit!important;">
                         }
                     </div>
                     <div class="qr-code-container">

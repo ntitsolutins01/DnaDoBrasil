@@ -1,20 +1,20 @@
-@model CertificadoModel
+﻿@model CertificadoModel
 @{
-    ViewData["Title"] = "Inclusão de Certificado";
+    ViewData["Title"] = "Edição de Certificado";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div id="vCertificado">
     <div class="row">
         <div class="col-md-12">
-            @using (@Html.BeginForm("Create", "Certificado", FormMethod.Post, new { id = "formCertificado", @class = "form-horizontal", enctype = "multipart/form-data" }))
+            @using (@Html.BeginForm("Edit", "Certificado", FormMethod.Post, new { id = "formCertificado", @class = "form-horizontal", enctype = "multipart/form-data" }))
             {
                 <section class="panel">
                     <header class="panel-heading">
                         <div class="panel-actions">
                             <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
                         </div>
-                        <h2 class="panel-title">Cadastro de Certificado</h2>
+                        <h2 class="panel-title">Edição de Certificado</h2>
                     </header>
 
                     <div class="panel-body">
@@ -71,7 +71,7 @@
                                                     <input type="file" id="bgImageInputFrente" name="ImagemFrente" style="display: none" accept="image/*">
                                                 </div>
                                                 <div class="certificate-container">
-                                                    <div class="summernote" id="summernoteFrente" name="HtmlFrente" data-plugin-summernote>
+                                                    <div class="summernote" id="summernoteFrente" name="HtmlFrente" data-plugin-summernote >
                                                         Digite o conteúdo da frente do certificado...
                                                     </div>
                                                 </div>
@@ -621,7 +621,7 @@
             if (crud === 1) {
                 new PNotify({
                     title: 'Certificado',
-                    text: 'Cadastro realizado com sucesso!',
+                    text: 'Edição realizado com sucesso!',
                     type: 'success'
                 });
             } else if (crud === 2) {

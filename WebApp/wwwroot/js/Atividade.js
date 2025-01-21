@@ -30,6 +30,79 @@ var vm = new Vue({
             }
 
             //skin select
+            // MultiSelect
+            (function (theme, $) {
+
+                theme = theme || {};
+
+                var instanceName = '__multiselect';
+
+                var PluginMultiSelect = function ($el, opts) {
+                    return this.initialize($el, opts);
+                };
+
+                PluginMultiSelect.defaults = {
+                    templates: {
+                        filter: '<div class="input-group"><span class="input-group-addon"><i class="fa fa-search"></i></span><input class="form-control multiselect-search" type="text"></div>'
+                    }
+                };
+
+                PluginMultiSelect.prototype = {
+                    initialize: function ($el, opts) {
+                        if ($el.data(instanceName)) {
+                            return this;
+                        }
+
+                        this.$el = $el;
+
+                        this
+                            .setData()
+                            .setOptions(opts)
+                            .build();
+
+                        return this;
+                    },
+
+                    setData: function () {
+                        this.$el.data(instanceName, this);
+
+                        return this;
+                    },
+
+                    setOptions: function (opts) {
+                        this.options = $.extend(true, {}, PluginMultiSelect.defaults, opts);
+
+                        return this;
+                    },
+
+                    build: function () {
+                        this.$el.multiselect(this.options);
+
+                        return this;
+                    }
+                };
+
+                // expose to scope
+                $.extend(theme, {
+                    PluginMultiSelect: PluginMultiSelect
+                });
+
+                // jquery plugin
+                $.fn.themePluginMultiSelect = function (opts) {
+                    return this.each(function () {
+                        var $this = $(this);
+
+                        if ($this.data(instanceName)) {
+                            return $this.data(instanceName);
+                        } else {
+                            return new PluginMultiSelect($this, opts);
+                        }
+
+                    });
+                }
+
+            }).apply(this, [window.theme, jQuery]);
+
             var $select = $(".select2").select2({
                 allowClear: true
             });
@@ -53,6 +126,30 @@ var vm = new Vue({
             $select.on('change', function () {
                 $(this).trigger('blur');
             });
+
+            //skin TimePicker
+            (function ($) {
+
+                'use strict';
+
+                if ($.isFunction($.fn['timepicker'])) {
+
+                    $(function () {
+                        $('[data-plugin-timepicker]').each(function () {
+                            var $this = $(this),
+                                opts = {};
+
+                            var pluginOptions = $this.data('plugin-options');
+                            if (pluginOptions)
+                                opts = pluginOptions;
+
+                            $this.themePluginTimePicker(opts);
+                        });
+                    });
+
+                }
+
+            }).apply(this, [jQuery]);
 
             if (formid === "formEditAtividade") {
 
@@ -100,7 +197,7 @@ var vm = new Vue({
                             else {
                                 new PNotify({
                                     title: 'Fomento',
-                                    text: 'MunicÌpios n„o encontrados.',
+                                    text: 'Munic√≠pios n√£o encontrados.',
                                     type: 'warning'
                                 });
                             }
@@ -130,7 +227,7 @@ var vm = new Vue({
                             else {
                                 new PNotify({
                                     title: 'Localidades',
-                                    text: 'Localidades n„o encontradas.',
+                                    text: 'Localidades n√£o encontradas.',
                                     type: 'warning'
                                 });
                             }
@@ -160,7 +257,7 @@ var vm = new Vue({
                             else {
                                 new PNotify({
                                     title: 'Estruturas',
-                                    text: 'Estruturas n„o encontradas.',
+                                    text: 'Estruturas n√£o encontradas.',
                                     type: 'warning'
                                 });
                             }
@@ -170,18 +267,64 @@ var vm = new Vue({
                         { id: id },
                         function (data) {
                             if (data.length > 0) {
-                                var items = '<option value="">Selecionar Localidade</option>';
-                                $("#ddlLocalidade").empty;
+                                var items = '<option value="">Selecionar Professor / Profissional</option>';
+                                $("#ddlProfessorProfissional").empty;
                                 $.each(data,
                                     function (i, row) {
                                         items += "<option value='" + row.value + "'>" + row.text + "</option>";
                                     });
-                                $("#ddlLocalidade").html(items);
+                                $("#ddlProfessorProfissional").html(items);
                             }
                             else {
                                 new PNotify({
-                                    title: 'Localidades',
-                                    text: 'Localidades n„o encontradas.',
+                                    title: 'Professor / Profissional',
+                                    text: 'Professores / Profissionais n√£o encontrados.',
+                                    type: 'warning'
+                                });
+                            }
+                        });
+                });
+
+
+
+                //clique de escolha do select
+                $("#ddlLinhaAcao").change(function () {
+                    var id = $("#ddlLinhaAcao").val();
+
+                    var url = "../../Modalidade/GetModalidadesByLinhaAcaoId";
+
+                    $.getJSON(url,
+                        { id: id },
+                        function (data) {
+                            //if (data.length > 0) {
+                            //    var items = '<option value="">Selecionar Modalidade</option>';
+
+                            //    for (var i = 0; i != data.length; i++) {
+                            //        $('select#ddlModalidade').append('<option value="' + data[i].value + '">' + data[i].text + '</option>');
+                            //    }
+
+                            //    $('select#ddlModalidade').multiselect('rebuild');
+                            //}
+                            //else {
+                            //    new PNotify({
+                            //        title: 'Modalidades',
+                            //        text: 'Modalidades n√£o encontradas.',
+                            //        type: 'warning'
+                            //    });
+                            //}
+                            if (data.length > 0) {
+                                var items = '<option value="">Selecionar Modalidade</option>';
+                                $("#ddlModalidade").empty;
+                                $.each(data,
+                                    function (i, row) {
+                                        items += "<option value='" + row.value + "'>" + row.text + "</option>";
+                                    });
+                                $("#ddlModalidade").html(items);
+                            }
+                            else {
+                                new PNotify({
+                                    title: 'Modalidade',
+                                    text: 'Modalidades n√£o encontradas.',
                                     type: 'warning'
                                 });
                             }

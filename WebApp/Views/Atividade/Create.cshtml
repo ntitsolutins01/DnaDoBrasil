@@ -66,21 +66,26 @@
                             <label class="col-sm-2 control-label">Atividade / Modalidade <span class="required">*</span></label>
                             <div class="col-md-4">
                                 <select class="form-control populate select2" name="ddlModalidade" id="ddlModalidade"
-                                        title="Por favor informe a Modalidade." required
+                                        title="Por favor informe a Atividade / Modalidade." required
                                         asp-for="AtividadeModalidadeId" asp-items="Model.ListAtividadesModalidades">
-                                    <option value="">Selecionar Atividade Modalidade</option>
+                                    <option value="">Selecionar Modalidade</option>
                                 </select>
                             </div>
+                            @*<label class="col-sm-2 control-label">Estrutura <span class="required">*</span></label>
+                            <div class="col-md-4">
+                                 <select class="form-control" multiple="multiple" data-plugin-multiselect data-plugin-options='{ "maxHeight": 300, "enableCaseInsensitiveFiltering": true }'
+                                        name="ddlModalidade" id="ddlModalidade"
+                                        title="Por favor informe a Modalidade." required style="width:100%"
+                                        asp-for="AtividadeModalidadeId" asp-items="Model.ListAtividadesModalidades">
+                                </select> 
+                                <select class="form-control populate select2" name="ddlEstrutura" id="ddlEstrutura"
+                                        title="Por favor informe a Estrutura." required
+                                        asp-for="EstruturaId" asp-items="Model.ListEstruturas">
+                                    <option value="">Selecionar Estrutura</option>
+                                </select>
+                            </div>*@
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-2 control-label">Categoria <span class="required">*</span></label>
-                            <div class="col-md-4">
-                                <select class="form-control populate select2" name="ddlCategoria" id="ddlCategoria"
-                                        title="Por favor informe a Categoria." required
-                                        asp-for="CategoriaId" asp-items="Model.ListCategorias">
-                                    <option value="">Selecionar Categoria</option>
-                                </select>
-                            </div>
                             <label class="col-sm-2 control-label">Estrutura <span class="required">*</span></label>
                             <div class="col-md-4">
                                 <select class="form-control populate select2" name="ddlEstrutura" id="ddlEstrutura"
@@ -89,71 +94,86 @@
                                     <option value="">Selecionar Estrutura</option>
                                 </select>
                             </div>
+                            <label class="col-sm-2 control-label">Categoria <span class="required">*</span></label>
+                            <div class="col-md-4">
+                                <select class="form-control populate select2" name="ddlCategoria" id="ddlCategoria"
+                                        title="Por favor informe a Categoria." required
+                                        asp-for="CategoriaId" asp-items="Model.ListCategorias">
+                                    <option value="">Selecionar Categoria</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 control-label">Dias da Semana</label>
 						
-                            <div class="col-sm-4">
+                            <div class="col-sm-2">
                                 <div class="checkbox-custom checkbox-default">
-                                    <input type="checkbox" checked="" id="checkboxExample1">
-                                    <label for="checkboxExample1">Segunda-Feira</label>
+                                    <input type="checkbox" id="segunda" name="segunda">
+                                    <label for="segunda">Segunda-Feira</label>
                                 </div>
 						
                                 <div class="checkbox-custom checkbox-primary">
-                                    <input type="checkbox" checked="" id="checkboxExample2">
-                                    <label for="checkboxExample2">Terça-Feira</label>
+                                    <input type="checkbox" id="terca" name="terca">
+                                    <label for="terca">Terça-Feira</label>
                                 </div>
 						
                                 <div class="checkbox-custom checkbox-success">
-                                    <input type="checkbox" checked="" id="checkboxExample3">
-                                    <label for="checkboxExample3">Quarta-Feira</label>
+                                    <input type="checkbox" id="quarta" name="quarta">
+                                    <label for="quarta">Quarta-Feira</label>
                                 </div>
 						
                                 <div class="checkbox-custom checkbox-warning">
-                                    <input type="checkbox" checked="" id="checkboxExample4">
-                                    <label for="checkboxExample4">Quinta-Feira</label>
+                                    <input type="checkbox" id="quinta" name="quinta">
+                                    <label for="quinta">Quinta-Feira</label>
                                 </div>
 						
                                 <div class="checkbox-custom checkbox-danger">
-                                    <input type="checkbox" checked="" id="checkboxExample5">
-                                    <label for="checkboxExample5">Sexta-Feira</label>
+                                    <input type="checkbox" id="sexta" name="sexta">
+                                    <label for="sexta">Sexta-Feira</label>
+                                </div>
+						
+                                <div class="checkbox-custom checkbox-dark">
+                                    <input type="checkbox" id="sabado" name="sabado">
+                                    <label for="sabado">Sábado</label>
+                                </div>
+                            </div>
+                            <label class="col-sm-2 control-label">Horário Início<span class="required">*</span></label>
+                            <div class="col-md-2">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-clock-o"></i>
+                                    </span>
+                                    <input type="text" id="hrInicial" name="hrInicial" data-plugin-timepicker class="form-control" data-plugin-options='{ "showMeridian": false }'>
+                                </div>
+                            </div>
+                            <label class="col-sm-2 control-label">Horário Fim <span class="required">*</span></label>
+                            <div class="col-md-2">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-clock-o"></i>
+                                    </span>
+                                    <input type="text" id="hrFinal" name="hrFinal" data-plugin-timepicker class="form-control" data-plugin-options='{ "showMeridian": false }'>
                                 </div>
                             </div>
                         </div>
-                        @* <div class="form-group row">
-                            <label class="col-sm-2 control-label">Código da Atividade <span class="required">*</span></label>
-                            <div class="col-sm-4">
-                                <input type="text" name="codigo" id="codigo" class="form-control"
-                                       maxlength="10" oninput="this.value = this.value.toUpperCase()"
-                                       title="Por favor informe o código da Atividade." required />
+                        <div class="form-group row">
+
+                            <label class="col-sm-2 control-label">Turma <span class="required">*</span></label>
+                            <div class="col-sm-2">
+                                <select class="form-control populate select2" name="ddlTurma" id="ddlTurma"
+                                        title="Por favor selecione uma turma." required style="width:100%">
+                                    <option value="">Selecionar Turma</option>
+                                    <option value="T1">T1</option>
+                                    <option value="T2">T2</option>
+                                    <option value="T3">T3</option>
+                                    <option value="T4">T4</option>
+                                </select>
                             </div>
-                            <label class="col-sm-2 control-label">Nome da Atividade <span class="required">*</span></label>
-                            <div class="col-sm-4">
-                                <input type="text" name="nome" id="nome" class="form-control"
-                                       maxlength="50"
-                                       title="Por favor informe o nome da Atividade." required />
+                            <label class="col-sm-2 control-label">Quantidade Alunos</label>
+                            <div class="col-sm-1">
+                                    <input type="number" id="qtAluno" name="qtAluno" maxlength="2" class="form-control" />
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 control-label">Idade Inicial <span class="required">*</span></label>
-                            <div class="col-sm-4">
-                                <input type="number" name="idadeInicial" id="idadeInicial" class="form-control"
-                                       maxlength="3"
-                                       title="Por favor informe o nome da idade inicial." required />
-                            </div>
-                            <label class="col-sm-2 control-label">Idade Final <span class="required">*</span></label>
-                            <div class="col-sm-4">
-                                <input type="number" name="idadeFim" id="idadeFinal" class="form-control"
-                                       maxlength="3"
-                                       title="Por favor informe o nome da idade final." required />
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 control-label">Descrição</label>
-                            <div class="col-sm-9">
-                                <textarea class="form-control" rows="3" maxlength="500" name="descricao" id="descricao"></textarea>
-                            </div>
-                        </div> *@
                     </div>
                     <footer class="panel-footer">
                         <div class="row">
@@ -173,8 +193,11 @@
 @section CssSpecificVendor {
     <link rel="stylesheet" href="~/assets/vendor/select2/css/select2.css" />
     <link rel="stylesheet" href="~/assets/vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
+    <link rel="stylesheet" href="~/assets/vendor/bootstrap-multiselect/bootstrap-multiselect.css" />
+    <link rel="stylesheet" href="~/assets/vendor/bootstrap-timepicker/css/bootstrap-timepicker.css" />
 }
 @section Scripts {
+    <script src="~/assets/vendor/bootstrap-timepicker/bootstrap-timepicker.js"></script>
     <script src="~/assets/vendor/jquery-validation/jquery.validate.js"></script>
     <script src="~/assets/vendor/select2/js/select2.js"></script>
     <script src="~/assets/vendor/jquery-mask/jquery.mask.js"></script>

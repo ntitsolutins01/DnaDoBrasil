@@ -19,8 +19,10 @@ namespace WebApp.Models
         {
             public int Id { get; set; }
             public int CursoId { get; set; }
-            public byte[] ImagemFrente { get; set; }
-            public byte[]? ImagemVerso { get; set; }
+            public string ImagemFrente { get; set; }
+            public string? ImagemVerso { get; set; }
+            public string NomeImagemFrente { get; set; }
+            public string? NomeImagemVerso { get; set; }
             public string HtmlFrente { get; set; }
             public string HtmlVerso { get; set; }
             public bool Status { get; set; } = true;
