@@ -762,6 +762,7 @@
 
                 }, "Informe um CPF válido");
 
+                
                 $("#formEditProfissional").validate({
                     rules: {
                         cpf: { cpf: true, required: true }
@@ -849,33 +850,7 @@
                     $(this).trigger('blur');
                 });
 
-                //clique de escolha do select
-                $("#ddlLinhaAcao").change(function () {
-                    var id = $("#ddlLinhaAcao").val();
-
-                    var url = "../../Modalidade/GetModalidadesByLinhaAcaoId";
-
-                    $.getJSON(url,
-                        { id: id },
-                        function (data) {
-                            if (data.length > 0) {
-                                var items = '<option value="">Selecionar Modalidade</option>';
-                                $("#ddlModalidade").empty;
-                                $.each(data,
-                                    function (i, row) {
-                                        items += "<option value='" + row.value + "'>" + row.text + "</option>";
-                                    });
-                                $("#ddlModalidade").html(items);
-                            }
-                            else {
-                                new PNotify({
-                                    title: 'Modalidade',
-                                    text: 'Modalidades não encontradas.',
-                                    type: 'warning'
-                                });
-                            }
-                        });
-                });
+                
 
                 $("#formMinhasTurmas").validate({
                     highlight: function (label) {

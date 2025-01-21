@@ -1,4 +1,5 @@
-﻿using WebApp.Dto;
+﻿using System.Collections;
+using WebApp.Dto;
 using WebApp.Models;
 
 namespace WebApp.ApiClient
@@ -114,5 +115,5 @@ namespace WebApp.ApiClient
 
 		#endregion
 
-	}
+    }
 }
