@@ -104,39 +104,17 @@
                             <div class="tab-content">
                                 <div id="frente" class="tab-pane active">
                                     <div class="student-info">
-                                        <div class="info-row">
-                                            <label>Curso:</label>
-                                            <span>{{editDto.Curso}}</span>
-                                        </div>
-                                        <div class="info-row">
-                                            <label>DATA DE NASCIMENTO:</label>
-                                            <span>{{editDto.DtNascimento}}</span>
-                                        </div>
-                                        <div class="info-row">
-                                            <label>TELEFONE:</label>
-                                            <span>{{editDto.Telefone}}</span>
-                                        </div>
-                                        <div class="info-row">
-                                            <label>CPF:</label>
-                                            <span>{{editDto.Cpf}}</span>
-                                        </div>
-                                        <div class="info-row">
-                                            <label>MATRÍCULA:</label>
-                                            <span>{{editDto.Id}}</span>
-                                        </div>
-                                        <div class="activity-info">
-                                            {{editDto.ModalidadeLinhaAcao}}
-                                        </div>
+                                        
                                     </div>
                                     <div class="photo-container">
-                                        <img :src="editDto.Image" alt="Foto do estudante" class="student-photo">
+                                        <img :src="editDto.NomeImagemFrente" alt="Foto do estudante" class="student-photo">
                                     </div>
-                                    <div class="qr-code-container">
+                                    @* <div class="qr-code-container">
                                         <img :src="editDto.QRCode" alt="QR Code" class="qr-code">
-                                    </div>
+                                    </div> *@
                                 </div>
                                 <div id="verso" class="tab-pane">
-                                    <div class="main-content-verso">
+                                    @* <div class="main-content-verso">
                                         <div class="info-row-verso">
                                             <label>MUNICÍPIO/ESTADO:</label>
                                             <span>{{editDto.MunicipioEstado}}</span>
@@ -145,7 +123,7 @@
                                             <label>UNIDADE ESCOLAR:</label>
                                             <span>{{editDto.NomeLocalidade}}</span>
                                         </div>
-                                    </div>
+                                    </div> *@
                                 </div>
                             </div>
                         </div>

@@ -32,13 +32,15 @@ namespace WebApp.Models
             public required int LinhaAcaoId { get; set; }
             public required int CategoriaId { get; set; }
             public required int ModalidadeId { get; set; }
-            public string? Turma { get; set; }
-            public TimeSpan? HrInicial { get; set; }
-            public TimeSpan? HrFinal { get; set; }
+            public required string Turma { get; set; }
+            public required string HrInicial { get; set; }
+            public required string HrFinal { get; set; }
             public required int ProfissionalId { get; set; }
             public required int LocalidadeId { get; set; }
             public bool Status { get; set; }
-		}
+            public required int QuantidadeAluno { get; set; }
+            public required string DiasSemana { get; set; }
+        }
 	}
 
 }

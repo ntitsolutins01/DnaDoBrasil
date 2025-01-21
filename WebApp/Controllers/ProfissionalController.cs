@@ -552,9 +552,11 @@ namespace WebApp.Controllers
                 SetCrudMessage(crud);
 
                 //usuario logado
-                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 if (User.Identity == null) return Redirect("/Identity/Account/Login");
+
                 var usuario = User.Identity.Name;
+                if (usuario == null) return Redirect("/Identity/Account/Login");
 
                 var usu = ApiClientFactory.Instance.GetUsuarioByEmail(usuario);
 
@@ -562,18 +564,19 @@ namespace WebApp.Controllers
 
                 var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome",
                     profissional.Uf);
+
                 var municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(profissional.Uf!), "Id",
                     "Nome", profissional.MunicipioId);
+
                 var localidades =
                     new SelectList(
                         ApiClientFactory.Instance.GetLocalidadeByMunicipio(profissional.MunicipioId.ToString()),
                         "Id", "Nome", profissional.LocalidadeId);
+
                 var listModalidades = new SelectList(ApiClientFactory.Instance.GetModalidadeAll(), "Id", "Nome",
                     profissional.ModalidadesIds);
 
                 var linhasAcoes = new SelectList(ApiClientFactory.Instance.GetLinhasAcoesAll(), "Id", "Nome");
-
-                var categorias = new SelectList(ApiClientFactory.Instance.GetCategoriasAll(), "Id", "Nome");
 
                 List<SelectListDto> list = new List<SelectListDto>
                 {
@@ -612,15 +615,17 @@ namespace WebApp.Controllers
             }
         }
 
-
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="collection"></param>
+        /// <returns></returns>
         [HttpPost]
         [ClaimsAuthorize(ClaimType.Profissional, Claim.AlterarProfile)]
         public async Task<ActionResult> Profile(IFormCollection collection)
         {
             try
             {
-
                 var status = collection["status"].ToString();
                 var habilitado = collection["habilitado"].ToString();
 
@@ -673,6 +678,29 @@ namespace WebApp.Controllers
             {
                 Console.Write(e.StackTrace);
                 return RedirectToAction(nameof(Profile), new { notify = (int)EnumNotify.Error, message = e.Message });
+
+            }
+        }
+
+        /// <summary>
+        /// Tela de Visualização das turmas do Profissional Logado
+        /// </summary>
+        /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
+        /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
+        /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
+        [ClaimsAuthorize(ClaimType.Profissional, Claim.Consultar)]
+        public ActionResult MinhasTurmas(int? crud, int? notify, string message = null)
+        {
+            try
+            {
+                SetNotifyMessage(notify, message);
+                SetCrudMessage(crud);
+
+                return RedirectToAction(nameof(Profile), new { crud = (int)EnumCrud.Updated });
+            }
+            catch (Exception e)
+            {
+                return Redirect("/Identity/Account/Login");
 
             }
         }
