@@ -2,12 +2,15 @@
 {
     public class CertificadoDto
     {
-        public int Id { get; set; }
-        public int CursoId { get; set; }
-        public byte[] ImagemFrente { get; set; }
-        public byte[]? ImagemVerso { get; set; }
-        public string HtmlFrente { get; set; }
-        public string HtmlVerso { get; set; }
+        public required int Id { get; set; }
+        public required int CursoId { get; set; }
+        public string? TituloCurso { get; set; }
+        public required string ImagemFrente { get; set; }
+        public string? ImagemVerso { get; set; }
+        public string? NomeImagemFrente { get; set; }
+        public string? NomeImagemVerso { get; set; }
+        public required string HtmlFrente { get; set; }
+        public required string HtmlVerso { get; set; }
         public bool Status { get; set; } = true;
     }
 }
