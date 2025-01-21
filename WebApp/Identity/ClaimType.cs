@@ -23,6 +23,7 @@ namespace WebApp.Identity
         public const string Encaminhamento = "Encaminhamento";
         public const string Usuario = "Usuario";
         public const string Perfil = "Perfil";
+        public const string QuestaoEad = "QuestaoEad";
         public const string Estrutura = "Estrutura";
         public const string Categoria = "Categoria";
         public const string Atividade = "Atividade";
