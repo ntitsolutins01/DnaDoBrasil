@@ -92,14 +92,14 @@ namespace WebApp.Controllers
                 foreach (var file in collection.Files)
                 {
                     if (file.Length <= 0) continue;
-                    filePathFrente = Path.GetFileName(collection.Files[0].FileName);
-                    fileNameFrente = Path.Combine(_host.WebRootPath, $"Certificados\\{newFileName0}");
+                    fileNameFrente = Path.GetFileName(collection.Files[0].FileName);
+                    filePathFrente = Path.Combine(_host.WebRootPath, $"Certificados\\{newFileName0}");
 
                     if (!Directory.Exists(Path.Combine(_host.WebRootPath, $"Certificados")))
                         Directory.CreateDirectory(Path.Combine(_host.WebRootPath, $"Certificados"));
 
-                    command.ImagemFrente = filePathFrente;
-                    command.NomeImagemFrente = fileNameFrente;
+                    command.ImagemFrente = fileNameFrente;
+                    command.NomeImagemFrente = filePathFrente;
 
                     using Stream fileStream = new FileStream(filePathFrente, FileMode.Create);
                     await file.CopyToAsync(fileStream);
@@ -117,14 +117,14 @@ namespace WebApp.Controllers
                 foreach (var file in collection.Files)
                 {
                     if (file.Length <= 0) continue;
-                    filePathVerso = Path.GetFileName(collection.Files[0].FileName);
-                    fileNameVerso = Path.Combine(_host.WebRootPath, $"Certificados\\{newFileName1}");
+                    fileNameVerso = Path.GetFileName(collection.Files[0].FileName);
+                    filePathVerso = Path.Combine(_host.WebRootPath, $"Certificados\\{newFileName1}");
 
                     if (!Directory.Exists(Path.Combine(_host.WebRootPath, $"Certificados")))
                         Directory.CreateDirectory(Path.Combine(_host.WebRootPath, $"Certificados"));
 
-                    command.ImagemVerso = filePathVerso;
-                    command.NomeImagemVerso = fileNameVerso;
+                    command.ImagemVerso = fileNameVerso;
+                    command.NomeImagemVerso = filePathVerso;
 
                     using Stream fileStream = new FileStream(filePathVerso, FileMode.Create);
                     await file.CopyToAsync(fileStream);

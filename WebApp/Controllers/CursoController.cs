@@ -246,6 +246,11 @@ public class CursoController : BaseController
 
 		return Task.FromResult(result);
     }
+    /// <summary>
+    /// Método de busca todos os Cursos pelo id do tipo de curso
+    /// </summary>
+    /// <param name="id">Id do tipo de curso</param>
+    /// <returns>Retorna um json com todos os cursos</returns>
     public Task<JsonResult> GetCursosAllByTipoCursoId(string id)
     {
         try
