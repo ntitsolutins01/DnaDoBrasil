@@ -29,7 +29,7 @@
 								<th class="text-center">Categoria</th>
 								<th class="text-center">Atividade / Modalidade</th>
 								<th class="text-center">Turma</th>
-								<th class="text-center">Dia da Semana</th>
+								<th class="text-center">Dias da Semana</th>
 								<th class="text-center">Horário</th>
 								<th class="text-center">Status</th>
 								<th class="text-center">Ações</th>
@@ -45,7 +45,7 @@
                                     <td class="text-center">@Html.DisplayFor(modelItem => item.NomeCategoria)</td>
                                     <td class="text-center">@Html.DisplayFor(modelItem => item.NomeModalidade)</td>
                                     <td class="text-center">@Html.DisplayFor(modelItem => item.Turma)</td>
-                                    <td class="text-center">@Html.DisplayFor(modelItem => item.DiaSemana)</td>
+                                    <td class="text-center">@Html.DisplayFor(modelItem => item.DiasSemana)</td>
 									<td class="text-center">@Html.DisplayFor(modelItem => item.HrInicial) - @Html.DisplayFor(modelItem => item.HrFinal)</td>
 									@if (item.Status)
 									{
@@ -56,11 +56,11 @@
 										<td class="text-center"><span class="label label-danger" style="display: block;">INATIVO</span></td>
 									}
 									<td class="actions text-center">
-										<a data-toggle="tooltip" data-placement="top" title="Editar"
+										@* <a data-toggle="tooltip" data-placement="top" title="Editar"
 										   href='javascript:(crud.EditModal(@item.Id))'
 										   class="on-default edit-row" style='color: #FF9800'>
 											<i class="fa fa-pencil"></i>
-										</a>
+										</a> *@
 										<a data-toggle="tooltip" data-placement="top" title="Excluir" href='javascript:(crud.DeleteModal(@item.Id))'
 										   class="on-default remove-row" style="cursor: pointer;color: #F44336"><i class="fa fa-trash"></i></a>
 									</td>

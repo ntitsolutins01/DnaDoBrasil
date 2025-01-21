@@ -562,49 +562,14 @@ namespace WebApp.Controllers
 
                 var profissional = ApiClientFactory.Instance.GetProfissionalByEmail(usuario);
 
-                var estados = new SelectList(ApiClientFactory.Instance.GetEstadosAll(), "Sigla", "Nome",
-                    profissional.Uf);
-
-                var municipios = new SelectList(ApiClientFactory.Instance.GetMunicipiosByUf(profissional.Uf!), "Id",
-                    "Nome", profissional.MunicipioId);
-
-                var localidades =
-                    new SelectList(
-                        ApiClientFactory.Instance.GetLocalidadeByMunicipio(profissional.MunicipioId.ToString()),
-                        "Id", "Nome", profissional.LocalidadeId);
-
-                var listModalidades = new SelectList(ApiClientFactory.Instance.GetModalidadeAll(), "Id", "Nome",
+                var listModalidades = new SelectList(ApiClientFactory.Instance.GetModalidadesByProfissionalId(profissional.Id), "Id", "Nome",
                     profissional.ModalidadesIds);
-
-                var linhasAcoes = new SelectList(ApiClientFactory.Instance.GetLinhasAcoesAll(), "Id", "Nome");
-
-                List<SelectListDto> list = new List<SelectListDto>
-                {
-                    new() { IdNome = "Professor Ed. Física", Nome = "Professor Ed. Física" },
-                    new() { IdNome = "Instrutor Ativ. Diversas", Nome = "Instrutor Ativ. Diversas" },
-                    new() { IdNome = "Instrutor Artes", Nome = "Instrutor Artes" },
-                    new() { IdNome = "Professor Reforço", Nome = "Professor Reforço" },
-                    new() { IdNome = "Professor Disc. Diversas", Nome = "Professor Disc. Diversas" },
-                    new() { IdNome = "Monitor Regular", Nome = "Monitor Regular" },
-                    new() { IdNome = "Monitor A. Especializado", Nome = "Monitor A. Especializado" },
-                    new() { IdNome = "Professor Informática", Nome = "Professor Informática" },
-                    new() { IdNome = "Psicólogo", Nome = "Psicólogo" },
-                    new() { IdNome = "Assistente Social", Nome = "Assistente Social" },
-                    new() { IdNome = "Estagiário", Nome = "Estagiário" }
-                };
-
-                var cargos = new SelectList(list, "IdNome", "Nome", profissional.Cargo);
 
                 return View(new ProfissionalModel()
                 {
-                    ListEstados = estados,
-                    ListModalidades = listModalidades,
+                    ListAtividadesModalidades = listModalidades,
                     Profissional = profissional,
                     Usuario = usu,
-                    ListMunicipios = municipios,
-                    ListLocalidades = localidades,
-                    ListCargos = cargos,
-                    ListLinhasAcoes = linhasAcoes
                 });
 
             }
