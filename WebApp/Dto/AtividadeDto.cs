@@ -11,10 +11,10 @@
         public required string NomeCategoria { get; set; }
         public required int ModalidadeId { get; set; }
         public required string NomeModalidade { get; set; }
-        public string? Turma { get; set; }
-        public string? DiaSemana { get; set; }
-        public TimeSpan? HrInicial { get; set; }
-        public TimeSpan? HrFinal { get; set; }
+		public required string Turma { get; set; }
+		public required string DiasSemana { get; set; }
+		public required string HrInicial { get; set; }
+		public required string HrFinal { get; set; }
         public required int ProfissionalId { get; set; }
         public required string NomeProfissional { get; set; }
         public required int LocalidadeId { get; set; }

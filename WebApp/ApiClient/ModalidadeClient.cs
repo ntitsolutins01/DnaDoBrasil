@@ -88,7 +88,19 @@ namespace WebApp.ApiClient
                 $"{ResourceModalidade}/LinhaAcao/{id}"));
             return Get<List<ModalidadeDto>>(requestUrl);
         }
-        #endregion
 
+
+        /// <summary>
+        /// busca uma lista de modalidades por ProfissionalId
+        /// </summary>
+        /// <param name="id">Id do profissional a ser buscado</param>
+        /// <returns>Retorna a lista de Modalidades</returns>
+        public List<ModalidadeDto> GetModalidadesByProfissionalId(int id)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceModalidade}/Profissional/{id}"));
+            return Get<List<ModalidadeDto>>(requestUrl);
+        }
+        #endregion
     }
 }
