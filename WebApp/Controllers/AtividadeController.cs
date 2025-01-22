@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -72,7 +73,7 @@ public class AtividadeController : BaseController
 
             var linhasAcoes = new SelectList(ApiClientFactory.Instance.GetLinhasAcoesAll(), "Id", "Nome");
 
-            var categorias = new SelectList(ApiClientFactory.Instance.GetCategoriasAll(), "Id", "Nome");
+            var categorias = new SelectList(ApiClientFactory.Instance.GetCategoriasAll(), "Id", "Codigo");
 
             var model = new AtividadeModel()
             {
@@ -101,14 +102,29 @@ public class AtividadeController : BaseController
     {
         try
         {
+            var listDiasSemana = new List<string>
+            {
+                collection["segunda"].ToString() != "" ? "SEG" : "",
+                collection["terca"].ToString() != "" ? "TER" : "",
+                collection["quarta"].ToString() != "" ? "QUA" : "",
+                collection["quinta"].ToString() != "" ? "QUI" : "",
+                collection["sexta"].ToString() != "" ? "SEX" : "",
+                collection["sabado"].ToString() != "" ? "SAB" : ""
+            };
+
             var command = new AtividadeModel.CreateUpdateAtividadeCommand
             {
-                EstruturaId = 0,
-                LinhaAcaoId = 0,
-                CategoriaId = 0,
-                ModalidadeId = 0,
-                ProfissionalId = 0,
-                LocalidadeId = 0
+                EstruturaId = Convert.ToInt32(collection["ddlEstrutura"].ToString()),
+                LinhaAcaoId = Convert.ToInt32(collection["ddlLinhaAcao"].ToString()),
+                CategoriaId = Convert.ToInt32(collection["ddlCategoria"].ToString()),
+                ModalidadeId = Convert.ToInt32(collection["ddlModalidade"].ToString()),
+                ProfissionalId = Convert.ToInt32(collection["ddlProfessorProfissional"].ToString()),
+                LocalidadeId = Convert.ToInt32(collection["ddlLocalidade"].ToString()),
+                Turma = collection["ddlTurma"].ToString(),
+                HrInicial = collection["hrInicial"].ToString(),
+                HrFinal = collection["hrFinal"].ToString(),
+                QuantidadeAluno = Convert.ToInt32(collection["qtAluno"].ToString()),
+                DiasSemana = string.Join("-", listDiasSemana.Where(s => !string.IsNullOrWhiteSpace(s)).Distinct().ToList())
             };
 
             await ApiClientFactory.Instance.CreateAtividade(command);
@@ -154,6 +170,11 @@ public class AtividadeController : BaseController
                 ModalidadeId = 0,
                 ProfissionalId = 0,
                 LocalidadeId = 0,
+                Turma = null,
+                HrInicial = null,
+                HrFinal = null,
+                QuantidadeAluno = 0,
+                DiasSemana = null,
             };
 
             await ApiClientFactory.Instance.UpdateAtividade(command.Id, command);

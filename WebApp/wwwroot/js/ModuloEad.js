@@ -100,7 +100,7 @@ var vm = new Vue({
                             else {
                                 new PNotify({
                                     title: 'Curso',
-                                    text: 'Curso não encontrados.',
+                                    text: 'Cursos não encontrados.',
                                     type: 'warning'
                                 });
                             }

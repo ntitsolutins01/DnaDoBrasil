@@ -1,4 +1,5 @@
-﻿using WebApp.Dto;
+﻿using System.Collections;
+using WebApp.Dto;
 using WebApp.Models;
 
 namespace WebApp.ApiClient
@@ -73,6 +74,12 @@ namespace WebApp.ApiClient
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 $"{ResourceAula}"));
+            return Get<List<AulaDto>>(requestUrl);
+        }
+        public List<AulaDto> GetAulasAllByModuloEadId(int id)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceAula}/ModuloEad/{id}"));
             return Get<List<AulaDto>>(requestUrl);
         }
 

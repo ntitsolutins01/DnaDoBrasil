@@ -406,11 +406,11 @@
                                                     Aula
                                                 </a>
                                             </li>
-                                            @* <li>
-                                                <a href="@Url.Action("Index", "QuestoesEad")">
+                                            <li>
+                                                <a href="@Url.Action("Index", "QuestaoEad")">
                                                     Questões
                                                 </a>
-                                            </li> *@
+                                            </li>
                                         </ul>
                                     </li>
                                 }
@@ -436,12 +436,45 @@
 
                                 @if ((await AuthorizationService.AuthorizeAsync(User, ModuloAccess.ControleMaterial)).Succeeded)
                                 {
-                                    <li class="nav-parent nav-expanded">
+                                    <li class="nav-parent">
+                                        <a href="#">
+                                            <i class="fa fa-file-text" aria-hidden="true"></i>
+                                            <span>Controle de Materiais</span>
+                                        </a>
+                                        <ul class="nav nav-children">
+                                            <li>
+                                                <a href="@Url.Action("Index", "GrupoMaterial")">
+                                                    Grupos de Materiais
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("Index", "TipoMaterial")">
+                                                    Tipos de Materiais
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("Index", "Material")">
+                                                    Materiais
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("Index", "ControleMensalEstoque")">
+                                                    Controle Mensal de Estoque
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("Index", "ControleMaterialEstoqueSaida")">
+                                                    Registro de Entrada/Saida
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    @* <li class="nav-parent nav-expanded">
                                         <a href="@Url.Action("Index", "ControleMaterial")">
                                             <i class="fa fa-file-text" aria-hidden="true"></i>
                                             <span>Controle Materiais</span>
                                         </a>
-                                    </li>
+                                    </li> *@
                                 }
 
                                 @if ((await AuthorizationService.AuthorizeAsync(User, ModuloAccess.Atividade)).Succeeded)

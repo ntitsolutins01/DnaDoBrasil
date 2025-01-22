@@ -695,13 +695,14 @@ namespace WebApp.Controllers
                     Console.WriteLine($"Filtros aplicados: Sexo={searchFilter.Sexo}, Fomento={searchFilter.FomentoId}");
                     var result = await ApiClientFactory.Instance.GetAlunosByFilter(searchFilter);
 
-                    if (!string.IsNullOrEmpty(sexoId))
+                    // Esse trecho comentado está bugando algo, deixa comentado por enquanto
+                    /*if (!string.IsNullOrEmpty(sexoId))
                     {
                         result.Alunos = result.Alunos.Where(a =>
                             !string.IsNullOrEmpty(a.Sexo) &&
                             a.Sexo.Equals(sexoId, StringComparison.OrdinalIgnoreCase)
                         ).ToList();
-                    }
+                    }*/
 
                     // Converte AlunoIndexDto para AlunoDto completo
                     var alunosCompletos = result.Alunos.Select(async a =>
