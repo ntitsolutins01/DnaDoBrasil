@@ -90,7 +90,7 @@ namespace WebApp.Controllers
                     Finalizado = finalizado != "",
                     PageNumber = 1,
 #if DEBUG
-                    PageSize = 10
+                    PageSize = 300
 #else
                     PageSize = 1000
 #endif

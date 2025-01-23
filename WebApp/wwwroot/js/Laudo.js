@@ -333,18 +333,29 @@ var vm = new Vue({
 
                 //mascara dos inputs
                 $('#massaCorporalSaude').maskMoney();
-                $("#massaCorporalSaude").maskMoney('mask');
+                //$("#massaCorporalSaude").maskMoney('mask');
                 $('#massaCorporal').maskMoney();
-                $("#massaCorporal").maskMoney('mask');
+                //$("#massaCorporal").maskMoney('mask');
                 $('#preensaoManual').maskMoney();
-                $("#preensaoManual").maskMoney('mask');
+               // $("#preensaoManual").maskMoney('mask');
 
                 $('#aptidaoFisica').maskMoney();
-                $("#aptidaoFisica").maskMoney('mask');
+                //$("#aptidaoFisica").maskMoney('mask');
                 $('#testeVelocidade').maskMoney();
-                $("#testeVelocidade").maskMoney('mask');
+                //$("#testeVelocidade").maskMoney('mask');
                 $('#agilidade').maskMoney();
-                $("#agilidade").maskMoney('mask');
+                //$("#agilidade").maskMoney('mask');
+
+                rules: {
+                    massaCorporalSaude: {
+                        massaCorporalSaude: [0, 100]
+                    }
+                },
+                messages: {
+                    massaCorporalSaude: {
+                        massaCorporalSaude: "Por favor informe a massa corporal entre 0 e 100 kilos"
+                    }
+                }
 
                 $("#formEditLaudo").validate({
                     highlight: function (label) {
@@ -519,10 +530,10 @@ var vm = new Vue({
                         function (data) {
                             $("#divIdade").show();
                             $("#spanIdade").text(data + " anos");
-                            if (data < 12) {
+                            if (data <= 12) {
                                 $("#liQualidade").hide();
                             }
-                            if (data < 14) {
+                            if (data <= 14) {
                                 $("#liVocacional").hide();
                             }
                         });
@@ -543,7 +554,18 @@ var vm = new Vue({
                 $('#agilidade').maskMoney();
                 //$("#agilidade").maskMoney('mask');
 
+
                 $("#formLaudo").validate({
+                    rules: {
+                        massaCorporalSaude: {
+                            massaCorporalSaude: [0, 100]
+                        }
+                    },
+                    messages: {
+                        massaCorporalSaude: {
+                            massaCorporalSaude: "Por favor informe a massa corporal entre 0 e 100 kilos"
+                        }
+                    }
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
                     },
