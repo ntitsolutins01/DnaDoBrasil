@@ -127,11 +127,13 @@ var vm = new Vue({
                 self.editDto.Id = result.data.id;
                 self.editDto.TipoCurso = result.data.tipoCurso;
                 self.editDto.Curso = result.data.curso;
-                self.editDto.ImagemFrente = result.data.imagemFrente;
                 self.editDto.HtmlFrente = result.data.htmlFrente;
-                self.editDto.ImagemVerso = result.data.imagemVerso;
                 self.editDto.HtmlVerso= result.data.htmlVerso;
                 self.editDto.Status = result.data.status;
+
+                self.editDto.NomeImagemFrente = result.data.nomeImagemFrente;
+                self.editDto.NomeImagemVerso = result.data.nomeImagemVerso;
+
 
             }).catch(error => {
                 Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
@@ -145,13 +147,12 @@ var vm = new Vue({
                 self.editDto.Id = result.data.id;
                 self.editDto.TipoCurso = result.data.tipoCurso;
                 self.editDto.Curso = result.data.curso;
-                self.editDto.ImagemFrente = result.data.imagemFrente;
                 self.editDto.HtmlFrente = result.data.htmlFrente;
-                self.editDto.ImagemVerso = result.data.imagemVerso;
                 self.editDto.HtmlVerso = result.data.htmlVerso;
-                self.editDto.NomeImagemFrente = result.data.nomeImagemFrente;
-                self.editDto.NomeImagemVerso = result.data.nomeImagemVerso;
                 self.editDto.Status = result.data.status;
+
+                self.editDto.NomeImagemFrente = "/Certificados" + result.data.nomeImagemFrente.split("/Certificados")[1];
+                self.editDto.NomeImagemVerso = "/Certificados" + result.data.nomeImagemVerso.split("/Certificados")[1];
 
                 //if (result.data.celular === "0" || result.data.celular === "" || result.data.celular === null) {
                 //    self.editDto.Telefone = "Não informado";

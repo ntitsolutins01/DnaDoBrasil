@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -17,6 +18,7 @@ namespace WebApp.Controllers
 
         private readonly IOptions<UrlSettings> _appSettings;
         private readonly IWebHostEnvironment _host;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
         #endregion
 
@@ -200,5 +202,3 @@ namespace WebApp.Controllers
         }
     }
 }
-
-

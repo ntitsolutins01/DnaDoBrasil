@@ -22,24 +22,24 @@
                     </div>
                     <table class="table table-bordered table-striped mb-0" id="datatable-default">
                         <thead>
-                        <tr>
-                            <th class="text-center">Id</th>
-                            <th class="text-center">Nome do Curso</th>
-                            @* <th class="text-center">Imagem Frente</th>
+                            <tr>
+                                <th class="text-center">Id</th>
+                                <th class="text-center">Nome do Curso</th>
+                                @* <th class="text-center">Imagem Frente</th>
                                 <th class="text-center">Imagem Verso</th> *@
-                            <th class="text-center">Html Frente</th>
-                            <th class="text-center">Html Verso</th>
-                            <th class="text-center">Status</th>
-                            <th class="text-center">Ações</th>
-                        </tr>
+                                <th class="text-center">Html Frente</th>
+                                <th class="text-center">Html Verso</th>
+                                <th class="text-center">Status</th>
+                                <th class="text-center">Ações</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        @foreach (var item in Model.Certificados)
-                        {
-                            <tr>
-                                <td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Id)</td>
-                                <td class="text-center">@Html.DisplayFor(modelItem => item.TituloCurso)</td>
-                                @* <td class="text-center">
+                            @foreach (var item in Model.Certificados)
+                            {
+                                <tr>
+                                    <td class="text-center" style="width:20px;">@Html.DisplayFor(modelItem => item.Id)</td>
+                                    <td class="text-center">@Html.DisplayFor(modelItem => item.TituloCurso)</td>
+                                    @* <td class="text-center">
                                         <img src="data:image/png;base64,@Convert.ToBase64String(item.ImagemFrente)" alt="Imagem Frente" style="width: 50px; height: 50px;" />
                                     </td>
                                     <td class="text-center">
@@ -48,32 +48,32 @@
                                             <img src="data:image/png;base64,@Convert.ToBase64String(item.ImagemVerso)" alt="Imagem Verso" style="width: 50px; height: 50px;" />
                                         }
                                     </td> *@
-                                <td class="text-center">@Html.DisplayFor(modelItem => item.HtmlFrente)</td>
-                                <td class="text-center">@Html.DisplayFor(modelItem => item.HtmlVerso)</td>
-                                @if (item.Status)
-                                {
-                                    <td class="text-center"><span class="label label-success">ATIVO</span></td>
-                                }
-                                else
-                                {
-                                    <td class="text-center"><span class="label label-danger">INATIVO</span></td>
-                                }
-                                <td class="actions text-center">
-                                    <a data-toggle="tooltip" data-placement="top" title="Editar"
-                                       href='@Url.Action("Edit", "Certificado", new { id = item.Id })'
-                                       class="on-default edit-row" style='color: #FF9800'>
-                                        <i class="fa fa-pencil"></i>
-                                    </a>
-                                    <a data-toggle="tooltip" data-placement="top" title="Certificado"
-                                       href='javascript:(crud.CertificadoModal(@item.Id))'
-                                       class="on-default edit-row" style='color: #8E24AA'>
-                                        <i class="fa fa-address-card-o"></i>
-                                    </a>
-                                    <a data-toggle="tooltip" data-placement="top" title="Excluir" href='javascript:(crud.DeleteModal(@item.Id))'
-                                       class="on-default remove-row" style="Certificador: pointer;color: #F44336"><i class="fa fa-trash"></i></a>
-                                </td>
-                            </tr>
-                        }
+                                    <td class="text-center">@Html.DisplayFor(modelItem => item.HtmlFrente)</td>
+                                    <td class="text-center">@Html.DisplayFor(modelItem => item.HtmlVerso)</td>
+                                    @if (item.Status)
+                                    {
+                                        <td class="text-center"><span class="label label-success">ATIVO</span></td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-center"><span class="label label-danger">INATIVO</span></td>
+                                    }
+                                    <td class="actions text-center">
+                                        <a data-toggle="tooltip" data-placement="top" title="Editar"
+                                           href='@Url.Action("Edit", "Certificado", new { id = item.Id })'
+                                           class="on-default edit-row" style='color: #FF9800'>
+                                            <i class="fa fa-pencil"></i>
+                                        </a>
+                                        <a data-toggle="tooltip" data-placement="top" title="Certificado"
+                                           href='javascript:(crud.CertificadoModal(@item.Id))'
+                                           class="on-default edit-row" style='color: #8E24AA'>
+                                            <i class="fa fa-address-card-o"></i>
+                                        </a>
+                                        <a data-toggle="tooltip" data-placement="top" title="Excluir" href='javascript:(crud.DeleteModal(@item.Id))'
+                                           class="on-default remove-row" style="Certificador: pointer;color: #F44336"><i class="fa fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>
@@ -104,10 +104,14 @@
                             <div class="tab-content">
                                 <div id="frente" class="tab-pane active">
                                     <div class="student-info">
-                                        
                                     </div>
                                     <div class="photo-container">
-                                        <img :src="editDto.NomeImagemFrente" alt="Foto do estudante" class="student-photo">
+                                        <img src="/Certificados/5c7907ee-9089-4e4f-8521-ef1ffa605eb4.jpg"
+                                             alt="Fundo do Certificado"
+                                             class="student-photo" />
+                                        @* <img src="/Certificados/@(Model?.Certificado?.NomeImagemFrente?.Split("Certificados").ElementAtOrDefault(1))"
+                                             alt="Fundo do Certificado"
+                                             class="student-photo" /> *@
                                     </div>
                                     @* <div class="qr-code-container">
                                         <img :src="editDto.QRCode" alt="QR Code" class="qr-code">
