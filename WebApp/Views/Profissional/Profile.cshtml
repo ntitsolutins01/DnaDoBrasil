@@ -202,7 +202,7 @@
                         @using (@Html.BeginForm("MinhasTurmas", "Profissional", FormMethod.Post, new { id = "formMinhasTurmas", @class = "form-horizontal" }))
                         {
                             <h4 class="mb-xlg">Meus Dados</h4>
-                            <input hidden="ProfissionalId" value="@Model.Profissional.Id" id="profissionalIdMinhasTurmas" name="profissionalIdMinhasTurmas" />
+                            <input type="hidden" id="profissionalIdMinhasTurmas" name="profissionalIdMinhasTurmas" value="@Model.Profissional.Id" />
                             <fieldset>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">Atividade / Modalidade <span class="required">*</span></label>

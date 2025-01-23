@@ -641,12 +641,14 @@
 
                 //clique de escolha do select
                 $("#ddlModalidade").change(function () {
-                    var id = $("#ddlModalidade").val();
+                    var modalidadeId = $("#ddlModalidade").val();
 
-                    var url = "../../Atividade/GetTurmaByModalidadeId";
+                    var profissionalId = $("#profissionalIdMinhasTurmas").val();
+
+                    var url = "../Profissional/GetTurmasByModalidadeIdProfissionalId";
 
                     $.getJSON(url,
-                        { id: id },
+                        { modalidadeId: modalidadeId, profissionalId: profissionalId },
                         function (data) {
                             if (data.length > 0) {
                                 var items = '<option value="">Selecionar Turma</option>';

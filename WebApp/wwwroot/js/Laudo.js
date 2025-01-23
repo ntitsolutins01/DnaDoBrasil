@@ -346,18 +346,19 @@ var vm = new Vue({
                 $('#agilidade').maskMoney();
                 //$("#agilidade").maskMoney('mask');
 
-                rules: {
-                    massaCorporalSaude: {
-                        massaCorporalSaude: [0, 100]
-                    }
-                },
-                messages: {
-                    massaCorporalSaude: {
-                        massaCorporalSaude: "Por favor informe a massa corporal entre 0 e 100 kilos"
-                    }
-                }
+                
 
                 $("#formEditLaudo").validate({
+                    rules: {
+                        massaCorporalSaude: {
+                            massaCorporalSaude: [0, 100]
+                        }
+                    },
+                    messages: {
+                        massaCorporalSaude: {
+                            massaCorporalSaude: "Por favor informe a massa corporal entre 0 e 100 kilos"
+                        }
+                    },
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
                     },
@@ -565,7 +566,7 @@ var vm = new Vue({
                         massaCorporalSaude: {
                             massaCorporalSaude: "Por favor informe a massa corporal entre 0 e 100 kilos"
                         }
-                    }
+                    },
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
                     },
