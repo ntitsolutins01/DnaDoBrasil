@@ -106,28 +106,27 @@
                                     <div class="student-info">
                                     </div>
                                     <div class="photo-container">
-                                        <img src="/Certificados/5c7907ee-9089-4e4f-8521-ef1ffa605eb4.jpg"
+                                        <img :src="editDto.NomeImagemFrente"
                                              alt="Fundo do Certificado"
                                              class="student-photo" />
-                                        @* <img src="/Certificados/@(Model?.Certificado?.NomeImagemFrente?.Split("Certificados").ElementAtOrDefault(1))"
-                                             alt="Fundo do Certificado"
-                                             class="student-photo" /> *@
                                     </div>
-                                    @* <div class="qr-code-container">
-                                        <img :src="editDto.QRCode" alt="QR Code" class="qr-code">
-                                    </div> *@
                                 </div>
                                 <div id="verso" class="tab-pane">
-                                    @* <div class="main-content-verso">
-                                        <div class="info-row-verso">
+                                    <div class="main-content-verso">
+                                        <div class="photo-container">
+                                            <img :src="editDto.NomeImagemVerso"
+                                                 alt="Fundo do Certificado"
+                                                 class="student-photo" />
+                                        </div>
+                                        @* <div class="info-row-verso">
                                             <label>MUNICÍPIO/ESTADO:</label>
                                             <span>{{editDto.MunicipioEstado}}</span>
                                         </div>
                                         <div class="info-row-verso">
                                             <label>UNIDADE ESCOLAR:</label>
                                             <span>{{editDto.NomeLocalidade}}</span>
-                                        </div>
-                                    </div> *@
+                                        </div> *@
+                                    </div>
                                 </div>
                             </div>
                         </div>

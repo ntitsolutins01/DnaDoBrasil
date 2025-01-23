@@ -151,8 +151,13 @@ var vm = new Vue({
                 self.editDto.HtmlVerso = result.data.htmlVerso;
                 self.editDto.Status = result.data.status;
 
-                self.editDto.NomeImagemFrente = "/Certificados" + result.data.nomeImagemFrente.split("/Certificados")[1];
-                self.editDto.NomeImagemVerso = "/Certificados" + result.data.nomeImagemVerso.split("/Certificados")[1];
+                self.editDto.NomeImagemFrente = "\Certificados" + result.data.nomeImagemFrente.split("\Certificados")[1];
+                if (result.data.nomeImagemVerso && result.data.nomeImagemVerso.includes("\Certificados")) {
+                    self.editDto.NomeImagemVerso = "\Certificados" + result.data.nomeImagemVerso.split("\Certificados")[1];
+                } else {
+                    self.editDto.NomeImagemVerso = null;
+                }
+
 
                 //if (result.data.celular === "0" || result.data.celular === "" || result.data.celular === null) {
                 //    self.editDto.Telefone = "Não informado";
