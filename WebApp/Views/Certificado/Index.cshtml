@@ -102,13 +102,17 @@
                                 </li>
                             </ul>
                             <div class="tab-content">
-                                <div id="frente" class="tab-pane active">
-                                    <div class="student-info">
-                                    </div>
-                                    <div class="photo-container">
+                                <div id="frente" class="tab-pane active" style="position: relative;">
+                                    <!-- Imagem da Frente -->
+                                    <div class="photo-container" style="position: relative; z-index: 1;">
                                         <img :src="editDto.NomeImagemFrente"
                                              alt="Fundo do Certificado"
-                                             class="student-photo" />
+                                             class="student-photo" style="width: 100%; height: auto; max-height: 100%; display: block; object-fit: contain;" />
+                                    </div>
+                                    <!-- HTML na Frente da Imagem -->
+                                    <div class="student-info"
+                                         style="position: absolute; top: 0; left: 0; z-index: 2; width: 100%; pointer-events: none;">
+                                        <div v-html="editDto.HtmlFrente" style="color: black; text-align: center;"></div>
                                     </div>
                                 </div>
                                 <div id="verso" class="tab-pane">
@@ -118,20 +122,13 @@
                                                  alt="Fundo do Certificado"
                                                  class="student-photo" />
                                         </div>
-                                        @* <div class="info-row-verso">
-                                            <label>MUNICÍPIO/ESTADO:</label>
-                                            <span>{{editDto.MunicipioEstado}}</span>
-                                        </div>
-                                        <div class="info-row-verso">
-                                            <label>UNIDADE ESCOLAR:</label>
-                                            <span>{{editDto.NomeLocalidade}}</span>
-                                        </div> *@
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="modal-footer">
                     <button type="reset" class="btn btn-danger pull-right" style="margin-left: 5px;" data-dismiss="modal"><i class="fa fa-remove"></i> &nbsp;&nbsp;Fechar</button>
                     <a data-toggle="tooltip"
