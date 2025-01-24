@@ -331,34 +331,176 @@ var vm = new Vue({
                         });
                 });
 
-               // //mascara dos inputs
-               // $('#massaCorporalSaude').maskMoney();
-               // //$("#massaCorporalSaude").maskMoney('mask');
-               // $('#massaCorporal').maskMoney();
-               // //$("#massaCorporal").maskMoney('mask');
-               // $('#preensaoManual').maskMoney();
-               //// $("#preensaoManual").maskMoney('mask');
+                $('.altura-mask').mask('000', {
+                    reverse: true,
+                    placeholder: "000",
+                    onChange: function (value, e) {
+                        var target = e.target;
+                        var numValue = parseInt(value);
+                        if (numValue < 1 || numValue > 300) {
+                            $(target).val('');
+                            new PNotify({
+                                title: 'Validação',
+                                text: 'Por favor insira uma altura entre 1 e 300 cm',
+                                type: 'error'
+                            });
+                        }
+                    }
+                });
 
-               // $('#aptidaoFisica').maskMoney();
-               // //$("#aptidaoFisica").maskMoney('mask');
-               // $('#testeVelocidade').maskMoney();
-               // //$("#testeVelocidade").maskMoney('mask');
-               // $('#agilidade').maskMoney();
-               // //$("#agilidade").maskMoney('mask');
+                $('.peso-mask').mask('000.00', {
+                    reverse: true,
+                    placeholder: "00.00",
+                    onChange: function (value, e) {
+                        var target = e.target;
+                        var numValue = parseFloat(value);
+                        if (numValue < 1 || numValue > 200) {
+                            $(target).val('');
+                            new PNotify({
+                                title: 'Validação',
+                                text: 'Por favor insira um peso entre 1 e 200 kg',
+                                type: 'error'
+                            });
+                        }
+                    }
+                });
 
-                
+                $('.preensao-mask').mask('000.00', {
+                    reverse: true,
+                    placeholder: "00.00",
+                    onChange: function (value, e) {
+                        var target = e.target;
+                        var numValue = parseFloat(value);
+                        if (numValue < 1 || numValue > 150) {
+                            $(target).val('');
+                            new PNotify({
+                                title: 'Validação',
+                                text: 'Por favor insira um valor entre 1 e 150 kg',
+                                type: 'error'
+                            });
+                        }
+                    }
+                });
+
+                $('.tempo-mask').mask('00.00', {
+                    reverse: true,
+                    placeholder: "00.00",
+                    onChange: function (value, e) {
+                        var target = e.target;
+                        var numValue = parseFloat(value);
+                        if (numValue < 0 || numValue > 60) {
+                            $(target).val('');
+                            new PNotify({
+                                title: 'Validação',
+                                text: 'Por favor insira um tempo válido entre 0 e 60 segundos',
+                                type: 'error'
+                            });
+                        }
+                    }
+                });
+
+                $('.flexibilidade-mask').mask('000', {
+                    reverse: true,
+                    placeholder: "000",
+                    onChange: function (value, e) {
+                        var target = e.target;
+                        var numValue = parseInt(value);
+                        if (numValue < 0 || numValue > 100) {
+                            $(target).val('');
+                            new PNotify({
+                                title: 'Validação',
+                                text: 'Por favor insira um valor entre 0 e 100 cm',
+                                type: 'error'
+                            });
+                        }
+                    }
+                });
+
+                $('.aptidao-mask').mask('00.00', {
+                    reverse: true,
+                    placeholder: "00.00",
+                    onChange: function (value, e) {
+                        var target = e.target;
+                        var numValue = parseFloat(value);
+                        if (numValue < 0 || numValue > 100) {
+                            $(target).val('');
+                            new PNotify({
+                                title: 'Validação',
+                                text: 'Por favor insira um valor entre 0 e 100 mLO2/min',
+                                type: 'error'
+                            });
+                        }
+                    }
+                });
+
+                // Aplicar as classes de máscara aos campos
+                $('#alturaSaude, #altura').addClass('altura-mask');
+                $('#massaCorporalSaude, #massaCorporal').addClass('peso-mask');
+                $('#envergaduraSaude').addClass('altura-mask');
+                $('#preensaoManual').addClass('preensao-mask');
+                $('#flexibilidade').addClass('flexibilidade-mask');
+                $('#impulsaoHorizontal').addClass('altura-mask');
+                $('#testeVelocidade, #agilidade').addClass('tempo-mask');
+                $('#aptidaoFisica').addClass('aptidao-mask');
 
                 $("#formEditLaudo").validate({
-                    //rules: {
-                    //    massaCorporalSaude: {
-                    //        massaCorporalSaude: [0, 100]
-                    //    }
-                    //},
-                    //messages: {
-                    //    massaCorporalSaude: {
-                    //        massaCorporalSaude: "Por favor informe a massa corporal entre 0 e 100 kilos"
-                    //    }
-                    //},
+                    rules: {
+                        alturaSaude: {
+                            required: true,
+                            min: 1,
+                            max: 300
+                        },
+                        massaCorporalSaude: {
+                            required: true,
+                            min: 1,
+                            max: 200
+                        },
+                        envergaduraSaude: {
+                            required: true,
+                            min: 1,
+                            max: 300
+                        },
+                        altura: {
+                            required: true,
+                            min: 1,
+                            max: 300
+                        },
+                        massaCorporal: {
+                            required: true,
+                            min: 1,
+                            max: 200
+                        },
+                        preensaoManual: {
+                            required: true,
+                            min: 1,
+                            max: 150
+                        },
+                        flexibilidade: {
+                            required: true,
+                            min: 0,
+                            max: 100
+                        },
+                        impulsaoHorizontal: {
+                            required: true,
+                            min: 0,
+                            max: 500
+                        },
+                        testeVelocidade: {
+                            required: true,
+                            min: 0,
+                            max: 60
+                        },
+                        aptidaoFisica: {
+                            required: true,
+                            min: 0,
+                            max: 100
+                        },
+                        agilidade: {
+                            required: true,
+                            min: 0,
+                            max: 60
+                        }
+                    },
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
                     },
