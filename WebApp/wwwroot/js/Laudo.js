@@ -331,34 +331,34 @@ var vm = new Vue({
                         });
                 });
 
-                //mascara dos inputs
-                $('#massaCorporalSaude').maskMoney();
-                //$("#massaCorporalSaude").maskMoney('mask');
-                $('#massaCorporal').maskMoney();
-                //$("#massaCorporal").maskMoney('mask');
-                $('#preensaoManual').maskMoney();
-               // $("#preensaoManual").maskMoney('mask');
+               // //mascara dos inputs
+               // $('#massaCorporalSaude').maskMoney();
+               // //$("#massaCorporalSaude").maskMoney('mask');
+               // $('#massaCorporal').maskMoney();
+               // //$("#massaCorporal").maskMoney('mask');
+               // $('#preensaoManual').maskMoney();
+               //// $("#preensaoManual").maskMoney('mask');
 
-                $('#aptidaoFisica').maskMoney();
-                //$("#aptidaoFisica").maskMoney('mask');
-                $('#testeVelocidade').maskMoney();
-                //$("#testeVelocidade").maskMoney('mask');
-                $('#agilidade').maskMoney();
-                //$("#agilidade").maskMoney('mask');
+               // $('#aptidaoFisica').maskMoney();
+               // //$("#aptidaoFisica").maskMoney('mask');
+               // $('#testeVelocidade').maskMoney();
+               // //$("#testeVelocidade").maskMoney('mask');
+               // $('#agilidade').maskMoney();
+               // //$("#agilidade").maskMoney('mask');
 
                 
 
                 $("#formEditLaudo").validate({
-                    rules: {
-                        massaCorporalSaude: {
-                            massaCorporalSaude: [0, 100]
-                        }
-                    },
-                    messages: {
-                        massaCorporalSaude: {
-                            massaCorporalSaude: "Por favor informe a massa corporal entre 0 e 100 kilos"
-                        }
-                    },
+                    //rules: {
+                    //    massaCorporalSaude: {
+                    //        massaCorporalSaude: [0, 100]
+                    //    }
+                    //},
+                    //messages: {
+                    //    massaCorporalSaude: {
+                    //        massaCorporalSaude: "Por favor informe a massa corporal entre 0 e 100 kilos"
+                    //    }
+                    //},
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
                     },
@@ -540,33 +540,33 @@ var vm = new Vue({
                         });
                 });
 
-                //mascara dos inputs 
-                $('#massaCorporalSaude').maskMoney();
-                //$("#massaCorporalSaude").maskMoney('mask');
-                $('#massaCorporal').maskMoney();
-                //$("#massaCorporal").maskMoney('mask');
-                $('#preensaoManual').maskMoney();
-                //$("#preensaoManual").maskMoney('mask');
+                ////mascara dos inputs 
+                //$('#massaCorporalSaude').maskMoney();
+                ////$("#massaCorporalSaude").maskMoney('mask');
+                //$('#massaCorporal').maskMoney();
+                ////$("#massaCorporal").maskMoney('mask');
+                //$('#preensaoManual').maskMoney();
+                ////$("#preensaoManual").maskMoney('mask');
 
-                $('#aptidaoFisica').maskMoney();
-                //$("#aptidaoFisica").maskMoney('mask');
-                $('#testeVelocidade').maskMoney();
-                //$("#testeVelocidade").maskMoney('mask');
-                $('#agilidade').maskMoney();
-                //$("#agilidade").maskMoney('mask');
+                //$('#aptidaoFisica').maskMoney();
+                ////$("#aptidaoFisica").maskMoney('mask');
+                //$('#testeVelocidade').maskMoney();
+                ////$("#testeVelocidade").maskMoney('mask');
+                //$('#agilidade').maskMoney();
+                ////$("#agilidade").maskMoney('mask');
 
 
                 $("#formLaudo").validate({
-                    rules: {
-                        massaCorporalSaude: {
-                            massaCorporalSaude: [0, 100]
-                        }
-                    },
-                    messages: {
-                        massaCorporalSaude: {
-                            massaCorporalSaude: "Por favor informe a massa corporal entre 0 e 100 kilos"
-                        }
-                    },
+                    //rules: {
+                    //    massaCorporalSaude: {
+                    //        massaCorporalSaude: [0, 100]
+                    //    }
+                    //},
+                    //messages: {
+                    //    massaCorporalSaude: {
+                    //        massaCorporalSaude: "Por favor informe a massa corporal entre 0 e 100 kilos"
+                    //    }
+                    //},
                     highlight: function (label) {
                         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
                     },

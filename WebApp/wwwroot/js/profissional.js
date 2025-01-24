@@ -7,7 +7,9 @@
             modalidadeProfissional: [],
         },
         loading: false,
-        editDto: { Id: "", Nome: "", DtNascimento: "", Email: "", AspNetUserId: "", Sexo: "", Cpf: "", Telefone: "", Celular: "", Endereco: "", Numero: "", Cep: "", Bairro: "", Municipio: "", Ambientes: "", Contratos: "", Status: true }
+        editDto: {
+            Categoria: "", Estrutura: "", DiasSemana: "", Horario: ""
+        }
     },
     mounted: function () {
         var self = this;
@@ -661,12 +663,58 @@
                             }
                             else {
                                 new PNotify({
-                                    title: 'Usuario',
-                                    text: data,
+                                    title: 'Profissional',
+                                    text: "O Profissional logado não possui atividades cadastradas.",
                                     type: 'warning'
                                 });
                             }
                         });
+                });
+
+
+                //clique de escolha do select
+                $("#ddlTurma").change(function () {
+                    var modalidadeId = $("#ddlModalidade").val();
+
+                    var profissionalId = $("#profissionalIdMinhasTurmas").val();
+
+                    var turma = $("#ddlTurma").val();
+
+                    var url = "../Profissional/GetAtividadeByModalidadeIdProfissionalIdTurma";
+
+                    axios.get(url, {
+                        params: {
+                            modalidadeId: 4,
+                            profissionalId: 60,
+                            turma: "T1"
+                        }
+                    }).then(result => {
+                        self.editDto.Categoria = result.data.nomeCategoria;
+                        self.editDto.Estrutura = result.data.nomeEstrutura;
+                        self.editDto.DiasSemana = result.data.diasSemana;
+                        self.editDto.Horario = result.data.hrInicial + " - " + result.data.hrFinal;
+                    }).catch(error => {
+                        Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
+                    });
+
+                    //$.getJSON(url,
+                    //    { modalidadeId: modalidadeId, profissionalId: profissionalId, turma: turma },
+                    //    function (data) {
+                    //        if (data.length > 0) {
+
+                    //            self.editDto.Categoria = result.data.nomeCategoria;
+                    //            self.editDto.Estrutura = result.data.nomeEstrutura;
+                    //            self.editDto.DiasSemana = result.data.diasSemana;
+                    //            self.editDto.Horario = result.data.hrInicial + " - " + result.data.hrFinal;
+                    //        }
+                    //        else {
+                    //            new PNotify({
+                    //                title: 'Profissional',
+                    //                text: "Turma não encontrada.",
+                    //                type: 'warning'
+                    //            });
+                    //        }
+                    //    });
                 });
 
                 //mascara dos inputs

@@ -139,8 +139,8 @@ namespace WebApp.ApiClient
         /// <summary>
         /// Busca Todos Nome de Aluno
         /// </summary>
-        /// <param name="id">Id de Todos os Aluno a ser buscado</param>
-        /// <returns>retorna a todos os Aluno</returns>
+        /// <param name="id">Id da localidade a ser buscado</param>
+        /// <returns>Retorna a todos os Aluno</returns>
         public List<SelectListDto> GetNomeAlunosAll(string id)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
@@ -158,6 +158,18 @@ namespace WebApp.ApiClient
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 $"{ResourceAlunos}/Filter"));
             return GetFiltro(requestUrl, searchFilter);
+        }
+
+        /// <summary>
+        /// Busca Todos Nome de Aluno
+        /// </summary>
+        /// <param name="id">Id do Profissional</param>
+        /// <returns>Retorna lista dos alunos</returns>
+        public List<SelectListDto> GetNomeAlunosByProfissionalId(int id)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceAlunos}/Profissional/{id}"));
+            return Get<List<SelectListDto>>(requestUrl);
         }
 
         #endregion

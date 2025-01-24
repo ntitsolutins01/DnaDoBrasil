@@ -77,19 +77,33 @@ namespace WebApp.ApiClient
             return Get<List<AtividadeDto>>(requestUrl);
         }
 
-        #endregion
-
         /// <summary>
         /// Busca lista de turmas pelo id da modalidade e id do profissional 
         /// </summary>
         /// <param name="modalidadeId">Id da modalidade</param>
         /// <param name="profissionalId">Id do profissional</param>
         /// <returns>Retorna a Lista de turmas</returns>
-        public List<ModalidadeDto> GetTurmasByModalidadeIdProfissionalId(int modalidadeId, int profissionalId)
+        public List<AtividadeDto> GetTurmasByModalidadeIdProfissionalId(int modalidadeId, int profissionalId)
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceModalidade}/Modalidade/{modalidadeId}/Profissional/{profissionalId}"));
-            return Get<List<ModalidadeDto>>(requestUrl);
+                $"{ResourceAtividade}/Modalidade/{modalidadeId}/Profissional/{profissionalId}"));
+            return Get<List<AtividadeDto>>(requestUrl);
         }
+
+        /// <summary>
+        /// Busca atividade pelo id da modalidade, id do profissional e turma
+        /// </summary>
+        /// <param name="modalidadeId">Id da modalidade</param>
+        /// <param name="profissionalId">Id do profissional</param>
+        /// <param name="turma">Turma do profissional</param>
+        /// <returns>Retorna o objeto da atividade</returns>
+        public AtividadeDto GetAtividadeByModalidadeIdProfissionalIdTurma(int modalidadeId, int profissionalId, string turma)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceAtividade}/Modalidade/{modalidadeId}/Profissional/{profissionalId}/Turma/{turma}"));
+            return Get<AtividadeDto>(requestUrl);
+        }
+
+        #endregion
     }
 }

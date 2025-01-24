@@ -565,10 +565,13 @@ namespace WebApp.Controllers
                 var listModalidades = new SelectList(ApiClientFactory.Instance.GetModalidadesByProfissionalId(profissional.Id), "Id", "Nome",
                     profissional.ModalidadesIds);
 
+                var listAlunos =  new SelectList(ApiClientFactory.Instance.GetNomeAlunosByProfissionalId(profissional.Id), "Id", "Nome");
+
                 return View(new ProfissionalModel()
                 {
                     ListAtividadesModalidades = listModalidades,
                     Profissional = profissional,
+                    ListAlunos = listAlunos,
                     Usuario = usu,
                 });
 
@@ -674,7 +677,7 @@ namespace WebApp.Controllers
         /// Busca lista de turmas pelo id da modalidade e id do profissional 
         /// </summary>
         /// <param name="modalidadeId">Id da modalidade</param>
-        /// <param name="prodissionalId">Id do profissional</param>
+        /// <param name="profissionalId">Id do profissional</param>
         /// <returns>Retorna um json com todas as turmas</returns>
         public Task<JsonResult> GetTurmasByModalidadeIdProfissionalId(string modalidadeId, string profissionalId)
         {
@@ -684,7 +687,34 @@ namespace WebApp.Controllers
 
                 var resultLocal = ApiClientFactory.Instance.GetTurmasByModalidadeIdProfissionalId(Convert.ToInt32(modalidadeId), Convert.ToInt32(profissionalId));
 
-                return Task.FromResult(Json(new SelectList(resultLocal, "Id", "Nome")));
+                return Task.FromResult(Json(new SelectList(resultLocal, "Turma", "Turma")));
+
+            }
+            catch (Exception ex)
+            {
+                return Task.FromResult(Json(ex));
+            }
+        }
+
+        /// <summary>
+        /// Busca atividade pelo id da modalidade, id do profissional e turma
+        /// </summary>
+        /// <param name="modalidadeId">Id da modalidade</param>
+        /// <param name="profissionalId">Id do profissional</param>
+        /// <param name="turma">Turma do profissional</param>
+        /// <returns>Retorna um json com o objeto oatividade</returns>
+        public Task<JsonResult> GetAtividadeByModalidadeIdProfissionalIdTurma(string modalidadeId, string profissionalId, string turma)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(modalidadeId)) throw new Exception("Turma não informada.");
+
+                var resultLocal = ApiClientFactory.Instance.GetAtividadeByModalidadeIdProfissionalIdTurma(Convert.ToInt32(modalidadeId), Convert.ToInt32(profissionalId), turma);
+
+                //var resultLocal = ApiClientFactory.Instance.GetAtividadeById(3);
+
+                return Task.FromResult(Json(resultLocal));
+
             }
             catch (Exception ex)
             {
