@@ -204,7 +204,23 @@ public class ModuloEadController : BaseController
             return Task.FromResult(Json(ex.Message));
         }
     }
+    #endregion
 
+    #region Get Methods
+
+    public Task<ModuloEadDto> GetModuloEadById(int id)
+    {
+        var result = ApiClientFactory.Instance.GetModuloEadById(id);
+
+        return Task.FromResult(result);
+    }
+
+
+    /// <summary>
+    /// Método de busca todos os módulos Ead pelo id do curso
+    /// </summary>
+    /// <param name="id">Id do curso</param>
+    /// <returns>Retorna um json com todos os módulos ead</returns>
     public Task<JsonResult> GetModulosEadAllByCursoId(string id)
     {
         try
@@ -219,16 +235,6 @@ public class ModuloEadController : BaseController
         {
             return Task.FromResult(Json(ex.Message));
         }
-    }
-    #endregion
-
-    #region Get Methods
-
-    public Task<ModuloEadDto> GetModuloEadById(int id)
-    {
-        var result = ApiClientFactory.Instance.GetModuloEadById(id);
-
-        return Task.FromResult(result);
     }
     #endregion
 }
