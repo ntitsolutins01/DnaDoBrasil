@@ -90,20 +90,6 @@ namespace WebApp.ApiClient
             return Get<List<AtividadeDto>>(requestUrl);
         }
 
-        /// <summary>
-        /// Busca atividade pelo id da modalidade, id do profissional e turma
-        /// </summary>
-        /// <param name="modalidadeId">Id da modalidade</param>
-        /// <param name="profissionalId">Id do profissional</param>
-        /// <param name="turma">Turma do profissional</param>
-        /// <returns>Retorna o objeto da atividade</returns>
-        public AtividadeDto GetAtividadeByModalidadeIdProfissionalIdTurma(int modalidadeId, int profissionalId, string turma)
-        {
-            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-                $"{ResourceAtividade}/Modalidade/{modalidadeId}/Profissional/{profissionalId}/Turma/{turma}"));
-            return Get<AtividadeDto>(requestUrl);
-        }
-
         #endregion
     }
 }

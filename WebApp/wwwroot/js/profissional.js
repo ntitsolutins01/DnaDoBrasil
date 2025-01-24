@@ -674,19 +674,14 @@
 
                 //clique de escolha do select
                 $("#ddlTurma").change(function () {
-                    var modalidadeId = $("#ddlModalidade").val();
 
-                    var profissionalId = $("#profissionalIdMinhasTurmas").val();
+                    var id = $("#ddlTurma").val();
 
-                    var turma = $("#ddlTurma").val();
-
-                    var url = "../Profissional/GetAtividadeByModalidadeIdProfissionalIdTurma";
+                    var url = "../Profissional/GetAtividadeById";
 
                     axios.get(url, {
                         params: {
-                            modalidadeId: 4,
-                            profissionalId: 60,
-                            turma: "T1"
+                            id: id
                         }
                     }).then(result => {
                         self.editDto.Categoria = result.data.nomeCategoria;

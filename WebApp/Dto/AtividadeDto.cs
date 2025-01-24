@@ -20,5 +20,6 @@
         public required int LocalidadeId { get; set; }
         public required string NomeLocalidade { get; set; }
         public bool Status { get; set; }
+        public required string TurmaHora { get; init; }
     }
 }
