@@ -163,6 +163,8 @@ namespace WebApp.Controllers
         public Task<ModalidadeDto> GetModalidadeById(int id)
         {
             var result = ApiClientFactory.Instance.GetModalidadeById(id);
+            var linhasAcoes = new SelectList(ApiClientFactory.Instance.GetLinhasAcoesAll(), "Id", "Nome", result.LinhaAcaoId);
+            result.ListLinhasAcoes = linhasAcoes;
 
             return Task.FromResult(result);
         }
