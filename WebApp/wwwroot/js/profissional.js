@@ -7,7 +7,9 @@
             modalidadeProfissional: [],
         },
         loading: false,
-        editDto: { Id: "", Nome: "", DtNascimento: "", Email: "", AspNetUserId: "", Sexo: "", Cpf: "", Telefone: "", Celular: "", Endereco: "", Numero: "", Cep: "", Bairro: "", Municipio: "", Ambientes: "", Contratos: "", Status: true }
+        editDto: {
+            Categoria: "", Estrutura: "", DiasSemana: "", Horario: ""
+        }
     },
     mounted: function () {
         var self = this;
@@ -640,63 +642,74 @@
                 });
 
                 //clique de escolha do select
-                $("#ddlEstado").change(function () {
-                    var sigla = $("#ddlEstado").val();
+                $("#ddlModalidade").change(function () {
+                    var modalidadeId = $("#ddlModalidade").val();
 
-                    var url = "../../DivisaoAdministrativa/GetMunicipioByUf?uf=" + sigla;
+                    var profissionalId = $("#profissionalIdMinhasTurmas").val();
 
-                    var ddlSource = "#ddlMunicipio";
+                    var url = "../Profissional/GetTurmasByModalidadeIdProfissionalId";
 
                     $.getJSON(url,
-                        { id: $(ddlSource).val() },
+                        { modalidadeId: modalidadeId, profissionalId: profissionalId },
                         function (data) {
                             if (data.length > 0) {
-                                var items = '<option value="">Selecionar Municipio</option>';
-                                $("#ddlMunicipio").empty;
+                                var items = '<option value="">Selecionar Turma</option>';
+                                $("#ddlTurma").empty;
                                 $.each(data,
                                     function (i, row) {
                                         items += "<option value='" + row.value + "'>" + row.text + "</option>";
                                     });
-                                $("#ddlMunicipio").html(items);
+                                $("#ddlTurma").html(items);
                             }
                             else {
                                 new PNotify({
-                                    title: 'Usuario',
-                                    text: data,
+                                    title: 'Profissional',
+                                    text: "O Profissional logado não possui atividades cadastradas.",
                                     type: 'warning'
                                 });
                             }
                         });
                 });
 
+
                 //clique de escolha do select
-                $("#ddlMunicipio").change(function () {
-                    var id = $("#ddlMunicipio").val();
+                $("#ddlTurma").change(function () {
 
-                    var url = "../../Localidade/GetLocalidadeByMunicipio?id=" + id;
+                    var id = $("#ddlTurma").val();
 
-                    var ddlSource = "#ddlLocalidade";
+                    var url = "../Profissional/GetAtividadeById";
 
-                    $.getJSON(url,
-                        { id: $(ddlSource).val() },
-                        function (data) {
-                            if (data.length > 0) {
-                                var items = '<option value="">Selecionar Localidade</option>';
-                                $("#ddlLocalidade").empty;
-                                $.each(data,
-                                    function (i, row) {
-                                        items += "<option value='" + row.value + "'>" + row.text + "</option>";
-                                    });
-                                $("#ddlLocalidade").html(items);
-                            }
-                            else {
-                                new PNotify({
-                                    title: 'Localidades',
-                                    text: 'Localidades não encontradas.',
-                                    type: 'warning'
-                                });
-                            }
-                        });
+                    axios.get(url, {
+                        params: {
+                            id: id
+                        }
+                    }).then(result => {
+                        self.editDto.Categoria = result.data.nomeCategoria;
+                        self.editDto.Estrutura = result.data.nomeEstrutura;
+                        self.editDto.DiasSemana = result.data.diasSemana;
+                        self.editDto.Horario = result.data.hrInicial + " - " + result.data.hrFinal;
+                    }).catch(error => {
+                        Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
+                    });
+
+                    //$.getJSON(url,
+                    //    { modalidadeId: modalidadeId, profissionalId: profissionalId, turma: turma },
+                    //    function (data) {
+                    //        if (data.length > 0) {
+
+                    //            self.editDto.Categoria = result.data.nomeCategoria;
+                    //            self.editDto.Estrutura = result.data.nomeEstrutura;
+                    //            self.editDto.DiasSemana = result.data.diasSemana;
+                    //            self.editDto.Horario = result.data.hrInicial + " - " + result.data.hrFinal;
+                    //        }
+                    //        else {
+                    //            new PNotify({
+                    //                title: 'Profissional',
+                    //                text: "Turma não encontrada.",
+                    //                type: 'warning'
+                    //            });
+                    //        }
+                    //    });
                 });
 
                 //mascara dos inputs

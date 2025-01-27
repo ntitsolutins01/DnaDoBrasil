@@ -214,11 +214,18 @@ public class AtividadeController : BaseController
 
     #region Get Methods
 
+    /// <summary>
+    /// Busca uma única Atividade
+    /// </summary>
+    /// <param name="id">Id da Atividade a ser buscada</param>
+    /// <returns>Retorna o objeto da Atividade</returns>
     public Task<AtividadeDto> GetAtividadeById(int id)
     {
         var result = ApiClientFactory.Instance.GetAtividadeById(id);
 
         return Task.FromResult(result);
     }
+
+    
     #endregion
 }
