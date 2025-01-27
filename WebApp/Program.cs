@@ -8,6 +8,7 @@ using WebApp.Models;
 using WebApp.Services;
 using WebApp.Configuration;
 using WebApp.Identity;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -220,6 +221,13 @@ app.UseRouting();
 app.UseCookiePolicy();
 
 app.UseAuthorization();
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")),
+    RequestPath = ""
+});
 
 app.MapControllerRoute(
     name: "default",
