@@ -1,4 +1,6 @@
-﻿namespace WebApp.Dto
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+
+namespace WebApp.Dto
 {
     public class ModalidadeDto
     {
@@ -27,5 +29,6 @@
         public bool Status { get; set; }
         public int? LinhaAcaoId { get; set; }
         public string? LinhaAcao { get; set; }
+        public SelectList ListLinhasAcoes { get; set; }
     }
 }
