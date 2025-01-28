@@ -85,19 +85,19 @@
                     <div class="container-title-info">
                         <span>MEU TALENTO</span>
                         <span>
-                            @if (Model.Laudo.NomeModalidade == null)
+                            @if (Model.Modalidade.Nome == null)
                             {
                                 <text>Não Definido</text>
                             }
                             else
                             {
-                                <text>@Model.Laudo.NomeModalidade</text>
+                                <text>@Model.Modalidade.Nome</text>
                             }
                         </span>
                     </div>
                     @if (Model.Modalidade.ByteImage != null)
                     {
-                        <div class="img-qrcode-info"
+                        <div class="img-modalidade"
                              style=" background-size: cover;">
                             @{
                                 var base64 = Convert.ToBase64String(Model.Modalidade.ByteImage);
@@ -109,10 +109,10 @@
                     }
                     else
                     {
-                        @* <div class="img-qrcode-info"
+                        @* <div class="img-modalidade"
                              style="background-image: url('/assets/assets_Laudo/qrCode.svg'); background-size: cover;">
                         </div> *@
-                        <div class="img-qrcode-info"
+                        <div class="img-modalidade"
                              style="background-image: url('/assets/assets_Laudo/icon_info_esporte.png'); background-size: cover;">
                         </div>
                     }
