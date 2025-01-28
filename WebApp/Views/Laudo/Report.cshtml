@@ -85,22 +85,22 @@
                     <div class="container-title-info">
                         <span>MEU TALENTO</span>
                         <span>
-                            @if (Model.Laudo.Modalidade == null)
+                            @if (Model.Laudo.NomeModalidade == null)
                             {
                                 <text>Não Definido</text>
                             }
                             else
                             {
-                                <text>@Model.Laudo.Modalidade</text>
+                                <text>@Model.Laudo.NomeModalidade</text>
                             }
                         </span>
                     </div>
-                    @if (Model.Laudo.ModalidadeByteImage != null)
+                    @if (Model.Modalidade.ByteImage != null)
                     {
                         <div class="img-qrcode-info"
                              style=" background-size: cover;">
                             @{
-                                var base64 = Convert.ToBase64String(Model.Laudo.ModalidadeByteImage);
+                                var base64 = Convert.ToBase64String(Model.Modalidade.ByteImage);
                                 var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
                             }
                             <img src="@imgSrc" />
@@ -301,15 +301,15 @@
                             </div>
                         }
                         @* <div class="row-info">
-                        <span class="label-info">Modalidade</span>
+                        <span class="label-info">NomeModalidade</span>
                         <span class="value-info">
-                        @if (Model.Laudo.Modalidade == null)
+                        @if (Model.Laudo.NomeModalidade == null)
                         {
                         <text>Em desenvolvimento</text>
                         }
                         else
                         {
-                        <text>@Model.Laudo.Modalidade</text>
+                        <text>@Model.Laudo.NomeModalidade</text>
                         }
                         </span>
                         </div>*@

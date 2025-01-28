@@ -2,8 +2,8 @@
 {
     public class ModalidadeDto
     {
-        public string Id { get; set; }
-        public string Nome { get; set; }
+        public int Id { get; set; }
+        public string? Nome { get; set; }
         public int Vo2MaxIni { get; set; }
         public int Vo2MaxFim { get; set; }
         public int VinteMetrosIni { get; set; }
@@ -24,7 +24,8 @@
         public int PesoFim { get; set; }
         public int AlturaIni { get; set; }
         public int AlturaFim { get; set; }
-        public bool Status { get; set; }
+        public bool Status { get; set; } = true;
+        public byte[]? ByteImage { get; set; }
         public int? LinhaAcaoId { get; set; }
         public string? LinhaAcao { get; set; }
     }
