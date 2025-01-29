@@ -594,7 +594,7 @@
                             else {
                                 new PNotify({
                                     title: 'Profissional',
-                                    text: "O Profissional logado não possui atividades cadastradas.",
+                                    text: "O Profissional logado não possui atividades e turmas cadastradas.",
                                     type: 'warning'
                                 });
                             }
@@ -626,25 +626,6 @@
                     }).catch(error => {
                         Site.Notification("Erro ao buscar e analisar dados", error.message, "error", 1);
                     });
-
-                    //$.getJSON(url,
-                    //    { modalidadeId: modalidadeId, profissionalId: profissionalId, turma: turma },
-                    //    function (data) {
-                    //        if (data.length > 0) {
-
-                    //            self.editDto.Categoria = result.data.nomeCategoria;
-                    //            self.editDto.Estrutura = result.data.nomeEstrutura;
-                    //            self.editDto.DiasSemana = result.data.diasSemana;
-                    //            self.editDto.Horario = result.data.hrInicial + " - " + result.data.hrFinal;
-                    //        }
-                    //        else {
-                    //            new PNotify({
-                    //                title: 'Profissional',
-                    //                text: "Turma não encontrada.",
-                    //                type: 'warning'
-                    //            });
-                    //        }
-                    //    });
                 });
 
                 //mascara dos inputs
@@ -820,45 +801,45 @@
                 });
             }
 
-            //var datatableInit = function () {
+            var datatableInit = function () {
 
-            //    $('.adicionados').dataTable({
-            //        columnDefs: [
-            //            { "className": "text-center", "targets": "_all" }
-            //        ],
-            //        dom: '<"row"<"col-lg-6"l><"col-lg-6"f>><"table-responsive"t>p',
-            //        "language": {
-            //            "sEmptyTable": "Nenhum registro encontrado",
-            //            "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
-            //            "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
-            //            "sInfoFiltered": "(Filtrados de _MAX_ registros)",
-            //            "sInfoPostFix": "",
-            //            "sInfoThousands": ".",
-            //            "sLengthMenu": "_MENU_ resultados por página",
-            //            "sLoadingRecords": "Carregando...",
-            //            "sProcessing": "Processando...",
-            //            "sZeroRecords": "Nenhum registro encontrado",
-            //            "sSearch": "Pesquisar: ",
-            //            "oPaginate": {
-            //                "sNext": "Próximo →" +
-            //                    "" +
-            //                    "",
-            //                "sPrevious": "← Anterior",
-            //                "sFirst": "Primeiro",
-            //                "sLast": "Último"
-            //            },
-            //            "oAria": {
-            //                "sSortAscending": ": Ordenar colunas de forma ascendente",
-            //                "sSortDescending": ": Ordenar colunas de forma descendente"
-            //            }
-            //        }
-            //    });
+                $('.adicionados').dataTable({
+                    columnDefs: [
+                        { "className": "text-center", "targets": "_all" }
+                    ],
+                    dom: '<"row"<"col-lg-6"l><"col-lg-6"f>><"table-responsive"t>p',
+                    "language": {
+                        "sEmptyTable": "Nenhum registro encontrado",
+                        "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                        "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+                        "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+                        "sInfoPostFix": "",
+                        "sInfoThousands": ".",
+                        "sLengthMenu": "_MENU_ resultados por página",
+                        "sLoadingRecords": "Carregando...",
+                        "sProcessing": "Processando...",
+                        "sZeroRecords": "Nenhum registro encontrado",
+                        "sSearch": "Pesquisar: ",
+                        "oPaginate": {
+                            "sNext": "Próximo →" +
+                                "" +
+                                "",
+                            "sPrevious": "← Anterior",
+                            "sFirst": "Primeiro",
+                            "sLast": "Último"
+                        },
+                        "oAria": {
+                            "sSortAscending": ": Ordenar colunas de forma ascendente",
+                            "sSortDescending": ": Ordenar colunas de forma descendente"
+                        }
+                    }
+                });
 
-            //};
+            };
 
-            //$(function () {
-            //    datatableInit();
-            //});
+            $(function () {
+                datatableInit();
+            });
         }).apply(this, [jQuery]);
     },
     methods: {
@@ -990,7 +971,7 @@
             var mapped = $("#ddlAluno").select2('data');
 
             if (self.params.alunos.indexOf(mapped[0].id) !== -1) {
-
+                self.ShowLoad(false, "divAlunos");
                 new PNotify({
                     title: 'Aluno',
                     text: 'Aluno já foi adicionado anteriormente.',
@@ -1019,30 +1000,28 @@
 
             self.ShowLoad(false, "divAlunos");
         },
-        DeleteAluno: function (index) {
+        DeleteAluno: function (id) {
             var self = this;
             self.ShowLoad(true, "divAlunos");
 
-            //var table = $('#alunoDataTable').DataTable();
-
-            //table.row(index).remove().draw();
-
-            //$('#alunoDataTable tbody').on('click', 'tr', function () {
-            //    //alert('Row index: ' + table.row(this).index());
-            //    var index = table.row(this).index();
-            //    table.row(index).remove().draw();
-
-            //    self.ShowLoad(false, "divAlunos");
-            //});
-
             var table = $('#alunoDataTable').DataTable();
             table.rows(function (idx, data, node) {
-                return data[0] === index;
+                return data[0] === id;
             })
             .remove()
             .draw();
 
-            self.params.alunos.remove(index);
+            const alunos = self.params.alunos;
+
+            const index = alunos.indexOf(id);
+
+            if (index !== -1) {
+                alunos.splice(index, 1);
+            }
+
+            self.params.alunos = alunos;
+
+            $('input[name="arrAlunos"]').attr('value', self.params.alunos);
 
             $("#ddlAluno").select2("val", "0");
             self.ShowLoad(false, "divAlunos");

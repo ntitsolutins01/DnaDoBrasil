@@ -56,7 +56,7 @@
                 <ul class="nav nav-tabs tabs-primary">
 
                     <li class="active">
-                        <a href="#overview" data-toggle="tab">Alterar</a>
+                        <a href="#overview" data-toggle="tab">Meus Dados</a>
                     </li>
                     @* *@
                     <li>
@@ -67,7 +67,6 @@
                     <div id="overview" class="tab-pane active">
                         @using (@Html.BeginForm("Profile", "Profissional", FormMethod.Post, new { id = "formProfile", @class = "form-horizontal" }))
                         {
-                                    <h4 class="mb-xlg">Meus Dados</h4>
                                     <input hidden="ProfissionalId" value="@Model.Profissional.Id" id="profissionalId" name="profissionalId" />
                                     <fieldset>
                                         <div class="form-group">
@@ -190,8 +189,8 @@
                             </fieldset> *@
                                     <div class="panel-footer">
                                         <div class="row">
-                                            <div class="col-md-9 col-md-offset-3">
-                                        @*  <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
+                                     <div class="col-md-9 col-md-offset-3">
+                                         @* <button type="submit" class="btn btn-danger pull-right" style="margin-left: 5px;"><i class="fa fa-remove"></i> &nbsp;&nbsp;Cancelar</button>
                                          <button type="submit" class="btn btn-success pull-right" style="margin-left: 5px;"><i class="fa fa-save"></i> &nbsp;&nbsp;Salvar</button> *@
                                             </div>
                                         </div>
@@ -201,7 +200,6 @@
                     <div id="minhasTurmas" class="tab-pane">
                         @using (@Html.BeginForm("MinhasTurmas", "Profissional", FormMethod.Post, new { id = "formMinhasTurmas", @class = "form-horizontal" }))
                         {
-                                    <h4 class="mb-xlg">Meus Dados</h4>
                                     <input type="hidden" id="profissionalIdMinhasTurmas" name="profissionalIdMinhasTurmas" value="@Model.Profissional.Id" />
                                     <fieldset>
                                         <div class="form-group">
@@ -244,45 +242,7 @@
                                                        maxlength="14" />
                                             </div>
                                         </div>
-                                        <div id="divDeficiencia" name="divDeficiencia">
-                                            <div class="form-group">
-                                                <label class="col-sm-1 control-label">&nbsp;&nbsp; </label>
-                                                <div class="col-sm-12">
-                                                    <blockquote class="info">
-                                                        <strong>Listagem de Alunos</strong>
-                                                    </blockquote>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="col-sm-2 control-label">Deficiência</label>
-                                                <div class="col-sm-4">
-                                                    <select class="form-control populate select2" name="ddlDeficiencia" id="ddlDeficiencia"
-                                                            title="Por favor selecione uma deficiência.">
-                                                        <option value="">Selecionar Deficiência</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-sm-1">
-                                                    <a type="button" class="ml-xs btn btn-success" href='javascript:(crud.AddDeficiencia())'>
-                                                        <i class="fa fa-plus"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="hidden" name="arrDeficiencias"/>
-                                                <label class="col-sm-2 control-label">Adicionados</label>
-                                                <div class="col-sm-10">
-                                                    <table class="table table-bordered table-striped mb-0" id="deficienciaDataTable">
-                                                        <thead>
-                                                        <tr>
-                                                            <th>Id</th>
-                                                            <th>Nome Deficiência</th>
-                                                            <th>Ação</th>
-                                                        </tr>
-                                                        </thead>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
+
                                         <div id="divAlunos" name="divAlunos">
                                             <div class="form-group">
                                                 <label class="col-sm-1 control-label">&nbsp;&nbsp; </label>
