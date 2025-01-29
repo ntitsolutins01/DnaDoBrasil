@@ -20,7 +20,7 @@ namespace WebApp.Controllers;
 /// <summary>
 /// Controller de Atividade
 /// </summary>
-[Authorize(Policy = ModuloAccess.Atividade)]
+//[Authorize(Policy = ModuloAccess.Atividade)]
 public class AtividadeController : BaseController
 {
     #region Constructor
