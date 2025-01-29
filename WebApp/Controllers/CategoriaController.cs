@@ -36,7 +36,7 @@ public class CategoriaController : BaseController
     }
     #endregion
 
-    #region Crud Methods
+    #region Main Methods
     /// <summary>
     /// Listagem de Categoria
     /// </summary>
@@ -55,7 +55,7 @@ public class CategoriaController : BaseController
     }
 
     /// <summary>
-    /// Tela para inclusão de Categoria
+    /// Tela para Inclusão de Categoria
     /// </summary>
     /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
     /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
@@ -78,7 +78,7 @@ public class CategoriaController : BaseController
     }
 
     /// <summary>
-    /// Ação de inclusão do Categoria
+    /// Ação de Inclusão de Categoria
     /// </summary>
     /// <param name="collection">coleção de dados para inclusao de Categoria</param>
     /// <returns>retorna mensagem de inclusao através do parametro crud</returns>
@@ -108,9 +108,9 @@ public class CategoriaController : BaseController
     }
 
     /// <summary>
-    /// Ação de alteração do Categoria
+    /// Ação de Alteração de Categoria
     /// </summary>
-    /// <param name="id">identificador do Categoria</param>
+    /// <param name="id">Identificador de Categoria</param>
     /// <param name="collection">coleção de dados para alteração de Categoria</param>
     /// <returns>retorna mensagem de alteração através do parametro crud</returns>
     [ClaimsAuthorize(ClaimType.Categoria, Claim.Alterar)]
@@ -166,6 +166,11 @@ public class CategoriaController : BaseController
 
     #region Get Methods
 
+    /// <summary>
+    /// Busca Categoria por Id
+    /// </summary>
+    /// <param name="id">Identificador de Categoria</param>
+    /// <returns>Retorna a Categoria</returns>
     public Task<CategoriaDto> GetCategoriaById(int id)
     {
         var result = ApiClientFactory.Instance.GetCategoriaById(id);
