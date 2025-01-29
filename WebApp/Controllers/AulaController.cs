@@ -17,9 +17,15 @@ namespace WebApp.Controllers;
 /// </summary>
 public class AulaController : BaseController
 {
-    #region Constructor
+
+    #region Parametros
+
     private readonly IOptions<UrlSettings> _appSettings;
     private readonly IWebHostEnvironment _host;
+
+    #endregion
+
+    #region Constructor
 
     /// <summary>
     /// Construtor da página
@@ -29,8 +35,8 @@ public class AulaController : BaseController
     public AulaController(IOptions<UrlSettings> appSettings, IWebHostEnvironment host)
     {
         _appSettings = appSettings;
-        _host = host;
         ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
+        _host = host;
     }
     #endregion
 

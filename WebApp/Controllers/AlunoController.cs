@@ -11,7 +11,6 @@ using WebApp.Factory;
 using WebApp.Identity;
 using WebApp.Models;
 using WebApp.Utility;
-using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 using QRCoder;
 using Claim = WebApp.Identity.Claim;
 
@@ -23,20 +22,24 @@ namespace WebApp.Controllers
     [Authorize(Policy = ModuloAccess.Aluno)]
     public class AlunoController : BaseController
     {
-        #region Constructor
+        #region Parametros
 
         private readonly IOptions<UrlSettings> _appSettings;
-        private readonly IHostingEnvironment _host;
+        private readonly IWebHostEnvironment _host;
+
+        #endregion
+
+        #region Constructor
 
         /// <summary>
         /// Construtor da página
         /// </summary>
         /// <param name="app">configurações de urls do sistema</param>
         /// <param name="host">informações da aplicação em execução</param>
-        public AlunoController(IOptions<UrlSettings> app,
-            IHostingEnvironment host)
+        public AlunoController(IOptions<UrlSettings> appSettings,
+            IWebHostEnvironment host)
         {
-            _appSettings = app;
+            _appSettings = appSettings;
             ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
             _host = host;
         }

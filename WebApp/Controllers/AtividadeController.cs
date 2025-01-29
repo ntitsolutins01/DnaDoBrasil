@@ -19,8 +19,14 @@ namespace WebApp.Controllers;
 //[Authorize(Policy = ModuloAccess.Atividade)]
 public class AtividadeController : BaseController
 {
-    #region Constructor
+
+    #region Parametros
+
     private readonly IOptions<UrlSettings> _appSettings;
+
+    #endregion
+
+    #region Constructor
 
     /// <summary>
     /// Construtor da página

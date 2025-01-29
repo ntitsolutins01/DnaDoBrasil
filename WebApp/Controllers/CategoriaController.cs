@@ -1,9 +1,6 @@
-using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
 using WebApp.Authorization;
 using WebApp.Configuration;
 using WebApp.Dto;
@@ -17,13 +14,18 @@ using Claim = WebApp.Identity.Claim;
 namespace WebApp.Controllers;
 
 /// <summary>
-/// Controller de Evento
+/// Controller de Categoria
 /// </summary>
 [Authorize(Policy = ModuloAccess.ConfiguracaoSistema)]
 public class CategoriaController : BaseController
 {
-    #region Constructor
+    #region Parametros
+
     private readonly IOptions<UrlSettings> _appSettings;
+
+    #endregion
+
+    #region Constructor
 
     /// <summary>
     /// Construtor da página
