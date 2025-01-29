@@ -17,6 +17,9 @@ using Claim = WebApp.Identity.Claim;
 
 namespace WebApp.Controllers
 {
+    /// <summary>
+    /// Controle de Aluno
+    /// </summary>
     [Authorize(Policy = ModuloAccess.Aluno)]
     public class AlunoController : BaseController
     {
@@ -806,7 +809,7 @@ namespace WebApp.Controllers
         /// <summary>
         /// Busca de aluno por id
         /// </summary>
-        /// <param name="id">identificador do aluno</param>
+        /// <param name="id">Identificador do aluno</param>
         /// <returns>retorna o aluno</returns>
         [ClaimsAuthorize(ClaimType.Aluno, Claim.Consultar)]
         public async Task<JsonResult> GetAlunoById(string id)

@@ -13,7 +13,9 @@ using WebApp.Utility;
 
 namespace WebApp.Controllers;
 
-
+/// <summary>
+/// Curso 
+/// </summary>
 [Authorize(Policy = ModuloAccess.ConfiguracaoSistemaEad)]
 public class CursoController : BaseController
 {
@@ -236,6 +238,11 @@ public class CursoController : BaseController
 
     #region Get Methods
 
+    /// <summary>
+    /// Busca de Curso por Id
+    /// </summary>
+    /// <param name="id">Identificador de Curso</param>
+    /// <returns>Retorna o Curso</returns>
     public Task<CursoDto> GetCursoById(int id)
     {
         var result = ApiClientFactory.Instance.GetCursoById(id);

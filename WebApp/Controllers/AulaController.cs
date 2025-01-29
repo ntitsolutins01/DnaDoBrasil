@@ -12,6 +12,9 @@ using WebApp.Utility;
 
 namespace WebApp.Controllers;
 
+/// <summary>
+/// Controle de Aula
+/// </summary>
 public class AulaController : BaseController
 {
     #region Constructor
@@ -31,7 +34,7 @@ public class AulaController : BaseController
     }
     #endregion
 
-    #region Crud Methods
+    #region Main Methods
     /// <summary>
     /// Listagem de Aula
     /// </summary>
@@ -226,6 +229,11 @@ public class AulaController : BaseController
 
     #region Get Methods
 
+    /// <summary>
+    /// Busca de Aula por Id
+    /// </summary>
+    /// <param name="id">Identificador de Aula</param>
+    /// <returns>Retorna a Aula</returns>
     public Task<AulaDto> GetAulaById(int id)
     {
         var result = ApiClientFactory.Instance.GetAulaById(id);
