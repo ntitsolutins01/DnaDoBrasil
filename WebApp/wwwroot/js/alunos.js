@@ -2,7 +2,7 @@ var vm = new Vue({
     el: "#vPesquisarAluno",
     data: {
         loading: false,
-        editDto: { Id: "", Nome: "", Status: true, Email: "", Sexo: "", DtNascimento: "", MunicipioEstado: "", NomeLocalidade: "", Cpf: "", Image: "", ModalidadeLinhaAcao: "", Cep: "", Etinia: "", Deficiencia: "" }
+        editDto: { Id: "", Nome: "", Status: true, Email: "", Sexo: "", DtNascimento: "", MunicipioEstado: "", NomeLocalidade: "", Cpf: "", Image: "", Modalidades: "", Cep: "", Etinia: "", Deficiencia: "" }
     },
     mounted: function () {
         var self = this;
@@ -201,11 +201,11 @@ var vm = new Vue({
                 else {
                     self.editDto.Cpf = result.data.cpf;
                 }
-                if (result.data.modalidadeLinhaAcao === "0" || result.data.modalidadeLinhaAcao === "" || result.data.modalidadeLinhaAcao === null) {
-                    self.editDto.ModalidadeLinhaAcao = "Modalidade / Linha de Ação (não informado)";
+                if (result.data.modalidades === "0" || result.data.modalidades === "" || result.data.modalidades === null) {
+                    self.editDto.modalidades = "Modalidade não informada";
                 }
                 else {
-                    self.editDto.ModalidadeLinhaAcao = result.data.modalidadeLinhaAcao;
+                    self.editDto.Modalidades = result.data.modalidades;
                 }
                 self.editDto.QRCode = 'data:image/jpeg;base64,' + result.data.qrCode;
 
