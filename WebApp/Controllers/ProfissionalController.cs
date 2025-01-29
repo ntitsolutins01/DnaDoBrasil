@@ -90,7 +90,8 @@ namespace WebApp.Controllers
                     new() { IdNome = "Professor Informática", Nome = "Professor Informática" },
                     new() { IdNome = "Psicólogo", Nome = "Psicólogo" },
                     new() { IdNome = "Assistente Social", Nome = "Assistente Social" },
-                    new() { IdNome = "Estagiário", Nome = "Estagiário" }
+                    new() { IdNome = "Estagiário", Nome = "Estagiário" },
+                    new() { IdNome = "Profissional Impressão", Nome = "Profissional Impressão" }
                 };
 
                 var cargos = new SelectList(list, "IdNome", "Nome");
@@ -229,7 +230,8 @@ namespace WebApp.Controllers
                     new() { IdNome = "Professor Informática", Nome = "Professor Informática" },
                     new() { IdNome = "Psicólogo", Nome = "Psicólogo" },
                     new() { IdNome = "Assistente Social", Nome = "Assistente Social" },
-                    new() { IdNome = "Estagiário", Nome = "Estagiário" }
+                    new() { IdNome = "Estagiário", Nome = "Estagiário" },
+                    new() { IdNome = "Profissional Impressão", Nome = "Profissional Impressão" }
                 };
 
                 var cargos = new SelectList(list, "IdNome", "Nome", profissional.Cargo);

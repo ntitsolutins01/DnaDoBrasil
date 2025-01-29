@@ -423,7 +423,7 @@ namespace WebApp.Controllers
         /// <param name="collection">arquivo de upload realizado</param>
         /// <returns>retorna mensagem de upload realizado através do parametro notfy e message</returns>
         [HttpPost]
-        [ClaimsAuthorize(ClaimType.Aluno, Claim.Upload)]
+        //[ClaimsAuthorize(ClaimType.Aluno, Claim.Upload)]
         public async Task<ActionResult> Upload(IFormCollection collection)
         {
             try
