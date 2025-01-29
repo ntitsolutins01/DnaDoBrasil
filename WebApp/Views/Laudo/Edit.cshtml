@@ -99,7 +99,7 @@
                                         <span style="color: #5bc0de;">Saúde Bucal</span>
                                     </a>
                                 </li>
-                                @if (Model.Aluno.Idade > 12)
+                                @if (Model.Aluno.Idade >= 12)
                                 {
                                     <li class="">
                                         <a href="#qualidade-vida" data-toggle="tab" aria-expanded="false">
@@ -108,7 +108,7 @@
                                         </a>
                                     </li>
                                 }
-                                @if (Model.Aluno.Idade > 14)
+                                @if (Model.Aluno.Idade >= 14)
                                 {
                                     <li class="">
                                         <a href="#vocacional"

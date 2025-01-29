@@ -239,7 +239,7 @@ namespace WebApp.Controllers
                 return View(new AlunoModel()
                 {
                     ListEstados = estados,
-                    Modalidades = aluno.Modalidades,
+                    Modalidades = aluno.ListModalidades,
                     Aluno = aluno,
                     ListMunicipios = municipios,
                     ListLocalidades = localidades,
@@ -448,12 +448,12 @@ namespace WebApp.Controllers
 
                 await ApiClientFactory.Instance.UpdateAlunoFoto(command.Id, command);
 
-                return RedirectToAction(nameof(Index), new { notify = EnumNotify.Success, mesage = "Upload realizado com sucesso." });
+                return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Success, mesage = "Upload realizado com sucesso." });
             }
             catch (Exception e)
             {
                 Console.Write(e.StackTrace);
-                return RedirectToAction(nameof(Index), new { notify = EnumNotify.Error, mesage = e.Message });
+                return RedirectToAction(nameof(Index), new { notify = (int)EnumNotify.Error, mesage = e.Message });
             }
         }
 
@@ -656,7 +656,7 @@ namespace WebApp.Controllers
                 var model = new AlunoModel()
                 {
                     ListEstados = estados,
-                    Modalidades = aluno.Modalidades,
+                    Modalidades = aluno.ListModalidades,
                     Aluno = aluno,
                     ListMunicipios = municipios,
                     ListLocalidades = localidades,

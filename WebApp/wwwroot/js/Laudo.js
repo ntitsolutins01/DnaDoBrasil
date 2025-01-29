@@ -565,10 +565,10 @@ var vm = new Vue({
                         function (data) {
                             $("#divIdade").show();
                             $("#spanIdade").text(data + " anos");
-                            if (data <= 12) {
+                            if (data < 12) {
                                 $("#liQualidade").hide();
                             }
-                            if (data <= 14) {
+                            if (data < 14) {
                                 $("#liVocacional").hide();
                             }
                         });
