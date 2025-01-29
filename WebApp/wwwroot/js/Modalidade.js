@@ -2,7 +2,7 @@ var vm = new Vue({
     el: "#vModalidade",
     data: {
         loading: false,
-        editDto: { Id: "", LinhaAcao: "", Nome: "", Vo2MaxIni: "", Vo2MaxFim: "", VinteMetrosIni: "", VinteMetrosFim: "", ShutlleRunIni: "", ShutlleRunFim: "", FlexibilidadeIni: "", FlexibilidadeFim: "", PreensaoManualIni: "", PreensaoManualFim: "", AbdominalPranchaIni: "", AbdominalPranchaFim: "", ImpulsaoIni: "", ImpulsaoFim: "", EnvergaduraIni: "", EnvergaduraFim: "", PesoIni: "", PesoFim: "", AlturaIni: "", AlturaFim: "", Status: true }
+        editDto: { Id: "", LinhaAcao: "", Nome: "", Vo2MaxIni: "", Vo2MaxFim: "", VinteMetrosIni: "", VinteMetrosFim: "", ShutlleRunIni: "", ShutlleRunFim: "", FlexibilidadeIni: "", FlexibilidadeFim: "", PreensaoManualIni: "", PreensaoManualFim: "", AbdominalPranchaIni: "", AbdominalPranchaFim: "", ImpulsaoIni: "", ImpulsaoFim: "", EnvergaduraIni: "", EnvergaduraFim: "", PesoIni: "", PesoFim: "", AlturaIni: "", AlturaFim: "", Status: true, ByteImage: null }
     },
     mounted: function () {
         var self = this;
@@ -175,6 +175,7 @@ var vm = new Vue({
                 self.editDto.PesoFim = result.data.pesoFim;
                 self.editDto.AlturaIni = result.data.alturaIni;
                 self.editDto.AlturaFim = result.data.alturaFim;
+                self.editDto.ByteImage = result.data.byteImage;
 
                 if (result.data.listLinhasAcoes && result.data.listLinhasAcoes.length > 0) {
                     var items = '<option value="">Selecionar a Linha Ação</option>';

@@ -135,10 +135,15 @@ namespace WebApp.Controllers
 
                 using (var ms = new MemoryStream())
                 {
-                    file.CopyToAsync(ms);
-                    var byteIMage = ms.ToArray();
-                    command.ByteImage = byteIMage;
+                    await file.CopyToAsync(ms);
+                    command.ByteImage = ms.ToArray();
                 }
+            }
+
+            if (!collection.Files.Any())
+            {
+                var currentModalidade = ApiClientFactory.Instance.GetModalidadeById(command.Id);
+                command.ByteImage = currentModalidade.ByteImage;
             }
 
             await ApiClientFactory.Instance.UpdateModalidade(command.Id, command);
