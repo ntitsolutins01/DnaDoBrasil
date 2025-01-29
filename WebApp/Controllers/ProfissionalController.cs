@@ -90,7 +90,8 @@ namespace WebApp.Controllers
                     new() { IdNome = "Professor Informática", Nome = "Professor Informática" },
                     new() { IdNome = "Psicólogo", Nome = "Psicólogo" },
                     new() { IdNome = "Assistente Social", Nome = "Assistente Social" },
-                    new() { IdNome = "Estagiário", Nome = "Estagiário" }
+                    new() { IdNome = "Estagiário", Nome = "Estagiário" },
+                    new() { IdNome = "Profissional Impressão", Nome = "Profissional Impressão" }
                 };
 
                 var cargos = new SelectList(list, "IdNome", "Nome");
@@ -229,7 +230,8 @@ namespace WebApp.Controllers
                     new() { IdNome = "Professor Informática", Nome = "Professor Informática" },
                     new() { IdNome = "Psicólogo", Nome = "Psicólogo" },
                     new() { IdNome = "Assistente Social", Nome = "Assistente Social" },
-                    new() { IdNome = "Estagiário", Nome = "Estagiário" }
+                    new() { IdNome = "Estagiário", Nome = "Estagiário" },
+                    new() { IdNome = "Profissional Impressão", Nome = "Profissional Impressão" }
                 };
 
                 var cargos = new SelectList(list, "IdNome", "Nome", profissional.Cargo);
@@ -565,10 +567,13 @@ namespace WebApp.Controllers
                 var listModalidades = new SelectList(ApiClientFactory.Instance.GetModalidadesByProfissionalId(profissional.Id), "Id", "Nome",
                     profissional.ModalidadesIds);
 
+                var listAlunos =  new SelectList(ApiClientFactory.Instance.GetNomeAlunosByProfissionalId(profissional.Id), "Id", "Nome");
+
                 return View(new ProfissionalModel()
                 {
                     ListAtividadesModalidades = listModalidades,
                     Profissional = profissional,
+                    ListAlunos = listAlunos,
                     Usuario = usu,
                 });
 
@@ -667,6 +672,29 @@ namespace WebApp.Controllers
             {
                 return Redirect("/Identity/Account/Login");
 
+            }
+        }
+
+        /// <summary>
+        /// Busca lista de turmas pelo id da modalidade e id do profissional 
+        /// </summary>
+        /// <param name="modalidadeId">Id da modalidade</param>
+        /// <param name="profissionalId">Id do profissional</param>
+        /// <returns>Retorna um json com todas as turmas</returns>
+        public Task<JsonResult> GetTurmasByModalidadeIdProfissionalId(string modalidadeId, string profissionalId)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(modalidadeId)) throw new Exception("Modalidade não informada.");
+
+                var resultLocal = ApiClientFactory.Instance.GetTurmasByModalidadeIdProfissionalId(Convert.ToInt32(modalidadeId), Convert.ToInt32(profissionalId));
+
+                return Task.FromResult(Json(new SelectList(resultLocal, "Id", "TurmaHora")));
+
+            }
+            catch (Exception ex)
+            {
+                return Task.FromResult(Json(ex));
             }
         }
     }

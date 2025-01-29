@@ -90,7 +90,7 @@ namespace WebApp.Controllers
                     Finalizado = finalizado != "",
                     PageNumber = 1,
 #if DEBUG
-                    PageSize = 10
+                    PageSize = 300
 #else
                     PageSize = 1000
 #endif
@@ -132,7 +132,7 @@ namespace WebApp.Controllers
             var saudeBucal = laudo.SaudeBucalId == null ? null : ApiClientFactory.Instance.GetConsumoAlimentarById((int)laudo.SaudeBucalId);
 
             var aluno = ApiClientFactory.Instance.GetAlunoById(id);
-            var profissional = ApiClientFactory.Instance.GetProfissionalById(Convert.ToInt32(aluno.ProfissionalId));
+            var profissional = laudo.ProfissionalId == null ? null : ApiClientFactory.Instance.GetProfissionalById(Convert.ToInt32(aluno.ProfissionalId));
             var talentoEsportivo = laudo.TalentoEsportivoId == null ? null : ApiClientFactory.Instance.GetTalentoEsportivoByAluno((int)laudo.AlunoId!);
             var encaminhamentoImc = laudo.SaudeId == null ? null : ApiClientFactory.Instance.GetEncaminhamentoBySaudeId(Convert.ToInt32(laudo.SaudeId));
             var qualidadeDeVida = laudo.QualidadeDeVidaId == null ? null : ApiClientFactory.Instance.GetEncaminhamentoByQualidadeDeVidaId((int)laudo.QualidadeDeVidaId);
@@ -166,7 +166,7 @@ namespace WebApp.Controllers
             var saudeBucal = laudo.SaudeBucalId == null ? null : ApiClientFactory.Instance.GetConsumoAlimentarById((int)laudo.SaudeBucalId);
 
             var aluno = ApiClientFactory.Instance.GetAlunoById(id);
-            var profissional = ApiClientFactory.Instance.GetProfissionalById(Convert.ToInt32(aluno.ProfissionalId));
+            var profissional = laudo.ProfissionalId == null ? null : ApiClientFactory.Instance.GetProfissionalById(Convert.ToInt32(aluno.ProfissionalId));
             var talentoEsportivo = laudo.TalentoEsportivoId == null ? null : ApiClientFactory.Instance.GetTalentoEsportivoByAluno((int)laudo.AlunoId!);
             var encaminhamentoImc = laudo.SaudeId == null ? null : ApiClientFactory.Instance.GetEncaminhamentoBySaudeId(Convert.ToInt32(laudo.SaudeId));
             var qualidadeDeVida = laudo.QualidadeDeVidaId == null ? null : ApiClientFactory.Instance.GetEncaminhamentoByQualidadeDeVidaId((int)laudo.QualidadeDeVidaId);

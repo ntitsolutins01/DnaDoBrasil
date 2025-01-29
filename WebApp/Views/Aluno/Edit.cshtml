@@ -278,6 +278,14 @@
             // Set the value
             $("#ddlModalidades").val(dataarray);
 
+            //set filter
+            $("#ddlModalidades").multiselect({
+                enableFiltering: true,
+                enableCaseInsensitiveFiltering: true,
+                maxHeight: 200,
+                dropUp: true
+            });
+
             // Then refresh
             $("#ddlModalidades").multiselect("refresh");
 

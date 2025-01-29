@@ -1,4 +1,5 @@
-﻿using WebApp.Dto;
+﻿using System.Collections;
+using WebApp.Dto;
 using WebApp.Models;
 
 namespace WebApp.ApiClient
@@ -73,6 +74,19 @@ namespace WebApp.ApiClient
         {
             var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
                 $"{ResourceAtividade}"));
+            return Get<List<AtividadeDto>>(requestUrl);
+        }
+
+        /// <summary>
+        /// Busca lista de turmas pelo id da modalidade e id do profissional 
+        /// </summary>
+        /// <param name="modalidadeId">Id da modalidade</param>
+        /// <param name="profissionalId">Id do profissional</param>
+        /// <returns>Retorna a Lista de turmas</returns>
+        public List<AtividadeDto> GetTurmasByModalidadeIdProfissionalId(int modalidadeId, int profissionalId)
+        {
+            var requestUrl = CreateRequestUri(string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                $"{ResourceAtividade}/Modalidade/{modalidadeId}/Profissional/{profissionalId}"));
             return Get<List<AtividadeDto>>(requestUrl);
         }
 
