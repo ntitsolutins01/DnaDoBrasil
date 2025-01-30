@@ -13,7 +13,6 @@ using WebApp.Data;
 using WebApp.Factory;
 using WebApp.Models;
 using WebApp.Utility;
-using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
 namespace WebApp.Areas.Identity.Pages.Account
 {
@@ -22,13 +21,13 @@ namespace WebApp.Areas.Identity.Pages.Account
     {
         private readonly ApplicationDbContext _db;
         private readonly IEmailSender _emailSender;
-        private readonly IHostingEnvironment _host;
+        private readonly IWebHostEnvironment _host;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IOptions<ParametersModel> _parameters;
         private readonly IOptions<UrlSettings> _appSettings;
 
         public ForgotPasswordModel(UserManager<IdentityUser> userManager, IEmailSender emailSender,
-            IHostingEnvironment host,
+            IWebHostEnvironment host,
             ApplicationDbContext db,
             IOptions<ParametersModel> parameters, 
             IOptions<UrlSettings> appSettings)
