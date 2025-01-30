@@ -16,6 +16,10 @@ namespace WebApp.Controllers;
 [Authorize(Policy = ModuloAccess.ConfiguracaoSistemaEad)]
 public class ControleMaterialEstoqueSaidaController : BaseController
 {
+    /// <summary>
+    /// Controle de Material de Estoque e Saida
+    /// </summary>
+
     #region Constructor
     private readonly IOptions<UrlSettings> _appSettings;
 
