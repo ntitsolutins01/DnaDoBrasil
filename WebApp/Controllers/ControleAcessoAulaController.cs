@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
 using WebApp.Authorization;
 using WebApp.Configuration;
@@ -12,6 +11,9 @@ using WebApp.Utility;
 
 namespace WebApp.Controllers;
 
+/// <summary>
+/// Controle Acesso Aula
+/// </summary>
 public class ControleAcessoAulaController : BaseController
 {
     #region Constructor
@@ -29,9 +31,9 @@ public class ControleAcessoAulaController : BaseController
     }
     #endregion
 
-    #region Crud Methods
+    #region Main Methods
     /// <summary>
-    /// Listagem de ControleAcessoAula
+    /// Listagem de Controle Acesso Aula
     /// </summary>
     /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
     /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
@@ -48,7 +50,7 @@ public class ControleAcessoAulaController : BaseController
     }
 
     /// <summary>
-    /// Tela para inclusão de ControleAcessoAula
+    /// Tela para Inclusão de Controle Acesso Aula
     /// </summary>
     /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
     /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
@@ -76,7 +78,7 @@ public class ControleAcessoAulaController : BaseController
     }
 
     /// <summary>
-    /// Ação de inclusão do ControleAcessoAula
+    /// Ação de inclusão do Controle Acesso Aula
     /// </summary>
     /// <param name="collection">coleção de dados para inclusao de ControleAcessoAula</param>
     /// <returns>retorna mensagem de inclusao através do parametro crud</returns>
@@ -106,7 +108,7 @@ public class ControleAcessoAulaController : BaseController
     }
 
     /// <summary>
-    /// Tela Alteração de ControleAcessoAula
+    /// Tela Alteração de Controle Acesso Aula
     /// </summary>
     /// <param name="id">Id de alteração do ControleAcessoAula</param>
     /// <returns>retorna mensagem de alteração através do parametro crud</returns>
@@ -141,7 +143,7 @@ public class ControleAcessoAulaController : BaseController
     }
 
     /// <summary>
-    /// Ação de alteração do ControleAcessoAula
+    /// Ação de alteração do Controle Acesso Aula
     /// </summary>
     /// <param name="id">identificador do ControleAcessoAula</param>
     /// <param name="collection">coleção de dados para alteração de ControleAcessoAula</param>
@@ -178,7 +180,7 @@ public class ControleAcessoAulaController : BaseController
     }
 
     /// <summary>
-    /// Ação de exclusão do ControleAcessoAula
+    /// Ação de exclusão do Controle Acesso Aula
     /// </summary>
     /// <param name="id">identificador do ControleAcessoAula</param>
     /// <param name="collection">coleção de dados para exclusão de ControleAcessoAula</param>
@@ -200,6 +202,11 @@ public class ControleAcessoAulaController : BaseController
 
     #region Get Methods
 
+    /// <summary>
+    /// Busca Controle Acesso Aula por Id
+    /// </summary>
+    /// <param name="id">Identificador de Categoria</param>
+    /// <returns>Retorna a Categoria</returns>
     public Task<ControleAcessoAulaDto> GetControleAcessoAulaById(int id)
     {
         var result = ApiClientFactory.Instance.GetControleAcessoAulaById(id);

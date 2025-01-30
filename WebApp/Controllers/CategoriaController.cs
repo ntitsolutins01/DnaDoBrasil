@@ -14,7 +14,7 @@ using Claim = WebApp.Identity.Claim;
 namespace WebApp.Controllers;
 
 /// <summary>
-/// Controller de Categoria
+/// Controle de Categoria
 /// </summary>
 [Authorize(Policy = ModuloAccess.ConfiguracaoSistema)]
 public class CategoriaController : BaseController
