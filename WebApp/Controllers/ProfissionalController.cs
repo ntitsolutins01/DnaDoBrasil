@@ -17,7 +17,9 @@ using WebApp.Authorization;
 using WebApp.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Claim = WebApp.Identity.Claim;
-using DocumentFormat.OpenXml.Spreadsheet;
+using log4net;
+using log4net.Config;
+using System.Reflection;
 
 namespace WebApp.Controllers
 {
@@ -546,8 +548,14 @@ namespace WebApp.Controllers
         [ClaimsAuthorize(ClaimType.Profissional, Claim.Consultar)]
         public ActionResult Profile(int? crud, int? notify, string message = null)
         {
+                var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
+                XmlConfigurator.Configure(logRepository, new FileInfo("log4netconfig.config"));
             try
             {
+
+
+                throw new Exception("Sample Error inside the try catch block code");
+
                 SetNotifyMessage(notify, message);
                 SetCrudMessage(crud);
 
