@@ -13,12 +13,12 @@ using WebApp.Utility;
 
 namespace WebApp.Controllers;
 
+/// <summary>
+/// Controle de Material de Estoque e Saida
+/// </summary> 
 [Authorize(Policy = ModuloAccess.ConfiguracaoSistemaEad)]
 public class ControleMaterialEstoqueSaidaController : BaseController
 {
-    /// <summary>
-    /// Controle de Material de Estoque e Saida
-    /// </summary>
 
     #region Constructor
     private readonly IOptions<UrlSettings> _appSettings;

@@ -12,7 +12,9 @@ using WebApp.Models;
 using WebApp.Utility;
 
 namespace WebApp.Controllers;
-
+/// <summary>
+/// Controle Mensal de Estoque
+/// </summary>
 [Authorize(Policy = ModuloAccess.ConfiguracaoSistemaEad)]
 public class ControleMensalEstoqueController : BaseController
 {
@@ -29,11 +31,11 @@ public class ControleMensalEstoqueController : BaseController
         _appSettings = appSettings;
         ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
     }
-    #endregion
+    #endregion 
 
-    #region Crud Methods
+    #region Main Methods
     /// <summary>
-    /// Listagem de ControleMensalEstoque
+    /// Listagem de Controle Mensal de Estoque
     /// </summary>
     /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
     /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
@@ -50,7 +52,7 @@ public class ControleMensalEstoqueController : BaseController
     }
 
     /// <summary>
-    /// Tela para inclusão de Modulo Ead
+    /// Tela para Inclusão de Controle Mensal de Estoque
     /// </summary>
     /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
     /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
@@ -78,9 +80,9 @@ public class ControleMensalEstoqueController : BaseController
     }
 
     /// <summary>
-    /// Ação de inclusão do ControleMensalEstoque
+    /// Ação de Inclusão de Controle Mensal de Estoque
     /// </summary>
-    /// <param name="collection">coleção de dados para inclusao de ControleMensalEstoque</param>
+    /// <param name="collection">Coleção de dados para inclusao de Controle Mensal de Estoque</param>
     /// <returns>retorna mensagem de inclusao através do parametro crud</returns>
     [ClaimsAuthorize(ClaimType.ControleMensalEstoque, Identity.Claim.Incluir)]
     [HttpPost]
@@ -112,10 +114,10 @@ public class ControleMensalEstoqueController : BaseController
 
 
     /// <summary>
-    /// Ação de alteração do ControleMensalEstoque
+    /// Ação de Alteração de Controle Mensal de Estoque
     /// </summary>
-    /// <param name="id">identificador do ControleMensalEstoque</param>
-    /// <param name="collection">coleção de dados para alteração de ControleMensalEstoque</param>
+    /// <param name="id">identificador de Controle Mensal de Estoque</param>
+    /// <param name="collection">coleção de dados para alteração de Controle Mensal e Estoque</param>
     /// <returns>retorna mensagem de alteração através do parametro crud</returns>
     [ClaimsAuthorize(ClaimType.ControleMensalEstoque, Identity.Claim.Alterar)]
     public async Task<ActionResult> Edit(IFormCollection collection)
@@ -146,7 +148,7 @@ public class ControleMensalEstoqueController : BaseController
     }
 
     /// <summary>
-    /// Ação de exclusão do ControleMensalEstoque
+    /// Ação de Exclusão de Controle Mensal de Estoque
     /// </summary>
     /// <param name="id">identificador do ControleMensalEstoque</param>
     /// <param name="collection">coleção de dados para exclusão de ControleMensalEstoque</param>
@@ -184,6 +186,11 @@ public class ControleMensalEstoqueController : BaseController
 
     #region Get Methods
 
+    /// <summary>
+    /// Busca Controle Mensal de Estoque por Id
+    /// </summary>
+    /// <param name="id">Identificador de Controle Mensal de Estoque </param>
+    /// <returns>Retorna o Controle Mensal de Estoque</returns>
     public Task<ControleMensalEstoqueDto> GetControleMensalEstoqueById(int id)
     {
         var result = ApiClientFactory.Instance.GetControleMensalEstoqueById(id);

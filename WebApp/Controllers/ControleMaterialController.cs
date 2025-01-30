@@ -12,6 +12,9 @@ using WebApp.Utility;
 
 namespace WebApp.Controllers;
 
+/// <summary>
+/// Controle de Material
+/// </summary>
 public class ControleMaterialController : BaseController
 {
     #region Constructor
@@ -28,7 +31,7 @@ public class ControleMaterialController : BaseController
         ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
     }
     #endregion
-
+    
     #region Crud Methods
     /// <summary>
     /// Listagem de Controle Material
