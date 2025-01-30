@@ -31,5 +31,6 @@ namespace WebApp.Dto
         public int? LinhaAcaoId { get; set; }
         public string? LinhaAcao { get; set; }
         public SelectList ListLinhasAcoes { get; set; }
+        public byte[]? ByteImage { get; set; }
     }
 }
