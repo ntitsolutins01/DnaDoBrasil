@@ -30,10 +30,10 @@ public class ControleMaterialEstoqueSaidaController : BaseController
         ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
     }
     #endregion
-
-    #region Crud Methods
+     
+    #region Main Methods
     /// <summary>
-    /// Listagem de ControleMaterialEstoqueSaida
+    /// Listagem de Controle de Material de Estoque e Saida
     /// </summary>
     /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
     /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
@@ -50,7 +50,7 @@ public class ControleMaterialEstoqueSaidaController : BaseController
     }
 
     /// <summary>
-    /// Tela para inclusão de Modulo Ead
+    /// Tela para Inclusão de Controle de Material de Estoque e Saida
     /// </summary>
     /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
     /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
@@ -78,7 +78,7 @@ public class ControleMaterialEstoqueSaidaController : BaseController
     }
 
     /// <summary>
-    /// Ação de inclusão do ControleMaterialEstoqueSaida
+    /// Ação de Inclusão do ControleMaterialEstoqueSaida
     /// </summary>
     /// <param name="collection">coleção de dados para inclusao de ControleMaterialEstoqueSaida</param>
     /// <returns>retorna mensagem de inclusao através do parametro crud</returns>
@@ -119,7 +119,7 @@ public class ControleMaterialEstoqueSaidaController : BaseController
 
 
     /// <summary>
-    /// Ação de alteração do ControleMaterialEstoqueSaida
+    /// Ação de Alteração Controle de Material de Estoque e Saida
     /// </summary>
     /// <param name="id">identificador do ControleMaterialEstoqueSaida</param>
     /// <param name="collection">coleção de dados para alteração de ControleMaterialEstoqueSaida</param>
@@ -146,9 +146,9 @@ public class ControleMaterialEstoqueSaidaController : BaseController
     }
 
     /// <summary>
-    /// Ação de exclusão do ControleMaterialEstoqueSaida
+    /// Ação de exclusão de Controle de Material de Estoque e Saida
     /// </summary>
-    /// <param name="id">identificador do ControleMaterialEstoqueSaida</param>
+    /// <param name="id">Identificador Controle de Material de Estoque e Saida</param>
     /// <param name="collection">coleção de dados para exclusão de ControleMaterialEstoqueSaida</param>
     /// <returns>retorna mensagem de exclusão através do parametro crud</returns>
     [ClaimsAuthorize(ClaimType.ControleMaterialEstoqueSaida, Identity.Claim.Excluir)]
@@ -199,6 +199,11 @@ public class ControleMaterialEstoqueSaidaController : BaseController
 
     #region Get Methods
 
+    /// <summary>
+    /// Busca de Controle de Material de Estoque e Saida por Id
+    /// </summary>
+    /// <param name="id">Identificador de Controle de Material de Estoque e Saida </param>
+    /// <returns>Retorna o Controle de Material de Estoque e Saida</returns>
     public Task<ControleMaterialEstoqueSaidaDto> GetControleMaterialEstoqueSaidaById(int id)
     {
         var result = ApiClientFactory.Instance.GetControleMaterialEstoqueSaidaById(id);
