@@ -652,20 +652,13 @@ namespace WebApp.Controllers
             }
         }
 
-        /// <summary>
-        /// Tela de Visualização das turmas do Profissional Logado
-        /// </summary>
-        /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
-        /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
-        /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
+
         [ClaimsAuthorize(ClaimType.Profissional, Claim.Consultar)]
-        public ActionResult MinhasTurmas(int? crud, int? notify, string message = null)
+        public ActionResult MinhasTurmas(IFormCollection collection)
         {
             try
             {
-                SetNotifyMessage(notify, message);
-                SetCrudMessage(crud);
-
+                
                 return RedirectToAction(nameof(Profile), new { crud = (int)EnumCrud.Updated });
             }
             catch (Exception e)
@@ -697,6 +690,8 @@ namespace WebApp.Controllers
                 return Task.FromResult(Json(ex));
             }
         }
+
+
     }
 
 }
