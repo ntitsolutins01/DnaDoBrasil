@@ -41,7 +41,7 @@ namespace WebApp.Models
             public string? ModalidadesIds { get; set; }
             public int LinhaAcaoId { get; set; }
             public byte[]? ByteImage { get; set; }
-		}
+        }
     }
 
 }
