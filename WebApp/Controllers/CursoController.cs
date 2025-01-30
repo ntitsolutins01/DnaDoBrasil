@@ -14,7 +14,7 @@ using WebApp.Utility;
 namespace WebApp.Controllers;
 
 /// <summary>
-/// Curso 
+/// Controle de Curso
 /// </summary>
 [Authorize(Policy = ModuloAccess.ConfiguracaoSistemaEad)]
 public class CursoController : BaseController
@@ -42,7 +42,7 @@ public class CursoController : BaseController
     #region Main Methods
 
     /// <summary>
-    /// Listagem de Curso
+    /// Listagem do Curso
     /// </summary>
     /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
     /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
@@ -58,7 +58,7 @@ public class CursoController : BaseController
     }
 
     /// <summary>
-    /// Tela para inclusão de Curso
+    /// Tela para inclusão do Curso
     /// </summary>
     /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
     /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
@@ -89,7 +89,7 @@ public class CursoController : BaseController
     }
 
     /// <summary>
-    /// Ação de inclusão do Curso
+    /// Ação de Inclusão do Curso
     /// </summary>
     /// <param name="collection">coleção de dados para inclusao de Curso</param>
     /// <returns>retorna mensagem de inclusao através do parametro crud</returns>
@@ -144,7 +144,7 @@ public class CursoController : BaseController
 
 
     /// <summary>
-    /// Ação de alteração do Curso
+    /// Ação de Alteração do Curso
     /// </summary>
     /// <param name="id">identificador do Curso</param>
     /// <param name="collection">coleção de dados para alteração de Curso</param>
@@ -210,7 +210,7 @@ public class CursoController : BaseController
     }
 
     /// <summary>
-    /// Ação de exclusão do Curso
+    /// Ação de Exclusão do Curso
     /// </summary>
     /// <param name="id">identificador do Curso</param>
     /// <param name="collection">coleção de dados para exclusão de Curso</param>

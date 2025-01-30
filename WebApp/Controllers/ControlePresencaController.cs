@@ -16,6 +16,9 @@ using WebApp.Authorization;
 
 namespace WebApp.Controllers
 {
+    /// <summary>
+    /// Controle de Presença
+    /// </summary>
     [Authorize(Policy = ModuloAccess.ControlePresenca)]
     public class ControlePresencaController : BaseController
 	{
@@ -37,16 +40,16 @@ namespace WebApp.Controllers
         #endregion
 
 
-        #region Crud Methods
+        #region Main Methods
 
         /// <summary>
-        /// 
+        /// Listagem de Controle de Presença 
         /// </summary>
-        /// <param name="crud"></param>
-        /// <param name="notify"></param>
-        /// <param name="collection"></param>
-        /// <param name="message"></param>
-        /// <returns></returns>
+        /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
+        /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
+        /// <param name="collection">parametro que indica o tipo de notificação realizada</param>
+        /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
+        /// <returns>returs true false</returns>
         [ClaimsAuthorize(ClaimType.ControlePresenca, Claim.Consultar)]
         public async Task<ActionResult> Index(int? crud, int? notify, IFormCollection collection, string message = null)
         {
@@ -127,7 +130,13 @@ namespace WebApp.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Tela para Inclusão de Controle de Presença
+        /// </summary>
+        /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
+        /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
+        /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
+        /// <returns>returns true love </returns>
         [ClaimsAuthorize(ClaimType.ControlePresenca, Claim.Incluir)]
         public ActionResult Create(int? crud, int? notify, string message = null)
 		{
@@ -192,6 +201,11 @@ namespace WebApp.Controllers
 			}
 		}
 
+        /// <summary>
+        /// Ação de Inclusão de Controle de Presença
+        /// </summary>
+        /// <param name="collection">coleção de dados para Inclusao de Controle de Presença</param>
+        /// <returns>retorna mensagem de inclusao através do parametro crud</returns>
         [HttpPost]
         [ClaimsAuthorize(ClaimType.ControlePresenca, Claim.Incluir)]
 		public async Task<ActionResult> Create(IFormCollection collection)
@@ -224,6 +238,11 @@ namespace WebApp.Controllers
 			}
 		}
 
+        /// <summary>
+        /// Ação de Alteração de Controle de Presença 
+        /// </summary>
+        /// <param name="collection">coleção de dados para alteração de Controle de Presença</param>
+        /// <returns>retorna mensagem de alteração através do parametro crud</returns>
         [ClaimsAuthorize(ClaimType.ControlePresenca, Claim.Alterar)]
         public async Task<ActionResult> Edit(IFormCollection collection)
 		{
@@ -246,6 +265,11 @@ namespace WebApp.Controllers
 			}
 		}
 
+        /// <summary>
+        /// Ação de Exclusão de Controle de Presença 
+        /// </summary>
+        /// <param name="id">identificador do Controle de Categoria</param>
+        /// <returns>retorna mensagem de exclusão através do parametro crud</returns>
         [ClaimsAuthorize(ClaimType.ControlePresenca, Claim.Excluir)]
         public ActionResult Delete(int id)
 		{
@@ -262,13 +286,22 @@ namespace WebApp.Controllers
 
         #endregion
 
+        #region Get Methods
+
+        /// <summary>
+        /// Busca Controle de Presença  por Id
+        /// </summary>
+        /// <param name="id">Identificador de Controle de Presença</param>
+        /// <returns>Retorna a Categoria</returns>
         [ClaimsAuthorize(ClaimType.ControlePresenca, Claim.Consultar)]
         public Task<ControlePresencaDto> GetControlePresencaById(int id)
-		{
-			var result = ApiClientFactory.Instance.GetControlePresencaById(id);
+        {
+            var result = ApiClientFactory.Instance.GetControlePresencaById(id);
 
-			return Task.FromResult(result);
-		}
+            return Task.FromResult(result);
+        }
 
-	}
+        #endregion
+
+    }
 }

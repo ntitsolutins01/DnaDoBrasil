@@ -12,6 +12,9 @@ using WebApp.Utility;
 
 namespace WebApp.Controllers
 {
+	/// <summary>
+	/// Controle de Disciplina 
+	/// </summary>
 	[Authorize(Policy = ModuloAccess.ConfiguracaoSistema)]
 	public class DisciplinaController : BaseController
     {
@@ -31,7 +34,7 @@ namespace WebApp.Controllers
         }
         #endregion
 
-        #region Crud Methods
+        #region Main Methods
         /// <summary>
         /// Listagem de Disciplina
         /// </summary>
@@ -49,8 +52,14 @@ namespace WebApp.Controllers
 			return View(new DisciplinaModel() { Disciplinas = response });
 		}
 
-
-		public ActionResult Create(int? crud, int? notify, string message = null)
+        /// <summary>
+        /// Listagem de Disciplina
+        /// </summary>
+        /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
+        /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
+        /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
+        /// <returns>returns true false</returns>
+        public ActionResult Create(int? crud, int? notify, string message = null)
 		{
 			SetNotifyMessage(notify, message);
 			SetCrudMessage(crud);
@@ -58,8 +67,13 @@ namespace WebApp.Controllers
 			return View();
 		}
 
-		//[ClaimsAuthorize("Usuario", "Incluir")]
-		[HttpPost]
+        /// <summary>
+        ///  Ação de Inclusão de Disciplina 
+        /// </summary>
+        /// <param name="collection">coleção de dados para inclusao de Disciplina</param>
+        /// <returns>retorna mensagem de inclusao através do parametro crud</returns>
+        //[ClaimsAuthorize("Usuario", "Incluir")]
+        [HttpPost]
 		public async Task<ActionResult> Create(IFormCollection collection)
 		{
 			try
@@ -79,8 +93,13 @@ namespace WebApp.Controllers
 			}
 		}
 
-		//[ClaimsAuthorize("Usuario", "Alterar")]
-		public async Task<ActionResult> Edit(IFormCollection collection)
+        /// <summary>
+        /// Ação de Alteração de Disciplina 
+        /// </summary>
+        /// <param name="collection">coleção de dados para alteração de Disciplina</param>
+        /// <returns>retorna mensagem de alteração através do parametro crud</returns>
+        //[ClaimsAuthorize("Usuario", "Alterar")]
+        public async Task<ActionResult> Edit(IFormCollection collection)
 		{
 			var command = new DisciplinaModel.CreateUpdateDisciplinaCommand
 			{
@@ -93,8 +112,13 @@ namespace WebApp.Controllers
 			return RedirectToAction(nameof(Index), new { crud = (int)EnumCrud.Updated });
 		}
 
-		//[ClaimsAuthorize("Usuario", "Excluir")]
-		public ActionResult Delete(int id)
+        /// <summary>
+        ///  Ação de Exclusão de Disciplina
+        /// </summary>
+        /// <param name="id">identificador de Disciplina</param>
+        /// <returns>retorna mensagem de exclusão através do parametro crud</returns>
+        //[ClaimsAuthorize("Usuario", "Excluir")]
+        public ActionResult Delete(int id)
 		{
 			try
 			{
@@ -109,11 +133,21 @@ namespace WebApp.Controllers
 
         #endregion
 
-        public Task<DisciplinaDto> GetDisciplinaById(int id)
-		{
-			var result = ApiClientFactory.Instance.GetDisciplinaById(id);
+        #region Get Methods
 
-			return Task.FromResult(result);
-		}
-	}
+        /// <summary>
+        /// Busca Disciplina por Id
+        /// </summary>
+        /// <param name="id">Identificador de Disciplina</param>
+        /// <returns>Retorna a Categoria</returns>
+        public Task<DisciplinaDto> GetDisciplinaById(int id)
+        {
+            var result = ApiClientFactory.Instance.GetDisciplinaById(id);
+
+            return Task.FromResult(result);
+        }
+
+        #endregion
+
+    }
 }
