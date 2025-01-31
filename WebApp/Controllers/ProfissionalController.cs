@@ -17,7 +17,9 @@ using WebApp.Authorization;
 using WebApp.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Claim = WebApp.Identity.Claim;
-using DocumentFormat.OpenXml.Spreadsheet;
+using log4net;
+using log4net.Config;
+using System.Reflection;
 
 namespace WebApp.Controllers
 {
@@ -28,15 +30,20 @@ namespace WebApp.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IWebHostEnvironment _host;
+        private readonly ILog _logger;
 
         public ProfissionalController(IOptions<UrlSettings> appSettings,
             IEmailSender emailSender,
-            UserManager<IdentityUser> userManager, IWebHostEnvironment host, RoleManager<IdentityRole> roleManager)
+            UserManager<IdentityUser> userManager, 
+            IWebHostEnvironment host, 
+            RoleManager<IdentityRole> roleManager,
+            ILog logger)
         {
             _emailSender = emailSender;
             _userManager = userManager;
             _host = host;
             _roleManager = roleManager;
+            _logger = logger;
             ApplicationSettings.WebApiUrl = appSettings.Value.WebApiBaseUrl;
         }
 
@@ -550,6 +557,8 @@ namespace WebApp.Controllers
         {
             try
             {
+                _logger.Info($"Usuario Logado: {User.Identity.Name}");
+
                 SetNotifyMessage(notify, message);
                 SetCrudMessage(crud);
 
@@ -563,6 +572,8 @@ namespace WebApp.Controllers
                 var usu = ApiClientFactory.Instance.GetUsuarioByEmail(usuario);
 
                 var profissional = ApiClientFactory.Instance.GetProfissionalByEmail(usuario);
+
+                _logger.Info($"ProfissionalId: {profissional.Id}");
 
                 var listModalidades = new SelectList(ApiClientFactory.Instance.GetModalidadesByProfissionalId(profissional.Id), "Id", "Nome",
                     profissional.ModalidadesIds);
@@ -580,6 +591,8 @@ namespace WebApp.Controllers
             }
             catch (Exception e)
             {
+                _logger.Error(e.StackTrace);
+
                 return Redirect("/Identity/Account/Login");
 
             }
