@@ -9,8 +9,12 @@ using WebApp.Services;
 using WebApp.Configuration;
 using WebApp.Identity;
 using Microsoft.Extensions.FileProviders;
+using WebApp.Utility;
 
 var builder = WebApplication.CreateBuilder(args);
+
+//Configure Log4net
+builder.Services.AddLog4net();
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??

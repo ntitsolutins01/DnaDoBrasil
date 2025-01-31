@@ -14,6 +14,7 @@ using System.Text.RegularExpressions;
 using WebApp.Configuration;
 using WebApp.Identity;
 using WebApp.Authorization;
+using log4net;
 
 namespace WebApp.Controllers
 {
@@ -29,6 +30,7 @@ namespace WebApp.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IWebHostEnvironment _host;
+        private readonly ILog _logger;
 
         /// <summary>
         /// Construtor da página
@@ -38,13 +40,19 @@ namespace WebApp.Controllers
         /// <param name="userManager">gerenciador de identidade de usuários</param>
         /// <param name="host">informações da aplicação em execução</param>
         /// <param name="roleManager">gerenciador de regras de permissoes</param>
-        public UsuarioController(IOptions<UrlSettings> app, IEmailSender emailSender,
-            UserManager<IdentityUser> userManager, IWebHostEnvironment host, RoleManager<IdentityRole> roleManager)
+        /// <param name="logger">gerenciador de log</param>
+        public UsuarioController(IOptions<UrlSettings> app, 
+            IEmailSender emailSender,
+            UserManager<IdentityUser> userManager, 
+            IWebHostEnvironment host,
+            RoleManager<IdentityRole> roleManager,
+            ILog logger)
         {
             _emailSender = emailSender;
             _userManager = userManager;
             _host = host;
             _roleManager = roleManager;
+            _logger = logger;
             ApplicationSettings.WebApiUrl = app.Value.WebApiBaseUrl;
         }
 
@@ -348,22 +356,32 @@ namespace WebApp.Controllers
         /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
         public ActionResult Profile(int? crud, int? notify, string message = null)
         {
-            SetNotifyMessage(notify, message);
-            SetCrudMessage(crud);
-
-            //usuario logado
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (User.Identity == null) return Redirect("/Account/Logout");
-            var usuario = User.Identity.Name;
-
-            if (usuario == null) return Redirect("/Account/Logout");
-            var usu = ApiClientFactory.Instance.GetUsuarioByEmail(usuario);
-
-            var model = new UsuarioModel
+            try
             {
-                Usuario = usu
-            };
-            return View(model);
+                _logger.Info($"Usuario Logado: {User.Identity.Name}");
+
+                SetNotifyMessage(notify, message);
+                SetCrudMessage(crud);
+
+                //usuario logado
+                //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                if (User.Identity == null) return Redirect("/Account/Logout");
+                var usuario = User.Identity.Name;
+
+                if (usuario == null) return Redirect("/Account/Logout");
+                var usu = ApiClientFactory.Instance.GetUsuarioByEmail(usuario);
+
+                var model = new UsuarioModel
+                {
+                    Usuario = usu
+                };
+                return View(model);
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e.StackTrace);
+                throw;
+            }
 
         }
 
