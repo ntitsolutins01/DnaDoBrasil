@@ -17,7 +17,9 @@ using WebApp.Authorization;
 using WebApp.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Claim = WebApp.Identity.Claim;
-using DocumentFormat.OpenXml.Spreadsheet;
+using log4net;
+using log4net.Config;
+using System.Reflection;
 
 namespace WebApp.Controllers
 {
@@ -28,15 +30,20 @@ namespace WebApp.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IWebHostEnvironment _host;
+        private readonly ILog _logger;
 
         public ProfissionalController(IOptions<UrlSettings> appSettings,
             IEmailSender emailSender,
-            UserManager<IdentityUser> userManager, IWebHostEnvironment host, RoleManager<IdentityRole> roleManager)
+            UserManager<IdentityUser> userManager, 
+            IWebHostEnvironment host, 
+            RoleManager<IdentityRole> roleManager,
+            ILog logger)
         {
             _emailSender = emailSender;
             _userManager = userManager;
             _host = host;
             _roleManager = roleManager;
+            _logger = logger;
             ApplicationSettings.WebApiUrl = appSettings.Value.WebApiBaseUrl;
         }
 
@@ -550,24 +557,43 @@ namespace WebApp.Controllers
         {
             try
             {
+                _logger.Info($"Usuario Logado User.Identity.Name: {User.Identity.Name}");
+
                 SetNotifyMessage(notify, message);
                 SetCrudMessage(crud);
 
-                //usuario logado
-                //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                if (User.Identity == null) return Redirect("/Identity/Account/Login");
+                //Busca usuario por AspNetUserId
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                _logger.Info($"Busca Usuario por AspNetUserId: {userId}");
 
                 var usuario = User.Identity.Name;
-                if (usuario == null) return Redirect("/Identity/Account/Login");
+                _logger.Info($"Busca Usuario por email: {usuario}");
 
-                var usu = ApiClientFactory.Instance.GetUsuarioByEmail(usuario);
+                if (userId == null)
+                {
+                    _logger.Warn($"AspNetUserId não encontrado para o email: {User.Identity.Name}");
+                    throw new Exception($"AspNetUserId não encontrado para o email: {User.Identity.Name}");
+                }
+
+                if (usuario == null)
+                {
+                    _logger.Warn($"User.Identity.Name não encontrado para o email: {User.Identity.Name}");
+                    throw new Exception($"User.Identity.Name não encontrado para o email: {User.Identity.Name}");
+                }
+
+                var usu = ApiClientFactory.Instance.GetUsuarioByAspNetUserId(userId);
 
                 var profissional = ApiClientFactory.Instance.GetProfissionalByEmail(usuario);
 
-                var listModalidades = new SelectList(ApiClientFactory.Instance.GetModalidadesByProfissionalId(profissional.Id), "Id", "Nome",
+                _logger.Info($"ProfissionalId: {profissional.Id}");
+
+                var listModalidades = new SelectList(
+                    ApiClientFactory.Instance.GetModalidadesByProfissionalId(profissional.Id), "Id", "Nome",
                     profissional.ModalidadesIds);
 
-                var listAlunos =  new SelectList(ApiClientFactory.Instance.GetNomeAlunosByProfissionalId(profissional.Id), "Id", "Nome");
+                var listAlunos =
+                    new SelectList(ApiClientFactory.Instance.GetNomeAlunosByProfissionalId(profissional.Id), "Id",
+                        "Nome");
 
                 return View(new ProfissionalModel()
                 {
@@ -576,11 +602,11 @@ namespace WebApp.Controllers
                     ListAlunos = listAlunos,
                     Usuario = usu,
                 });
-
             }
             catch (Exception e)
             {
-                return Redirect("/Identity/Account/Login");
+                _logger.Error(e.StackTrace);
+                throw;
 
             }
         }
@@ -652,20 +678,13 @@ namespace WebApp.Controllers
             }
         }
 
-        /// <summary>
-        /// Tela de Visualização das turmas do Profissional Logado
-        /// </summary>
-        /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
-        /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
-        /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
+
         [ClaimsAuthorize(ClaimType.Profissional, Claim.Consultar)]
-        public ActionResult MinhasTurmas(int? crud, int? notify, string message = null)
+        public ActionResult MinhasTurmas(IFormCollection collection)
         {
             try
             {
-                SetNotifyMessage(notify, message);
-                SetCrudMessage(crud);
-
+                
                 return RedirectToAction(nameof(Profile), new { crud = (int)EnumCrud.Updated });
             }
             catch (Exception e)
@@ -697,6 +716,8 @@ namespace WebApp.Controllers
                 return Task.FromResult(Json(ex));
             }
         }
+
+
     }
 
 }

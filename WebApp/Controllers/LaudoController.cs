@@ -14,6 +14,7 @@ using WebApp.Dto;
 using ClosedXML.Excel;
 using System.Diagnostics;
 using DocumentFormat.OpenXml.Presentation;
+using log4net;
 
 namespace WebApp.Controllers
 {
@@ -22,11 +23,15 @@ namespace WebApp.Controllers
     {
         private readonly IOptions<UrlSettings> _appSettings;
         private readonly IWebHostEnvironment _host;
+        private readonly ILog _logger;
 
-        public LaudoController(IOptions<UrlSettings> appSettings, IWebHostEnvironment host)
+        public LaudoController(IOptions<UrlSettings> appSettings, 
+            IWebHostEnvironment host, 
+            ILog logger)
         {
             _appSettings = appSettings;
             _host = host;
+            _logger = logger;
             ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
         }
 
@@ -35,6 +40,8 @@ namespace WebApp.Controllers
         {
             try
             {
+                _logger.Info($"Usuario Logado: {User.Identity.Name}");
+
                 var usuario = User.Identity.Name;
 
                 SetNotifyMessage(notify, message);
@@ -117,7 +124,7 @@ namespace WebApp.Controllers
             }
             catch (Exception e)
             {
-                Console.Write(e.StackTrace);
+                _logger.Error(e.StackTrace);
                 return RedirectToAction(nameof(Error), new { notify = (int)EnumNotify.Error, message = e.Message });
 
             }
@@ -174,6 +181,7 @@ namespace WebApp.Controllers
             var encaminhamentoConsumoAlimentar = laudo.ConsumoAlimentarId == null ? null : ApiClientFactory.Instance.GetEncaminhamentoById((int)consumoAlimentar.Encaminhamento.Id);
             var encaminhamentoSaudeBucal = laudo.SaudeBucalId == null ? null : ApiClientFactory.Instance.GetEncaminhamentoById((int)saudeBucal.Encaminhamento.Id);
             var desempenho = ApiClientFactory.Instance.GetDesempenhoByAluno(Convert.ToInt32(laudo.AlunoId));
+            var modalidade = ApiClientFactory.Instance.GetModalidadeById(Convert.ToInt32(laudo.ModalidadeId));
 
             var model = new LaudoModel()
             {
@@ -185,7 +193,8 @@ namespace WebApp.Controllers
                 ListVocacional = vocacional,
                 EncaminhamentoSaudeBucal = encaminhamentoSaudeBucal,
                 EncaminhamentoConsumoAlimentar = encaminhamentoConsumoAlimentar,
-                Desempenho = desempenho
+                Desempenho = desempenho,
+                Modalidade = modalidade
             };
             return View(model);
         }
