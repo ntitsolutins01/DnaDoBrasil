@@ -41,9 +41,9 @@ namespace WebApp.Controllers
         /// <param name="host">informações da aplicação em execução</param>
         /// <param name="roleManager">gerenciador de regras de permissoes</param>
         /// <param name="logger">gerenciador de log</param>
-        public UsuarioController(IOptions<UrlSettings> app, 
+        public UsuarioController(IOptions<UrlSettings> app,
             IEmailSender emailSender,
-            UserManager<IdentityUser> userManager, 
+            UserManager<IdentityUser> userManager,
             IWebHostEnvironment host,
             RoleManager<IdentityRole> roleManager,
             ILog logger)
@@ -358,24 +358,38 @@ namespace WebApp.Controllers
         {
             try
             {
-                _logger.Info($"Usuario Logado: {User.Identity.Name}");
+                _logger.Info($"Usuario Logado User.Identity.Name: {User.Identity.Name}");
 
                 SetNotifyMessage(notify, message);
                 SetCrudMessage(crud);
 
-                //usuario logado
-                //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                if (User.Identity == null) return Redirect("/Account/Logout");
-                var usuario = User.Identity.Name;
+                //Busca usuario por email
+                //var usuario = User.Identity.Name;
+                //if (usuario == null) return Redirect("/Account/Logout");
+                //_logger.Info($"Busca Usuario por email: {usuario}");
+                //var usu1 = ApiClientFactory.Instance.GetUsuarioByEmail(usuario);
 
-                if (usuario == null) return Redirect("/Account/Logout");
-                var usu = ApiClientFactory.Instance.GetUsuarioByEmail(usuario);
-
-                var model = new UsuarioModel
+                //Busca usuario por AspNetUserId
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                _logger.Info($"Busca Usuario por AspNetUserId: {userId}");
+                if (userId != null)
                 {
-                    Usuario = usu
-                };
-                return View(model);
+                    var usu = ApiClientFactory.Instance.GetUsuarioByAspNetUserId(userId);
+
+                    _logger.Info($"Retorno de GetUsuarioByAspNetUserId");
+                    _logger.Info(Newtonsoft.Json.JsonConvert.SerializeObject(usu));
+
+                    var model = new UsuarioModel
+                    {
+                        Usuario = usu
+                    };
+                    return View(model);
+                }
+                else
+                {
+                    _logger.Warn($"AspNetUserId não encontrado para o email: {User.Identity.Name}");
+                    throw new Exception($"AspNetUserId não encontrado para o email: {User.Identity.Name}");
+                }
             }
             catch (Exception e)
             {

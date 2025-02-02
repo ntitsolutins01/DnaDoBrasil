@@ -557,28 +557,43 @@ namespace WebApp.Controllers
         {
             try
             {
-                _logger.Info($"Usuario Logado: {User.Identity.Name}");
+                _logger.Info($"Usuario Logado User.Identity.Name: {User.Identity.Name}");
 
                 SetNotifyMessage(notify, message);
                 SetCrudMessage(crud);
 
-                //usuario logado
-                //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                if (User.Identity == null) return Redirect("/Identity/Account/Login");
+                //Busca usuario por AspNetUserId
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                _logger.Info($"Busca Usuario por AspNetUserId: {userId}");
 
                 var usuario = User.Identity.Name;
-                if (usuario == null) return Redirect("/Identity/Account/Login");
+                _logger.Info($"Busca Usuario por email: {usuario}");
 
-                var usu = ApiClientFactory.Instance.GetUsuarioByEmail(usuario);
+                if (userId == null)
+                {
+                    _logger.Warn($"AspNetUserId não encontrado para o email: {User.Identity.Name}");
+                    throw new Exception($"AspNetUserId não encontrado para o email: {User.Identity.Name}");
+                }
+
+                if (usuario == null)
+                {
+                    _logger.Warn($"User.Identity.Name não encontrado para o email: {User.Identity.Name}");
+                    throw new Exception($"User.Identity.Name não encontrado para o email: {User.Identity.Name}");
+                }
+
+                var usu = ApiClientFactory.Instance.GetUsuarioByAspNetUserId(userId);
 
                 var profissional = ApiClientFactory.Instance.GetProfissionalByEmail(usuario);
 
                 _logger.Info($"ProfissionalId: {profissional.Id}");
 
-                var listModalidades = new SelectList(ApiClientFactory.Instance.GetModalidadesByProfissionalId(profissional.Id), "Id", "Nome",
+                var listModalidades = new SelectList(
+                    ApiClientFactory.Instance.GetModalidadesByProfissionalId(profissional.Id), "Id", "Nome",
                     profissional.ModalidadesIds);
 
-                var listAlunos =  new SelectList(ApiClientFactory.Instance.GetNomeAlunosByProfissionalId(profissional.Id), "Id", "Nome");
+                var listAlunos =
+                    new SelectList(ApiClientFactory.Instance.GetNomeAlunosByProfissionalId(profissional.Id), "Id",
+                        "Nome");
 
                 return View(new ProfissionalModel()
                 {
@@ -587,13 +602,11 @@ namespace WebApp.Controllers
                     ListAlunos = listAlunos,
                     Usuario = usu,
                 });
-
             }
             catch (Exception e)
             {
                 _logger.Error(e.StackTrace);
-
-                return Redirect("/Identity/Account/Login");
+                throw;
 
             }
         }
