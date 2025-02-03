@@ -23,6 +23,7 @@ namespace WebApp.Dto
         public int? EncaminhamentoSaudeBucalId { get; set; }
         public int? EncaminhamentoTalentoEsportivoId { get; set; }
         public int? ModalidadeId { get; set; }
+        public string? EncaminhamentoTexto { get; set; }
 
         #endregion
 
