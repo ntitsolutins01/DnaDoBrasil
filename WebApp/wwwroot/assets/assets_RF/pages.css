@@ -89,8 +89,7 @@
 .avatar-image {
     width: 120px;
     height: 150px;
-    background: url('/assets/images/user-square.jpg') no-repeat center center;
-    background-size: cover;
+    object-fit: cover;
     border: 1px solid #adadad;
 }
 
@@ -116,7 +115,7 @@
 .info-value {
     color: #333;
     font-size: 15px;
-    font-weight: 500;
+    font-weight: 400;
 }
 
 /* Container direito (tabela e info da turma) */

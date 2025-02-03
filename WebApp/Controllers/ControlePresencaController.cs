@@ -298,7 +298,7 @@ namespace WebApp.Controllers
                     LocalidadeId = result.LocalidadeId,
                     MunicipioId = result.MunicipioId,
                     Status = result.Status,
-                    Mes = mes
+                    Mes = mes,
                 }
             };
 
