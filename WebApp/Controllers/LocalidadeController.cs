@@ -142,10 +142,10 @@ namespace WebApp.Controllers
         #region Get Methods
 
         /// <summary>
-        /// 
+        ///  Busca Localidade por Id
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">Identificador de Localidade</param>
+        /// <returns>Retorna a Localidade</returns>
         public Task<LocalidadeDto> GetLocalidadeById(int id)
         {
             var result = ApiClientFactory.Instance.GetLocalidadeById(id);
@@ -154,10 +154,10 @@ namespace WebApp.Controllers
         }
 
         /// <summary>
-        /// Busca Localidade por Id
+        /// Busca Localidade por Municipio
         /// </summary>
-        /// <param name="id">Identificador de Localidade</param>
-        /// <returns>Retorna a Localidade</returns>
+        /// <param name="id">Identificador de Localidade por Municipio</param>
+        /// <returns>Retorna a Localidade por Municipio</returns>
         public Task<JsonResult> GetLocalidadeByMunicipio(string id)
         {
             try

@@ -1,5 +1,4 @@
-﻿using System.Security.Claims;
-using System.Text;
+﻿using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -17,17 +16,25 @@ using WebApp.Authorization;
 using WebApp.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Claim = WebApp.Identity.Claim;
-using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace WebApp.Controllers
 {
+    /// <summary>
+    /// Controle de Profissional
+    /// </summary>
     [Authorize(Policy = ModuloAccess.Profissional)]
     public class ProfissionalController : BaseController
     {
+        #region Parametros
+
         private readonly IEmailSender _emailSender;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IWebHostEnvironment _host;
+
+        #endregion
+
+        #region Constructor
 
         public ProfissionalController(IOptions<UrlSettings> appSettings,
             IEmailSender emailSender,
@@ -40,6 +47,17 @@ namespace WebApp.Controllers
             ApplicationSettings.WebApiUrl = appSettings.Value.WebApiBaseUrl;
         }
 
+        #endregion
+
+        #region Main Methods
+
+        /// <summary>
+        /// Listagem de Profissional
+        /// </summary>
+        /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
+        /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
+        /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
+        /// <returns></returns>
         [ClaimsAuthorize(ClaimType.Profissional, Claim.Consultar)]
         public IActionResult Index(int? crud, int? notify, string message = null)
         {
@@ -65,7 +83,13 @@ namespace WebApp.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Tela para Inclusão de Profissional
+        /// </summary>
+        /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
+        /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
+        /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
+        /// <returns></returns>
         [ClaimsAuthorize(ClaimType.Profissional, Claim.Incluir)]
         public ActionResult Create(int? crud, int? notify, string message = null)
         {
@@ -113,6 +137,11 @@ namespace WebApp.Controllers
             }
         }
 
+        /// <summary>
+        /// Ação de Inclusão de Profissional
+        /// </summary>
+        /// <param name="collection">coleção de dados para inclusao de Profissional</param>
+        /// <returns>retorna mensagem de inclusao através do parametro crud</returns>
         [HttpPost]
         [ClaimsAuthorize(ClaimType.Profissional, Claim.Incluir)]
         public async Task<ActionResult> Create(IFormCollection collection)
@@ -203,7 +232,14 @@ namespace WebApp.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Ação de Alteração de Profissional
+        /// </summary>
+        /// <param name="id">Identificador de Profissional</param>
+        /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
+        /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
+        /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
+        /// <returns></returns>
         [ClaimsAuthorize(ClaimType.Profissional, Claim.Alterar)]
         public ActionResult Edit(int id, int? crud, int? notify, string message = null)
         {
@@ -254,6 +290,12 @@ namespace WebApp.Controllers
             }
         }
 
+        /// <summary>
+        /// Ação de Alteração de Profissional
+        /// </summary>
+        /// <param name="id">Identificador de Profissional</param>
+        /// <param name="collection">coleção de dados para alteração de Profissional</param>
+        /// <returns></returns>
         [HttpPost]
         [ClaimsAuthorize(ClaimType.Profissional, Claim.Alterar)]
         public async Task<ActionResult> Edit(int id, IFormCollection collection)
@@ -310,6 +352,11 @@ namespace WebApp.Controllers
             }
         }
 
+        /// <summary>
+        /// Ação de Inclusão de Profissional
+        /// </summary>
+        /// <param name="collection">coleção de dados para inclusao de Profissional</param>
+        /// <returns>retorna mensagem de inclusao através do parametro crud</returns>
         [HttpPost]
         [ClaimsAuthorize(ClaimType.Profissional, Claim.Incluir)]
         public async Task<ActionResult> CreateModalidade(IFormCollection collection)
@@ -335,6 +382,11 @@ namespace WebApp.Controllers
             }
         }
 
+        /// <summary>
+        /// Ação de Exclusão do Profissional
+        /// </summary>
+        /// <param name="id">identificador do Profissional</param>
+        /// <returns>retorna mensagem de exclusão através do parametro crud</returns>
         [ClaimsAuthorize(ClaimType.Profissional, Claim.Excluir)]
         public async Task<ActionResult> Delete(int id)
         {
@@ -389,42 +441,124 @@ namespace WebApp.Controllers
             return null;
         }
 
+        /// <summary>
+        /// Tela de Visualização do Profile do Profissional Logado
+        /// </summary>
+        /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
+        /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
+        /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
         [ClaimsAuthorize(ClaimType.Profissional, Claim.Consultar)]
-        public Task<ProfissionalDto> GetProfissionalById(int id)
+        public ActionResult Profile(int? crud, int? notify, string message = null)
         {
-            var result = ApiClientFactory.Instance.GetProfissionalById(id);
-
-            return Task.FromResult(result);
-        }
-
-        [ClaimsAuthorize(ClaimType.Profissional, Claim.Consultar)]
-        public Task<bool> GetProfissionalByEmail(string email)
-        {
-            if (string.IsNullOrEmpty(email)) throw new Exception("Email não informado.");
-            var result = ApiClientFactory.Instance.GetProfissionalByEmail(email);
-
-            if (result == null)
+            try
             {
-                return Task.FromResult(true);
+                SetNotifyMessage(notify, message);
+                SetCrudMessage(crud);
+
+                //usuario logado
+                //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                if (User.Identity == null) return Redirect("/Identity/Account/Login");
+
+                var usuario = User.Identity.Name;
+                if (usuario == null) return Redirect("/Identity/Account/Login");
+
+                var usu = ApiClientFactory.Instance.GetUsuarioByEmail(usuario);
+
+                var profissional = ApiClientFactory.Instance.GetProfissionalByEmail(usuario);
+
+                var listModalidades = new SelectList(ApiClientFactory.Instance.GetModalidadesByProfissionalId(profissional.Id), "Id", "Nome",
+                    profissional.ModalidadesIds);
+
+                var listAlunos = new SelectList(ApiClientFactory.Instance.GetNomeAlunosByProfissionalId(profissional.Id), "Id", "Nome");
+
+                return View(new ProfissionalModel()
+                {
+                    ListAtividadesModalidades = listModalidades,
+                    Profissional = profissional,
+                    ListAlunos = listAlunos,
+                    Usuario = usu,
+                });
+
             }
-
-            return Task.FromResult(false);
-        }
-
-        [ClaimsAuthorize(ClaimType.Profissional, Claim.Consultar)]
-        public Task<bool> GetProfissionalByCpf(string cpf)
-        {
-            if (string.IsNullOrEmpty(cpf)) throw new Exception("Cpf não informado.");
-            var result = ApiClientFactory.Instance.GetProfissionalByCpf(Regex.Replace(cpf, "[^0-9a-zA-Z]+", ""));
-
-            if (result == null)
+            catch (Exception e)
             {
-                return Task.FromResult(true);
-            }
+                return Redirect("/Identity/Account/Login");
 
-            return Task.FromResult(false);
+            }
         }
 
+        /// <summary>
+        /// Tela de Visualizaçao do Profile do Profissional Logado 
+        /// </summary>
+        /// <param name="collection">coleção de dados para Visualizaçao de Profissional</param>
+        /// <returns>returns true false</returns>
+        [HttpPost]
+        [ClaimsAuthorize(ClaimType.Profissional, Claim.AlterarProfile)]
+        public async Task<ActionResult> Profile(IFormCollection collection)
+        {
+            try
+            {
+                var status = collection["status"].ToString();
+                var habilitado = collection["habilitado"].ToString();
+
+                var command = new ProfissionalModel.CreateUpdateProfissionalCommand
+                {
+                    Id = Convert.ToInt32(collection["ProfissionalId"].ToString()),
+                    Nome = collection["nome"] == "" ? null : collection["nome"].ToString(),
+                    DtNascimento = collection["DtNascimento"] == "" ? null : collection["DtNascimento"].ToString(),
+                    Email = collection["email"] == "" ? null : collection["email"].ToString(),
+                    Sexo = collection["ddlSexo"] == "" ? null : collection["ddlSexo"].ToString(),
+                    Telefone = collection["numTelefone"] == "" ? null : collection["numTelefone"].ToString(),
+                    Cep = collection["cep"] == "" ? null : collection["cep"].ToString(),
+                    Celular = collection["numCelular"] == "" ? null : collection["numCelular"].ToString(),
+                    Cpf = collection["cpf"] == "" ? null : collection["cpf"].ToString(),
+                    //AspNetUserId = collection["aspnetuserId"].ToString(),
+                    Numero = collection["numero"] == "" ? null : Convert.ToInt32(collection["numero"].ToString()),
+                    Bairro = collection["bairro"] == "" ? null : collection["bairro"].ToString(),
+                    Endereco = collection["endereco"] == "" ? null : collection["endereco"].ToString(),
+                    MunicipioId = collection["ddlMunicipio"] == "" ? null : Convert.ToInt32(collection["ddlMunicipio"].ToString()),
+                    LocalidadeId = collection["ddlLocalidade"] == "" ? null : Convert.ToInt32(collection["ddlLocalidade"].ToString()),
+                    Habilitado = habilitado != "",
+                    Status = status != "",
+                    ModalidadesIds = collection["ddlModalidades"].ToString(),
+                    Cargo = collection["ddlCargo"].ToString()
+                };
+
+                await ApiClientFactory.Instance.UpdateProfissional(command.Id, command);
+
+                var user = await _userManager.FindByEmailAsync(command.Email);
+
+                var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+                await _userManager.ResetPasswordAsync(user, token, collection["perfilNovaSenha"].ToString());
+
+                // var profissional = ApiClientFactory.Instance.GetProfissionalById(id);
+
+                //           if (profissional.Email.Trim()!=command.Email.Trim())
+                //           {
+                //               //atualiza email na aspnetuser e o username
+
+                ////atualiza o email na tabela usuários
+                //               var usuario = ApiClientFactory.Instance.GetUsuarioByEmail(profissional.Email);
+
+                //usuario.Email = command.Email
+                //           }
+
+                return RedirectToAction(nameof(Profile), new { crud = (int)EnumCrud.Updated });
+            }
+            catch (Exception e)
+            {
+                Console.Write(e.StackTrace);
+                return RedirectToAction(nameof(Profile), new { notify = (int)EnumNotify.Error, message = e.Message });
+
+            }
+        }
+
+        /// <summary>
+        /// Tela de Alteraçao do Perfil do Profissional Logado 
+        /// </summary>
+        /// <param name="collection">coleção de dados para Alteraçao de Profissional</param>
+        /// <returns>returns true false</returns>
         [HttpPost]
         [ClaimsAuthorize(ClaimType.Profissional, Claim.Habilitar)]
         public async Task<ActionResult> Habilitar(IFormCollection collection)
@@ -491,22 +625,13 @@ namespace WebApp.Controllers
             }
         }
 
-        [ClaimsAuthorize(ClaimType.Profissional, Claim.Consultar)]
-        public Task<JsonResult> GetProfissionaisByLocalidade(string id)
-        {
-            try
-            {
-                if (string.IsNullOrEmpty(id)) throw new Exception("Localidadee não informada.");
-                var resultLocal = ApiClientFactory.Instance.GetProfissionaisByLocalidade(Convert.ToInt32(id));
-
-                return Task.FromResult(Json(new SelectList(resultLocal, "Id", "Nome")));
-
-            }
-            catch (Exception ex)
-            {
-                return Task.FromResult(Json(ex));
-            }
-        }
+        /// <summary>
+        /// Enviar email de novo Usuario 
+        /// </summary>
+        /// <param name="user">user</param>
+        /// <param name="email">email</param>
+        /// <param name="nome">nome</param>
+        /// <returns>returns true false</returns>
         private async Task SendNewUserEmail(IdentityUser user, string email, string nome)
         {
             var code = await _userManager.GeneratePasswordResetTokenAsync(user);
@@ -523,142 +648,17 @@ namespace WebApp.Controllers
                 message);
         }
 
-        public Task<JsonResult> GetProfissionaisByLocalidadeId(string id)
-        {
-            try
-            {
-                if (string.IsNullOrEmpty(id)) throw new Exception("Localidade não informada.");
-                var resultLocal = ApiClientFactory.Instance.GetProfissionaisByLocalidade(Convert.ToInt32(id));
-
-                return Task.FromResult(Json(new SelectList(resultLocal, "Id", "Titulo")));
-
-            }
-            catch (Exception ex)
-            {
-                return Task.FromResult(Json(ex.Message));
-            }
-        }
-
         /// <summary>
-        /// Tela de Visualização do Profile do Profissional Logado
+        /// Minha Turma 
         /// </summary>
-        /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
-        /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
-        /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
-        [ClaimsAuthorize(ClaimType.Profissional, Claim.Consultar)]
-        public ActionResult Profile(int? crud, int? notify, string message = null)
-        {
-            try
-            {
-                SetNotifyMessage(notify, message);
-                SetCrudMessage(crud);
-
-                //usuario logado
-                //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                if (User.Identity == null) return Redirect("/Identity/Account/Login");
-
-                var usuario = User.Identity.Name;
-                if (usuario == null) return Redirect("/Identity/Account/Login");
-
-                var usu = ApiClientFactory.Instance.GetUsuarioByEmail(usuario);
-
-                var profissional = ApiClientFactory.Instance.GetProfissionalByEmail(usuario);
-
-                var listModalidades = new SelectList(ApiClientFactory.Instance.GetModalidadesByProfissionalId(profissional.Id), "Id", "Nome",
-                    profissional.ModalidadesIds);
-
-                var listAlunos =  new SelectList(ApiClientFactory.Instance.GetNomeAlunosByProfissionalId(profissional.Id), "Id", "Nome");
-
-                return View(new ProfissionalModel()
-                {
-                    ListAtividadesModalidades = listModalidades,
-                    Profissional = profissional,
-                    ListAlunos = listAlunos,
-                    Usuario = usu,
-                });
-
-            }
-            catch (Exception e)
-            {
-                return Redirect("/Identity/Account/Login");
-
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="collection"></param>
-        /// <returns></returns>
-        [HttpPost]
-        [ClaimsAuthorize(ClaimType.Profissional, Claim.AlterarProfile)]
-        public async Task<ActionResult> Profile(IFormCollection collection)
-        {
-            try
-            {
-                var status = collection["status"].ToString();
-                var habilitado = collection["habilitado"].ToString();
-
-                var command = new ProfissionalModel.CreateUpdateProfissionalCommand
-                {
-                    Id = Convert.ToInt32(collection["ProfissionalId"].ToString()),
-                    Nome = collection["nome"] == "" ? null : collection["nome"].ToString(),
-                    DtNascimento = collection["DtNascimento"] == "" ? null : collection["DtNascimento"].ToString(),
-                    Email = collection["email"] == "" ? null : collection["email"].ToString(),
-                    Sexo = collection["ddlSexo"] == "" ? null : collection["ddlSexo"].ToString(),
-                    Telefone = collection["numTelefone"] == "" ? null : collection["numTelefone"].ToString(),
-                    Cep = collection["cep"] == "" ? null : collection["cep"].ToString(),
-                    Celular = collection["numCelular"] == "" ? null : collection["numCelular"].ToString(),
-                    Cpf = collection["cpf"] == "" ? null : collection["cpf"].ToString(),
-                    //AspNetUserId = collection["aspnetuserId"].ToString(),
-                    Numero = collection["numero"] == "" ? null : Convert.ToInt32(collection["numero"].ToString()),
-                    Bairro = collection["bairro"] == "" ? null : collection["bairro"].ToString(),
-                    Endereco = collection["endereco"] == "" ? null : collection["endereco"].ToString(),
-                    MunicipioId = collection["ddlMunicipio"] == "" ? null : Convert.ToInt32(collection["ddlMunicipio"].ToString()),
-                    LocalidadeId = collection["ddlLocalidade"] == "" ? null : Convert.ToInt32(collection["ddlLocalidade"].ToString()),
-                    Habilitado = habilitado != "",
-                    Status = status != "",
-                    ModalidadesIds = collection["ddlModalidades"].ToString(),
-                    Cargo = collection["ddlCargo"].ToString()
-                };
-
-                await ApiClientFactory.Instance.UpdateProfissional(command.Id, command);
-
-                var user = await _userManager.FindByEmailAsync(command.Email);
-
-                var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-
-                await _userManager.ResetPasswordAsync(user, token, collection["perfilNovaSenha"].ToString());
-
-                // var profissional = ApiClientFactory.Instance.GetProfissionalById(id);
-
-                //           if (profissional.Email.Trim()!=command.Email.Trim())
-                //           {
-                //               //atualiza email na aspnetuser e o username
-
-                ////atualiza o email na tabela usuários
-                //               var usuario = ApiClientFactory.Instance.GetUsuarioByEmail(profissional.Email);
-
-                //usuario.Email = command.Email
-                //           }
-
-                return RedirectToAction(nameof(Profile), new { crud = (int)EnumCrud.Updated });
-            }
-            catch (Exception e)
-            {
-                Console.Write(e.StackTrace);
-                return RedirectToAction(nameof(Profile), new { notify = (int)EnumNotify.Error, message = e.Message });
-
-            }
-        }
-
-
+        /// <param name="collection">coleção de dados para Alteraçao de Minha turma</param>
+        /// <returns>returns</returns>
         [ClaimsAuthorize(ClaimType.Profissional, Claim.Consultar)]
         public ActionResult MinhasTurmas(IFormCollection collection)
         {
             try
             {
-                
+
                 return RedirectToAction(nameof(Profile), new { crud = (int)EnumCrud.Updated });
             }
             catch (Exception e)
@@ -667,6 +667,89 @@ namespace WebApp.Controllers
 
             }
         }
+
+        #endregion
+
+        #region Get Methods
+
+        /// <summary>
+        /// Busca Profissional por Id
+        /// </summary>
+        /// <param name="id">Identificador de Profissional</param>
+        /// <returns>Retorna a Profissional</returns>
+        [ClaimsAuthorize(ClaimType.Profissional, Claim.Consultar)]
+        public Task<ProfissionalDto> GetProfissionalById(int id)
+        {
+            var result = ApiClientFactory.Instance.GetProfissionalById(id);
+
+            return Task.FromResult(result);
+        }
+
+        /// <summary>
+        /// Busca Profissional por Email
+        /// </summary>
+        /// <param name="email">email</param>
+        /// <returns>retorna a Profissional</returns>
+        /// <exception cref="Exception"></exception>
+        [ClaimsAuthorize(ClaimType.Profissional, Claim.Consultar)]
+        public Task<bool> GetProfissionalByEmail(string email)
+        {
+            if (string.IsNullOrEmpty(email)) throw new Exception("Email não informado.");
+            var result = ApiClientFactory.Instance.GetProfissionalByEmail(email);
+
+            if (result == null)
+            {
+                return Task.FromResult(true);
+            }
+
+            return Task.FromResult(false);
+        }
+
+        /// <summary>
+        /// Busca Profissional por Cpf
+        /// </summary>
+        /// <param name="cpf">cpf</param>
+        /// <returns>retorna a Profissional por Cpf</returns>
+        /// <exception cref="Exception"></exception>
+        [ClaimsAuthorize(ClaimType.Profissional, Claim.Consultar)]
+        public Task<bool> GetProfissionalByCpf(string cpf)
+        {
+            if (string.IsNullOrEmpty(cpf)) throw new Exception("Cpf não informado.");
+            var result = ApiClientFactory.Instance.GetProfissionalByCpf(Regex.Replace(cpf, "[^0-9a-zA-Z]+", ""));
+
+            if (result == null)
+            {
+                return Task.FromResult(true);
+            }
+
+            return Task.FromResult(false);
+        }
+
+
+
+        /// <summary>
+        /// Busca Profissional por Localidade
+        /// </summary>
+        /// <param name="id">Identificador de Profissional por Localidade</param>
+        /// <returns>retorna a profissional por Localidade</returns>
+        [ClaimsAuthorize(ClaimType.Profissional, Claim.Consultar)]
+        public Task<JsonResult> GetProfissionaisByLocalidade(string id)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(id)) throw new Exception("Localidadee não informada.");
+                var resultLocal = ApiClientFactory.Instance.GetProfissionaisByLocalidade(Convert.ToInt32(id));
+
+                return Task.FromResult(Json(new SelectList(resultLocal, "Id", "Nome")));
+
+            }
+            catch (Exception ex)
+            {
+                return Task.FromResult(Json(ex));
+            }
+        }
+
+        
 
         /// <summary>
         /// Busca lista de turmas pelo id da modalidade e id do profissional 
@@ -693,5 +776,13 @@ namespace WebApp.Controllers
 
 
     }
+
+    #endregion
+
+
+
+
+
+
 
 }

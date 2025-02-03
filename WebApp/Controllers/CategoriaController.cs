@@ -142,7 +142,7 @@ public class CategoriaController : BaseController
     }
 
     /// <summary>
-    /// Ação de exclusão do Categoria
+    /// Ação de Exclusão do Categoria
     /// </summary>
     /// <param name="id">identificador do Categoria</param>
     /// <param name="collection">coleção de dados para exclusão de Categoria</param>
