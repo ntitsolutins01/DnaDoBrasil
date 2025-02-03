@@ -270,5 +270,38 @@ namespace WebApp.Controllers
 			return Task.FromResult(result);
 		}
 
-	}
+
+        /// <summary>
+        /// Tela para impressao de relatório de frequência individual
+        /// </summary>
+        /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
+        /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
+        /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
+        [ClaimsAuthorize(ClaimType.ControlePresenca, Claim.Incluir)]
+        public ActionResult ImprimirFrequencia(int id)
+        {
+            var result = ApiClientFactory.Instance.GetControlePresencaById(id);
+
+            var model = new ControlePresencaModel()
+            {
+                ControlePresenca = new ControlePresencaDto
+                {
+                    Id = result.Id,
+                    AlunoId = result.AlunoId,
+                    EventoId = result.EventoId,
+                    NomeAluno = result.NomeAluno,
+                    Controle = result.Controle,
+                    Justificativa = result.Justificativa,
+                    MunicipioEstado = result.MunicipioEstado,
+                    NomeLocalidade = result.NomeLocalidade,
+                    Data = result.Data,
+                    LocalidadeId = result.LocalidadeId,
+                    MunicipioId = result.MunicipioId,
+                    Status = result.Status
+                }
+            };
+
+            return View("ImprimirFrequencia", model);
+        }
+    }
 }

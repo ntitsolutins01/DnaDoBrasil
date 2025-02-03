@@ -341,5 +341,8 @@ var crud = {
         $('input[name="editControlePresencaId"]').attr('value', id);
         $('#mdEditControlePresenca').modal('show');
         vm.EditControlePresenca(id)
-    }
+    },
+    ImprimirFrequencia: function (id) {
+        window.location.href = "/ControlePresenca/ImprimirFrequencia?id=" + id;
+    },
 };
