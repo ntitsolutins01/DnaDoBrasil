@@ -14,5 +14,6 @@
 		public int? LocalidadeId { get; set; }
         public int? MunicipioId { get; set; }
         public bool Status { get; set; }
+        public int Mes { get; internal set; }
     }
 }
