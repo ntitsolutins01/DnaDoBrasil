@@ -34,8 +34,8 @@ namespace WebApp.Controllers
 
         public ProfissionalController(IOptions<UrlSettings> appSettings,
             IEmailSender emailSender,
-            UserManager<IdentityUser> userManager, 
-            IWebHostEnvironment host, 
+            UserManager<IdentityUser> userManager,
+            IWebHostEnvironment host,
             RoleManager<IdentityRole> roleManager,
             ILog logger)
         {
@@ -680,12 +680,27 @@ namespace WebApp.Controllers
 
 
         [ClaimsAuthorize(ClaimType.Profissional, Claim.Consultar)]
-        public ActionResult MinhasTurmas(IFormCollection collection)
+        public async Task<ActionResult> MinhasTurmas(IFormCollection collection)
         {
             try
             {
-                
-                return RedirectToAction(nameof(Profile), new { crud = (int)EnumCrud.Updated });
+                var command = new AtividadeModel.CreateUpdateAtividadeAlunosCommand
+                {
+                    AtividadeId = Convert.ToInt32(collection["ddlTurma"].ToString()),
+                    AlunosIds = collection["arrAlunos"].ToString()
+                };
+
+                if (Convert.ToBoolean(collection["Update"].ToString()))
+                {
+                    await ApiClientFactory.Instance.UpdateAtividadeAluno(Convert.ToInt32(collection["ddlTurma"].ToString()), command);
+
+                    return RedirectToAction(nameof(Profile), new { crud = (int)EnumCrud.Updated });
+                }
+
+                await ApiClientFactory.Instance.CreateAtividadeAluno(command);
+
+                return RedirectToAction(nameof(Profile), new { crud = (int)EnumCrud.Created });
+
             }
             catch (Exception e)
             {
