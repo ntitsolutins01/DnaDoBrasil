@@ -42,8 +42,8 @@ namespace WebApp.Controllers
 
         public ProfissionalController(IOptions<UrlSettings> appSettings,
             IEmailSender emailSender,
-            UserManager<IdentityUser> userManager, 
-            IWebHostEnvironment host, 
+            UserManager<IdentityUser> userManager,
+            IWebHostEnvironment host,
             RoleManager<IdentityRole> roleManager,
             ILog logger)
         {
@@ -772,14 +772,26 @@ namespace WebApp.Controllers
         /// <param name="id">Identificador de Profissional por Localidade</param>
         /// <returns>retorna a profissional por Localidade</returns>
         [ClaimsAuthorize(ClaimType.Profissional, Claim.Consultar)]
-        public Task<JsonResult> GetProfissionaisByLocalidade(string id)
+        public async Task<ActionResult> MinhasTurmas(IFormCollection collection)
         {
             try
             {
-                if (string.IsNullOrEmpty(id)) throw new Exception("Localidadee não informada.");
-                var resultLocal = ApiClientFactory.Instance.GetProfissionaisByLocalidade(Convert.ToInt32(id));
+                var command = new AtividadeModel.CreateUpdateAtividadeAlunosCommand
+                {
+                    AtividadeId = Convert.ToInt32(collection["ddlTurma"].ToString()),
+                    AlunosIds = collection["arrAlunos"].ToString()
+                };
 
-                return Task.FromResult(Json(new SelectList(resultLocal, "Id", "Nome")));
+                if (Convert.ToBoolean(collection["Update"].ToString()))
+                {
+                    await ApiClientFactory.Instance.UpdateAtividadeAluno(Convert.ToInt32(collection["ddlTurma"].ToString()), command);
+
+                    return RedirectToAction(nameof(Profile), new { crud = (int)EnumCrud.Updated });
+                }
+
+                await ApiClientFactory.Instance.CreateAtividadeAluno(command);
+
+                return RedirectToAction(nameof(Profile), new { crud = (int)EnumCrud.Created });
 
             }
             catch (Exception ex)

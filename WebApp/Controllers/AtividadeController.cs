@@ -228,6 +228,13 @@ public class AtividadeController : BaseController
         return Task.FromResult(result);
     }
 
+    public Task<List<AtividadeAlunosDto>> GetAtividadeAlunosByAtividadeId(int id)
+    {
+        var result = ApiClientFactory.Instance.GetAtividadeAlunosByAtividadeId(id);
+
+        return Task.FromResult(result);
+    }
+
     
     #endregion
 }

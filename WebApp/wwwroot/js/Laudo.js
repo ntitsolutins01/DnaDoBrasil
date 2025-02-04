@@ -66,7 +66,6 @@ var vm = new Vue({
                                 }
                             }
                         });
-
                     };
 
                     $(function () {
