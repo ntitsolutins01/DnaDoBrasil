@@ -14,6 +14,7 @@ using WebApp.Dto;
 using ClosedXML.Excel;
 using System.Diagnostics;
 using DocumentFormat.OpenXml.Presentation;
+using log4net;
 
 namespace WebApp.Controllers
 {
@@ -22,11 +23,15 @@ namespace WebApp.Controllers
     {
         private readonly IOptions<UrlSettings> _appSettings;
         private readonly IWebHostEnvironment _host;
+        private readonly ILog _logger;
 
-        public LaudoController(IOptions<UrlSettings> appSettings, IWebHostEnvironment host)
+        public LaudoController(IOptions<UrlSettings> appSettings, 
+            IWebHostEnvironment host, 
+            ILog logger)
         {
             _appSettings = appSettings;
             _host = host;
+            _logger = logger;
             ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
         }
 
@@ -35,6 +40,8 @@ namespace WebApp.Controllers
         {
             try
             {
+                _logger.Info($"Usuario Logado: {User.Identity.Name}");
+
                 var usuario = User.Identity.Name;
 
                 SetNotifyMessage(notify, message);
@@ -117,7 +124,7 @@ namespace WebApp.Controllers
             }
             catch (Exception e)
             {
-                Console.Write(e.StackTrace);
+                _logger.Error(e.StackTrace);
                 return RedirectToAction(nameof(Error), new { notify = (int)EnumNotify.Error, message = e.Message });
 
             }
@@ -237,7 +244,7 @@ namespace WebApp.Controllers
 
                 if (usu.LocalidadeId != null)
                 {
-                    var resultAlunos = ApiClientFactory.Instance.GetAlunosByLocalidade(Convert.ToInt32(usu.LocalidadeId));
+                    var resultAlunos = ApiClientFactory.Instance.GetAlunosByLocalidade(Convert.ToInt32(usu.LocalidadeId)).Where(x => x.PossuiLaudo == false);
 
                     alunos = new SelectList(resultAlunos, "Id", "Nome");
 
@@ -368,10 +375,7 @@ namespace WebApp.Controllers
                             StatusSaudeBucal = listSaudeBucal.Count == totalRespSaudeBucal ? "F" : "A"
                         });
                 }
-
-                var listPropSaude = collection.Where(item => item.Key.Contains("Saude"));
-
-
+                
                 var commandSaude = new SaudeModel.CreateUpdateSaudeCommand()
                 {
                     ProfissionalId = collection["ddlProfissional"] == ""
@@ -422,6 +426,15 @@ namespace WebApp.Controllers
                     commandTalentoEsportivo.AptidaoFisica != null && commandTalentoEsportivo.Agilidade != null)
                 {
                     command.TalentoEsportivoId = (int)await ApiClientFactory.Instance.CreateTalentoEsportivo(commandTalentoEsportivo);
+
+                    var encaminhamento = ApiClientFactory.Instance.GetTalentoEsportivoById((int)command.TalentoEsportivoId)
+                        .Encaminhamento;
+
+                    var modalidade = ApiClientFactory.Instance.GetModalidadeAll()
+                        .FirstOrDefault(x => x.Nome.Contains(encaminhamento.Nome));
+
+                    command.ModalidadeId = modalidade!.Id;
+
                 }
                 else
                 {
@@ -679,6 +692,19 @@ namespace WebApp.Controllers
                     await ApiClientFactory.Instance.UpdateTalentoEsportivo((int)laudo.TalentoEsportivoId, commandTalentoEsportivo);
 
                     command.TalentoEsportivoId = laudo.TalentoEsportivoId;
+
+                    if (laudo.ModalidadeId ==null)
+                    {
+                        var modalidade = ApiClientFactory.Instance.GetModalidadeAll()
+                            .FirstOrDefault(x => x.Nome.Contains(laudo.EncaminhamentoTexto));
+
+                        command.ModalidadeId = modalidade!.Id;
+                    }
+                    else
+                    {
+                        command.ModalidadeId = laudo.ModalidadeId;
+                    }
+
                 }
                 else
                 {
@@ -869,6 +895,7 @@ namespace WebApp.Controllers
                     var encaminhamentoSaudeBucal = laudo.SaudeBucalId == null ? null :
                         ApiClientFactory.Instance.GetEncaminhamentoById((int)laudo.SaudeBucalId);
                     var desempenho = ApiClientFactory.Instance.GetDesempenhoByAluno(Convert.ToInt32(laudo.AlunoId));
+                    var modalidade = ApiClientFactory.Instance.GetModalidadeById(Convert.ToInt32(laudo.ModalidadeId));
 
                     laudoModels.Add(new LaudoModel
                     {
@@ -881,7 +908,8 @@ namespace WebApp.Controllers
                         ListVocacional = vocacional,
                         EncaminhamentoSaudeBucal = encaminhamentoSaudeBucal,
                         EncaminhamentoConsumoAlimentar = encaminhamentoConsumoAlimentar,
-                        Desempenho = desempenho
+                        Desempenho = desempenho,
+                        Modalidade = modalidade
                     });
                 }
 

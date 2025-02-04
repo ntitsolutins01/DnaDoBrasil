@@ -116,6 +116,8 @@ namespace WebApp.Controllers
                 {
                     if (file.Length <= 0) continue;
 
+                    command.NomeByteImage = Path.GetFileName(collection.Files[0].FileName);
+
                     using (var ms = new MemoryStream())
                     {
                         file.CopyToAsync(ms);
@@ -174,6 +176,8 @@ namespace WebApp.Controllers
             foreach (var file in collection.Files)
             {
                 if (file.Length <= 0) continue;
+
+                command.NomeByteImage = Path.GetFileName(collection.Files[0].FileName);
 
                 using (var ms = new MemoryStream())
                 {

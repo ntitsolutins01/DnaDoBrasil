@@ -692,7 +692,7 @@
                 }, "Informe um CPF válido");
 
                 
-                $("#formEditProfissional").validate({
+                $("#formMinhasTurmas").validate({
                     rules: {
                         cpf: { cpf: true, required: true }
                     },

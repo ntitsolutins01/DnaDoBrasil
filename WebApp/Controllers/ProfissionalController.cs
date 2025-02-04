@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -16,6 +16,9 @@ using WebApp.Authorization;
 using WebApp.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Claim = WebApp.Identity.Claim;
+using log4net;
+using log4net.Config;
+using System.Reflection;
 
 namespace WebApp.Controllers
 {
@@ -31,6 +34,7 @@ namespace WebApp.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IWebHostEnvironment _host;
+        private readonly ILog _logger;
 
         #endregion
 
@@ -38,12 +42,16 @@ namespace WebApp.Controllers
 
         public ProfissionalController(IOptions<UrlSettings> appSettings,
             IEmailSender emailSender,
-            UserManager<IdentityUser> userManager, IWebHostEnvironment host, RoleManager<IdentityRole> roleManager)
+            UserManager<IdentityUser> userManager, 
+            IWebHostEnvironment host, 
+            RoleManager<IdentityRole> roleManager,
+            ILog logger)
         {
             _emailSender = emailSender;
             _userManager = userManager;
             _host = host;
             _roleManager = roleManager;
+            _logger = logger;
             ApplicationSettings.WebApiUrl = appSettings.Value.WebApiBaseUrl;
         }
 
@@ -680,27 +688,58 @@ namespace WebApp.Controllers
         [ClaimsAuthorize(ClaimType.Profissional, Claim.Consultar)]
         public Task<ProfissionalDto> GetProfissionalById(int id)
         {
-            var result = ApiClientFactory.Instance.GetProfissionalById(id);
-
-            return Task.FromResult(result);
-        }
-
-        /// <summary>
-        /// Busca Profissional por Email
-        /// </summary>
-        /// <param name="email">email</param>
-        /// <returns>retorna a Profissional</returns>
-        /// <exception cref="Exception"></exception>
-        [ClaimsAuthorize(ClaimType.Profissional, Claim.Consultar)]
-        public Task<bool> GetProfissionalByEmail(string email)
-        {
-            if (string.IsNullOrEmpty(email)) throw new Exception("Email não informado.");
-            var result = ApiClientFactory.Instance.GetProfissionalByEmail(email);
-
-            if (result == null)
+            try
             {
-                return Task.FromResult(true);
+                _logger.Info($"Usuario Logado User.Identity.Name: {User.Identity.Name}");
+
+                SetNotifyMessage(notify, message);
+                SetCrudMessage(crud);
+
+                //Busca usuario por AspNetUserId
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                _logger.Info($"Busca Usuario por AspNetUserId: {userId}");
+
+                var usuario = User.Identity.Name;
+                _logger.Info($"Busca Usuario por email: {usuario}");
+
+                if (userId == null)
+                {
+                    _logger.Warn($"AspNetUserId não encontrado para o email: {User.Identity.Name}");
+                    throw new Exception($"AspNetUserId não encontrado para o email: {User.Identity.Name}");
+                }
+
+                if (usuario == null)
+                {
+                    _logger.Warn($"User.Identity.Name não encontrado para o email: {User.Identity.Name}");
+                    throw new Exception($"User.Identity.Name não encontrado para o email: {User.Identity.Name}");
+                }
+
+                var usu = ApiClientFactory.Instance.GetUsuarioByAspNetUserId(userId);
+
+                var profissional = ApiClientFactory.Instance.GetProfissionalByEmail(usuario);
+
+                _logger.Info($"ProfissionalId: {profissional.Id}");
+
+                var listModalidades = new SelectList(
+                    ApiClientFactory.Instance.GetModalidadesByProfissionalId(profissional.Id), "Id", "Nome",
+                    profissional.ModalidadesIds);
+
+                var listAlunos =
+                    new SelectList(ApiClientFactory.Instance.GetNomeAlunosByProfissionalId(profissional.Id), "Id",
+                        "Nome");
+
+                return View(new ProfissionalModel()
+                {
+                    ListAtividadesModalidades = listModalidades,
+                    Profissional = profissional,
+                    ListAlunos = listAlunos,
+                    Usuario = usu,
+                });
             }
+            catch (Exception e)
+            {
+                _logger.Error(e.StackTrace);
+                throw;
 
             return Task.FromResult(false);
         }
