@@ -25,7 +25,6 @@ namespace WebApp.Controllers
         #region Parametros
 
         private readonly IOptions<UrlSettings> _appSettings;
-        private readonly IWebHostEnvironment _host;
 
         #endregion
 
@@ -34,14 +33,11 @@ namespace WebApp.Controllers
         /// <summary>
         /// Construtor da página
         /// </summary>
-        /// <param name="app">configurações de urls do sistema</param>
-        /// <param name="host">informações da aplicação em execução</param>
-        public AlunoController(IOptions<UrlSettings> appSettings,
-            IWebHostEnvironment host)
+        /// <param name="appSettings">configurações de urls do sistema</param>
+        public AlunoController(IOptions<UrlSettings> appSettings)
         {
             _appSettings = appSettings;
             ApplicationSettings.WebApiUrl = _appSettings.Value.WebApiBaseUrl;
-            _host = host;
         }
         #endregion
 
