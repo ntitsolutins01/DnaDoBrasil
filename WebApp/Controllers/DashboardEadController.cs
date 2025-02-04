@@ -91,26 +91,26 @@ namespace WebApp.Controllers
                 return Task.FromResult(Json(ex.Message));
             }
         }
-        //public async Task<JsonResult> GetIndicadoresAlunosByFilter([FromBody] DashboardEadDto search)
-        //{
-        //    try
-        //    {
-        //        var DashboardEad = await ApiClientFactory.Instance.GetIndicadoresAlunosByFilter(search);
+        public async Task<JsonResult> GetIndicadoresAlunosByFilter([FromBody] DashboardEadDto search)
+        {
+            try
+            {
+                var DashboardEad = await ApiClientFactory.Instance.GetIndicadoresEadAlunosByFilter(search);
 
-        //        var model = new DashboardEadModel
-        //        {
-        //            DashboardEad = DashboardEad,
+                var model = new DashboardEadModel
+                {
+                    DashboardEad = DashboardEad,
 
-        //        };
+                };
 
-        //        return Json(model);
+                return Json(model);
 
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return Json(ex);
-        //    }
-        //}
+            }
+            catch (Exception ex)
+            {
+                return Json(ex);
+            }
+        }
         //public async Task<JsonResult> GetControlePresencaByFilter([FromBody] DashboardEadDto search)
         //{
         //    try

@@ -230,7 +230,7 @@ var vm = new Vue({
             };
 
             //Busca indicadores de acordo com o filtro selecionado
-            axios.post("DashboardEad/GetIndicadoresAlunosByFilter", obj, axiosConfig).then(result => {
+            axios.post("DashboardEad/GetIndicadoresEadAlunosByFilter", obj, axiosConfig).then(result => {
                 var self = this;
                 self.ShowLoad(true, "pIndicadores");
 
