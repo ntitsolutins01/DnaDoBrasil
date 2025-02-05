@@ -36,7 +36,7 @@ public class ControleMaterialController : BaseController
     }
     #endregion
     
-    #region Crud Methods
+    #region Main Methods
     /// <summary>
     /// Listagem de Controle Material
     /// </summary>
