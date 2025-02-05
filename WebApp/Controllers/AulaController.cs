@@ -128,7 +128,7 @@ public class AulaController : BaseController
 				command.Material = filePath;
 				command.NomeMaterial = fileName;
 
-				using Stream fileStream = new FileStream(filePath, FileMode.Create);
+                await using Stream fileStream = new FileStream(filePath, FileMode.Create);
                 await file.CopyToAsync(fileStream);
             }
 
