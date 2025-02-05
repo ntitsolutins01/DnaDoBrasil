@@ -33,7 +33,7 @@ public class AtividadeController : BaseController
     /// <summary>
     /// Construtor da página
     /// </summary>
-    /// <param name="app">configurações de urls do sistema</param>
+    /// <param name="appSettings">configurações de urls do sistema</param>
     public AtividadeController(IOptions<UrlSettings> appSettings)
     {
         _appSettings = appSettings;
@@ -45,10 +45,9 @@ public class AtividadeController : BaseController
     /// <summary>
     /// Listagem de Atividade
     /// </summary>
-    /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
-    /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
-    /// <param name="collection">lista de filtros selecionados para pesquisa de alunos</param>
-    /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
+    /// <param name="crud">Paramentro que indica o tipo de ação realizado</param>
+    /// <param name="notify">Parametro que indica o tipo de notificação realizada</param>
+    /// <param name="message">Mensagem apresentada nas notificações e alertas gerados na tela</param>
     [ClaimsAuthorize(ClaimType.Atividade, Claim.Consultar)]
     public IActionResult Index(int? crud, int? notify, string message = null)
     {
@@ -60,11 +59,11 @@ public class AtividadeController : BaseController
     }
 
     /// <summary>
-    /// Tela para inclusão de Atividade
+    /// Tela para Inclusão de Atividade
     /// </summary>
-    /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
-    /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
-    /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
+    /// <param name="crud">Paramentro que indica o tipo de ação realizado</param>
+    /// <param name="notify">Parametro que indica o tipo de notificação realizada</param>
+    /// <param name="message">Mensagem apresentada nas notificações e alertas gerados na tela</param>
     [ClaimsAuthorize(ClaimType.Atividade, Claim.Incluir)]
     public ActionResult Create(int? crud, int? notify, string message = null)
     {
@@ -96,10 +95,10 @@ public class AtividadeController : BaseController
     }
 
     /// <summary>
-    /// Ação de inclusão do Atividade
+    /// Ação de Inclusão do Atividade
     /// </summary>
-    /// <param name="collection">coleção de dados para inclusao de Atividade</param>
-    /// <returns>retorna mensagem de inclusao através do parametro crud</returns>
+    /// <param name="collection">Coleção de dados para inclusao de Atividade</param>
+    /// <returns>Retorna mensagem de inclusao através do parametro crud</returns>
     [ClaimsAuthorize(ClaimType.Atividade, Claim.Incluir)]
     [HttpPost]
     public async Task<ActionResult> Create(IFormCollection collection)
@@ -142,11 +141,11 @@ public class AtividadeController : BaseController
     }
 
     /// <summary>
-    /// Ação de alteração do Atividade
+    /// Ação de Alteração do Atividade
     /// </summary>
-    /// <param name="id">identificador do Atividade</param>
-    /// <param name="collection">coleção de dados para alteração de Atividade</param>
-    /// <returns>retorna mensagem de alteração através do parametro crud</returns>
+    /// <param name="id">Identificador do Atividade</param>
+    /// <param name="collection">Coleção de dados para alteração de Atividade</param>
+    /// <returns>Retorna mensagem de alteração através do parametro crud</returns>
     [ClaimsAuthorize(ClaimType.Atividade, Claim.Alterar)]
     public async Task<ActionResult> Edit(IFormCollection collection)
     {
@@ -192,11 +191,10 @@ public class AtividadeController : BaseController
     }
 
     /// <summary>
-    /// Ação de exclusão do Atividade
+    /// Ação de Exclusão do Atividade
     /// </summary>
-    /// <param name="id">identificador do Atividade</param>
-    /// <param name="collection">coleção de dados para exclusão de Atividade</param>
-    /// <returns>retorna mensagem de exclusão através do parametro crud</returns>
+    /// <param name="id">Identificador do Atividade</param>
+    /// <param name="collection">Coleção de dados para exclusão de Atividade</param>
     [ClaimsAuthorize(ClaimType.Atividade, Claim.Excluir)]
     public ActionResult Delete(int id)
     {
@@ -219,7 +217,7 @@ public class AtividadeController : BaseController
     #region Get Methods
 
     /// <summary>
-    /// Busca uma única Atividade
+    /// Busca uma Única Atividade
     /// </summary>
     /// <param name="id">Id da Atividade a ser buscada</param>
     /// <returns>Retorna o objeto da Atividade</returns>
@@ -230,6 +228,11 @@ public class AtividadeController : BaseController
         return Task.FromResult(result);
     }
 
+    /// <summary>
+    /// Busca Atividade de Aluno por Atividade por Id
+    /// </summary>
+    /// <param name="id">Id da Atividade a ser buscada</param>
+    /// <returns>Retorna o objeto da Atividade</returns>
     public Task<List<AtividadeAlunosDto>> GetAtividadeAlunosByAtividadeId(int id)
     {
         var result = ApiClientFactory.Instance.GetAtividadeAlunosByAtividadeId(id);
