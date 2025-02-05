@@ -33,7 +33,7 @@ namespace WebApp.Controllers
         /// <summary>
         /// Construtor da página
         /// </summary>
-        /// <param name="appSettings">configurações de urls do sistema</param>
+        /// <param name="appSettings">Configurações de urls do sistema</param>
         public AlunoController(IOptions<UrlSettings> appSettings)
         {
             _appSettings = appSettings;
@@ -45,10 +45,10 @@ namespace WebApp.Controllers
         /// <summary>
         /// Listagem de Alunos
         /// </summary>
-        /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
-        /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
-        /// <param name="collection">lista de filtros selecionados para pesquisa de alunos</param>
-        /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
+        /// <param name="crud">Paramentro que indica o tipo de ação realizado</param>
+        /// <param name="notify">Parametro que indica o tipo de notificação realizada</param>
+        /// <param name="collection">Lista de filtros selecionados para pesquisa de alunos</param>
+        /// <param name="message">Mensagem apresentada nas notificações e alertas gerados na tela</param>
         [ClaimsAuthorize(ClaimType.Aluno, Claim.Consultar)]
         public async Task<ActionResult> Index(int? crud, int? notify, IFormCollection collection, string message = null)
         {
@@ -166,11 +166,11 @@ namespace WebApp.Controllers
         }
 
         /// <summary>
-        /// Tela para inclusão de aluno
+        /// Tela para Inclusão de Aluno
         /// </summary>
-        /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
-        /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
-        /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
+        /// <param name="crud">Paramentro que indica o tipo de ação realizado</param>
+        /// <param name="notify">Parametro que indica o tipo de notificação realizada</param>
+        /// <param name="message">Mensagem apresentada nas notificações e alertas gerados na tela</param>
         [ClaimsAuthorize(ClaimType.Aluno, Claim.Incluir)]
         public ActionResult Create(int? crud, int? notify, string message = null)
         {
@@ -204,12 +204,12 @@ namespace WebApp.Controllers
         }
 
         /// <summary>
-        /// Tela para alteração de aluno
+        /// Tela para Alteração de Aluno
         /// </summary>
-        /// <param name="id">identificador do aluno</param>
-        /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
-        /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
-        /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
+        /// <param name="id">Identificador do aluno</param>
+        /// <param name="crud">Paramentro que indica o tipo de ação realizado</param>
+        /// <param name="notify">Parametro que indica o tipo de notificação realizada</param>
+        /// <param name="message">Mensagem apresentada nas notificações e alertas gerados na tela</param>
         [ClaimsAuthorize(ClaimType.Aluno, Claim.Alterar)]
         public ActionResult Edit(int id, int? crud, int? notify, string message = null)
         {
@@ -263,10 +263,10 @@ namespace WebApp.Controllers
         }
 
         /// <summary>
-        /// Ação de inclusao do aluno
+        /// Ação de Inclusao do Aluno
         /// </summary>
-        /// <param name="collection">coleção de dados para inclusao de aluno</param>
-        /// <returns>retorna mensagem de inclusao através do parametro crud</returns>
+        /// <param name="collection">Coleção de dados para inclusao de aluno</param>
+        /// <returns>Retorna mensagem de inclusao através do parametro crud</returns>
         [HttpPost]
         [ClaimsAuthorize(ClaimType.Aluno, Claim.Incluir)]
         public async Task<ActionResult> CreateDados(IFormCollection collection)
@@ -345,11 +345,11 @@ namespace WebApp.Controllers
         }
 
         /// <summary>
-        /// Ação de alteração do aluno
+        /// Ação de Alteração do Aluno
         /// </summary>
-        /// <param name="id">identificador do aluno</param>
-        /// <param name="collection">coleção de dados para alteração de aluno</param>
-        /// <returns>retorna mensagem de alteração através do parametro crud</returns>
+        /// <param name="id">Identificador do aluno</param>
+        /// <param name="collection">Coleção de dados para alteração de aluno</param>
+        /// <returns>Retorna mensagem de alteração através do parametro crud</returns>
         [HttpPost]
         [ClaimsAuthorize(ClaimType.Aluno, Claim.Alterar)]
         public async Task<ActionResult> Edit(int id, IFormCollection collection)
@@ -417,10 +417,10 @@ namespace WebApp.Controllers
         }
 
         /// <summary>
-        /// Ação de upload de foto do aluno
+        /// Ação de Upload de Foto do Aluno
         /// </summary>
-        /// <param name="collection">arquivo de upload realizado</param>
-        /// <returns>retorna mensagem de upload realizado através do parametro notfy e message</returns>
+        /// <param name="collection">Arquivo de upload realizado</param>
+        /// <returns>Retorna mensagem de upload realizado através do parametro notfy e message</returns>
         [HttpPost]
         //[ClaimsAuthorize(ClaimType.Aluno, Claim.Upload)]
         public async Task<ActionResult> Upload(IFormCollection collection)
@@ -460,9 +460,9 @@ namespace WebApp.Controllers
         }
 
         /// <summary>
-        /// Ação de exclusão do aluno
+        /// Ação de Exclusão do Aluno
         /// </summary>
-        /// <param name="id">Id de exclusão de Aluno</param>
+        /// <param name="id">Id de exclusão de aluno</param>
         /// <returns>Retorna true ou false</returns>
         [ClaimsAuthorize(ClaimType.Aluno, Claim.Excluir)]
         public ActionResult Delete(int id)
@@ -479,11 +479,10 @@ namespace WebApp.Controllers
 		}
 
         /// <summary>
-        /// Tela para impressao de carteirinha
+        /// Tela para Impressao de Carteirinha
         /// </summary>
-        /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
-        /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
-        /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
+        /// <param name="id">Id do aluno</param>
+        /// <returns></returns>
         [ClaimsAuthorize(ClaimType.Aluno, Claim.Incluir)]
         public ActionResult ImprimirCarteirinha(int id)
         {
@@ -495,6 +494,19 @@ namespace WebApp.Controllers
             });
         }
 
+
+        /// <summary>
+        /// Acao de Imprimir Carteirinha por Lote
+        /// </summary>
+        /// <param name="ids">ids</param>
+        /// <param name="fomentoId">Id de fomento</param>
+        /// <param name="estadoId">Id de estudo</param>
+        /// <param name="municipioId">Id de municipio</param>
+        /// <param name="localidadeId">Id de localidade</param>
+        /// <param name="deficienciaId">Id de deficiencia</param>
+        /// <param name="etniaId">Id de etnia</param>
+        /// <param name="sexoId">Id de sexo</param>
+        /// <returns>Retorna impresao de carteirinha</returns>
         [ClaimsAuthorize(ClaimType.Aluno, Claim.Incluir)]
         public async Task<ActionResult> ImprimirCarteirinhasLote(string ids, string fomentoId = null, string estadoId = null,
             string municipioId = null, string localidadeId = null, string deficienciaId = null, string etniaId = null, string sexoId = null)
@@ -625,7 +637,14 @@ namespace WebApp.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Tela de Visualizasao do Profile Aluno
+        /// </summary>
+        /// <param name="id">Identificador do aluno</param>
+        /// <param name="crud">Paramentro que indica o tipo de ação realizado</param>
+        /// <param name="notify">Parametro que indica o tipo de notificação realizada</param>
+        /// <param name="message">Mensagem apresentada nas notificações e alertas gerados na tela</param>
+        /// <returns>Retorna mensagem de alteração através do parametro crud</returns>
         [ClaimsAuthorize(ClaimType.Aluno, Claim.Alterar)]
         public ActionResult Profile(int id, int? crud, int? notify, string message = null)
         {
@@ -679,7 +698,11 @@ namespace WebApp.Controllers
             }
         }
 
-        
+        /// <summary>
+        /// Tela de Visualizasao do Profile Aluno
+        /// </summary>
+        /// <param name="collection">Coleção de dados para alteração de aluno</param>
+        /// <returns>Retorna mensagem de alteração através do parametro crud</returns>
         [HttpPost]
         [ClaimsAuthorize(ClaimType.Aluno, Claim.Incluir)]
         public async Task<ActionResult> Profile(IFormCollection collection)
@@ -762,10 +785,10 @@ namespace WebApp.Controllers
         #region Get Methods
 
         /// <summary>
-        /// Busca de alunos por localidade
+        /// Busca de Alunos por Localidade
         /// </summary>
-        /// <param name="id">identificador da localidade</param>
-        /// <returns>retorna a lista de alunos</returns>
+        /// <param name="id">Identificador da localidade</param>
+        /// <returns>Retorna a lista de alunos</returns>
         [ClaimsAuthorize(ClaimType.Aluno, Claim.Consultar)]
         public Task<JsonResult> GetAlunosByLocalidade(string id)
         {
@@ -784,10 +807,10 @@ namespace WebApp.Controllers
         }
 
         /// <summary>
-        /// Busca de idade do Aluno por Id
+        /// Busca de Idade do Aluno por Id
         /// </summary>
-        /// <param name="id">identificador do aluno</param>
-        /// <returns>retorna a idade do aluno</returns>
+        /// <param name="id">Identificador do aluno</param>
+        /// <returns>Retorna a idade do aluno</returns>
         [ClaimsAuthorize(ClaimType.Aluno, Claim.Consultar)]
         public Task<JsonResult> GetAlunoIdadeById(string id)
         {
@@ -806,10 +829,10 @@ namespace WebApp.Controllers
         }
 
         /// <summary>
-        /// Busca de aluno por id
+        /// Busca de Aluno por id
         /// </summary>
         /// <param name="id">Identificador do aluno</param>
-        /// <returns>retorna o aluno</returns>
+        /// <returns>Retorna o aluno</returns>
         [ClaimsAuthorize(ClaimType.Aluno, Claim.Consultar)]
         public async Task<JsonResult> GetAlunoById(string id)
         {
@@ -842,27 +865,41 @@ namespace WebApp.Controllers
         #endregion
 
         #region Private Methods
+
+        /// <summary>
+        /// Gera Qr Code
+        /// </summary>
+        /// <param name="alunoId">Id de aluno</param>
+        /// <returns>Retorna o qrCode</returns>
         private static byte[]? GeraQrCode(long alunoId)
         {
             var text = $"http://dnadobrasil.org.br/Identity/Account/ControlePresenca?alunoId={alunoId}";
 
-            QRCodeGenerator QrGenerator = new QRCodeGenerator();
-            QRCodeData QrCodeInfo = QrGenerator.CreateQrCode(text, QRCodeGenerator.ECCLevel.Q);
-            QRCode QrCode = new QRCode(QrCodeInfo);
-            Bitmap QrBitmap = QrCode.GetGraphic(60);
+            QRCodeGenerator qrGenerator = new QRCodeGenerator();
+            QRCodeData qrCodeInfo = qrGenerator.CreateQrCode(text, QRCodeGenerator.ECCLevel.Q);
+            QRCode qrCode = new QRCode(qrCodeInfo);
+            Bitmap qrBitmap = qrCode.GetGraphic(60);
 
-            return BitmapToBytes(QrBitmap);
+            return BitmapToBytes(qrBitmap);
         }
 
+        /// <summary>
+        /// Busca os Bytes de Bitmap
+        /// </summary>
+        /// <param name="img">Bytemap de imagem </param>
+        /// <returns>Retrona um stream array</returns>
         private static Byte[] BitmapToBytes(Bitmap img)
         {
-            using (MemoryStream stream = new MemoryStream())
-            {
-                img.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
-                return stream.ToArray();
-            }
+            using MemoryStream stream = new MemoryStream();
+            img.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+            return stream.ToArray();
         }
 
+        /// <summary>
+        /// Busca Imagem
+        /// </summary>
+        /// <param name="sBase64String">sBase64String</param>
+        /// <returns>Retorna a imagem</returns>
         private byte[] GetImage(string sBase64String)
         {
             byte[] bytes = null;
