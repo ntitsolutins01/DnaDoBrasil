@@ -22,8 +22,8 @@ public class ControleAcessoAulaController : BaseController
     /// <summary>
     /// Construtor da página
     /// </summary>
-    /// <param name="app">configurações de urls do sistema</param>
-    /// <param name="host">informações da aplicação em execução</param>
+    /// <param name="appSettings">Configurações de urls do sistema</param>
+    /// <param name="host">Informações da aplicação em execução</param>
     public ControleAcessoAulaController(IOptions<UrlSettings> appSettings)
     {
         _appSettings = appSettings;
@@ -35,10 +35,10 @@ public class ControleAcessoAulaController : BaseController
     /// <summary>
     /// Listagem de Controle Acesso Aula
     /// </summary>
-    /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
-    /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
-    /// <param name="collection">lista de filtros selecionados para pesquisa de alunos</param>
-    /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
+    /// <param name="crud">Paramentro que indica o tipo de ação realizado</param>
+    /// <param name="notify">Parametro que indica o tipo de notificação realizada</param>
+    /// <param name="collection">Lista de filtros selecionados para pesquisa de alunos</param>
+    /// <param name="message">Mensagem apresentada nas notificações e alertas gerados na tela</param>
     [ClaimsAuthorize(ClaimType.ControleAcessoAula, Identity.Claim.Consultar)]
     public IActionResult Index(int? crud, int? notify, string message = null)
     {
@@ -52,9 +52,9 @@ public class ControleAcessoAulaController : BaseController
     /// <summary>
     /// Tela para Inclusão de Controle Acesso Aula
     /// </summary>
-    /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
-    /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
-    /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
+    /// <param name="crud">Paramentro que indica o tipo de ação realizado</param>
+    /// <param name="notify">Parametro que indica o tipo de notificação realizada</param>
+    /// <param name="message">Mensagem apresentada nas notificações e alertas gerados na tela</param>
     [ClaimsAuthorize(ClaimType.ControleAcessoAula, Identity.Claim.Incluir)]
     public ActionResult Create(int? crud, int? notify, string message = null)
     {
@@ -80,8 +80,8 @@ public class ControleAcessoAulaController : BaseController
     /// <summary>
     /// Ação de inclusão do Controle Acesso Aula
     /// </summary>
-    /// <param name="collection">coleção de dados para inclusao de ControleAcessoAula</param>
-    /// <returns>retorna mensagem de inclusao através do parametro crud</returns>
+    /// <param name="collection">Coleção de dados para inclusao de ControleAcessoAula</param>
+    /// <returns>Retorna mensagem de inclusao através do parametro crud</returns>
     [ClaimsAuthorize(ClaimType.ControleAcessoAula, Identity.Claim.Incluir)]
     [HttpPost]
     public async Task<ActionResult> Create(IFormCollection collection)
@@ -111,7 +111,7 @@ public class ControleAcessoAulaController : BaseController
     /// Tela Alteração de Controle Acesso Aula
     /// </summary>
     /// <param name="id">Id de alteração do ControleAcessoAula</param>
-    /// <returns>retorna mensagem de alteração através do parametro crud</returns>
+    /// <returns>Retorna mensagem de alteração através do parametro crud</returns>
     /// <exception cref="ArgumentNullException">Mensagem de erro ao alterar o ControleAcessoAula</exception>
     [ClaimsAuthorize(ClaimType.ControleAcessoAula, Claim.Alterar)]
     public ActionResult Edit(int id, int? crud, int? notify, string message = null)
@@ -143,11 +143,11 @@ public class ControleAcessoAulaController : BaseController
     }
 
     /// <summary>
-    /// Ação de alteração do Controle Acesso Aula
+    /// Ação de Alteração do Controle Acesso Aula
     /// </summary>
-    /// <param name="id">identificador do ControleAcessoAula</param>
-    /// <param name="collection">coleção de dados para alteração de ControleAcessoAula</param>
-    /// <returns>retorna mensagem de alteração através do parametro crud</returns>
+    /// <param name="id">Identificador do ControleAcessoAula</param>
+    /// <param name="collection">Coleção de dados para alteração de ControleAcessoAula</param>
+    /// <returns>Retorna mensagem de alteração através do parametro crud</returns>
     [ClaimsAuthorize(ClaimType.ControleAcessoAula, Identity.Claim.Alterar)]
     public async Task<ActionResult> Edit(IFormCollection collection)
     {
@@ -180,11 +180,11 @@ public class ControleAcessoAulaController : BaseController
     }
 
     /// <summary>
-    /// Ação de exclusão do Controle Acesso Aula
+    /// Ação de Exclusão do Controle Acesso Aula
     /// </summary>
-    /// <param name="id">identificador do ControleAcessoAula</param>
-    /// <param name="collection">coleção de dados para exclusão de ControleAcessoAula</param>
-    /// <returns>retorna mensagem de exclusão através do parametro crud</returns>
+    /// <param name="id">Identificador do ControleAcessoAula</param>
+    /// <param name="collection">Coleção de dados para exclusão de ControleAcessoAula</param>
+    /// <returns>Retorna mensagem de exclusão através do parametro crud</returns>
     [ClaimsAuthorize(ClaimType.ControleAcessoAula, Identity.Claim.Excluir)]
     public ActionResult Delete(int id)
     {
