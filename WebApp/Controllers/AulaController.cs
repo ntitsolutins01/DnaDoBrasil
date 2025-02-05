@@ -30,8 +30,8 @@ public class AulaController : BaseController
     /// <summary>
     /// Construtor da página
     /// </summary>
-    /// <param name="app">configurações de urls do sistema</param>
-    /// <param name="host">informações da aplicação em execução</param>
+    /// <param name="appSettings">Configurações de urls do sistema</param>
+    /// <param name="host">Informações da aplicação em execução</param>
     public AulaController(IOptions<UrlSettings> appSettings, IWebHostEnvironment host)
     {
         _appSettings = appSettings;
@@ -44,10 +44,9 @@ public class AulaController : BaseController
     /// <summary>
     /// Listagem de Aula
     /// </summary>
-    /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
-    /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
-    /// <param name="collection">lista de filtros selecionados para pesquisa de alunos</param>
-    /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
+    /// <param name="crud">Paramentro que indica o tipo de ação realizado</param>
+    /// <param name="notify">Parametro que indica o tipo de notificação realizada</param>
+    /// <param name="message">Mensagem apresentada nas notificações e alertas gerados na tela</param>
     [ClaimsAuthorize(ClaimType.Aula, Identity.Claim.Consultar)]
     public IActionResult Index(int? crud, int? notify, string message = null)
     {
@@ -59,11 +58,11 @@ public class AulaController : BaseController
     }
 
     /// <summary>
-    /// Tela para inclusão de Aula
+    /// Tela para Inclusão de Aula
     /// </summary>
-    /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
-    /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
-    /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
+    /// <param name="crud">Paramentro que indica o tipo de ação realizado</param>
+    /// <param name="notify">Parametro que indica o tipo de notificação realizada</param>
+    /// <param name="message">Mensagem apresentada nas notificações e alertas gerados na tela</param>
     [ClaimsAuthorize(ClaimType.Aula, Identity.Claim.Incluir)]
     public ActionResult Create(int? crud, int? notify, string message = null)
     {
@@ -88,10 +87,10 @@ public class AulaController : BaseController
     }
 
     /// <summary>
-    /// Ação de inclusão do Aula
+    /// Ação de Inclusão do Aula
     /// </summary>
-    /// <param name="collection">coleção de dados para inclusao de Aula</param>
-    /// <returns>retorna mensagem de inclusao através do parametro crud</returns>
+    /// <param name="collection">Coleção de dados para inclusao de Aula</param>
+    /// <returns>Retorna mensagem de inclusao através do parametro crud</returns>
     [ClaimsAuthorize(ClaimType.Aula, Identity.Claim.Incluir)]
     [HttpPost]
     public async Task<ActionResult> Create(IFormCollection collection)
@@ -143,11 +142,10 @@ public class AulaController : BaseController
     }
 
     /// <summary>
-    /// Ação de alteração do Aula
+    /// Ação de Alteração do Aula
     /// </summary>
-    /// <param name="id">identificador do Aula</param>
-    /// <param name="collection">coleção de dados para alteração de Aula</param>
-    /// <returns>retorna mensagem de alteração através do parametro crud</returns>
+    /// <param name="id">Identificador do Aula</param>
+    /// <returns>Retorna mensagem de alteração através do parametro crud</returns>
     [ClaimsAuthorize(ClaimType.Aula, Identity.Claim.Alterar)]
     public async Task<ActionResult> Edit(IFormCollection collection)
     {
@@ -208,11 +206,10 @@ public class AulaController : BaseController
     }
 
     /// <summary>
-    /// Ação de exclusão do Aula
+    /// Ação de Exclusão do Aula
     /// </summary>
-    /// <param name="id">identificador do Aula</param>
-    /// <param name="collection">coleção de dados para exclusão de Aula</param>
-    /// <returns>retorna mensagem de exclusão através do parametro crud</returns>
+    /// <param name="id">Identificador do Aula</param>
+    /// <param name="collection">Coleção de dados para exclusão de Aula</param>
     [ClaimsAuthorize(ClaimType.Aula, Identity.Claim.Excluir)]
     public ActionResult Delete(int id)
     {
