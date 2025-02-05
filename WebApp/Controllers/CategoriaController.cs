@@ -30,7 +30,7 @@ public class CategoriaController : BaseController
     /// <summary>
     /// Construtor da página
     /// </summary>
-    /// <param name="app">configurações de urls do sistema</param>
+    /// <param name="appSettings">Configurações de urls do sistema</param>
     public CategoriaController(IOptions<UrlSettings> appSettings)
     {
         _appSettings = appSettings;
@@ -42,10 +42,9 @@ public class CategoriaController : BaseController
     /// <summary>
     /// Listagem de Categoria
     /// </summary>
-    /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
-    /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
-    /// <param name="collection">lista de filtros selecionados para pesquisa de alunos</param>
-    /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
+    /// <param name="crud">Paramentro que indica o tipo de ação realizado</param>
+    /// <param name="notify">Parametro que indica o tipo de notificação realizada</param>
+    /// <param name="message">Mensagem apresentada nas notificações e alertas gerados na tela</param>
     [ClaimsAuthorize(ClaimType.Categoria, Claim.Consultar)]
     public IActionResult Index(int? crud, int? notify, string message = null)
     {
@@ -59,9 +58,9 @@ public class CategoriaController : BaseController
     /// <summary>
     /// Tela para Inclusão de Categoria
     /// </summary>
-    /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
-    /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
-    /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
+    /// <param name="crud">Paramentro que indica o tipo de ação realizado</param>
+    /// <param name="notify">Parametro que indica o tipo de notificação realizada</param>
+    /// <param name="message">Mensagem apresentada nas notificações e alertas gerados na tela</param>
     [ClaimsAuthorize(ClaimType.Categoria, Claim.Incluir)]
     public ActionResult Create(int? crud, int? notify, string message = null)
     {
@@ -82,8 +81,8 @@ public class CategoriaController : BaseController
     /// <summary>
     /// Ação de Inclusão de Categoria
     /// </summary>
-    /// <param name="collection">coleção de dados para inclusao de Categoria</param>
-    /// <returns>retorna mensagem de inclusao através do parametro crud</returns>
+    /// <param name="collection">Coleção de dados para inclusao de Categoria</param>
+    /// <returns>Retorna mensagem de inclusao através do parametro crud</returns>
     [ClaimsAuthorize(ClaimType.Categoria, Claim.Incluir)]
     [HttpPost]
     public async Task<ActionResult> Create(IFormCollection collection)
@@ -113,8 +112,7 @@ public class CategoriaController : BaseController
     /// Ação de Alteração de Categoria
     /// </summary>
     /// <param name="id">Identificador de Categoria</param>
-    /// <param name="collection">coleção de dados para alteração de Categoria</param>
-    /// <returns>retorna mensagem de alteração através do parametro crud</returns>
+    /// <returns>Retorna mensagem de alteração através do parametro crud</returns>
     [ClaimsAuthorize(ClaimType.Categoria, Claim.Alterar)]
     public async Task<ActionResult> Edit(IFormCollection collection)
     {
@@ -144,10 +142,9 @@ public class CategoriaController : BaseController
     /// <summary>
     /// Ação de Exclusão do Categoria
     /// </summary>
-    /// <param name="id">identificador do Categoria</param>
-    /// <param name="collection">coleção de dados para exclusão de Categoria</param>
-    /// <returns>retorna mensagem de exclusão através do parametro crud</returns>
-    [ClaimsAuthorize(ClaimType.Categoria, Claim.Excluir)]
+    /// <param name="id">Identificador do Categoria</param>
+    /// <param name="collection">Coleção de dados para exclusão de Categoria</param>
+    /// <returns>Retorna mensagem de exclusão através do parametro crud</returns>
     public ActionResult Delete(int id)
     {
         try
