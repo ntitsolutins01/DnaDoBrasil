@@ -210,7 +210,7 @@ public class AulaController : BaseController
     /// </summary>
     /// <param name="id">Identificador do Aula</param>
     /// <param name="collection">Coleção de dados para exclusão de Aula</param>
-    [ClaimsAuthorize(ClaimType.Aula, Identity.Claim.Excluir)]
+    /// <returns>Retorna a Aula</returns>
     public ActionResult Delete(int id)
     {
         try
