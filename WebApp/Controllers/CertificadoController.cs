@@ -39,9 +39,9 @@ namespace WebApp.Controllers
         /// <summary>
         /// Listagem de Certificado
         /// </summary>
-        /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
-        /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
-        /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
+        /// <param name="crud">Paramentro que indica o tipo de ação realizado</param>
+        /// <param name="notify">Parametro que indica o tipo de notificação realizada</param>
+        /// <param name="message">Mensagem apresentada nas notificações e alertas gerados na tela</param>
         /// <returns></returns>
         public IActionResult Index(int? crud, int? notify, string message = null)
         {
@@ -59,9 +59,9 @@ namespace WebApp.Controllers
         /// <summary>
         /// Tela para Inclusão de Certificado
         /// </summary>
-        /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
+        /// <param name="crud">Paramentro que indica o tipo de ação realizado</param>
         /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
-        /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
+        /// <param name="message">Mensagem apresentada nas notificações e alertas gerados na tela</param>
         /// <returns></returns>
         public ActionResult Create(int? crud, int? notify, string message = null)
         {
@@ -85,8 +85,8 @@ namespace WebApp.Controllers
         /// <summary>
         ///  Ação de Inclusão de Certificado
         /// </summary>
-        /// <param name="collection">coleção de dados para inclusao de Curso</param>
-        /// <returns>retorna mensagem de inclusao através do parametro crud</returns>
+        /// <param name="collection">Coleção de dados para inclusao de Curso</param>
+        /// <returns>Retorna mensagem de inclusao através do parametro crud</returns>
         [HttpPost]
         public async Task<ActionResult> Create(IFormCollection collection)
         {
@@ -155,10 +155,10 @@ namespace WebApp.Controllers
         /// <summary>
         /// Tela para Alteração de Certificado
         /// </summary>
-        /// <param name="id">identificador de Certificado</param>
-        /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
-        /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
-        /// <param name="message">retorna mensagem de alteração através do parametro crud</param>
+        /// <param name="id">Identificador de Certificado</param>
+        /// <param name="crud">Paramentro que indica o tipo de ação realizado</param>
+        /// <param name="notify">Parametro que indica o tipo de notificação realizada</param>
+        /// <param name="message">Retorna mensagem de alteração através do parametro crud</param>
         /// <returns></returns>
         public ActionResult Edit(int id, int? crud, int? notify, string message = null)
         {
@@ -177,9 +177,9 @@ namespace WebApp.Controllers
         /// <summary>
         /// Ação de Alteração de Certificado
         /// </summary>
-        /// <param name="id">identificador de Certificado</param>
+        /// <param name="id">Identificador de Certificado</param>
         /// <param name="collection">Coleção de dados para Alteração de Certificado</param>
-        /// <returns>retorna mensagem de alteração através do parametro crud</returns>
+        /// <returns>Retorna mensagem de alteração através do parametro crud</returns>
         [HttpPost]
         public async Task<ActionResult> Edit(int id, IFormCollection collection)
         {
@@ -202,8 +202,8 @@ namespace WebApp.Controllers
         /// <summary>
         /// Ação de Exclusão de Certificado
         /// </summary>
-        /// <param name="id">identificador do Certificado</param>
-        /// <returns>retorna mensagem de exclusão através do parametro crud</returns>
+        /// <param name="id">Identificador do Certificado</param>
+        /// <returns>Retorna mensagem de exclusão através do parametro crud</returns>
         public ActionResult Delete(int id)
         {
             try
