@@ -202,7 +202,7 @@ namespace WebApp.Controllers
         /// <param name="id">id do usuario</param>
         /// <exception cref="ArgumentNullException">Mensagem de erro ao alterar o tentar acessar tela de alteração do Usuario</exception>
         [ClaimsAuthorize(ClaimType.Usuario, Identity.Claim.Alterar)]
-        public ActionResult Edit(string id, int? crud, int? notify, string message = null)
+        public async Task<ActionResult> Edit(string id, int? crud, int? notify, string message = null)
         {
             try
             {
@@ -211,7 +211,7 @@ namespace WebApp.Controllers
 
                 UsuarioModel model = new UsuarioModel();
 
-                var obj = ApiClientFactory.Instance.GetUsuarioById(id) ?? throw new ArgumentNullException("Usuário não encontrado.");
+                var obj = await ApiClientFactory.Instance.GetUsuarioById(id) ?? throw new ArgumentNullException("Usuário não encontrado.");
 
                 var resultPerfil = ApiClientFactory.Instance.GetPerfilAll();
 
@@ -255,7 +255,7 @@ namespace WebApp.Controllers
             {
                 //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-                var usuario = ApiClientFactory.Instance.GetUsuarioById(id.ToString());
+                var usuario = await ApiClientFactory.Instance.GetUsuarioById(id.ToString());
 
                 var perfil = ApiClientFactory.Instance.GetPerfilById(Convert.ToInt32(collection["ddlPerfis"].ToString()));
 
@@ -307,7 +307,7 @@ namespace WebApp.Controllers
         {
             try
             {
-                var usuario = ApiClientFactory.Instance.GetUsuarioById(id.ToString()) ?? throw new ArgumentNullException("Usuário não encontrado.");
+                var usuario = await ApiClientFactory.Instance.GetUsuarioById(id.ToString()) ?? throw new ArgumentNullException("Usuário não encontrado.");
 
                 var user = _userManager.Users.FirstOrDefault(x => x.Email == usuario.Email);
 
@@ -354,7 +354,7 @@ namespace WebApp.Controllers
         /// <param name="crud">paramentro que indica o tipo de ação realizado</param>
         /// <param name="notify">parametro que indica o tipo de notificação realizada</param>
         /// <param name="message">mensagem apresentada nas notificações e alertas gerados na tela</param>
-        public ActionResult Profile(int? crud, int? notify, string message = null)
+        public async Task<ActionResult> Profile(int? crud, int? notify, string message = null)
         {
             try
             {
@@ -374,7 +374,7 @@ namespace WebApp.Controllers
                 _logger.Info($"Busca Usuario por AspNetUserId: {userId}");
                 if (userId != null)
                 {
-                    var usu = ApiClientFactory.Instance.GetUsuarioByAspNetUserId(userId);
+                    var usu = await ApiClientFactory.Instance.GetUsuarioByAspNetUserId(userId);
 
                     _logger.Info($"Retorno de GetUsuarioByAspNetUserId");
                     _logger.Info(Newtonsoft.Json.JsonConvert.SerializeObject(usu));
