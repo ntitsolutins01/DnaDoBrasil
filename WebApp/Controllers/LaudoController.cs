@@ -170,7 +170,7 @@ namespace WebApp.Controllers
             var laudo = ApiClientFactory.Instance.GetLaudoByAluno(id);
 
             var consumoAlimentar = laudo.ConsumoAlimentarId == null ? null : ApiClientFactory.Instance.GetConsumoAlimentarById((int)laudo.ConsumoAlimentarId);
-            var saudeBucal = laudo.SaudeBucalId == null ? null : ApiClientFactory.Instance.GetConsumoAlimentarById((int)laudo.SaudeBucalId);
+            var saudeBucal = laudo.SaudeBucalId == null ? null : ApiClientFactory.Instance.GetSaudeBucalById((int)laudo.SaudeBucalId);
 
             var aluno = await ApiClientFactory.Instance.GetAlunoById(id);
             var profissional = laudo.ProfissionalId == null ? null : ApiClientFactory.Instance.GetProfissionalById(Convert.ToInt32(aluno.ProfissionalId));
@@ -966,6 +966,12 @@ namespace WebApp.Controllers
                 ws.Cell(1, 4).Value = "Email";
                 ws.Cell(1, 5).Value = "Telefone";
                 ws.Cell(1, 6).Value = "Celular";
+                ws.Cell(1, 7).Value = "Saúde";
+                ws.Cell(1, 8).Value = "Talento Esportivo";
+                ws.Cell(1, 9).Value = "Consumo Alimentar";
+                ws.Cell(1, 10).Value = "Saúde Bucal";
+                ws.Cell(1, 11).Value = "Qualidade de Vida";
+                ws.Cell(1, 12).Value = "Vocacional";
                 int row = 2;
                 foreach (var item in result.Laudos.Items.ToList())
                 {
@@ -975,6 +981,12 @@ namespace WebApp.Controllers
                     ws.Cell("D" + row).Value = item.Email;
                     ws.Cell("E" + row).Value = item.Telefone;
                     ws.Cell("F" + row).Value = item.Celular;
+                    ws.Cell("G" + row).Value = item.SaudeId != null ? "X" : "" ;
+                    ws.Cell("H" + row).Value = item.TalentoEsportivoId != null ? "X" : "" ;
+                    ws.Cell("I" + row).Value = item.ConsumoAlimentarId != null ? "X" : "" ;
+                    ws.Cell("J" + row).Value = item.SaudeBucalId != null ? "X" : "" ;
+                    ws.Cell("K" + row).Value = item.QualidadeDeVidaId != null ? "X" : "" ;
+                    ws.Cell("L" + row).Value = item.VocacionalId != null ? "X" : "" ;
                     row++;
                 }
 
