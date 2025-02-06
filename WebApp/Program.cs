@@ -8,8 +8,13 @@ using WebApp.Models;
 using WebApp.Services;
 using WebApp.Configuration;
 using WebApp.Identity;
+using Microsoft.Extensions.FileProviders;
+using WebApp.Utility;
 
 var builder = WebApplication.CreateBuilder(args);
+
+//Configure Log4net
+builder.Services.AddLog4net();
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
@@ -184,7 +189,6 @@ builder.Services.AddAuthorization(o =>
 
     #region Sistema EAD
 
-
     o.AddPolicy(ModuloAccess.DashboardEad, policy =>
         policy.RequireAssertion(context =>
             context.User.IsInRole(UserRoles.AdministradorEad) ||
@@ -195,7 +199,6 @@ builder.Services.AddAuthorization(o =>
     o.AddPolicy(ModuloAccess.ConfiguracaoSistemaEad, policy =>
         policy.RequireAssertion(context =>
             context.User.IsInRole(UserRoles.AdministradorEad) ||
-            context.User.IsInRole(UserRoles.ProfessorEad) ||
             context.User.IsInRole(UserRoles.CoordenadorEad) ||
             context.User.IsInRole(UserRoles.Administrador)));
 
@@ -220,6 +223,13 @@ app.UseRouting();
 app.UseCookiePolicy();
 
 app.UseAuthorization();
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")),
+    RequestPath = ""
+});
 
 app.MapControllerRoute(
     name: "default",
